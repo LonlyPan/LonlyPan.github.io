@@ -1,0 +1,61 @@
+# Site settings
+title: LonlyPan - Lonly的博客分享站
+url: "http://lonlypan.com"    # the protocol and hostname of your site, eg. `http://laobubu.github.io`
+baseurl: "" # the prefix of your site uri, eg. `"/jekyll-theme-EasyBook"` or empty string `""`
+#timezone: Asia/Chongqing
+description: >
+  3d Print，STM32，Marlin，FPGA，HTML，C++
+# Your information
+email: lonlypan@gmail.com
+author: LonlyPan
+avatar: "/avator.ico"
+profile: 啥事都做，一事无成
+profile_links:
+  LonlyStack: "https://lonlystack.com/"
+  GitHub: "https://github.com/lonlypan"
+  996.ICU: "https://996.icu"
+  # You can add more profile links above, or edit _includes/sidebar.html 
+
+# Google Analytics
+baidu_analytics: f56279d43c733d547ea06f75f8e05d89
+
+excerpt_separator: <!--more-->
+
+header:
+  links:             # Links on the header. Link to in-site page with a slash as prefix
+    分类: /category/
+    关于: /about/
+    书影: /Book/
+    项目: /Project/
+    
+
+permalink: /archivers/:title
+plugins:
+ - jekyll-paginate
+ - jekyll-gist
+ - jemoji
+ - jekyll-last-modified-at
+
+# Build settings
+paginate: 12
+paginate_path: "page:num"
+
+highlighter: rouge
+markdown: kramdown
+
+# https://jekyllrb.com/docs/configuration/#precedence
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  math_engine: mathjax
+
+
+
