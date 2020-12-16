@@ -1303,6 +1303,27 @@ lv_anim_start(&a);                             /*Start the animation*/
 ```
 您可以同时在同一变量上应用多个不同的动画。例如，使用lv_obj_set_x和lv_obj_set_y设置x和y坐标的动画。但是，只有一个动画可以存在给定的变量和函数对。因此lv_anim_start()将删除已经存在的可变功能动画。
 
+### 动画path
+
+您可以确定动画的path。在最简单的情况下，它是线性的，这意味着开始和结束之间的当前值线性变化。path主要是其计算基于所述动画的当前状态中的下一个值集的函数。当前，有以下内置path功能：
+- lv_anim_path_linear线性动画
+- lv_anim_path_step最后一步更改
+- lv_anim_path_ease_in开头缓慢
+- lv_anim_path_ease_out最后慢
+- lv_anim_path_ease_in_out在开始和结束时也很慢
+- lv_anim_path_overshoot超出最终值
+- lv_anim_path_bounce从最终值反弹一点（就像撞墙一样）
+  
+ 可以这样初始化path：
+ ```
+ lv_anim_path_t path;
+lv_anim_path_init(&path);
+lv_anim_path_set_cb(&path, lv_anim_path_overshoot);
+lv_anim_path_set_user_data(&path, &foo); /*Optional for custom functions*/
+
+/*Set the path in an animation*/
+lv_anim_set_path(&a, &path);
+```
 # 通过CodeBlocks模拟运行LittlevGL
 
 
