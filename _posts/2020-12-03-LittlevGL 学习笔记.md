@@ -1288,10 +1288,10 @@ lv_anim_set_playback_time(&a, wait_time);
 /*播放前延迟. Default is 0 (disabled) [ms]*/
 lv_anim_set_playback_delay(&a, wait_time);
 
-/*重复次数. Default is 1.  LV_ANIM_REPEAT_INFINIT for infinite repetition*/
+/*重复次数. Default is 1.  LV_ANIM_REPEAT_INFINIT for 无限重复*/
 lv_anim_set_repeat_count(&a, wait_time);
 
-/*Delay before repeat. Default is 0 (disabled) [ms]*/
+/*延迟再重复. Default is 0 (disabled) [ms]*/
 lv_anim_set_repeat_delay(&a, wait_time);
 
 /*true (default): apply the start vale immediately, false: apply start vale after delay when then anim. really starts. */
