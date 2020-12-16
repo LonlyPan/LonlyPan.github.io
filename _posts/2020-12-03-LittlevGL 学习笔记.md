@@ -1270,7 +1270,7 @@ lv_anim_set_values(&a,start,end);
 
 /*可选设置*------------------*/
 
-/*Timetowaitbeforestartingtheanimation[ms]*/
+/*开始动画之前要等待的时间[ms]*/
 lv_anim_set_delay(&a,delay);
 
 /*Setpath(curve).Defaultislinear*/
