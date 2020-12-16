@@ -1275,9 +1275,11 @@ lv_anim_set_delay(&a,delay);
 
 /*设置路径（曲线）。默认为线性*/
 lv_anim_set_path(&a,&path);
-/*Setacallbacktocallwhenanimationisready.*/
+
+/*设置回调以在动画准备好时调用.*/
 lv_anim_set_ready_cb(&a,ready_cb);
-/*Setacallbacktocallwhenanimationisstarted(afterdelay).*/
+
+/*设置在动画开始时调用的回调(afterdelay).*/
 
 
 
