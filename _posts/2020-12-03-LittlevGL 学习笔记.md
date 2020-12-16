@@ -1239,6 +1239,17 @@ void lv_ex_get_started_2(void)
 
 ## 动画
 
+您可以使用动画在开始值和结束值之间自动更改变量的值。动画将通过定期调用带有相应value参数的“animator”函数来发生。  
+该动画功能具有以下原型： 
+```
+voidfunc(void*var,lv_anim_var_tvalue);
+```
+该原型与LVGL的大多数设置功能兼容。例如
+```lv_obj_set_x(obj, value) or lv_obj_set_width(obj, value)```
+### 创建动画
+
+要创建动画，必须初始化变量 lv_anim_t并使用lv_anim_set_...()功能对其进行配置。/*INITIALIZEANANIMATION*-----------------------*/lv_anim_ta;lv_anim_init(&a);/*MANDATORYSETTINGS*------------------*//*Setthe"animator"function*/lv_anim_set_exec_cb(&a,(lv_anim_exec_xcb_t)lv_obj_set_x);/*Setthe"animator"function*/lv_anim_set_var(&a,obj);/*Lengthoftheanimation[ms]*/lv_anim_set_time(&a,duration);/*Setstartandendvalues.E.g.0,150*/lv_anim_set_values(&a,start,end);/*OPTIONALSETTINGS*------------------*//*Timetowaitbeforestartingtheanimation[ms]*/lv_anim_set_delay(&a,delay);/*Setpath(curve).Defaultislinear*/lv_anim_set_path(&a,&path);/*Setacallbacktocallwhenanimationisready.*/lv_anim_set_ready_cb(&a,ready_cb);/*Setacallbacktocallwhenanimationisstarted(afterdelay).*/Cai Xuefeng 
+
 
 # 通过CodeBlocks模拟运行LittlevGL
 
@@ -1311,3 +1322,15 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 
 ## STM32F4 SPI DMA显示
 [GUuiLite-MCU SPI屏也能跑这么炫酷的特效？来，移植起来秀一秀](https://mp.ofweek.com/ee/a545693620996)
+[STM32---SPI通信的总结(库函数操作)](https://www.cnblogs.com/linxw-blog/p/12488682.html)
+[【STM32】使用DMA+SPI传输数据](https://my.oschina.net/u/4314849/blog/3447441)
+[【LVGL学习之旅 01】移植LVGL到STM32](https://blog.csdn.net/qq_40831286/article/details/107633216)
+[ScarsFun/lvgl_STM32F103_encoder_rtx5](https://github.com/ScarsFun/lvgl_STM32F103_encoder_rtx5/blob/master/ili9341/dma.c)
+[(三)stm32之串口通信DMA传输完成中断](https://www.cnblogs.com/zhangshenghui/p/5340483.html)
+[使用 spi dma 传输和键盘时绘图区域错误？](https://forum.lvgl.io/t/drawing-area-error-when-using-spi-dma-transmit-and-keypad/288)
+[weefnn/pandora](https://github.com/weefnn/pandora/blob/179ae468ab176c86b8b10732e22507869abeb56d/pandora_lvgl/pandora_lvgl/LVGL/hal_stm_lvgl/tft/tft.c#L32)
+[lvgl/lv_port_stm32f746_disco](https://github.com/lvgl/lv_port_stm32f746_disco/blob/master/hal_stm_lvgl/tft/tft.c#L428-L429)
+[两天移植littlevgl](https://www.firebbs.cn/thread-28679-1-1.html) 
+[lvgl/lv_port_stm32f429_disco](https://github.com/lvgl/lv_port_stm32f429_disco)
+[LVGL 优化帧率技巧](https://blog.csdn.net/weixin_43862847/article/details/109318017)
+[f429 discovery开发版 LVGL移植（带操作系统）](https://blog.csdn.net/weixin_43862847/article/details/109056321)
