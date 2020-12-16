@@ -1294,7 +1294,7 @@ lv_anim_set_repeat_count(&a, wait_time);
 /*延迟再重复. Default is 0 (disabled) [ms]*/
 lv_anim_set_repeat_delay(&a, wait_time);
 
-/*true (default): apply the start vale immediately, false: apply start vale after delay when then anim. really starts. */
+/*true（默认）：立即应用开始值，false：延迟设置动画后再应用开始值。真正开始。 */
 lv_anim_set_early_apply(&a, true/false);
 
 /* START THE ANIMATION
