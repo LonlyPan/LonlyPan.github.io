@@ -1254,7 +1254,7 @@ voidfunc(void*var,lv_anim_var_tvalue);
 lv_anim_t a;
 lv_anim_init(&a);
 
-/*MANDATORYSETTINGS*------------------*/
+/*强制设置*------------------*/
 
 /*Setthe"animator"function*/
 lv_anim_set_exec_cb(&a,(lv_anim_exec_xcb_t)lv_obj_set_x);
