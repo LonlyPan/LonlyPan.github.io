@@ -1300,7 +1300,8 @@ lv_anim_set_early_apply(&a, true/false);
 /* START THE ANIMATION
  *------------------*/
 lv_anim_start(&a);                             /*Start the animation*/
-
+```
+您可以同时在同一变量上应用多个不同的动画。例如，使用lv_obj_set_x和lv_obj_set_y设置x和y坐标的动画。但是，只有一个动画可以存在给定的变量和函数对。因此lv_anim_start()将删除已经存在的可变功能动画。
 
 # 通过CodeBlocks模拟运行LittlevGL
 
