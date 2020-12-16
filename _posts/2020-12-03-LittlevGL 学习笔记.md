@@ -1248,7 +1248,37 @@ voidfunc(void*var,lv_anim_var_tvalue);
 ```lv_obj_set_x(obj, value) or lv_obj_set_width(obj, value)```
 ### 创建动画
 
-要创建动画，必须初始化变量 lv_anim_t并使用lv_anim_set_...()功能对其进行配置。/*INITIALIZEANANIMATION*-----------------------*/lv_anim_ta;lv_anim_init(&a);/*MANDATORYSETTINGS*------------------*//*Setthe"animator"function*/lv_anim_set_exec_cb(&a,(lv_anim_exec_xcb_t)lv_obj_set_x);/*Setthe"animator"function*/lv_anim_set_var(&a,obj);/*Lengthoftheanimation[ms]*/lv_anim_set_time(&a,duration);/*Setstartandendvalues.E.g.0,150*/lv_anim_set_values(&a,start,end);/*OPTIONALSETTINGS*------------------*//*Timetowaitbeforestartingtheanimation[ms]*/lv_anim_set_delay(&a,delay);/*Setpath(curve).Defaultislinear*/lv_anim_set_path(&a,&path);/*Setacallbacktocallwhenanimationisready.*/lv_anim_set_ready_cb(&a,ready_cb);/*Setacallbacktocallwhenanimationisstarted(afterdelay).*/Cai Xuefeng 
+要创建动画，必须初始化变量 lv_anim_t并使用lv_anim_set_...()功能对其进行配置。
+```
+/*初始化动画*----------------------*/
+lv_anim_t a;
+lv_anim_init(&a);
+
+/*MANDATORYSETTINGS*------------------*/
+
+/*Setthe"animator"function*/
+lv_anim_set_exec_cb(&a,(lv_anim_exec_xcb_t)lv_obj_set_x);
+
+/*Setthe"animator"function*/
+lv_anim_set_var(&a,obj);
+
+/*Lengthoftheanimation[ms]*/
+lv_anim_set_time(&a,duration);
+
+/*Setstartandendvalues.E.g.0,150*/
+lv_anim_set_values(&a,start,end);
+
+/*OPTIONALSETTINGS*------------------*/
+
+/*Timetowaitbeforestartingtheanimation[ms]*/
+lv_anim_set_delay(&a,delay);
+
+/*Setpath(curve).Defaultislinear*/
+lv_anim_set_path(&a,&path);
+/*Setacallbacktocallwhenanimationisready.*/
+lv_anim_set_ready_cb(&a,ready_cb);
+/*Setacallbacktocallwhenanimationisstarted(afterdelay).*/
+
 
 
 # 通过CodeBlocks模拟运行LittlevGL
