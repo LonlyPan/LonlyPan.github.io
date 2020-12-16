@@ -1236,6 +1236,10 @@ void lv_ex_get_started_2(void)
 #endif
 }
 ```
+
+## 动画
+
+
 # 通过CodeBlocks模拟运行LittlevGL
 
 
