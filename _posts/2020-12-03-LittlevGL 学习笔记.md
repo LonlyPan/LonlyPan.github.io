@@ -1310,3 +1310,4 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [Using GCC with MinGW](https://code.visualstudio.com/docs/cpp/config-mingw#_prerequisites)
 
 ## STM32F4 SPI DMA显示
+[GUuiLite-MCU SPI屏也能跑这么炫酷的特效？来，移植起来秀一秀](https://mp.ofweek.com/ee/a545693620996)
