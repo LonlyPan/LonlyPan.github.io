@@ -1280,7 +1280,26 @@ lv_anim_set_path(&a,&path);
 lv_anim_set_ready_cb(&a,ready_cb);
 
 /*设置在动画开始时调用的回调(afterdelay).*/
+lv_anim_set_start_cb(&a, start_cb);
 
+/*在此持续时间内也向后播放动画. Default is 0 (disabled) [ms]*/
+lv_anim_set_playback_time(&a, wait_time); 
+
+/*Delay before playback. Default is 0 (disabled) [ms]*/
+lv_anim_set_playback_delay(&a, wait_time);
+
+/*Number of repetitions. Default is 1.  LV_ANIM_REPEAT_INFINIT for infinite repetition*/
+lv_anim_set_repeat_count(&a, wait_time);
+
+/*Delay before repeat. Default is 0 (disabled) [ms]*/
+lv_anim_set_repeat_delay(&a, wait_time);
+
+/*true (default): apply the start vale immediately, false: apply start vale after delay when then anim. really starts. */
+lv_anim_set_early_apply(&a, true/false);
+
+/* START THE ANIMATION
+ *------------------*/
+lv_anim_start(&a);                             /*Start the animation*/
 
 
 # 通过CodeBlocks模拟运行LittlevGL
