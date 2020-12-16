@@ -1273,7 +1273,7 @@ lv_anim_set_values(&a,start,end);
 /*开始动画之前要等待的时间[ms]*/
 lv_anim_set_delay(&a,delay);
 
-/*Setpath(curve).Defaultislinear*/
+/*设置路径（曲线）。默认为线性*/
 lv_anim_set_path(&a,&path);
 /*Setacallbacktocallwhenanimationisready.*/
 lv_anim_set_ready_cb(&a,ready_cb);
