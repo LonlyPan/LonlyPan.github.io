@@ -1285,7 +1285,7 @@ lv_anim_set_start_cb(&a, start_cb);
 /*在此持续时间内也向后播放动画. Default is 0 (disabled) [ms]*/
 lv_anim_set_playback_time(&a, wait_time); 
 
-/*Delay before playback. Default is 0 (disabled) [ms]*/
+/*播放前延迟. Default is 0 (disabled) [ms]*/
 lv_anim_set_playback_delay(&a, wait_time);
 
 /*Number of repetitions. Default is 1.  LV_ANIM_REPEAT_INFINIT for infinite repetition*/
