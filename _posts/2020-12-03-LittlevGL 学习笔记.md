@@ -1268,7 +1268,7 @@ lv_anim_set_time(&a,duration);
 /*设置开始和结束值。.E.g.0,150*/
 lv_anim_set_values(&a,start,end);
 
-/*OPTIONALSETTINGS*------------------*/
+/*可选设置*------------------*/
 
 /*Timetowaitbeforestartingtheanimation[ms]*/
 lv_anim_set_delay(&a,delay);
