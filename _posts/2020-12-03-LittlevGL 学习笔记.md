@@ -1256,16 +1256,16 @@ lv_anim_init(&a);
 
 /*强制设置*------------------*/
 
-/*Setthe"animator"function*/
+/*设置“动画”时要调用的函数*/
 lv_anim_set_exec_cb(&a,(lv_anim_exec_xcb_t)lv_obj_set_x);
 
 /*Setthe"animator"function*/
 lv_anim_set_var(&a,obj);
 
-/*Lengthoftheanimation[ms]*/
+/*动画时间【ms】*/
 lv_anim_set_time(&a,duration);
 
-/*Setstartandendvalues.E.g.0,150*/
+/*设置开始和结束值。.E.g.0,150*/
 lv_anim_set_values(&a,start,end);
 
 /*OPTIONALSETTINGS*------------------*/
