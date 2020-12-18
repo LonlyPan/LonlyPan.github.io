@@ -1393,7 +1393,7 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [Run LittlevGL via PlatformIO](https://github.com/lvgl/lv_platformio)
 [Using GCC with MinGW](https://code.visualstudio.com/docs/cpp/config-mingw#_prerequisites)
 [LittlevGL基础控件学习](https://littlevgl.readthedocs.io/en/latest/Doc/01.LittelvGL%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/LittlevGL.html#ainmation)
-## STM32F4 SPI DMA显示
+# STM32F4 SPI DMA显示
 [GUuiLite-MCU SPI屏也能跑这么炫酷的特效？来，移植起来秀一秀](https://mp.ofweek.com/ee/a545693620996)
 [STM32---SPI通信的总结(库函数操作)](https://www.cnblogs.com/linxw-blog/p/12488682.html)
 [【STM32】使用DMA+SPI传输数据](https://my.oschina.net/u/4314849/blog/3447441)
@@ -1413,3 +1413,8 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [STM32 cubeMX: triggering SPI DMA interrupt using interrupt](https://stackoverflow.com/questions/53999597/stm32-cubemx-triggering-spi-dma-interrupt-using-interrupt)
 [HAL_SPI_TransmitReceive_DMA() transmit interrupt always triggered after receive interrupt](https://community.st.com/s/question/0D50X0000APclcf/halspitransmitreceivedma-transmit-interrupt-always-triggered-after-receive-interrupt)
 [STM32CubeMx. SPI and DMA usage example for STM32 MCU.](https://microtechnics.ru/en/stm32cube-spi-and-dma-example/)
+
+# LVGL应用
+
+## Screen
+
