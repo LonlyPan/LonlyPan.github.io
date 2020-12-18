@@ -10,16 +10,7 @@ categories: c&c++
 
 <!--more-->
 
----
-layout: post
-show_title: "static 修饰符"
-title: "2020-04-13-static 修饰符"
-data: 2020-04-13 14:5
-last_modified_at:  2020-04-13
-categories:  c&c++
----
 
-static 修饰符
 
 **以下内容涉及面较广，有些内容并未详细展开说明，也有些未彻底深入探讨，请大家在阅读时多参考文末参考文章，自行斟酌、独立思考。**
 
@@ -30,7 +21,6 @@ static作为C和C++语句中的修饰符，可以**修饰变量和函数**，主
 为了更好理解 static 作用，我们需要先了解程序在内存中的分布情况，具体请参考文章  
 [程序在内存中的分布](https://lonlypan.com/archivers/程序在内存中的分布)
 
-<!--more-->
 
 ## static的内部机制
 
