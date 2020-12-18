@@ -1393,6 +1393,7 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [Run LittlevGL via PlatformIO](https://github.com/lvgl/lv_platformio)
 [Using GCC with MinGW](https://code.visualstudio.com/docs/cpp/config-mingw#_prerequisites)
 [LittlevGL基础控件学习](https://littlevgl.readthedocs.io/en/latest/Doc/01.LittelvGL%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/LittlevGL.html#ainmation)
+LittlevGL在AT32上的移植说明
 extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=http%3A%2F%2Fwww.arterytek.com%2Fdownload%2FAN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3.pdf
 # STM32F4 SPI DMA显示
 [GUuiLite-MCU SPI屏也能跑这么炫酷的特效？来，移植起来秀一秀](https://mp.ofweek.com/ee/a545693620996)
