@@ -17,7 +17,7 @@ data: 2019-5-27 16:47
 categories:  c&c++
 ---
 
-# 数组_array_vector
+# 数组_array_vector- 2019-5-27
 
 C++ 中有三种数组：C风格的数组、std::array、std::vector。
 
