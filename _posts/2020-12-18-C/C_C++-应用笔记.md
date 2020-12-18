@@ -152,7 +152,7 @@ int main()
 
 ![enter description here](https://LonlyPan.github.io/images/Posts/2019-5-27-数组_array_vector/enter_description_here.png)
 
-可知当最终空间不足时，会不断的把容量\*2。容量是capacity，而不是size。size是已经占用数据的大小，capacity是vector为了实现动态数组，提前申请出的空间。因此vector当发生容量乘以2时，会带来数据的复制。从老的地址空间复制数据到扩大后的地址空间。这也是可能带来性能问题的地方。因此有时可以提前一次申请足够的空间，例如：std::vector<int> v(100)。
+可知当最终空间不足时，会不断的把容量\*2。容量是capacity，而不是size。size是已经占用数据的大小，capacity是vector为了实现动态数组，提前申请出的空间。因此vector当发生容量乘以2时，会带来数据的复制。从老的地址空间复制数据到扩大后的地址空间。这也是可能带来性能问题的地方。因此有时可以提前一次申请足够的空间，例如：std::vector\<int> v(100)。
 
 参考：
 
