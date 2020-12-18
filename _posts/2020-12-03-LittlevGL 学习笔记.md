@@ -1417,4 +1417,9 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 # LVGL应用
 
 ## Screen
-
+[Screen transitions and display background](https://forum.lvgl.io/t/screen-transitions-and-display-background/2582)
+[Multiple screen question #394](https://github.com/lvgl/lvgl/issues/394)
+[The most efficient way to structure a multi screen LittlevGL project](https://forum.lvgl.io/t/the-most-efficient-way-to-structure-a-multi-screen-littlevgl-project/1680)
+[button to change screen #93](https://github.com/lvgl/lvgl/issues/93)
+[LittlevGL 切换界面的演示](https://blog.csdn.net/yunjie167/article/details/105488356)
+[零知增强板-TFT扩展板 3.5寸 UI界面示例(lvgl)](http://www.lingzhilab.com/lzbbs/resources.html?ecid=454)
