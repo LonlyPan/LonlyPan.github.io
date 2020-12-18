@@ -1424,3 +1424,559 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [button to change screen #93](https://github.com/lvgl/lvgl/issues/93)
 [LittlevGL 切换界面的演示](https://blog.csdn.net/yunjie167/article/details/105488356)
 [零知增强板-TFT扩展板 3.5寸 UI界面示例(lvgl)](http://www.lingzhilab.com/lzbbs/resources.html?ecid=454)
+
+```
+static lv_style_t arc_block_style;
+static lv_style_t arc_line_style;
+
+lv_obj_t * big_arc; // 大的环形弧块
+lv_obj_t * tiny_arc;// 小的环形弧块
+lv_obj_t * out_arc; // 外弧线
+lv_obj_t * in_arc1;  // 内弧线
+lv_obj_t * in_arc2;
+
+lv_obj_t * line1;
+lv_obj_t * line2;
+lv_obj_t * line3;
+lv_obj_t * line4;
+
+static lv_point_t line_points[2] = {{0,0},{0,0}};
+static int line_angle= 87;
+
+static lv_point_t line_points2[2] = {{0,0},{0,0}};
+static int line2_angle_offest = 51;
+
+static lv_point_t line_points3[2] = {{0,0},{0,0}};
+static int line3_angle_offest = 80;
+
+static lv_point_t line_points4[2] = {{0,0},{0,0}};
+static int line4_angle_offest = -33;
+
+
+/* 大圆弧块起始角 */
+static int16_t big_arc_block_start_angle = 330;
+static int16_t big_arc_block_offer = 300;
+
+static int16_t tiny_arc_block_start_angle = 125;
+static int16_t tiny_arc_block_end_angle = 25;
+
+static int16_t out_arc_block_start_angle = 285;
+static int16_t out_arc_block_off = 265;
+
+static int16_t in_arc1_block_start_angle = 305;
+static int16_t in_arc1_block_offer = 110;
+
+static int16_t in_arc2_block_start_angle = 220;
+static int16_t in_arc2_block_offer = 55;
+
+#define MAIN_COLOR lv_color_make(255, 240,70)   //255, 255,74
+//static lv_style_t lmeter_style;
+/**
+ * An `lv_task` to call periodically to set the angles of the arc
+ * @param t
+ */
+
+static uint32_t arc_size_reduce = 0;
+
+
+lv_obj_t *show_scr1;
+lv_obj_t *show_scr3;
+lv_obj_t *show_scr4;
+lv_obj_t *scr1_label;
+lv_obj_t *show_scr2;
+lv_task_t * scr1_task;
+
+static char buf[30];//储存浮点数转换后的字符
+static bool scr1_task_flag = true;
+
+static void rest_show_scr1()
+{
+    lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(in_arc1,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(in_arc2,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(out_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+
+    lv_style_set_line_width(&arc_line_style, LV_STATE_DEFAULT,7);
+
+    lv_arc_set_angles(big_arc,big_arc_block_start_angle,big_arc_block_start_angle-big_arc_block_offer);
+    lv_arc_set_angles(tiny_arc, tiny_arc_block_start_angle,150);
+    lv_arc_set_angles(in_arc1, in_arc1_block_start_angle,in_arc1_block_start_angle-in_arc1_block_offer);
+    lv_arc_set_angles(in_arc2, in_arc2_block_start_angle,in_arc2_block_start_angle+in_arc2_block_offer);
+    lv_arc_set_angles(out_arc, out_arc_block_start_angle-out_arc_block_off,out_arc_block_start_angle);
+
+    lv_obj_set_size(in_arc1, 174, 174);
+    lv_obj_set_size(in_arc2, 174, 174);
+    lv_obj_set_size(tiny_arc, 240, 240);
+    //lv_obj_set_size(in_arc2, 240, 240);
+
+    lv_obj_align(in_arc1, show_scr1, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_align(in_arc2, show_scr1, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_align(tiny_arc, show_scr1, LV_ALIGN_CENTER, 0, 0);
+    //*
+    line_points[0].x= (int)(120+80*cose_taylor(line_angle));
+    line_points[0].y =(int)(120-80*sine_taylor(line_angle));
+
+    line_points[1].x= (int)(120+116*cose_taylor(line_angle));
+    line_points[1].y = (int)(120-116*sine_taylor(line_angle));
+
+
+    line_points2[0].x= (int)(120+80*cose_taylor(line_angle+line2_angle_offest));
+    line_points2[0].y =(int)(120-80*sine_taylor(line_angle+line2_angle_offest));
+
+    line_points2[1].x= (int)(120+116*cose_taylor(line_angle+line2_angle_offest));
+    line_points2[1].y = (int)(120-116*sine_taylor(line_angle+line2_angle_offest));
+
+
+    line_points3[0].x= (int)(120+80*cose_taylor(line_angle+line3_angle_offest));
+    line_points3[0].y =(int)(120-80*sine_taylor(line_angle+line3_angle_offest));
+
+    line_points3[1].x= (int)(120+116*cose_taylor(line_angle+line3_angle_offest));
+    line_points3[1].y = (int)(120-116*sine_taylor(line_angle+line3_angle_offest));
+
+
+    line_points4[0].x= (int)(120+80*cose_taylor(line_angle+line4_angle_offest));
+    line_points4[0].y =(int)(120-80*sine_taylor(line_angle+line4_angle_offest));
+
+    line_points4[1].x= (int)(120+116*cose_taylor(line_angle+line4_angle_offest));
+    line_points4[1].y = (int)(120-116*sine_taylor(line_angle+line4_angle_offest));
+
+    lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(line3,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+    lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+
+    lv_line_set_points(line2, line_points2,2);
+    lv_line_set_points(line1, line_points,2);
+
+    lv_line_set_points(line3, line_points3,2);
+    lv_line_set_points(line4, line_points4,2);
+
+
+}
+static void show_scr1_loader(lv_task_t * t)
+{
+
+    //sprintf(buf, "%d", fps_cnt);//将data转换为fmt样式的字符
+    //lv_label_set_text(scr1_label,buf);
+    //lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	//static opa_temp = 0;
+
+	if(scr1_task_flag ){
+        big_arc_block_start_angle -= 1;
+        tiny_arc_block_start_angle -= 1;
+        in_arc1_block_start_angle -= 1;
+        in_arc2_block_start_angle -= 1;
+        line_angle += 1;
+
+        lv_arc_set_angles(big_arc, big_arc_block_start_angle,(big_arc_block_start_angle < big_arc_block_offer)? big_arc_block_start_angle+60:big_arc_block_start_angle - big_arc_block_offer);
+        lv_arc_set_angles(tiny_arc, tiny_arc_block_start_angle < 0 ? (360+tiny_arc_block_start_angle):tiny_arc_block_start_angle ,tiny_arc_block_start_angle+tiny_arc_block_end_angle);
+
+        if(big_arc_block_start_angle > 200) {
+                lv_arc_set_angles(in_arc1, in_arc1_block_start_angle,in_arc1_block_start_angle-in_arc1_block_offer);
+                lv_arc_set_angles(in_arc2, in_arc2_block_start_angle,in_arc2_block_start_angle+in_arc2_block_offer);
+        }
+        //*
+        line_points[0].x= (int)(120+80*cose_taylor(line_angle));
+        line_points[0].y =(int)(120-80*sine_taylor(line_angle));
+
+        line_points[1].x= (int)(120+116*cose_taylor(line_angle));
+        line_points[1].y = (int)(120-116*sine_taylor(line_angle));
+
+
+        line_points2[0].x= (int)(120+80*cose_taylor(line_angle+line2_angle_offest));
+        line_points2[0].y =(int)(120-80*sine_taylor(line_angle+line2_angle_offest));
+
+        line_points2[1].x= (int)(120+116*cose_taylor(line_angle+line2_angle_offest));
+        line_points2[1].y = (int)(120-116*sine_taylor(line_angle+line2_angle_offest));
+
+
+        line_points3[0].x= (int)(120+80*cose_taylor(line_angle+line3_angle_offest));
+        line_points3[0].y =(int)(120-80*sine_taylor(line_angle+line3_angle_offest));
+
+        line_points3[1].x= (int)(120+116*cose_taylor(line_angle+line3_angle_offest));
+        line_points3[1].y = (int)(120-116*sine_taylor(line_angle+line3_angle_offest));
+
+
+        line_points4[0].x= (int)(120+80*cose_taylor(line_angle+line4_angle_offest));
+        line_points4[0].y =(int)(120-80*sine_taylor(line_angle+line4_angle_offest));
+
+        line_points4[1].x= (int)(120+116*cose_taylor(line_angle+line4_angle_offest));
+        line_points4[1].y = (int)(120-116*sine_taylor(line_angle+line4_angle_offest));
+
+
+        lv_line_set_points(line2, line_points2,2);
+        lv_line_set_points(line1, line_points,2);
+
+        lv_line_set_points(line3, line_points3,2);
+        lv_line_set_points(line4, line_points4,2);
+
+
+        if(big_arc_block_start_angle <= 145) { // 第一次变暗2，更暗
+            lv_arc_set_angles(in_arc1,0,0);
+            line_angle= 87;
+            big_arc_block_start_angle = 330;
+            tiny_arc_block_start_angle = 125;
+            out_arc_block_start_angle = 285;
+            in_arc1_block_start_angle = 305;
+            in_arc2_block_start_angle = 220;
+            //lv_arc_set_angles(in_arc1,0,0);
+            scr1_task_flag = false;
+        }
+
+        else if(big_arc_block_start_angle <= 155) { // 第一次变暗2，更暗
+
+            arc_size_reduce = 169;
+            lv_arc_set_angles(in_arc1,0,359);
+            lv_style_set_line_width(&arc_line_style, LV_STATE_DEFAULT,4);
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_style_local_line_opa(in_arc1,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,80);
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        }
+
+        else if(big_arc_block_start_angle <= 165) { // 第一次变暗2，更暗
+
+            arc_size_reduce = 150;
+            lv_arc_set_start_angle(in_arc1,in_arc1_block_start_angle+110);
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_style_local_line_opa(in_arc1,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,80);
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        }
+        else if(big_arc_block_start_angle <= 175) { // 第一次变暗2，更暗
+            lv_arc_set_angles(out_arc,0,0);
+
+            arc_size_reduce = 130;
+
+            lv_arc_set_start_angle(in_arc1,in_arc1_block_start_angle+80);
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_style_local_line_opa(in_arc1,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,150);
+
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        }
+        else if(big_arc_block_start_angle <= 180) { // 第一次变暗2，更暗
+            lv_arc_set_end_angle(out_arc,40);
+
+            arc_size_reduce = 90;
+
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+        }
+
+        else if(big_arc_block_start_angle <= 190) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,0);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-195);
+            lv_arc_set_angles(in_arc2, 0,0);
+
+            arc_size_reduce = 60;
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+            lv_obj_align(tiny_arc, NULL, LV_ALIGN_CENTER, 0, 0);
+
+        }
+
+        else if(big_arc_block_start_angle <= 195) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,30);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-135);
+            lv_arc_set_start_angle(in_arc2,in_arc2_block_start_angle+in_arc2_block_offer-20);
+
+            arc_size_reduce = 30;
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_size(in_arc2, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_size(tiny_arc, 240-arc_size_reduce, 240-arc_size_reduce);
+
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+            lv_obj_align(in_arc2, NULL, LV_ALIGN_CENTER, 0, 0);
+            lv_obj_align(tiny_arc, NULL, LV_ALIGN_CENTER, 0, 0);
+
+
+        }
+        else if(big_arc_block_start_angle <= 200) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,100);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-95);
+            arc_size_reduce = 10;
+            lv_obj_set_size(in_arc1, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_size(in_arc2, 174-arc_size_reduce, 174-arc_size_reduce);
+            lv_obj_set_size(tiny_arc, 240-arc_size_reduce, 240-arc_size_reduce);
+            lv_obj_align(in_arc1, NULL, LV_ALIGN_CENTER, 0, 0);
+            lv_obj_align(in_arc2, NULL, LV_ALIGN_CENTER, 0, 0);
+            lv_obj_align(tiny_arc, NULL, LV_ALIGN_CENTER, 0, 0);
+        }
+        else if(big_arc_block_start_angle <= 203) { // 第一次变暗2，更暗
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-60);
+
+        }
+        else if(big_arc_block_start_angle <= 206) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+            lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-35);
+
+        }
+        else if(big_arc_block_start_angle <= 209) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,50);
+            lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,50);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-15);
+        }
+        else if(big_arc_block_start_angle <= 214) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(tiny_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,240);
+            lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+            lv_arc_set_end_angle(out_arc,out_arc_block_start_angle-5);
+        }
+        else if(big_arc_block_start_angle <= 360 -138) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,0);
+            lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+        }
+        else if(big_arc_block_start_angle <= 360 -135) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,200);
+            lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+            lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+        }
+        else if(big_arc_block_start_angle <= 360 -132) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,255);
+            lv_obj_set_style_local_line_opa(line4,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+            lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+        }
+        else if(big_arc_block_start_angle <= 360 -128) { // 第一次变暗2，更暗
+            lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,120);
+            lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+            lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+        }
+        else if(big_arc_block_start_angle <= 360 -125) {  // 第一次变暗1，浅暗
+            lv_obj_set_style_local_line_opa(big_arc,LV_ARC_PART_INDIC,LV_STATE_DEFAULT,200);
+            lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+            lv_obj_set_style_local_line_opa(line2,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+        }
+        else if(big_arc_block_start_angle <= 360 -123) {  //
+            lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,255);
+        }
+        else if(big_arc_block_start_angle <= 360 -118) {  //
+            lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+             lv_obj_set_style_local_line_opa(line3,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+        }
+        else if(big_arc_block_start_angle <= 360 -115) {  //
+            lv_obj_set_style_local_line_opa(line1,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+            lv_obj_set_style_local_line_opa(line3,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+        }
+        else if(big_arc_block_start_angle <= 360 -110) {  //
+            lv_obj_set_style_local_line_opa(line3,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,0);
+        }
+        else if(big_arc_block_start_angle <= 360 -102) {  //
+            lv_obj_set_style_local_line_opa(line3,LV_LINE_PART_MAIN,LV_STATE_DEFAULT,150);
+        }
+        //*/
+	}
+}
+
+void test_screen()
+{
+/* 用于填充背景色,目前没找到填充背景的函数,使用没有角度值的圆弧空间代替 */
+
+    /* scr1 样式表 */
+    // 环形弧样式，用于环形弧块
+    lv_style_init(&arc_block_style);
+    lv_style_set_line_width(&arc_block_style, LV_STATE_DEFAULT,40);         /* 设置环形弧宽度 */
+    lv_style_set_line_rounded(&arc_block_style, LV_STATE_DEFAULT,false);    /* 设置两端为直线 */
+    lv_style_set_pad_all(&arc_block_style, LV_STATE_DEFAULT,0);             /* 设置内部填充间距 弧形显示部分与外框之间的距离 */
+
+    lv_style_set_line_color(&arc_block_style,LV_STATE_DEFAULT,MAIN_COLOR);  /* 设置 弧形显示部分颜色 */
+    lv_style_set_bg_opa(&arc_block_style,LV_STATE_DEFAULT,0);               /* 设置显示背景透明 */
+    lv_style_set_border_opa(&arc_block_style,LV_STATE_DEFAULT,0);               /* 设置显示背景透明 */
+
+    // 环形线条样式，补充，用于内外环线
+    lv_style_init(&arc_line_style);
+    lv_style_set_line_width(&arc_line_style, LV_STATE_DEFAULT,7);           /* 设置环形弧宽度 */
+
+    /* 四条短线段样式 */
+    static lv_style_t style_line;
+    lv_style_init(&style_line);
+    lv_style_set_line_width(&style_line, LV_STATE_DEFAULT, 7);
+    lv_style_set_line_rounded(&style_line, LV_STATE_DEFAULT,false);    /* 设置两端为直线 */
+    lv_style_set_line_color(&style_line, LV_STATE_DEFAULT, MAIN_COLOR);
+
+    /* 界面1 */
+    show_scr1 = lv_scr_act();//lv_obj_create(lv_scr_act(), NULL);    /* 首先创建一个默认界面，必须继承当前默认屏幕 */
+
+    lv_obj_t * scr1_backgroud = lv_obj_create(show_scr1, NULL);     /* 创建背景 */
+    lv_obj_set_style_local_bg_color(scr1_backgroud ,LV_OBJ_PART_MAIN,LV_STATE_DEFAULT,lv_color_make(1, 1,1));  /* 设置背景部分颜色，黑色 */
+    lv_obj_set_style_local_border_color(scr1_backgroud ,LV_OBJ_PART_MAIN,LV_STATE_DEFAULT,lv_color_make(1, 1,1));
+    lv_obj_set_size(scr1_backgroud, 240,240);                   /* 设置背景大小 */
+    lv_obj_align(scr1_backgroud, show_scr1, LV_ALIGN_CENTER, 0, 0); /* 设置背景相对scr位置 */
+
+    scr1_label = lv_label_create(scr1_backgroud, NULL);    /* 创建label，仅用于标识，正式应用会删除 */
+    lv_label_set_text(scr1_label, "Screen 1");
+    lv_obj_align(scr1_label, show_scr1, LV_ALIGN_CENTER, 0, 0);
+
+
+    /*较大的环形弧块*/
+    big_arc = lv_arc_create(show_scr1, NULL);
+    lv_obj_add_style(big_arc ,LV_ARC_PART_INDIC, &arc_block_style);         /* 设置弧形显示部分样式  */
+    lv_obj_add_style(big_arc ,LV_ARC_PART_BG, &arc_block_style);            /* 设置背景部分样式*/
+    lv_arc_set_bg_angles(big_arc,0,0);                                      /* 设置背景弧形角度为0，不显示  */
+    lv_arc_set_angles(big_arc,big_arc_block_start_angle,big_arc_block_start_angle-big_arc_block_offer);                                     /* 设置前景弧形角度为 */
+    lv_obj_set_size(big_arc, 240, 240);                                     /* 设置对象（屏幕）大小 */
+    lv_obj_align(big_arc, show_scr1, LV_ALIGN_CENTER, 0, 0);                     /* 设置对象位置，居中，偏移0*/
+
+    /*较小的环形弧块*/
+    tiny_arc = lv_arc_create(show_scr1,big_arc);              /* 继承 big_arc 样式 */
+    lv_arc_set_bg_angles(tiny_arc,0,0);
+    lv_arc_set_angles(tiny_arc, tiny_arc_block_start_angle,150);
+    lv_obj_set_size(tiny_arc, 240, 240);
+    lv_obj_align(tiny_arc, show_scr1, LV_ALIGN_CENTER, 0, 0);
+    //lv_task_create(tiny_arc_loader, 1000, LV_TASK_PRIO_LOWEST, tiny_arc);
+
+    /*out block Arc*/
+    out_arc = lv_arc_create(show_scr1,big_arc);
+    lv_obj_add_style(out_arc,_LV_OBJ_PART_VIRTUAL_LAST, &arc_line_style);   /* 仅修改部分样式 前景弧宽度 */
+    lv_arc_set_bg_angles(out_arc,0,0);
+    lv_arc_set_angles(out_arc, out_arc_block_start_angle-out_arc_block_off,out_arc_block_start_angle);
+    lv_obj_set_size(out_arc, 240, 240);
+    lv_obj_align(out_arc, show_scr1, LV_ALIGN_CENTER, 0, 0);
+
+    /*in block Arc1*/
+    in_arc1 = lv_arc_create(show_scr1,out_arc);                /* 继承 out_arc 样式 */
+    lv_obj_set_style_local_border_opa(in_arc1,LV_OBJ_PART_MAIN,LV_STATE_DEFAULT,0);  /* 边框透明 */
+
+    lv_arc_set_bg_angles(in_arc1,0,0);
+    lv_arc_set_angles(in_arc1, in_arc1_block_start_angle,in_arc1_block_start_angle-in_arc1_block_offer);
+    lv_obj_set_size(in_arc1, 174, 174);                                      /* 小的弧线在内部，对象大小要变，且去除边框 */
+    lv_obj_align(in_arc1, show_scr1, LV_ALIGN_CENTER, 0, 0);
+
+    /*in block Arc2*/
+    in_arc2 = lv_arc_create(show_scr1,in_arc1);                /* 继承 out_arc 样式 */
+    lv_arc_set_angles(in_arc2, in_arc2_block_start_angle,in_arc2_block_start_angle+in_arc2_block_offer);
+    lv_obj_set_size(in_arc2, 174, 174);                                      /* 小的弧线在内部，对象大小要变，且去除边框 */
+    lv_obj_align(in_arc2, show_scr1, LV_ALIGN_CENTER, 0, 0);
+
+    /*Create a line meter */
+    line_points[0].x= (int)(120+80*cose_taylor(line_angle));
+    line_points[0].y =(int)(120-80*sine_taylor(line_angle));
+    line_points[1].x= (int)(120+116*cose_taylor(line_angle));
+    line_points[1].y = (int)(120-116*sine_taylor(line_angle));
+
+    /*Create a line and apply the new style*/
+    line1 = lv_line_create(show_scr1, NULL);
+    lv_obj_add_style(line1, LV_LINE_PART_MAIN, &style_line);     /*Set the points*/
+    lv_line_set_points(line1, line_points,2);     /*Set the points*/
+
+
+    line_points2[0].x= (int)(120+80*cose_taylor(line_angle+line2_angle_offest));
+    line_points2[0].y =(int)(120-80*sine_taylor(line_angle+line2_angle_offest));
+
+    line_points2[1].x= (int)(120+116*cose_taylor(line_angle+line2_angle_offest));
+    line_points2[1].y = (int)(120-116*sine_taylor(line_angle+line2_angle_offest));
+
+
+    line2 = lv_line_create(show_scr1, line1);
+    lv_line_set_points(line2, line_points2,2);     /*Set the points*/
+
+    line_points3[0].x= (int)(120+80*cose_taylor(line_angle+line3_angle_offest));
+    line_points3[0].y =(int)(120-80*sine_taylor(line_angle+line3_angle_offest));
+
+    line_points3[1].x= (int)(120+116*cose_taylor(line_angle+line3_angle_offest));
+    line_points3[1].y = (int)(120-116*sine_taylor(line_angle+line3_angle_offest));
+
+
+    line3 = lv_line_create(show_scr1, line1);
+    lv_line_set_points(line3, line_points3,2);     /*Set the points*/
+
+
+    line_points4[0].x= (int)(120+80*cose_taylor(line_angle+line4_angle_offest));
+    line_points4[0].y =(int)(120-80*sine_taylor(line_angle+line4_angle_offest));
+
+    line_points4[1].x= (int)(120+116*cose_taylor(line_angle+line4_angle_offest));
+    line_points4[1].y = (int)(120-116*sine_taylor(line_angle+line4_angle_offest));
+
+
+    line4 = lv_line_create(show_scr1, line1);
+    lv_line_set_points(line4, line_points4,2);     /*Set the points*/
+
+
+    scr1_task = lv_task_create(show_scr1_loader, 30,LV_TASK_PRIO_HIGHEST, NULL);
+
+}
+
+ //LV_IMG_DECLARE(img_cogwheel_argb);
+/*
+ void lv_ex_img_1(void)
+ {
+     lv_obj_t * img1 = lv_img_create(lv_scr_act(), NULL);
+     lv_img_set_src(img1, &bilibili2);
+     lv_obj_align(img1, NULL, LV_ALIGN_CENTER, 0, 0);
+     lv_img_set_zoom(img1,230);
+ }
+*/
+
+millis_t run_times;
+void setup()
+{
+	__HAL_SPI_ENABLE(&hspi1);
+
+	//HAL_Delay(100);
+	lcd_init();//LCD初始化
+	//HAL_Delay(500);
+	//LCD_Fill(0,0,LCD_W,LCD_H,RED);
+	HAL_TIM_Base_Start_IT(&htim10);
+	HAL_UART_Receive_IT(&huart1,&RxBuffer,1);
+
+	lv_init();						//lvgl系统初始化
+	lv_port_disp_init();	//lvgl显示接口初始化,放在lv_init()的后面
+
+	//
+	test_screen();
+	/* 至此初始化时间 15ms */
+
+
+	//lv_ex_img_1();
+	fps_cnt = 0;
+	HAL_GPIO_WritePin(GPIOB, LED_G_Pin,SET);
+	//LCD_Fill(0,0,LCD_W,LCD_H,RED);
+	run_times = millis()+10000;
+}
+void speech_process()
+{
+	switch(current_command ){
+		case SPEECH_WAKE_UP:
+			//LCD_Fill(0,0,LCD_W,LCD_H,RED);
+			break;
+		case SPEECH_LIGHT_ON:
+			HAL_GPIO_WritePin(GPIOB, LED_G_Pin,SET);
+			break;
+		case SPEECH_LIGHT_OFF:
+			HAL_GPIO_WritePin(GPIOB, LED_G_Pin,RESET);
+			break;
+	}
+
+}
+static u8 mode_flag = 0;
+void loop()
+{
+	speech_process();
+	/*
+	if(ELAPSED(millis(), run_times)){
+		run_times = millis()+5000;
+		speeech_wake_up();
+        switch(mode_flag){
+        	case 0:
+        		mode_flag++;
+				lv_scr_load(show_scr2);
+				break;
+        	case 1:
+        		mode_flag++;
+				lv_scr_load(show_scr3);
+				break;
+        	case 2:
+        		mode_flag++;
+				lv_scr_load(show_scr4);
+				break;
+        	case 3:
+    			scr1_task_flag = true;
+    			rest_show_scr1();
+    			mode_flag = 0;
+    			lv_scr_load(show_scr1);
+				break;
+       }
+	}
+```
