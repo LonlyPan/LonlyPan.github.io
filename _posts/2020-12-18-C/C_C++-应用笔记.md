@@ -10,15 +10,9 @@ categories: c&c++
 
 <!--more-->
 
----
-layout: post
-show_title: "new和malloc "
-title: "2020-04-11-new和malloc "
-data: 2020-04-11 15:8
-categories:  c&c++
----
 
-# malloc
+# new和malloc-2020-04-11
+## malloc
 
 `void * malloc（size_t大小）;`
 
@@ -27,7 +21,6 @@ categories:  c&c++
 新分配的内存块的内容未初始化，剩余的值不确定。
 如果size为零，则返回值取决于特定的库实现（它可以是null指针，也可以不是null指针），但不应取消对返回的指针的引用。
 
-<!--more-->
 **参数：**  
 size -- 内存块的大小，以字节为单位。
 size_t 是无符号整数类型。
@@ -38,7 +31,7 @@ size_t 是无符号整数类型。
 如果函数未能分配所请求的内存块，则返回空指针。
 
 
-## 实例
+### 实例
 
 ```c
 /* malloc example: random string generator*/
@@ -82,13 +75,13 @@ String = runoob.com,  Address = 57917504
 [1. malloc](http://www.cplusplus.com/reference/cstdlib/malloc/)  
 [2. C 库函数 - malloc()](https://www.runoob.com/cprogramming/c-function-malloc.html)  
 
-# new
+## new
 
 `new data-type;`
 
 data-type 可以是包含数组在内的任意内置的数据内省，也可以包括类或结构在内的用户自定义的任何数据类型。
 
-## 内置数据类型分配
+### 内置数据类型分配
 
 实例：
 
@@ -116,7 +109,7 @@ int main ()
 Value of pvalue : 29495
 ```
 
-## 数组内存分配
+### 数组内存分配
 
 **一维数组**
 
@@ -146,7 +139,7 @@ for( int i=0; i<m; i++ )
 delete [] array;
 ```
 
-## 类对象实例内存分配
+### 类对象实例内存分配
 
 对象与简单的数据类型没有什么不同。例如，请看下面的代码，我们将使用一个对象数组来理清这一概念：
 
@@ -189,7 +182,7 @@ int main( )
 调用析构函数！
 ```
 
-# delete 与 delete[] 区别：
+## delete 与 delete[] 区别：
 
 1、针对简单类型 使用 new 分配后的不管是数组还是非数组形式内存空间用两种方式均可 如：
 
@@ -230,7 +223,7 @@ delete [] a;
 
 对于像 int/char/long/int*/struct 等等简单数据类型，由于对象没有 destructor，所以用 delete 和 delete [] 是一样的！但是如果是C++ 对象数组就不同了！
 
-# new 和 malloc 内部的实现方式区别
+## new 和 malloc 内部的实现方式区别
 
 new 的功能是在堆区新建一个对象，并返回该对象的指针。
 所谓的【新建对象】的意思就是，将调用该类的构造函数，因为如果不构造的话，就不能称之为一个对象。
@@ -288,14 +281,9 @@ int main(void)
 */
 ```
 
-# 参考资料
+## 参考资料
 
 [C++ 动态内存](https://www.runoob.com/cplusplus/cpp-dynamic-memory.html)
-
-
-
-
-
 
 
 
