@@ -9,17 +9,6 @@ categories: c&c++
 
 <!--more-->
 
----
-layout: post
-show_title: "STM32CubeIDE-安装与新建工程模板"
-title: "2020-05-08-STM32CubeIDE软件教程"
-date: 2020-05-08
-last_modified_at: 2020-05-08
-categories: arm
----
-
-<!--more-->
-
 # 安装与新建工程模板
 
 [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
