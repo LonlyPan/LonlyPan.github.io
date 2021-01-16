@@ -1,6 +1,6 @@
 ---
 layout: post
-show_title: "2020-12-18-STM32学习笔记-基于STM32CubeIDE"
+show_title: "STM32学习笔记-基于STM32CubeIDE"
 title: "2020-12-18-STM32学习笔记-基于STM32CubeIDE"
 date: 2020-12-18
 last_modified_at: 2020-12-18
@@ -9,17 +9,17 @@ categories: c&c++
 
 <!--more-->
 
-## 安装与新建工程模板
+# 安装与新建工程模板
 
 [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
 
-### 简介
+## 简介
 ![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
 >产品链接
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
 
-#### 1. 特性
+### 1. 特性
 
 - 集成STM32CubeMX，提供以下服务：
    - STM32微控制器选择 
@@ -38,7 +38,7 @@ categories: c&c++
 - 从Atollic导入项目® TrueSTUDIO ®和AC6系统工作台的STM32
 - 多支持操作系统：Windows ®，Linux的®和MacOS ®
 
-#### 2. 概述
+### 2. 概述
 
 [STM32CubeIDE](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)是一款多功能的多操作系统开发工具，集成了TrueSTUDIO和STM32CubeMX，它是[STM32Cube](https://www.st.com/content/st_com/en/stm32cube-ecosystem.html)软件生态系统的一部分。  
 
@@ -56,7 +56,7 @@ categories: c&c++
 
 [STM32CubeIDE](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)支持基于Arm®Cortex®处理器的STM32产品
 
-#### 3. STM32Cube介绍
+### 3. STM32Cube介绍
 
 [STM32Cube](https://www.st.com/content/st_com/en/stm32cube-ecosystem.html)是意法半导体的一项原始计划，旨在通过减少开发工作量，时间和成本来显着提高设计师的生产率。 [STM32Cube](https://www.st.com/content/st_com/en/stm32cube-ecosystem.html)涵盖了整个STM32产品组合。
 
@@ -87,9 +87,9 @@ categories: c&c++
   - 在某些特定的STMicroelectronics开发板上运行的示例
 
 
-### 下载安装
+## 下载安装
 
-#### 1. 下载
+### 1. 下载
 
 可以从[STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) 网站上下载最新版本的安装程序。
 
@@ -98,7 +98,7 @@ categories: c&c++
 
 ![download](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/download.png)
 
-#### 2. 安装
+### 2. 安装
 
 前面几步较简单，这里跳过。
 
@@ -113,7 +113,7 @@ categories: c&c++
 
 ![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
-### 汉化
+## 汉化
 
 如下图打开安装软件界面：
 
@@ -154,11 +154,11 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 ![汉化选择6_396](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
 
 
-### 新建工程模板
+## 新建工程模板
 
 这里以控制 GPIO 输出/输出为例说明
 
-#### 1.1 新建工程
+### 1.1 新建工程
 
 新建工程有两种途径。如下图示：
 
@@ -184,7 +184,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 接下来就是熟悉的 CubeMX 初始化配置界面了，操作方法也没有什么难的，就是将我们之前用代码写的初始化变成了图形化操作，按照我们初始化的思路一步步勾选即可了。下面具体操作。
 
-#### 1.2 引脚与配置(Pinout  and Configuration)
+### 1.2 引脚与配置(Pinout  and Configuration)
 
 1. 系统配置。这里是调试工具选择和基准时钟源选择。我们用的是ST-Link的SWD（Serial Wire Debug）调试模式，所以选择 **Serial Wire** 串行线。时钟基准源默认系统滴答时钟 **SysTick**。
 ![SYS](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/SYS.png)
@@ -204,22 +204,22 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
     然后我们到左边的引脚具体配置。配置如图示，两个引脚相同。
 ![引脚配置2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚配置2.png)
 
-#### 1.3 时钟配置(Clock Configuration)
+### 1.3 时钟配置(Clock Configuration)
 
 选择外部8MHz晶振，配置系统时钟为72MHz。注意APB1总线时钟式36MHz，需二分频。
 这里和后面的配置都不需要保存的，也没有保存按钮<i class="fas fa-smile"></i>
 ![时钟选择](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/时钟选择.png)
 
-#### 1.4 项目管理(Project Manager)
+### 1.4 项目管理(Project Manager)
 
 这里我们注意勾选上图中红框部分。这样生成的代码每个外设一个文件夹，就不会全堆在main.c文件里了。其他的默认。
 ![项目管理](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/项目管理.png)
 
-#### 1.5 工具(Tools)
+### 1.5 工具(Tools)
 
 保持默认即可
 
-#### 1.6 编译生成初始化文件
+### 1.6 编译生成初始化文件
 
 单击上方工具栏的  `设备配置工具代码生成` ，完成工程建立。观察左侧的项目资源管理器，会发现多出了gpio.c文件等等。现在就可以正式编写程序了。
 ![初始化生成](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/初始化生成.png)
@@ -228,16 +228,16 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 ![编译](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
 
 
-#### 注意
+### 注意
 
 工作空间是会和项目文件绑定的，所以如果项目工程没有从Stm32CubeIDE中删除（不是删除文件，相当于卸载工程），期间移动工程文件是会出错的。
 
-### 自己工程中添加文件与文件夹
+## 自己工程中添加文件与文件夹
 
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/添加文件与文件夹.png)
 [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
-### 参考链接
+## 参考链接
 
 1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
 2. [STM32CubeIDE属于一站式工具，本文带你体验它的强大](https://blog.csdn.net/ybhuangfugui/article/details/89702356)    
@@ -246,7 +246,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 
 
-### 工程模板文件解读
+# 工程模板文件解读
 
 #### 1.1.7 文件夹结构
 
@@ -294,10 +294,5 @@ stm32f1xx_it.c：存放中断服务函数
 stm32f1xx_hal_conf.h：见上面表格
 
 stm32f1xx_it.h：中断服务函数声明，一般很少改动
-
-## 实际应用
-
-### 红外遥控发射
-
 
 
