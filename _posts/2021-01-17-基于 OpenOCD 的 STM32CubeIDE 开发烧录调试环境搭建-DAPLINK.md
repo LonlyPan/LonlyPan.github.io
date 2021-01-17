@@ -24,5 +24,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 
 ## 部署 OpenOCD
 
+下载好OpenOCD，解压到任意目录，建议路径不带空格或中文
+并在bin目录建立STM32F1XTest.bat文件:
 
 ## 参考连接
