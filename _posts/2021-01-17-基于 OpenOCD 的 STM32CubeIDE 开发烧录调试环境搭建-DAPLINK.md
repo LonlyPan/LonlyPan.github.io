@@ -42,6 +42,6 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 
 ## STM32CubeIDE 仿真配置
 
-1. 新建测试工程（我的是LED亮灭）
+1. 新建测试工程（我的是 LED 亮灭测试）
 2. 这里使用我配置好的工程，点击”Run->Debug Configurations”
 ## 参考连接
