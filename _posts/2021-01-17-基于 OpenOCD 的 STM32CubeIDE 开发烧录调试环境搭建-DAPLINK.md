@@ -53,7 +53,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
  ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/switch.png)
  
 ## 仿真测试
-进入仿真调试界面，
+进入仿真调试界面，可以看到 GPIOC（LED的 IO 为 GPIOC_13） 端口值会随着程序运行改变。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/调式.gif)
 
 
