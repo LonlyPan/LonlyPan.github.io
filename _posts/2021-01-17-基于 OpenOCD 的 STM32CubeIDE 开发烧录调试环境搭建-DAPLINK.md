@@ -45,7 +45,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 1. 新建测试工程（我的是 LED 亮灭测试）
 2. 单击菜单栏 Debug图标（绿色甲壳虫）旁的下拉按钮，单击选择 `Debug Configurations`  进入配置界面  
 ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug打开.png)
-3. 配置如下图所示，
+3. 配置如下图所示，  
  **一定要：取消勾选 `Live Expressions`**，网上教程都没这一步，导致调试失败。
  取消勾选原因：[Does STM32CubeIDE not support live variable watching?](https://community.st.com/s/question/0D53W000003NWoy/does-stm32cubeide-not-support-live-variable-watching)
  ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug配置.png)
