@@ -43,7 +43,8 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 ## STM32CubeIDE 仿真配置
 
 1. 新建测试工程（我的是 LED 亮灭测试）
- 
 2. 这里使用我配置好的工程，点击”Run->Debug Configurations”
-3. 
+
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/调式.gif)
 ## 参考连接
