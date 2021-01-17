@@ -22,4 +22,7 @@ DAPLink 仿真器购买：[淘宝-MUSE LAB](https://item.taobao.com/item.htm?spm
 STM32CubeIDE：[V1.5.1](https://www.st.com/zh/development-tools/stm32cubeide.html#get-software)
 OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 
+## 部署 OpenOCD
+
+
 ## 参考连接
