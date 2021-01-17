@@ -27,7 +27,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 下载好OpenOCD，解压到任意目录，建议路径不带空格或中文
 并在 bin 目录右键，新建文本文档，并重命名为 `DAP-Linkl-stm32F4.bat`， 右键编辑或者使用 vs-code 打开，输入以下内容：
 ```java
-openocd -f interface/stlink.cfg -f target/stm32f1x.cfg
+openocd -f interface/stlink.cfg -f target/stm32f4x.cfg
 ```
 
 建立STM32F1XTest.bat文件:
