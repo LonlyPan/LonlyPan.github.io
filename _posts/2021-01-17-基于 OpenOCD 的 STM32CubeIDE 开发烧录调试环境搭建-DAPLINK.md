@@ -60,3 +60,13 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 可以看到 `现场表达式` 是无法使用的（由于前面取消勾选了 `Live Expressions`），但`Expressions`是可以的。而这两者很相似啊，具体区别也未查到，不知道是软件的bug还是什么情况。反正还是可以实时查看表达式值就很开心😀  
 
 ## 参考连接
+
+[MuseLab-nanoDAP-资料](https://github.com/wuxx/nanoDAP/blob/master/doc/README.md)
+[STM32开发/烧录/调试环境搭建 基于:Win10+STM32Cube+openocd+cmsis-dap(dap-link)](https://www.cnblogs.com/DragonStart/p/12004523.html)
+[Does STM32CubeIDE not support live variable watching?](https://community.st.com/s/question/0D53W000003NWoy/does-stm32cubeide-not-support-live-variable-watching)
+[基于OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建 DAPLINK/STLINK](http://www.elelab.net/stm32cubeide-flash-openocd-daplink-stlink.html)
+[在STM32CubeIDE中用OpenOCD调试STM32H750](http://www.wujique.com/2020/03/22/%E5%9C%A8stm32cubeide%E4%B8%AD%E7%94%A8openocd%E8%B0%83%E8%AF%95stm32h750/)
+[STM32CubeIDE配置OpenOCD跳过STLink版本检查 跳过芯片型号检查(免破解,免修改ide任何文件)](https://www.cnblogs.com/DragonStart/p/12199455.html)
+[STM32CubeIDE 调试配置](https://github.com/wuxx/nanoDAP/issues/5)
+[STM32IDE_无线DAP调试下载器不香吗](https://www.bilibili.com/video/av968640373/)
+[DAPLink设计与应用](https://lgg001.github.io/2018/08/12/DAPLink%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BA%94%E7%94%A8/)
