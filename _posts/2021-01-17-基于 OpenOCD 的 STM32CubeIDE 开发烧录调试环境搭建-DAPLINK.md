@@ -33,7 +33,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
    ```java
    openocd -f interface/cmsis-dap.cfg -f target/stm32f4x.cfg
    ```
-   意思是：使用cmsis-dap调试stm32f4，这里默认使用 SWD 接口。通过其他配置，还可以支持 J-link 接口，未做尝试，不再叙述。
+   意思是：使用cmsis-dap调试stm32f4，这里默认使用 SWD 接口。通过其他配置，还可以支持 J-link 接口，未做尝试，不再叙述。  
    后面的 `stm32f4x.cfg` 需要适配你的芯片型号，具体支持型号可以在 `OpenOCD-20201228-0.10.0\share\openocd\scripts\target` 的目录,在里面能找到
 ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/target.png)
 可以看到 stm32 大部分型号都支持了。F1系列 的就改为 `stm32f1x.cfg`,F7系列 的就改为 `stm32f7x.cfg`，同理类推。
