@@ -47,7 +47,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug打开.png)
 3. 配置如下图所示，
  **一定要：取消勾选 `Live Expressions`**，网上教程都没这一步，导致调试失败。
- 原因：
+ 取消勾选原因：[Does STM32CubeIDE not support live variable watching?](https://community.st.com/s/question/0D53W000003NWoy/does-stm32cubeide-not-support-live-variable-watching)
  ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug配置.png)
  4. 弹窗单击 `Switch` ，进入调试界面
  ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/switch.png)
