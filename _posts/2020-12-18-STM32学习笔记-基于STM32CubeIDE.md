@@ -301,6 +301,9 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ## 新建文件-文件夹
 
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/输入文件名-完成.png)
 ## 导入外部文件-文件夹
 
 
