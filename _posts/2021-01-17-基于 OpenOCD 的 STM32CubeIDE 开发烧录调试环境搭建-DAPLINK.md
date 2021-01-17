@@ -24,7 +24,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 
 ## 部署 OpenOCD
 
-下载好OpenOCD，解压到任意目录，建议路径不带空格或中文
+下载好OpenOCD，解压到任意目录，建议路径不带空格或中文  
 并在 bin 目录右键，新建文本文档，并重命名为 `DAP-Linkl-stm32F4.bat`（前缀名称可以随意，后缀 `.bat`不能更改）
 ![enter description here](https://LonlyPan.github.io/images/Posts/2021-01-17-基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/创建bat.png)
 右键编辑或者使用 vs-code 打开
