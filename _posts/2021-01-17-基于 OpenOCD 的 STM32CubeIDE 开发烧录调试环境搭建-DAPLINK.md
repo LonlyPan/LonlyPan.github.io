@@ -60,6 +60,7 @@ OpenOCD：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 可以看到 `现场表达式` 是无法使用的（由于前面取消勾选了 `Live Expressions`），但`Expressions`是可以的。而这两者很相似啊，具体区别也未查到，不知道是软件的bug还是什么情况。反正还是可以实时查看表达式值就很开心😀  
 
 以后每次调试都需要单击 `DAP-Linkl-stm32F4.bat` 保持后台运行。
+
 ## 参考链接
 
  - [MuseLab-nanoDAP-资料](https://github.com/wuxx/nanoDAP/blob/master/doc/README.md)
