@@ -1,7 +1,7 @@
 ---
 layout: post
 show_title: "电脑PC相关"
-title: "电脑PC相关"
+title: "2002-07-10-电脑PC相关"
 date: 2002-07-10
 last_modified_at: 2020-07-10
 categories: zothers
