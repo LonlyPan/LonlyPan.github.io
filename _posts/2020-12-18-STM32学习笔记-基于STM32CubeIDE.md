@@ -371,10 +371,12 @@ int main()
 
 ### 参考资料
 
-
-
-
-
+- [\[原创\] STM32F4 CDC问题](https://www.stmcu.org.cn/module/forum/thread-602794-1-1.html)
+- [\[STM32F4\] 外部时钟+PLL的问题](https://bbs.21ic.com/icview-885079-1-1.html)
+- [STM32CubeMX 4.25 PLL Mux Error ''PLL Mux should have HSE as input''](https://community.st.com/s/question/0D50X00009XkbYzSAJ/stm32cubemx-425-pll-mux-error-pll-mux-should-have-hse-as-input)
+- [STM32F4 Discovery CubeMX and USB](https://community.st.com/s/question/0D50X00009XkiTu/stm32f4-discovery-cubemx-and-usb)
+- [STM32CubeMX 4.15.1 - cannot select HSI as PLL source when USB is enabled (STM32F3Discovery)](https://community.st.com/s/question/0D50X00009XkYorSAF/stm32cubemx-4151-cannot-select-hsi-as-pll-source-when-usb-is-enabled-stm32f3discovery)
+- [stmhal: Option to run from internal oscillator (HSI) #2681](https://github.com/micropython/micropython/issues/2681)
 
 
 
