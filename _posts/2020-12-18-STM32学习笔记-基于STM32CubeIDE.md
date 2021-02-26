@@ -307,7 +307,36 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/输入文件名-完成.png)
 
+
 ## 导入外部文件-文件夹
+
+
+## 48MHz时钟配置问题
+
+在使用 STM32F401CCU6时，使用到 USB Device 功能，需要使用 PLL 产生 48MHz 时钟。
+STM32CubeIDE 配置界面提示，必须使用外部晶振，但手册并未对此做说明，参考网上资料，使用内部时钟源也是可以的，只是时钟精度不高，导致数据传输不稳定。介于此，还是乖乖使用外部时钟。
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/pll_mux.png)
+
+而这个时钟的配置选择也很有意思，你必须生成 48MHz时钟，同时又要保证系统时钟（HCLK）最大化。
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/clock_config.png)
+
+经过计算，最优解有如下几个：
+
+| /M   |  \*N   |  /P   |  /Q  |   HCLK  |
+|---|---|---|---|---|
+| 15  | 288  | 6  | 10  |  80 |
+|  20 | 384  | 6  | 10  |  80 |
+| 25  | 144  | 2  |3   |  72 |
+|  25 |  288 |  4 | 4  | 72  |
+|  25 | 336  | 4  | 7  | 84  |
+| 25  | 432  | 6  | 9  |  72 |
+|  50 |  288 | 2  |  3 |  72 |
+
+首选第五行的参数，系统时钟得到最大值 84MHz
+
+
+
+
 
 
 
