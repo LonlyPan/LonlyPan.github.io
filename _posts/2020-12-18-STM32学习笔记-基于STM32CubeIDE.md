@@ -314,6 +314,14 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 - `ctrl + -/+`：缩小，放大编辑界面字体。
 
+### 显示问题
+
+#### 编辑界面显示空格、回车符号
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/show_space.png)
+设置问题，在 `window->preferences->General->Editors->Text Editors中的Show whitespace characters`中的钩去掉就可以了。
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/Show_whitespace.png)
+
 ## 48MHz时钟配置问题
 
 在使用 STM32F401CCU6时，使用到 USB Device 功能，需要使用 PLL 产生 48MHz 时钟。
