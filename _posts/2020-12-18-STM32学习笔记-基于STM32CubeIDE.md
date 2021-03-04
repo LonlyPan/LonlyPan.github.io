@@ -232,8 +232,9 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 工作空间是会和项目文件绑定的，所以如果项目工程没有从Stm32CubeIDE中删除（不是删除文件，相当于卸载工程），期间移动工程文件是会出错的。
 
-## 自己工程中添加文件
+## 工程中添加文件
 
+右键工程名，鼠标移至 `NEW`上，在右侧弹窗中选择 `Sorce Files`或者`Header File` 新建源文件和头文件。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/添加文件与文件夹.png)
 [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
