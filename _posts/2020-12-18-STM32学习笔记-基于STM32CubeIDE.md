@@ -245,7 +245,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 ### 重新建立文件和文件夹
 
-右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`，
+右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
 
 
