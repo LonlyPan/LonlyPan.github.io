@@ -245,12 +245,11 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 ### 重新建立文件和文件夹
 
-右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹
+右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+随后新建源文件或头文件，和上图类似，不过这次是在`文件夹名上右键`，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/添加文件与文件夹.png)
-[stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
+之后就可以在新文件中编写代码了。注意这种方式新建文件夹，不需要再设置头文件包含，软件自动设置好了，我们只管新建文件和编写就好了。
 
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
 
