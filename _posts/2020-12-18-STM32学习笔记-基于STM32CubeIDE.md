@@ -269,11 +269,10 @@ https://blog.csdn.net/qq_36300069/article/details/103226568
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
-3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件不需要添加）`extern "C" `。
+3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
 ```
 #ifndef MY_MAIN_H_
 #define MY_MAIN_H_
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -281,7 +280,6 @@ extern "C" {
 
 void setup();  // 被main.c调用
 void loop();   // 被main.c调用
-
 
 #ifdef __cplusplus
 }
