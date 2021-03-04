@@ -267,10 +267,29 @@ https://blog.csdn.net/qq_36300069/article/details/103226568
 1. 新建 C++ 工程
 如下图所示，只需要改动一处即可。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
-2. 添加个人文件夹
+2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
-3. 编写程序，注意cpp中函数被.c文件调用时，需要再cpp头文中添加 （源文件不需要添加）`extern "C" `。
+3. 编写程序，注意cpp中函数被.c文件调用时，需要在cpp头文中添加 （源文件不需要添加）`extern "C" `。
+```
+#ifndef MY_MAIN_H_
+#define MY_MAIN_H_
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void setup();  // 被main.c调用
+void loop();   // 被main.c调用
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* CPP_TEST_H_ */
+
+```
 # 工程模板文件解读
 
 #### 1.1.7 文件夹结构
