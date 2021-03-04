@@ -235,7 +235,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 ## 工程中添加文件
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
 
 ## 新建个人文件-文件夹
 
