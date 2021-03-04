@@ -261,7 +261,8 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 1. 新建 C++ 工程
 如下图所示，只需要改动一处即可。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
-2. 添加外部文件夹
+2. 添加自定义文件夹
+为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
 # 工程模板文件解读
 
 #### 1.1.7 文件夹结构
