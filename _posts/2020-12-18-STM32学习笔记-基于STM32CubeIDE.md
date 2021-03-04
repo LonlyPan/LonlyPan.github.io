@@ -269,7 +269,7 @@ https://blog.csdn.net/qq_36300069/article/details/103226568
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
-3. 编写程序，注意cpp中函数被.c文件调用时，需要在cpp头文中添加 （源文件不需要添加）`extern "C" `。
+3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在cpp头文中添加 （源文件不需要添加）`extern "C" `。
 ```
 #ifndef MY_MAIN_H_
 #define MY_MAIN_H_
@@ -294,7 +294,7 @@ void loop();   // 被main.c调用
 我们之前新建文件时已经包含过一次头文件，但对于 C++ 编程，我们还需要再另外包含一次。  
 按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
-5. 之后就可以使用 C++ 了。
+5. 之后就可以自由使用 C++ 了。
 # 工程模板文件解读
 
 #### 1.1.7 文件夹结构
