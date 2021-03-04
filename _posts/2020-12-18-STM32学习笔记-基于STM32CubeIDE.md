@@ -237,6 +237,18 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/添加文件与文件夹.png)
 [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
+由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
+
+这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹。另一种是从外部导入文件和文件夹。
+
+## 新建文件-文件夹
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/输入文件名-完成.png)
+
+## 导入外部文件-文件夹
+
 ## 参考链接
 
 1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
@@ -297,17 +309,7 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 # 添加自定义文件-文件夹
 
-由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
 
-这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹。另一种是从外部导入文件和文件夹。
-
-## 新建文件-文件夹
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/输入文件名-完成.png)
-
-## 导入外部文件-文件夹
 
 
 
