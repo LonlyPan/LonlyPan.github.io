@@ -294,7 +294,7 @@ void loop();   // 被main.c调用
 我们之前新建文件时已经包含过一次头文件，但对于 C++ 编程，我们还需要再另外包含一次。  
 按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
-5. zhi
+5. 之后就可以使用 C++ 
 # 工程模板文件解读
 
 #### 1.1.7 文件夹结构
