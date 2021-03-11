@@ -11,8 +11,6 @@ categories: arm
 
 # 安装与新建工程模板
 
-[STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
-
 ## 简介
 ![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
@@ -260,6 +258,7 @@ https://blog.csdn.net/qq_36300069/article/details/103226568
 1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
 2. [STM32CubeIDE属于一站式工具，本文带你体验它的强大](https://blog.csdn.net/ybhuangfugui/article/details/89702356)    
 3. [STM32CubeMX系列教程03\_创建并生成代码工程](https://www.strongerhuang.com/STM32Cube/STM32CubeMX/STM32CubeMX%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B03_%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E5%B7%A5%E7%A8%8B.html) 
+4. [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
 
 
 # 使用 C++ 编程
