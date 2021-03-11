@@ -251,7 +251,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 ### 导入外部文件-文件夹
 
-- https://blog.csdn.net/qq_36300069/article/details/103226568
+- [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
 ## 参考链接
 
