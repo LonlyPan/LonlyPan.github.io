@@ -268,24 +268,24 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
-```
-#ifndef MY_MAIN_H_
-#define MY_MAIN_H_
+   ```
+   #ifndef MY_MAIN_H_
+   #define MY_MAIN_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+   #ifdef __cplusplus
+   extern "C" {
+   #endif
 
-void setup();  // 被main.c调用
-void loop();   // 被main.c调用
+   void setup();  // 被main.c调用
+   void loop();   // 被main.c调用
 
-#ifdef __cplusplus
-}
-#endif
+   #ifdef __cplusplus
+   }
+   #endif
 
-#endif /* CPP_TEST_H_ */
-
-```
+   #endif /* CPP_TEST_H_ */
+  
+    ```
 4. 包含头文件。
 按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。  
 这一步是C++独有的，非C++文件只需要安装上文中的 `新建个人问价-文件夹`所述即可，无需此步。但C++却需要单独设置添加。
