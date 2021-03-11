@@ -260,8 +260,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 3. [STM32CubeMX系列教程03\_创建并生成代码工程](https://www.strongerhuang.com/STM32Cube/STM32CubeMX/STM32CubeMX%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B03_%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E5%B7%A5%E7%A8%8B.html) 
 4. [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
 
-
-# 使用 C++ 编程
+## 使用 C++ 编程
 
 1. 新建 C++ 工程
 如下图所示，只需要改动一处即可。
