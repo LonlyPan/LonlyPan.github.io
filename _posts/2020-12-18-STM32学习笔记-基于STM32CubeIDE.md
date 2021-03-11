@@ -9,13 +9,12 @@ categories: arm
 
 <!--more-->
 
-# 安装与新建工程模板
 
-## 简介
-![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
-
+## STM32CubeIDE简介
 >产品链接
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
+
+![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
 ### 1. 特性
 
@@ -84,6 +83,7 @@ categories: arm
   - 中间件扩展和应用层
   - 在某些特定的STMicroelectronics开发板上运行的示例
 
+# 安装与新建工程模板
 
 ## 下载安装
 
