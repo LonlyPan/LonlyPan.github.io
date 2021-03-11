@@ -253,7 +253,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 - [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
-## 参考链接
+### 参考链接
 
 1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
 2. [STM32CubeIDE属于一站式工具，本文带你体验它的强大](https://blog.csdn.net/ybhuangfugui/article/details/89702356)    
@@ -287,7 +287,8 @@ void loop();   // 被main.c调用
 
 ```
 4. 包含头文件。
-按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。
+按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。  
+这一步是C++独有的，非C++文件只需要安装上文中的 `新建个人问价-文件夹`所述即可，无需此步。但C++却需要单独设置添加。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 5. 之后就可以自由使用 C++ 了。
 # 工程模板文件解读
