@@ -83,8 +83,6 @@ categories: arm
   - 中间件扩展和应用层
   - 在某些特定的STMicroelectronics开发板上运行的示例
 
-# 安装与新建工程模板
-
 ## 下载安装
 
 ### 1. 下载
@@ -111,7 +109,7 @@ categories: arm
 
 ![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
-## 汉化
+### 汉化
 
 如下图打开安装软件界面：
 
@@ -174,10 +172,12 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 选好后，我们单击 `下一步`。
 ![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
 
-**1** 处输入工程名称，**2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。**3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
+**1** 处输入工程名称  
+**2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
+**3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
 ![新建工程3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程3.png)
 
-这里是关于库文件的选项，第一个是将库文件链接到安装目录下，这样工程目录下其实是没有库文件了，如果话 PC 的话吗，会有问题。第二个是复制库文件到工程目录下。建议选择第二个。
+这里是关于库文件的选项，第一个是将库文件链接到安装目录下，这样工程目录下其实是没有库文件了，如果换电脑目录改变，则需要重新链接，不推荐。第二个是复制库文件到工程目录下。建议选择第二个。
 ![新建工程4](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程4.png)
 
 接下来就是熟悉的 CubeMX 初始化配置界面了，操作方法也没有什么难的，就是将我们之前用代码写的初始化变成了图形化操作，按照我们初始化的思路一步步勾选即可了。下面具体操作。
@@ -196,7 +196,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 ![RCC](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/RCC.png)
 
 3. 引脚配置。
-1）在图左图形界面单击我们用到的引脚。这里我们使用的LED引脚有 PD2 和 PC8，都是低电平点亮，具体可查看开发板原理图。两个引脚我们都配置为输出模式。
+在图左图形界面单击我们用到的引脚。这里我们使用的LED引脚有 PD2 和 PC8，都是低电平点亮，具体可查看开发板原理图。两个引脚我们都配置为输出模式。
 ![引脚选择3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚选择3.png)
 
     然后我们到左边的引脚具体配置。配置如图示，两个引脚相同。
@@ -230,18 +230,18 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 工作空间是会和项目文件绑定的，所以如果项目工程没有从Stm32CubeIDE中删除（不是删除文件，相当于卸载工程），期间移动工程文件是会出错的。
 
-## 工程中添加文件
+### 新建文件
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
 
-### 新建个人文件-文件夹
+## 新建个人文件-文件夹
 
 由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
 
 这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹（适用从零开始的工程）。另一种是从外部导入文件和文件夹（适用工程迁移）。
 
-#### 重新建立文件和文件夹
+### 重新建立文件和文件夹
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
@@ -249,7 +249,7 @@ https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
 
 之后就可以在新文件中编写代码了。注意这种方式新建文件夹，不需要再设置头文件包含，软件自动设置好了，我们只管新建文件和编写就好了。
 
-#### 导入外部文件-文件夹
+### 导入外部文件-文件夹
 
 https://blog.csdn.net/qq_36300069/article/details/103226568
 
