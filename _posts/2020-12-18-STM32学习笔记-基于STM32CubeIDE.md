@@ -291,7 +291,7 @@ void loop();   // 被main.c调用
 这一步是C++独有的，非C++文件只需要安装上文中的 `新建个人问价-文件夹`所述即可，无需此步。但C++却需要单独设置添加。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 5. 之后就可以自由使用 C++ 了。
-# 工程模板文件解读
+## 工程模板文件解读
 
 #### 1.1.7 文件夹结构
 
