@@ -9,6 +9,8 @@ categories: arm
 
 <!--more-->
 
+[HAL库学习 GPIO---1-知乎](https://zhuanlan.zhihu.com/p/231696942)
+[【STM32】HAL库 STM32CubeMX系列学习教程-csdn](https://blog.csdn.net/as480133937/article/details/99935090)
 
 ## STM32CubeIDE简介
 >产品链接
