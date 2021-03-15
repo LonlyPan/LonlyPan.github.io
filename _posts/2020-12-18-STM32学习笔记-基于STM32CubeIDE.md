@@ -29,7 +29,7 @@ categories: arm
 ## 资料下载
 
 学习STM32需要提前准备几份文档资料，在接下来的学习和今后实际运用中都会经常用到。
-资料直接从 ST 官网下载即可，有的手册有中文，有的中文手册官网没有，可自行网上搜索下载。
+资料直接从 [ST官网](https://www.st.com/) 下载即可，有的手册有中文。有的中文手册官网没有，可自行网上搜索下载。
 - HAL和LL库官方描述手册：`Description of STM32F4 HAL and low-layer drivers`
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 - 芯片参考手册：`STM32F401xB/C and STM32F401xD/E advanced Arm®-based 32-bit MCUs` 官网搜索：`STM32F401 Reference Manual`
