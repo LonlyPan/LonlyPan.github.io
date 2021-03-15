@@ -29,7 +29,7 @@ categories: arm
 ## 资料下载
 
 学习STM32需要提前准备几份文档资料，在接下来的学习和今后实际运用中都会经常用到。
-- HAL和LL库驱动官方描述手册：`Description of STM32F4 HAL and low-layer drivers`
+- HAL和LL库官方描述手册：`Description of STM32F4 HAL and low-layer drivers`
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ### 
