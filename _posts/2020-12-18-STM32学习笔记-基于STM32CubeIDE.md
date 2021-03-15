@@ -38,7 +38,8 @@ categories: arm
    - 数据手册：`Arm® Cortex®-M4 32-bit MCU+FPU, 105 DMIPS, 256KB Flash / 64KB RAM, 11 TIMs, 1 ADC, 11 comm. interfacesV11.0` 芯片本身的手册，相当于产品说明书。
    - 参考手册：`STM32F401xB/C and STM32F401xD/E advanced Arm®-based 32-bit MCUs` ，芯片自身的编程参考手册
    - 编程手册：`STM32 Cortex®-M4 MCUs and MPUs programming manual` ，芯片内核的编程参考手册
-4. HAL和LL库参考手册我们需要在官网所搜才能找到，Description of STM32F4 HAL and low-layer drivers
+4. HAL和LL库参考手册我们需要在官网所搜才能找到，`Description of STM32F4 HAL and low-layer drivers`。API详细使用请参考官方驱动描述手册：
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ### 
 ## STM32CubeIDE简介
