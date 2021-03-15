@@ -369,15 +369,17 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
 
-通过：
+示例：
 ```
 LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出高电平
 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出低电平
 LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);    /* 翻转PB3输出电平
 LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
-```
 
 LL_mDelay(500); // 延时500ms
+```
+
+
 
 ```
 /**
