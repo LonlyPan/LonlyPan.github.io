@@ -413,7 +413,6 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 
 ```c 
 //位带操作,实现51类似的GPIO控制功能
-//具体实现思想,参考<<CM3权威指南>>第五章(87页~92页).
 //IO口操作宏定义
 // 把“位带地址+位序号”转换成别名地址的宏
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2))
