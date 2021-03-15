@@ -34,6 +34,7 @@ categories: arm
 下文中的 `STM32F4` 或 `STM32F401` 请换成你自己芯片的型号，再搜索下载。
 - HAL和LL库官方描述手册：`Description of STM32F4 HAL and low-layer drivers`。官网搜索：“ HAL and low-layer drivers ”
 - 芯片参考手册：`STM32F401xB/C and STM32F401xD/E advanced Arm®-based 32-bit MCUs` 官网搜索：“ STM32F401 Reference Manual ”
+- Cortex®-M4 编程手册，
 ### 
 ## STM32CubeIDE简介
 >产品链接
