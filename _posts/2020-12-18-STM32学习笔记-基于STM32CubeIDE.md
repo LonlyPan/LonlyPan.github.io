@@ -474,7 +474,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，那这里就需要改为 12 和 8。
 
 参考链接：
-
+[知乎-STM32位带操作全解](https://zhuanlan.zhihu.com/p/142586194)
 ### 2.1 GPIO双向 I/O
 
 ## USART
