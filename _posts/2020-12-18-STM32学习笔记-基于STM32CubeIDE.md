@@ -376,7 +376,7 @@ LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出低电平
 LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);    /* 翻转PB3输出电平
 LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
 
-LL_mDelay(500); // 延时500ms
+LL_mDelay(500); // ms延时，延时500ms
 ```
 
 
