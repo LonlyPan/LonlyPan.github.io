@@ -389,6 +389,7 @@ __STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask)
 ### 2.1 GPIO位带操作
 
 ### 2.1 GPIO双向 I/O
+
 ## USART
 
 不论是重定义和自定义printf函数，若想打印float类型，都需要再IDE中单独开启，否则无法打印，且额外占用内存 18 KB 左右。
