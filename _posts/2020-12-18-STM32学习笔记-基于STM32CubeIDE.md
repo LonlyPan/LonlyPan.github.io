@@ -463,7 +463,7 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 
 **示例**
 ```
-PHout(10)= 1;
+PGout(10)= 1;  // PG10 输出高电平
 ```
 上述代码中：#define BITBAND
 ### 2.1 GPIO双向 I/O
