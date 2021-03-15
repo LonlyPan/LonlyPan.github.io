@@ -464,6 +464,7 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 **示例**
 ```
 PGout(10)= 1;  // PG10 输出高电平
+uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ```
 上述代码中：#define BITBAND
 ### 2.1 GPIO双向 I/O
