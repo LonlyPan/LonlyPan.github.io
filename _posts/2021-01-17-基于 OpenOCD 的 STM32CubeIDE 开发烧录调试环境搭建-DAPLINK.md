@@ -22,6 +22,7 @@ DAPLink 仿真器购买：[淘宝-MUSE LAB](https://item.taobao.com/item.htm?spm
 STM32CubeIDE：[V1.5.1](https://www.st.com/zh/development-tools/stm32cubeide.html#get-software)  
 OpenOCD下载：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 经测试：[淘宝-维特智能](https://detail.tmall.com/item.htm?spm=a1z09.8149145.0.0.331b3f00jkkKmS&id=630953476460) 的CMSIS-DAP也使用本教程
+
 ## 部署 OpenOCD
 
 1. 下载好OpenOCD，解压到任意目录，建议路径不带空格或中文  
