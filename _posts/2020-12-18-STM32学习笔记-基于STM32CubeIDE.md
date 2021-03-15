@@ -467,7 +467,7 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 PGout(10)= 1;  // PG10 输出高电平
 uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ```
-上述代码中：`#define BITBAND` 根据不同内核，可能需要另外修改（M3和M4内核已经验证，可通用）。 数字 `20`和`16`是寄存器 ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节，
+上述代码中：`#define BITBAND` 根据不同内核，可能需要另外修改（M3和M4内核已经验证，可通用）。 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR 寄存器描述
 ### 2.1 GPIO双向 I/O
 
 ## USART
