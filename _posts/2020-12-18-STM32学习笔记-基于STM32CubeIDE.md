@@ -378,7 +378,7 @@ LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
 
 LL_mDelay(500); // ms延时，延时500ms
 ```
-详细使用参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
+API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ### 2.1 GPIO位带操作
