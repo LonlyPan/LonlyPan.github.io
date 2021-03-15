@@ -378,23 +378,8 @@ LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
 
 LL_mDelay(500); // ms延时，延时500ms
 ```
-
-
-
-```
-/**
-   * @brief（简介） 在专用gpio端口上将几个引脚设置为高电平
-   * @param（参数） GPIOx GPIO 端口
-   * @param（参数） PinMask此参数可以是以下值的组合
-   * @retval（返回值） 没有
-   */
-__STATIC_INLINE void LL_GPIO_SetOutputPin(GPIO_TypeDef *GPIOx, uint32_t PinMask){...}
-```
-示例：
-
-
-其他：
-
+详细使用参考官方手册：Description of STM32F4 HAL and low-layer drivers
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ### 2.1 GPIO位带操作
 
