@@ -27,8 +27,8 @@ categories: arm
 ### 库选择
 
 ## 资料下载
-
-
+学习STM32需要提前准备几份文档资料，在接下来的学习和今后实际运用中都会经常用到。
+### 
 ## STM32CubeIDE简介
 >产品链接
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
