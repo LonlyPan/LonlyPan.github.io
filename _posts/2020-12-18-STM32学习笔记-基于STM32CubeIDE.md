@@ -473,7 +473,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
 图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，那这里就需要改为 12 和 8。
 
-参考连接：
+参考链接：
 
 ### 2.1 GPIO双向 I/O
 
