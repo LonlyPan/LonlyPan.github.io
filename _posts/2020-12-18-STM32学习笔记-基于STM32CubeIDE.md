@@ -17,6 +17,12 @@ categories: arm
 [【STM32】HAL库 STM32CubeMX系列学习教程](http://openedv.com/thread-309468-1-1.html)
 ## 如何入门STM32
 
+
+### 购买开发板
+
+### 编程软件
+
+### 库选择
 ## STM32CubeIDE简介
 >产品链接
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
