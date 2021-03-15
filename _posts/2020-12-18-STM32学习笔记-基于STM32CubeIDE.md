@@ -471,7 +471,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - `#define BITBAND` 后的内容不同内核，可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
-图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。已知 STM32F101、102、103、105、107 系列都是  0x08、0x0C，就需要改为 12 和 8。
+图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，就需要改为 12 和 8。
 ### 2.1 GPIO双向 I/O
 
 ## USART
