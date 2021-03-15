@@ -376,8 +376,11 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ## STM32F030_HAL库学习笔记
 
+
 ## STM32F030_LL库学习笔记
 
+[STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
+[【stm32cubemx专题教程】ST全外设原理、配置、API使用详解](https://www.bilibili.com/video/BV1Tv411B7Uw)
 标准库官方已经不更新了，虽然资料很多，所以不再使用。之后学习使用了HAL库，但最近做项目需要使用16和32KB的STM32F0芯片，使用HAL库新建个工程再加上串口，基本就是10KB+了，所以也是被迫重新选择了LL库。
 
 下面是别人做的一个不同编程方式的效率对比：
@@ -483,6 +486,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
 [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
 [STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 ### 寄存器操作
 
 [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
