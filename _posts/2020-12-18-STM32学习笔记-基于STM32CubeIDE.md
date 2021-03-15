@@ -460,6 +460,12 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 #define PGout(n)   BIT_ADDR(GPIOG_ODR_Addr,n)  //输出
 #define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //输入
 ```
+
+**示例**
+```
+PHout(10)= 1;
+```
+上述代码中：#define BITBAND
 ### 2.1 GPIO双向 I/O
 
 ## USART
