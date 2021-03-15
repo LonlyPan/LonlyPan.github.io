@@ -475,6 +475,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 参考链接：
 [知乎-STM32位带操作全解](https://zhuanlan.zhihu.com/p/142586194)
+[CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 ### 2.1 GPIO双向 I/O
 
 ## USART
