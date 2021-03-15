@@ -480,8 +480,6 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 ### 2.1 GPIO双向 I/O
 
-
-
 ## USART
 
 不论是重定义和自定义printf函数，若想打印float类型，都需要再IDE中单独开启，否则无法打印，且额外占用内存 18 KB 左右。
