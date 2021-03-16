@@ -160,7 +160,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ```
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
 
-将以下内容填入 `Add Repository` 对话框。
+将以下内容填入 `Add Repository` 对话框。其中的 URL 就是上面的链接
 
 ``` cpp
 language
