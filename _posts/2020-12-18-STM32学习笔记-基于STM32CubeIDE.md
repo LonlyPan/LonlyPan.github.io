@@ -148,6 +148,8 @@ categories: arm
 ![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
 
 复制下面代码，对应填入 `Add Repository` 对话框。
+
+
 ``` cpp
 language
 
