@@ -151,8 +151,9 @@ categories: arm
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
 选择R0.18.2，并单击进入
 
-选择如选择:2019-12，并单击进入
+选择如选择:2020-12，并单击进入
 
+复制ci'shi
 复制下面代码，对应填入 `Add Repository` 对话框。
 
 
