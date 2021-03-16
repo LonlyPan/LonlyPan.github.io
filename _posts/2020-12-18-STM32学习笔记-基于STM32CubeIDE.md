@@ -147,8 +147,8 @@ categories: arm
 
 ![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
 
-进入以下网址：
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
+
 选择R0.18.2，并单击进入
 
 选择如选择:2020-12，并单击进入
