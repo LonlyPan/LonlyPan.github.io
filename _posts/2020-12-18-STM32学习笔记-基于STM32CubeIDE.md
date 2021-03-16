@@ -141,7 +141,7 @@ categories: arm
 
 ![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
-### 汉化
+### 3. 汉化
 
 如下图打开安装软件界面：
 
