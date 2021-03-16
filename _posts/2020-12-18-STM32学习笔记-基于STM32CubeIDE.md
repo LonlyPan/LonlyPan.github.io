@@ -147,23 +147,25 @@ categories: arm
 
 ![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
 
+进入以下网址：
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
 
 选择R0.18.2，并单击进入
-
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1.png)
 选择如选择:2020-12，并单击进入
-
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/2.png)
 复制此时的 URL 链接，例如：
 ```
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ```
-复制下面代码，对应填入 `Add Repository` 对话框。
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
 
+填入 `Add Repository` 对话框。
 
 ``` cpp
 language
 
-https://archive.eclipse.org/technology/babel/update-site/R0.16.1/2018-12/
+http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ```
 ![Add_Repository_12](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Add_Repository_12.png)
 
