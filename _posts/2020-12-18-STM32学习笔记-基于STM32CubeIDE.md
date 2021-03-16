@@ -153,7 +153,10 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
 
 选择如选择:2020-12，并单击进入
 
-复制ci'shi
+复制此时的 URL 链接，例如：
+```
+http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
+```
 复制下面代码，对应填入 `Add Repository` 对话框。
 
 
