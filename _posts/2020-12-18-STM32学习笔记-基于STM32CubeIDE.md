@@ -208,12 +208,11 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 2. 第二种：默认启动界面，在这里直接单击开始新工程。如果看不到下图界面，单击上图中 `红色五角星` 上方的 “感叹号” 图标，就会出现了。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/启动界面新建工程.png)
 
-之后会弹出如下的 芯片选择界面。
-![芯片选择](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择.png)
-
+之后会弹出如下的 芯片选择界面。  
 这里有很多种查找芯片的方法，我们这里直接在搜索框 （**1** 处）里搜索，在右下结果框里（**2**处）选中我们要查找的芯片即可。注意其最左边的五角星 <i class="far fa-star"></i>，单击收藏，则会变成蓝色。下次我们可以直接单击左上角搜索框上方的大五角星（ **3** 处），就能够快速查看已收藏的芯片，方便快速。  
 选好后，我们单击 `下一步`。
 ![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
+
 
 **1** 处输入工程名称  
 **2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
@@ -283,7 +282,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 ### 新建文件和文件夹
 
-右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。在这上面还有类似的 `Folder`选项，这种文件夹新建后是需要手动单独包含到编译器路径的，而`Sorce Folder`则不需要
+右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。在这上面还有类似的 `Folder`选项，这种文件夹新建后是需要手动单独包含到编译器路径的，而`Sorce Folder`则不需要。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
 随后新建源文件或头文件，和上图类似，不过这次是在`文件夹名上右键`，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 
