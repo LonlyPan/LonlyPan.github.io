@@ -201,6 +201,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 之后按照软件提示，一路默认安装即可。最后重启软件，选择主题。  
 如果后面还想更改，点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/change_theme.png)
+
 #### 3. 中文注释字体显示问题解决
 
 当我们尝试中文注释和英文注释混编的时候，会出现中文注释突然变小的问题
