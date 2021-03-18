@@ -6,36 +6,22 @@ date:   2014-12-30 09:00:13
 categories: web
 permalink: /archivers/hello
 ---
+### 目录测试
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
-  - [图床绑定测试](#图床绑定测试)
-  - [语法测试](#语法测试)
-- [EasyBook Advanced Functions ##](#easybook-advanced-functions)
-- [Support me by... ##](#support-me-by)
-  - [Add a link ###](#add-a-link)
-  - [Donate (PayPal or 支付宝) ###](#donate-paypal-or-支付宝)
-  - [Star and Fork on GitHub (free) ###](#star-and-fork-on-github-free)
-- [And Here We Go ##](#and-here-we-go)
-
-<!-- /code_chunk_output -->
-![图 4](../images/2014-12-30-Welcome%20to%20Jekyll%20and%20EasyBook/%E5%A6%84%E8%B6%8A%E5%A4%B4%E5%83%8F.jpg)  
+[TOC]
 
 ### 图床绑定测试
 
-修订版链接：使用博客绝对链接。国内可访问
+1. 修订版链接：使用博客绝对链接。国内可访问
 `https://githubpages地址/图片文件夹/xxx.png`  
-
 ![enter description here](https://LonlyPan.github.io/images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_off.jpg)
 
-修订版链接：使用博客相对链接。国内可访问
+2. 修订版链接：使用博客相对链接。国内可访问
+`https://../图片文件夹/xxx.png`  
 ![enter description here](../images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_off.jpg)
 
-小书匠默认链接：使用项目绝对链接。国内不可访问。
+3. 小书匠默认链接：使用项目绝对链接。国内不可访问。  
 `https://raw.githubusercontent.com/用户名/项目名称/master/图片文件夹/xxx.png`  
-
 ![看到这句话，说明在国内访问，图片会无法加载](https://raw.githubusercontent.com/LonlyPan/LonlyPan.github.io/master/images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_on.jpg)
 
 ### 语法测试
