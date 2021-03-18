@@ -267,12 +267,6 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ![编译](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
 
 
-
-### 新建文件
-
-右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
-
 ## 新建文件-文件夹
 
 由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
@@ -286,6 +280,12 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 随后新建源文件或头文件，和上图类似，不过这次是在`文件夹名上右键`，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 
 之后就可以在新文件中编写代码了。注意这种方式新建文件夹，不需要再设置头文件包含，软件自动设置好了，我们只管新建文件和编写就好了。
+
+
+### 新建文件
+
+右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
 
 ### 导入外部文件-文件夹
 
