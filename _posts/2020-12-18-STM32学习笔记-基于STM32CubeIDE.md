@@ -195,7 +195,9 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 #### 2. 更换主题
 
-软件自带了几个主题，但都不太好用
+软件自带了几个主题，具体可以点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。但官方主题不太好用，所以下面讲解如何使用外部主题。  
+菜单栏 `Help`-> `Eclipse Marketplace`，
+
 
 #### 3. 中文注释字体显示问题解决
 
