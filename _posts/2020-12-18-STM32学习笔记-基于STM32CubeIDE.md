@@ -485,7 +485,7 @@ PGout(10)= 1;  // PG10 输出高电平
 uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ```
 上述代码中：
-- `#define BITBAND` 后的内容不同内核，可能需要另外修改（M3和M4内核已经验证，可通用）。 
+- `#define BITBAND` 后的内容，不同内核可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
 图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，那这里就需要改为 12 和 8。
@@ -495,12 +495,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
-### 2.1 GPIO双向 I/O
-[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
-[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
-[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
-[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
-[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+
 ### 寄存器操作
 
 [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
@@ -509,6 +504,13 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 [Would my solution work for 8-bit bus addressing using BSRR and BRR?](https://stackoverflow.com/questions/56822789/would-my-solution-work-for-8-bit-bus-addressing-using-bsrr-and-brr)
 [STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
 [STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
+
+### 2.1 GPIO双向 I/O
+[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
+[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
+[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
+[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 ## USART
 
 不论是重定义和自定义printf函数，若想打印float类型，都需要再IDE中单独开启，否则无法打印，且额外占用内存 18 KB 左右。
