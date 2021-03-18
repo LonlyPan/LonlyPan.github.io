@@ -212,7 +212,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 这里有很多种查找芯片的方法，我们这里直接在搜索框 （**1** 处）里搜索，在右下结果框里（**2**处）选中我们要查找的芯片即可。注意其最左边的五角星 <i class="far fa-star"></i>，单击收藏，则会变成蓝色。下次我们可以直接单击左上角搜索框上方的大五角星（ **3** 处），就能够快速查看已收藏的芯片，方便快速。  
 选好后，我们单击 `下一步`。
 ![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
-
+	
 **1** 处输入工程名称  
 **2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
 **3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
@@ -383,45 +383,6 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 ## STM32F030_HAL库学习笔记
 
 
-### GPIO 操作
-
-### us延时
-
-
-## STM32F030_LL库学习笔记
-
-[STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
-[【stm32cubemx专题教程】ST全外设原理、配置、API使用详解](https://www.bilibili.com/video/BV1Tv411B7Uw)
-[STM32 之十一 LL 库（low-layer drivers）详解 及 移植说明](https://blog.csdn.net/ZCShouCSDN/article/details/104174662)
-标准库官方已经不更新了，虽然资料很多，所以不再使用。之后学习使用了HAL库，但最近做项目需要使用16和32KB的STM32F0芯片，使用HAL库新建个工程再加上串口，基本就是10KB+了，所以也是被迫重新选择了LL库。
-
-下面是别人做的一个不同编程方式的效率对比：
-原文链接：[https://blog.csdn.net/super828/article/details/79078693](https://blog.csdn.net/super828/article/details/79078693)
-
-<!--more-->
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
-
-总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
-
-
-### GPIO操作
-
-配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
-
-示例：
-```
-LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出高电平
-LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出低电平
-LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);    /* 翻转PB3输出电平
-LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
-
-LL_mDelay(500); // ms延时，延时500ms
-```
-API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
-
 ### GPIO 寄存器操作
 
 [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
@@ -503,6 +464,44 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
 
+
+
+### us延时
+
+
+## STM32F030_LL库学习笔记
+
+[STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
+[【stm32cubemx专题教程】ST全外设原理、配置、API使用详解](https://www.bilibili.com/video/BV1Tv411B7Uw)
+[STM32 之十一 LL 库（low-layer drivers）详解 及 移植说明](https://blog.csdn.net/ZCShouCSDN/article/details/104174662)
+标准库官方已经不更新了，虽然资料很多，所以不再使用。之后学习使用了HAL库，但最近做项目需要使用16和32KB的STM32F0芯片，使用HAL库新建个工程再加上串口，基本就是10KB+了，所以也是被迫重新选择了LL库。
+
+下面是别人做的一个不同编程方式的效率对比：
+原文链接：[https://blog.csdn.net/super828/article/details/79078693](https://blog.csdn.net/super828/article/details/79078693)
+
+<!--more-->
+
+![enter description here](https://LonlyPan.github.io/images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
+
+总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
+
+
+### GPIO操作
+
+配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
+
+示例：
+```
+LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出高电平
+LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3); // PB3输出低电平
+LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);    /* 翻转PB3输出电平
+LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
+
+LL_mDelay(500); // ms延时，延时500ms
+```
+API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 
 ### 2.1 GPIO双向 I/O
