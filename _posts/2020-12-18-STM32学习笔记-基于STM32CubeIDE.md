@@ -341,9 +341,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
    #endif /* CPP_TEST_H_ */
   
     ```
-4. 包含头文件。
-在 `Properties` -> `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含文件夹路径。  
-5. 之后就可以自由使用 C++ 了。
+4. 之后就可以自由使用 C++ 了。
 
 ## 工程模板文件解读
 
