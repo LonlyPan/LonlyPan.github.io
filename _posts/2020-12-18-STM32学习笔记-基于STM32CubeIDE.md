@@ -289,7 +289,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ![编译](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
 
 
-### 1.7 新建文件-文件夹
+### 1.7 新建文件夹和文件
 
 由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
 
