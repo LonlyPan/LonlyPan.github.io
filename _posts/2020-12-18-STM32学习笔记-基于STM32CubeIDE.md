@@ -141,7 +141,9 @@ categories: arm
 
 ![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
-### 3. 汉化
+### 3. 可选配置
+
+#### 1. 汉化
 
 如下图打开安装软件界面：
 ![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
@@ -277,12 +279,11 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。在这上面还有类似的 `Folder`选项，至于两者不同点，还请自行尝试。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
-随后新建源文件或头文件，和上图类似，不过这次是在`文件夹名上右键`，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
+随后新建源文件或头文件，和上图类似，不过这次是在刚刚新建的`文件夹名`上右键，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 
 之后就可以在新文件中编写代码了。注意这种方式新建文件夹，不需要再设置头文件包含，软件自动设置好了，我们只管新建文件和编写就好了。
 
-
-### 新建文件
+#### 新建文件
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
