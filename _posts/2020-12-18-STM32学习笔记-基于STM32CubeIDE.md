@@ -200,7 +200,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 新建工程有两种途径。如下图示：
 >**注意**
-软件的工作空间是会和项目文件绑定的，所以如果工程没有从Stm32CubeIDE中删除（不是真的删除，相当于卸载工程），期间在磁盘中移动工程文件是会出错的。同样同名的工程文件也会导致出错，
+软件的工作空间是会和项目文件绑定的，所以如果工程没有从Stm32CubeIDE中删除（不是真的删除，相当于卸载工程），期间在磁盘中移动工程文件是会出错的。同样同名的工程文件也会导致出错。
 
 1. 第一种：界面左上角 `file` -> `New` -> STM32 Project`
 ![file新建工程](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
