@@ -383,6 +383,8 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 ## STM32F030_HAL库学习笔记
 
 
+### GPIO 操作
+
 ### GPIO 寄存器操作
 
 [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
@@ -462,8 +464,6 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [知乎-STM32位带操作全解](https://zhuanlan.zhihu.com/p/142586194)
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
-
-
 
 
 ### us延时
