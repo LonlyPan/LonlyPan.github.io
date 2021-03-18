@@ -200,9 +200,12 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 当我们尝试中文注释和英文注释混编的时候，会出现中文注释突然变小的问题
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1616038037498.png)
 
-**解决办法：** 菜单栏 Windows-preference，进入以后如下图
-http://www.openedv.com/thread-300647-1-1.html
-https://blog.csdn.net/weixin_39754256/article/details/104304634
+**解决办法：** 菜单栏 `Windows`-> `preference`，进入以后如下图
+![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/test-font.png)
+
+**参考链接**
+- [STM32CubeIDE注释字体问题](http://www.openedv.com/thread-300647-1-1.html)
+- [STM32的开发环境cubeIDE注释混乱问题解决方法](https://blog.csdn.net/weixin_39754256/article/details/104304634)
 
 ## 新建工程模板
 
