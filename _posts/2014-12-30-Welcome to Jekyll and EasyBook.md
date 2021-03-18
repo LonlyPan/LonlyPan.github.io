@@ -31,7 +31,7 @@ permalink: /archivers/hello
 ![enter description here](https://LonlyPan.github.io/images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_off.jpg)
 
 修订版链接：使用博客相对链接。国内可访问
-![enter description here](./images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_off.jpg)
+![enter description here](../images/Posts/2014-12-30-Welcome_to_Jekyll_and_EasyBook/main_menu_off.jpg)
 
 小书匠默认链接：使用项目绝对链接。国内不可访问。
 `https://raw.githubusercontent.com/用户名/项目名称/master/图片文件夹/xxx.png`  
