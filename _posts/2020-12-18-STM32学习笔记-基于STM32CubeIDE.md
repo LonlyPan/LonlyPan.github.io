@@ -193,7 +193,9 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 ![汉化选择6_396](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
 
+#### 2. 更换主题
 
+#### 3. 中文注释字体显示问题解决
 ## 新建工程模板
 
 这里以控制 GPIO 输出/输出为例说明
