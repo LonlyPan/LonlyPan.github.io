@@ -395,8 +395,59 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ## STM32F030_HAL库学习笔记
 
+### GPIO 操作 与 调试
 
-### GPIO 操作
+#### 初始化配置
+
+参考上文中的工程模板建立。
+
+#### 程序编写
+
+**主要API：**
+1. **HAL_GPIO_WritePin(GPIO_TypeDef\* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)**
+控制某个具体引脚的状态
+   - GPIO_TypeDef：IO端口编号  GPIOA、 GPIOB、 …、 GPIOG  
+   - GPIO_Pin：IO引脚编号 GPIO_PIN_0…GPIO_PIN_15  
+   - PinState：IO状态 GPIO_PIN_SET 或者 GPIO_PIN_RESET  
+2. HAL_GPIO_TogglePin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)
+翻转某个具体引脚的状态
+3. HAL_Delay(uint32_t Delay)
+ms 级延时函数。IDE内置的，但没有内置 us 级延时函数
+**主函数：**
+
+``` cpp
+int main(void)
+{
+  HAL_Init();
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  WritePin(LED1_GPIO_Port,LED1_Pin, GPIO_PIN_SET)  /* LED1输出高电平 */ 
+  while (1)
+  {
+	  HAL_GPIO_TogglePin(LED0_GPIO_Port,LED0_Pin); /* 间隔500ms翻转 LED0 引脚 */
+	  HAL_Delay(500);
+  }
+}
+```
+
+这里的前两个`LED0_GPIO_Port,LED0_Pin`是引脚的宏定义，初始化时系统根据我们在配置界面设置的 IO 别名自动生成的，方便理解，否则没有。请在 main.h 文件中查看。
+
+#### 调试Debug
+
+点击工具栏的 `甲虫按钮`
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%B0%83%E8%AF%95_20.png)  
+在弹出对话框，选择 `STM32 CPU`，单击 `确认` 进入配置界面。在 `调试器`下选择 ST-Link 作为调试器，单击 `确认`。
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%B0%83%E8%AF%952_21.png)  
+
+在弹出的对话框选择 `Switch`，打开调试窗口。
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%B0%83%E8%AF%953_22.png)  
+
+这里就是调试窗口了，红框内的都是和调试有关的工具按钮，这里不多做介绍，自行摸索。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%B0%83%E8%AF%954_23.png)  
+
 
 ### GPIO 寄存器操作
 
