@@ -283,7 +283,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹（适用从零开始的工程）。另一种是从外部导入文件和文件夹（适用工程迁移）。
 
-### 重新建立文件和文件夹
+### 新建文件和文件夹
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
@@ -433,7 +433,7 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 [STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
 [STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
 
-#### GPIO 位带操作
+### GPIO 位带操作
 
 关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。下面只说明如何使用：
 
