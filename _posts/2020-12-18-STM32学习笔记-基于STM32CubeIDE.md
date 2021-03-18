@@ -433,7 +433,7 @@ API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL a
 [STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
 [STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
 
-#### GPIO位带操作
+#### GPIO 位带操作
 
 关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。下面只说明如何使用：
 
