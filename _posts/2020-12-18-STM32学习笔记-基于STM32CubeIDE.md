@@ -213,7 +213,6 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 选好后，我们单击 `下一步`。
 ![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
 
-
 **1** 处输入工程名称  
 **2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
 **3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
