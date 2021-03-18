@@ -342,7 +342,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
   
     ```
 4. 包含头文件。
-按下图所示，在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。  
+在 `C/C++ build`->`Settings`->`Tool Settings`->`MCU GCC Compiler`->`include paths`包含我们自定义的文件夹路径。  
 5. 之后就可以自由使用 C++ 了。
 
 ## 工程模板文件解读
