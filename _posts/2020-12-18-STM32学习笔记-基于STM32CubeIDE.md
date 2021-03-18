@@ -407,7 +407,7 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
 
 
-### 2.1 GPIO操作
+### GPIO操作
 
 配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
@@ -424,7 +424,7 @@ LL_mDelay(500); // ms延时，延时500ms
 API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
 ![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
-### 寄存器操作
+### GPIO 寄存器操作
 
 [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
 [STM32duino GPIO Registers and programming](https://gist.github.com/iwalpola/6c36c9573fd322a268ce890a118571ca)
