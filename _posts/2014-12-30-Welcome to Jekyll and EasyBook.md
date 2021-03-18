@@ -7,6 +7,21 @@ categories: web
 permalink: /archivers/hello
 ---
 
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+  - [图床绑定测试](#图床绑定测试)
+  - [语法测试](#语法测试)
+- [EasyBook Advanced Functions ##](#easybook-advanced-functions)
+- [Support me by... ##](#support-me-by)
+  - [Add a link ###](#add-a-link)
+  - [Donate (PayPal or 支付宝) ###](#donate-paypal-or-支付宝)
+  - [Star and Fork on GitHub (free) ###](#star-and-fork-on-github-free)
+- [And Here We Go ##](#and-here-we-go)
+
+<!-- /code_chunk_output -->
+
 ### 图床绑定测试
 
 修订版链接：使用博客绝对链接。国内可访问
