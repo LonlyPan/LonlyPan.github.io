@@ -31,22 +31,22 @@ categories: arm
 学习STM32需要提前准备几份文档资料，在接下来的学习和今后实际运用中都会经常用到。  
 资料直接从 [ST官网](https://www.st.com/) 下载即可，有的手册有中文。有的中文手册官网没有，可自行网上搜索下载。但都不推荐使用中文的：版本太老、阅读英文文档是程序员必备技能
 1. 进入官网 [ST官网](https://www.st.com/) ，选择进入 `微控制器界面`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/浏览微控制器.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/浏览微控制器.png)
 2. 在左侧栏找到自己芯片型号，并进入 `Documentation` 界面，选择对应文档下载即可。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/芯片文档下载.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/芯片文档下载.png)
 3. 下载以下文档：
    - 数据手册：`Arm® Cortex®-M4 32-bit MCU+FPU, 105 DMIPS, 256KB Flash / 64KB RAM, 11 TIMs, 1 ADC, 11 comm. interfacesV11.0` 芯片本身的手册，相当于产品说明书。
    - 参考手册：`STM32F401xB/C and STM32F401xD/E advanced Arm®-based 32-bit MCUs` ，芯片使用参考手册
    - 编程手册：`STM32 Cortex®-M4 MCUs and MPUs programming manual` ，芯片内核的编程手册（高阶）
 4. HAL和LL库参考手册我们需要另外在官网搜索才能找到，`Description of STM32F4 HAL and low-layer drivers`，库函数API驱动描述手册：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
-### 
 ## STM32CubeIDE简介
->产品链接
+>产品链接。建议多看看官网的资料，很多问题都能在这些文档里找到答案。
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
+[STM32CubeIDE user guide](https://www.st.com/content/ccc/resource/technical/document/user_manual/group1/f8/a2/48/77/68/e6/4b/74/DM00629856/files/DM00629856.pdf/jcr:content/translations/en.DM00629856.pdf)
 
-![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
+![Stm32CubeIDE_show](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
 ### 1. 特性
 
@@ -73,7 +73,7 @@ categories: arm
 
 简单来说就是：**STM32cubeIDE = true studio for stm32 + STM32cubeMX**
 
-![Stm32CubeIDE](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/STM32CubeIDE.png)
+![Stm32CubeIDE](../images/Posts/2020-05-08-STM32CubeIDE软件教程/STM32CubeIDE.png)
 
 [STM32CubeIDE](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)是一个高级C / C ++开发平台，具有用于STM32微控制器和微处理器的外设配置，代码生成，代码编译和调试功能。它基于ECLIPSE™/ CDT框架和GCCtoolchain用于开发，而GDB用于调试。它允许集成数百个现有插件，这些插件完成ECLIPSE™IDE的功能
 
@@ -94,7 +94,7 @@ categories: arm
 = 在STM32微控制器和微处理器上运行的嵌入式软件模块，可带来各种功能（从MCU组件驱动程序到更高级的面向应用的特性)
 
 **[STM32Cube](https://www.st.com/content/st_com/en/stm32cube-ecosystem.html)生态系统包括**
-![overview-zh](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/overview-zh.jpg)
+![overview-zh](../images/Posts/2020-05-08-STM32CubeIDE软件教程/overview-zh.jpg)
 
 - **一套易于使用的软件开发工具，涵盖从概念到实现的项目开发，其中**
 
@@ -124,7 +124,7 @@ categories: arm
 在页面底部找到下图，根据自己电脑操作系统下载即可，这里以Windows版为例。  右边下拉菜单还可以选择其他版本，推荐下载最新版。
 软件是免费的， 但下载时需要填写信息或注册登录。  
 
-![download](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/download.png)
+![download](../images/Posts/2020-05-08-STM32CubeIDE软件教程/download.png)
 
 ### 2. 安装
 
@@ -134,29 +134,29 @@ categories: arm
 - 安装路径中不要包含中文字符，不要包含中文字符，不要包含中文字符
 - 建议选择短路径以避免工作区路径过长而面临Windows®限制。
   
-![Installer_location_dialog](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Installer_location_dialog.png)
+![Installer_location_dialog](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Installer_location_dialog.png)
 
 **“选择组件”对话框**
 选择要与STM32CubeIDE一起安装的GDB服务器组件。用于STM32CubeIDE安装调试的每种JTAG探针类型都需要一个服务
 
-![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
+![Selection_of_components_dialog_](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
 ### 3. 可选配置
 
 #### 1. 汉化
 
 如下图打开安装软件界面：
-![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
+![汉化](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
 
 进入以下网址：
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
 
 选择 `R0.18.2`，并单击进入
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1.png)
 选择如选择:`2020-12`，并单击进入
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/2.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/2.png)
 复制此时网址链接
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
 
 将以下内容填入 `Add Repository` 对话框。其中的位置就是上面得到的链接。
 
@@ -165,13 +165,13 @@ language
 
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ```
-![Add_Repository_12](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Add_Repository_12.png)
+![Add_Repository_12](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Add_Repository_12.png)
 
 单击 `添加` 按钮。之后会弹出下面对话框，下拉找到图中红框选项，
-![汉化选择_56](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择_56.png)
+![汉化选择_56](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择_56.png)
 
 单击其最左侧的多选 `>` 按钮，在下拉框中选中打勾下图红框部分，之后单击 `下一步`。
-![汉化选择2_135](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择2_135.png)
+![汉化选择2_135](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择2_135.png)
 
 >注：   
 上图红框选项指软件的界面汉化，其中后面的（85.21%）表示汉化程度，可见还并未完全汉化。
@@ -179,36 +179,36 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 单击 `下一步` 
 
-![汉化选择3_220](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择3_220.png)
+![汉化选择3_220](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择3_220.png)
 
 勾选接受许可协议，点击 `完成`
 
-![汉化选择4_281](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择4_281.png)
+![汉化选择4_281](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择4_281.png)
 
 之后会弹出下面的对话框，单击 install anyway
 
-![汉化选择5_336](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择5_336.png)
+![汉化选择5_336](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择5_336.png)
 
 单击现在重启，汉化完成
 
-![汉化选择6_396](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
+![汉化选择6_396](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
 
 #### 2. 更换主题
 
 软件自带了几个主题，具体可以点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。但官方主题不太好用，所以下面讲解如何使用外部主题。  
 菜单栏 `Help`，在下拉栏中双击 `Eclipse Marketplace`打开。  
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/install_theme.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/install_theme.png)
 之后按照软件提示，一路默认安装即可。最后重启软件，选择主题。  
 如果后面还想更改，点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/change_theme.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/change_theme.png)
 
 #### 3. 中文注释字体显示问题解决
 
 当我们尝试中文注释和英文注释混编的时候，会出现中文注释突然变小的问题
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1616038037498.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1616038037498.png)
 
 **解决办法：** 菜单栏 `Windows`-> `preference`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/test-font.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/test-font.png)
 
 **参考链接**
 - [STM32CubeIDE注释字体问题](http://www.openedv.com/thread-300647-1-1.html)
@@ -221,34 +221,38 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ### 1.1 新建工程
 
 新建工程有两种途径。如下图示：
->**注意**
-软件的工作空间是会和项目文件绑定的，所以如果工程没有从Stm32CubeIDE中删除（不是真的删除，相当于卸载工程），期间在磁盘中移动工程文件是会出错的。所以当你想要移动工程时，一定要先卸载工程。
+>开发过程中有时候需要复制一个已有的项目，在该项目之上进行开发，STM32CubeIDE不允许同一个工作空间中出现同名项目，这时候就需要修改项目名称了，方法如下：
+1. 右键项目名，选择 `Delete` 删除项目（不是真的删除，相当于卸载工程）。
+2. 复制项目，并修改项目文件夹名称。
+3. 打开项目，右键项目名，选择 `Rename` 重命名项目名
+4. 删除以前的 `.elf`和`.launch`文件。重新启动 Debug 调试。
+
 1. 第一种：界面左上角 `file` -> `New` -> STM32 Project`
-![file新建工程](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
+![file新建工程](../images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
 
 
 2. 第二种：默认启动界面，在这里直接单击开始新工程。如果看不到下图界面，单击上图中 `红色五角星` 上方的 “感叹号” 图标，就会出现了。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/启动界面新建工程.png)
+![enter description here](../images/Posts/2020-05-08-STM32CubeIDE软件教程/启动界面新建工程.png)
 
 之后会弹出如下的 芯片选择界面。  
 这里有很多种查找芯片的方法，我们这里直接在搜索框 （**1** 处）里搜索，在右下结果框里（**2**处）选中我们要查找的芯片即可。注意其最左边的五角星 <i class="far fa-star"></i>，单击收藏，则会变成蓝色。下次我们可以直接单击左上角搜索框上方的大五角星（ **3** 处），就能够快速查看已收藏的芯片，方便快速。  
 选好后，我们单击 `下一步`。
-![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
+![芯片选择2](../images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
 	
 **1** 处输入工程名称  
 **2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
 **3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
-![新建工程3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程3.png)
+![新建工程3](../images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程3.png)
 
 这里是关于库文件的选项，第一个是将库文件链接到安装目录下，这样工程目录下其实是没有库文件了，如果换电脑目录改变，则需要重新链接，不推荐。第二个是复制库文件到工程目录下。建议选择第二个。
-![新建工程4](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程4.png)
+![新建工程4](../images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程4.png)
 
 接下来就是熟悉的 CubeMX 初始化配置界面了，操作方法也没有什么难的，就是将我们之前用代码写的初始化变成了图形化操作，按照我们初始化的思路一步步勾选即可了。下面具体操作。
 
 ### 1.2 引脚与配置(Pinout  and Configuration)
 
 1. 系统配置。这里是调试工具选择和基准时钟源选择。我们用的是ST-Link的SWD（Serial Wire Debug）调试模式，所以选择 **Serial Wire** 串行线。时钟基准源默认系统滴答时钟 **SysTick**。
-![SYS](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/SYS.png)
+![SYS](../images/Posts/2020-05-08-STM32CubeIDE软件教程/SYS.png)
 
 2. 时钟源配置。一共有以下选项。
 - 外部晶体/陶瓷晶振(Crystal/Ceramic Resonator)：由外部无源晶体与MCU内部时钟驱动电路共同配合形成，有一定的启动时间，精度较高。外部晶振没有时，自动切换为自带的内部晶振。
@@ -256,25 +260,25 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 - Disable：无时钟，相关功能不工作。
 
   这里HSE配置为外部晶振，LSE选Disable(低速时钟是给看门狗和RTC的，目前未用)。时钟输出关闭。
-![RCC](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/RCC.png)
+![RCC](../images/Posts/2020-05-08-STM32CubeIDE软件教程/RCC.png)
 
 3. 引脚配置。
 在图左图形界面单击我们用到的引脚。这里我们使用的LED引脚有 PD2 和 PC8，都是低电平点亮，具体可查看开发板原理图。两个引脚我们都配置为输出模式。
-![引脚选择3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚选择3.png)
+![引脚选择3](../images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚选择3.png)
 
     然后我们到左边的引脚具体配置。配置如图示，两个引脚相同。
-![引脚配置2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚配置2.png)
+![引脚配置2](../images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚配置2.png)
 
 ### 1.3 时钟配置(Clock Configuration)
 
 选择外部8MHz晶振，配置系统时钟为72MHz。注意APB1总线时钟式36MHz，需二分频。
 这里和后面的配置都不需要保存的，也没有保存按钮<i class="fas fa-smile"></i>
-![时钟选择](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/时钟选择.png)
+![时钟选择](../images/Posts/2020-05-08-STM32CubeIDE软件教程/时钟选择.png)
 
 ### 1.4 项目管理(Project Manager)
 
 这里我们注意勾选上图中红框部分。这样生成的代码每个外设一个文件夹，就不会全堆在main.c文件里了。其他的默认。
-![项目管理](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/项目管理.png)
+![项目管理](../images/Posts/2020-05-08-STM32CubeIDE软件教程/项目管理.png)
 
 ### 1.5 工具(Tools)
 
@@ -283,43 +287,37 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ### 1.6 编译生成初始化文件
 
 单击上方工具栏的  `设备配置工具代码生成` ，完成工程建立。观察左侧的项目资源管理器，会发现多出了gpio.c文件等等。现在就可以正式编写程序了。
-![初始化生成](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/初始化生成.png)
+![初始化生成](../images/Posts/2020-05-08-STM32CubeIDE软件教程/初始化生成.png)
 
 我们可以单击其左边的锤子 🔨 编译 按钮，编译应该是没有错误的。
-![编译](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
+![编译](../images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
 
 
 ### 1.7 新建文件夹和文件
 
 由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 
+>之后所有的参考程序都会存放在我们新建的 `BSP` 文件夹下。
 
 这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹（适用从零开始的工程）。另一种是从外部导入文件和文件夹（适用工程迁移）。
 
 #### 新建文件和文件夹
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。在这上面还有类似的 `Folder`选项，至于两者不同点，还请自行尝试。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
 随后新建源文件或头文件，和上图类似，不过这次是在刚刚新建的`文件夹名`上右键，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
 头文件包含，新建文件夹后，需要在编译器中另外包含文件夹地址，否则编译会提示找不到文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 
 #### 导入外部文件-文件夹
 
 - [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
 
-### 参考链接
-
-1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
-2. [STM32CubeIDE属于一站式工具，本文带你体验它的强大](https://blog.csdn.net/ybhuangfugui/article/details/89702356)    
-3. [STM32CubeMX系列教程03\_创建并生成代码工程](https://www.strongerhuang.com/STM32Cube/STM32CubeMX/STM32CubeMX%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B03_%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E5%B7%A5%E7%A8%8B.html) 
-4. [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
-
-## 使用 C++ 编程
+### 1.8 使用 C++ 编程
 
 1. 新建 C++ 工程
 如下图所示，只需要改动一处即可。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
@@ -342,6 +340,13 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
   
     ```
 4. 之后就可以自由使用 C++ 了。
+
+### 参考链接
+
+1. [STM32CubeIDE资源](https://www.st.com/zh/development-tools/stm32cubeide.html#resource)
+2. [STM32CubeIDE属于一站式工具，本文带你体验它的强大](https://blog.csdn.net/ybhuangfugui/article/details/89702356)    
+3. [STM32CubeMX系列教程03\_创建并生成代码工程](https://www.strongerhuang.com/STM32Cube/STM32CubeMX/STM32CubeMX%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B03_%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E5%B7%A5%E7%A8%8B.html) 
+4. [STM32CubeIDE使用笔记（01）：基础说明与开发流程](https://blog.csdn.net/Naisu_kun/article/details/95935283)
 
 ## 工程模板文件解读
 
@@ -378,7 +383,7 @@ Src 里面是每个设备外设的驱动源程序，Inc 则是相对应的外设
 和 Inc 文件夹里的就是 HAL 库针对每个外设而编写的库函数文件，每个外设对应一个 stm32f1xx_hal_ppp.c 和 stm32f1xx_hal_ppp.h 文件，部分外设有特殊功能还有一个 stm32f1xx_hal_ppp_ex.c 文件，其中 ppp 为外设名称，比如
 gpio、adc、i2c 等等，见下面表格。
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-09-28-STM32CubeIDE-工程模板文件解读/图像_5.png)
+![enter description here](../images/Posts/2020-09-28-STM32CubeIDE-工程模板文件解读/图像_5.png)
 
 main.c：存放main函数和SystemClock_Config函数
 
@@ -424,7 +429,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  WritePin(LED1_GPIO_Port,LED1_Pin, GPIO_PIN_SET)  /* LED1输出高电平 */ 
+  HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin, GPIO_PIN_SET)  /* LED1输出高电平 */ 
   while (1)
   {
 	  HAL_GPIO_TogglePin(LED0_GPIO_Port,LED0_Pin); /* 间隔500ms翻转 LED0 引脚 */
@@ -451,12 +456,102 @@ int main(void)
 
 ### GPIO 寄存器操作
 
-[高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
-[STM32duino GPIO Registers and programming](https://gist.github.com/iwalpola/6c36c9573fd322a268ce890a118571ca)
-[GPIO Output Registers on the STM32](https://electronics.stackexchange.com/questions/336021/gpio-output-registers-on-the-stm32)
-[Would my solution work for 8-bit bus addressing using BSRR and BRR?](https://stackoverflow.com/questions/56822789/would-my-solution-work-for-8-bit-bus-addressing-using-bsrr-and-brr)
-[STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
-[STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
+**BSRR 和 BRR 关系**
+
+BSRR 和 BRR 都是 STM32 系列 MCU 中 GPIO 的寄存器。 BSRR 称为端口位设置/清除寄存器，BRR称为端口位清除寄存器。
+- BSRR 低 16 位用于设置 GPIO 口对应位输出高电平，高 16 位用于设置 GPIO 口对应位输出低电平。
+- BRR 低 16 位用于设置 GPIO 口对应位输出低电平。高 16 位为保留地址，读写无效。
+
+所以理论上来讲，BRR 寄存器的功能和 BSRR 寄存器高 16 位的功能是一样的，都可以控制端口输出低电平。也就是说，输出低电平可以有如下两种写法。
+
+```
+#define SET_BL_LOW() GPIOA->BRR=GPIO_Pin_0
+等价于
+#define SET_BL_LOW() GPIOA->BSRR=GPIO_Pin_0 << 16
+```
+这么来看的话，其实 BRR 寄存器是比较多余的。而实际上，在最新的 STM32F4 系列 MCU 的 GPIO寄存器中，已经找不到 BRR 寄存器了，仅保留了 BSRR 寄存器用于实现端口输出高低电平。
+
+可见，不管是输出高还是输出低，对 BSRR 寄存器的操作最为稳妥。
+
+
+
+BSRR常见操作
+```
+/* 低8位操作 */
+GPIOE->BSRR = (Newdata & 0xffff) | ( (~Newdata )<<16 );
+/* 16位操作 */
+GPIOE->BSRR = (Newdata & 0xff) | ( (~Newdata & 0xff)<<16 );
+```
+BSRR还有一个特点，就是如果低6位和高16位同时置1，结果以低16位为准。
+就是说同一个bit在 BSRR 低16位中为1（输出高电平），但在高16位中也是1（输出低电平），结果该bit引脚输出 1（高电平）。
+此时对多位同时操作可以这么写：
+```
+GPIOx->BSRR = 0xFFFF0000 | PATTEN;
+```
+不用考虑哪些需要置1，哪些需要清零
+
+**ODR**
+
+ODR 寄存器也是用于输出数据的寄存器，一个 ODR 寄存器控制了一组(16位)的 GPIO 输出。因此，对 ODR 进行修改也可以到达对 IO 口输出进行配置。同时通过读取该寄存器，也能够获取 IO 的当前输出状态。而 BSRR 和 BRR 只可写。
+
+但是，由于对 ODR 寄存器的读写操作必须以 16 位的形式进行。因此，如果使用 ODR 改写数据以控制输出时，须采用“读-改-写”的形式进行。
+
+假设需要对 GPIOA_Pin_6 输出高电平。采用改写 ODR 寄存器的方式时，使用“读-改-写”操作，代码如下：
+```
+GPIOB->ODR=((GPIOB->ODR | GPIO_Pin_6); 
+```
+
+而使用 BSRR 寄存器时，仅需要使用如下语句：
+```
+GPIOA->BSRR = GPIO_Pin_6;
+```
+这是因为在修改 ODR 时，为了确保对端口 6 的修改不会影响到其他端口的输出，需要对端口的原始数据进行保存，之后再对端口 6 的值进行修改，最后再写入寄存器。而对 BSRR 的操作，是写 1 有效，写 0 不改变原状态，因此可以对端口 6 置 1，其他位保持为 0。
+
+BSRR 为 1 的话，程序运行时自动会修改相应的 ODR 位。
+
+**BSRR、BRR、 ODR 之间的关系**
+
+* ODR寄存器可读可写：既能控制管脚为高电平，也能控制管脚为低电平。管脚对于位写1 GPIO管脚为高电平，写 0 为低电平（有被中断打断的风险）
+* BSRR 只写寄存器：既能控制管脚为高电平，也能控制管脚为低电平。对寄存器高16位 写1 对应管脚为低电平，写0无动作；对寄存器的第16位写1对应管脚为高电平，写 0 无动作。
+* BRR 只写寄存器：只能改变管脚状态为低电平，对寄存器 管脚对于位写 1 相应管脚会为低电平。写 0 无动作。
+
+ODR 能控制管脚高低电平为什么还需要BSRR和SRR寄存器的原因是：用BSRR和BRR去改变管脚状态的时候，没有被中断打断的风险。也就不需要关闭中断，关闭中断明显会延迟或丢失一事件的捕获，所以控制GPIO的状态最好还是用SBRR和BRR。
+
+**IDR**
+
+GPIO 端口输入数据寄存器。只用了低 16 位。该寄存器为只读寄存器，并且只能以 16 位的形式读出。  
+要想知道某个 IO 口的状态， 你只要读这个寄存器，再看某个位的状态就可以了。
+
+#### 程序编写
+
+寄存器的写法可以通过查看 HAL 函数底层实现，来学习官方如何使用寄存器的。
+```
+void led_blink()
+{
+#if 0 // ODR 方式
+	if(LED_GPIO_Port->ODR & LED_Pin)  // 高电平
+		LED_GPIO_Port->ODR=~(~LED_GPIO_Port->ODR | LED_Pin);  // 置0
+	else
+		LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+
+    HAL_Delay(2000);
+
+#endif
+	if(LED_GPIO_Port->IDR & LED_Pin)  // 高电平
+	   LED_GPIO_Port->BSRR = LED_Pin  << 16 ;   // 高位置0
+	else
+	   LED_GPIO_Port->BSRR = LED_Pin; // 低位置1
+
+    HAL_Delay(2000);
+}
+```
+**参考链接**
+* [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
+* [STM32duino GPIO Registers and programming](https://gist.github.com/iwalpola/6c36c9573fd322a268ce890a118571ca)
+* [GPIO Output Registers on the STM32](https://electronics.stackexchange.com/questions/336021/gpio-output-registers-on-the-stm32)
+* [Would my solution work for 8-bit bus addressing using BSRR and BRR?](https://stackoverflow.com/questions/56822789/would-my-solution-work-for-8-bit-bus-addressing-using-bsrr-and-brr)
+* [STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
+* [STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
 
 ### GPIO 位带操作
 
@@ -521,7 +616,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 上述代码中：
 - `#define BITBAND` 后的内容，不同内核可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
 图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，那这里就需要改为 12 和 8。
 
 参考链接：
@@ -529,8 +624,77 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
+### GPIO双向 I/O
+
+
+有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
+如果希望某GPIO做双向传输，将其配制为OD输出模式，
+
+* 开漏模式：输出寄存器中的“0”可激活 N-MOS，而输出寄存器中的“1”会使端
+* 口保持高组态 (Hi-Z)（ P-MOS 始终不激活）。
+* 施密特触发器输入被打开
+* 根据 GPIOx_PUPDR 寄存器中的值决定是否打开弱上拉电阻和下拉电阻
+* 输入数据寄存器每隔 1 个 AHB1 时钟周期对 I/O 引脚上的数据进行一次采样
+* 对输入数据寄存器的读访问可获取 I/O 状态
+* 对输出数据寄存器的读访问可获取最后的写入值
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1234567890.png)  
+
+如果需要使用一个GPIO既要用作输入也要用作输出的，可以将该引脚配置为Output-OpenDrain， 同时在引脚上连接一个上拉电阻，可将它用作(准)双向输入输出口。  
+输出时： GPIOx->ODR ＝输出值;
+输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，引脚被拉低)，然后读.
+```
+LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+LED_Pin_status ＝ LED_GPIO_Port->IDR & LED_Pin;
+```
+
+**参考链接**
+* [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
+* [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
+* [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
+* [STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+* [STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+
+### GPIO模拟配置
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
 
 ### us延时
+
+HAL 官方是没有 us 级延时函数的。这里参考正点原子例程，改写了一点。
+```
+#define F_CPU SystemCoreClock  // 系统时钟
+#define CYCLES_PER_MICROSECOND (F_CPU / 1000000U)   // 1us 的时钟周期
+//延时nus
+//nus为要延时的us数.	
+//nus:0~190887435(最大值即2^32/fac_us@fac_us=22.5)	 
+void delay_us(u32 nus)
+{		
+	u32 ticks;
+	u32 told,tnow,tcnt=0;
+	u32 reload=SysTick->LOAD;				//LOAD的值	    	 
+	ticks=nus*CYCLES_PER_MICROSECOND; 						//需要的节拍数 
+	told=SysTick->VAL;        				//刚进入时的计数器值
+	while(1)
+	{
+		tnow=SysTick->VAL;	
+		if(tnow!=told)
+		{	    
+			if(tnow<told)tcnt+=told-tnow;	//这里注意一下SYSTICK是一个递减的计数器就可以了.
+			else tcnt+=reload-tnow+told;	    
+			told=tnow;
+			if(tcnt>=ticks)break;			//时间超过/等于要延迟的时间,则退出.
+		}  
+	};
+}
+
+//延时nms
+//nms:要延时的ms数
+void delay_ms(u16 nms)
+{
+	u32 i;
+	for(i=0;i<nms;i++) delay_us(1000);
+}
+```
 
 
 ## STM32F030_LL库学习笔记
@@ -545,7 +709,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 <!--more-->
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
+![enter description here](../images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
 
 总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
 
@@ -553,7 +717,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ### GPIO操作
 
 配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
 
 示例：
 ```
@@ -565,15 +729,7 @@ LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
 LL_mDelay(500); // ms延时，延时500ms
 ```
 API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
-
-
-### 2.1 GPIO双向 I/O
-[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
-[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
-[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
-[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
-[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ## USART
 
