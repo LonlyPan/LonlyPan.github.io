@@ -31,22 +31,22 @@ categories: arm
 学习STM32需要提前准备几份文档资料，在接下来的学习和今后实际运用中都会经常用到。  
 资料直接从 [ST官网](https://www.st.com/) 下载即可，有的手册有中文。有的中文手册官网没有，可自行网上搜索下载。但都不推荐使用中文的：版本太老、阅读英文文档是程序员必备技能
 1. 进入官网 [ST官网](https://www.st.com/) ，选择进入 `微控制器界面`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/浏览微控制器.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/浏览微控制器.png)
 2. 在左侧栏找到自己芯片型号，并进入 `Documentation` 界面，选择对应文档下载即可。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/芯片文档下载.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/芯片文档下载.png)
 3. 下载以下文档：
    - 数据手册：`Arm® Cortex®-M4 32-bit MCU+FPU, 105 DMIPS, 256KB Flash / 64KB RAM, 11 TIMs, 1 ADC, 11 comm. interfacesV11.0` 芯片本身的手册，相当于产品说明书。
    - 参考手册：`STM32F401xB/C and STM32F401xD/E advanced Arm®-based 32-bit MCUs` ，芯片使用参考手册
    - 编程手册：`STM32 Cortex®-M4 MCUs and MPUs programming manual` ，芯片内核的编程手册（高阶）
 4. HAL和LL库参考手册我们需要另外在官网搜索才能找到，`Description of STM32F4 HAL and low-layer drivers`，库函数API驱动描述手册：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 ### 
 ## STM32CubeIDE简介
 >产品链接
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
 
-![Stm32CubeIDE_show](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
+![Stm32CubeIDE_show](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
 ### 1. 特性
 
@@ -73,7 +73,7 @@ categories: arm
 
 简单来说就是：**STM32cubeIDE = true studio for stm32 + STM32cubeMX**
 
-![Stm32CubeIDE](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/STM32CubeIDE.png)
+![Stm32CubeIDE](../images/Posts/2020-05-08-STM32CubeIDE软件教程/STM32CubeIDE.png)
 
 [STM32CubeIDE](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)是一个高级C / C ++开发平台，具有用于STM32微控制器和微处理器的外设配置，代码生成，代码编译和调试功能。它基于ECLIPSE™/ CDT框架和GCCtoolchain用于开发，而GDB用于调试。它允许集成数百个现有插件，这些插件完成ECLIPSE™IDE的功能
 
@@ -94,7 +94,7 @@ categories: arm
 = 在STM32微控制器和微处理器上运行的嵌入式软件模块，可带来各种功能（从MCU组件驱动程序到更高级的面向应用的特性)
 
 **[STM32Cube](https://www.st.com/content/st_com/en/stm32cube-ecosystem.html)生态系统包括**
-![overview-zh](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/overview-zh.jpg)
+![overview-zh](../images/Posts/2020-05-08-STM32CubeIDE软件教程/overview-zh.jpg)
 
 - **一套易于使用的软件开发工具，涵盖从概念到实现的项目开发，其中**
 
@@ -124,7 +124,7 @@ categories: arm
 在页面底部找到下图，根据自己电脑操作系统下载即可，这里以Windows版为例。  右边下拉菜单还可以选择其他版本，推荐下载最新版。
 软件是免费的， 但下载时需要填写信息或注册登录。  
 
-![download](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/download.png)
+![download](../images/Posts/2020-05-08-STM32CubeIDE软件教程/download.png)
 
 ### 2. 安装
 
@@ -134,29 +134,29 @@ categories: arm
 - 安装路径中不要包含中文字符，不要包含中文字符，不要包含中文字符
 - 建议选择短路径以避免工作区路径过长而面临Windows®限制。
   
-![Installer_location_dialog](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Installer_location_dialog.png)
+![Installer_location_dialog](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Installer_location_dialog.png)
 
 **“选择组件”对话框**
 选择要与STM32CubeIDE一起安装的GDB服务器组件。用于STM32CubeIDE安装调试的每种JTAG探针类型都需要一个服务
 
-![Selection_of_components_dialog_](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
+![Selection_of_components_dialog_](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Selection_of_components_dialog_.png)
 
 ### 3. 可选配置
 
 #### 1. 汉化
 
 如下图打开安装软件界面：
-![汉化](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
+![汉化](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化.gif)
 
 进入以下网址：
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/
 
 选择 `R0.18.2`，并单击进入
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1.png)
 选择如选择:`2020-12`，并单击进入
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/2.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/2.png)
 复制此时网址链接
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/3.png)
 
 将以下内容填入 `Add Repository` 对话框。其中的位置就是上面得到的链接。
 
@@ -165,13 +165,13 @@ language
 
 http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ```
-![Add_Repository_12](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/Add_Repository_12.png)
+![Add_Repository_12](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Add_Repository_12.png)
 
 单击 `添加` 按钮。之后会弹出下面对话框，下拉找到图中红框选项，
-![汉化选择_56](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择_56.png)
+![汉化选择_56](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择_56.png)
 
 单击其最左侧的多选 `>` 按钮，在下拉框中选中打勾下图红框部分，之后单击 `下一步`。
-![汉化选择2_135](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择2_135.png)
+![汉化选择2_135](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择2_135.png)
 
 >注：   
 上图红框选项指软件的界面汉化，其中后面的（85.21%）表示汉化程度，可见还并未完全汉化。
@@ -179,36 +179,36 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 单击 `下一步` 
 
-![汉化选择3_220](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择3_220.png)
+![汉化选择3_220](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择3_220.png)
 
 勾选接受许可协议，点击 `完成`
 
-![汉化选择4_281](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择4_281.png)
+![汉化选择4_281](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择4_281.png)
 
 之后会弹出下面的对话框，单击 install anyway
 
-![汉化选择5_336](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择5_336.png)
+![汉化选择5_336](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择5_336.png)
 
 单击现在重启，汉化完成
 
-![汉化选择6_396](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
+![汉化选择6_396](../images/Posts/2020-05-08-STM32CubeIDE软件教程/汉化选择6_396.png)
 
 #### 2. 更换主题
 
 软件自带了几个主题，具体可以点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。但官方主题不太好用，所以下面讲解如何使用外部主题。  
 菜单栏 `Help`，在下拉栏中双击 `Eclipse Marketplace`打开。  
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/install_theme.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/install_theme.png)
 之后按照软件提示，一路默认安装即可。最后重启软件，选择主题。  
 如果后面还想更改，点击菜单栏 `Windows`-> `preference`，搜索 `theme`并尝试。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/change_theme.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/change_theme.png)
 
 #### 3. 中文注释字体显示问题解决
 
 当我们尝试中文注释和英文注释混编的时候，会出现中文注释突然变小的问题
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1616038037498.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/1616038037498.png)
 
 **解决办法：** 菜单栏 `Windows`-> `preference`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/test-font.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/test-font.png)
 
 **参考链接**
 - [STM32CubeIDE注释字体问题](http://www.openedv.com/thread-300647-1-1.html)
@@ -224,31 +224,31 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 >**注意**
 软件的工作空间是会和项目文件绑定的，所以如果工程没有从Stm32CubeIDE中删除（不是真的删除，相当于卸载工程），期间在磁盘中移动工程文件是会出错的。所以当你想要移动工程时，一定要先卸载工程。
 1. 第一种：界面左上角 `file` -> `New` -> STM32 Project`
-![file新建工程](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
+![file新建工程](../images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
 
 
 2. 第二种：默认启动界面，在这里直接单击开始新工程。如果看不到下图界面，单击上图中 `红色五角星` 上方的 “感叹号” 图标，就会出现了。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/启动界面新建工程.png)
+![enter description here](../images/Posts/2020-05-08-STM32CubeIDE软件教程/启动界面新建工程.png)
 
 之后会弹出如下的 芯片选择界面。  
 这里有很多种查找芯片的方法，我们这里直接在搜索框 （**1** 处）里搜索，在右下结果框里（**2**处）选中我们要查找的芯片即可。注意其最左边的五角星 <i class="far fa-star"></i>，单击收藏，则会变成蓝色。下次我们可以直接单击左上角搜索框上方的大五角星（ **3** 处），就能够快速查看已收藏的芯片，方便快速。  
 选好后，我们单击 `下一步`。
-![芯片选择2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
+![芯片选择2](../images/Posts/2020-05-08-STM32CubeIDE软件教程/芯片选择2.png)
 	
 **1** 处输入工程名称  
 **2**处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。  
 **3** 处是编程语言，这里选择使用C++。之后单击 `下一步`
-![新建工程3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程3.png)
+![新建工程3](../images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程3.png)
 
 这里是关于库文件的选项，第一个是将库文件链接到安装目录下，这样工程目录下其实是没有库文件了，如果换电脑目录改变，则需要重新链接，不推荐。第二个是复制库文件到工程目录下。建议选择第二个。
-![新建工程4](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程4.png)
+![新建工程4](../images/Posts/2020-05-08-STM32CubeIDE软件教程/新建工程4.png)
 
 接下来就是熟悉的 CubeMX 初始化配置界面了，操作方法也没有什么难的，就是将我们之前用代码写的初始化变成了图形化操作，按照我们初始化的思路一步步勾选即可了。下面具体操作。
 
 ### 1.2 引脚与配置(Pinout  and Configuration)
 
 1. 系统配置。这里是调试工具选择和基准时钟源选择。我们用的是ST-Link的SWD（Serial Wire Debug）调试模式，所以选择 **Serial Wire** 串行线。时钟基准源默认系统滴答时钟 **SysTick**。
-![SYS](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/SYS.png)
+![SYS](../images/Posts/2020-05-08-STM32CubeIDE软件教程/SYS.png)
 
 2. 时钟源配置。一共有以下选项。
 - 外部晶体/陶瓷晶振(Crystal/Ceramic Resonator)：由外部无源晶体与MCU内部时钟驱动电路共同配合形成，有一定的启动时间，精度较高。外部晶振没有时，自动切换为自带的内部晶振。
@@ -256,25 +256,25 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 - Disable：无时钟，相关功能不工作。
 
   这里HSE配置为外部晶振，LSE选Disable(低速时钟是给看门狗和RTC的，目前未用)。时钟输出关闭。
-![RCC](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/RCC.png)
+![RCC](../images/Posts/2020-05-08-STM32CubeIDE软件教程/RCC.png)
 
 3. 引脚配置。
 在图左图形界面单击我们用到的引脚。这里我们使用的LED引脚有 PD2 和 PC8，都是低电平点亮，具体可查看开发板原理图。两个引脚我们都配置为输出模式。
-![引脚选择3](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚选择3.png)
+![引脚选择3](../images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚选择3.png)
 
     然后我们到左边的引脚具体配置。配置如图示，两个引脚相同。
-![引脚配置2](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚配置2.png)
+![引脚配置2](../images/Posts/2020-05-08-STM32CubeIDE软件教程/引脚配置2.png)
 
 ### 1.3 时钟配置(Clock Configuration)
 
 选择外部8MHz晶振，配置系统时钟为72MHz。注意APB1总线时钟式36MHz，需二分频。
 这里和后面的配置都不需要保存的，也没有保存按钮<i class="fas fa-smile"></i>
-![时钟选择](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/时钟选择.png)
+![时钟选择](../images/Posts/2020-05-08-STM32CubeIDE软件教程/时钟选择.png)
 
 ### 1.4 项目管理(Project Manager)
 
 这里我们注意勾选上图中红框部分。这样生成的代码每个外设一个文件夹，就不会全堆在main.c文件里了。其他的默认。
-![项目管理](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/项目管理.png)
+![项目管理](../images/Posts/2020-05-08-STM32CubeIDE软件教程/项目管理.png)
 
 ### 1.5 工具(Tools)
 
@@ -283,10 +283,10 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ### 1.6 编译生成初始化文件
 
 单击上方工具栏的  `设备配置工具代码生成` ，完成工程建立。观察左侧的项目资源管理器，会发现多出了gpio.c文件等等。现在就可以正式编写程序了。
-![初始化生成](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/初始化生成.png)
+![初始化生成](../images/Posts/2020-05-08-STM32CubeIDE软件教程/初始化生成.png)
 
 我们可以单击其左边的锤子 🔨 编译 按钮，编译应该是没有错误的。
-![编译](https://LonlyPan.github.io/images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
+![编译](../images/Posts/2020-05-08-STM32CubeIDE软件教程/编译.png)
 
 
 ### 1.7 新建文件夹和文件
@@ -299,11 +299,11 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 #### 新建文件和文件夹
 
 右键工程名，鼠标移至 `NEW`上，在右侧弹窗中单击 `Sorce Folder`新建文件夹。在这上面还有类似的 `Folder`选项，至于两者不同点，还请自行尝试。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件夹.png)
 随后新建源文件或头文件，和上图类似，不过这次是在刚刚新建的`文件夹名`上右键，选择`NEW`，并在右侧弹窗中单击 `Sorce Files`或者`Header File` 新建源文件和头文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建文件.png)
 头文件包含，新建文件夹后，需要在编译器中另外包含文件夹地址，否则编译会提示找不到文件。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 
 #### 导入外部文件-文件夹
 
@@ -313,7 +313,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
 1. 新建 C++ 工程
 如下图所示，只需要改动一处即可。
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
@@ -379,7 +379,7 @@ Src 里面是每个设备外设的驱动源程序，Inc 则是相对应的外设
 和 Inc 文件夹里的就是 HAL 库针对每个外设而编写的库函数文件，每个外设对应一个 stm32f1xx_hal_ppp.c 和 stm32f1xx_hal_ppp.h 文件，部分外设有特殊功能还有一个 stm32f1xx_hal_ppp_ex.c 文件，其中 ppp 为外设名称，比如
 gpio、adc、i2c 等等，见下面表格。
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-09-28-STM32CubeIDE-工程模板文件解读/图像_5.png)
+![enter description here](../images/Posts/2020-09-28-STM32CubeIDE-工程模板文件解读/图像_5.png)
 
 main.c：存放main函数和SystemClock_Config函数
 
@@ -522,7 +522,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 上述代码中：
 - `#define BITBAND` 后的内容，不同内核可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/GIPIO_adress_offset.png)
 图中红框部分 0x10 、0x14 转换成十进制就是 16 和 20。例如 STM32F103 系列的是  0x08、0x0C，那这里就需要改为 12 和 8。
 
 参考链接：
@@ -546,7 +546,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 <!--more-->
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
+![enter description here](../images/Posts/2019-9-12-STM32F030_LL库学习笔记/标准库与Cube,LL,直接写寄存器的效率对比.png)
 
 总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
 
@@ -554,7 +554,7 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ### GPIO操作
 
 配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
 
 示例：
 ```
@@ -566,7 +566,7 @@ LL_GPIO_ReadInputPort(GPIO_TypeDef \*GPIOx);  /* 读取引脚电平状态 */
 LL_mDelay(500); // ms延时，延时500ms
 ```
 API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
+![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
 
 ### 2.1 GPIO双向 I/O
