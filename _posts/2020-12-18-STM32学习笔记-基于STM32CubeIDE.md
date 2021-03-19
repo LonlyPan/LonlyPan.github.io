@@ -626,14 +626,34 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 ### GPIO双向 I/O
 
+
 有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
 如果希望某GPIO做双向传输，将其配制为OD输出模式，
 
-[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
-[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
-[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
-[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
-[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+* 开漏模式：输出寄存器中的“0”可激活 N-MOS，而输出寄存器中的“1”会使端
+* 口保持高组态 (Hi-Z)（ P-MOS 始终不激活）。
+* 施密特触发器输入被打开
+* 根据 GPIOx_PUPDR 寄存器中的值决定是否打开弱上拉电阻和下拉电阻
+* 输入数据寄存器每隔 1 个 AHB1 时钟周期对 I/O 引脚上的数据进行一次采样
+* 对输入数据寄存器的读访问可获取 I/O 状态
+* 对输出数据寄存器的读访问可获取最后的写入值
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1234567890.png)  
+
+如果需要使用一个GPIO既要用作输入也要用作输出的，可以将该引脚配置为Output-OpenDrain， 同时在引脚上连接一个上拉电阻，可将它用作(准)双向输入输出口。  
+输出时： GPIOx->ODR ＝输出值;
+输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，引脚被拉低)，然后读.
+```
+LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+LED_Pin_status ＝ LED_GPIO_Port->IDR & LED_Pin;
+```
+
+**参考链接**
+* [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
+* [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
+* [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
+* [STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+* [STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 
 ### GPIO模拟配置
 ![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
