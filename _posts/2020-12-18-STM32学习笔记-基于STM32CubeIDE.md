@@ -41,10 +41,10 @@ categories: arm
 4. HAL和LL库参考手册我们需要另外在官网搜索才能找到，`Description of STM32F4 HAL and low-layer drivers`，库函数API驱动描述手册：
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
 
-### 
 ## STM32CubeIDE简介
->产品链接
+>产品链接。建议多看看官网的资料，很多问题都能在这些文档里找到答案。
 [STM32CubeIDE官网](https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html)
+[STM32CubeIDE user guide](https://www.st.com/content/ccc/resource/technical/document/user_manual/group1/f8/a2/48/77/68/e6/4b/74/DM00629856/files/DM00629856.pdf/jcr:content/translations/en.DM00629856.pdf)
 
 ![Stm32CubeIDE_show](../images/Posts/2020-05-08-STM32CubeIDE软件教程/Stm32CubeIDE_show.png)
 
@@ -221,8 +221,12 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ### 1.1 新建工程
 
 新建工程有两种途径。如下图示：
->**注意**
-软件的工作空间是会和项目文件绑定的，所以如果工程没有从Stm32CubeIDE中删除（不是真的删除，相当于卸载工程），期间在磁盘中移动工程文件是会出错的。所以当你想要移动工程时，一定要先卸载工程。
+>开发过程中有时候需要复制一个已有的项目，在该项目之上进行开发，STM32CubeIDE不允许同一个工作空间中出现同名项目，这时候就需要修改项目名称了，方法如下：
+1. 右键项目名，选择 `Delete` 删除项目（不是真的删除，相当于卸载工程）。
+2. 复制项目，并修改项目文件夹名称。
+3. 打开项目，右键项目名，选择 `Rename` 重命名项目名
+4. 删除以前的 `.elf`和`.launch`文件。重新启动 Debug 调试。
+
 1. 第一种：界面左上角 `file` -> `New` -> STM32 Project`
 ![file新建工程](../images/Posts/2020-05-08-STM32CubeIDE软件教程/file新建工程.png)
 
@@ -425,7 +429,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  WritePin(LED1_GPIO_Port,LED1_Pin, GPIO_PIN_SET)  /* LED1输出高电平 */ 
+  HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin, GPIO_PIN_SET)  /* LED1输出高电平 */ 
   while (1)
   {
 	  HAL_GPIO_TogglePin(LED0_GPIO_Port,LED0_Pin); /* 间隔500ms翻转 LED0 引脚 */
@@ -452,12 +456,102 @@ int main(void)
 
 ### GPIO 寄存器操作
 
-[高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
-[STM32duino GPIO Registers and programming](https://gist.github.com/iwalpola/6c36c9573fd322a268ce890a118571ca)
-[GPIO Output Registers on the STM32](https://electronics.stackexchange.com/questions/336021/gpio-output-registers-on-the-stm32)
-[Would my solution work for 8-bit bus addressing using BSRR and BRR?](https://stackoverflow.com/questions/56822789/would-my-solution-work-for-8-bit-bus-addressing-using-bsrr-and-brr)
-[STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
-[STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
+**BSRR 和 BRR 关系**
+
+BSRR 和 BRR 都是 STM32 系列 MCU 中 GPIO 的寄存器。 BSRR 称为端口位设置/清除寄存器，BRR称为端口位清除寄存器。
+- BSRR 低 16 位用于设置 GPIO 口对应位输出高电平，高 16 位用于设置 GPIO 口对应位输出低电平。
+- BRR 低 16 位用于设置 GPIO 口对应位输出低电平。高 16 位为保留地址，读写无效。
+
+所以理论上来讲，BRR 寄存器的功能和 BSRR 寄存器高 16 位的功能是一样的，都可以控制端口输出低电平。也就是说，输出低电平可以有如下两种写法。
+
+```
+#define SET_BL_LOW() GPIOA->BRR=GPIO_Pin_0
+等价于
+#define SET_BL_LOW() GPIOA->BSRR=GPIO_Pin_0 << 16
+```
+这么来看的话，其实 BRR 寄存器是比较多余的。而实际上，在最新的 STM32F4 系列 MCU 的 GPIO寄存器中，已经找不到 BRR 寄存器了，仅保留了 BSRR 寄存器用于实现端口输出高低电平。
+
+可见，不管是输出高还是输出低，对 BSRR 寄存器的操作最为稳妥。
+
+
+
+BSRR常见操作
+```
+/* 低8位操作 */
+GPIOE->BSRR = (Newdata & 0xffff) | ( (~Newdata )<<16 );
+/* 16位操作 */
+GPIOE->BSRR = (Newdata & 0xff) | ( (~Newdata & 0xff)<<16 );
+```
+BSRR还有一个特点，就是如果低6位和高16位同时置1，结果以低16位为准。
+就是说同一个bit在 BSRR 低16位中为1（输出高电平），但在高16位中也是1（输出低电平），结果该bit引脚输出 1（高电平）。
+此时对多位同时操作可以这么写：
+```
+GPIOx->BSRR = 0xFFFF0000 | PATTEN;
+```
+不用考虑哪些需要置1，哪些需要清零
+
+**ODR**
+
+ODR 寄存器也是用于输出数据的寄存器，一个 ODR 寄存器控制了一组(16位)的 GPIO 输出。因此，对 ODR 进行修改也可以到达对 IO 口输出进行配置。同时通过读取该寄存器，也能够获取 IO 的当前输出状态。而 BSRR 和 BRR 只可写。
+
+但是，由于对 ODR 寄存器的读写操作必须以 16 位的形式进行。因此，如果使用 ODR 改写数据以控制输出时，须采用“读-改-写”的形式进行。
+
+假设需要对 GPIOA_Pin_6 输出高电平。采用改写 ODR 寄存器的方式时，使用“读-改-写”操作，代码如下：
+```
+GPIOB->ODR=((GPIOB->ODR | GPIO_Pin_6); 
+```
+
+而使用 BSRR 寄存器时，仅需要使用如下语句：
+```
+GPIOA->BSRR = GPIO_Pin_6;
+```
+这是因为在修改 ODR 时，为了确保对端口 6 的修改不会影响到其他端口的输出，需要对端口的原始数据进行保存，之后再对端口 6 的值进行修改，最后再写入寄存器。而对 BSRR 的操作，是写 1 有效，写 0 不改变原状态，因此可以对端口 6 置 1，其他位保持为 0。
+
+BSRR 为 1 的话，程序运行时自动会修改相应的 ODR 位。
+
+**BSRR、BRR、 ODR 之间的关系**
+
+* ODR寄存器可读可写：既能控制管脚为高电平，也能控制管脚为低电平。管脚对于位写1 GPIO管脚为高电平，写 0 为低电平（有被中断打断的风险）
+* BSRR 只写寄存器：既能控制管脚为高电平，也能控制管脚为低电平。对寄存器高16位 写1 对应管脚为低电平，写0无动作；对寄存器的第16位写1对应管脚为高电平，写 0 无动作。
+* BRR 只写寄存器：只能改变管脚状态为低电平，对寄存器 管脚对于位写 1 相应管脚会为低电平。写 0 无动作。
+
+ODR 能控制管脚高低电平为什么还需要BSRR和SRR寄存器的原因是：用BSRR和BRR去改变管脚状态的时候，没有被中断打断的风险。也就不需要关闭中断，关闭中断明显会延迟或丢失一事件的捕获，所以控制GPIO的状态最好还是用SBRR和BRR。
+
+**IDR**
+
+GPIO 端口输入数据寄存器。只用了低 16 位。该寄存器为只读寄存器，并且只能以 16 位的形式读出。  
+要想知道某个 IO 口的状态， 你只要读这个寄存器，再看某个位的状态就可以了。
+
+#### 程序编写
+
+寄存器的写法可以通过查看 HAL 函数底层实现，来学习官方如何使用寄存器的。
+```
+void led_blink()
+{
+#if 0 // ODR 方式
+	if(LED_GPIO_Port->ODR & LED_Pin)  // 高电平
+		LED_GPIO_Port->ODR=~(~LED_GPIO_Port->ODR | LED_Pin);  // 置0
+	else
+		LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+
+    HAL_Delay(2000);
+
+#endif
+	if(LED_GPIO_Port->IDR & LED_Pin)  // 高电平
+	   LED_GPIO_Port->BSRR = LED_Pin  << 16 ;   // 高位置0
+	else
+	   LED_GPIO_Port->BSRR = LED_Pin; // 低位置1
+
+    HAL_Delay(2000);
+}
+```
+**参考链接**
+* [高手带你解析STM32 BSRR BRR ODR寄存器](http://news.moore.ren/industry/64985.htm)
+* [STM32duino GPIO Registers and programming](https://gist.github.com/iwalpola/6c36c9573fd322a268ce890a118571ca)
+* [GPIO Output Registers on the STM32](https://electronics.stackexchange.com/questions/336021/gpio-output-registers-on-the-stm32)
+* [Would my solution work for 8-bit bus addressing using BSRR and BRR?](https://stackoverflow.com/questions/56822789/would-my-solution-work-for-8-bit-bus-addressing-using-bsrr-and-brr)
+* [STM32裸机学习笔记（三）—寄存器映射之BSRR与延时的爱恨情仇](https://www.codenong.com/cs106676846/)
+* [STM32 GPIO 配置之ODR, BSRR, BRR 详解](https://blog.csdn.net/GDNNNNN/article/details/87904592?spm=1001.2014.3001.5501)
 
 ### GPIO 位带操作
 
@@ -530,8 +624,57 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
+### GPIO双向 I/O
+
+有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
+如果希望某GPIO做双向传输，将其配制为OD输出模式，
+
+[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
+[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
+[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
+[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+
+### GPIO模拟配置
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
 
 ### us延时
+
+HAL 官方是没有 us 级延时函数的。这里参考正点原子例程，改写了一点。
+```
+#define F_CPU SystemCoreClock  // 系统时钟
+#define CYCLES_PER_MICROSECOND (F_CPU / 1000000U)   // 1us 的时钟周期
+//延时nus
+//nus为要延时的us数.	
+//nus:0~190887435(最大值即2^32/fac_us@fac_us=22.5)	 
+void delay_us(u32 nus)
+{		
+	u32 ticks;
+	u32 told,tnow,tcnt=0;
+	u32 reload=SysTick->LOAD;				//LOAD的值	    	 
+	ticks=nus*CYCLES_PER_MICROSECOND; 						//需要的节拍数 
+	told=SysTick->VAL;        				//刚进入时的计数器值
+	while(1)
+	{
+		tnow=SysTick->VAL;	
+		if(tnow!=told)
+		{	    
+			if(tnow<told)tcnt+=told-tnow;	//这里注意一下SYSTICK是一个递减的计数器就可以了.
+			else tcnt+=reload-tnow+told;	    
+			told=tnow;
+			if(tcnt>=ticks)break;			//时间超过/等于要延迟的时间,则退出.
+		}  
+	};
+}
+
+//延时nms
+//nms:要延时的ms数
+void delay_ms(u16 nms)
+{
+	u32 i;
+	for(i=0;i<nms;i++) delay_us(1000);
+}
+```
 
 
 ## STM32F030_LL库学习笔记
@@ -567,14 +710,6 @@ LL_mDelay(500); // ms延时，延时500ms
 ```
 API详细使用请参考官方驱动描述手册：`Description of STM32F4 HAL and low-layer drivers`
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/库参考手册.png)
-
-
-### 2.1 GPIO双向 I/O
-[STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
-[stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
-[STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
-[STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
-[STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 
 ## USART
 
