@@ -22,6 +22,7 @@ categories: arm
 
 ### 购买开发板
 
+
 ### 编程软件
 
 ### 库选择
@@ -309,6 +310,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 头文件包含，新建文件夹后，需要在编译器中另外包含文件夹地址，否则编译会提示找不到文件。
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 
+
 #### 导入外部文件-文件夹
 
 - [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
@@ -320,6 +322,9 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
+另外还需要在G++中包含头文件夹，`Properties`->`C/C++ Build`->`Tool Settings`：
+* -> `MCU G++ Compiler` -> `include paths` 和 
+* -> `MCU GCC Compiler` -> `include paths`
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
    ```
    #ifndef MY_MAIN_H_
@@ -400,7 +405,12 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ## STM32F030_HAL库学习笔记
 
-### GPIO 操作 与 调试
+操作系统：Win10
+硬件平台：STM32F401
+软件平台：STRM32CubeIDE V1.6.0
+下载器：ST-Link V2
+
+### GPIO HAL库 操作与调试
 
 #### 初始化配置
 
@@ -414,9 +424,10 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
    - GPIO_TypeDef：IO端口编号  GPIOA、 GPIOB、 …、 GPIOG  
    - GPIO_Pin：IO引脚编号 GPIO_PIN_0…GPIO_PIN_15  
    - PinState：IO状态 GPIO_PIN_SET 或者 GPIO_PIN_RESET  
-2. HAL_GPIO_TogglePin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)
-翻转某个具体引脚的状态
-3. HAL_Delay(uint32_t Delay)
+2. **HAL_GPIO_TogglePin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)**
+3. **HAL_GPIO_ReadPin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)**
+读取某个具体引脚的状态(**需要将引脚设置为输入模式 `GPIO_input`**)
+4. HAL_Delay(uint32_t Delay)
 ms 级延时函数。IDE内置的，但没有内置 us 级延时函数
 **主函数：**
 
@@ -455,6 +466,8 @@ int main(void)
 
 
 ### GPIO 寄存器操作
+
+#### 寄存器介绍
 
 **BSRR 和 BRR 关系**
 
@@ -522,6 +535,8 @@ ODR 能控制管脚高低电平为什么还需要BSRR和SRR寄存器的原因是
 GPIO 端口输入数据寄存器。只用了低 16 位。该寄存器为只读寄存器，并且只能以 16 位的形式读出。  
 要想知道某个 IO 口的状态， 你只要读这个寄存器，再看某个位的状态就可以了。
 
+#### 初始化配置
+沿用 HAL 库操作时的配置
 #### 程序编写
 
 寄存器的写法可以通过查看 HAL 函数底层实现，来学习官方如何使用寄存器的。
@@ -555,7 +570,8 @@ void led_blink()
 
 ### GPIO 位带操作
 
-关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。下面只说明如何使用：
+#### 位带操作设置
+关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。只需要将下段代码加入到任意头文件中：
 
 ```c 
 //位带操作,实现51类似的GPIO控制功能
@@ -607,12 +623,6 @@ void led_blink()
 #define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //输入
 ```
 
-**示例**
-```
-/* 操作相应I/O前，必须先配置初始化，才能使用位带操作 */
-PGout(10)= 1;  // PG10 输出高电平
-uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
-```
 上述代码中：
 - `#define BITBAND` 后的内容，不同内核可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
@@ -624,12 +634,23 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
-### GPIO双向 I/O
+#### 初始化配置
 
+沿用 HAL 库操作时的配置
+
+#### 程序编写
+```
+/* 操作相应I/O前，必须先配置初始化，才能使用位带操作 */
+PGout(10)= 1;  // PG10 输出高电平
+uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
+```
+
+### GPIO双向 I/O
 
 有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
 如果希望某GPIO做双向传输，将其配制为OD输出模式，
 
+#### F401 开漏输出模式介绍
 * 开漏模式：输出寄存器中的“0”可激活 N-MOS，而输出寄存器中的“1”会使端
 * 口保持高组态 (Hi-Z)（ P-MOS 始终不激活）。
 * 施密特触发器输入被打开
@@ -640,15 +661,30 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 
 ![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1234567890.png)  
 
-如果需要使用一个GPIO既要用作输入也要用作输出的，可以将该引脚配置为Output-OpenDrain， 同时在引脚上连接一个上拉电阻，可将它用作(准)双向输入输出口。  
-输出时： GPIOx->ODR ＝输出值;
-输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，引脚被拉低)，然后读.
-```
-LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
-LED_Pin_status ＝ LED_GPIO_Port->IDR & LED_Pin;
-```
+另外其实将IO设置为推挽输出模式时，也可以随时读取 IO 引脚状态，但在该模式下，不论输出高、低电平，P-MOS和N-MOS总有一个处于导通状态，轻则影响外部输入信号，重则烧毁芯片（外部拉低或拉高，MOS都相当于短路，导致大电流）。所以并不能作为双向 IO。
 
-**参考链接**
+#### 初始化配置
+
+* 将该引脚配置为Output-OpenDrain，
+* 在引脚上连接一个上拉电阻（从上图可以看出，**F401 能通过软件配置上下拉电阻的；但在 F103 上是没有的，则需要外部硬件上拉**）
+
+上述具体实现：在沿用 HAL 库操作时的配置上，只需修改以下图示部分：
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/test.png)  
+
+
+#### 程序编写
+
+* 输出时： 
+    ```
+    GPIOx->BSRR ＝ 输出值;
+    ```
+* 输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，影响外部输入)，然后通过 GPIOx->IDR 读.
+   ```
+   LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+   LED_Pin_status = LED_GPIO_Port->IDR & LED_Pin;
+   ```
+
+#### 参考链接
 * [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
 * [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
 * [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
@@ -656,11 +692,47 @@ LED_Pin_status ＝ LED_GPIO_Port->IDR & LED_Pin;
 * [STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 
 ### GPIO模拟配置
+
+#### 模拟配置介绍
+该模式一般用于复用状态下或低功耗要求下。不作为普通输入输出控制下的模式配置。
+
 ![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
+
+**总结**
+1、模拟配置会关闭引脚的一切内部相关联设施，此时普通 I/O 操作失效（不能读也不能输出）。因此引脚功耗为0。因此可以通过将引脚配置为该模式来**降低芯片功耗**。 
+2、模拟配置另外好处就是保证了这个引脚是 **“干净”** 的，如果和外部连接，那个该引脚就完全反映了外部引脚状态。因此将该引脚内联到A/D 片上外设，就可以精确测量引脚的模拟值了。实际上在我们将引脚复用为 A/D 功能时，就会默认配置为 Analog 模式。
+
+#### 初始化配置
+
+`Pinout` 界面，引脚单击选择即可
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/analog.png)  
+
+或者在 `Project Manager` 界面选中将不用的引脚都配置为模拟模式，降低功耗
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/analog%20full.png)  
+
+#### 程序编写
+
+无
+
+**参考资料**
+- [1、Question about ADC versus GPIO Analog](https://community.st.com/s/question/0D50X00009XkfqtSAB/question-about-adc-versus-gpio-analog)  
+- [2、What pins can I use for Analog Input/Output? STM32CubeMX allows every GPIO to be set to ''GPIO_Analog''?](https://community.st.com/s/question/0D50X00009XkWkeSAF/what-pins-can-i-use-for-analog-inputoutput-stm32cubemx-allows-every-gpio-to-be-set-to-gpioanalog)  
 
 ### us延时
 
+#### SysTick介绍
 HAL 官方是没有 us 级延时函数的。这里参考正点原子例程，改写了一点。
+
+SysTick定时器是存在于系统内核的一个滴答定时器，只要是ARM Cortex-M0/M3/M4/M7内核的MCU都包含这个定时器，它是一个24位的递减定时器，当计数到 0 时，将从RELOAD 寄存器中自动重装载定时初值，开始新一轮计数。使用内核的SysTick定时器来实现延时，可以不占用系统定时器，由于和MCU外设无关，所以代码的移植，在不同厂家的Cortex-M内核MCU之间，可以很方便的实现。
+
+STM32默认设置 SysTick 定时为1ms，也就是 HAL_Delay 的时钟来源。所以我们无需再初始化,如果是其它芯片，可能需要使用下面语句初始化 SysTick：
+```
+SysTick_Config(SystemCoreClock / 1000000);  //定时1us
+// 或
+SysTick_Config(SystemCoreClock / 1000);     //定时1ms
+```
+
+下面是具体实现，在新文件中添加以下代码并引用：
 ```
 #define F_CPU SystemCoreClock  // 系统时钟
 #define CYCLES_PER_MICROSECOND (F_CPU / 1000000U)   // 1us 的时钟周期
@@ -672,8 +744,8 @@ void delay_us(u32 nus)
 	u32 ticks;
 	u32 told,tnow,tcnt=0;
 	u32 reload=SysTick->LOAD;				//LOAD的值	    	 
-	ticks=nus*CYCLES_PER_MICROSECOND; 						//需要的节拍数 
-	told=SysTick->VAL;        				//刚进入时的计数器值
+	ticks=nus*CYCLES_PER_MICROSECOND; 		//nus 需要的节拍数 
+	told=SysTick->VAL;        				//计数器值
 	while(1)
 	{
 		tnow=SysTick->VAL;	
@@ -696,7 +768,56 @@ void delay_ms(u16 nms)
 }
 ```
 
+#### 初始化配置
 
+参考 HAL 库操作时的 SYS 和 RCC 配置，启动 Timebase Source 和 系统时钟。
+
+#### 程序编写
+
+直接引用即可。
+
+### 外部中断
+
+通过外部按键，中断触发，再中断函数中翻转LED。
+
+#### 硬件原理图
+
+![图 5](../images\Posts\2020-12-18-STM32学习笔记-基于STM32CubeIDE\按键硬件图.png) 
+
+#### 初始化配置
+
+1. 配置引脚为外部中断模式
+2. 配置引脚：中断触发模式，上下拉。
+根据按键原理图，这里设置为上拉，下降沿触发。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD_%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE.png)  
+3. 中断配置：使能中断，中断分组及优先级
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD_%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+```
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+
+	if(GPIO_Pin & KEY_Pin){
+		 led_toggle(); //电平反转
+		 HAL_Delay(1000);  // 防抖，防止频繁触发中断，导致LED翻转现象不明显
+	}
+}
+
+```
+`HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)`为 HAL 库的引脚外部中断回调函数，所有的引脚中断都会调用该函数。用户只需要在这里面编写中断处理函数接即可。`GPIO_Pin`传参表示触发中断的引脚编号。  
+`GPIO_Pin & KEY_Pin`判断当前中断是否由按键引脚触发的，再运行处理函数。
+
+>**注意：** 这个回调函数是只针对外部中断的（EXTI），定时中断和其他中断都都还有自己的回调函数。HAL的思想大概就是同类中断集中在一个回调函数，不同类的分开。
+
+
+#### 中断触发与事件触发
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/EXIT%E5%8A%9F%E8%83%BD%E6%A1%86%E5%9B%BE.png)  
+
+
+https://blog.csdn.net/tanyjin/article/details/53359883
+
+https://blog.csdn.net/qq_43328313/article/details/106559934
 ## STM32F030_LL库学习笔记
 
 [STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
