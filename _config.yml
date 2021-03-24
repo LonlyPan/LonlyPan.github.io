@@ -26,7 +26,7 @@ header:
     分类: /category/
     关于: /about/
     书影: /Book/
-    项目: www.lonlystack.com  # /Project/
+    项目: https://lonlypan.com #/Project/
     
 
 permalink: /archivers/:title
