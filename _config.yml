@@ -25,7 +25,7 @@ header:
   links:             # Links on the header. Link to in-site page with a slash as prefix
     分类: /category/
     关于: /about/
-    书影: /Book/
+    书影: /book/
     项目: https://lonlystack.com #/Project/
     
 
