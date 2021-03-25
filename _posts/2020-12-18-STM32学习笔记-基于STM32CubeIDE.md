@@ -22,6 +22,7 @@ categories: arm
 
 ### 购买开发板
 
+
 ### 编程软件
 
 ### 库选择
@@ -309,6 +310,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 头文件包含，新建文件夹后，需要在编译器中另外包含文件夹地址，否则编译会提示找不到文件。
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/头文件包含1.png)
 
+
 #### 导入外部文件-文件夹
 
 - [stm32CubeIDE 在自己工程中添加.c 和.h文件](https://blog.csdn.net/qq_36300069/article/details/103226568)
@@ -320,6 +322,9 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/新建C++工程.png)
 2. 添加个人文件夹（参考上文的`工程中添加文件`）
 为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。
+另外还需要在G++中包含头文件夹，`Properties`->`C/C++ Build`->`Tool Settings`：
+* -> `MCU G++ Compiler` -> `include paths` 和 
+* -> `MCU GCC Compiler` -> `include paths`
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
    ```
    #ifndef MY_MAIN_H_
@@ -400,7 +405,12 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 ## STM32F030_HAL库学习笔记
 
-### GPIO 操作 与 调试
+操作系统：Win10
+硬件平台：STM32F401
+软件平台：STRM32CubeIDE V1.6.0
+下载器：ST-Link V2
+
+### GPIO HAL库 操作与调试
 
 #### 初始化配置
 
@@ -414,9 +424,10 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
    - GPIO_TypeDef：IO端口编号  GPIOA、 GPIOB、 …、 GPIOG  
    - GPIO_Pin：IO引脚编号 GPIO_PIN_0…GPIO_PIN_15  
    - PinState：IO状态 GPIO_PIN_SET 或者 GPIO_PIN_RESET  
-2. HAL_GPIO_TogglePin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)
-翻转某个具体引脚的状态
-3. HAL_Delay(uint32_t Delay)
+2. **HAL_GPIO_TogglePin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)**
+3. **HAL_GPIO_ReadPin(GPIO_TypeDef \*GPIOx, uint16_t GPIO_Pin)**
+读取某个具体引脚的状态(**需要将引脚设置为输入模式 `GPIO_input`**)
+4. HAL_Delay(uint32_t Delay)
 ms 级延时函数。IDE内置的，但没有内置 us 级延时函数
 **主函数：**
 
@@ -453,8 +464,9 @@ int main(void)
 这里就是调试窗口了，红框内的都是和调试有关的工具按钮，这里不多做介绍，自行摸索。
 ![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%B0%83%E8%AF%954_23.png)  
 
-
 ### GPIO 寄存器操作
+
+#### 寄存器介绍
 
 **BSRR 和 BRR 关系**
 
@@ -522,6 +534,8 @@ ODR 能控制管脚高低电平为什么还需要BSRR和SRR寄存器的原因是
 GPIO 端口输入数据寄存器。只用了低 16 位。该寄存器为只读寄存器，并且只能以 16 位的形式读出。  
 要想知道某个 IO 口的状态， 你只要读这个寄存器，再看某个位的状态就可以了。
 
+#### 初始化配置
+沿用 GPIO HAL 库操作时的配置
 #### 程序编写
 
 寄存器的写法可以通过查看 HAL 函数底层实现，来学习官方如何使用寄存器的。
@@ -555,7 +569,8 @@ void led_blink()
 
 ### GPIO 位带操作
 
-关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。下面只说明如何使用：
+#### 位带操作设置
+关于位带操作，网上有很多讲解，这里不再详述。可以参考：`参考手册` 的 GPIO 章节，`编程手册` 的 2.2.5 Bit-banding 章节，自行深入学习。只需要将下段代码加入到任意头文件中：
 
 ```c 
 //位带操作,实现51类似的GPIO控制功能
@@ -607,12 +622,6 @@ void led_blink()
 #define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //输入
 ```
 
-**示例**
-```
-/* 操作相应I/O前，必须先配置初始化，才能使用位带操作 */
-PGout(10)= 1;  // PG10 输出高电平
-uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
-```
 上述代码中：
 - `#define BITBAND` 后的内容，不同内核可能需要另外修改（M3和M4内核已经验证，可通用）。 
 - 数字 `20`和`16`是寄存器  ODR 和 IDR 的地址偏移，不同芯片也需要做出相应修改，具体查看 `参考手册` 的 GPIO 章节的 GPIOx_IDR、GPIOx_ODR寄存器描述
@@ -624,43 +633,33 @@ uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 - [CSDN-快速理解STM32位带操作原理和用途](https://blog.csdn.net/ybhuangfugui/article/details/108067563)
 - [cnblogs-第13章 GPIO-位带操作—零死角玩转STM32-F429系列](https://www.cnblogs.com/firege/p/5748713.html)
 
-### GPIO双向 I/O
+#### 初始化配置
 
+沿用 GPIO HAL 库操作时的配置
 
-有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
-如果希望某GPIO做双向传输，将其配制为OD输出模式，
-
-* 开漏模式：输出寄存器中的“0”可激活 N-MOS，而输出寄存器中的“1”会使端
-* 口保持高组态 (Hi-Z)（ P-MOS 始终不激活）。
-* 施密特触发器输入被打开
-* 根据 GPIOx_PUPDR 寄存器中的值决定是否打开弱上拉电阻和下拉电阻
-* 输入数据寄存器每隔 1 个 AHB1 时钟周期对 I/O 引脚上的数据进行一次采样
-* 对输入数据寄存器的读访问可获取 I/O 状态
-* 对输出数据寄存器的读访问可获取最后的写入值
-
-![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1234567890.png)  
-
-如果需要使用一个GPIO既要用作输入也要用作输出的，可以将该引脚配置为Output-OpenDrain， 同时在引脚上连接一个上拉电阻，可将它用作(准)双向输入输出口。  
-输出时： GPIOx->ODR ＝输出值;
-输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，引脚被拉低)，然后读.
+#### 程序编写
 ```
-LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
-LED_Pin_status ＝ LED_GPIO_Port->IDR & LED_Pin;
+/* 操作相应I/O前，必须先配置初始化，才能使用位带操作 */
+PGout(10)= 1;  // PG10 输出高电平
+uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ```
 
-**参考链接**
-* [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
-* [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
-* [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
-* [STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
-* [STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
 
-### GPIO模拟配置
-![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
+### 自定义延时
 
-### us延时
-
+#### SysTick介绍
 HAL 官方是没有 us 级延时函数的。这里参考正点原子例程，改写了一点。
+
+SysTick定时器是存在于系统内核的一个滴答定时器，只要是ARM Cortex-M0/M3/M4/M7内核的MCU都包含这个定时器，它是一个24位的递减定时器，当计数到 0 时，将从RELOAD 寄存器中自动重装载定时初值，开始新一轮计数。使用内核的SysTick定时器来实现延时，可以不占用系统定时器，由于和MCU外设无关，所以代码的移植，在不同厂家的Cortex-M内核MCU之间，可以很方便的实现。
+
+STM32默认设置 SysTick 定时为1ms，也就是 HAL_Delay 的时钟来源。所以我们无需再初始化,如果是其它芯片，可能需要使用下面语句初始化 SysTick：
+```
+SysTick_Config(SystemCoreClock / 1000000);  //定时1us
+// 或
+SysTick_Config(SystemCoreClock / 1000);     //定时1ms
+```
+
+下面是具体实现，在新文件中添加以下代码并引用：
 ```
 #define F_CPU SystemCoreClock  // 系统时钟
 #define CYCLES_PER_MICROSECOND (F_CPU / 1000000U)   // 1us 的时钟周期
@@ -672,8 +671,8 @@ void delay_us(u32 nus)
 	u32 ticks;
 	u32 told,tnow,tcnt=0;
 	u32 reload=SysTick->LOAD;				//LOAD的值	    	 
-	ticks=nus*CYCLES_PER_MICROSECOND; 						//需要的节拍数 
-	told=SysTick->VAL;        				//刚进入时的计数器值
+	ticks=nus*CYCLES_PER_MICROSECOND; 		//nus 需要的节拍数 
+	told=SysTick->VAL;        				//计数器值
 	while(1)
 	{
 		tnow=SysTick->VAL;	
@@ -695,6 +694,669 @@ void delay_ms(u16 nms)
 	for(i=0;i<nms;i++) delay_us(1000);
 }
 ```
+
+#### 初始化配置
+
+参考 HAL 库操作时的 SYS 和 RCC 配置，启动 Timebase Source 和 系统时钟。
+
+#### 程序编写
+
+直接引用即可。
+
+### 按键输入
+
+这里提供两种按键输入检测方法：阻塞和非阻塞。
+
+#### 硬件原理图
+
+![图 5](../images\Posts\2020-12-18-STM32学习笔记-基于STM32CubeIDE\按键硬件图.png) 
+
+#### 初始化配置
+
+基本沿用GPIO HAL 库操作时的配置，只不过在 IO 功能配置时将按键引脚配置为 **输入模式**（GPIO_Input）,上下拉配置根据硬件选择，这里选择上拉，低电平触发。
+
+#### 阻塞-程序编写
+
+这个就直接参考正点原子的函数即可，利用延时函数消抖延时检测。
+
+``` cpp
+// 长按无效，按键必须松开才有效
+int Key_Scan(void){
+	if(HAL_GPIO_ReadPin(Key0_GPIO_Port,Key0_Pin) == 0){ // 检测到按键为低电平
+		HAL_Delay(10);
+		if(HAL_GPIO_ReadPin(Key0_GPIO_Port,Key0_Pin) == 0){
+			while(HAL_GPIO_ReadPin(Key0_GPIO_Port,Key0_Pin) == 1);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+// 正点原子写法
+//mode:0,不支持连续按;1,支持
+//0，没有任何按键按下
+//1， WKUP 按下 WK_UP
+#define KEY0 HAL_GPIO_ReadPin(Key0_GPIO_Port,Key0_Pin) //KEY0 按键
+u8 KEY_Scan(u8 mode)
+{
+    static u8 key_up=1; //按键松开标志
+    if(mode == 1)key_up=1; //支持连按
+    if(key_up && (KEY0 == 0){
+        delay_ms(10);
+        key_up=0;
+        if(KEY0 == 0) return KEY0_PRES;
+    }
+    else if(KEY0 == 1) key_up=1;
+    return 0; //无按键按下
+}
+```
+
+#### 非阻塞-程序编写
+
+在编写非阻塞程序前，我们需要先了解一个函数：`HAL_GetTick()`
+
+如果你仔细研究 `HAL_Delay()` 函数的话，会发现其实它底层是调用了 `HAL_GetTick()`。HAL库中原型如下：
+```
+/**
+  * @brief Provides a tick value in millisecond.
+  * @note This function is declared as __weak to be overwritten in case of other 
+  *       implementations in user file.
+  * @retval tick value
+  */
+__weak uint32_t HAL_GetTick(void)
+{
+  return uwTick;
+}
+```
+其中的 `uwTick`又被`HAL_IncTick()`调用，该函数又被系统滴答定时器中断（1ms）调用，每次递增 1, 所以它的值代表了系统上电运行至今的时间（ms），而我们则就可以通过`HAL_GetTick()`:
+1. 获取系统运行时间，最大计时 49.7 天。（`uwTick`为32位，2^32/1000/60/60/24 = 49.7）
+2. 也可以利用该函数，做一个ms的计数器
+
+非阻塞按键检测程序正是利用第2点，移植了 [OneButtonLibrary](http://www.mathertel.de/Arduino/OneButtonLibrary.aspx) 库，同时实现按键的单击、双击、长按检测。还不会阻塞正常程序执行。
+
+```
+/*************** key.h文件 ***************/
+
+#define millis() HAL_GetTick()  /* 获取系统时间，用于按键的计时基准ms */
+typedef unsigned long millis_t; /* 专门用于 millis() 型变量声明 */
+
+/* 按键状态 */
+enum KEY_STATUS{
+    NO_CLICK,        /* 没有动作 */
+    SINGLE_CLICK,    /* 单击 */
+    DOUBLE_CLICK,    /* 双击 */
+    LONGLE_CLICK     /* 长按 */
+};
+
+// 按键低电平有效
+#define BUTTON_PRESSED  (HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin)!=1)
+
+/**
+ * @brief  按键扫描状态机（FSM）
+ * @retval enum key_status
+ */
+u8 button_tick(void);
+
+
+/*************** key.c文件 ***************/
+
+#define DEBOUNCETIME  50 // ms 按键去抖时间
+#define CLICKTIME  100  // ms 检测到单击之前必须经过的时间（超过这个时间可能是双击或长按）
+#define LONGTIME  1500 // ms 检测到长按之前必须经过的时间（超过这个时间是长按）
+
+// 这些变量在按键检测时保存信息。
+// 它们在程序启动时初始化一次，并在每次调用key_scan()函数时更新。
+static u8 s_state = 0;  // 状态机标志位
+static millis_t s_startTime = 0; // will be set in state 1
+static millis_t s_stopTime = 0; // will be set in state 2
+
+u8 button_tick(void)
+{
+    u8 key_status = 0;
+    millis_t now = millis(); // 获取当前的时间 ms.
+
+    if (s_state == 0) { // 等待按键按下.
+        if (BUTTON_PRESSED) {
+            s_state = 1; // 转到状态1
+            s_startTime = now; // 记住按键按下的时间（当前时间）
+        }
+        else
+            key_status = NO_CLICK;
+    }
+    else if (s_state == 1) { // 等待按键被释放
+
+        if ((!BUTTON_PRESSED) && ((unsigned long)(now - s_startTime) < DEBOUNCETIME)) {
+            // 按键释放太快，认为是抖动，返回状态0，认为按键没有被按下，再次返回状态0
+            s_state = 0;
+        }
+        else if (!BUTTON_PRESSED) { // 按键释放且有效
+            s_state = 2; // // 转到状态2
+            s_stopTime = now; // remember stopping time
+        }
+        else if ((BUTTON_PRESSED) && ((unsigned long)(now - s_startTime) > LONGTIME)) {
+            s_state = 6; // 按键已知每释放，且按下的时间超过了长按的时间，则认为是长按，转到状态6
+            s_stopTime = now; // // 记住当前时间
+        } else {
+            // Button was pressed down. wait. Stay in this state.
+        } // if
+    }
+    else if (s_state == 2) {
+        // waiting for menu pin being pressed the second time or timeout.
+        if ((unsigned long)(now - s_startTime) > CLICKTIME) {
+            // this was only a single short click
+            key_status = SINGLE_CLICK;
+            s_state = 0; // restart.
+        } else if ((BUTTON_PRESSED) && ((unsigned long)(now - s_stopTime) > DEBOUNCETIME)) {
+            s_state = 3; // step to state 3
+            s_startTime = now; // remember starting time
+        } // if
+    }
+    else if (s_state == 3) { // waiting for menu pin being released finally.
+        // Stay here for at least _debounceTicks because else we might end up in
+        // state 1 if the button bounces for too long.
+        if ((!BUTTON_PRESSED) && ((unsigned long)(now - s_startTime) > DEBOUNCETIME)) {
+            // this was a 2 click sequence.
+            key_status = DOUBLE_CLICK;
+            s_state = 0; // restart.
+            s_stopTime = now; // remember stopping time
+        } // if
+    }
+    else if (s_state == 6) {  /* 长按状态处理 */
+        // waiting for pin being release after long press.
+        if (!BUTTON_PRESSED) {
+            s_state = 0; // restart.
+            s_stopTime = now; // remember stopping time
+        } else {
+            // button is being long pressed
+            key_status =  LONGLE_CLICK;
+        } // if
+    } // if
+    return key_status;
+} // OneButton.tick()
+```
+
+之后只要在主程序中循环调用函数 `button_tick()`，读取返回值，就能知道按键的状态。
+
+### GPIO 双向 I/O
+
+有时需要IO既要作为输出，还要作为输入读取。如果采用初始化重新配置的话，就会很慢且繁琐。
+如果希望某GPIO做双向传输，将其配制为OD输出模式，
+
+#### F401 开漏输出模式介绍
+* 开漏模式：输出寄存器中的“0”可激活 N-MOS，而输出寄存器中的“1”会使端
+* 口保持高组态 (Hi-Z)（ P-MOS 始终不激活）。
+* 施密特触发器输入被打开
+* 根据 GPIOx_PUPDR 寄存器中的值决定是否打开弱上拉电阻和下拉电阻
+* 输入数据寄存器每隔 1 个 AHB1 时钟周期对 I/O 引脚上的数据进行一次采样
+* 对输入数据寄存器的读访问可获取 I/O 状态
+* 对输出数据寄存器的读访问可获取最后的写入值
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1234567890.png)  
+
+另外其实将IO设置为推挽输出模式时，也可以随时读取 IO 引脚状态，但在该模式下，不论输出高、低电平，P-MOS和N-MOS总有一个处于导通状态，轻则影响外部输入信号，重则烧毁芯片（外部拉低或拉高，MOS都相当于短路，导致大电流）。所以并不能作为双向 IO。
+
+#### 初始化配置
+
+* 将该引脚配置为Output-OpenDrain，
+* 在引脚上连接一个上拉电阻（从上图可以看出，**F401 能通过软件配置上下拉电阻的；但在 F103 上是没有的，则需要外部硬件上拉**）
+
+上述具体实现：在沿用 GPIO HAL 库操作时的配置基础上，只需修改以下图示部分：
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/test.png)  
+
+
+#### 程序编写
+
+* 输出时： 
+    ```
+    GPIOx->BSRR ＝ 输出值;
+    ```
+* 输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，影响外部输入)，然后通过 GPIOx->IDR 读.
+   ```
+   LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
+   LED_Pin_status = LED_GPIO_Port->IDR & LED_Pin;
+   ```
+
+#### 参考链接
+* [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
+* [stm32的双向io口](https://blog.csdn.net/weixin_30443813/article/details/96729719)
+* [STM32 IO口双向问题](https://my.oschina.net/hoolev/blog/525208)
+* [STM32 GPIO八种输入输出模式的功能及区别](https://blog.csdn.net/weixin_41072132/article/details/103264249)
+* [STM32的8种GPIO输入输出模式深入详解](https://blog.csdn.net/baidu_37366055/article/details/80060962)
+
+### GPIO 模拟配置
+
+#### 模拟配置介绍
+该模式一般用于复用状态下或低功耗要求下。不作为普通输入输出控制下的模式配置。
+
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/GPIO%E6%A8%A1%E6%8B%9F%E9%85%8D%E7%BD%AE.png)  
+
+**总结**
+1、模拟配置会关闭引脚的一切内部相关联设施，此时普通 I/O 操作失效（不能读也不能输出）。因此引脚功耗为0。因此可以通过将引脚配置为该模式来**降低芯片功耗**。 
+2、模拟配置另外好处就是保证了这个引脚是 **“干净”** 的，如果和外部连接，那个该引脚就完全反映了外部引脚状态。因此将该引脚内联到A/D 片上外设，就可以精确测量引脚的模拟值了。实际上在我们将引脚复用为 A/D 功能时，就会默认配置为 Analog 模式。
+
+#### 初始化配置
+
+`Pinout` 界面，引脚单击选择即可
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/analog.png)  
+
+或者在 `Project Manager` 界面选中将不用的引脚都配置为模拟模式，降低功耗
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/analog%20full.png)  
+
+#### 程序编写
+
+无
+
+**参考资料**
+- [1、Question about ADC versus GPIO Analog](https://community.st.com/s/question/0D50X00009XkfqtSAB/question-about-adc-versus-gpio-analog)  
+- [2、What pins can I use for Analog Input/Output? STM32CubeMX allows every GPIO to be set to ''GPIO_Analog''?](https://community.st.com/s/question/0D50X00009XkWkeSAF/what-pins-can-i-use-for-analog-inputoutput-stm32cubemx-allows-every-gpio-to-be-set-to-gpioanalog)  
+
+
+
+### 外部中断
+
+通过外部按键，中断触发，再中断函数中翻转LED。
+
+#### 硬件原理图
+
+![图 5](../images\Posts\2020-12-18-STM32学习笔记-基于STM32CubeIDE\按键硬件图.png) 
+
+#### 初始化配置
+
+1. 配置引脚为外部中断模式
+2. 配置引脚：中断触发模式，上下拉。
+根据按键原理图，这里设置为上拉，下降沿触发。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD_%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE.png)  
+3. 中断配置：使能中断，中断分组及优先级
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD_%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+```
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+
+	if(GPIO_Pin & KEY_Pin){
+		 led_toggle(); //电平反转
+		 HAL_Delay(1000);  // 防抖，防止频繁触发中断，导致LED翻转现象不明显
+	}
+}
+
+```
+`HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)`为 HAL 库的引脚外部中断回调函数，所有的引脚中断都会调用该函数。用户只需要在这里面编写中断处理函数接即可。`GPIO_Pin`传参表示触发中断的引脚编号。  
+`GPIO_Pin & KEY_Pin`判断当前中断是否由按键引脚触发的，再运行处理函数。
+
+>**注意：** 这个回调函数是只针对外部中断的（EXTI），定时中断和其他中断都都还有自己的回调函数。HAL的思想大概就是同类中断集中在一个回调函数，不同类的分开。
+
+
+### 中断与事件
+
+#### Cortex-M3 处理器内核 vs 基于Cortex-M3的MCU
+Cortex-M3 处理器内核是由 ARM 公司设计的，传统意义上的 ARM7/ARM9（简称A7/A9）  也是处理器内核，也是 ARM 公司设计的。
+
+Cortex‐M3处理器内核：故名思意就是单片机（MCU）的核心，是单片机的中央处理单元（CPU）
+
+完整的基于CM3的MCU还需要很多其它组件。在芯片制造商得到CM3处理器内核的使用授权后，它们就可以把CM3内核用在自己的硅片设计中，添加存储器，外设， I/O以及其它功能块。不同厂家设计出的单片机会有不同的配置，包括存储器容量、类型、外设等都各具特色。
+
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/213453.png)
+
+#### 中断和异常
+
+中断属于异常的一种。所有能打断正常执行流的事件都称为异常
+
+CM3 的所有中断机制都由 NVIC 实现。除了支持 240 条中断之外， NVIC 还支持 16‐4‐1=11 个内
+部异常源（保留了 4+1 个档位），可以实现 fault 管理机制。结果， CM3 就有了 256 个预定义的异常类型。其中编号为 1－15 的对应系统异常，大于等于 16 的则全是外部中断。
+
+类型编号为 1－15 的系统异常如表 7.1 所示（注意： 没有编号为 0 的异常），从 16 开始的外部中断类型如表 7.2 所示
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/CM3%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B.png) 
+
+![在这里插入图片描述](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/CM3%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD%E6%B8%85%E5%8D%95.png)  
+
+虽然 CM3 是支持 240 个外中断的，但具体使用了多少个是由芯片制造商决定。 CM3 还有一个NMI（不可屏蔽中断）输入脚。当它被置为有效（ assert）时， NMI 服务例程会无条件地执行。
+
+#### STM32外部中断（EXTI ）
+STM32F103 是基于 CM3 内核设计的，ST 公司（芯片制造商）在原有 CM3 内核基础上，添加了储如定时器、串口、DMA等外设，最终组合成一个STM32单片机。其中 CM3 内核是整个单片机的核心部分，相当于CPU（大脑）
+
+所以 STM32 根据原有 NVIC 中断，从中选择性添加了部分中断，并重新命名与排序。下图是STM32的中断向量表：
+
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/1236.png)  
+
+从表中可以看出，STM32 对上文中 CM3 内核的系统异常/外部中断表重新进行了编排和删减，把编号从-3 至 6 的中断向量定义为系统异常。从编号 7 开始将原本 CM3 所描述的外部中断又分成了若干中断类型：外部中断（EXTI）、定时器中断、DMA中断等等。
+
+
+细心的朋友可能已经发现了这里有一个概念冲突：**外部中断**。释义如下:
+>CM3 内核描述中的外部中断均是相对于内核而言的，比如串口中断、定时器中断等等都是（内核的）外部中断！而这里提到的STM32的外部中断（EXTI）指的是芯片的外部中断，主要是由芯片外部事件触发的中断，不是内核的外部中断！
+STM32的外部中断（EXTI）属于内核的外部中断一部分。在STM32手册中外部中断（EXIT）均是指芯片的外部中断**加粗样式**，也就是上表中的 EXIT0-9。
+这里的 `内外部` 就是物理空间的内外部。
+
+所以当阅读 STM32 参考手册时，外部中断（EXTI）指的均是芯片外部（IO引脚）事件触发的中断。而当阅读网络文章时，则要注意区分。为了避免混淆，都会加 `（EXTI）` 以区分。
+
+这里还有一个概念：`软件中断` ，下文中再详述。
+另外 STM32 是没有 ~~内部中断~~  这个概念的，
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/内核与中断.png)  
+
+#### 中断/事件关系
+MCU运行过程，其中会有许多各种各样的事件，比方：管脚电平变化、计数器溢出、DMA空、FIFO非空、AD转换结束、超时、外设使能、初始化等等。
+其中有些事件本身是不会导致中断产生的，比方外设使能或部分初始化动作是不会导致中断发生的；有些事件则可能导致中断发生，比方计数器溢出，AD转换结束等，这些就是中断事件。当然这些中断事件最终能否触发后续中断，还需要对中断事件进行配置。
+
+**先说结论**
+- 中断：处理器运行的一个状态，该状态会打断处理器当前正常的进程。
+- 事件：就是事件。其可能触发中断。
+- 中断事件：触发中断的事件，而且软件上也有中断函数的，叫中断事件
+- 中断是中断事件发生的结果，中断事件属于事件，事件可分为中断事件或非中断事件
+
+我们可以借助 STM32 MCU的GPIO的外部事件与中断控制器的框图来理解上述结论。
+>这张图的在 STM32中文手册 中是错误的，英文版的是对的。因而网上很多文章此处的配图都有误，我这里重置了。
+
+
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/EXTI%E5%8A%9F%E8%83%BD%E6%A1%86%E5%9B%BE.png)  
+
+我们先关注两个寄存器：`中断屏蔽寄存器`和`事件屏蔽寄存器`。这两个寄存器决定了从编号1、2、3输入进来的事件最终会输出脉冲发生器（不产生中断）还是 NVIC 中断控制器（产生中断）。从而决定了输入的事件是中断事件还是非中断事件。
+
+MCU参考手册里在谈到事件的触发方式时引入了`事件模式`和`中断模式`两个概念。这里的不同模式就是通过控制这两个寄存器实现的。
+>**例子:**
+比方STM32的GPIO口的电平跳变是可能触发外部中断（EXIT）的。但在具体配置时，可以根据需要来决定启用还是禁用相关脚的中断功能，从而选择不同的事件触发方式，即：`外部事件模式`和`外部中断模式`。如果不希望电平跳变事件触发中断，就配置为事件模式，反之，配置为中断模式
+
+**接下来详细说明 EXIT 执行过程。**
+上图中信号线上划有一条斜线，旁边标志 19字样的注释，表示相同的这样的中断线路共有19条。EXTI中有一个边沿检测电路(编号②)监视着输入线（编号①），并分别与上升沿和下降沿选择寄存器对比。 如果在这两个寄存器中相应的中断线检测开启了，那么当中断线上有上升沿或者下降沿时边沿检测电路就会产生一个事件触发信号给后继的或门。
+
+除了边沿检测电路的输出外，或门（编号 ③）还接受一个`软件中断事件寄存器`的输入。 `软件中断事件寄存器`的存在使得我们可以通过软件的形式直接触发某一个中断线上的事件。
+>我们可以通过程序控制此处的`软件中断事件寄存器`，人为的通过或门（编号 ③）输入一个外部事件，从而不需要真实的外部输入，就能产生一个可能触发中断的事件，相当与模拟该中断线上的事件。
+
+>诸如ADC、串口、定时器之类产生的中断，就叫 `名称+中断`，如：定时器中断、串口中断、ADC中断。并不属于这里的`软件中断`范畴，STM32手册中唯一提到`软件中断`这个词的就是指这个寄存器，不要混淆了。
+
+或门的输出接到了两个与门（编号 ④、⑤）上，一方面与中断屏蔽寄存器求与编号（④）触发中断， 另一方面与事件屏蔽寄存器求与（⑤）触发事件。 中断屏蔽寄存器控制了相应的中断是否开启了，如果开启了中断将会产生一个中断触发信号，置位中断请求寄存器， 同时将中断触发信号提交给中断控制器(NVIC)。 同样的道理，事件屏蔽寄存器控制事件是否开启，如果开启则直接产生一个脉冲通知后继的功能模块处理事件，例如通知DMA读写内存等。
+
+从这张图上我们也可以知道，从外部激励信号来看，中断和事件的产生源都可以是一样的。之所以分成2个部分，因为中断是需要CPU参与的，需要软件的中断服务函数才能完成中断后产生的结果；但是事件，是靠脉冲发生器产生一个脉冲，进而由硬件自动完成这个事件产生的结果，当然相应的联动部件需要先设置好，比如引起DMA操作，AD转换等;
+
+>**简单举例：** 外部I/O触发AD转换,来测量外部物品的重量;
+> - 如果使用传统的中断通道，需要I/O触发产生外部中断（EXIT），外部中断（EXIT）服务程序启动AD转换，AD转换完成中断服务程序提交最后结果；
+> - 要是使用事件通道，I/O触发产生事件，然后联动触发AD转换，AD转换完成中断服务程序提交最后结果；
+
+相比之下，后者不要软件参与启动AD转换，并且响应速度也更块；要是再使用事件触发DMA操作，就完全不用软件参与（AD转换后操作）就可以完成某些联动任务了。
+
+**总结:**
+- 事件触发：机制提供了一个完全由硬件自动完成的触发到产生结果的通道，不要软件的参与，降低了CPU的负荷，节省了中断资源，提高了响应速度(硬件总快于软件)，是利用硬件来提升CPU芯片处理事件能力的一个有效方法;
+- 中断触发：由软件控制，CPU 参与。
+
+**参考链接**
+- STM32F10xxx参考手册（Reference manual STM32F101xx, STM32F102xx, STM32F103xx, STM32F105xx and STM32F107xx advanced ARM®-based 32-bit MCUs）
+- Cortex-M3权威指南（The Definitive Guide to the ARM COrtex-M3） 
+- [Interrupt-Driven Input/Outputon the STM32F407 Microcontroller](https://docplayer.net/54908905-Interrupt-driven-input-output-on-the-stm32f407-microcontroller.html)
+- [Exceptions and Interrupts——Cuauhtemoc Carbajal-ITESM CEM](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjK-vytkcbvAhUmJzQIHXtSARgQFjAAegQIAxAD&url=http://homepage.cem.itesm.mx/carbajal/Microcontrollers/SLIDES/Interrupts.pdf&usg=AOvVaw3OiAMagNDaIjozquuDcoMa)
+- [新手入门之stm32中断系统](https://zhuanlan.zhihu.com/p/64921464)
+- [stm32异常、中断和事件的区别](https://blog.csdn.net/jian3214/article/details/99818975)
+- [STM32中断系统（NVIC和EXTI）](https://my.oschina.net/u/4383286/blog/4440596)
+- [STM32的“外部中断”和“事件”区别和理解](https://blog.csdn.net/tanyjin/article/details/53359883)
+- [【STM32】EXTI---外部中断/事件控制器](https://blog.csdn.net/qq_43328313/article/details/106559934)
+- [STM32中断与事件](https://mp.weixin.qq.com/s?__biz=MzIxNTg1NzQwMQ==&mid=2247484547&idx=2&sn=de7a4464fe0dadadb3f9b8843dd33d0b&chksm=9790a515a0e72c036be83b413489bbc5cbf367caf11a0cb7403a05823e2938e00126248344ce&scene=178&cur_album_id=1359585244344696836#rd)
+- [浅谈STM32中断模块](https://www.codenong.com/cs106293064/)
+- [外部中断(EXTI)控制LED灯](https://gaoyichao.com/Xiaotu/?book=stm32&title=%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6LED%E7%81%AF)
+
+
+### 串口
+
+#### 初始化配置
+
+1. 配置引脚为串口输入输出模式
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E4%B8%B2%E5%8F%A3%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE.png)  
+2. USART配置中选择异步通信模式，并开启串口中断
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USART%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+同外部中断类似，串口中断也有自己的中断回调函数，我们再需要的地方编写即可。
+
+**主要API：**
+1. HAL_UART_Transmit();串口轮询模式发送，使用超时管理机制，阻塞
+2. HAL_UART_Receive();串口轮询模式接收，使用超时管理机制，阻塞
+3. HAL_UART_Transmit_IT();串口中断模式发送，非阻塞
+4. HAL_UART_Receive_IT();串口中断模式接收，非阻塞
+5. HAL_UART_TxHalfCpltCallback();一半数据发送完成时调用
+6. HAL_UART_TxCpltCallback();数据完全发送完成后调用
+7. HAL_UART_RxHalfCpltCallback();一般数据接收完成时调用
+8. HAL_UART_RxCpltCallback();数据完全接受完成后调用
+8. HAL_UART_ErrorCallback();传输出现错误时调用
+
+**主函数：**
+
+```
+/************************* uart.cpp *************************/
+uint8_t RxBuffer;  // 定义一个接受数组
+
+/**
+  * @brief 串口初始化，启动接收中断
+  */
+void uart_init()
+{
+	HAL_UART_Receive_IT(&huart1,&RxBuffer,1);  //开启中断
+}
+
+/**
+  * @brief 串口接收中断，每接收一个字节中断一次，并发送该数据
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == USART1){   //判断时那种中断
+		HAL_UART_Transmit(&huart1,&RxBuffer,1,10);  // 发送10个数据
+	}
+	HAL_UART_Receive_IT(&huart1,&RxBuffer,1); // 再次开启中断
+}
+
+```
+
+**使用步骤：**
+
+1. 添加以上代码
+2. 调用`uart_init()`初始化
+3. 然后通过串口助手发送信息，单片机即返回所发送的信息。
+
+#### printf，getchar重定义
+
+fgetc，fputc 属于 C 标准可，因此在.ccp 文件中重定义是，需要添加 extern "C" 声明。
+
+```
+// 将以下函数放在 .cpp 文件中，需要添加 extern "C" ，否则重定义无效。
+// 或者可以将其放在任意 .c 文件中
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+  * @brief 重定向c库函数getchar,scanf到USARTx
+  * @retval None
+  */
+#ifdef __GNUC__
+#define GETCHAR_PROTOTYPE int __io_getchar(int ch)  /* 防止重定义，具体为什么会用到GNUC我以为不知道*/
+#else
+#define GETCHAR_PROTOTYPE int fgetc(int ch, FILE *f)
+#endif
+GETCHAR_PROTOTYPE{
+  HAL_UART_Receive(&huart1,(uint8_t *)&ch, 1, 0xffff);
+  return ch;
+}
+
+/**
+  * @brief 重定向c库函数printf到USARTx
+  * @retval None
+  */
+#ifdef __GNUC__
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)  /* 防止重定义，具体为什么会用到GNUC我以为不知道*/
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
+PUTCHAR_PROTOTYPE{
+	 HAL_UART_Transmit(&huart1,(uint8_t *)&ch,1,1000);
+     return ch;
+}
+
+#ifdef __cplusplus
+}
+#endif
+```
+
+**使用步骤：**
+1. 添加以上代码
+2. 包含头文件 `#include "stdio.h"` 
+3. 添加测试代码：`printf("\n===函数Printf函数发送数据===\n");` 测试
+
+**打印浮点数**
+
+IDE在编译使，默认不支持打印浮点数的（耗费内存和运存）。可以右键单击项目名，在 Properties 中开启该功能：
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/float%E6%94%AF%E6%8C%81.png)  
+
+或者自己编写浮点数打印函数：
+```]
+/*
+ * 打印浮点类型
+ * @param（data）要打印的浮点数
+ * @param（precision）小数点精度（小数点后几位）
+ */
+void printf_float(double data,uint8_t precision){
+	uint8_t num = 0;
+	uint32_t data_int = (uint32_t)data;
+	uint32_t data_float = 0;
+	printf("%d",(int)data_int);
+	printf(".");
+	while(num<precision){
+		data_float = (int)(data*pow(10,num+1))%10;
+		printf("%d",(int)data_float);
+		num++;
+	}
+}
+```
+
+### 串口DMA模式
+
+**主要API：**
+1. HAL_UART_Transmit_DMA(); // 使用DMA模式发送数据
+2. HAL_UART_Receive_DMA();  // 使用DMA模式接收数据
+
+
+#### UART以DMA方式接收和发送的函数调用顺序：
+
+**循环模式接收**：
+`HAL_UART_Receive_DMA()` -> `DMA1_Channelx_IRQHandler()` -> `HAL_DMA_IRQHandler()` -> `UART_DMAReceiveCplt()` -> `HAL_UART_RxCpltCallback()`
+
+**正常模式发送：**
+`HAL_UART_Transmit_DMA()` -> `DMA1_Channelx_IRQHandler()` -> `HAL_DMA_IRQHandler()` -> `UART_DMATransmitCplt()` -> `USART3_IRQHandler()` -> `HAL_UART_IRQHandler()` -> `UART_EndTransmit_IT()` -> `HAL_UART_TxCpltCallback()`
+
+循环发送与正常接收模式与上述类似，不再叙述。这当中还会调用传输 Half 中断，这里也不再讨论了。  
+以上整个调用过程不需要CPU参与，自动执行。我们只需要关心状态变化即可，无需关心数据怎么传输的。
+
+**总结：**
+对于上述过程，我们只需要知道：DMA 在执行过程中是会调用正常的 USART 的 API 接口函数的就行。也就意味着，如果我们使用了 DMA接收，则不能再用中断接收以及相应的接收函数，否则两者的数据会又冲突，实际测试也是如此。所有的接收过程不应再有软件的参与，我们只需要关系数据是否到来、一半、结束几个标志。同理DMA发送与USART发送函数不可同时使用。特别是在开启了循环模式时。
+
+#### 循环模式
+
+循环模式下，DMA的发送与接收是不断循环的，不会停止。我们只需要在初始化时开启即可。
+
+**初始化配置**
+
+承接上面 USART 的配置，最初以下修改：
+1. 在 USART 配置界面中，选中DMA设置
+   1.1 添加USART_RX/TX 两个通道
+   1.2 两个通道均选择 循环模式，数据宽度为 1字节
+2. 在 USART 中断配置界面中，取消串口全局中断
+
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USART_DMA%E9%85%8D%E7%BD%AE.png)  
+
+如前文所述，我们开启了DMA的循环模式，为了避免冲突，这里需要关闭串口的全局中断。
+
+**软件编写**
+
+我们实现串口接收啥就返回啥。和前面的串口功能一样，但这里并不需要软件参与，全程自动执行。
+> **注意：** 这里的数组只有 5 个字节，所有只能接收 5 个字节的数据，多了则只保留后5位。
+由于发送是自动的，所以下面的程序在接收到数据后，就会不断重复发送该数据，除非有新的外部数据或手动清空。
+```
+uint8_t buffer[5] = {0};
+void setup() {
+    HAL_UART_Receive_DMA (&huart1,&RxBuffer,5);  // 开启DMA接收
+    HAL_UART_Transmit_DMA (&huart1,&RxBuffer,5); // 开启DMA发送
+}
+```
+经测试在双循环模式下，printf也是不能使用的，总之在循环模式下，不要调用任何有关发送和接收数据的函数。
+经测试，就算没开启DMA接收，之开启DMA发送，并且数组数据为空，系统仍会不断往外发送数据，但是乱码。所以循环发送模式并不推荐。
+#### 正常模式
+
+正常模式下的发送与接收，每一次DMA传输都只会执行一次就接收，如果想要继续使用，就得再手动开启DMA传输。所以如果想要再正常模式下实现自动收发，我们就需要借助中断函数，初始化时下开启 DMA 接收，然后在接收中断中使用DMA发送接收到的数据，并再次启动DMA接收。
+
+
+**初始化配置**
+在双循环配置基础上，都选择 正常模式（normal）并勾选串口中断。
+**软件编写**
+
+改写之前的串口初始化和接收中断函数，实现功能与前文一样，收啥发啥。
+```
+/**
+  * @brief 串口初始化，启动接收中断
+  */
+void uart_init()
+{
+	HAL_UART_Receive_IT(&huart1,&RxBuffer,1);  //开启中断
+	HAL_UART_Receive_DMA (&huart1,&RxBuffer,5);  // 启动DMA接收
+}
+
+/**
+  * @brief 串口接收中断，每接收一个字节中断一次
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == USART1){   //判断时那种中断
+		HAL_UART_Transmit_DMA (&huart1,&RxBuffer,5);
+	}
+	HAL_UART_Receive_DMA (&huart1,&RxBuffer,5);
+
+}
+```
+这和一般的串口中断很相似，唯一的区别就是在发送和接收数据时，不需要CPU的参与，仅在这个数据的流动过程是不同的。
+经过实际测试，这种模式下，DMA的数据是有问题的。由于DMA发送接收不需要CPU参与，所以在接收中断中调用`HAL_UART_Transmit_DMA()`发送串口数据，之后再`HAL_UART_Receive_DMA ();`启动接收，整个过程近似无延时，所以当你的数据超过数组长度时，下一次接收是会接收到上一次发送的多余的数据。
+
+![正常模式下返回数据](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/正常模式下返回数据.gif)
+
+有一个解决办法是将 `HAL_UART_Receive_DMA ();` 放到初始化源码的中断函数里
+
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USART_DMA-normal.png)  
+
+
+#### 混合模式
+
+这里用接收循环模式，发送正常模式说明。
+
+**初始化配置**
+
+在双循环配置基础上，发送选择正常模式，接收选择循环模式。
+
+**软件编写**
+
+改写之前的串口初始化和接收中断函数，实现功能与前文一样，收啥发啥。
+```
+
+/**
+  * @brief 串口初始化，启动接收中断
+  */
+void uart_init()
+{
+	HAL_UART_Receive_DMA (&huart1,&RxBuffer,10);
+}
+
+/**
+  * @brief 串口接收中断，每接收一个字节中断一次
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == USART1){   //判断时那种中断
+		//HAL_UART_DMAStop(&huart1); //
+		HAL_UART_Transmit_DMA (&huart1,&RxBuffer,10);
+		//HAL_DMA_PollForTransfer(huart1.hdmatx,HAL_DMA_FULL_TRANSFER,1000);
+	}
+
+
+}
+```
+这里的收发数据问题和双正常模式一样，接收数据会记住多余的数据。由于接收数据是自动执行的，随意这里并不能更改修复。
+有一个解决办法的思路，就是在发送数据后，清空 DMA 接收缓存，并重置数据指针，但比较麻烦，似乎并不划算。
+
+### TIM定时器
 
 
 ## STM32F030_LL库学习笔记
