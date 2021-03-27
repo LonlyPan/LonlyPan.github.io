@@ -1482,7 +1482,337 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 1. 在系统初始化函数中调用 pwm_init 初始化
 2. 使用 `__HAL_TIM_SET_COMPARE` 控制指定通道的占空比输出
 
+
+## 输入捕获
+
+我们通过输入捕获计算按键按下低电平的时间
+
+### 初始化配置
+1. 引脚配置，IO配置为上拉
+2. 定时器配置
+捕获频率1Mhz，计数周期最大（能够测量更多时间，防止溢出，当然程序也做了一处处理）
+由于外部按键时低电平有效，所以这里选择下降沿捕获
+
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E9%85%8D%E7%BD%AE.png)  
+
+### 程序编写
+
+**主要API**
+- `HAL_TIM_IC_Start_IT();`
+启动输入捕获
+- `HAL_TIM_IC_CaptureCallback()`
+输入捕获中断回调函数
+- `__HAL_TIM_SET_CAPTUREPOLARITY();  `
+在运行时设置定时器输入捕获极性。
+- ` HAL_TIM_PeriodElapsedCallback()`
+定时器溢出中断回调函数
+- `__HAL_TIM_SET_COUNTER();`
+在运行时设置TIM计数器寄存器的值。
+- `HAL_TIM_ReadCapturedValue()`
+从捕获比较单元读取捕获的值，其实就是捕获中断发生时的定时器计数值
+
+**主程序**
+```
+/*****************capture.cpp********************/
+//变量存储
+typedef struct
+{
+    uint8_t   flg; //0为未开始，1已经开始，2为结束
+    uint32_t  num; //计数值
+    uint16_t  num_period;//溢出次数
+}COUNT_TEMP;
+
+COUNT_TEMP count_temp={0};
+
+// 输入捕获初始化
+void capture_init()
+{
+	HAL_TIM_IC_Start_IT(&htim5, TIM_CHANNEL_2);    //启动输入捕获
+}
+
+// 输入捕获测试程序
+// 打印低电平时间，并重新使能输入捕获计数
+void capture_test()
+{
+	if(count_temp.flg == 2 )
+	{
+	    //计数计数值，0xFFFF为最大计数
+	    uint32_t ulTime = (uint32_t)count_temp .num_period * 0xFFFF + count_temp .num;
+	    //输出测量的值
+	    printf ( "low level time:%d us\r\n",ulTime/1000);
+	    count_temp .flg = 0;
+	}
+
+}
+
+//捕获中断发送时的回调函数
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+    //判断定时器5
+    if(TIM5 == htim->Instance){
+        if (count_temp.flg == 0 )  // 下降沿触发
+        {
+            // 清零定时器计数
+            __HAL_TIM_SET_COUNTER(htim,0);
+            //设置上升沿触发
+            __HAL_TIM_SET_CAPTUREPOLARITY(&htim5, TIM_CHANNEL_2, TIM_INPUTCHANNELPOLARITY_RISING);
+            count_temp .flg = 1;           //标志已捕获到下降沿
+            count_temp .num_period = 0;    //溢出计数清零
+            count_temp .num = 0;           //计数清零
+        }
+        else  // 上升沿触发
+        {
+            // 获取定时器计数值
+            count_temp .num = HAL_TIM_ReadCapturedValue(&htim5,TIM_CHANNEL_2);
+            //设置下降沿触发
+            __HAL_TIM_SET_CAPTUREPOLARITY(&htim5, TIM_CHANNEL_2, TIM_INPUTCHANNELPOLARITY_FALLING);
+            count_temp .flg = 2;  // 标志捕获完成
+        }
+    }
+}
+/* 中断回调函数 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+
+    if(TIM5 == htim->Instance){
+		//每次溢出时间为 2^32 us
+		if(count_temp.flg==1)//还未成功捕获
+		{
+			if(count_temp.num_period==0XFFFF){ //低 电平太长了,强制完成
+				count_temp.flg=2;              //标记成功捕获了一次
+				count_temp.num=0XFFFFFFFF;
+			}
+			else
+				count_temp.num_period ++;
+		}
+    }
+
+/*****************capture.cpp********************/
+void setup() {
+    uart_init();
+    capture_init();
+
+}
+
+void loop()
+{
+	capture_test();
+}
+
+```
+
+- 先初始化捕获中断为下降沿触发，当下降沿触发后，立即设置为上升沿触发，保存来个那次触发时的定时器计数值，在和定时器频率 1MHz 计算就能得出低电平的总时间。   
+- 溢出中断则计算溢出的次数，防止低电平时间过长当时计数器溢出。
+- 主程序循环判断捕获标志位，打印输出时间
+
+## IWDG
+
+独立看门狗（IWDG)由专用的低速时钟（LSI）驱动（40kHz），即使主时钟发生故障它仍有效。独立看门狗适合应用于需要看门狗作为一个在主程序之外 能够完全独立工作，并且对时间精度要求低的场合。
+
+独立看门狗只适用于系统死机的情况，如果某个程序异常，但系统仍能正常喂狗，此时独立看门狗时不会起作用的。
+
+如果需要检测某个程序段是否正常，使用窗口看门口狗，后续会单独讲解。
+
+### 初始化配置
+
+1. 配置PA0为GPIO输入模式，上拉。作为后面的按键检测
+2. IWDG 使能，配置时钟分频和重装载值
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/IWDG%E9%85%8D%E7%BD%AE.png)  
+IWDG的超时时间 Tout = (4*2^prv) / LSI * rlv (s) prv是预分频器寄存器的值，rlv是重装载寄存器的值
+根据时钟图分析
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/IWDG%E6%97%B6%E9%92%9F.png)  
+LSI 为 25 KHz，当 prv 取 IWDG_ PRESCALER_64 ，rlv 取 500 时，Tout=64/32*500=1s。
+
+### 程序编写
+**主要API**
+- `HAL_IWDG_Refresh(&hiwdg)`
+刷新看门狗（喂狗）
+**主程序**
+看门狗不需要额外初始化，上电即运行，所以要注意一点，如果系统的初始化时间过长，应该及时喂狗。
+建议使用定时器定时喂狗，且最先初始化定时器
+```
+void setup() {
+    uart_init();
+    printf("\n\r***** IWDG Test Start *****\n\r");
+}
+
+void loop()
+{
+	printf("\n\r Refreshes the IWDG !!!\n\r");
+	if(HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin) != 0){
+	    HAL_IWDG_Refresh(&hiwdg);
+	}
+	delay_ms(800);
+
+}
+```
+主程序不断检测按键电平值，由于按键默认上拉，所以系统会每 800 ms喂狗一次（超时溢出为 1 秒），此时系统正常
+当我们按下按键不放时，程序停止喂狗，会看到系统会1s重启一次（根据打印的数据查看系统状态）
+
+
+### WWDG
+
+窗口看门狗跟独立看门狗一样，也是一个递减计数器不断的往下递减计数，当减到一个固定值 0x3F 时还不喂狗的话，产生复位，这个值叫窗口的下限，是固定的值，不能改变。
+
+窗口看门狗之所以称为窗口，就是因为其喂狗时间是在一个有上下限的范围内（窗口上限值~下限值0x3F），在这个范围内才可以喂狗，可以通过设定相关寄存器，设定其上限时间（但是下限是固定的0x3F）
+
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/pic_1616832615030.png)  
+
+图中：
+- 数字 1 处为计数器的初始值（重装载值）
+- 2 是我们设置的窗口上限值（只能取低7为值，也就是最大值为 127）
+- 3 是下窗口值(0x3F, 那么W[]最小为64)
+
+当窗口看门狗计数器的值只有处在 2 和3 之间(上窗口和下窗口之间)才可以喂狗，其余时间喂狗都时异常。
+
+窗口看门狗还可以使能提前唤醒中断，如果系统出现问题，喂狗函数没有生效，那么在计数器由减到0x40  (0x3f+1) 的时候，便会先进入提前唤醒中断，之后才会复位，你也可以在该中断里面喂狗（不建议在中断里喂狗，不然效果和独立看门狗类似，无意义）
+
+窗口看门狗的超时公式如下：
+`Twwdg=(4096× 2^WDGTB× (T[5:0]+1)) /Fpclk1;`
+其中：
+- Twwdg： WWDG 超时时间（单位为 ms）(看门狗的计数周期)
+- Fpclk1： APB1 的时钟频率（单位为 Khz）注意看门狗时钟靠在PCLK1下，一般为主时钟一半。
+- WDGTB： WWDG 的预分频系数（系数范围[0-3],2^WDGTB = 分频值）
+- T[5:0]：窗口看门狗的计数器低 6 位（0-64）
+
+根据前面所述，你的 W[\]只能取 64-127，则计数器T[]的值范围为 0-63。假设 Fpclk1=42Mhz，分频值为8，W[] = 127（T[] = 63）,则看门狗计数周期：
+T = 4096\*8\*[63+1]/42000 = 50ms
+
+###  初始化配置
+
+1. 开启看门狗中断、配置参数（超时时间 = 4096\*8\*[63+1]/42000 = 50ms）
+2. 开启提前唤醒中断
+3. 开启中断
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/WWDG%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE.png)  
+
+
+### 程序编写
+
+**主要API**
+- `HAL_WWDG_Refresh()` 
+看门狗喂狗
+- `HAL_WWDG_EarlyWakeupCallback()`
+看门狗提前唤醒中断
+
+**主程序**
+
+```
+void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef* hwwdg)
+{
+	HAL_WWDG_Refresh(hwwdg);
+	printf("\n\rWWDG well!\n\r");
+}
+
+void setup() {
+    uart_init();
+    printf("\n\rWWDG Test Start\n\r");
+}
+
+void loop()
+{
+
+}
+```
+我们在唤醒中断里不断喂狗（实际使用时不建议在中断里放喂狗函数，这里应放置整个系统故障的 “临终遗嘱”）。
+通过串口助手的时间戳显示，两条信息 `WWDG well!` 之间的时间约为 50 ms。如果注释掉喂狗函数，系统就会不断重启。
+
+## 待机唤醒
+
+STM32 的低功耗模式有 3 种：
+- 1)睡眠模式（CM3 内核停止，外设仍然运行）
+- 2)停止模式（所有时钟都停止）
+- 3)待机模式（1.8V 内核电源关闭）
+
+在运行模式下，我们也可以通过降低系统时钟关闭 APB 和 AHB 总线上未被使用的外设的时钟来降低功耗。
+在这三种低功耗模式中，最低功耗的是待机模式。停机模式是次低功耗的。最后就是睡眠模式了。
+这里将对 STM32 的最低功耗模式-待机模式做介绍
+
+STM32 进入及退出待机模式的条件
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/进入及退出待机模式的条件.png)  
+
+我们有使用WKUP 引脚上的上升沿 方式退出待机模式。从待机唤醒后，除了电源控制/状态寄存器(PWR_CSR)， 所有寄存器被复位。从待机模式唤醒后的代码执行等同于复位后的执行(采样启动模式引脚，读取复位向量等)。电源控制/状态寄存器(PWR_CSR)将会指示内核由待机状态退出。
+
+### 初始化配置
+
+配置PA0（WKUP 引脚）为输入下拉。
+
+### 程序编写
+
+**主要API**
+- `__HAL_RCC_PWR_CLK_ENABLE() `
+使能 PWR 时钟
+- `HAL_PWR_EnableWakeUpPin() `
+设置 WKUP 用于唤醒
+- `HAL_PWR_EnterSTANDBYMode()`
+设置 SLEEPDEEP 位，设置 PDDS 位，执行 WFI 指令，进入待机模式。
+- `__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU)`
+清除Wake_UP标志
+
+**主程序**
+```
+void Sys_Enter_Standby(void){
+	__HAL_RCC_PWR_CLK_ENABLE();		//使能PWR时钟
+
+	__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);		//清除Wake_UP标志
+	HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);	//设置WAKEUP用于唤醒
+	HAL_PWR_EnterSTANDBYMode();		//进入待机模式
+}
+
+void setup() {
+    uart_init();
+    printf("\n\rWWDG Test Start\n\r");
+}
+
+void loop()
+{
+	printf("Time: 3\r\n");
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
+	HAL_Delay(1000);
+
+	printf("Time: 2\r\n");
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_SET);
+	HAL_Delay(1000);
+
+	printf("Time: 1\r\n");
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,GPIO_PIN_RESET);
+	HAL_Delay(1000);
+
+
+	printf("Entered Standby Mode...Please press KEY_UP to wakeup system!\r\n");
+	Sys_Enter_Standby();
+}
+```
+PA0 按键用来唤醒待机模式，并使用串口1打印相关调试信息
+系统运行时倒计时，3秒钟后进入待机模式。当 PA0 接高电平时，待机模式被唤醒，系统重新运行，重新倒计时。
+
+## ADC
+
+## 内部温度传感器
+
+## DAC
+
+## IIC（EEPROM）
+
+## IIC DMA
+
+## SPI（Flash）
+
+## SPI DMA
+
+## 内部Flash模拟EEPROM
+
+## 内存管理
+
+## USB虚拟串口
+
+## USB读卡器
+
 ## STM32F030_LL库学习笔记
+
+## LCD驱动
+
+## LCD触摸
+
 
 [STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
 [【stm32cubemx专题教程】ST全外设原理、配置、API使用详解](https://www.bilibili.com/video/BV1Tv411B7Uw)
