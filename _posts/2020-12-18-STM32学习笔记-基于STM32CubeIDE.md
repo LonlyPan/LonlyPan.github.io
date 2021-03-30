@@ -1421,7 +1421,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 1. 系统初始化时调用 `timer_init()` 启动定时器
 2. 在定时器中断中编写处理程序
 
-## PWM
+### PWM
 
 #### 初始化配置
 
@@ -1483,11 +1483,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 2. 使用 `__HAL_TIM_SET_COMPARE` 控制指定通道的占空比输出
 
 
-## 输入捕获
+### 输入捕获
 
 我们通过输入捕获计算按键按下低电平的时间
 
-### 初始化配置
+#### 初始化配置
 1. 引脚配置，IO配置为上拉
 2. 定时器配置
 捕获频率1Mhz，计数周期最大（能够测量更多时间，防止溢出，当然程序也做了一处处理）
@@ -1495,7 +1495,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 ![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E8%BE%93%E5%85%A5%E6%8D%95%E8%8E%B7%E9%85%8D%E7%BD%AE.png)  
 
-### 程序编写
+#### 程序编写
 
 **主要API**
 - `HAL_TIM_IC_Start_IT();`
@@ -1605,7 +1605,7 @@ void loop()
 - 溢出中断则计算溢出的次数，防止低电平时间过长当时计数器溢出。
 - 主程序循环判断捕获标志位，打印输出时间
 
-## IWDG
+### IWDG
 
 独立看门狗（IWDG)由专用的低速时钟（LSI）驱动（40kHz），即使主时钟发生故障它仍有效。独立看门狗适合应用于需要看门狗作为一个在主程序之外 能够完全独立工作，并且对时间精度要求低的场合。
 
@@ -1613,7 +1613,7 @@ void loop()
 
 如果需要检测某个程序段是否正常，使用窗口看门口狗，后续会单独讲解。
 
-### 初始化配置
+#### 初始化配置
 
 1. 配置PA0为GPIO输入模式，上拉。作为后面的按键检测
 2. IWDG 使能，配置时钟分频和重装载值
@@ -1623,7 +1623,7 @@ IWDG的超时时间 Tout = (4*2^prv) / LSI * rlv (s) prv是预分频器寄存器
 ![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/IWDG%E6%97%B6%E9%92%9F.png)  
 LSI 为 25 KHz，当 prv 取 IWDG_ PRESCALER_64 ，rlv 取 500 时，Tout=64/32*500=1s。
 
-### 程序编写
+#### 程序编写
 **主要API**
 - `HAL_IWDG_Refresh(&hiwdg)`
 刷新看门狗（喂狗）
@@ -1716,7 +1716,7 @@ void loop()
 我们在唤醒中断里不断喂狗（实际使用时不建议在中断里放喂狗函数，这里应放置整个系统故障的 “临终遗嘱”）。
 通过串口助手的时间戳显示，两条信息 `WWDG well!` 之间的时间约为 50 ms。如果注释掉喂狗函数，系统就会不断重启。
 
-## 待机唤醒
+### 待机唤醒
 
 STM32 的低功耗模式有 3 种：
 - 1)睡眠模式（CM3 内核停止，外设仍然运行）
@@ -1732,7 +1732,7 @@ STM32 进入及退出待机模式的条件
 
 我们有使用WKUP 引脚上的上升沿 方式退出待机模式。从待机唤醒后，除了电源控制/状态寄存器(PWR_CSR)， 所有寄存器被复位。从待机模式唤醒后的代码执行等同于复位后的执行(采样启动模式引脚，读取复位向量等)。电源控制/状态寄存器(PWR_CSR)将会指示内核由待机状态退出。
 
-### 初始化配置
+#### 初始化配置
 
 配置PA0（WKUP 引脚）为输入下拉。
 
@@ -1785,17 +1785,787 @@ void loop()
 PA0 按键用来唤醒待机模式，并使用串口1打印相关调试信息
 系统运行时倒计时，3秒钟后进入待机模式。当 PA0 接高电平时，待机模式被唤醒，系统重新运行，重新倒计时。
 
+>低功耗模式下载 Debug 需要 reset 按键手动复位
 ## ADC
 
+### ADC时钟
+
+挂靠在 PCLK2（APB2时钟，最大84HHz）下。分频因子可配置2/4/6/8分频
+ADC转换周期：
+
+```
+T = 采样时间(周期) + 12.5个周期，其中1周期为1/ADCCLK
+```
+
+例如，当 ADCCLK=14Mhz 的时候，并设置 1.5 个周期的采样时间，则得到： Tcovn=1.5+12.5=14 个周期=1us。
+
+根据芯片数据手册，电气特性（Electrical characteristics）-> 操作条件（Operating conditions）所述：
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC%E6%97%B6%E9%92%9F.png)  
+
+由 表6.3.1 可知，ADC的最大采样速率（转换速率）与VDDA有关，当VDDA低于2.4V时，转换速率最大只有1.2Msps（million samples per second）；而当VDDA高于2.4V时，可达2.4Msps，即每秒一百二十万次转换。
+
+无论是1.2Msps还是2.4Msps，都是相对于12位分辨率来说的，即表14中给出的是最高分辨率（12bit）下的最大转换速率。STM32F4系列MCU支持12位、10位、8位和6位可编程分辨率，更低的分辨率可以缩短转换周期。因此采用降低分辨率的方法还可以进一步获得更大的转换速率。
+
+由 表6.3.20 可知，ADC的最大时钟频率在VDDA低于2.4V时为18MHz，VDDA高于2.4V时为36MHz。
+
+对于12位分辨率来说，转换周期为12个ADC周期，采样时间可编程的最小值为3个ADC周期，即12位分辨率的最少转换周期数为15个ADC周期。
+
+因此，当VDDA低于2.4V时12位分辨率的最大转换速率为 18/15 Msps，即上面提到的1.2Msps。当VDDA高于2.4V时12位分辨率的最大转换速率为 36/15 Msps，即上面提到的2.4 Msps。
+
+为了保证ADC转换结果的准确性，ADC的时钟最好不超过14M。（有的stm32单片机最高只支持1MHz转换速率）
+
+**参考链接**
+- [STM32F4系列ADC最大转换速率及操作条件（以STM32F407ZGT6为例）](https://blog.csdn.net/weixin_44567318/article/details/114449108)
+### ADC的转换模式 (重要，请务必看懂)**
+
+1 单次转换模式：ADC只执行一次转换，转换完成后，必须再手动开启
+
+2 连续转换模式：转换结束之后马上开始新的转换，每次转换结束，ADC的值会被刷新，所以需要及时读出数据；
+
+3 扫描模式：ADC扫描被规则通道和注入通道选中的所有通道，在每个组的每个通道上执行单次转换。在每个转换结束时，这一组的下一个通道被自动转换。
+
+4 间断模式：触发一次，转换一个通道，在触发，在转换。在所选转换通道循环，由触发信号启动新一轮的转换，直到转换完成为止。
+
+扫描模式简单的说是一次对所有所选中的通道进行转换，比如开了ch0，ch1，ch4，ch5。  ch0转换完以后就会自动转换通道1,4,5直到转换完这个过程不能被打断。如果开启了连续转换模式，则会在转换完ch5之后开始新一轮的转换。
+
+间断模式，可以说是对扫描模式的一种补充。它可以把0,1,4,5这四个通道进行分组。可以分成0,1一组，4,5一组。也可以每个通道单独配置为一组。这样每一组转换之前都需要先触发一次。
+
+### 单通道、多通道配置
+
+**ADC单通道：**
+
+只进行一次ADC转换：配置为“单次转换模式”，扫描模式关闭。ADC通道转换一次后，就停止转换。等待再次使能后才会重新转换
+
+进行连续ADC转换：配置为“连续转换模式”，扫描模式关闭。ADC通道转换一次后，接着进行下一次转换，不断连续。
+
+**ADC多通道：**
+
+只进行一次ADC转换：配置为“单次转换模式”，扫描模式使能。ADC的多个通道，按照配置的顺序依次转换一次后，就停止转换。等待再次使能后才会重新转换
+
+进行连续ADC转换：配置为“连续转换模式”，扫描模式使能。ADC的多个通道，按照配置的顺序依次转换一次后，接着进行下一次转换，不断连续。
+
+也就是：多通道必须使能扫描模式
+
+### 数据左对齐或右对齐
+
+因为ADC得到的数据是12位精度的，但是数据存储在 16 位数据寄存器中，所以ADC的存储结果可以分为左对齐或右对齐方式（12位）
+
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC%E6%95%B0%E6%8D%AE%E5%B7%A6%E5%AF%B9%E9%BD%90%E5%8F%B3%E5%AF%B9%E9%BD%90.png)  
+
+### ADC输入通道
+从ADCx_INT0-ADCx_INT15 对应三个ADC的16个外部通道，进行模拟信号转换 此外，还有两个内部通道：温度检测或者内部电压检测
+选择对应通道之后，便会选择对应GPIO引脚，相关的引脚定义和描述可在开发板的数据手册里找
+
+#### 注入通道，规则通道
+
+我们看到，在选择了ADC的相关通道引脚之后，在模拟至数字转换器中有两个通道，注入通道，规则通道，
+规则通道至多16个，注入通道至多4个
+
+**规则通道：**
+规则通道相当于你正常运行的程序，看它的名字就可以知道，很规矩，就是正常执行程序
+**注入通道：**
+注入通道可以打断规则通道，听它的名字就知道不安分，如果在规则通道转换过程中，有注入通道进行转换，那么就要先转换完注入通道，等注入通道转换完成后，再回到规则通道的转换流程
+
+无法连续转换注入通道。连续模式下唯一的例外情况是，注入通道配置为在规则通道之后自动转换（使用 JAUTO 位），请参见自动注入一节
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%20ADC%E6%B3%A8%E5%85%A5%E9%80%9A%E9%81%93%E4%B8%8E%E8%A7%84%E5%88%99%E9%80%9A%E9%81%93.png)  
+
+### 中断
+中断触发条件有三个，规则通道转换结束，注入通道转换结束，或者模拟看门狗状态位被设置时都能产生中断，
+
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC%E4%B8%AD%E6%96%AD.png)  
+
+转换结束中断就是正常的ADC完成一次转换，进入中断，这个很好理解
+
+**模拟看门狗中断**
+当被ADC转换的模拟电压值低于低阈值或高于高阈值时，便会产生中断。阈值的高低值由ADC_LTR和ADC_HTR配置
+模拟看门狗，听他的名字就知道，在ADC的应用中是为了防止读取到的电压值超量程或者低于量程
+
+### DMA
+同时ADC还支持DMA触发，规则和注入通道转换结束后会产生DMA请求，用于将转换好的数据传输到内存。
+
+注意，只有部分ADC组可以产生DMA请求
+
+因为涉及到DMA传输，所以这里我们不再详细介绍，之后几节会更新DMA,一般我们在使用ADC 的时候都会开启DMA 传输。
+
+### 单通道单次转换
+#### 初始化配置
+
+1. 配置引脚为ADC1_IN1
+2. 使能通道1
+3. 匹配ADC参数
+这里根据上描述设置ADC时钟为6分频，14MHz。其余配置保持默认即可，也不要修改
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC-%E5%8D%95%E9%80%9A%E9%81%93%E9%85%8D%E7%BD%AE.png)  
+
+**参数讲解**
+- ADC_Mode_Independent  这里设置为独立模式
+独立模式模式下，双ADC不能同步，每个ADC接口独立工作。所以如果不需要ADC同步或者只是用了一个ADC的时候，应该设成独立模式，多个ADC同时使用时会有其他模式，如双重ADC同步模式，两个ADC同时采集一个或多个通道，可以提高采样率
+- Data Alignment (数据对齐方式): 右对齐/左对齐
+- Scan Conversion Mode( 扫描模式 ) ：   DISABLE
+如果只是用了一个通道的话，DISABLE就可以了(也只能DISABLE)，如果使用了多个通道的话，会自动设置为ENABLE。 就是是否开启扫描模式
+- Continuous Conversion Mode(连续转换模式)    DISABLE
+设置为ENABLE，即连续转换。如果设置为DISABLE，则是单次转换。两者的区别在于连续转换直到所有的数据转换完成后才停止转换，而单次转换则只转换一次数据就停止，要再次触发转换才可以进行转换
+- Discontinuous Conversion Mode(间断模式)    DISABLE
+多通道模式下使用
+- Enable Regular Conversions (启用常规转换模式)    ENABLE
+使能 否则无发进行下方配置
+- Number OF Conversion(转换通道数)    1
+用到几个通道就设置为几，数字大于1即多个通道会自动使能上面的扫描模式
+- Extenal Trigger Conversion Source (外部触发转换源)
+设定ADC的触发方式，外部事件触发时使用。详见 `中断与事件` 章节
+- Regular Conversion launched by software 规则的软件触发 调用函数触发即可
+上述时触发ADC，这个时触发ADC的规则处理，如：启动下一次转换
+- Rank          转换顺序
+这个只修改通道采样时间即可 默认为1.5个周期。其余配置在多通道再讲解。
+
+
+**HAL库中关于个参数的讲解：**
+
+```
+   ScanConvMode;                        / *！<配置常规组和注入组的序列。
+                                            此参数可以与参数'DiscontinuousConvMode'关联，以将主序列细分为连续的部分。
+                                            如果禁用：转换以单模式执行（转换了一个通道，在等级1中定义了一个通道）。
+                                                    参数“ NbrOfConversion”和“ InjectedNbrOfConversion”将被丢弃（等效于设置为1）。
+                                            如果启用：转换以顺序模式执行（由“ NbrOfConversion” /“ InjectedNbrOfConversion”定义的多个等级以及每个通道等级）。
+                                                    扫描方向朝上：从等级1到等级'n'。
+                                            该参数可以设置为ENABLE或DISABLE * /
+  EOCSelection;                         / *！<指定通过轮询和中断将什么EOC（转换结束）标志用于转换：每个等级或完整序列的转换结束。
+                                            此参数可以是@ref ADC_EOCSelection的值。
+                                            注意：对于注入组，仅在序列末尾才引发转换结束（flag＆IT）。
+                                                因此，如果将转换结束设置为每次转换结束，则不应将插入组与中断一起使用（HAL_ADCEx_InjectedStart_IT）
+                                                或轮询（HAL_ADCEx_InjectedStart和HAL_ADCEx_InjectedPollForConversion）。顺便说一句，轮询仍然是可能的，因为驱动程序将使用估计的时间来完成注入转换。
+                                            注意：如果要使用溢出功能，请在参数“ EOCSelection”设置为每次转换结束时，在“中断”模式（函数HAL_ADC_Start_IT（））中使用ADC，或者在“通过DMA传输”模式（函数HAL_ADC_Start_DMA（））中使用ADC。
+                                                如果要绕过超限功能，则必须在参数“ EOCSelection”的“轮询”或“中断”模式下使用ADC，并且必须将其设置为序列的结尾* /
+  ContinuousConvMode;                   / *！<指定对于常规组是在单模式（一次转换）还是连续模式下进行转换，
+                                              在发生选定的触发器（软件启动或外部触发器）之后。
+  NbrOfConversion;                      / *！<指定将在常规组音序器中转换的等级数。
+                                              要使用常规组音序器并转换几个等级，必须启用参数“ ScanConvMode”。
+                                              此参数必须是介于Min_Data = 1和Max_Data = 16之间的数字。* /
+  DiscontinuousConvMode;                / *！<指定是否以完全序列/不连续序列（主序列细分为连续部分）执行常规组的转换序列。
+                                              仅当启用了定序器（参数“ ScanConvMode”）时，才使用不连续模式。如果禁用了音序器，则此参数将被丢弃。
+                                              仅当禁用连续模式时，才能启用非连续模式。如果启用了连续模式，则此参数设置将被放弃。
+                                              该参数可以设置为ENABLE或DISABLE。 * /
+ NbrOfDiscConversion;                   / *！<指定不连续转换的数量，在该不连续转换中将细分常规组的主要序列（参数NbrOfConversion）。
+                                              如果禁用了参数“ DiscontinuousConvMode”，则该参数将被丢弃。
+                                              此参数必须是Min_Data = 1和Max_Data = 8之间的数字。* /
+  DMAContinuousRequests；               / *！<指定是否以单发模式执行DMA请求（当达到转换次数时DMA传输停止）
+                                             或在连续模式下（无限制的DMA传输，无论转换次数如何）。
+                                             注意：在连续模式下，必须在循环模式下配置DMA。否则，当达到DMA缓冲区最大指针时，将触发溢出。
+                                             注意：在常规组和注入组上都没有进行任何转换时（禁用ADC，或启用ADC而没有连续模式或可能触发转换的外部触发），必须修改此参数。
+                                             该参数可以设置为ENABLE或DISABLE。 * /
+```
+#### 程序编写
+
+**主要API**
+
+- `HAL_ADC_Start();`     
+启动ADC转换
+- `__HAL_ADC_GET_FLAG()`
+查询标志位，判断ADC状态
+- `HAL_ADC_GetValue()`   
+获取ADC值
+- `HAL_ADC_PollForConversion(&hadc1, 50)`
+等待转换完成，第二个参数表示超时时间，单位ms.
+- `HAL_ADC_GetState(&hadc1)`
+换取ADC状态，HAL_ADC_STATE_REG_EOC表示转换完成标志位，需配合 `HAL_ADC_PollForConversion()`使用。
+
+
+**主程序**
+```
+/****************** adc.c **********************/
+
+// 开始ADC转换
+void adc1_start()
+{
+	HAL_ADC_Start(&hadc1);     //启动ADC转换
+	//HAL_ADC_PollForConversion(&hadc1, 50);   //等待转换完成，50为最大等待时间，单位为ms
+}
+
+// 查询ADC转换是否完成
+// 返回1 完成
+uint8_t adc1_ready()
+{
+	if(__HAL_ADC_GET_FLAG(&hadc1,ADC_FLAG_EOC))
+    //if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_REG_EOC))
+		return 1;
+	else
+		return 0;
+}
+
+// 获取ADC值
+uint16_t get_adc()
+{
+	return HAL_ADC_GetValue(&hadc1);   //获取ADC值
+}
+
+/****************** main.c **********************/
+
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();  // 启动转换
+}
+
+void loop()
+{
+	if(adc1_ready()){
+		printf("ADC = %d\n\r",get_adc());
+		adc1_start();
+	}
+	printf("idle\n\r");
+	delay_ms(1000);
+}
+
+```
+系统初始化组后，启动ADC转换。主程序不断查询ADC转换状态，如果就绪，就打印ADC值并重新启动下一次转换。
+
+网上很多教程会使用函数
+```
+HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_REG_EOC)
+```
+查询ADC状态，但必须配合函数
+```
+HAL_ADC_PollForConversion(&hadc1, 50);
+```
+使用，这种方案使用阻塞查询，也就是启动转换后，会等待转换完成，会阻塞程序，不推荐使用。详细使用参考上述程序对应注释部分。
+
+网上教程还会有校准函数
+```
+HAL_ADCEx_Calibration_Start(&hadc2);    //AD校准
+```
+ 这个依芯片而异，这里使用的 F401 就没有。
+**开启ADC 3种模式 ( 轮询模式 中断模式 DMA模式 ）**
+
+- HAL_ADC_Start(&hadcx);       //轮询模式开启ADC
+- HAL_ADC_Start_IT(&hadcx);       //中断轮询模式开启ADC
+- HAL_ADC_Start_DMA(&hadcx)；       //DMA模式开启ADC
+
+**关闭ADC 3种模式 ( 轮询模式 中断模式 DMA模式 ）**
+
+- HAL_ADC_Stop()
+- HAL_ADC_Stop_IT()
+- HAL_ADC_Stop_DMA()
+
+### 单通道单次转换-中断方式
+
+#### 初始化配置
+紧跟上文的配置，只需要再使能中断即可。
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC-%E5%8D%95%E9%80%9A%E9%81%93%E4%B8%AD%E6%96%AD%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+**主要API**
+-  `HAL_ADC_Start_IT()  `    
+中断模式下开启ADC转换
+- `HAL_ADC_Stop_IT()`
+停止准换
+- `HAL_ADC_ConvCpltCallback()`
+中断模式下转换完成后回调，DMA模式下DMA传输完成后也会调用
+
+**主程序**
+```
+/****************** adc.c **********************/
+void adc1_start()
+{
+	HAL_ADC_Start_IT(&hadc1); //定时器中断里面开启ADC中断转换，1ms开启一次采集
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)    //ADC转换完成回调
+{
+    //HAL_ADC_Stop_IT(&hadc1);    //关闭定时器
+	printf("ADC1 Reading : %d \r\n",HAL_ADC_GetValue(&hadc1));
+    HAL_ADC_Start_IT(&hadc1);
+    //HAL_TIM_Base_Start_IT(&htim3);   //开启定时器
+}
+/****************** main.c **********************/
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();
+}
+```
+系统初始化组后开启ADC中断转换，中断回调函数里读取当前ADC数据并打印出来。其中的开关全局中断为可选项，是为了避免其它中断打断这里的ADC数据读取，这里只有一个中断，并未开启。
+
+### 多通道单次转换
+
+STM32的多通道是没有多通道值存储寄存器的，也就是说在普通轮询模式下，我们只能通过函数
+```
+HAL_ADC_GetValue(&hadc1)
+```
+读取一个通道的值，并不能一次性读取多个通道，STM32每次只能转换一个通道。 
+随意我们在开启多通道时，读取数值的基本方法就是转换一次，读取一次，在开启转换，在读取。
+
+初始化配置中能帮我们解决的只有：不用手动切换通道以及切换通道的重新初始化配置。
+#### 初始化配置
+
+在**单通道单次转换**配置基础上修改：
+1. 使能多个通道
+2. 参数配置
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC-%E5%A4%9A%E9%80%9A%E9%81%93%E9%85%8D%E7%BD%AE.png)  
+
+
+**参数详解**
+- Scan Conversion Mode( 扫描模式 ) ： ENABLE
+如果使用了多个通道的话，会自动设置为ENABLE。
+- Discontinuous Conversion Mode(间断模式)    ENABLE
+根据数据手册描述：
+    ```
+    在不使用 DMA 的情况下管理转换序列
+    如果转换过程足够慢，则可使用软件来处理转换序列。在这种情况下，必须将 ADC_CR2 寄
+    存器中的 EOCS 位置 1，才能使 EOC 状态位在每次转换结束时置 1，而不仅是在序列结束
+    时置 1。当 EOCS = 1 时，会自动使能溢出检测。因此，每当转换结束时， EOC 都会置 1，
+    并且可以读取 ADC_DR 寄存器。溢出管理与使用 DMA 时的管理相同。
+    要在 EOCS 位置 1 时将 ADC 从 OVR 状态中恢复，请按以下步骤操作：
+    1. 将 ADC_SR 寄存器中的 ADC OVR 位清零
+    2. 触发 ADC 以开始转换。
+    ```
+大致意思就是，要是没有使用DMA，那么管理多个通道（转化序列）转换就需要使用软件处理，需开启间断模式（EOCS = 1），每次转换后，转换完成标志为（EOC = 1），和单次一样，通过判断这个标志位读取ADC值，之后再手动开启转换，系统就会自动开始转换下一个组。依次循环往复（最后一组转换完成会自动跳转到第一组）如果我们不开启间断模式，那么系统就会一次性转换所有组，那么我们在读取时也就只能读到最后一个通道的值。
+- Number of Discontinuous Conversion 1
+定义序列长度，距离分组模式。
+比如我们一共有  1、3、4、5、6  通道
+这里设为1，则每个通道为一组，那么每一个通道转换完成后都会置位 EOC。
+如果设备2，这、则 1、3一组，4、5一组、6一组，那么没两个通道转换完成后，才会置位EOC，那么其实我们也就只能读取到每组最后一个通道的ADC值。
+- Number OF Conversion(转换通道数)    3
+用到几个通道就设置为几，数字大于1即多个通道会自动使能上面的扫描模式
+- Rank          转换顺序
+这里是设置通道的转换顺序，Ranx 系统是按照x的顺序开始转换的。
+例如如果这里我们 Rank1设为通道3，Rank2设为通道4，依次设置，则转换顺序为 3、4、5、6、1.
+如果我们的序列长度为2，则3、4一组，5、6一组。系统会先转换3、4通道，按序执行。而不是1通道先转换。
+
+这里我们序列长度设为1，转换顺序为1、3、5.则按一般顺序转换，没完成一个通道，EOC置位1次。
+
+#### 程序编写
+
+```
+/******************* adc.c ***************/
+uint16_t adcBuf[3] = {0};
+
+void adc1_start()
+{
+	HAL_ADC_Start(&hadc1); // 开启ADC转换
+}
+
+// ADC 通道轮询  扫描模式+间断模式
+// 注意必须在初始化开启一次转换，否则数据会错位。应为ADC是按顺序轮询的
+void adc1_scan()
+{
+	static uint8_t ch = 0;
+
+	if(__HAL_ADC_GET_FLAG(&hadc1,ADC_FLAG_EOC)){  // 获取一次ADC值
+		adcBuf[ch]=HAL_ADC_GetValue(&hadc1);      // 保存值
+		HAL_ADC_Start(&hadc1);                    // 启动下一个通道的转换
+
+		if(++ch>=3)
+			ch = 0;
+	}
+
+}
+
+// 获取ADC值
+// ch 通道索引  注意这个值并不直接对应实际通道号，仅仅是数组的索引，对应通道存入数组的顺序
+// 例如本次共开启了1、3、4通道，并在 adc1_scan() 中依次存入了 adcBuf 中
+// 则 ch=1 对应通道1；ch=2 对应通道3
+uint16_t adc1_get(uint8_t ch)
+{
+	return adcBuf[ch];
+}
+
+/********************** main.c *******************/
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();
+}
+
+void loop()
+{
+	adc1_scan();
+	for(int i = 0;i<3;i++){
+		printf("adc1_CH%d = %d\n\r",i,adc1_get(i));
+	}
+	delay_ms(1000);
+}
+```
+
+初始化需先开启依次转换，不然我们的 `adc1_scan()` 中判断会不通过。
+主程序不断调用 `adc1_scan()` 扫描每个通道，并将值存储到数组，在一次性读取打印出来。
+
+在 `adc1_scan()` 我们无需关心通道的配置，系统会按照我们初始化配置是的顺序自动轮询转换。
+不然我们就需要像下面这要，手动切换通道并初始化：
+```
+void adc_start_conversion(uint32_t ch)
+{
+	ADC_ChannelConfTypeDef sConfig ;
+
+	sConfig.Channel = ch;
+	sConfig.Rank = ADC_REGULAR_RANK_1;                // 1个序列，序列1
+	sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_1;
+	HAL_ADC_ConfigChannel(&hadc1, &sConfig);          //通道配置
+    HAL_ADC_Start(&hadc1);                            // 启动ADC转换
+}
+```
+
+这里还要解答一个疑问点：
+既然 `Number of Discontinuous Conversion`序列长度大于1时，我们就无法读取部分通道的值，那么这个设置是做什么的呢？
+数据手册中也有解答：
+```
+ADC 在转换一个或多个通道时不是每次都读取数据的情况下，这可能会很有用（例如，存在
+模拟看门狗时）。为此，必须禁止 DMA (DMA = 0) 并且仅在序列结束 (EOCS = 0) 时才将
+EOC 位置 1。在此配置中，溢出检测已禁止。
+```
+意思就是并不是每个ADC通道的值都需要我们读取，有的可能转换完成后会用于其它目的（模拟看门狗）。比如 1、3通道是用于模拟看门狗的，那么我们的实际程序是不需要知道这两个通道的值，系统需要，我们也就不需要读取。这是序列为2后，系统会自动在每个通道转换完成后获取通道值并用于模拟看门狗比较。在这一组转换完成后，EOC置1，告诉我们这两个通过转换完成。
+
+同样连续转换模式 `Continuous Conversion Mode` 如果再没开启DMA情况下，我们手动读取数据，也只能读取到最后一个通道的转换结果。所以一般模式下，不是能该选项。
+
+### DMA转换-连续模式-circle
+
+DMA转换的好处就是无需手动获取查询转换状态吗，再手动保存通道值，DMA会自动将数据放进数组中。
+
+#### 初始化配置
+
+在上面**多通道单次转换**基础上修改：
+1. 添加一路DMA，配置参数：循环模式，字节为 World（必须为字，因为ADC变量是32位的）
+2. 配置ADC参数
+
+这里DMA中断时强制开启的，无法关闭。DMA循环模式会一致更新数据到数组中，如果改为Normal模式，则需要在 ADC 转换完成回调函数中手动启动下一次 DMA 转换。（DMA中断最终会调用ADC的所有回调函数，即使没启动ADC中断）
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/DMA1%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+**主要API**
+- HAL_ADC_Start_DMA(&hadc1, ();  
+开启ADC DMA转换
+```
+/******************* adc.c ***************/
+uint32_t adcBuf[3] = {0};
+
+void adc1_start()
+{
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuf, 3);  // 开启ADC DMA转换
+}
+
+// 获取ADC值
+// ch 通道索引  注意这个值并不直接对应实际通道号，仅仅是数组的索引，对应通道存入数组的顺序
+// 例如本次共开启了1、3、4通道，并在 adc1_scan() 中依次存入了 adcBuf 中
+// 则 ch=1 对应通道1；ch=2 对应通道3
+uint16_t adc1_get(uint8_t ch)
+{
+	return adcBuf[ch];
+}
+
+/********************** main.c *******************/
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();
+}
+
+void loop()
+{
+	for(int i = 0;i<3;i++){
+		printf("adc1_CH%d = %d\n\r",i,adc1_get(i));
+	}
+	delay_ms(1000);
+}
+
+```
+
+系统初始化开启 DMA 传输即可，后面不用再管了，主程序值负责读取即可。
+如果你选择了DMA 的  Normal 模式，则需要再中断里手动开启下一次转换。
+### DMA-不连续模式-circle
+该模式和 DMA ，DMA在一轮转换完成后会停止，需要手动再次开启下一轮转换。
+
+#### 初始化配置
+
+只在上述配置中将 Continuous Conversion Mode 改为 Disable。不是使能连续转换。
+
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/DMA2%E9%85%8D%E7%BD%AE.png)  
+
+
+#### 程序编写
+
+```
+/******************* adc.c ***************/
+uint32_t adcBuf[3] = {0};
+
+void adc1_start()
+{
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuf, 3);  // 开启ADC DMA转换
+}
+
+// 获取ADC值
+// ch 通道索引  注意这个值并不直接对应实际通道号，仅仅是数组的索引，对应通道存入数组的顺序
+// 例如本次共开启了1、3、4通道，并在 adc1_scan() 中依次存入了 adcBuf 中
+// 则 ch=1 对应通道1；ch=2 对应通道3
+uint16_t adc1_get(uint8_t ch)
+{
+	return adcBuf[ch];
+}
+
+// 在 Readme 参数配置下，不论是否开启  ADC 中断，都会调用该回调函数
+// 此时更多的是通知所有通道转换完成，并无实际操作
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuf, 3);  // 开启ADC DMA转换
+}
+
+
+/********************** main.c *******************/
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();
+}
+
+void loop()
+{
+	for(int i = 0;i<3;i++){
+		printf("adc1_CH%d = %d\n\r",i,adc1_get(i));
+	}
+	delay_ms(1000);
+}
+
+```
+系统初始化开启 DMA 传输即可，中断里手动开启下一次转换。
+主程序读取ADC值并打印。
+
+### DMA-不连续模式-Normal
+
+该模式和 DMA-不连续模式-circle 很像。
+这两者差别目前并不清楚。推测时应用场景不同，连续模式下，所有通道转换完成才会触发中断，不连续模式下，每个通道转换完成触发依次中断。
+
+#### 初始化配置
+
+只在上述配置中将 Continuous Conversion Mode 改为 Disable。DMA 改为 Normal 模式
+>注意， Continuous Conversion Mode 必须改为 Disable。否则数组中的数据会发生偏移，比如，通道1数据第一次会存储在 adcBuf[0]，下一次转换再读取，数据就会存储再adcBuf[1]，其它通道数据依次移动，然后再循环往复。
+
+从实验结果来看，无论是不是能连续模式，每次DMA转换都会转换所有的通道，所以连续在这的意义即使是数据偏移？？？
+
+参考链接：[STM32使用HAL库的ADC多通道数据采集（DMA+非DMA方式）+ 读取内部传感器温度](https://blog.csdn.net/qq153471503/article/details/108123019)
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/DMA4%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+```
+/******************* adc.c ***************/
+uint32_t adcBuf[3] = {0};
+
+void adc1_start()
+{
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuf, 3);  // 开启ADC DMA转换
+}
+
+// 获取ADC值
+// ch 通道索引  注意这个值并不直接对应实际通道号，仅仅是数组的索引，对应通道存入数组的顺序
+// 例如本次共开启了1、3、4通道，并在 adc1_scan() 中依次存入了 adcBuf 中
+// 则 ch=1 对应通道1；ch=2 对应通道3
+uint16_t adc1_get(uint8_t ch)
+{
+	return adcBuf[ch];
+}
+
+// 在 Readme 参数配置下，不论是否开启  ADC 中断，都会调用该回调函数
+// 此时更多的是通知所有通道转换完成，并无实际操作
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle)
+{
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adcBuf, 3);  // 开启ADC DMA转换
+}
+
+
+/********************** main.c *******************/
+void setup() {
+    uart_init();
+    printf("Test Start\n\r");
+    adc1_start();
+}
+
+void loop()
+{
+	for(int i = 0;i<3;i++){
+		printf("adc1_CH%d = %d\n\r",i,adc1_get(i));
+	}
+	delay_ms(1000);
+}
+
+```
+系统初始化开启 DMA 传输即可，中断里手动开启下一次转换。
+主程序读取ADC值并打印。
+
+### 其它
+
+关于 ADC在DMA模式下的 `DMA Continuous Request`作用，目前仍无结论。下面是可能有帮助的参考：
+- [DMA Continuous Request functionality](https://electronics.stackexchange.com/questions/500827/dma-continuous-request-functionality)
 ## 内部温度传感器
 
+温度传感器可用于测量器件的环境温度 (TA)。
+- 对于 STM32F40x 和 STM32F41x 器件，温度传感器内部连接到 ADC1_IN16 通道，而
+ADC1 用于将传感器输出电压转换为数字值
+
+主要特性
+- 支持的温度范围： —40 °C 到 125 °C
+- 精度： ±1.5 °C
+
+使用以下公式计算温度：
+```
+温度（单位为 °C） = {(VSENSE — V25) / Avg_Slope} + 25
+其中：
+— V25 = 25 °C 时的 VSENSE 值。
+— Avg_Slope = 温度与 VSENSE 曲线的平均斜率（以 mV/°C 或 μV/°C 表示））
+```
+VSENSE 位电压值 v。
+有关 V25 和 Avg_Slope 实际值的相关信息，请参见数据手册中的电气特性一节。
+一般典型值为：V25 = 0.76； Avg_Slope = 2.5mv/℃
+注意： 传感器从掉电模式中唤醒需要一个启动时间，启动时间过后其才能正确输出 VSENSE。 ADC 在
+上电后同样需要一个启动时间，因此，为尽可能减少延迟间，应同时将 ADON 和 TSVREFE
+位置 1。
+
+>温度传感器的输出电压随温度线性变化。由于工艺不同，该线性函数的偏移量取决于各个芯片（芯片之间的温度变化可达 45 °C）。
+
+>内部温度传感器更适用于对温度变量而非绝对温度进行测量的应用情况。如果需要读取精确温度，则应使用外部温度传感器。**
+
+### 初始化配置
+
+在 `多通道单次转换`基础上修改
+1. 使能内部温度传感器
+2. 配置adc参数：通道数改为4，rank4选择内部温度通道。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ADC-%E5%86%85%E9%83%A8%E6%B8%A9%E5%BA%A6%E9%85%8D%E7%BD%AE.png)  
+
+### 程序编写
+
+程序和 `多通道单次转换` 一样，将adcBuf改为4就行了。主程序修改一下：
+```
+void loop()
+{
+	adc1_scan();
+	for(int i = 0;i<4;i++){
+		if(i<3){
+			printf("adc1_CH%d = %d\n\r",i,adc1_get(i));
+		}
+		else{
+			double temperate = (float)adc1_get(i)*(3.3/4096);
+			temperate=(temperate - 0.76)/0.0025+25; //转换为温度值
+			printf("temper = %d\n\r",(int)temperate);
+		}
+
+	}
+	delay_ms(1000);
+}
+```
+单独将通道16的数值转换位温度值并打印输出。我这初始输出温度 31，比环境温度高不少（环境15度左右），可见内部温度如手册所说，不准确。用手触摸芯片，会发现温度在升高。
+
 ## DAC
+
+STM32F401 不支持 DAC，暂空。
 
 ## IIC（EEPROM）
 
 ## IIC DMA
 
 ## SPI（Flash）
+
+使用SPI驱动外部 flash 芯片（W25q128）。
+
+### 初始化配置
+
+- 配置PA4引脚位输出，作为片选
+- 开启spi，参数默认
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/SPI%E9%85%8D%E7%BD%AE.png)  
+
+### 程序编写
+
+先编写两个 spi 底层读写接口。共flash函数使用。
+```
+/******************** spi1.c *******************/
+
+//SPI速度设置函数
+//SPI速度=fAPB1/分频系数
+//@ref SPI_BaudRate_Prescaler:SPI_BAUDRATEPRESCALER_2~SPI_BAUDRATEPRESCALER_2 256
+//fAPB1时钟  般为42Mhz
+void SPI1_SetSpeed(uint8_t SPI_BaudRatePrescaler)
+{
+    assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));//判断有效
+    __HAL_SPI_DISABLE(&hspi1);            //关闭SPI
+    hspi1.Instance->CR1&=0XFFC7;          //�???3-5清零，用来设置波特率
+    hspi1.Instance->CR1|=SPI_BaudRatePrescaler;//设置SPI速度
+    __HAL_SPI_ENABLE(&hspi1);             //使能SPI
+
+}
+
+//SPI1 读写个字
+//TxData:要写入的字节
+//返回:读取到的字节
+uint8_t SPI1_ReadWriteByte(uint8_t TxData)
+{
+	uint8_t Rxdata;
+    HAL_SPI_TransmitReceive(&hspi1,&TxData,&Rxdata,1, 100);
+ 	return Rxdata;          		    //返回收到的数
+}
+```
+然后是 Flash 的驱动函数.
+w25qxx.h 主要是一些宏定义和指令表，不详细列出，具体请查看源码，另外定义了片选引脚（位带操作）。
+```
+/****************** w25qxx.h **********************/
+
+//W25X系列/Q系列芯片列表
+#define W25Q80 	0XEF13
+#define W25Q16 	0XEF14
+#define W25Q32 	0XEF15
+#define W25Q64 	0XEF16
+#define W25Q128	0XEF17
+#define W25Q256 0XEF18
+
+extern u16 W25QXX_TYPE;					//定义W25QXX芯片型号
+
+#define	W25QXX_CS 		PAout(4)  		//W25QXX的片选信号
+
+//////////////////////////////////////////////////////////////////////////////////
+//指令表
+#define W25X_WriteEnable		0x06
+#define W25X_WriteDisable		0x04
+#define W25X_ReadStatusReg1		0x05
+#define W25X_ReadStatusReg2		0x35
+#define W25X_ReadStatusReg3		0x15
+#define W25X_WriteStatusReg1    0x01
+#define W25X_WriteStatusReg2    0x31
+#define W25X_WriteStatusReg3    0x11
+#define W25X_ReadData			0x03
+...  部分代码省略
+```
+
+w25qxx.c 就是主要的 flash 操作函数了。这里也不在=列出，详细请查看源码。
+我们直接看主程序：
+```
+//要写入到 W25Q64 的字符串数组
+const u8 TEXT_Buffer[]={"MiniSTM32 SPI TEST"};
+#define SIZE sizeof(TEXT_Buffer)
+
+void setup() {
+
+	u8 datatemp[SIZE];
+	u32 FLASH_SIZE=128*1024*1024; //FLASH 大小为 128M 字节
+    uart_init();
+    printf("Test Start\n\r");
+	W25QXX_Init();  /* W25Q256-Flash初始化 */
+	while(W25QXX_ReadID()!=W25Q128)
+	{
+		printf("W25Q64 Failed!\n\r");  //
+	}
+	printf("W25Q64 OK!\n\r");
+	W25QXX_Write((u8*)TEXT_Buffer,FLASH_SIZE-100,SIZE);
+	W25QXX_Read(datatemp,FLASH_SIZE-100,SIZE);
+	printf("The Data Readed Is: ");//提示传送完成
+	printf("%s\r\n",datatemp); //显示读到的字符串
+}
+
+void loop()
+{
+
+	printf("Test Start\n\r");
+	delay_ms(1000);
+}
+```
+我们在初始化配置时先检测 flash ID型号，判断是否初始化成功。
+随后写入一串字符，之后读取并打印出来。如果打印内容与字符串内容一致，说明 falsh 操作成功。
 
 ## SPI DMA
 
