@@ -2473,6 +2473,14 @@ STM32F401 不支持 DAC，暂空。
 
 ### 程序编写
 
+**主要API**
+- `HAL_SPI_TransmitReceive();`
+在阻塞模式下发送和接收大量数据。
+- `HAL_SPI_Receive()`
+在阻塞模式下接收大量数据。
+- `HAL_SPI_Transmit()`
+在阻塞模式下发送大量数据。
+
 先编写两个 spi 底层读写接口。共flash函数使用。
 ```
 /******************** spi1.c *******************/
@@ -2569,14 +2577,504 @@ void loop()
 
 ## SPI DMA
 
+flash读写会占用比较长的时间 ，如果这个SPI上还挂载了其他SPI 器件，如SPI显示屏，就需要通过开启DMA来提升速度了。
+
+###  初始化配置
+承接上文 SPI 配置，添加以下几项
+1. 开启DMA通道，可以只开一个
+2. 配置DMA参数
+3. 关闭SPI中断
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/SPI_DMA%E9%85%8D%E7%BD%AE.png)  
+
+### 程序编写
+
+**主要API**
+
+- `HAL_SPI_Transmit_DMA()`
+使用DMA在非阻塞模式下传输大量数据。
+- `HAL_SPI_Receive_DMA()`
+使用DMA在非阻塞模式下接收大量数据。
+- `HAL_SPI_TransmitReceive_DMA()`
+使用DMA在非阻塞模式下发送和接收大量数据。
+- `HAL_SPI_GetState()`
+返回SPI句柄状态。
+- `HAL_SPI_TxCpltCallback()`
+SPI发送完成回调函数，DMA中断调用
+- `HAL_SPI_RxCpltCallback()`
+SPI接收完成回调函数，DMA中断调用
+
+**主程序**
+ 在 **SPI** 的基础上，修改两个函数：SPI的读与写
+ ```
+//读取SPI FLASH
+//在指定地址开始读取指定长度的数据
+//pBuffer:数据存储区
+//ReadAddr:开始读取的地址(24bit)
+//NumByteToRead:要读取的字节数(最大65535)
+void W25QXX_Read(u8* pBuffer,u32 ReadAddr,u16 NumByteToRead)
+{
+
+	W25QXX_CS=0;                            //使能器件
+    SPI1_ReadWriteByte(W25X_ReadData);      //发送读取命令
+    if(W25QXX_TYPE==W25Q256)                //如果是W25Q256的话地址为4字节的，要发送最高8位
+    {
+        SPI1_ReadWriteByte((u8)((ReadAddr)>>24));
+    }
+    SPI1_ReadWriteByte((u8)((ReadAddr)>>16));   //发送24bit地址
+    SPI1_ReadWriteByte((u8)((ReadAddr)>>8));
+    SPI1_ReadWriteByte((u8)ReadAddr);
+//  u16 i = 0xFF;
+//  for(i=0;i<NumByteToRead;i++)
+//	{
+//      pBuffer[i]=SPI1_ReadWriteByte(0XFF);    //循环读数
+//  }
+    // 如果使用普通SPI读写，请注释下面两行行，上面四行取消注释
+    HAL_SPI_Receive_DMA(&hspi1,pBuffer,NumByteToRead);
+    while (hspi1.State == HAL_SPI_STATE_BUSY_RX);  // 必须加这一行，等待spi读结束
+    //u8 i = 0xFF;
+    //HAL_SPI_TransmitReceive_DMA(&hspi1,&i,pBuffer,NumByteToRead);  !!! 不能使用该语句写操作，会导致读写错误 !!!
+	W25QXX_CS=1;
+}
+//SPI在一页(0~65535)内写入少于256个字节的数据
+//在指定地址开始写入最大256字节的数据
+//pBuffer:数据存储区
+//WriteAddr:开始写入的地址(24bit)
+//NumByteToWrite:要写入的字节数(最大256),该数不应该超过该页的剩余字节数!!!
+void W25QXX_Write_Page(u8* pBuffer,u32 WriteAddr,u16 NumByteToWrite)
+{
+ 	u16 i;
+    W25QXX_Write_Enable();                  //SET WEL
+	W25QXX_CS=0;                            //使能器件
+    SPI1_ReadWriteByte(W25X_PageProgram);   //发送写页命令
+    if(W25QXX_TYPE==W25Q256)                //如果是W25Q256的话地址为4字节的，要发送最高8位
+    {
+        SPI1_ReadWriteByte((u8)((WriteAddr)>>24));
+    }
+    SPI1_ReadWriteByte((u8)((WriteAddr)>>16)); //发送24bit地址
+    SPI1_ReadWriteByte((u8)((WriteAddr)>>8));
+    SPI1_ReadWriteByte((u8)WriteAddr);
+    //for(i=0;i<NumByteToWrite;i++)SPI1_ReadWriteByte(pBuffer[i]);//循环写数
+    //HAL_SPI_TransmitReceive_DMA(&hspi1,pBuffer,&i,NumByteToWrite);
+    HAL_SPI_Transmit_DMA(&hspi1,pBuffer,NumByteToWrite);
+    while (hspi1.State == HAL_SPI_STATE_BUSY_TX);
+    W25QXX_CS=1;                            //取消片选
+	W25QXX_Wait_Busy();					   //等待写入结束
+}
+
+ ```
+
+ 这里的 SPI DMA操作实际还是阻塞模式，每次传输完成必须使用 while 检查 falsh状态，才能开启下一次传输，否则可能会导致只一次还未结束，有开始下一轮数据传输（DMA非阻塞，与主程序并行），所以主程序和DMA传输数据直接存在交叉现象，可以添加标志位知识DMA传输状态，但和此处的while效果一样，最终还是需要等待每一次数据传输完成才能开始下一次。
+
+ 这里使用DMA的唯一好处就是读写速度加快，虽然主程序会等待 DMA 完成，但 数据的传输过程不需要 CPU 参与，所以同一数据使用DMA的速度更快，也就是这里的等待时间更短。
+ 
+ 根据网上他人测试结论：DMA速度是普通（基于HAL库）的 3倍，另外使用寄存器方式也会比 HAl 库快三倍，如果使用 DMA+寄存器 方式就会比 HAL快9倍
+
+
 ## 内部Flash模拟EEPROM
+
+通过访问内部 falsh 地址及其内容，达到类似 eeprom 的读写操作。
+
+目前测试：访问内部数据会得到数据并打印出来，但之后程序死机。原因未知
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/stmF4%20-flahs.png)  
+
+**参考链接**
+[STM32F407.FLASH 读写经验](https://blog.csdn.net/huan447882949/article/details/79726380)
+[STM32F4内部Flash读写](https://blog.csdn.net/zhang062061/article/details/114275376)
+[STM32F030 Read/Write Flash Throwing HardFault](https://community.arm.com/developer/tools-software/tools/f/keil-forum/33821/stm32f030-read-write-flash-throwing-hardfault)
 
 ## 内存管理
 
+
+### 使用标准库
+
+#### void *
+在进行下面话题之前，我们先回忆一下 void * 是什么？
+
+void * 表示未确定类型的指针。C/C++规定，void * 类型可以强制转换为任何其它类型的指针。
+
+void * 也被称之为无类型指针，void * 可以指向任意类型的数据，就是说可以用任意类型的指针对 void * 赋值，如下示例：
+```
+void *p1;
+int *p2;
+p1 = p2;
+```
+但一般不会反过来使用，如下示例在有些编译器上面可以编译通过，有些就不行：
+```
+void *p1;
+int *p2;
+p2 = p1;
+
+```
+可以修改一下代码，将 void * 转换为对应的指针类型再进行赋值，如下示例：
+```
+void *p1;
+int *p2;
+p2 = (char *)p1;
+```
+由于 GNU 和 ANSI 对 void * 类型指针参与运算的规定不一样，所以为了兼容二者并且让程序有更好的兼容性，最好还是将 void * 转换为有明确类型的指针再参与运算，如下示例。
+```
+void *p1;
+int *p2;
+p2 = (char *)p1;
+```
+
+#### malloc
+void * malloc(size_t size);
+malloc 向系统申请分配指定 size 个字节的内存空间，即 malloc 函数用来从堆空间中申请指定的 size 个字节的内存大小，返回类型是 void * 类型，如果成功，就会返回指向申请分配的内存，否则返回空指针，所以 malloc 不保证一定成功。
+
+另外需要注意一个问题，使用 malloc 函数分配内存空间成功后，malloc 不会对数据进行初始化，里边数据是随机的垃圾数据，所以一般结合 memset 函数和 malloc 函数 一起使用。
+```
+int *arr;
+arr = (int *)malloc(10 * sizeof(int));
+if (NULL != arr) {
+    memset(arr, 0, 10 * sizeof(int));
+    printf("arr: %p\n", arr);
+}
+```
+
+#### free
+
+void free(void *ptr);
+
+free 函数会释放指针指向的内存分配空间。
+
+对于 free 函数我们要走出一个误区，不要以为调用了 free 函数，变量就变为 NULL 值了。本质是 free 函数只是割断了指针所指的申请的那块内存之间的关系，并没有改变所指的地址（本身保存的地址并没有改变）。如下示例：
+```
+char *pchar = (char *)malloc(10 * sizeof(char));
+        
+if (NULL != pchar) {
+    strcpy(pchar, "blog");
+    /* pchar所指的内存被释放，但是pchar所指的地址仍然不变 */
+    free(pchar);
+    
+    /* 该判断没有起到防错作用，此时 pchar 并不为 NULL */
+    if (NULL != pchar) {
+        strcpy(pchar, "it");
+        printf("pchar: %s", pchar);
+    }
+}
+```
+正确且安全的做法是对指针变量先进行 free 然后再将其值置为 NULL，如下下面示例：
+```
+char *pchar = (char *)malloc(10 * sizeof(char));
+        
+if (NULL != pchar) {
+    strcpy(pchar, "blog");
+    /* pchar所指的内存被释放，但是pchar所指的地址仍然不变 */
+    free(pchar);
+    /* 将其置为 NULL 值 */
+    pchar = NULL;
+    
+    /* 该判断没有起到防错作用，此时 pchar 并不为 NULL */
+    if (NULL != pchar) {
+        strcpy(pchar, "it");
+        printf("pchar: %s", pchar);
+    }
+}
+```
+
+#### calloc 函数
+
+void * calloc(size_t count, size_t size);
+
+在堆上，分配 n*size 个字节，并初始化为0，返回 void *类型，返回值情况跟 malloc 一致。
+
+函数 malloc() 和函数 calloc() 的主要区别是前者不能初始化所分配的内存空间，而后者能。如果由 malloc() 函数分配的内存空间原来没有被使用过，则其中的每一位可能都是0；反之，如果这部分内存曾经被分配过，则其中可能遗留有各种各样的数据。也就是说，使用 malloc() 函数的程序开始时(内存空间还没有被重新分配)能正常进行，但经过一段时间(内存空间还已经被重新分配)可能会出现问题。
+
+函数 calloc() 会将所分配的内存空间中的每一位都初始化为零，也就是说，如果你是为字符类型或整数类型的元素分配内存，那么这些元素将保证会被初始化为0；如果你是为指针类型的元素分配内存，那么这些元素通常会被初始化为空指针；如果你为实型数据分配内存，则这些元素会被初始化为浮点型的零。
+
+#### realloc() 函数
+
+void * realloc(void *ptr, size_t size);
+
+realloc() 会将 ptr 所指向的内存块的大小修改为 size，并将新的内存指针返回。假设之前内存块的大小为 n，如果 size <= n，那么截取的内容不会发生变化，如果 size > n，那么新分配的内存不会被初始化。
+
+对于上面说的新的内存指针地址可能变也可能不变，假如原来alloc的内存后面还有足够多剩余内存的话，realloc后的内存=原来的内存+剩余内存，realloc还是返回原来内存的地址即不会创建新的内存。假如原来alloc的内存后面没有足够多剩余内存的话，realloc将申请新的内存，然后把原来的内存数据拷贝到新内存里，原来的内存将被free掉，realloc返回新内存的地址。
+
+另外要注意，如果 ptr = NULL，那么相当于调用 malloc(size)；如果 ptr != NULL且size = 0，那么相当于调用 free(ptr)。
+
+当调用 realloc 失败的时候，返回NULL，并且原来的内存不改变，不会释放也不会移动。
+
+#### 示例
+```
+// 对其分配内存，这个时候pchar值是随机的垃圾值
+char *pchar = (char *)malloc(16);
+// 手动初始化pchar的值，下面的方法则不需要
+memset(pchar, 0, 16);
+
+// calloc分配内存，会自动设置为0，不需要memset
+char *pchar_orig = (char *)calloc(12, sizeof(char));
+
+// 在原内存基础上，在堆内存空间中连续增加内存
+// 如果原内存没有连续空间可拓展，realloc会新分配一个空间，将原有内存copy到新空间，然后释放原内存  
+// 注意：realloc和malloc，只分配内存不进行赋值操作
+char *pchar_dest = (char *)realloc(pchar_orig, 10);
+  
+// 相当于 malloc(60)
+char *pchar_ini = (char *)realloc(NULL, 60);
+
+free(pchar);
+pchar = NULL;
+
+free(pchar_orig);
+pchar_orig = NULL;
+
+free(pchar_dest);
+pchar_dest = NULL;
+
+free(pchar_ini);
+pchar_ini = NULL;
+```
+
+**参考链接**
+- [C语言中free、malloc 等内存管理函数](https://blog.csdn.net/veryitman/article/details/89761768)
+
+### 自写malloc库
+
+- **栈区（stack）**：由编译器自动分配和释放，存放函数的参数值、局部变量的值等，其操作方式类似于数据结构中的栈。
+- **堆区（heap）**：一般由程序员分配和释放，若程序员不释放，程序结束时可能由操作系统回收。分配方式类似于数据结构中的链表。
+
+stm32cubeide 默认配置
+```
+Stack_Size      EQU     0x400
+Heap_Size       EQU     0x200
+```
+0x00000400 等于1024字节所以等于1K
+0x00000200 等于512字节所以等于512 Byte
+
+由于 `malloc()` 分配的动态内存在堆区域，因此调大堆空间 `Heap_Size` 为 0xC00，即 3072 字节大小。用户可以自由使用的堆空间，大约为这里分配的堆总空间的一半。超过时系统就会死机，也就是 3072/2 字节可以被用户用来自由使用。
+
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E5%A0%86%E4%BF%AE%E6%94%B9.png)  
+
+[STM32CUBEIDE——malloc](https://blog.csdn.net/qq_26410201/article/details/102842270)
+[STM32分配堆栈空间不足问题原因及解决方法](https://blog.csdn.net/lighthear/article/details/69485942)
+
+
 ## USB虚拟串口
 
-## USB读卡器
+STM32向PC发送的是USB协议的数据包，跟串口自身没有关系
+PC端的USB接口收到USB协议的数据包后，由驱动程序来解包并放入操作系统的串口缓冲区里，这样，串口助手类的工具就能够从缓冲区里读到数据，串口助手就认为是有 uart数据到来了。
 
+所以虚拟串口和串口不是一个概念，本质也不同，那么其实串口的参数配置对虚拟串口来说也就没用了。在我们链接虚拟串口测试时，无论怎么更改串口助手的波特率，都不会影响数据接收和发送。
+
+###  初始化配置
+
+开发板已经将芯片的USB引脚接到了 micro 接口上，我们只需要用数据线连接电脑和开发板即可。这里的 `USBDP/DM` 引脚是直接和usb接口时直连的，不需要一般串口需要接一个串口芯片。
+
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USBD_CDC%20%E7%A1%AC%E4%BB%B6.png)  
+
+
+1. 使能USB接口
+参数保持默认，speed 参数设置通信速度，可自行再尝试修改；引脚再使能后系统自动选择配置，和我们的硬件一致，无需更改。
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USBD_CDC%20%E9%85%8D%E7%BD%AE1.png)  
+
+2. 配置USB模式位虚拟串口
+参数保持默认。其中的USB CDC Rx Buffer Size 是定义接收数组大小，下面的是发送数组大小，可以尝试修改。
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USBD_CDC%20%E9%85%8D%E7%BD%AE2.png)  
+
+
+### 程序编写
+
+USB 虚拟串口的API我们常用的对外接口都在 usbd_cdc_if.c/.h 文件中。其中主要API：
+
+- `CDC_Receive_FS()`
+接收数据。
+- `CDC_Transmit_FS()`
+发送的数据
+- `CDC_TransmitCplt_FS()`
+数据发送完成回调函数
+
+以上三个函数都在usbd_cdc_if.c文件中，一般需要需改是 `CDC_Receive_FS()`函数，用来处理接收的数据
+
+**主程序**
+初始化配置后，我们无需任何修改，就可以直接发送数据。主函数如下：
+```
+u8 test_buf[] = {"Test Start\n\r"};
+
+void loop()
+{
+	CDC_Transmit_FS(test_buf,sizeof(test_buf));
+	delay_ms(1000);
+}
+```
+通多usb连接 
+
+### 数据接收
+
+需要更改一下原来的`CDC_Receive_FS()`函数：
+```
+static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
+{
+  /* USER CODE BEGIN 6 */
+  USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
+  USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+
+  CDC_Transmit_FS(Buf,*Len);
+  return (USBD_OK);
+  /* USER CODE END 6 */
+}
+```
+我们仅添加了
+```
+CDC_Transmit_FS(Buf,*Len);
+```
+实现数据的回传。
+
+### printf 功能
+
+通过自定义一个printf函数，实现与串口中的重定向printf 功能。
+在 `usbd_cdc_if.c` 添加如下内容：
+```
+void usb_printf(const char *format, ...)
+{
+    va_list args;
+    uint32_t length;
+
+    va_start(args, format);
+    length = vsnprintf((char *)UserTxBufferFS, APP_TX_DATA_SIZE, (char *)format, args);
+    va_end(args);
+    CDC_Transmit_FS(UserTxBufferFS, length);
+}
+```
+然后在.h 中声明一下。
+```
+void usb_printf(const char *format, ...);
+```
+
+最后主程序中直接调用即可：
+```
+void loop()
+{
+	usb_printf("idle\n\r");
+	delay_ms(1000);
+}
+
+````
+
+**参考链接:**
+- [STM32 usb虚拟串口 最大速度可以达到多少 波特率可以设置到多少？](https://www.amobbs.com/thread-4764331-1-1.html)
+- [使用STM32CubeMX把USB配置成虚拟串口（virtual com port）](https://blog.csdn.net/d1w2jsw/article/details/112206357)
+- [使用STM32CubeMX实现USB虚拟串口的环回测试功能](https://bbs.21ic.com/icview-1241432-1-1.html)
+- [stm32Cubemx USB虚拟串口](https://blog.csdn.net/qq_36561846/article/details/109427606)
+- [STM32使用虚拟串口CDC重定向printf](http://www.mcublog.cn/stm32/2020_04/stm32-cdc-printf/)
+- [STM32CubeMX之USB从机](https://mp.weixin.qq.com/s?__biz=MzUxMTcxMTU5Mg==&mid=2247483844&idx=1&sn=3ad9d076b353ebca20054922812d5b84&chksm=f96ec1c3ce1948d56f22387edf21bf6ea2f4f0e08b4c95c0e533d479703bb454e237f7256433&scene=21#wechat_redirect)
+- [STM32 USB虚拟串口波特率问题（含源码）](https://blog.csdn.net/zhang062061/article/details/113483845)
+- [STM32CubeMX实现STM32的USB虚拟串口功能](https://www.sunev.cn/embedded/732.html)
+
+## USB-U盘
+
+将外部flash W25Qxx 作为U盘，通过电脑可以像访问U盘一样访问 falsh 里的数据。类似U盘
+### 初始化配置
+
+在之前的spi驱动，读写 W25Q256 基础上配置。
+
+1. 使能USB接口
+参数保持默认，speed 参数设置通信速度，可自行再尝试修改；引脚再使能后系统自动选择配置，和我们的硬件一致，无需更改。
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USBD_CDC%20%E9%85%8D%E7%BD%AE1.png)  
+
+2. 配置USB模式，选择大容量存储设备。读写扇区大小改为4096
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/USB%20u%E7%9B%98%E9%85%8D%E7%BD%AE.png)  
+
+### 程序编写
+
+主要修改 `usbd_storage_if.c` w文件内容，添加 SPi 的读写接口到 USb读写中。
+在原有的宏定义下，重新定义，应为如果我们直接修改的话，下次初始化就又会被 IDE 该回来。
+- 定义扇区数  = 1024*8 扇区，内存大小 =扇区数* 扇区大小 = 1024*8*4096 = 32M。这个数字是根据 W25Q256 = 32M，倒退计算得来的。
+- 定义块大小，必须和我们初始化配置时的一致。要改一起改，而且要和上面的计算配合，不然实际程序虽然也能用，但显示的内存容量就会不一样。
+
+```
+/** @defgroup USBD_STORAGE_Private_Defines
+  * @brief Private defines.
+  * @{
+  */
+#define STORAGE_LUN_NBR                  1
+#define STORAGE_BLK_NBR                  0x10000
+#define STORAGE_BLK_SIZ                  0x200
+
+/* USER CODE BEGIN PRIVATE_DEFINES */
+#undef STORAGE_BLK_NBR
+#undef STORAGE_BLK_SIZ
+#define STORAGE_BLK_NBR                  1024*8  //Kb = 32M
+#define STORAGE_BLK_SIZ                  4096
+/* USER CODE END PRIVATE_DEFINES */
+```
+
+然后修改连个读写接口：
+将SPI读写API添加进来。其余不许改动，之后直接使用即可。
+
+```
+/**
+  * @brief  .
+  * @param  lun: .
+  * @retval USBD_OK if all operations are OK else USBD_FAIL
+  */
+int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
+{
+  /* USER CODE BEGIN 6 */
+	W25QXX_Read((uint8_t*)buf,blk_addr*STORAGE_BLK_SIZ,blk_len*STORAGE_BLK_SIZ);
+  return (USBD_OK);
+  /* USER CODE END 6 */
+}
+
+/**
+  * @brief  .
+  * @param  lun: .
+  * @retval USBD_OK if all operations are OK else USBD_FAIL
+  */
+int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
+{
+  /* USER CODE BEGIN 7 */
+	W25QXX_Write((uint8_t*)buf,blk_addr*STORAGE_BLK_SIZ,blk_len*STORAGE_BLK_SIZ);
+  return (USBD_OK);
+  /* USER CODE END 7 */
+}
+```
+**主函数：**
+只需要初始化时，输出话 W25Q256 接可。其实在原有程序上完全不用改动。下面的程序还是原来 SPI 读写的程序。
+```
+void setup() {
+
+	u8 datatemp[SIZE];
+	u32 FLASH_SIZE=128*1024*1024; //FLASH 大小为 128M 字节
+    uart_init();
+    printf("Test Start\n\r");
+	W25QXX_Init();  /* W25Q256-Flash初始化 */
+	while(W25QXX_ReadID()!=W25Q128)
+	{
+		printf("W25Q64 Failed!\n\r");  //
+	}
+	printf("W25Q64 OK!\n\r");
+	W25QXX_Write((u8*)TEXT_Buffer,FLASH_SIZE-100,SIZE);
+	W25QXX_Read(datatemp,FLASH_SIZE-100,SIZE);
+	printf("The Data Readed Is: ");//提示传送完成
+	printf("%s\r\n",datatemp); //显示读到的字符串
+}
+
+void loop()
+{
+
+	printf("Test Start\n\r");
+	delay_ms(1000);
+}
+```
+
+然后使用 USB 现连接开发板和电脑，随后电脑会弹窗提示格式化，点确认
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/U%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%96.png)  
+U盘初始化配置保持和下图一致即可，然后点击 `开始`
+![图 8](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/U%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%962.png)  
+格式化完成
+![图 9](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/U%E7%9B%98%E6%A0%BC%E5%BC%8F%E5%8C%963.png)  
+
+之后就想一般u盘操作，保存读取文件即可。（注意文件不要太大，就32M）。下图是存放的图片，重新插拔USB线，图片依旧还在，也能正常读取，删减。测试成功.
+![图 10](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/U%E7%9B%98%E5%AD%98%E5%82%A8.png)  
+
+**参考连接**
+[stm32USB之模拟U盘](https://blog.csdn.net/qq_38420206/article/details/110572003)
+[stm32 cubemx usb spi flash w25q128 u盘调试笔记](https://blog.csdn.net/zhaqonianzhu/article/details/108363938)
+[用STM32F0系列内部Flash虚拟出U盘](https://www.amobbs.com/thread-5705198-1-1.html)
+[stm32使用外部SPI FLASH模拟U盘(大容量存储设备MSC)求职学习资料](https://www.b2bchain.cn/10000.html)
+[cubemx配置 USB读卡器+FATFS](https://www.pianshen.com/article/1915956443/)
 ## LCD驱动
 
 ## LCD触摸
