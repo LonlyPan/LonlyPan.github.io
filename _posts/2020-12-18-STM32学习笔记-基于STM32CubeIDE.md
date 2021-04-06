@@ -2672,16 +2672,273 @@ void W25QXX_Write_Page(u8* pBuffer,u32 WriteAddr,u16 NumByteToWrite)
 
 ## 内部Flash模拟EEPROM
 
+不同型号的STM32F4xC/E，其FLASH容量也有所不同，最小的只有256K字节，最大的512K字节。STM32F401的FLASH容量为256K字节，STM32F411xC/E产品的闪存模块组织如图所示：
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/stm.png)  
+
+STM32F4的闪存模块由：主存储器、系统存储器、OPT区域和选项字节等4部分组成。
+
+主存储器，该部分用来存放代码和数据常数（如const类型的数据）。分为8个扇区，前4个扇区为16KB大小，然后扇区4是64KB大小，扇区5~7是128K大小，不同容量的STM32F411拥有的扇区数不一样，比如我们的STM32F411RCT6，则拥有6个扇区，从上图可以看出主存储器的起始地址就是0X08000000， B0、B1都接GND的时候，就是从0X08000000开始运行代码的。
+
+系统存储器，这个主要用来存放STM32F4的bootloader代码，此代码是出厂的时候就固化在STM32F4里面了，专门来给主存储器下载代码的。当B0接V3.3，B1接GND的时候，从该存储器启动（即进入串口下载模式）。
+
+OTP区域，即一次性可编程区域，共528字节，被分成两个部分，前面512字节（32字节为1块，分成16块），可以用来存储一些用户数据（一次性的，写完一次，永远不可以擦除！！），后面16字节，用于锁定对应块。
+
+选项字节，用于配置读保护、BOR级别、软件/硬件看门狗以及器件处于待机或停止模式下的复位。 
+
+闪存存储器接口寄存器，该部分用于控制闪存读写等，是整个闪存模块的控制机构。
+
+在执行闪存写操作时，任何对闪存的读操作都会锁住总线，在写操作完成后读操作才能正确地进行；既在进行写或擦除操作时，不能进行代码或数据的读取操作。
+
+STM23F4的FLASH读取是很简单的。例如，我们要从地址addr，读取一个字（一个字为32位），可以通过如下的语句读取：  
+`data=*(vu32*)addr;`  
+将addr强制转换为vu32指针，然后取该指针所指向的地址的值，即得到了addr地址的值。类似的，将上面的vu32改为vu8，即可读取指定地址的一个字节。相对FLASH读取来说，STM32F4 FLASH的写就复杂一点了，下面我们介绍STM32F4闪存的编程和擦除。
+
+**闪存的编程和擦除**
+执行任何Flash编程操作（擦除或编程）时，CPU时钟频率 (HCLK)不能低于1 MHz。如果在Flash操作期间发生器件复位，无法保证Flash中的内容。
+
+在对 STM32F4的Flash执行写入或擦除操作期间，任何读取Flash的尝试都会导致总线阻塞。只有在完成编程操作后，才能正确处理读操作。这意味着，写/擦除操作进行期间不能从Flash中执行代码或数据获取操作。
+
+STM32F4的闪存编程由6个32位寄存器控制，他们分别是：
+- FLASH访问控制寄存器(FLASH_ACR)
+- FLASH秘钥寄存器(FLASH_KEYR)
+- FLASH选项秘钥寄存器(FLASH_OPTKEYR)
+- FLASH状态寄存器(FLASH_SR)
+- FLASH控制寄存器(FLASH_CR)
+- FLASH选项控制寄存器(FLASH_OPTCR) 
+
+STM32F4复位后，FLASH编程操作是被保护的，不能写入FLASH_CR寄存器；通过写入特定的序列（0X45670123和0XCDEF89AB）到FLASH_KEYR寄存器才可解除写保护，只有在写保护被解除后，我们才能操作相关寄存器。
+
+FLASH_CR的解锁序列为：
+1. 写0X45670123到FLASH_KEYR
+2. 写0XCDEF89AB到FLASH_KEYR
+
+通过这两个步骤，即可解锁FLASH_CR，如果写入错误，那么FLASH_CR将被锁定，直到下次复位后才可以再次解锁。
+STM32F4闪存的编程位数可以通过FLASH_CR的PSIZE字段配置，PSIZE的设置必须和电源电压匹配，见表：29.1.2：
+![图 8](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E7%BC%96%E7%A8%8B%E6%93%A6%E9%99%A4%E5%B9%B6%E8%A1%8C%E4%BD%8D%E6%95%B0%E4%B8%8E%E7%94%B5%E5%8E%8B%E5%85%B3%E7%B3%BB%E8%A1%A8.png)  
+
+由于我们开发板用的电压是3.3V，所以PSIZE必须设置为10，即32位并行位数。擦除或者编程，都必须以32位为基础进行。
+STM32F4的FLASH在编程的时候，也必须要求其写入地址的FLASH是被擦除了的（也就是其值必须是0XFFFFFFFF），否则无法写入。STM32F4的标准编程步骤如下：
+1. 检查FLASH_SR中的BSY位，确保当前未执行任何FLASH操作。
+2. 将FLASH_CR寄存器中的PG位置1，激活FLASH编程。
+3. 针对所需存储器地址（主存储器块或OTP区域内）执行数据写入操作：
+    —并行位数为x8时按字节写入（PSIZE=00）
+    —并行位数为x16时按半字写入（PSIZE=01）
+    —并行位数为x32时按字写入（PSIZE=02）
+    —并行位数为x64时按双字写入（PSIZE=03）
+4. 等待BSY位清零，完成一次编程。
+
+按以上四步操作，就可以完成一次FLASH编程。不过有几点要注意：1，编程前，要确保要写如地址的FLASH已经擦除。2，要先解锁（否则不能操作FLASH_CR）。3，编程操作对OPT区域也有效，方法一模一样。
+我们在STM32F4的FLASH编程的时候，要先判断缩写地址是否被擦除了，所以，我们有必要再介绍一下STM32F4的闪存擦除，STM32F4的闪存擦除分为两种：扇区擦除和整片擦除。
+扇区擦除步骤如下：
+1. 检查FLASH_CR的LOCK是否解锁，如果没有则先解锁
+2. 检查FLASH_SR寄存器中的BSY 位，确保当前未执行任何FLASH操作
+3. 在FLASH_CR寄存器中，将SER位置1，并从主存储块的12个扇区中选择要擦除的
+扇区 (SNB)
+4. 将FLASH_CR寄存器中的STRT位置1，触发擦除操作
+5. 等待BSY位清零
+	
+经过以上五步，就可以擦除某个扇区。本章，我们只用到了STM32F4的扇区擦除功能，整片擦除功能我们在这里就不介绍了.。
+
+
 通过访问内部 falsh 地址及其内容，达到类似 eeprom 的读写操作。
 
 目前测试：访问内部数据会得到数据并打印出来，但之后程序死机。原因未知
 
-![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/stmF4%20-flahs.png)  
+###  初始化配置
+
+在上文 `SPI(Flash)`基础上编写，不用额外初始化。
+
+### 程序编写
+
+新建 stmflash.c文件，用于操作stm32的内部flash
+```
+/****************** stmflash.c ************************/
+#include "stmflash.h"
+#include "delay.h"
+
+//读取指定地址的字(32位数据)
+//faddr:读地址
+//返回值:对应数据.
+u32 STMFLASH_ReadWord(u32 faddr)
+{
+	return *(vu32*)faddr;
+}
+
+//获取某个地址所在的flash扇区
+//addr:flash地址
+//返回值:0~11,即addr所在的扇区
+u8 STMFLASH_GetFlashSector(u32 addr)
+{
+	if(addr<ADDR_FLASH_SECTOR_1)return FLASH_SECTOR_0;
+	else if(addr<ADDR_FLASH_SECTOR_2)return FLASH_SECTOR_1;
+	else if(addr<ADDR_FLASH_SECTOR_3)return FLASH_SECTOR_2;
+	else if(addr<ADDR_FLASH_SECTOR_4)return FLASH_SECTOR_3;
+	else if(addr<ADDR_FLASH_SECTOR_5)return FLASH_SECTOR_4;
+
+	return FLASH_SECTOR_5;
+}
+
+//从指定地址开始写入指定长度的数据
+//特别注意:因为STM32F4的扇区实在太大,没办法本地保存扇区数据,所以本函数
+//         写地址如果非0XFF,那么会先擦除整个扇区且不保存扇区数据.所以
+//         写非0XFF的地址,将导致整个扇区数据丢失.建议写之前确保扇区里
+//         没有重要数据,最好是整个扇区先擦除了,然后慢慢往后写.
+//该函数对OTP区域也有效!可以用来写OTP区!
+//OTP区域地址范围:0X1FFF7800~0X1FFF7A0F(注意：最后16字节，用于OTP数据块锁定，别乱写！！)
+//WriteAddr:起始地址(此地址必须为4的倍数!!)
+//pBuffer:数据指针
+//NumToWrite:字(32位)数(就是要写入的32位数据的个数.)
+void STMFLASH_Write(u32 WriteAddr,u32 *pBuffer,u32 NumToWrite)
+{
+	FLASH_EraseInitTypeDef FlashEraseInit;
+	HAL_StatusTypeDef FlashStatus=HAL_OK;
+	u32 SectorError=0;
+	u32 addrx=0;
+	u32 endaddr=0;
+	if(WriteAddr<STM32_FLASH_BASE||WriteAddr%4)return;	//非法地址
+
+	HAL_FLASH_Unlock();             //解锁
+	addrx=WriteAddr;				//写入的起始地址
+	endaddr=WriteAddr+NumToWrite*4;	//写入的结束地址
+
+	if(addrx<0X1FFF0000)
+	{
+		while(addrx<endaddr)		//扫清一切障碍.(对非FFFFFFFF的地方,先擦除)
+		{
+			 if(STMFLASH_ReadWord(addrx)!=0XFFFFFFFF)//有非0XFFFFFFFF的地方,要擦除这个扇区
+			{
+				FlashEraseInit.TypeErase=FLASH_TYPEERASE_SECTORS;       //擦除类型，扇区擦除
+				FlashEraseInit.Sector=STMFLASH_GetFlashSector(addrx);   //要擦除的扇区
+				FlashEraseInit.NbSectors=1;                             //一次只擦除一个扇区
+				FlashEraseInit.VoltageRange=FLASH_VOLTAGE_RANGE_3;      //电压范围，VCC=2.7~3.6V之间!!
+				if(HAL_FLASHEx_Erase(&FlashEraseInit,&SectorError)!=HAL_OK)
+				{
+					break;//发生错误了
+				}
+				}else addrx+=4;
+				FLASH_WaitForLastOperation(FLASH_WAITETIME);                //等待上次操作完成
+		}
+	}
+	FlashStatus=FLASH_WaitForLastOperation(FLASH_WAITETIME);            //等待上次操作完成
+	if(FlashStatus==HAL_OK)
+	{
+		 while(WriteAddr<endaddr)//写数据
+		 {
+			if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD,WriteAddr,*pBuffer)!=HAL_OK)//写入数据
+			{
+				break;	//写入异常
+			}
+			WriteAddr+=4;
+			pBuffer++;
+		}
+	}
+	HAL_FLASH_Lock();           //上锁
+}
+
+//从指定地址开始读出指定长度的数据
+//ReadAddr:起始地址
+//pBuffer:数据指针
+//NumToRead:字(32位)数
+void STMFLASH_Read(u32 ReadAddr,u32 *pBuffer,u32 NumToRead)
+{
+	u32 i;
+	for(i=0;i<NumToRead;i++)
+	{
+		pBuffer[i]=STMFLASH_ReadWord(ReadAddr);//读取4个字节.
+		ReadAddr+=4;//偏移4个字节.
+	}
+}
+
+//////////////////////////////////////////测试用///////////////////////////////////////////
+//WriteAddr:起始地址
+//WriteData:要写入的数据
+void Test_Write(u32 WriteAddr,u32 WriteData)
+{
+	STMFLASH_Write(WriteAddr,&WriteData,1);//写入一个字
+}
+
+/******************** stmflash.h **********************/
+
+//FLASH起始地址
+#define STM32_FLASH_BASE 0x08000000 	//STM32 FLASH的起始地址
+#define FLASH_WAITETIME  50000          //FLASH等待超时时间
+
+//FLASH 扇区的起始地址
+#define ADDR_FLASH_SECTOR_0     ((u32)0x08000000) 	//扇区0起始地址, 16 Kbytes
+#define ADDR_FLASH_SECTOR_1     ((u32)0x08004000) 	//扇区1起始地址, 16 Kbytes
+#define ADDR_FLASH_SECTOR_2     ((u32)0x08008000) 	//扇区2起始地址, 16 Kbytes
+#define ADDR_FLASH_SECTOR_3     ((u32)0x0800C000) 	//扇区3起始地址, 16 Kbytes
+#define ADDR_FLASH_SECTOR_4     ((u32)0x08010000) 	//扇区4起始地址, 64 Kbytes
+#define ADDR_FLASH_SECTOR_5     ((u32)0x08020000) 	//扇区5起始地址, 128 Kbytes
+
+
+u32 STMFLASH_ReadWord(u32 faddr);		  	//读出字
+void STMFLASH_Write(u32 WriteAddr,u32 *pBuffer,u32 NumToWrite);		//从指定地址开始写入指定长度的数据
+void STMFLASH_Read(u32 ReadAddr,u32 *pBuffer,u32 NumToRead);   		//从指定地址开始读出指定长度的数据
+//测试写入
+void Test_Write(u32 WriteAddr,u32 WriteData);
+
+```
+该部分代码，我们重点介绍一下STMFLASH_Write函数，该函数用于在STM32F4的指定地址写入指定长度的数据，该函数的实现基本类似第24章的SPI_Flash_Write函数，不过该函数对写入地址是有要求的，必须保证以下两点：
+1. 该地址必须是用户代码区以外的地址。
+2. 该地址必须是4的倍数。
+3. 对OTP区域编程也有效。 
+
+第1点比较好理解，如果把用户代码给卡擦了，可想而知你运行的程序可能就被废了，从而很可能出现死机的情况。不过，因为STM32F4的扇区都比较大（最少16K，大的128K），所以本函数不缓存要擦除的扇区内容，也就是如果要擦除，那么就是整个扇区擦除，所以建议大家使用该函数的时候，写入地址定位到用户代码占用扇区以外的扇区，比较保险。
+
+第2点则是3.3V时，设置PSIZE=2所决定的，每次必须写入32位，即4字节，所以地址必须是4的倍数。第3点，该函数对OTP区域的操作同样有效，所以大家要写OTP字节，也可以直接通过该函数写入，不过注意OTP是一次写入的，无法擦除，所以，一般不要写OTP字节。
+
+然后打开stmflash.h，该文件代码代码非常简单，我们就不做介绍了。
+最后，打开main.c文件，main函数如下：
+```
+//要写入到STM32 FLASH的字符串数组
+const u8 TEXT_Buffer[]={"STM32 FLASH TEST"};
+#define TEXT_LENTH sizeof(TEXT_Buffer)	 		  	//数组长度
+#define SIZE TEXT_LENTH/4+((TEXT_LENTH%4)?1:0)
+
+#define FLASH_SAVE_ADDR  0X0800C004 	//设置FLASH 保存地址(必须为4的倍数，且所在扇区,要大于本代码所占用到的扇区.
+										//否则,写操作的时候,可能会导致擦除整个扇区,从而引起部分程序丢失.引起死机.
+
+void setup() {
+
+	u32 datatemp[SIZE];
+    uart_init();
+
+    delay_ms(1000);
+
+    printf("Test Start\n\r");
+    printf("\r\nStart Write FLASH....\r\n");
+    STMFLASH_Write(FLASH_SAVE_ADDR,(u32*)TEXT_Buffer,SIZE);
+    printf("FLASH Write Finished!\r\n");//提示传送完成
+
+    printf("\r\nStart Read FLASH.... \r\n");
+	STMFLASH_Read(FLASH_SAVE_ADDR,(u32*)datatemp,SIZE);
+	printf("The Data Readed Is:  \r\n");//提示传送完成
+	printf("%s\r\n",datatemp);//显示读到的字符串
+}
+
+void loop()
+{
+
+	printf("Test Start\n\r");
+	delay_ms(1000);
+}
+```
+主函数部分代码非常简单，首先先进行写操作，然后再读。至此，我们的软件设计部分就结束了。
+
+>**这里要提醒以下：**
+> 主函数的 `u32 datatemp[SIZE];` 定义在正点原子的程序是 `u8 datatemp[SIZE];`,而我们在读操作时
+>```
+>STMFLASH_Read(FLASH_SAVE_ADDR,(u32*)datatemp,SIZE);
+>```
+>用的是32位的，正点原子的例程在读取函数这里将8位强制转换为32位，这在keil上面是没问题（正点原子例程是用的keil）的。但是在 STM32CubeIDe 中这么使用则是错误的，会导致读操作时造成硬件报错 `HardFault_Handler`。所以这里在一开始定义就要定义为32位的。
+
 
 **参考链接**
-[STM32F407.FLASH 读写经验](https://blog.csdn.net/huan447882949/article/details/79726380)
-[STM32F4内部Flash读写](https://blog.csdn.net/zhang062061/article/details/114275376)
-[STM32F030 Read/Write Flash Throwing HardFault](https://community.arm.com/developer/tools-software/tools/f/keil-forum/33821/stm32f030-read-write-flash-throwing-hardfault)
+- [STM32F407.FLASH 读写经验](https://blog.csdn.net/huan447882949/article/details/79726380)
+- [STM32F4内部Flash读写](https://blog.csdn.net/zhang062061/article/details/114275376)
+- [STM32F030 Read/Write Flash Throwing HardFault](https://community.arm.com/developer/tools-software/tools/f/keil-forum/33821/stm32f030-read-write-flash-throwing-hardfault)
+- [STM32 Hardfault exception when writing globally declared buffer to FLASH](https://stackoverflow.com/questions/41892267/stm32-hardfault-exception-when-writing-globally-declared-buffer-to-flash)
 
 ## 内存管理
 
@@ -2982,6 +3239,7 @@ void loop()
 在原有的宏定义下，重新定义，应为如果我们直接修改的话，下次初始化就又会被 IDE 该回来。
 - 定义扇区数  = 1024*8 扇区，内存大小 =扇区数* 扇区大小 = 1024*8*4096 = 32M。这个数字是根据 W25Q256 = 32M，倒退计算得来的。
 - 定义块大小，必须和我们初始化配置时的一致。要改一起改，而且要和上面的计算配合，不然实际程序虽然也能用，但显示的内存容量就会不一样。
+>这里的扇区大小和芯片的扇区是两个概念，这里的扇区指 USB协议下的 U盘设备的扇区大小，所以通常比芯片的扇区大很多。
 
 ```
 /** @defgroup USBD_STORAGE_Private_Defines
@@ -3075,6 +3333,193 @@ U盘初始化配置保持和下图一致即可，然后点击 `开始`
 [用STM32F0系列内部Flash虚拟出U盘](https://www.amobbs.com/thread-5705198-1-1.html)
 [stm32使用外部SPI FLASH模拟U盘(大容量存储设备MSC)求职学习资料](https://www.b2bchain.cn/10000.html)
 [cubemx配置 USB读卡器+FATFS](https://www.pianshen.com/article/1915956443/)
+
+## IAP
+
+STM32的内部闪存（FLASH）地址起始于0x08000000，一般情况下，程序文件就从此地址开始写入。此外STM32是基于Cortex-M3内核的微控制器，其内部通过一张“中断向量表”来响应中断，程序启动后，将首先从“中断向量表”取出复位中断向量执行复位中断程序完成启动，而这张“中断向量表”的起始地址是0x08000004，当中断来临，STM32的内部硬件机制亦会自动将PC指针定位到“中断向量表”处，并根据中断源取出对应的中断向量执行中断服务程序。
+
+**常规程序运行状态：**
+STM32在复位后，先从0X08000004地址取出复位中断向量的地址，并跳转到复位中断服务程序，如图标号①所示；在复位中断服务程序执行完之后，会跳转到我们的main函数，如图标号②所示；而我们的main函数一般都是一个死循环，在main函数执行过程中，如果收到中断请求（发生重中断），此时STM32强制将PC指针指回中断向量表处，如图标号③所示；然后，根据中断源进入相应的中断服务程序，如图标号④所示；在执行完中断服务程序以后，程序再次返回main函数执行，如图标号⑤所示。
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/.png)  
+
+**IAP程序运行流程：**
+STM32复位后，还是从0X08000004地址取出复位中断向量的地址，并跳转到复位中断服务程序，在运行完复位中断服务程序之后跳转到IAP的main函数，如图标号①所示，此部分同图33.1.1一样；在执行完IAP以后（即将新的APP代码写入STM32的FLASH，灰底部分。新程序的复位中断向量起始地址为0X08000004+N+M），跳转至新写入程序的复位向量表，取出新程序的复位中断向量的地址，并跳转执行新程序的复位中断服务程序，随后跳转至新程序的main函数，如图标号②和③所示，同样main函数为一个死循环，并且注意到此时STM32的FLASH，在不同位置上，共有两个中断向量表。
+
+在main函数执行过程中，如果CPU得到一个中断请求，PC指针仍强制跳转到地址0X08000004中断向量表处，而不是新程序的中断向量表，如图标号④所示；程序再根据我们设置的中断向量表偏移量，跳转到对应中断源新的中断服务程序中，如图标号⑤所示；在执行完中断服务程序后，程序返回main函数继续运行，如图标号⑥所示。
+
+**通过以上两个过程的分析，我们知道IAP程序必须满足两个要求：**
+1. 新程序必须在IAP程序之后的某个偏移量为x的地址开始；
+2. 必须将新程序的中断向量表相应的移动，移动的偏移量为x；
+
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/pic_1617687693919.png)  
+
+### 初始化配置
+
+沿用前面的前面的 **GPIO HAL库操作**（LED闪烁）和 **串口** 两个程序，不修改初始化配置。
+
+### 程序编写
+
+我们有2个程序，一个为Bootloader即IAP程序，一个是app即主程序。
+- Bootloader程序负责接收串口发送过来的app程序，并存储到flash中，再实现程序跳转，运行已经存储的app程序。
+- app程序就是我们要运行的主程序，也是IAO升级要修改的程序，以后更新该程序时可以直接通过串口发送更新。
+
+
+
+#### app程序
+
+app程序直接使用**GPIO HAL库操作**（LED闪烁）程序，main 函数修改如下：
+```
+int main(void)
+{
+  SCB->VTOR = FLASH_BASE | 0x8000;  // 更新中断向量表偏移地址。
+
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+
+  setup();
+  while (1)
+  {
+	loop();
+  }
+}
+```
+注意这里修改的时 Src 文件夹下初始化生成main函数。这里只在程序开始处添加了一行`SCB->VTOR = FLASH_BASE | 0x8000; `,用于中断向量表偏移量的设置。这里的 `0x8000` 一定要大于我们的 `Bootloader程序` 占用的flash大小，这个需要我们在编写完`Bootloader程序`后，编译执行才能看到，从下图得知本次的`Bootloader程序`falsh占用 17.68KB，而 `0x8000` 约为 32KB，满足要求。
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/bootloader%E7%A8%8B%E5%BA%8F%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F.png)  
+
+还要修改一下程序flash链接地址。打开 STM32Fxxxx_FLASH.ld 文件，在开头部分找到下图所示内容
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/link%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9falsh%E5%9C%B0%E5%9D%80.png)  
+将falsh起始地址改为0x08008000，大小改为 224KB（256KB-32KB）。
+
+修改好后，重新编译，会默认生成 bin 文件，在项目文件夹下的 `Debug` 文件夹中。留好备用。
+
+#### Bootloader程序
+
+Bootloader程序直接使用**串口**程序，首先修改串口接收回调函数
+
+Bootloader程序部分大概思路：
+1. 先将Bootloader程序通过stlink烧录到MCU
+2. 运行MCU，Bootloader程序开始会循环检测串口有没有数据，如果在一段时间后仍没有数据过来，Bootloader程序将会执行跳转，运行旧的app程序
+3. 如果等待期间有数据过来，Bootloader程序将通过串口接收APP文件，利用数组先保存下来存储到USART_Buffer中，然后再写入flash，最后执行跳转，运行新的app程序（刚从串口接收的app）
+
+```
+#define USART_REC_LEN  			20*1024 //定义最大接收字节数 10K
+
+//串口1中断服务程序
+//注意,读取USARTx->SR能避免莫名其妙的错误
+//u8 USART_RX_BUF[USART_REC_LEN] __attribute__ ((at(0X20001000))) ={0};     该语句在GCC编译器不支持，需改为以下语句，并修改Link文件
+u8 __attribute__((section(".myBufSection"))) USART_RX_BUF[USART_REC_LEN];  //接收缓冲,最大USART_REC_LEN个字节,起始地址为0X20001000.
+
+u32 USART_RX_CNT=0;		  //接收的字节数
+/**
+  * @brief 串口接收中断，每接收一个字节中断一次
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == USART1){   //判断时那种中断
+		if(USART_RX_CNT<USART_REC_LEN)
+		{
+			USART_RX_BUF[USART_RX_CNT]=RxBuffer;
+			USART_RX_CNT++;
+		}
+	}
+    HAL_UART_Receive_IT(&huart1,&RxBuffer,1); // 再次开启中断	
+}
+```
+回调函数没啥特别的，主要讲解 `USART_RX_BUF[USART_REC_LEN]` 的定义，正点原子使用 `__attribute__ ((at(0X20001000))) ={0}`，其作用就是把变量或函数绝对定位到 Flash 或者 RAM 中，区别就是后面的地址，写成0x80000000就是定位到falsh中，写成0x20000000就是定位到RAM中。
+
+这里我们选择定位到 RAM 中，一般用于数据量比较大的缓存，如串口的接收缓存，再就是某个位置的特定变量。用于用于串口发送过来的app程序。
+
+但以上语句只能在keil编译器（基于MDK）中使用，而在STM32CubeIDE（基于GCC）是不支持的，所以我们需要修改为：
+`__attribute__((section(".myBufSection"))) USART_RX_BUF[USART_REC_LEN]`,同时还需要再次修改link文件，打开 STM32Fxxxx_FLASH.ld 文件，将
+```
+  /* placing my named section at given address: */
+  .myBufBlock 0X20001000 :
+  {
+    KEEP(*(.myBufSection)) /* keep my variable even if not referenced */
+  } > RAM
+```
+添加到 `SECTIONS`处，如下图所示。
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/section%E4%BF%AE%E6%94%B9.png)  
+
+具体含义及使用参考以下链接：
+- [GCC编译器对变量绝对定位怎么写？](https://www.zhihu.com/question/266452426/answer/308181759)
+- [Defining Variables at Absolute Addresses with gcc](https://mcuoneclipse.com/2012/11/01/defining-variables-at-absolute-addresses-with-gcc/)
+- [GNU Linker, can you NOT Initialize my Variable?](https://mcuoneclipse.com/2014/04/19/gnu-linker-can-you-not-initialize-my-variable/)
+- [C语言__attribute__的使用](https://www.yuque.com/ixxw/it/__attribute__)
+
+这里有个bug，这里使用的 STM32F401 单片的RAM空间只有64KB，而flash空间有256KB，所以如果我们的app程序大64KB，就无法一次性存储到 RAM 中了，必须采用边接收边写入的方式，这里我们的app程序只有5.76Kb，数组设置为10K，完全够用。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/app%E7%A8%8B%E5%BA%8F%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4.png)  
+
+然后修改主函数如下：
+```
+void loop()
+{
+	u16 oldcount=0;	//老的串口接收数据值
+	u16 applenth=0;	//接收到的app代码长度
+
+	while(1){
+		for(int i = 0;i<20;i++){  // 循环检查串口是否有数据发过来
+			while(USART_RX_CNT)   // 有数据，直接进入循环，接收所有数据
+			{
+				if(oldcount==USART_RX_CNT)//新周期内,没有收到任何数据,认为本次数据接收完成.
+				{
+					applenth=USART_RX_CNT;
+					oldcount=0;
+					USART_RX_CNT=0;
+					printf("用户程序接收完成!\r\n");
+					printf("代码长度:%dBytes\r\n",applenth);
+					printf("开始更新固件...\r\n");
+					if(((*(vu32*)(0X20001000+4))&0xFF000000)==0x08000000)//判断是否为0X08XXXXXX.此时SRAM存储的是新的app程序，检查前四个字节地址是否正确，判断是否是app程序
+					{
+						iap_write_appbin(FLASH_APP1_ADDR,USART_RX_BUF,applenth);//更新FLASH代码 
+						printf("固件更新完成!\r\n");
+					}else
+					{
+						printf("非FLASH应用程序!\r\n");
+						applenth = 0;
+					}
+
+				}else {
+					oldcount=USART_RX_CNT;
+					delay_ms(10);
+				}
+			}
+			printf("没有可以更新的固件!");  // 没有数据，等待200ms
+            printf("\r\n");
+			delay_ms(200);
+		}
+	    printf("没有可以更新的固件!\r\n");  // 没有app更新
+		printf("开始执行FLASH用户代码!!\r\n");
+		delay_ms(10);
+		if(((*(vu32*)(FLASH_APP1_ADDR+4))&0xFF000000)==0x08000000)//判断是否为0X20XXXXXX.检查app地址的字节是否正确，判断是否是一个程序
+		{
+			iap_load_app(FLASH_APP1_ADDR);//执行FLASH APP代码
+		}else
+		{
+			printf("非FLASH应用程序,无法执行!\r\n");
+            printf("\r\n");
+		}
+	}
+}
+```
+
+程序一开始会循环等待 20*200ms，查看串口是否有新的程序发送过来，有的话就接收并存储到 RAM 中，接收完成后，在写入到falsh中，然后跳转执行新的app程序。如果没有新程序发过来，在等待时间结束后，程序仍会跳转执行app程序（旧的）。
+
+**使用：**
+1. 将Bootloader程序下载至MCU，上电运行。
+2. 通过串口助手发送之前编译好的APP的bin文件，等待写入flash，直至完成。
+3. 等待跳转到APP运行。
+
+**参考资料：**
+- [STM32 IAP 升级设计（HAL）](https://tw511.com/a/01/12332.html)
+- [stm32cubeide iap](https://www.cnblogs.com/ramlife/p/12435986.html)
+- [STM32CubeMx生成的工程中使用Printf函数调试和IAP（在线下载功能）](https://blog.csdn.net/mynameislinduan/article/details/83579725)
+- [STM32F4 IAP学习笔记](https://blog.csdn.net/qq_18150255/article/details/82430847)
+- [STM32CUBEIDE IAP跳转失败，求助？！！](http://www.openedv.com/thread-320143-1-1.html)
+- [STM32CubeIDE IAP原理讲解，及UART双APP迭代升级IAP实现](https://blog.csdn.net/sudaroot/article/details/106932736)
+- [STM32 Cube IDE 下实现 IAP —— (1) 程序跳转](http://ibotx.com/?p=191)
+
 ## LCD驱动
 
 ## LCD触摸
