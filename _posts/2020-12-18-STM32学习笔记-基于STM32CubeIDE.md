@@ -664,6 +664,56 @@ PGout(10)= 1;  // PG10 输出高电平
 uint8_t io_status = PGin(9); // 读取PG9的高低电平状态
 ```
 
+### GPIO DMA 操作
+
+#### 初始化配置
+
+沿用普通给个gpio例程，添加 DMA 配置如下：
+- DMA 模式Normal
+- 地址增长，只勾选 源地址（也就是内容地址），目标地址不勾选（也就是IO外设地址）
+- 数据宽度设为字节（也可设为其它两个选项，具体再程序编写时说明）
+- DMA 中断根据需要选择开启
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/gpio_dma1.png)  
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/gpio_dma2.png)  
+
+- [STM32F103的GPIO与DMA的终极（没啥用）玩法](http://www.mcublog.cn/stm32/2021_03/stm32f103-gpio-dma/)
+- [Using Direct Memory Access (DMA) in STM32 projects](https://embedds.com/using-direct-memory-access-dma-in-stm23-projects/)
+- [Particle Photon (STM32F205) DMA Control of GPIO pins](https://www.kasperkamperman.com/blog/particle-photon-stm32f205-dma-control-gpio-pins/)
+- [TM32 DMA输出到GPIO问题](https://bbs.21ic.com/icview-368199-1-1.html)
+- [STM32并口数据通过DMA传输](https://blog.csdn.net/aaaaa098/article/details/105615573)
+
+#### 程序编写
+
+```
+static uint32_t source_buffer[10] = {0xFFFF,0x11};                      /*A buffer for 10 rows*/
+
+/* 9 (DMA IRQ callbacks) */
+void data_tramsmitted_handler(DMA_HandleTypeDef *hdma)
+{
+
+}
+
+
+void setup()
+{
+	delay_init(84); /* 延时函数初始化 */
+
+	GPIOA->ODR = 0x0000;
+	hdma_memtomem_dma2_stream0.XferCpltCallback = data_tramsmitted_handler;  // 注册 DMA 传输完成中断
+	//hdma_memtomem_dma2_stream0.XferErrorCallback = transmit_error_handler;  // 注册传输错误中断
+
+	HAL_DMA_Start_IT(&hdma_memtomem_dma2_stream0, (uint32_t)source_buffer,(uint32_t)&GPIOA->ODR,1);   // 传输数组的值到IO引脚，按位从低到高一一对应。
+	                                                                                                  // 如果DMA的数据位宽设计为8为，不论传多少位数据，只有低8位引脚（Pin0-7）改变。
+	                                                                                                  // 设为16位，则只改变低16位
+}
+
+```
+- `source_buffer` 存储这引脚状态，每一元素的每一位表示一个一脚，bit0对应pinx-0，依次一一对应。  
+- `hdma_memtomem_dma2_stream0.XferCpltCallback` 是注册回调函数，这里是DMA的普通模式，因此回调函数需要我们自己编写并注册。
+- `HAL_DMA_Start_IT` 开启DMA传输，若不使用中断也可以使用函数 HAL_DMA_Start 代替。
+- DMA传输只改变目标地址位宽对应引脚的状态，其它引脚不改变。比如这里 源地址和目标地址位宽都是8位，则最后只会改变pin0-7 引脚状态，其余引脚不受影响。如果是16位则改为pin0-15.
+- 如果DMA源地址位宽是8位，目标地址位宽16，则传输数据时，数组的 [0] 和 [1] 共同表示一个引脚状态。
+- 不论数组元素是多少位的，传输数据时只传送DMA源地址位宽对应的低位。比如这里数组是32位的，DMA位宽8位，则数组元素只有低8位有效
 
 ### 自定义延时
 
@@ -3522,8 +3572,536 @@ void loop()
 
 ## LCD驱动
 
+**参考资料**
+- [My Top 5 Arduino Displays](https://www.youtube.com/watch?v=0FMs0hA4Xzo)
+
+- [ST7789_3D_Filled_Vector_Ext](https://github.com/cbm80amiga/ST7789_3D_Filled_Vector_Ext)
+
+- [ST7735_3d_filled_vector](https://github.com/cbm80amiga/ST7735_3d_filled_vector)
+- [stm32_graphics_display_drivers](https://github.com/RobertoBenjami/stm32_graphics_display_drivers)
+- [Bodmer/TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+### ST7789 3.5寸 8位并口
+
+#### 硬件配置
+本次驱动采用8位并口驱动，无触摸（pin1、2、3、4不接），DB0-7可以悬空不用接地。
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/TFT%E5%B1%8F8%E4%BD%8D%E6%8E%A5%E7%BA%BF.png)  
+
+
+#### 初始化配置
+在 **串口** 例程基础上修改。主要是添加以下 IO 引脚。
+- PB0- 7作为数据引脚接硬件DB8-15
+- PB10 LCD背光（实际未接）
+- PB12 RESET
+- PB14 CS
+- PC13 RD
+- PC14 WR
+- PC14 RS
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/TFT%E5%B1%8F8%E4%BD%8D%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+一般 TFTLCD 模块的使用流程：
+
+![图 3](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/TFT%E5%B1%8F%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B.png)  
+
+第一个是 LCD_WR_DATA 函数，该函数在 lcd.h 里面，通过宏定义的方式申明。该函数通
+过 并口向 LCD 模块写入一个 16 位的数据，使用频率是最高的，这里我们采用了宏定义的方
+式，以提高速度，实际测试刷屏速度比放在 .c 文件中块 33ms 。其代码如下
+```
+#define DATAOUT(x) GPIOB->ODR=((GPIOB->ODR & 0xff00) | (x));  // 比下方语句增加加了15ms显示时间，但避免修改了高八位引脚状态
+//#define DATAOUT(x) GPIOB->ODR=x; //数据输出 低8位
+#define LCD_WR_DATA(data){\
+	LCD_RS=1;\
+	LCD_CS=0;\
+	DATAOUT(data);\
+	LCD_WR=0;\
+	LCD_WR=1;\
+	LCD_CS=1;\
+}
+```
+第二个是： LCD_WR_DATAX 函数，该函数在 ILI93xx.c 里面定义，功能和 LCD_WR_DATA
+一模一样。宏定义函数的好处就是速度快（直接嵌到被调用函数里面去了），坏处就是占空
+间大。在 LCD_Init 函数里面，有很多地方要写数据，如果全部用宏定义的 LCD_WR_DATA 函
+数，那么就会占用非常大的 flash，所以我们这里另外实现一个函数： LCD_WR_DATAX，专门
+给 LCD_Init 函数调用，从而大大减少 flash 占用量。
+该函数代码如下：
+```
+//写数据函数
+//可以替代LCD_WR_DATAX宏,拿时间换空间
+//主要用于初始化，这里测试大约可以节约 1.7KB rom空间
+//data:寄存器值
+void LCD_WR_DATAX(u8 data){
+	LCD_RS=1;
+	LCD_CS=0;
+	DATAOUT(data);
+	LCD_WR=0;
+	LCD_WR=1;
+	LCD_CS=1;
+}
+```
+第三个是 LCD_WR_REG 函数，该函数是通过 8080 并口向 LCD 模块写入寄存器命令，因
+为该函数使用频率不是很高，我们不采用宏定义来做（宏定义占用 FLASH 较多），通过 LCD_RS
+来标记是写入命令（LCD_RS=0）还是数据（LCD_RS=1）。该函数代码如下：
+```
+//写寄存器函数
+//regval:寄存器值，寄存器值都是8位的
+void LCD_WR_REG(u8 regval)
+{
+	LCD_RS=0;//写地址
+ 	LCD_CS=0;
+	DATAOUT(regval);  // 先写高8位
+	LCD_WR=0;
+	LCD_WR=1;
+ 	LCD_CS=1;
+}
+```
+LCD_WriteReg 用于向 LCD 指定寄存器写入指定数据，
+```
+//写寄存器
+//LCD_Reg:寄存器地址
+//LCD_RegValue:要写入的数据
+void LCD_WriteReg(u8 LCD_Reg, u16 LCD_RegValue)
+{
+	LCD_WR_REG(LCD_Reg);
+	LCD_WR_DATA(LCD_RegValue);
+}
+```
+坐标设置函数。
+```
+//设置光标位置
+//Xpos:横坐标
+//Ypos:纵坐标
+void LCD_SetCursor(u16 Xpos, u16 Ypos)
+{
+	LCD_WR_REG(lcddev.setxcmd);
+	LCD_WR_DATA(Xpos>>8);
+	LCD_WR_DATA(Xpos&0XFF);
+
+	LCD_WR_REG(lcddev.setycmd);
+	LCD_WR_DATA(Ypos>>8);
+	LCD_WR_DATA(Ypos&0XFF);
+}
+```
+画点函数。先设置坐标，然后往坐标写颜色。其中 POINT_COLOR 是我们
+定义的一个全局变量，用于存放画笔颜色。LCD_DrawPoint 函数虽然简单，但是至关重要，其他几乎所有上层函数，都是通过调用这个函数实现的。
+```
+//画点
+//x,y:坐标
+//POINT_COLOR:此点的颜色
+void LCD_DrawPoint(u16 x,u16 y)
+{
+	LCD_SetCursor(x,y);		//设置光标位置
+	LCD_WriteRAM_Prepare();	//开始写入GRAM
+	LCD_WriteRAM(POINT_COLOR);
+}
+
+```
+字符显示函数 LCD_ShowChar，字符显示函数多了一个功能，就是可以以叠加方式显示，或者以非叠加方式显示。叠加方式显示多用于在显示的图片上再显示字符。非叠加方式一般用于普通的显示。
+该函数实现代码如下：
+```
+//在指定位置显示一个字符
+//x,y:起始坐标
+//num:要显示的字符:" "--->"~"
+//size:字体大小 12/16
+//mode:叠加方式(1)还是非叠加方式(0)
+void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
+{
+    u16 temp,t1,t;
+	u16 y0=y;
+	//u16 colortemp=POINT_COLOR;
+	//设置窗口
+	num=num-' ';//得到偏移后的值
+	u8 csize=(size/8+((size%8)?1:0))*(size/2);		//得到字体一个字符对应点阵集所占的字节数
+
+	for(t=0;t<csize;t++)
+	{
+		if(size==12)temp=asc2_1206[num][t];  //调用1206字体
+		else if(size==16) temp=asc2_1608[num][t];		 //调用1608字体
+		else if(size==24)temp=asc2_2412[num][t];
+		else if(size==32) temp=asc2_3216[num][t];
+		else ;
+		for(t1=0;t1<8;t1++)
+		{
+			if(temp&0x80)LCD_Fast_DrawPoint(x,y,POINT_COLOR);
+			else if(mode==0)LCD_Fast_DrawPoint(x,y,BACK_COLOR);
+			temp<<=1;
+			y++;
+			if(y>=lcddev.height)return;		//超区域了
+			if((y-y0)==size)
+			{
+				y=y0;
+				x++;
+				if(x>=lcddev.width)return;	//超区域了
+				break;
+			}
+		}
+	}
+}
+
+```
+在 LCD_ShowChar 函数里面，我们采用快速画点函数 LCD_Fast_DrawPoint 来画点显示字符，该函数同 LCD_DrawPoint 一样，只是带了颜色参数，且减少了函数调用的时间，详见本例程源码。 该代码中我们用到了三个字符集点阵数据数组 asc2_2412、 asc2_1206 和 asc2_1608，都存放在 lcd_font.h  文件中，点阵数据的提取方式该文件中有详细描述。
+
+最后是我们的主函数测试程序：
+```
+void setup()
+{
+	delay_init(84); /* 延时函数初始化 */
+	LCD_Init();     /* LCD初始化 */
+
+	LCD_DrawLine(10,10,60,100);  // 画线，LCD显示测试用，正式版请删除
+    LCD_Clear(BLUE);
+    LCD_ShowChar(50,50,'A',16,1);
+}
+
+void loop()
+{
+	
+}
+```
+先初始化，然后画线，清屏，再显示字符。
+
+### ST7789 SPI 四线
+
+当改为 spi 串口驱动时，需要注意屏幕FPC后方的模式选择硬件接口（有的屏幕没有则不需要关注）。
+当前使用的屏幕时需要通过调整电阻接线方式来选择屏幕的数据接口位数的。
+![图 6](../images/Posts/2021-01-24-%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%AC%94%E8%AE%B0/FPC%E6%8E%A5%E5%8F%A3%E9%80%89%E6%8B%A9.png)  
+当前屏幕出厂默认接口方式如下：
+![图 7](../images/Posts/2021-01-24-%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%AC%94%E8%AE%B0/FPC%E5%AE%9E%E9%99%85%E6%8E%A5%E5%8F%A3.jpg)  
+可以发现接线时默认接了 R1、R3、R5的，也就是默认16位驱动。如果我需要SPI串口驱动吗，应该改为R2、R4、R6焊接（此时PIN38-40无用）或者接R7、R8、R9(通过Pin38-40任意调整接口模式)。这里选择后者，这样就可以通过改变外部引脚接线方式改变接口形式，而不需要频繁焊接电阻。
+
+#### 硬件配置
+
+本次驱动采用SPI串口驱动，无触摸（pin1、2、3、4不接），DB0-15可以悬空不用接地。
+>注意屏幕背面的电阻（<10R）要仅焊接 R7-9，其余留空。
+
+![图 9](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/LCD_SPI%E6%8E%A5%E7%BA%BF.png)  
+
+#### 初始化配置
+
+沿用上一节并口驱动例程；
+- 去除并口例程中的IO驱动引脚配置
+- PA0-2 设置位输出引脚
+- 添加SPI驱动，配置如下图
+![图 8](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/LCD_SPI%E9%85%8D%E7%BD%AE.png)  
+- SPI_SCK PA5 接 SCL 
+- SPI_MOSI PA7 接 SDA 
+- SPI_MISO PA6 接  SDO 
+- PB10 LCD背光（实际未接）
+- PA0 接 RESET
+- PA1 接 CS
+- PA2 接 RS
+
+**参考资料**
+- [ST7789-STM32](https://github.com/Floyd-Fish/ST7789-STM32/blob/master/ST7789_demo_103c8t6/st7789/st7789.c)
+- [分享关于STM32 SPI驱动ST7789 LCD ISP TFT液晶屏幕](https://blog.csdn.net/qq997758497/article/details/105347705)
+- [STM32Cube-17 | 使用硬件SPI驱动TFT-LCD（ST7789）](https://cloud.tencent.com/developer/article/1662641)
+
+#### 程序编写
+
+与并口区别主要就是底层数据输出方式，主要函数改动如下：
+```
+
+void SPI_WriteByte(u8 Byte)
+{
+	while(__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_TXE) == RESET);//检查接收标志位
+	HAL_SPI_Transmit(&hspi1, &Byte, 1, 10);
+}
+
+//写数据函数 比放在 .c 文件中减少了33ms显示时间
+void LCD_WR_DATA(u8 data){
+	LCD_RS=1;
+	LCD_CS=0;
+	SPI_WriteByte(data);
+	LCD_CS=1;
+}
+
+//写寄存器函数
+//regval:寄存器值，寄存器值都是8位的
+void LCD_WR_REG(u8 regval)
+{
+	LCD_RS=0;//写地址
+ 	LCD_CS=0;
+ 	SPI_WriteByte(regval);
+ 	LCD_CS=1;
+}
+```
+其余初始化及上层画图函数保持不变。
+
+另初始化时要是能SPI
+```
+void setup()
+{
+	delay_init(84); /* 延时函数初始化 */
+	__HAL_SPI_ENABLE(&hspi1);  // SPI外设使能
+	delay_ms(300);
+	LCD_Init();//LCD初始化
+	delay_ms(1000);
+}
+```
+### ILL9488 SPI驱动
+
+>ILL9488 SPI模式下：数据必须是24位的即RGB666模式。
+同时 ILI9488 芯片手册 `Display Data Format`章节中在对SPI的数据数据描述中也仅用3bit和18bie两种形式
+一般的颜色数据都是RGB565格式即16位的，所以在使用时需要将16位转为24位的再输出才能正确控制LCD屏。
+```
+    SPI_WriteByte((color>>8)&0xF8);
+    SPI_WriteByte((color>>3)&0xFC);
+    SPI_WriteByte(color<<3);
+```
+>在驱动时间上是16位的1/3倍。而后期使用的LVGL图形库只支持16位或32位格式的颜色，并不支持24位数据，所以无法是哟个
+>总之不推荐使用 9488 的屏幕，请使用 ST7796 的替代，此系列可使用16位的SPI模式。
+
+引用外网一句原话：
+```
+ILI9488 SPI is painful.  You need 3 bytes per pixel.  i.e. 24-bits per pixel.
+
+You can only configure the SAM3X(一款单片机) for 8-16 bits per SPI.    Which works nicely for 565 format 16-bit pixels.   And for DMA.
+
+It would be  pretty straightforward to implement 24-bit pixels on UTFT(一款单片机).    After all,  UTFT is designed to be SLOW.   24-bit pixels can only help to make it SLOWER.
+
+Bodmer（LCD驱动库） supports ILI9488 with TFT_eSPI.   This runs on STM32, ESP8266, ESP32.
+
+I presume that you have already bought your ILI9488 display.   The easiest solution is to buy an STM32, ESP8266 or ESP32 board.
+
+Alternatively,   buy ST7796S or HX8357-D SPI displays.   These support both 16-bit pixels and 24-bit pixels.
+Or use ILI9341 SPI displays e.g. with Bodmer's TFT_ILI9341 or Marek's ILI9341_due library.
+And of course UTFT supports ILI9341 straight out of the box.
+```
+
+```
+I have made some heavy modifications, as the typical Adafruit TFT libraries are designed to work with 16bit color (RGB565), and the ILI9488 can only do 24bit (RGB888) color in 4 wire SPI mode. You can still use the library EXACTLY like you would for 16bit mode color, the colors are converted before sending to the display. What this means is, things will be slower than normal. 
+```
+
+**参考资料**
+- [ili9488还不赖](https://www.eefocus.com/max_huayu/blog/13-03/291938_35e2e.html)
+- [有用过ILI9488的RGB接口的朋友吗？ ](https://whycan.com/t_6095.html)
+- [jaretburkett/ILI9488](https://github.com/jaretburkett/ILI9488)
+- [Ili9488 & lvgl?](https://forum.lvgl.io/t/ili9488-lvgl/2689)
+- [Due + ILI9488 SPI - Problem](https://forum.arduino.cc/index.php?topic=683319.0)
+- [Need sample code for ILI9488 LCD on SPI Interface](https://www.esp32.com/viewtopic.php?t=1683&start=10)
+- [a bug in the ILI9488 driver?](https://community.ugfx.io/topic/1229-a-bug-in-the-ili9488-driver/)
+- [3.5寸TFT液晶屏 ILI9488 mcu spi 触摸屏并口/串口模块原子ips全视角液晶屏 显示屏](http://www.lcdgo.com/show-83-93.html)
+
+####  硬件配置
+
+本次驱动采用SPI串口驱动，无触摸（pin1、2、3、4不接），DB0-15可以悬空不用接地。
+
+![图 10](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ILI9488-SPI%E6%8E%A5%E7%BA%BF.png)  
+
+#### 初始化配置
+
+沿用 ST7789-SPI 的配置，仅改变接线方式
+- SPI_SCK PA5 接 SCL 
+- SPI_MOSI PA7 接 SDA 
+- SPI_MISO PA6 接  SDO 
+- PB10 LCD背光（实际未接）
+- PA0 接 RESET
+- PA1 接 CS
+- PA2 接 RS
+
+#### 程序编写
+
+基本和ST7789-SPI驱动类似，不过如开始所述，数据输出要转位24位，所以改动如下；
+- 初始化函数改动，这里不再列出，直接看源码即可
+注意RGB格式：ILI默认是 BGR 格式，所以 ST7789_MADCTL_RGB 设为 0x08.而ST7789默认是 RGB，随意设为 0x00。
+- 数据写入时改为24位：
+    ```
+    //画点
+    //x,y:坐标
+    //POINT_COLOR:此点的颜色
+    void LCD_DrawPoint(u16 x,u16 y)
+    {
+        LCD_SetCursor(x,y);		//设置光标位置
+        LCD_WriteRAM_Prepare();	//开始写入GRAM
+        LCD_WriteRAM(POINT_COLOR);
+    }
+
+    //快速画点
+    //x,y:坐标
+    //color:颜色
+    void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color)
+    {
+        LCD_SetCursor(x,y);		//设置光标位置
+        LCD_WriteRAM_Prepare();	//开始写入GRAM
+        LCD_WriteRAM(POINT_COLOR);
+    }
+    ```
+
+>虽然数据接口是24位的，但是在初始化写寄存器时，仍可使用16位，这也就是为什么其它函数未修改的原因。24位格式仅影响 FRAM 的数据输入（即屏幕内部数据缓存），不影响寄存器写入。
+
+**参考资料**
+- [LVGL-DemoTest](https://github.com/FASTSHIFT/LVGL-DemoTest/blob/master/LVGL_v7/Libraries/TFT_ILI9488/TFT_ILI9488.cpp)
+- [ILI9341(new)SPI library for Due supporting DMA transfer(Uno, Mega,.. compatible)](https://forum.arduino.cc/index.php?topic=265806.0)
+- [Adafruit_ILI9341](https://github.com/adafruit/Adafruit_ILI9341/blob/master/Adafruit_ILI9341.cpp)
+- [Adafruit-GFX-Library](https://github.com/adafruit/Adafruit-GFX-Library)
+
+### LCD DMA
+
+经实际测试与理论分析：
+- DMA可以实现从内容到GPIO的数据控制
+- 并口且为普通IO控制时，不适合使用DMA（每传一个数据就要控制WR引脚跳变，就需要没一个字节产生一个DMA中断，程序实现复杂，且速度并无显著提升）
+- 并口且为FSMC接口控制是，适合DMA操作（通过FSMC写数据，WR等引脚会自动跳变，无需程序参数，只负责传数据即可，时序由系统自动控制）
+- SPI串行接口时，适合DMA，原因同 FSMC 接口。
+
+由于这里没有FSMC接口芯片，暂不编写。只编写 SPI 接口的 DMA 例程。
+另由于 ILI9488 SPI 数据位24位，而DMA位16位或32位，故该屏的DMA例程不再编写，也不推荐使用该驱动芯片的屏。
+
+#### ST7789_SPI_DMA
+
+##### 硬件配置
+
+硬件配置参考前面的 `ST7789 SPI 四线` 章节内容。
+
+##### 初始化配置
+
+初始化配置基本参考前面的 `ST7789 SPI 四线` 章节内容。仅修改下面内容部分：
+- 添加 SPI TX DMA
+- 数据位宽 16 位
+- SPI中断关闭，DMA中断默认开启
+
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/ST7789_SPI_DMA%E9%85%8D%E7%BD%AE.png)  
+
+
+##### 程序编写
+
+ 这里只编写清屏函数，因为DMA传输实际是要和地址挂钩的（外置Flash存储的图片地址或内部图片数组地址），这里仅演示DMA用法，具体的实际使用在后续例程中在讲解。
+
+```
+u16 SendBuff[320*10];  // 缓存数组，10行
+static u8 disp_p = 0;  // DMA传输完成标志位
+
+
+// DMA传输完成回调函数
+void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+	disp_p = 1;
+}
+
+void LCD_DMA_TEST(u16 color)
+{
+	static int i = 0;
+
+	for(uint32_t j=0 ;j<320*10;j++){
+		SendBuff[j] = color;
+	}
+	LCD_Address_Set(0,0,319,479);//设置显示范围
+	LCD_WriteRAM_Prepare();
+	LCD_CS =0;
+
+	/* 将spi设置为16位数据传输模式 */
+	HAL_SPI_DeInit(&hspi1);
+	hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
+	HAL_SPI_Init(&hspi1);
+
+	HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)SendBuff, 320*10);  // 开启一次传输
+	while(1){
+		if(disp_p){
+			disp_p = 0;
+			if(i<480/10){ // 一满屏还未传输结束
+				i++;
+				HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)SendBuff, 320*10);
+			}
+			else{
+				LCD_CS =1;
+				HAL_SPI_DeInit(&hspi1);
+				hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+				HAL_SPI_Init(&hspi1);
+				i=0;
+				break;
+			}
+		}
+	}
+}
+```
+
+我们定义了一个数组 `SendBuff` 作为数据缓存，并将颜色值写入进去，在开始前我们先将spi的位数转为 16 位，因为DMA的数据位宽是16位的，而LCD初始化配置时是8位的，所以需要切换。
+
+```
+/* 将spi设置为16位数据传输模式 */
+HAL_SPI_DeInit(&hspi1);
+hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
+HAL_SPI_Init(&hspi1);
+```
+然后再开启一轮 DMA 传输，这里该送入数据SendBuff时改为8位，是HAl库的一个bug，但是经对函数内部分析，实际执行时，会将把这两个指针重新变换为( uint16_t *) 。这里8位，但实际还是16位的数据，所以数据宽度仍按16位的计算。
+
+之后会在DMA中断中置位传输完成标志为，循环里检测该标志位，发送下一轮DMA数据，知道一屏幕的数据发送完成，才跳出循环，从而完成刷屏
+
+主程序如下：
+
+```
+void setup()
+{
+	delay_init(84); /* 延时函数初始化 */
+	__HAL_SPI_ENABLE(&hspi1);
+	delay_ms(300);
+	LCD_Init();//LCD初始化
+	delay_ms(100);
+}
+
+
+void loop()
+{
+    LCD_DMA_TEST(WHITE);
+	delay_ms(300);
+	LCD_Clear(BLUE);
+	delay_ms(300);
+}
+```
+这里主程序一个使用DMA刷屏，一个SPI刷屏。可以直观的对比两者速度差异。
+
+
+这里也可以再配置是将数据位宽改为8位的，不过测试就需要修改以下，主要就是DMA发送数据是的宽度x2，SPI的配置也不要才来回在 8 位和16位之间切换了。
+```
+// 这是8位的DMA函数
+// 需要在初始化配置中将DMA的数据位宽都改为 Byte
+u8 SendBuff8[320*10];  // 缓存数组，5行
+void LCD_DMA_TEST2(u16 color)
+{
+	static int i = 0;
+
+	for(uint32_t j=0 ;j<320*10;){  // 一个像素点颜色分两次存储
+		SendBuff8[j] = color>>8;
+		SendBuff8[j+1] = color&0xFF;
+		j += 2;
+	}
+	LCD_Address_Set(0,0,319,479);//设置显示范围
+	LCD_WriteRAM_Prepare();
+	LCD_CS =0;
+
+	HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)SendBuff8, 320*10);  // 开启一次传输
+	while(1){
+		if(disp_p){
+			disp_p = 0;
+			if(i<480/10*2){ // 一满屏还未传输结束。这里由于DMA位宽是8位，所以传输次数*2
+				i++;
+				HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)SendBuff8, 320*10);
+			}
+			else{
+				LCD_CS =1;
+				i=0;
+				break;
+			}
+		}
+	}
+}
+```
+
+**参考资料：**
+- [基于stm32 标准库spi驱动st7789(使用DMA)](https://www.codenong.com/cs106298491/)
+- [STM32使用SPI DMA加双缓冲区的方式加速LCD显示BMP图片时刷屏速度](https://my.oschina.net/FuXiRuo/blog/471599)
+- [cubemx spi 中断_STM32HAL库SPI的16位数据中断发送与接收](https://blog.csdn.net/weixin_39750195/article/details/111751595)
+- [STM32F103的GPIO与DMA的终极（没啥用）玩法](http://www.mcublog.cn/stm32/2021_03/stm32f103-gpio-dma/)
+- [Using Direct Memory Access (DMA) in STM32 projects](https://embedds.com/using-direct-memory-access-dma-in-stm23-projects/)
+- [Particle Photon (STM32F205) DMA Control of GPIO pins](https://www.kasperkamperman.com/blog/particle-photon-stm32f205-dma-control-gpio-pins/)
+- [TM32 DMA输出到GPIO问题](https://bbs.21ic.com/icview-368199-1-1.html)
+- [STM32并口数据通过DMA传输](https://blog.csdn.net/aaaaa098/article/details/105615573)
+
 ## LCD触摸
 
+## LVGl 移植
+
+
+# LL库
 
 [STM32LL库系列教程（一）—— LL库概览及资料](https://zhuanlan.zhihu.com/p/347459515)
 [【stm32cubemx专题教程】ST全外设原理、配置、API使用详解](https://www.bilibili.com/video/BV1Tv411B7Uw)
@@ -3540,7 +4118,7 @@ void loop()
 总的来说：代码效率与移植性成反比的规律是明显的。与HAL相比，LL的效率优势很明显，几乎和直接写寄存器的效率相差无几。而且目前STM32cubeIDE已经支持直接生成LL工程，对于追求效率的开发应用人员来说，非常值得推荐大家使用。
 
 
-### GPIO操作
+## GPIO操作
 
 配置操作基本和前面的 HAL 一样，只有一处不同，驱动库选择 LL 库，如图所示：
 ![enter description here](../images/Posts/2020-12-18-STM32学习笔记-基于STM32CubeIDE/advanced_settings.png)
