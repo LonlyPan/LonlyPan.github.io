@@ -1326,15 +1326,56 @@ lv_anim_set_path(&a, &path);
 ```
 # 通过CodeBlocks模拟运行LittlevGL
 
+其实官方有使用教程：[lvgl/lv_sim_codeblocks_win](https://github.com/lvgl/lv_sim_codeblocks_win)
+```
+Tutorial for Windows
+Download and install Git
+Download CodeBlocks in latest version. It is recommended to use the version which includes MinGW, as otherwise you will have to install and configure it separately.
+Clone this repository.
+Open Command prompt (Win key + R -> cmd -> Enter) or PowerShell (Win key + R -> powershell -> Enter) (if you want different folder than C:/Users/username you have to navigate to it) and type: git clone https://github.com/lvgl/lv_sim_codeblocks_win.git
+In that folder type: cd lv_sim_codeblocks_win and press Enter. Here type: git submodule update --init --recursive and press Enter. This should download files to lvgl, lv_examples and lv_drivers folders.
+Open CodeBlocks and select Open an existing project. Navigate to the lv_sim_codeblocks_win folder and select LittlevGL.cbp.
+Click on Build and Run or press F9.
+If everything goes well, you should see your simulator running.
+```
+下面就跟着官方教程走。
 
-## 下载安装 CodeBlocks
-
-CodeBlocks下载地址：http://www.codeblocks.org/downloads/26
-
+1. 下载安装 git：[1.5 起步 - 安装 Git](https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git)
+比较简单，跟着git官方教程走就行了。这是为了后边使用命令下载 LVGL 仿真文件。
+2. 下载安装 CodeBlocks：[CodeBlocks下载地址](http://www.codeblocks.org/downloads/26)
+选择带编译器的版本：codeblocks-20.03mingw-setup。
 安装一路默认即可，可更改安装路径
+3. 打开 cmd，输入命令:
+    ```
+    git clone https://github.com/lvgl/lv_sim_codeblocks_win.git
+    ```
+    文件默认会下载到目录 `C:/Users/username`。如果自己指定目录，请提前进入指定目录下，再输入上述命令下载
+4. 使用命令
+    ```
+    cd lv_sim_codeblocks_win
+    ```
+    回车进入该文件目录下，并输入命令：
+    ```
+    git submodule update --init --recursive
+    ```
+    回车，将自动下载lvgl, lv_examples and lv_drivers 文件内容
+5. 打开 codeblocks，开始界面点击 `Open an existing project`，进入我们刚下载的 `lv_sim_codeblocks_win`文件夹并选择 ittlevGL.cbp` ，确认打开。
+6. 单击 `Click on Build` 图标或者按 `F9` 编译运行工程。
+如果编译时提示找不到编译器，出现无法编译的情况，则需对程序的编译环境进行重新配置
+![图 1](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/codeblock_settings.png) 
+这里先点击 `Auto-detect`自动检测看自己电脑上有没有，如果没有的话， 则需要单独下载mingw：[mingw-w64](http://mingw-w64.org/doku.php)。再设置mingw路径。
+![图 2](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/settings_compiler.png)  
+7. 开始使用仿真。
 
+>这里下载仿真的 LVGL 版本比较老，7.6.0 版本，不过这与最新版差别并不大，新版主要时修复了一些bug。
+关于最新版的仿真，目前并无方法。
 
-# 使用PlatformIO运行LittlevGL"
+**参考资料**
+- [LVGL：Win7基于CodeBlocks的PC模拟仿真](https://blog.csdn.net/qq_33661199/article/details/108199967)
+- [【LittleVGL】Windows环境下利用CodeBlocks搭建LittleVGL的PC模拟器环境配置问题](https://blog.csdn.net/SSA_ming/article/details/107875678)
+- [AN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3](www.arterytek.com/download/AN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3.pdf)
+
+# 使用PlatformIO运行LittlevGL
 
 >该方案不可行，不可行！不可行！原因未知。
 >已在 windows 和 linux 都测试过，均不可用，源码编译有错误。
@@ -1415,6 +1456,245 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [HAL_SPI_TransmitReceive_DMA() transmit interrupt always triggered after receive interrupt](https://community.st.com/s/question/0D50X0000APclcf/halspitransmitreceivedma-transmit-interrupt-always-triggered-after-receive-interrupt)
 [STM32CubeMx. SPI and DMA usage example for STM32 MCU.](https://microtechnics.ru/en/stm32cube-spi-and-dma-example/)
 
+# LVGL 移植
+
+## 文件移植与修改
+跟随官方教程移植：[v7.11.0-dev](https://docs.lvgl.io/latest/en/html/get-started/index.html)
+
+```
+The following steps show how to setup LVGL on an embedded system with a display and a touchpad.
+
+Download or Clone the library from GitHub with git clone https://github.com/lvgl/lvgl.git
+
+Copy the lvgl folder into your project
+
+Copy lvgl/lv_conf_template.h as lv_conf.h next to the lvgl folder, change the first #if 0 to 1 to enable the file's content and set at least LV_HOR_RES_MAX, LV_VER_RES_MAX and LV_COLOR_DEPTH defines.
+
+Include lvgl/lvgl.h where you need to use LVGL related functions.
+
+Call lv_tick_inc(x) every x milliseconds in a Timer or Task (x should be between 1 and 10). It is required for the internal timing of LVGL. Alternatively, configure LV_TICK_CUSTOM (see lv_conf.h) so that LVGL can retrieve the current time directly.
+
+Call lv_init()
+
+Create a display buffer for LVGL. LVGL will render the graphics here first, and seed the rendered image to the display. The buffer size can be set freely but 1/10 screen size is a good starting point.
+```
+1. 下载 LVGL 最新发布版 [Release v7.11.0](https://github.com/lvgl/lvgl/releases/tag/v7.11.0)。这里并不下载 master 仓库的。并将文件夹重命名为 `lvgl`
+2. 将 lvgl 文件夹复制到工程目录下，并在IDE中将 `lvgl` 文件夹添加到编译路径中
+3. 将lvgl文件夹中的lv_conf_template.h复制并重命名为lv_conf，与lvgl同级目录
+4. 打开lv_conf.h，将#if 0改为 # if 1，设置屏幕的宽高像素，以及颜色模式，如下代码所示
+    ```
+    #if 1 /*Set it to "1" to enable content*/
+
+    #ifndef LV_CONF_H
+    #define LV_CONF_H
+    /* clang-format off */
+
+    #include <stdint.h>
+
+    /*====================
+    Graphical settings
+    *====================*/
+
+    /* Maximal horizontal and vertical resolution to support by the library.*/
+    #define LV_HOR_RES_MAX          (240)  // 水平像素
+    #define LV_VER_RES_MAX          (320)  // 垂直像素
+
+    /* Color depth:
+    * - 1:  1 byte per pixel
+    * - 8:  RGB332
+    * - 16: RGB565
+    * - 32: ARGB8888
+    */
+    #define LV_COLOR_DEPTH     16  // 这里选择 RGB565模式
+    ```
+5. 在你需要用到的littlevGL的文件添加#include "lvgl.h"
+6. 调用lv_init();函数
+在一个定时任务中调用`lv_tick_inc（x）`每x毫秒（x应在1到10之间）。 LVGL的内部时间需要。或者配置lv_tick_custom（请参阅LV_CONF.H）直接使用库函数自动调用`lv_tick_inc（x）`。
+7. 调用 lv_init() 初始化
+8. 设置显示缓冲区。LVGL首先将在此缓存图像数据，并将渲染图像作为显示器进行。缓冲区大小可以自由设置，但1/10屏幕尺寸是一个很好的起点。
+   ```
+    static lv_disp_buf_t disp_buf;
+    static lv_color_t buf[LV_HOR_RES_MAX * LV_VER_RES_MAX / 10];                     /*Declare a buffer for 1/10 screen size*/
+    lv_disp_buf_init(&disp_buf, buf, NULL, LV_HOR_RES_MAX * LV_VER_RES_MAX / 10);    /*Initialize the display buffer*/
+    ```
+9. 实现并注册可以将渲染图像复制到显示区域的函数：
+    ```
+    lv_disp_drv_t disp_drv;               /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv);          /*Basic initialization*/
+    disp_drv.flush_cb = my_disp_flush;    /*Set your driver function*/
+    disp_drv.buffer = &disp_buf;          /*Assign the buffer to the display*/
+    lv_disp_drv_register(&disp_drv);      /*Finally register the driver*/
+
+    void my_disp_flush(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p)
+    {
+        int32_t x, y;
+        for(y = area->y1; y <= area->y2; y++) {
+            for(x = area->x1; x <= area->x2; x++) {
+                set_pixel(x, y, *color_p);  /* Put a pixel to the display.*/
+                color_p++;
+            }
+        }
+
+        lv_disp_flush_ready(disp);         /* Indicate you are ready with the flushing*/
+    }
+    ```
+    其中的set_pixel就是LCD顶层驱动的画点函数，这里直接替换成自己的画点函数即可。
+10. 如果需要触摸输入就进行输入函数注册和实现，不需要就算了
+    ```
+    lv_indev_drv_t indev_drv;                  /*Descriptor of a input device driver*/
+    lv_indev_drv_init(&indev_drv);             /*Basic initialization*/
+    indev_drv.type = LV_INDEV_TYPE_POINTER;    /*Touch pad is a pointer-like device*/
+    indev_drv.read_cb = my_touchpad_read;      /*Set your driver function*/
+    lv_indev_drv_register(&indev_drv);         /*Finally register the driver*/
+
+    bool my_touchpad_read(lv_indev_t * indev, lv_indev_data_t * data)
+    {
+        data->state = touchpad_is_pressed() ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
+        if(data->state == LV_INDEV_STATE_PR) touchpad_get_xy(&data->point.x, &data->point.y);
+
+        return false; /*Return `false` because we are not buffering and no more data to read*/
+    }
+    ```
+    这里 `touchpad_get_xy` 和 `touchpad_is_pressed()`也需要我们自己实现，目的就是将触摸坐标赋值给`data->point.x, &data->point.y,data->state`。因此这里可以自由发挥，只要把坐标值给到这俩变量就行了。例如
+    ```
+    bool my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t*data)
+    {
+        data->point.x = touchpad_x;
+        data->point.y = touchpad_y;
+        data->state = LV_INDEV_STATE_PR or LV_INDEV_STATE_REL;
+        return false; /*现在没有缓冲，所以没有更多的数据读取*/
+    }
+    ```
+11. 定期调用lv_task_handler（）在主机中断或操作系统任务中每隔几毫秒。如果需要，它将重绘屏幕，处理输入设备等。
+
+For a more detailed guide go to the[ Porting ](https://docs.lvgl.io/v7/en/html/porting/index.html)section.
+
+以上的 9-10 步其实官方已经有例程了，我们不用再自己编写，只需要修改即可。例程在 `lvgl\examples\porting`，这里面存放的就是对外接口适配例程。用哪一个，就更改那个名字，并在相应文件中修改 `#if 0` 启用。
+![图 3](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/porting%E6%9B%B4%E5%90%8D.png)  
+
+- lv_port_disp：显示相关。
+- lv_port_indev：输入相关。
+- lv_port_fs：文件系统相关。
+
+这里我们只使用 `lv_port_disp` 其它保持不动。并将 `lv_port_disp.c/h`文件复制到 lvgl 同级的 `lvgl_porting`目录下。 然后删除其它无关文件夹，最终文件结构如下：
+![图 4](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84png.png)  
+
+这里我们按照上面的 8-10 步骤修改 lv_port_disp.c/h 文件
+
+1. .c/h 文件中的 `#if 0` 改为 `# if 1` , .c 文件的头文件包含改为 `#include "lv_port_disp.h"` 
+    ```
+    /*Copy this file as "lv_port_disp.c" and set this value to "1" to enable content*/
+    #if 1
+
+    /*********************
+    *      INCLUDES
+    *********************/
+    #include "lv_port_disp.h"
+    ```
+2. 缓存数组已经在 `lv_port_disp_init(void)` 定义好了，这里我们仅使用一级缓存，将其他数组定去注释掉，不然会占用RAM，导致RAM不够用。
+    ```
+        /* Example for 1) */
+        static lv_disp_buf_t draw_buf_dsc_1;
+        static lv_color_t draw_buf_1[LV_HOR_RES_MAX * 10];                          /*A buffer for 10 rows*/
+        lv_disp_buf_init(&draw_buf_dsc_1, draw_buf_1, NULL, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+
+        /* Example for 2) */
+    //    static lv_disp_buf_t draw_buf_dsc_2;
+    //    static lv_color_t draw_buf_2_1[LV_HOR_RES_MAX * 10];                        /*A buffer for 10 rows*/
+    //    static lv_color_t draw_buf_2_2[LV_HOR_RES_MAX * 10];                        /*An other buffer for 10 rows*/
+    //    lv_disp_buf_init(&draw_buf_dsc_2, draw_buf_2_1, draw_buf_2_2, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+
+        /* Example for 3) */
+    //    static lv_disp_buf_t draw_buf_dsc_3;
+    //    static lv_color_t draw_buf_3_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];            /*A screen sized buffer*/
+    //    static lv_color_t draw_buf_3_2[LV_HOR_RES_MAX * LV_VER_RES_MAX];            /*An other screen sized buffer*/
+    //    lv_disp_buf_init(&draw_buf_dsc_3, draw_buf_3_1, draw_buf_3_2, LV_HOR_RES_MAX * LV_VER_RES_MAX);   /*Initialize the display buffer*/
+    ```
+    同时注释掉下面屏幕尺寸赋值语句。之前我们已经在 lv_conf.h 中设置过了，下面语句的优先级最高即会覆盖掉 lv_conf.h 中的设置。但为了保持入口一致，我们统一在lv_conf.h中设置，这里的注释掉。
+    ```
+        /*Set the resolution of the display*/
+    //disp_drv.hor_res = 240;
+    //disp_drv.ver_res = 320;
+    ```
+3. 修改 `disp_flush()`。`LCD_Fast_DrawPoint`就是我们之前编写的画点函数。
+    ```
+    #include "lcd.h"
+
+    static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
+    {
+        /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
+
+        int32_t x;
+        int32_t y;
+        for(y = area->y1; y <= area->y2; y++) {
+            for(x = area->x1; x <= area->x2; x++) {
+                /* Put a pixel to the display. For example: */
+                /* put_px(x, y, *color_p)*/
+                LCD_Fast_DrawPoint(x,y,color_p->full);
+                color_p++;
+            }
+        }
+
+        /* IMPORTANT!!!
+        * Inform the graphics library that you are ready with the flushing*/
+        lv_disp_flush_ready(disp_drv);
+    }
+    ```
+4. 触摸接口在 `lv_port_indev` 文件中，这里没用到，不添加。 
+5. 添加定时器，设置为1ms定时。在中断函数中调用 `lv_tick_inc(1)`。注意这里的 "1" 必须和中断事件移植，中断间隔几ms，这个数字就是几。且只能取 1-10。
+    ```
+    #include "lvgl.h"
+    /* 中断回调函数 */
+    void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+    {
+        lv_tick_inc(1);//lvgl的1ms心跳
+    }
+    ```
+6. 编译，检查错误。主要就是头文件包含错误。注意在STM32CubeIDE中一定要将GUI文件夹设置源文件夹
+![图 6](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL_GUI_Sr_Loc.png)  
+其余头文件包含如下：
+![图 5](../images/Posts/2020-12-03-LittlevGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL_%E5%A4%B4%E6%96%87%E4%BB%B6.png)  
+
+7. 编写主函数，驱动例程。
+    ```
+    void test_screen(void)
+    {
+        lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
+        lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
+        lv_obj_set_size(btn, 120, 50);                          /*Set its size*/
+
+        lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
+        lv_label_set_text(label, "Button");                     /*Set the labels text*/
+    }
+
+    void setup()
+    {
+        delay_init(84); /* 延时函数初始化 */
+        __HAL_SPI_ENABLE(&hspi1);
+        HAL_TIM_Base_Start_IT(&htim10); /* 使能定时器  */
+        LCD_Init();//LCD初始化
+        delay_ms(100);
+
+        lv_init();				//lvgl系统初始化, 放在 LCD_Init() 后面
+        lv_port_disp_init();	//lvgl显示接口初始化,放在lv_init()的后面
+        test_screen(); /* 初始化界面后立即会显示 */
+
+        run_times = millis();
+    }
+
+
+
+    void loop()
+    {
+        lv_task_handler();
+    }
+    ```
+    `test_screen` 函数作用是创建一个带字符的按钮控件，主函数通过调用 `lv_task_handler()` 显示创建的按钮控件。
+    loop 循环中一定不能有阻塞（延时函数），必须保证 `lv_task_handler()` 能够及时调用，或者放在中断中定时调用。
+
+## LVGL快速入门
+
+
 # LVGL应用
 
 ## Screen
@@ -1425,3 +1705,172 @@ Bare metal: Terminal -> Run Build Task... -> PlatformIO: Build (stm32f429_disco)
 [LittlevGL 切换界面的演示](https://blog.csdn.net/yunjie167/article/details/105488356)
 [零知增强板-TFT扩展板 3.5寸 UI界面示例(lvgl)](http://www.lingzhilab.com/lzbbs/resources.html?ecid=454)
 
+
+
+## LVGL优化
+
+该优化测试实在 240*320 的屏幕测试的，测试显示按钮+屏幕背景刷新
+```
+void test_screen(void)
+{
+    lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
+    lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
+    lv_obj_set_size(btn, 120, 50);                          /*Set its size*/
+
+    lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
+    lv_label_set_text(label, "Button");                     /*Set the labels text*/
+}
+
+void setup()
+{
+	delay_init(84); /* 延时函数初始化 */
+	__HAL_SPI_ENABLE(&hspi1);
+	HAL_TIM_Base_Start_IT(&htim10); /* 使能定时器  */
+	LCD_Init();//LCD初始化
+	delay_ms(100);
+
+	lv_init();				//lvgl系统初始化
+	lv_port_disp_init();	//lvgl显示接口初始化,放在lv_init()的后面
+	test_screen(); /* 初始化界面后立即会显示 */
+	run_times = millis();   // 记住显示前时间
+	lv_task_handler();
+	delay_ms(50);  // 延时50ms。等待显示完成
+	run_times = (millis()-run_times-50);   // 得到显示时间
+	LCD_ShowNum(50,100,run_times,5,16);
+}
+
+
+```
+不同配置下显示该同一内容画面所消耗的时间、RAM、ROM对比。
+
+### DMA+中断+单buf 
+```
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 10];                      /*A buffer for 10 rows*/
+lv_disp_buf_init(&disp_buf_1, buf_1,  NULL,  LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+```
+- 耗时：67ms
+- RAM占用 73.55%  
+- FLASH占用 65.12%
+
+**`LV_HOR_RES_MAX * 10` 改为 `LV_HOR_RES_MAX * 20`**
+```
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 20];                      /*A buffer for 10 rows*/
+lv_disp_buf_init(&disp_buf_1, buf_1, NULL, LV_HOR_RES_MAX * 20);   /*Initialize the display buffer*/
+```
+- 耗时：55ms
+- RAM占用  80.87%  
+- FLASH占用 65.12%
+
+
+### 双buf 
+```
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 10];                      /*A buffer for 10 rows*/
+static lv_color_t buf_2[LV_HOR_RES_MAX * 10];
+lv_disp_buf_init(&disp_buf_1, buf_1, buf_2, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+```
+- 耗时：48ms
+- RAM占用  80.87%  
+- FLASH占用 65.12%
+
+**`LV_HOR_RES_MAX * 10` 改为 `LV_HOR_RES_MAX * 20`**
+```
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 20];                      /*A buffer for 10 rows*/
+static lv_color_t buf_2[LV_HOR_RES_MAX * 20];
+lv_disp_buf_init(&disp_buf_1, buf_1, buf_2, LV_HOR_RES_MAX * 20);   /*Initialize the display buffer*/
+```
+- 耗时：42ms
+- RAM占用  95.52%  
+- FLASH占用 65.12%
+
+### 减小RAM占用
+修改以下内容对于显示时间几乎无影响，但可以大幅减小RAM暂用  
+上述测试都是在下属设置中(lv_conf.h)
+```
+#  define LV_MEM_SIZE    (32U * 1024U)
+```
+下述为dma 单buffer的显示参数
+```
+#  define LV_MEM_SIZE    (32U * 1024U)
+
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 10];                      /*A buffer for 10 rows*/
+lv_disp_buf_init(&disp_buf_1, buf_1,  NULL,  LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+```
+- 耗时：67ms
+- RAM占用 73.55%  
+- FLASH占用 65.12%
+
+修改 LV_MEM_SIZE 大小
+
+```
+#  define LV_MEM_SIZE    (8U * 1024U)
+```
+- 耗时：66ms
+- RAM占用 36.05%  
+- FLASH占用 65.12%
+
+### 插件宏定义设为0
+lv_conf.h设置不用的插件为0，速度无影响，内存增加
+上述测试都是在下属设置中(lv_conf.h)
+```
+#define LV_USE_ARC      1
+#define LV_USE_BAR      0
+#define LV_USE_BTN      1
+#define LV_USE_BTNMATRIX     0
+#define LV_USE_CALENDAR 0
+#define LV_USE_CANVAS   0
+#define LV_USE_CHECKBOX       0
+#define LV_USE_CHART    0
+#define LV_USE_CONT     1
+#define LV_USE_CPICKER   0
+#define LV_USE_DROPDOWN    0
+#define LV_USE_GAUGE    0
+#define LV_USE_IMG      0
+#define LV_USE_IMGBTN   0
+#define LV_USE_KEYBOARD       0
+#define LV_USE_LABEL    1
+#define LV_USE_LED      0
+#define LV_USE_LINE     1
+#define LV_USE_LIST     0
+#define LV_USE_LINEMETER   0
+#define LV_USE_OBJMASK  0
+#define LV_USE_MSGBOX     0
+#define LV_USE_PAGE     0
+#define LV_USE_SPINNER      0
+#define LV_USE_ROLLER    0
+#define LV_USE_SLIDER    0
+#define LV_USE_SPINBOX       0
+#define LV_USE_SWITCH       0
+#define LV_USE_TEXTAREA       0
+#define LV_USE_TABLE    0
+#define LV_USE_TABVIEW      0
+#define LV_USE_TILEVIEW     0
+#define LV_USE_WIN      0
+```
+在上述配置下，下述为dma 单buffer的显示参数
+```
+#  define LV_MEM_SIZE    (32U * 1024U)
+
+static lv_disp_buf_t disp_buf_1;
+static lv_color_t buf_1[LV_HOR_RES_MAX * 10];                      /*A buffer for 10 rows*/
+lv_disp_buf_init(&disp_buf_1, buf_1,  NULL,  LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+```
+- 耗时：67ms
+- RAM占用 73.55%  
+- FLASH占用 65.12%
+
+如果将上述宏定义全部改为1（lvgl默认全为1）,显示参数为
+- 耗时：67ms
+- RAM占用 73.55%  
+- FLASH占用 72.38%
+
+**参考资料**
+- [【LVGL学习之旅 01】移植LVGL到STM32](https://blog.csdn.net/qq_40831286/article/details/107633216)
+- [STM32 移植 littlevGL GUI](https://www.jianshu.com/p/456fb71ec798)
+- [lvgl最新版本在STM32上的移植使用](https://www.eet-china.com/mp/a40316.html)
+- [stm32 DMA2D使用中断LVGL,提高LVGL帧率](https://www.codeleading.com/article/56705058674/)
+- [LVGL 优化帧率技巧](https://blog.csdn.net/weixin_43862847/article/details/109318017)
