@@ -4737,7 +4737,8 @@ lcd_show_pic_flash(0,0,240,240,"img_test.bin");
 #### 字库制作
 
 1. 打开点阵字库软件 ts3
-2. 选择字体
+2. 选择字体。 字符集实测西欧语言和GB2312都可以。这里的字体大小设置于最终字库无关，字体大小由下面几个步骤决定。
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E4%B8%AD%E6%96%87%E5%AD%97%E5%BA%93%E5%AD%97%E4%BD%93%E9%80%89%E6%8B%A9.png)  
 3. 设置宽、高（点阵大小）。字体大小设置请根据实际适应，保证字在方框中即可。一般16点阵字体大小12，24点阵字体大小18，32点阵字体大小24
 4. 横向、纵向偏移根据预览调整，保证字体居中方框即可
 5. 模式设置，设置`纵向取模方式二`（根据程序适配）
@@ -4936,9 +4937,83 @@ void setup()
     LCD_ShowPicture(0,0,40,40,gImage_3);
 
 }
+```
+### DMA显示flash中的图片
 
-### 外置flash模拟U盘存储+fatfs文件系统+图片字库显示
+#### 取模
 
+取模方式与上文基本一致，仅需要将输出类型改为 `.bin` 格式。
+
+#### 程序编写
+
+程序结合 `显示flash中的图片` 和 `图片显示 DMA` 两个章节。
+```
+/**
+ * @brief: 显示图片
+ * @param x,y起点坐标
+ * @param {u16} length  图片长度
+ * @param {u16} width   图片宽度
+ * @param {const u8} pic  图片数组
+ * @detail 由于HAL_SPI_Transmit_DMA的数据size大小是16位的，所以如果满屏刷新 240x320 > 2^16，则需要分多次显示（屏幕小的则不需要）。
+ *                 每次传输后都必须等待完成，才能开启下一次传输。
+ */
+#define pic_buffer_size (LCD_WIDTH*20)
+uint8_t pic_buffer[pic_buffer_size]; /* 一行真彩色数据缓存 176 * 2 = 352 */
+void lcd_show_pic_flash_dma(u16 x,u16 y,u16 length,u16 width,const char* path)
+{
+	uint32_t i;
+	UINT num;
+	u32 num1=(length)*(width)*2; // 两个字节一个像素
+    u32 num_i = num1/pic_buffer_size;
+    u32 num_j = num1%pic_buffer_size;
+	LCD_Set_Window(x,y,length,width);
+
+	/* Register the file system object to the FatFs module */
+	if(f_mount(&USERFatFS, "0:", 0) == FR_OK)
+	{
+		//* Create and Open a new text file object with write access */
+		if(f_open(&USERFile, path, FA_READ) == FR_OK) // FA_WRITE  identity_true_blue.bin
+		{
+	    	for(i=0;i<num_i;i++)
+	    	{
+				//f_lseek(&USERFile,i*width*2);
+	    		f_read(&USERFile,pic_buffer,pic_buffer_size,&num);
+	    		LCD_CS=0;
+	    		disp_p = 0;
+				HAL_SPI_Transmit_DMA(&hspi1,pic_buffer, pic_buffer_size);
+    			while(disp_p==0);
+    			LCD_CS=1;
+
+			}
+	    	if(num_j != 0){
+	    		f_read(&USERFile,pic_buffer,num_j,&num);
+	    		LCD_CS=0;
+	    		disp_p = 0;
+	    		HAL_SPI_Transmit_DMA(&hspi1,pic_buffer, num_j);
+	    		while(disp_p==0);
+	    		LCD_CS=1;
+	    	}
+			f_close(&USERFile); // 读完后关闭点阵字库文件
+		}
+		else{
+			lcd_show_str(50,50,200,35,(u8 *)"bin open fail",16,1);
+		}
+
+		f_mount(NULL, "0:", 0);
+	}
+	//LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+
+}
+```
+
+定义缓存数组`pic_buffer`，存储读取的图片数据。DMA负责显示，检查DMA完成回调函数，判断下一次显示执行。
+>这里flash和lcd共用一个SPI接口，导致DMA显示时，无法读取falsh，如果时分开的接口，则可以实现DMA发送显示同时，读取下一次的图片数据，再判断DMA传输完成，这样可以加快显示速度。少了一个等待flash读取时间。
+
+主程序：
+
+```
+lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
+```
 
 ## LCD触摸
 
