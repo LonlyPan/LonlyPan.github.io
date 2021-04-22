@@ -3287,7 +3287,7 @@ void loop()
 
 主要修改 `usbd_storage_if.c` w文件内容，添加 SPi 的读写接口到 USb读写中。
 在原有的宏定义下，重新定义，应为如果我们直接修改的话，下次初始化就又会被 IDE 该回来。
-- 定义扇区数  = 1024*8 扇区，内存大小 =扇区数* 扇区大小 = 1024*8*4096 = 32M。这个数字是根据 W25Q256 = 32M，倒退计算得来的。
+- 定义扇区数  = 1024x8 扇区，内存大小 =扇区数x扇区大小 = 1024*8*4096 = 32M。这个数字是根据 W25Q256 = 32M，倒退计算得来的。
 - 定义块大小，必须和我们初始化配置时的一致。要改一起改，而且要和上面的计算配合，不然实际程序虽然也能用，但显示的内存容量就会不一样。
 >这里的扇区大小和芯片的扇区是两个概念，这里的扇区指 USB协议下的 U盘设备的扇区大小，所以通常比芯片的扇区大很多。
 
@@ -3339,7 +3339,7 @@ int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t b
 }
 ```
 **主函数：**
-只需要初始化时，输出话 W25Q256 接可。其实在原有程序上完全不用改动。下面的程序还是原来 SPI 读写的程序。
+只需要初始化 W25Q256 接可。其实在原有程序上完全不用改动。下面的程序还是原来 SPI 读写的程序。
 ```
 void setup() {
 
@@ -3384,6 +3384,179 @@ U盘初始化配置保持和下图一致即可，然后点击 `开始`
 [stm32使用外部SPI FLASH模拟U盘(大容量存储设备MSC)求职学习资料](https://www.b2bchain.cn/10000.html)
 [cubemx配置 USB读卡器+FATFS](https://www.pianshen.com/article/1915956443/)
 
+## Fatfs 文件系统移植
+
+再上述模拟u盘基础上，添加文件系统。这样就可以使用usb线实现将内存存储到flash中，再通过文件系统识别读取flash中的文件。
+
+### 初始化配置
+再上述 USB-U 盘章节基础上修改
+- 勾选使能FATFS
+- 配置FATFS
+    - 支持长文件名并将缓存放在 STACK（栈）中
+    - 最大扇区(MAX_SS)修改为4096
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/fatfs-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE.png)  
+1. 缓存工作区为什么放在栈？其实fatfs提供了三个选项：BSS，STACK , HEAP，根据个人情况选一个。
+    - 在BSS上启用带有静态工作缓冲区的LFN，不能动态分配。
+    - 如果选择了HEAP(堆)且自己有属于自己的malloc就去重写ff_memalloc  ff_memfree函数。如果是库的malloc就不需要。
+    - 一般都选择使用STACK（栈），能动态分配。
+    - 当使用堆栈作为工作缓冲区时，请注意堆栈溢出。Stack Size只要不溢出就行。
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E5%A0%86%E6%A0%88%E5%A4%A7%E5%B0%8F%E8%AE%BE%E7%BD%AE.png)  
+
+3、为什么最大扇区大小是4096Byte?一般别人都是512Byte？   其实这个是根据你自己使用的存储芯片和驱动相关的。因为我使用的W25Q128这款芯片是最小擦除单位是4096。不使用512byte是因为效率大大降低但是优点是空间利用率会大大提高。比如你文件系统最大分区是512，但是芯片最小擦除单位是4096，那么你在驱动就要实现先用缓存区把整个扇区4096byte全部读出来，然后判读其中写入512byte中有没有擦除过（即全0xFF），没有的话先擦除，在把数据写入缓存区最后写入芯片。所以步骤繁琐效率低，但是优点就是存储空间的利用率会大大提高，避免太多浪费。
+另外可能需要修改堆栈大小。
+
+### 程序编写
+
+我们需要先配置底层函数接口，在 `user_diskio.c` 文件中
+
+```
+// user_diskio.c
+#define FLASH_SECTOR_COUNT     1024*8  // 16M
+#define FLASH_BLOCK_SIZE   	   1       // 单次擦除的快数量
+
+
+DSTATUS USER_initialize (
+	BYTE pdrv           /* Physical drive nmuber to identify the drive */
+)
+{
+  /* USER CODE BEGIN INIT */
+	W25QXX_Init();
+	if(W25QXX_ReadID()== W25QXX_TYPE){
+		Stat = RES_OK;
+	}
+    else{
+    	Stat = RES_ERROR;
+    }
+    return Stat;
+  /* USER CODE END INIT */
+}
+
+DSTATUS USER_status (
+	BYTE pdrv       /* Physical drive number to identify the drive */
+)
+{
+  /* USER CODE BEGIN STATUS */
+	if(W25QXX_ReadID()== W25QXX_TYPE){
+		Stat = RES_OK;
+	}
+    else{
+    	Stat = RES_ERROR;
+    }
+    return Stat;
+  /* USER CODE END STATUS */
+}
+
+DRESULT USER_read (
+	BYTE pdrv,      /* Physical drive nmuber to identify the drive */
+	BYTE *buff,     /* Data buffer to store read data */
+	DWORD sector,   /* Sector address in LBA */
+	UINT count      /* Number of sectors to read */
+)
+{
+  /* USER CODE BEGIN READ */
+    if (!count)return RES_PARERR;//参数�?�?
+	for(;count>0;count--)
+	{
+		W25QXX_Read(buff,sector*_MAX_SS,_MAX_SS);
+		sector++;
+		buff+=_MAX_SS;
+	}
+    return RES_OK;
+  /* USER CODE END READ */
+}
+
+DRESULT USER_write (
+	BYTE pdrv,          /* Physical drive nmuber to identify the drive */
+	const BYTE *buff,   /* Data to be written */
+	DWORD sector,       /* Sector address in LBA */
+	UINT count          /* Number of sectors to write */
+)
+{
+  /* USER CODE BEGIN WRITE */
+  /* USER CODE HERE */
+    if (!count)return RES_PARERR;//参数�?�?
+	for(;count>0;count--)
+	{
+		W25QXX_Write((u8*)buff,sector*_MAX_SS,_MAX_SS);
+		sector++;
+		buff+=_MAX_SS;
+	}
+    return RES_OK;
+  /* USER CODE END WRITE */
+}
+
+DRESULT USER_ioctl (
+	BYTE pdrv,      /* Physical drive nmuber (0..) */
+	BYTE cmd,       /* Control code */
+	void *buff      /* Buffer to send/receive control data */
+)
+{
+  /* USER CODE BEGIN IOCTL */
+    DRESULT res = RES_ERROR;
+	switch(cmd)
+	{
+		case CTRL_SYNC:
+			res = RES_OK;
+			break;
+		case GET_SECTOR_SIZE:
+			*(WORD*)buff = _MAX_SS;
+			res = RES_OK;
+			break;
+		case GET_BLOCK_SIZE:
+			*(WORD*)buff = FLASH_BLOCK_SIZE;
+			res = RES_OK;
+			break;
+		case GET_SECTOR_COUNT:
+			*(DWORD*)buff = FLASH_SECTOR_COUNT;
+			res = RES_OK;
+			break;
+		default:
+			res = RES_PARERR;
+			break;
+	}
+    return res;
+  /* USER CODE END IOCTL */
+}
+```
+之后编写主程序测试：
+```
+void setup() {
+
+	u8 name_buf[512] = " ";  // 字符数组，用于存放从文件中读取的内容
+	UINT num =1;  // 如果不初始化，该值会保存最后一次值（不是局部变量吗？实际测竟会保留值。。。）
+	u16 i = 0;    // 数组元素索引
+    uart_init();
+    printf("Test Start\n\r");
+	W25QXX_Init();  /* W25Q256-Flash初始化 */
+	while(W25QXX_ReadID()!=W25Q128)
+	{
+		printf("W25Q64 Failed!\n\r");  //
+	}
+	printf("W25Q64 OK!\n\r");
+
+    /* 挂载外部flash */
+	retUSER = f_mount(&USERFatFS, "0:", 0);
+	if(retUSER == FR_OK)
+	{
+		//* Create and Open a new text file object with read access */
+		retUSER = f_open(&USERFile, "FatFs_test.txt", FA_READ);
+		if(retUSER == FR_OK) // FA_WRITE  identity_true_blue.bin
+		{
+			 f_lseek(&USERFile,0);
+			 while(num != 0){ // 读取文件内容直到结束
+				 f_read(&USERFile,name_buf+i,1,&num);
+				 i++;
+			 }
+			 f_close(&USERFile); // 读完后关闭文件
+		}
+		f_mount(NULL, "0:", 0);
+	}
+	if(i != 0)
+		printf("%s\n\r",name_buf);
+}
+```
+
+下载程序并运行。程序会查找flash中的文件 `name.txt`没有则会创建一个空白文件。我们使用usb连接电脑，会发现falsh中多了一个`FatFs_test.txt`文件，我们打开该文件，手动添加一些内容（不能是中文，中文支持后面再说明）保存，重启，会观察到串口输出了文件内容，表示测试成功。
 ## IAP
 
 STM32的内部闪存（FLASH）地址起始于0x08000000，一般情况下，程序文件就从此地址开始写入。此外STM32是基于Cortex-M3内核的微控制器，其内部通过一张“中断向量表”来响应中断，程序启动后，将首先从“中断向量表”取出复位中断向量执行复位中断程序完成启动，而这张“中断向量表”的起始地址是0x08000004，当中断来临，STM32的内部硬件机制亦会自动将PC指针定位到“中断向量表”处，并根据中断源取出对应的中断向量执行中断服务程序。
@@ -3943,6 +4116,9 @@ I have made some heavy modifications, as the typical Adafruit TFT libraries are 
 - 并口且为FSMC接口控制是，适合DMA操作（通过FSMC写数据，WR等引脚会自动跳变，无需程序参数，只负责传数据即可，时序由系统自动控制）
 - SPI串行接口时，适合DMA，原因同 FSMC 接口。
 
+**参考资料**
+- [Connecting a parallel LCD using ST7789 with STM32H743VI](https://electronics.stackexchange.com/questions/485135/connecting-a-parallel-lcd-using-st7789-with-stm32h743vi)
+- [STM32 and ILI9341 16bit Parallel](https://www.eevblog.com/forum/microcontrollers/stm32-and-ili9341-16bit-parallel/)
 由于这里没有FSMC接口芯片，暂不编写。只编写 SPI 接口的 DMA 例程。
 另由于 ILI9488 SPI 数据位24位，而DMA位16位或32位，故该屏的DMA例程不再编写，也不推荐使用该驱动芯片的屏。
 
@@ -4095,6 +4271,674 @@ void LCD_DMA_TEST2(u16 color)
 - [Particle Photon (STM32F205) DMA Control of GPIO pins](https://www.kasperkamperman.com/blog/particle-photon-stm32f205-dma-control-gpio-pins/)
 - [TM32 DMA输出到GPIO问题](https://bbs.21ic.com/icview-368199-1-1.html)
 - [STM32并口数据通过DMA传输](https://blog.csdn.net/aaaaa098/article/details/105615573)
+
+## LCD 内部字符显示
+
+使用软件将字符变为数组，存储在内存中，然后调用。
+### ASCII 字符
+
+#### 取模
+常用ASCII表  
+偏移量32  (这句话不知道什么意思)
+ASCII字符集（注意首位有个空格不要忘记复制）:
+
+```
+ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+```
+
+0. 打开PC2LCD2002
+1. 模式设为：字符模式
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E5%AD%97%E7%AC%A6%E6%A8%A1%E5%BC%8F.png)  
+
+2. 选项设置：
+- 阴码+逐列式+顺向+C51格式
+- 这里的后缀尽量保持一致，影响最终数组的输出排版和注释
+- 点阵：输出的字模每行字节数。大小 = (size/8+((size%8)?1:0))\*(size/2)，size:点阵大小(12/16/24...)。根据计算，12点阵这里应该填写12，但实际测试只要比计算结果大就可以，该值影响数组的输出排版。可以保证每个字符的字符组输出在同一大括号内，不然就会分两行、两个大括号显示，不利于复制使用。
+- 索引：每次字模生成在开始时都会有一个索引，但我们不会复制使用这段索引。这里的值也表示每行显示的索引个数，这里任意。
+![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E9%80%89%E9%A1%B9%E8%AE%BE%E7%BD%AE.png)  
+3. 选择字体：字宽和字高值和上面的点阵大小保持一致
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E5%AD%97%E4%BD%93.png)  
+4. 在界面下方输入栏复制粘贴开头的字符集（注意空格）。点击生成字模，然后将字符复制保存，粘贴到程序文件中。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E7%94%9F%E6%88%90%E5%AD%97%E7%AC%A6.png)  
+5. 在程序文件中新建数组，名称自定义
+    ```
+    const unsigned char asc2_1206[95][12]={  // 6x12 宋体
+    {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},/*" ",0*/
+    {0x00,0x00,0x00,0x00,0x3E,0x40,0x00,0x00,0x00,0x00,0x00,0x00},/*"!",1*/
+    {0x00,0x00,0x20,0x00,0xC0,0x00,0x20,0x00,0xC0,0x00,0x00,0x00},/*""",2*/
+    ...
+    };
+    ```
+    数字 95 是固定的，表示95个字符。数字 12 表示字符所占的字节数（也就是下面的行元素个数），计算公式和步骤2一样：
+    大小 = (size/8+((size%8)?1:0))\*(size/2)
+    12点阵就是12，23点阵就是36.
+
+#### 程序编写
+```
+/**
+ * @brief: 在指定位置显示一个字符
+ * @note: 字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y  起始坐标
+ * @param {u8} num  要显示的字符，范围：" "--->"~"
+ * @param {u8} size 字体大小 12/16/24/32
+ * @param {u8} mode  叠加方式(1) ，会导致内容叠加
+ *                   非叠加方式(0)，有单独背景，会清除之前内容
+ */
+void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
+{
+    u16 temp,t1,t;
+	u16 y0=y;
+	num=num-' ';//得到偏移后的值
+	u8 csize=(size/8+((size%8)?1:0))*(size/2);      //得到字体一个字符对应点阵集所占的字节数
+
+	for(t=0;t<csize;t++)  // 轮询单个字符（一行）所有元素
+	{
+        if(size==12)temp=asc2_1206[num][t];         //查找对应字体
+		else if(size==16) temp=asc2_1608[num][t];
+		else if(size==24)temp=asc2_2412[num][t];
+		else if(size==32) temp=asc2_3216[num][t];
+		else ;
+		for(t1=0;t1<8;t1++)  // 显示一个元素（每一个位表示一个点）
+		{
+			if(temp&0x80)LCD_Fast_DrawPoint(x,y,POINT_COLOR);   // 1表示为内容，
+			else if(mode==0)LCD_Fast_DrawPoint(x,y,BACK_COLOR); // 0表示无内容（背景）
+			temp<<=1;                       // 位偏移，只检测最高位
+			y++;                            // 逐列式：从上至下，高位在前（与取模软件一致） 
+			if(y>=lcddev.height)return;		// 超区域了
+			if((y-y0)==size)                // 一列显示完成
+			{
+				y=y0;
+				x++;
+				if(x>=lcddev.width)return;	// 超区域了
+				break;
+			}
+		}
+	}
+}
+/**
+ * @brief: m^n函数
+ * @param {u8} m 底数; {u8} n 指数
+ * @retval: m^n次方.
+ */
+u32 LCD_Pow(u8 m,u8 n)
+{
+	u32 result=1;
+	while(n--)result*=m;
+	return result;
+}
+
+/**
+ * @brief: 显示数字,高位为0,则不显示
+ * @note: 非叠加方式显示，字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y  起始坐标
+ * @param {u32} num  数值(0~4294967295);
+ * @param {u8} len  数字的个数
+ * @param {u8} size  字体大小 12/16/24/32
+ */
+void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size)
+{
+	u8 t,temp;
+	u8 enshow=0;
+	for(t=0;t<len;t++)
+	{
+		temp=(num/LCD_Pow(10,len-t-1))%10;
+		if(enshow==0&&t<(len-1))
+		{
+			if(temp==0)
+			{
+				LCD_ShowChar(x+(size/2)*t,y,' ',size,0);
+				continue;
+			}else enshow=1;
+
+		}
+	 	LCD_ShowChar(x+(size/2)*t,y,temp+'0',size,0);
+	}
+}
+
+/**
+ * @brief: 显示数字
+ * @note: 字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y  起点坐标
+ * @param {u32} num  数值(0~999999999);
+ * @param {u8} len 长度(即要显示的位数)
+ * @param {u8} size  字体大小
+ * @param {u8} mode [7]:0,不填充;1,填充0.
+ *                  [6:1]:保留
+ *                  [0]:0,非叠加显示;1,叠加显示.
+ */
+void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode)
+{
+	u8 t,temp;
+	u8 enshow=0;
+	for(t=0;t<len;t++)
+	{
+		temp=(num/LCD_Pow(10,len-t-1))%10;
+		if(enshow==0&&t<(len-1))
+		{
+			if(temp==0)
+			{
+				if(mode&0X80)LCD_ShowChar(x+(size/2)*t,y,'0',size,mode&0X01);
+				else LCD_ShowChar(x+(size/2)*t,y,' ',size,mode&0X01);
+ 				continue;
+			}else enshow=1;
+
+		}
+	 	LCD_ShowChar(x+(size/2)*t,y,temp+'0',size,mode&0X01);
+	}
+}
+
+/**
+ * @brief: 显示字符串
+ * @note: 字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y 起点坐标
+ * @param {u16} width  {u16} height  区域大小
+ * @param {u8} size  字体大小
+ * @param {u8} *p  字符串起始地址
+ * @param {u8} mode  叠加方式(1) ，会导致内容叠加
+ *                   非叠加方式(0)，有单独背景，会清除之前内容
+ */
+void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p,u8 mode)
+{
+	u8 x0=x;
+	width+=x;
+	height+=y;
+    while((*p<='~')&&(*p>=' '))//判断是不是非法字符!
+    {
+        if(x>=width){x=x0;y+=size;}
+        if(y>=height)break;//退出
+        LCD_ShowChar(x,y,*p,size,mode?1:0);
+        x+=size/2;
+        p++;
+    }
+}
+```
+
+主程序:
+```
+// C 不支持字符串
+char char_test1[8] = {'C', 'T', 'E', 'S', 'T', '!', '1','\0'};  // 由于数组的末尾存储了空字符，所以字符数组的大小比字符串多一个空字符结尾。
+char char_test2[] = "CTEST!2"; // 与上面等同，char_test2[0] = 'C'
+
+void setup()
+{
+
+	delay_init(84); /* 延时函数初始化 */
+
+	__HAL_SPI_ENABLE(&hspi1);
+	delay_ms(300);
+	LCD_Init();//LCD初始化
+	delay_ms(100);
+
+	LCD_ShowString(10,10,100,16,12,char_test1,1);
+	LCD_ShowChar(10,30,char_test2[6],12,1);
+	LCD_ShowString(10,50,100,16,12,&char_test2[0],1);
+	LCD_ShowString(10,70,100,16,12,"CTEST!3",1);
+}
+```
+
+### 中文字符
+
+#### 取模
+0. 打开PC2LCD2002
+1. 模式设为：字符模式
+![图 1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E5%AD%97%E7%AC%A6%E6%A8%A1%E5%BC%8F.png)  
+
+2. 选项设置：
+- 阴码+逐列式+顺向+C51格式
+- 这里的后缀尽量保持一致，影响最终数组的输出排版和注释
+- 点阵：输出的字模每行字节数。大小 = (size/8+((size%8)?1:0))\*(size)，size:点阵大小(12/16/24...)。根据计算，12点阵这里应该填写12，但实际测试只要比计算结果大就可以，该值影响数组的输出排版。可以保证每个字符的字符组输出在同一大括号内，不然就会分两行、两个大括号显示，不利于复制使用。
+- 索引：每次字模生成在开始时都会有一个索引，但我们不会复制使用这段索引。这里的值也表示每行显示的索引个数，这里任意。
+![![图 2](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E9%80%89%E9%A1%B9%E8%AE%BE%E7%BD%AE.png)  1](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E6%B1%89%E5%AD%97%E9%80%89%E9%A1%B9%E9%85%8D%E7%BD%AE.png)  
+3. 选择字体：字宽和字高值和上面的点阵大小保持一致
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E5%AD%97%E4%BD%93.png)  
+4. 然后在输入栏输入汉字，点击 “生成字模”，生成的字模如下
+![图 7](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/PC2-%E6%B1%89%E5%AD%97%E7%94%9F%E6%88%90.png)  
+5. 然后将字模复制到程序文件中，新建数组 
+    >注：数组为一维数组。每个字的字模前需要添加对应的汉字
+    ```
+    typedef struct
+    {
+        unsigned char Index[2];
+        unsigned char Msk[24];
+    }typFNT_GB12;
+
+    const typFNT_GB12 tfont12_cn[] = {
+        "中",0x00,0x00,0x1F,0x80,0x11,0x00,0x11,0x00,0x11,0x00,0xFF,0xF0,0x11,0x00,0x11,0x00,0x11,0x00,0x1F,0x80,0x00,0x00,0x00,0x00,/*"中",0*/
+        "文",0x20,0x10,0x20,0x10,0x38,0x20,0x26,0x20,0xA1,0x40,0x60,0x80,0x21,0x40,0x26,0x20,0x38,0x20,0x20,0x10,0x20,0x10,0x00,0x00,/*"文",1*/
+        "字",0x30,0x80,0x20,0x80,0x24,0x80,0x24,0x90,0xA4,0x90,0x64,0xF0,0x25,0x80,0x26,0x80,0x24,0x80,0x20,0x80,0x30,0x80,0x00,0x00,/*"字",2*/
+        "体",0x08,0x00,0x3F,0xF0,0xC0,0x80,0x11,0x00,0x12,0x40,0x14,0x40,0xFF,0xF0,0x14,0x40,0x12,0x40,0x11,0x00,0x00,0x80,0x00,0x00,/*"体",3*/
+        "测",0x44,0x20,0x22,0x40,0x7F,0x90,0x40,0x20,0x5F,0xC0,0x40,0x20,0x7F,0x90,0x00,0x00,0x3F,0x80,0x00,0x10,0xFF,0xF0,0x00,0x00,/*"测",4*/
+        "试",0x88,0x00,0x4F,0xF0,0x00,0x20,0x00,0x00,0x24,0x20,0x27,0xE0,0x24,0x40,0x20,0x00,0xFF,0xC0,0x20,0x20,0xA0,0x70,0x00,0x00,/*"试",5*/
+    };
+    ```
+
+#### 程序编写
+
+```
+/**
+ * @brief: 显示汉字
+ * @note: 字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y  起点坐标
+ * @param {u8} *s  字符地址
+ * @param {u8} size  字体大小
+ * @param {u8} mode  叠加方式(1) ，会导致内容叠加
+ *                   非叠加方式(0)，有单独背景，会清除之前内容
+ */
+void LCD_ShowChinese(u16 x,u16 y,u8 *s,u8 size,u8 mode)
+{
+	u16 temp,t1,t;
+	u16 k;
+	u16 y0=y;
+
+	u8 csize=(size/8+((size%8)?1:0))*size;  //得到字体一个字符对应点阵集所占的字节数
+
+	u16 HZnum=sizeof(tfont12_cn)/sizeof(typFNT_GB12);	//统计汉字数目
+	for(k=0;k<HZnum;k++)  // 查找汉字在数组中的位置
+	{
+		if((tfont12_cn[k].Index[0]==*(s))&&(tfont12_cn[k].Index[1]==*(s+1)))
+		{
+			break;       //查找到对应点阵字库立即退出，防止多个汉字重复取模带来影响
+		}
+	}
+	for(t=0;t<csize;t++)
+	{
+		if(size==12)temp=tfont12_cn[k].Msk[t];  //调用1206字体
+		//else if(size==16) temp=tfont16_cn[k].Msk[0];		 //调用1608字体
+		//else if(size==24)temp=tfont24_cn[k].Msk[0];
+		//else if(size==32) temp=tfont32_cn[k].Msk[0];
+		else ;
+		for(t1=0;t1<8;t1++)
+		{
+			if(temp&0x80)LCD_Fast_DrawPoint(x,y,POINT_COLOR);  // 为1表示为内容，为0表示无内容（背景）
+			else if(mode==0)LCD_Fast_DrawPoint(x,y,BACK_COLOR); // 无内容（背景）处理
+			temp<<=1;
+			y++;
+			if(y>=lcddev.height)return;		//超区域了
+			if((y-y0)==size)
+			{
+				y=y0;
+				x++;
+				if(x>=lcddev.width)return;	//超区域了
+				break;
+			}
+		}
+	}
+}
+
+/** 
+ * @brief:  显示汉字串
+ * @note: 字体色、背景色为宏定义指定
+ * @param {u16} x  {u16} y  起点坐标
+ * @param {u8} *s  字符地址
+ * @param {u8} size  字体大小
+ * @param {u8} mode  叠加方式(1) ，会导致内容叠加
+ *                   非叠加方式(0)，有单独背景，会清除之前内容
+ */
+void LCD_ShowChineseString(u16 x,u16 y,u8 *s,u8 size,u8 mode)
+{
+	while(*s!=0)
+	{
+		LCD_ShowChinese(x,y,s,size,mode);
+		s+=3;  // GCC UTF-8 编码，中文字符位3个字节表示。GBK编码则是2个字节
+		x+=size;
+	}
+}
+
+```
+
+
+主程序：
+```
+void setup()
+{
+
+	delay_init(84); /* 延时函数初始化 */
+
+	__HAL_SPI_ENABLE(&hspi1);
+	delay_ms(300);
+	LCD_Init();//LCD初始化
+	delay_ms(100);
+	LCD_ShowChinese(10,90,"中",12,1);
+}
+
+```
+这里特别说明一下 ` LCD_ShowChineseString` 函数中 s 指针偏移为3，是因为stm32cubeide默认编码是 utf-8，所以导致主程序中的中文会使用**三个字节表示**。
+
+另外我们可以将包含中文字符的源文件格式修改为 GBK 格式，则这里 s偏移就需要修改为2。偏移为2是大多数教程例程的写法，因为他们使用的IDE编码就是GBK格式。这里为了统一、同时也为了兼容后续的中文字库程序，还是修改一下。
+
+1. 使用 vscode 打开该文件，并在vscode右小角单击 UTF-8，在命令栏中选择 `通过编码重新保存`,并选择 GB 2312 格式，保存退出
+![图 6](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/vscode%E6%9B%B4%E6%94%B9%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F.png) 
+2. 右键包含中文的文件，单击 `Properties`
+3. 在弹出界面中，修改文件编码格式为 GBK。
+![图 5](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E4%BF%AE%E6%94%B9.png)  
+4. 记得将上面程序的偏移改为2。则可以下载使用了。
+
+### 图片显示
+
+#### 取模
+1. 打开 Img2LCD 软件
+2. 打开要取模的图片：以例程的40x40企鹅图片为例
+3. 观察左下角的输入图像，如果显示无效的输入图像，那么请使用电脑自带的画图软件将图片转化为16色位的bmp格式图片。
+![图 8](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/img-%E6%97%A0%E6%95%88%E5%9B%BE%E5%83%8F.png)  
+4. 打开图片后 设置如下
+- 输出数据类型：C语言数组
+- 扫描模式：水平
+- 输出灰度：16位真彩色
+- 尺寸请和实际尺寸一致，
+  此软件只能缩小图片不能放大图片！缩小是等比例缩小！
+  设置好后点击一下![图 10](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/pic_1618883556757.png)  
+
+- 高位在前，其余不勾选
+
+![图 9](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/img-%E8%AE%BE%E7%BD%AE.png)  
+5. 然后点击保存，将生成的数组复制到到例程文件内
+![图 11](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/img-%E4%BF%9D%E5%AD%98.png)  
+
+#### 程序编写
+```
+/**
+ * @brief: 显示图片
+ * @param x,y起点坐标
+ * @param {u16} length  图片长度
+ * @param {u16} width  图片宽度
+ * @param {const u8} pic  图片数组
+ */
+void LCD_ShowPicture(u16 x,u16 y,u16 length,u16 width,const u8 pic[])
+{
+	u16 i,j;
+	u32 k=0;
+    LCD_Set_Window(x,y,length,width);
+	for(i=0;i<length;i++)
+	{
+		for(j=0;j<width;j++)
+		{
+            LCD_WR_DATA(pic[k*2]);
+	        LCD_WR_DATA(pic[k*2+1]);
+			k++;
+		}
+	}
+}
+```
+**主程序**
+```
+void setup()
+{
+
+	delay_init(84); /* ???????????? */
+
+	__HAL_SPI_ENABLE(&hspi1);
+	delay_ms(300);
+	LCD_Init();//
+	delay_ms(100);
+
+    delay_ms(500);
+    LCD_ShowPicture(0,0,40,40,gImage_3);
+
+}
+```
+
+### 显示flash中的图片
+
+由于图片一般较大，我们一般会将图片存储在外置flash中。
+
+#### 取模
+
+取模方式与上文基本一致，仅需要将输出类型改为 `.bin` 格式。
+
+#### 程序编写
+
+该程序需要使用 usb u功能和fatf是文件系统。请参考`usb U盘` 和 `fatfs文件系统移植` 两个章节内容。这里只讲显示函数编写。
+
+```
+uint8_t pic[ 352]; /* 一行真彩色数据缓存 176 * 2 = 352 */
+void lcd_show_pic_flash(u16 x,u16 y,u16 length,u16 width,const char* path)
+{
+	uint16_t k = 0;
+	UINT num;
+	u16 i,j;
+	LCD_Set_Window(x,y,length,width);
+	/* Register the file system object to the FatFs module */
+	if(f_mount(&USERFatFS, "0:", 0) == FR_OK)
+	{
+		//* Create and Open a new text file object with write access */
+		if(f_open(&USERFile, path, FA_READ) == FR_OK) // FA_WRITE  identity_true_blue.bin
+		{
+			for(i=0;i<length;i++)
+			{
+				//f_lseek(&USERFile,i*width*2);
+				f_read(&USERFile,pic,width*2,&num);
+				k = 0;
+				for(j=0;j<width;j++)
+				{
+					LCD_WR_DATA(pic[k*2]);
+					LCD_WR_DATA(pic[k*2+1]);
+					k++;
+				}
+			}
+			f_close(&USERFile); // 读完后关闭点阵字库文件
+		}
+		else{
+			lcd_show_str(50,50,200,35,(u8 *)"bin open fail",16,1);
+		}
+
+		f_mount(NULL, "0:", 0);
+	}
+	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+}
+```
+主函数
+```
+lcd_show_pic_flash(0,0,240,240,"img_test.bin");
+```
+下载程序之后，将bin格式图片文件通过usb连接放到flash中。 名称要和程序中的一致 `img_test.bin`。之后程序会查找该文件，并显示。
+
+### 显示falsh中的中文字符
+
+#### 字库制作
+
+1. 打开点阵字库软件 ts3
+2. 选择字体
+3. 设置宽、高（点阵大小）。字体大小设置请根据实际适应，保证字在方框中即可。一般16点阵字体大小12，24点阵字体大小18，32点阵字体大小24
+4. 横向、纵向偏移根据预览调整，保证字体居中方框即可
+5. 模式设置，设置`纵向取模方式二`（根据程序适配）
+6. 点击创建保存，保存为 GBK16.DZK 。这里的命名适合下面的程序保持一致的，可以自定义，两者保持一致即可。
+
+![图 4](../images/Posts/2020-12-18-STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/%E4%B8%AD%E6%96%87%E5%AD%97%E5%BA%93%E5%88%B6%E4%BD%9C%E9%85%8D%E7%BD%AE.png)  
+
+#### 程序编写
+
+该程序需要使用 usb u功能和fatf是文件系统。请参考`usb U盘` 和 `fatfs文件系统移植` 两个章节内容。这里只讲显示函数编写。
+```
+//code 字符指针开始
+//从字库中查找出字模
+//code 字符串的开始地址,GBK码
+//mat  数据存放地址 (size/8+((size%8)?1:0))*(size) bytes大小
+//size:字体大小
+void Get_HzMat(unsigned char *code,unsigned char *mat,u8 size)
+{
+	 char path[20];
+	UINT num;
+
+	unsigned char qh,ql;
+	unsigned char i;
+	unsigned long foffset;
+	u16 csize=(size/8+((size%8)?1:0))*(size);//得到字体一个字符对应点阵集所占的字节数
+	qh=*code;
+	ql=*(++code);
+	if(qh<0x81||ql<0x40||ql==0xff||qh==0xff)//非 常用汉字
+	{
+	    for(i=0;i<csize;i++)*mat++=0x00;//填充满格
+	    return; //结束访问
+	}
+	if(ql<0x7f)ql-=0x40;//注意!
+	else ql-=0x41;
+	qh-=0x81;
+	foffset=((unsigned long)190*qh+ql)*csize;	//得到字库中的字节偏移量
+	sprintf(path,"GBK%d.DZK",size);
+
+	/* Register the file system object to the FatFs module */
+	if(f_mount(&USERFatFS, "0:", 0) == FR_OK)
+	{
+		//* Create and Open a new text file object with write access */
+		if(f_open(&USERFile, path, FA_READ) == FR_OK) // FA_WRITE  identity_true_blue.bin
+		{
+			 f_lseek(&USERFile,foffset);
+			 f_read(&USERFile,mat,csize,&num);
+			f_close(&USERFile); // 读完后关闭点阵字库文件
+		}
+		f_mount(NULL, "0:", 0);
+	}
+}
+//显示一个指定大小的汉字
+//x,y :汉字的坐标
+//font:汉字GBK码
+//size:字体大小
+//mode:0,正常显示,1,叠加显示
+void Show_Font(u16 x,u16 y,u8 *font,u8 size,u8 mode)
+{
+	u8 temp,t,t1;
+	u16 y0=y;
+	u8 dzk[512];
+	u16 csize=(size/8+((size%8)?1:0))*(size);//得到字体一个字符对应点阵集所占的字节数
+	if(size!=12&&size!=16&&size!=24&&size!=32)return;	//不支持的size
+	Get_HzMat(font,dzk,size);	//得到相应大小的点阵数据
+	for(t=0;t<csize;t++)
+	{
+		temp=dzk[t];			//得到点阵数据
+		for(t1=0;t1<8;t1++)
+		{
+			if(temp&0x80)LCD_Fast_DrawPoint(x,y,POINT_COLOR);
+			else if(mode==0)LCD_Fast_DrawPoint(x,y,BACK_COLOR);
+			temp<<=1;
+			y++;
+			if((y-y0)==size)
+			{
+				y=y0;
+				x++;
+				break;
+			}
+		}
+	}
+}
+
+//在指定位置开始显示一个字符串
+//支持自动换行
+//(x,y):起始坐标
+//width,height:区域
+//str  :字符串
+//size :字体大小
+//mode:0,非叠加方式;1,叠加方式
+void lcd_show_str(u16 x,u16 y,u16 width,u16 height,u8*str,u8 size,u8 mode)
+{
+
+	u16 x0=x;
+	u16 y0=y;
+    u8 bHz=0;     //字符或者中文
+    while(*str!=0)//数据未结束
+    {
+        if(!bHz)
+        {
+	        if(*str>0x80)bHz=1;//中文
+	        else              //字符
+	        {
+                if(x>(x0+width-size/2))//换行
+				{
+					y+=size;
+					x=x0;
+				}
+		        if(y>(y0+height-size))break;//越界返回
+		        if(*str==13)//换行符号
+		        {
+		            y+=size;
+					x=x0;
+		            str++;
+		        }
+		        else LCD_ShowChar(x,y,*str,size,mode);//有效部分写入
+				str++;
+		        x+=size/2; //字符,为全字的一半
+	        }
+        }else//中文
+        {
+            bHz=0;//有汉字库
+            if(x>(x0+width-size))//换行
+			{
+				y+=size;
+				x=x0;
+			}
+	        if(y>(y0+height-size))break;//越界返回
+	        Show_Font(x,y,str,size,mode); //显示这个汉字,空心显示
+	        str+=2;
+	        x+=size;//下一个汉字偏移
+        }
+    }
+
+}
+```
+主程序调用：
+```
+lcd_show_str(10,90,100,16,"中文字体测试",16,1);	//在指定位置显示一个字符串
+```
+这里说明以下，stm32cubeide默认编码是 utf-8，所以main.c 中文会无法显示，需要先将包含中文（注释不算）的程序源文件拜编码格式修改为 GBK 格式，才能下载使用。修改方式见上文 `中文字符` 章节
+
+将上述生成的字库通过usb保存到flash中。`Get_HzMat` 函数中会查找该字库，请保持名称一致。
+
+### 图片显示 DMA
+```
+/**
+ * @brief: 显示图片
+ * @param x,y起点坐标
+ * @param {u16} length  图片长度
+ * @param {u16} width   图片宽度
+ * @param {const u8} pic  图片数组
+ * @detail 由于HAL_SPI_Transmit_DMA的数据size大小是16位的，所以如果满屏刷新 240x320 > 2^16，则需要分多次显示（屏幕小的则不需要）。
+ *                 每次传输后都必须等待完成，才能开启下一次传输。
+ */
+void LCD_ShowPicture(u16 x,u16 y,u16 length,u16 width,const u8 pic[])
+{
+	uint8_t *p = gImage_3;
+	uint32_t i;
+	u32 num1=(length)*(width)*2;
+	LCD_Set_Window(x,y,length,width);
+	LCD_CS=0;
+    u32 num_i = num1/65535;
+    u32 num_j = num1%65535;
+    if(num_i != 0){
+    	for(i=0;i<num_i;i++)
+    	{
+    			while(disp_p==0);
+    			disp_p = 0;
+    			HAL_SPI_Transmit_DMA(&hspi1, (uint8_t  *)(p), 65535);
+    			p += 65535;
+    	}
+    }
+
+	if(num_j != 0){
+		while(disp_p==0);
+		disp_p = 0;
+		HAL_SPI_Transmit_DMA(&hspi1, (uint8_t  *)(p), num_j);
+	}
+}
+```
+这里唯一注意的点就是DMA传输的数据大小是16位的，也就是一次只能传出最多65535个数据。所以对于大的图片需要分次显示。
+**主函数:**
+```
+void setup()
+{
+
+	delay_init(84); /* ???????????? */
+
+	__HAL_SPI_ENABLE(&hspi1);
+	delay_ms(300);
+	LCD_Init();//
+	delay_ms(100);
+
+    delay_ms(500);
+    LCD_ShowPicture(0,0,40,40,gImage_3);
+
+}
+
+### 外置flash模拟U盘存储+fatfs文件系统+图片字库显示
+
 
 ## LCD触摸
 
