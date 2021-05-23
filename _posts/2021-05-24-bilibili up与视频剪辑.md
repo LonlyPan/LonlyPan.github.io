@@ -6,7 +6,12 @@ date: 2021-05-24
 last_modified_at: 2021-05-24
 categories: c&c++
 ---
+## 视频录制
 
+OBS 
+## 视频剪辑
+
+blender
 
 ## 字幕制作
 
