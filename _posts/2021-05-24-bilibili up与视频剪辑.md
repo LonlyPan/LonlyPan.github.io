@@ -9,6 +9,7 @@ categories: c&c++
 ## 视频录制
 
 OBS 
+
 ## 视频剪辑
 
 blender
