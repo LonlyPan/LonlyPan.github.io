@@ -10,8 +10,12 @@ categories: zothers
 
 OBS 
 
-[OBS教程：六分钟学会直播与视频录制](https://www.bilibili.com/video/BV1kW411K7HA/?spm_id_from=333.788.videocard.4)
-
+- [OBS教程：六分钟学会直播与视频录制](https://www.bilibili.com/video/BV1kW411K7HA/?spm_id_from=333.788.videocard.4)
+- [五分钟教你在OBS安装按键显示插件](https://www.bilibili.com/video/BV1vk4y1r7jU/?spm_id_from=333.788.videocard.5)
+- [录屏时显示按键点击——KeyCastOW编译](https://www.bilibili.com/video/BV1MV411y7UZ?from=search&seid=11252422796430700713)
+- [OBS 去除背景噪声 滤镜的使用 【JD煎蛋】](https://www.bilibili.com/video/BV1qW411L7pt)
+- [OBS 高级音频设置-监听设置+音轨 【JD煎蛋】](https://www.bilibili.com/video/BV19W411P7CG?from=search&seid=1270254410331759847)
+- [为什么你的直播这么卡？用实测告诉你OBS推流到底需要什么配置](https://www.bilibili.com/video/BV1R4411b78i/?spm_id_from=333.788.videocard.6)
 ## 视频剪辑
 
 blender
