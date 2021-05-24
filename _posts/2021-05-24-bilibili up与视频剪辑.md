@@ -10,6 +10,8 @@ categories: zothers
 
 OBS 
 
+[OBS教程：六分钟学会直播与视频录制](https://www.bilibili.com/video/BV1kW411K7HA/?spm_id_from=333.788.videocard.4)
+
 ## 视频剪辑
 
 blender
