@@ -42,4 +42,6 @@ lo        Link encap:Local Loopback
 sudo nmcli connection modify 'Wired connection 1' connection.autoconnect yes ipv4.method manual ipv4.address 192.168.1.199/24 ipv4.gateway 192.168.1.255 ipv4.dns 192.168.1.255
 ```
 上述中的 `192.168.1`这三个数一定要和你刚查到的ip地址前三位一致，后面的 `199` 、 `255` 自己随意设定。但要保证 `199` 这里的数字不能和你电脑上已有的ip地址冲突，所以越接近255越好。
+
+
 <!--more-->
