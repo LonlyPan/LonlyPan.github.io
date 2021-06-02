@@ -7,6 +7,8 @@ last_modified_at: 2021-06-03
 categories: c&c++
 ---
 
+[NanoPi NEO/zh](https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO/zh)
+
 ## 系统安装
 
 ## 串口连接
@@ -47,5 +49,8 @@ sudo nmcli connection modify 'Wired connection 1' connection.autoconnect yes ipv
 sudo reboot
 ```
 重启系统，完成配置。
+
 - [Use NetworkManager to configure network settings/zh](https://wiki.friendlyarm.com/wiki/index.php/Use_NetworkManager_to_configure_network_settings/zh)
+
+## OLED驱动
 <!--more-->
