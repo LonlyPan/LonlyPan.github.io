@@ -53,4 +53,6 @@ sudo reboot
 - [Use NetworkManager to configure network settings/zh](https://wiki.friendlyarm.com/wiki/index.php/Use_NetworkManager_to_configure_network_settings/zh)
 
 ## OLED驱动
+
+[NanoHat OLED](https://wiki.friendlyarm.com/wiki/index.php/NanoHat_OLED)
 <!--more-->
