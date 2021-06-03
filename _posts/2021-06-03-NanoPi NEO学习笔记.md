@@ -9,9 +9,15 @@ categories: c&c++
 
 [NanoPi NEO/zh](https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO/zh)
 
+[NanoPi-NEO——初体验](https://blog.csdn.net/lu_embedded/article/details/70676835)
+[Nanopi Neo Core上网记（日积月累计划）](https://blog.csdn.net/watershade2010/article/details/113404521)
+
+[nanopi--基础配置](https://blog.csdn.net/qq_30932167/article/details/81507544)
+
 ## 系统安装
 
 ## 串口连接
+# 基础配置
 
 ## 网络连接
 
