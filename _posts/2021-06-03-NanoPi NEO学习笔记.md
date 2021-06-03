@@ -10,7 +10,7 @@ categories: c&c++
 [NanoPi NEO/zh](https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO/zh)
 
 
-## 系统安装
+
 
 
 
@@ -20,7 +20,9 @@ categories: c&c++
 [Nanopi Neo Core上网记（日积月累计划）](https://blog.csdn.net/watershade2010/article/details/113404521)
 
 [nanopi--基础配置](https://blog.csdn.net/qq_30932167/article/details/81507544)
+## 系统安装
 
+## 串口连接
 
 ## 网络连接
 
@@ -65,5 +67,8 @@ sudo reboot
 
 ## OLED驱动
 
-[NanoHat OLED](https://wiki.friendlyarm.com/wiki/index.php/NanoHat_OLED)
+记得开全局翻墙，不然github无法下载
+
+[NanoHat OLED/zh](https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO/zh)
+
 <!--more-->
