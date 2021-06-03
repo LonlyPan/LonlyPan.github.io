@@ -15,6 +15,8 @@ categories: c&c++
 
 ## 网络连接
 
+修改ip后，无法使用putty连接，原因未知，暂且使用随机地址，不做改动
+
 1. 使用 ifconfig 查看IP地址
  ```
 pi@NanoPi-NEO:~$ ifconfig
