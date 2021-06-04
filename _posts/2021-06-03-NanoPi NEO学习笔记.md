@@ -15,11 +15,12 @@ categories: c&c++
 
 
 # 基础配置
-
+[1.【NanoPi NEO教程】烧写系统镜像](https://www.dreamtoptech.com/archives/39)
 [NanoPi-NEO——初体验](https://blog.csdn.net/lu_embedded/article/details/70676835)
 [Nanopi Neo Core上网记（日积月累计划）](https://blog.csdn.net/watershade2010/article/details/113404521)
 
 [nanopi--基础配置](https://blog.csdn.net/qq_30932167/article/details/81507544)
+[NanoPi-NEO——系统配置工具npi-config](https://luhuadong.blog.csdn.net/article/details/70834346)
 ## 系统安装
 
 ## 串口连接
@@ -64,7 +65,7 @@ sudo reboot
 重启系统，完成配置。
 
 - [Use NetworkManager to configure network settings/zh](https://wiki.friendlyarm.com/wiki/index.php/Use_NetworkManager_to_configure_network_settings/zh)
-
+[2.【NanoPi NEO教程】网线登录 putty 登录配置方法](https://www.dreamtoptech.com/archives/42)
 ## OLED驱动
 
 记得开全局翻墙，不然github无法下载
