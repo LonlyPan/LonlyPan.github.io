@@ -11,10 +11,6 @@ categories: 网页
 - Github 一个托管网站
 - 小书匠拥有 文章试试在线编写
 
-
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png)
-
-
 ## 安装Hexo
 
 这是 Hexo 的官方中文教程网站：[Hexo官方教程中文](https://hexo.io/zh-cn/docs/)  
