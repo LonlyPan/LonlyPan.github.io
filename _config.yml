@@ -104,4 +104,3 @@ theme: fluid  # 指定主题
 deploy:
   type: git
   repo: git@github.com:LonlyPan/LonlyPan.github.io.git
-  branch: main
