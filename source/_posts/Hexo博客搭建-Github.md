@@ -150,7 +150,7 @@ deploy:
 
 至于别的教程说的要添加自己 GitHub 的 **IP** 地址，经过实测，并不需要。
 
-![解析](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/解析.png)
+![解析](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/解析.png)
 
 登录 GitHub，进入之前创建的仓库，点击 **settings**，设置 **Custom domain**，输入你的域名，点击 **save** 保存。
 
@@ -159,8 +159,7 @@ deploy:
 进入本地博客文件夹 ，进入**my_blog/source** 目录下，创建一个记事本文件，输入你的域名，如果带有www，那么以后访问的时候必须带有www完整的域名才可以访问，如果不带有www，以后访问的时候带不带www都可以访问。所以建议，不要带有www。  
 保存时，命名为CNAME （后缀**.txt** 不要），注意保存成**所有文件**而不是txt文件。
 
-![CNAME](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/CNAME.png)
-
+![CNAME](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/CNAME.png)
 进入blog目录中，按住shift键右击打开命令行，依次输入
 ```
 hexo g
