@@ -1,7 +1,7 @@
 ---
 layout: post
 title:    "Hexo博客搭建-Github"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png
 date:   2022-05-03  10:27 
 categories: 网页
 ---
