@@ -46,7 +46,7 @@ jobs:
     - name: Deploy hexo blog
       env: 
         # Github 仓库
-        GITHUB_REPO: github.com/yifanzheng/yifanzheng.github.io
+        GITHUB_REPO: github.com/LonlyPan/LonlyPan.github.io
       # 将编译后的博客文件推送到指定仓库
       run: |
         cd ./public && git init && git add .
