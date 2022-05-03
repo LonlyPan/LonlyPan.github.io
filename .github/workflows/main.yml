@@ -54,4 +54,4 @@ jobs:
         git config user.email "LonlyPan@gmail.com"
         git add .
         git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https://${{ secrets.HEXO_BLOG }}@$GITHUB_REPO" master:master
+        git push --force --quiet "https://${{ secrets.HEXO_BLOG }}@$GITHUB_REPO" master:main
