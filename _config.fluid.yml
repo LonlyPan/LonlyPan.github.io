@@ -785,8 +785,8 @@ gitalk:
 # Based on LeanCloud
 # See: https://valine.js.org/
 valine:
-  appId:
-  appKey:
+  appId: geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI
+  appKey: fO2rYFt9wStdv0SX7C7omkal
   path: window.location.pathname
   placeholder:
   avatar: 'retro'
@@ -806,7 +806,7 @@ valine:
 # Derived from Valine, with self-hosted service and new features
 # See: https://waline.js.org/
 waline:
-  serverURL: 'https://geh90q7i.api.lncldglobal.com'
+  serverURL: ''
   path: window.location.pathname
   placeholder:
   meta: ['nick', 'mail', 'link']
@@ -1017,7 +1017,7 @@ links:
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis
-    type: waline
+    type: valine
 
 
 #---------------------------
