@@ -3,7 +3,11 @@ layout: post
 title: "C&C++编码规范"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/C&C++编码规范/C_C++.png
 data: 2019-9-3 15:15
-categories: 编程语言
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
 ## 自己需要改正的地方
