@@ -113,7 +113,7 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
 ```
 <iframe src="https://lonlypan.com" width="100%" height="500" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
 ```
-width="100%" 为宽度自适应，高度请根据实际需求调整，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
+`src=" "`为网页链接，必须是htpps，实测http不显示 width="100%" 为宽度自适应，高度请根据实际需求调整，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
 
 # 进阶配置
 
