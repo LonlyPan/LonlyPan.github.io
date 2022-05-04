@@ -187,10 +187,10 @@ https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@main/
 ## Fusion360 模型在线展示
 Fusion 软件中，文件->共享，生成分享链接，不过只能看不能下载，按如下格式编写即可：
 ```
-<iframe src="https://a360.co/38PcGXr" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
+<iframe src="https://a360.co/38PcGXr" width="100%" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
 ```
 `src=" "`  填写的就是软件生成的贡献链接，`width="640" height="480"` 指定了显示大小，测试该参数最合适，也可以自定义参数，随便填。
 
 **最终效果**
 **原链接640\*480像素**
-<iframe src="https://a360.co/38PcGXr" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
+<iframe src="https://a360.co/38PcGXr" width="480" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
