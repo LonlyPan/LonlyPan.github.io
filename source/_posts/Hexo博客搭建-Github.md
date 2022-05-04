@@ -183,5 +183,6 @@ hexo d
 - [hexo配合github action 自动构建（多种形式）](https://segmentfault.com/a/1190000040767893)
 - [如何使用 GitHub Actions 自动部署 Hexo 博客](https://juejin.cn/post/6943895271751286821)
 - [GitHub Action 实现 Hexo 博客持续集成](https://blog.linioi.com/posts/9/)
+- [Hexo 排坑日记（持续更新）](https://www.erenship.com/posts/7487.html#) 
 
 
