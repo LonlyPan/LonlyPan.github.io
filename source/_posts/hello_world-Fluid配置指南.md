@@ -179,12 +179,12 @@ https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@main/
 
 
 ## Fusion360 模型在线展示
-Fusion 软件中生成分享链接，按如下格式编写即可：
+Fusion 软件中，文件->共享，生成分享链接，按如下格式编写即可：
 ```
-<iframe src="https://myqq12509.autodesk360.com/shares/public/SH919a0QTf3c32634dcf004d92fd38c51ead?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
+<iframe src="https://a360.co/38PcGXr" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
 ```
-`width="640" height="480"` 指定了显示大小，测试该参数最合适，也可以自定义参数，随便填。
+`src=" "`  填写的就是软件生成的贡献链接，`width="640" height="480"` 指定了显示大小，测试该参数最合适，也可以自定义参数，随便填。
 
 **最终效果**
 **原链接640\*480像素**
-<iframe src="https://grabcad.com/library/tbo-t2-2022-style-grande-berline-1" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
+<iframe src="https://a360.co/38PcGXr" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
