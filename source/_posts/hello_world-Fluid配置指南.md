@@ -119,9 +119,7 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
 
 ## 哔哩哔哩视频嵌入
 
-<div class="bilibili">
-    <iframe src="////player.bilibili.com/player.html?aid=248260059&bvid=BV1Qv411G76v&cid=343709769&page=1&high_quality=1"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-</div>
+
 
 需要修改主题配置文件即_config.fluid.yml文件：
 ```
@@ -157,6 +155,10 @@ custom_css: /css/custom.css
 `<iframe ...></iframe>`所有内容，在bilibili网页端点击视频下方分享图标->嵌入代码，直接获取。追加 `&high_quality=1`可设置默认清晰度为最高
 
 >该方法也适用于所有iframe 页面镶套 ，做到页面自适应和显示调整。
+**最终效果**
+<div class="bilibili">
+    <iframe src="////player.bilibili.com/player.html?aid=248260059&bvid=BV1Qv411G76v&cid=343709769&page=1&high_quality=1"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</div>
 
 **参考资料：**
 - [hexo博客插入图片与视频方法](https://zhuanlan.zhihu.com/p/104996801)
