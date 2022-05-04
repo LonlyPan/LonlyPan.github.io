@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/daplink.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/daplink.png
 date: 2021-01-17
 categories: 单片机
 ---
@@ -25,35 +25,35 @@ OpenOCD下载：[Version 20201228](https://gnutoolchains.com/arm-eabi/openocd/)
 
 1. 下载好OpenOCD，解压到任意目录，建议路径不带空格或中文  
 2. 并在 bin 目录右键，新建文本文档，并重命名为 `DAP-Linkl-stm32F4.bat`（前缀名称可以随意，后缀 `.bat`不能更改）
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/创建bat.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/创建bat.png)
 3. 右键编辑或者使用 vs-code 打开
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/编辑bat.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/编辑bat.png)
 4. 输入以下内容：
    ```java
    openocd -f interface/cmsis-dap.cfg -f target/stm32f4x.cfg
    ```
    意思是：使用cmsis-dap调试stm32f4，这里默认使用 SWD 接口。通过其他配置，还可以支持 J-link 接口，未做尝试，不再叙述。  
    后面的 `stm32f4x.cfg` 需要适配你的芯片型号，具体支持型号可以在 `OpenOCD-20201228-0.10.0\share\openocd\scripts\target` 的目录,在里面能找到
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/target.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/target.png)
 可以看到 stm32 大部分型号都支持了。F1系列 的就改为 `stm32f1x.cfg`,F7系列 的就改为 `stm32f7x.cfg`，同理类推。
 5. 单击  `DAP-Linkl-stm32F4.bat` 执行，会弹出一下窗口，表示连接成功。最小化窗口，保持后台运行。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/打开bat.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/打开bat.png)
 
 ## STM32CubeIDE 配置
 
 1. 新建测试工程（我的是 LED 亮灭测试）
 2. 单击菜单栏 Debug图标（绿色甲壳虫）旁的下拉按钮，单击选择 `Debug Configurations`  进入配置界面  
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug打开.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug打开.png)
 3. 配置如下图所示，  
  **一定要：取消勾选 `Live Expressions`**，网上教程都没这一步，导致调试失败。  
  取消勾选原因：[Does STM32CubeIDE not support live variable watching?](https://community.st.com/s/question/0D53W000003NWoy/does-stm32cubeide-not-support-live-variable-watching)
- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug配置.png)
+ ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/debug配置.png)
  4. 弹窗单击 `Switch` ，进入调试界面
- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/switch.png)
+ ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/switch.png)
  
 ## 仿真测试
 进入仿真调试界面，可以看到 GPIOC（LED的 IO 为 GPIOC_13） 的 寄存器 ODR 值会随着程序运行改变。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/调式.gif)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/调式.gif)
 
 再看另外两个窗口：`现场表达式` 和 `Expressions`。    
 可以看到 `现场表达式` 是无法使用的（由于前面取消勾选了 `Live Expressions`），但`Expressions`是可以的。而这两者很相似啊，具体区别也未查到，不知道是软件的bug还是什么情况。反正还是可以实时查看表达式值就很开心😀  

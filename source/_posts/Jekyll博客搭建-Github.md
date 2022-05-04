@@ -1,7 +1,7 @@
 ---
 layout: post
 title:    "Jekyll博客搭建-Github"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/下载.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/下载.png
 date:   2019-12-01  10:7 
 categories: 网页
 ---
@@ -23,7 +23,7 @@ categories: 网页
 1、从[RubyInstaller](https://rubyinstaller.org/downloads/)官网下载并安装 **Ruby + Devkit** 版本，选择第一个最新版本就行。  
 使用默认选项进行安装，**不要更改安装路径**（我这里改了，尝试过一次，会在后面无法安装Jekyll），注意下图两个选项一定要勾选（默认已勾选）
 
-![install_ruby](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/install_ruby.png)
+![install_ruby](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/install_ruby.png)
 
 安装完成后，会自动弹出 **cmd.exe** 提示安装 MSYS2，它是用来编译 Ruby 本地包的，我们需要同时键入 `1,2,3`，一次完成所有的安装（建议一个个依次安装）。这里因为众所周知的网络原因，速度奇慢无比，如果网络状况良好，能够一次装成功或者以失败告终。 失败了就重新尝试（或翻墙），这一步是没法跳过的。
 
@@ -38,11 +38,11 @@ categories: 网页
 - [Windows安装Jekll](https://segmentfault.com/a/1190000010195733)
 - [Jekyll、MSYS2、Vibora 及在 Windows 下用 Linux](https://kaffa.im/jekyll-msys2-vibora-and-use-linux-on-windows.html)
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/1575169649155.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/1575169649155.png)
 
 安装完成后，关闭上面的cmd命令行再重新打开或在`...press ENTER []`后敲回车，分别输入 `ruby -v`和 `gem -v` 查看版本，确认安装完成
 
-![check_ruby](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/check_ruby.png)
+![check_ruby](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/check_ruby.png)
 
 
 ## 2、安装Jekyll
@@ -66,11 +66,11 @@ categories: 网页
 
 接着使用 `jekyll new myblog` 命令在 ./myblog 目录下创建一个全新的 Jekyll 网站，这里文件位置可以自己指定，我是安装在D盘(先进入D盘，再执行指令，涉及[cmd命令](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cmd))。等待几分钟安装完成。
 
-![add_myblog](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/add_myblog.png)
+![add_myblog](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/add_myblog.png)
 
 `cd myblog`进入新创建的目录，再输入`bundle exec jekyll serve` 构建网站并启动一个本地 web服务，在浏览器中打开 `http://127.0.0.1:4000` 网址访问网站。
 
-![add_site](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Jekyll博客搭建-Github/1575180879786.png)
+![add_site](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/1575180879786.png)
 
 `bundle exec jekyll serve`这个命令后面会经常用到，每次我们更改了博客的**配置文件（.yml）**，都需要执行这个命令，本地网站才会刷新显示，但如果已经部署到github上，那么你编辑后直接推送上去就行，GitHub会自动构建，但是要想本地网站刷新还是需要运行该命令。
 
@@ -142,16 +142,16 @@ bundle exec 表示在当前项目依赖的上下文环境中执行命令 jekyll 
 - 记录值：仓库地址
 至于别的教程说的要添加自己 GitHub 的 **IP** 地址，经过实测，并不需要。
 
-![解析](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/解析.png)
+![解析](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/解析.png)
 
 登录 GitHub，进入之前创建的仓库，点击 **settings**，设置 **Custom domain**，输入你的域名，点击 **save** 保存。
 
-![github_site](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/github_site.png)
+![github_site](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/github_site.png)
 
 进入本地博客文件夹 **wifimake.github.io** 目录下，创建一个记事本文件，输入你的域名，如果带有www，那么以后访问的时候必须带有www完整的域名才可以访问，如果不带有www，以后访问的时候带不带www都可以访问。所以建议，不要带有www。  
 保存时，命名为CNAME （后缀**.txt** 不要），注意保存成**所有文件**而不是txt文件。
 
-![CNAME](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hexo博客搭建-Github/CNAME.png)
+![CNAME](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/CNAME.png)
 
 使用 Github Desktop 推送到线上，稍等片刻，就可使用域名访问了。
 

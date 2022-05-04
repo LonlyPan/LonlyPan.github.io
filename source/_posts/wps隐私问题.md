@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "wps隐私问题"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/wps隐私问题/wps隐私.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/wps隐私问题/wps隐私.png
 data: 2019-04-23 13:52
 categories: 其它
 ---

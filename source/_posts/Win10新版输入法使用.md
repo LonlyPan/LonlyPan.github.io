@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Win10新版输入法使用"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/featured.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/featured.png
 date: 2020-07-10
 categories: 其它
 ---
@@ -15,7 +15,7 @@ categories: 其它
 在微软输入法的设置面板中，你能看到两个与之相关的开关，其中“智能模糊拼音”是由输入法自动识别输错的拼音串，而“模糊拼音”则将选择权交给用户，以防止一些特殊输入被输入法错误纠正。
 
 
-![模糊拼音]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/模糊拼音.png)
+![模糊拼音]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/模糊拼音.png)
 
 ### u模式
 
@@ -24,24 +24,24 @@ U模式总共包含三种模式，分别是笔画输入、拆分输入、符号�
 
 使用前首先输入“u”进入U模式，然后按照相关规则打出生僻字即可。比如“犇”只要按顺序敲入代码“u”、“niu”、“”niu、“niu”即可输出，“淼”也是。
 
-![U模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/U模式.png)
+![U模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/U模式.png)
 
 此外u模式还支持一些特殊的指令，比如 **“dw”代表单位符号、“ts”代表特殊符号、“bd”代表标点符号 ** 等等，输入前需要在字符串前面敲入两个“uu”作为前缀即可
 
-![特殊指令]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/特殊指令.png)
+![特殊指令]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/特殊指令.png)
 
 ### V模式
 和U模式不同，V模式更多是用来搞定一些变量录入，比如时间显示转换、日期显示转换、数字小写转大写等等。
 它的用法和U模式很像，也要在具体输入前以“V”开头，比如数字大小写转换就是v123：一百二十三，日期显示转换就是v2019.5.25：二〇一九年五月二十五日等等。
 
-![V模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/V模式.png)
+![V模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/V模式.png)
 
 ### 人名模式
 
 第三方输入法大都支持人名模式，而这项功能在Win10中则是以快捷键切换的，比如你要输入的名字在默认候选区中没有，那么就可以点击** “;“+”r”  **直接切换到人名模式。
 切换完成后，所有候选词都是与拼音串一致的人名组合，比如“刘雪”、“刘学”、“刘靴”等等。
 
-![人名模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/人名模式.png)
+![人名模式]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/人名模式.png)
 
 ### 专业词典
 
@@ -49,17 +49,17 @@ U模式总共包含三种模式，分别是笔画输入、拆分输入、符号�
 
 开启后系统会在候选区展示这些专业词，当然这项功能尽量按需开启，一来输入法的工作效率更高，二来候选词的弹出也会更为精准。
 
-![专业字典]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/专业字典.png)
+![专业字典]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/专业字典.png)
 
 ### emoji、颜文字与符号面板
 
 1、直接点击书法候选框最右侧表情符号
 
-![符号1]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/符号1.png)
+![符号1]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/符号1.png)
 
 2、快捷键："Win + ." 或 "Win + ;" ，中英文你输入时都有效。但有个缺点按任意按键就消失了，无法固定。
 
-![符号2]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Win10新版输入法使用/符号2.png)
+![符号2]( https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/符号2.png)
 
 ### 图标显示问题
 1、[win10下怎样设置的输入栏M图标和中英文输入提示](https://blog.csdn.net/SNK1992/article/details/79482003)，by CSDN-SNK1992   

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: GuiLite 学习笔记
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GuiLite_学习笔记/logo.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GuiLite_学习笔记/logo.png
 date: 2021-04-15
 categories: 单片机
 ---

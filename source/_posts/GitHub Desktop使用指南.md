@@ -1,7 +1,7 @@
 ---
 layout: post
 title:    "GitHub Desktop使用指南"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GitHub_Desktop使用指南/github_desktop_logo.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/github_desktop_logo.png
 date:   2019-12-07  9:33 
 categories: 编程语言
 ---
@@ -15,7 +15,7 @@ categories: 编程语言
 
 进入 [Github Desktop官网](https://desktop.github.com/) 下载软件，单击安装包，再登陆账户，安装完成。
 
-![001-sign_in.](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GitHub_Desktop使用指南/001=sign_in.png)
+![001-sign_in.](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/001=sign_in.png)
 
 ## 克隆
 
@@ -23,7 +23,7 @@ categories: 编程语言
 
 **克隆：** 意思就是将你该仓库的所有文件全部下载到本地，原模原样，文件名就是仓库名。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GitHub_Desktop使用指南/clone.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/clone.png)
 
 克隆完成后，你就可以使用其他软件修改本地仓库的文件了（推荐 Visual Studio Code ），而 Github Desktop 软件会实时检查本地文件更改状态，并列出详细信息。
 
@@ -37,11 +37,11 @@ categories: 编程语言
 - 第二步：点击 **Commit master** 按钮将更改提交到主分支（不一定是主分支，根据你所选的分支提交），**这里的提交并不是真正的提交到线上，而是一种确认。**
 - 第三步：单击 **fetch origin** 按钮进行线上线下文档对比
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GitHub_Desktop使用指南/003-change_file.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/003-change_file.png)
 
 对比结束后，软件会显示 **Push origin** 按钮，单击就可将本地文件更新到线上仓库。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/GitHub_Desktop使用指南/004-push.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/004-push.png)
 
 ### 线上到本地
 

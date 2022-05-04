@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Marlin固件中Bresenham算法与实现"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png
 date: 2020-01-08
 ---
 
@@ -11,21 +11,21 @@ date: 2020-01-08
 
 Bresenhan算法将坐标系分割成棋盘形状，每个像素占有一个棋格，当我们进行采样时（直线斜率小于1），如下图所示，假设给定绘图的起始点为（10,11），那么绘制下一个采样点的坐标必然是从（11,11）和（11,12）中选择一个。如果把这种情况一般化，对于绘制直线的起始点是（X~k~,Y~k~），那么其下一个采样点必然是（X~k+1~,Y~k~）或者(X~k+1~,Y~k+1~)中的一个。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin固件中Bresenham算法与实现/1.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin固件中Bresenham算法与实现/1.png)
 
 那么该选择这两点中的哪一个点呢？选择更接近理论线路径的那个点。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin固件中Bresenham算法与实现/2.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin固件中Bresenham算法与实现/2.png)
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin固件中Bresenham算法与实现/3.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin固件中Bresenham算法与实现/3.png)
 
 想要得到**3.16表达式**，需要将y~k~=m\*x~k~+b(一般直线方程)带入**式3.14**中，而且应该注意△y和△x都是常量，△y为给定的起始点和终点的纵坐标差的绝对值，△x为给定的起始点和终点的横坐标的差的绝对值。
 
 >注意：文中所说的p~0~是已经根据运动起点计算出的p值，它决定的是实际第一步的运动方向。许多文章也叫p~1~。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin固件中Bresenham算法与实现/4.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin固件中Bresenham算法与实现/4.png)
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Marlin固件中Bresenham算法与实现/5.png)
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin固件中Bresenham算法与实现/5.png)
 
 >这里的△x实际是运动长度最长的那个轴总长度作为横坐标（上述默认X轴移动最长），△y是我们当前要移动的轴总长度，p也是依赖于当前轴的（上面默认p0 = py,实际还有px）
 
