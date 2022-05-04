@@ -1,0 +1,398 @@
+---
+layout: post
+title: "ARM-应用经验总结"
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ARM_logo.png
+date: 2020-10-09
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
+---
+
+<!--more-->
+
+# GPIO_Analog 引脚模式-STM32CubeMX-2019-05-17
+
+修正日期：2021-03-15  
+
+最近开始学习使用STM最新的编译器STM32cubeIDE，直接从Keil转移过来的。之前也没用过CubeMX。
+
+这里在配置引脚模式时，遇到了一个问题：**GPIO_Analog** 是什么模式？之前似乎从没遇见过。
+
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/引脚选择.png)
+
+上网搜了一通，找到ST官方社区的两个问答，才解决了疑惑。
+- [1、Question about ADC versus GPIO Analog](https://community.st.com/s/question/0D50X00009XkfqtSAB/question-about-adc-versus-gpio-analog)  
+- [2、What pins can I use for Analog Input/Output? STM32CubeMX allows every GPIO to be set to ''GPIO_Analog''?](https://community.st.com/s/question/0D50X00009XkWkeSAF/what-pins-can-i-use-for-analog-inputoutput-stm32cubemx-allows-every-gpio-to-be-set-to-gpioanalog)  
+
+再结合参考手册描述：
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/GPIO模拟配置.png)
+
+**总结起来就两个：**
+
+1、模拟配置会关闭引脚的一切内部相关联设施，此时普通 I/O 操作失效（不能读也不能输出）。因此引脚功耗为0。因此可以通过将引脚配置为该模式来**降低芯片功耗**。 
+2、模拟配置另外好处就是保证了这个引脚是 **“干净”** 的，如果和外部连接，那个该引脚就完全反映了外部引脚状态。因此将该引脚内联到A/D 片上外设，就可以精确测量引脚的模拟值了。实际上在我们将引脚复用为 A/D 功能时，就会默认配置为 Analog 模式。
+
+# 结构体使用前必须分配内存-2019-5-18
+
+最近再将原Keil5中的STM32工程移植到Atollic TrueSTDIO for STM32上，顺便使用STM32CubeMX简化初始化配置，减小工作量。更具体的原因则是涉及到版权和商业化问题，另外Keil所有版本的破解版都是2020年到期，我很慌啊。。。
+
+但移植就以为这一堆问题，工程文件配置什么的都好解决，今天遇到的是程序上的问题。那就是：结构体使用前必须分配内存
+
+原Keil函数里使用用到结构体的，但我在一个函数中申明了它却没有申请内存，关建是编译没有错误和警告，而且实机测试也是成功的。而今天原模原样照搬到TrueSTDIO上，编译也是没有错误和警告的，但实机测试情况是能跑，但不正常。最后一点点在线调试，才发现是结构体的问题，遂申请内存空间，问题解决。最后为了解答心中疑惑，我又测试了一下：
+
+## TrueSTDIO调试，出错输出信息：
+
+硬故障HardFault
+
+硬故障详细信息
+总线，存储器管理或使用失败（FORCED）
+
+总线故障详细信息
+ 不精确的数据访问冲突（IMPRECISERR）
+
+故障发生时，堆栈指针的值。请确认这个值指向一个有效的堆栈内存区域。
+MSP = 主堆栈指针
+PSP = 进程堆栈指针
+
+## 编译测试
+
+在线代码编译：（经常用来跑测试）
+https://www.onlinegdb.com/
+
+测试代码：
+```c
+#include <stdio.h>
+
+typedef struct{
+	__uint16_t a;    // 随意的变量
+	__uint16_t b;
+} test;
+
+int main() {
+    test * test1 = NULL; 
+    //test1=(test*)malloc(sizeof(test));//分配内存
+    test1->b=5; 
+    printf("b = %d",test1->b); 
+    return 0;
+}
+```
+上面将内存分配注释掉，运行时直接报错编译不通过，输出结果：`Segmentation fault (core dumped)`
+
+去掉注释后，就正常了，输出结果：`b = 5`
+
+同时我也在C++环境下测试，同样的结果。
+
+## 结论
+
+至此得出结论：**结构体在使用时是必须要分配内存的；Keil 5在编译时，可能对结构体会有优化，使得不分配内存也不会出错。**
+
+## 补充备忘
+
+另外还涉及到另一个知识：字节对齐 \_packed 问题，这里自己并不是很懂，能看明白啥意思，但究其原因还是不行。下面内容作为备忘，以后再来解答。
+
+https://blog.csdn.net/lafengxiaoyu/article/details/53032963   
+http://bbs.pfan.cn/post-284115.html   
+https://blog.csdn.net/lanzhihui_10086/article/details/44353381#   https://blog.csdn.net/u014717398/article/details/55511197    
+https://www.cnblogs.com/King-Gentleman/p/5940480.html   
+
+
+# IO部分引脚不工作
+
+## 测试环境
+
+- STM32G031G8 芯片
+- SWD下载接口
+- Micro-USB 硬件接口（SWD接在数据引脚上）
+
+## 描述
+
+micro-usb 为手工焊接，导致接触不良，使得程序调试下载时，一会可以一会报错（无法下载）。但正常下载后，发现部分引脚无输出（测试程序令所有引脚输出高电平），部分有输出。检查了硬件设计没有问题，程序也没问题。重新焊接了 MCU，问题依旧未解决。遂根据下载不正常判断是不是 usb 焊接问题。重新焊接，下载程序不再故障，IO 输出也都正常。
+
+## 结论
+
+一开始下载不正常时就应该判断出 usb 没焊好，但心存侥幸、懒。没去在意和解决。  
+事出离奇必有妖。不能容得半点马虎。  
+至于为何接触不良会导致程序执行不正常，猜测是下载数据传输错误。具体原因无法深究查明。
+
+# 程序下载、下载器连接问题
+
+## 芯片低功耗模式 ST-Link 无法下载
+### 测试环境
+
+- STM32G031G8 芯片
+- SWD下载接口
+
+### 描述
+
+一只在测试芯片的软件低功耗功能，启用了停止模式。开始下载调试一切正常，第二天再下载调试，就提示无法下载，提示如下错误信息：
+
+```
+Error message from debugger back end:
+Error finishing flash operation
+```
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/图像_2.png)
+
+之后再网上找到一种解决办法，重新擦除 MCU 的内部 flash，才能继续正常下载。
+
+## Keil 无法下载，但STM32CubeIDE可以下载
+
+使用 Keil 下载程序时，出现以下错误。
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK_USB_Communication_Error.png)
+
+同时查看 下载配置，会发现 ST-Link并未被识别到。但是我使用 STM32CubeIDE下载时却可以识别并调试下载。
+
+查看资料
+- [ST-Link不能下载程序的几种解决办法](https://blog.csdn.net/lingsuifenfei123/article/details/62447343)
+- [µVISION DEBUGGER: ST-LINK USB Communication Error](https://www.keil.com/support/docs/3662.htm#:~:text=CHECK%20THE%20USB%20SETTINGS&text=if%20both%20%C2%B5Vision%20and%20the,USB%20port%20on%20the%20PC.&text=Try%20using%20another%20USB%20cable,Manager%20recognizes%20the%20ST%2DLink.)
+
+是ST-Link固件太新了，因为我之前一直使用  STM32CubeIDE，使得 ST-Link 固件一直保持在最新状态，但是我安装的 Keil 是 5.15 版本的，属于很老的版本了。所以 Keil 并未u识别。
+
+解决办法：
+
+进入 Keil 的安装目录，我的是
+```
+D:\Keil_v5\ARM\STLink
+```
+点击  `ST-LinkUpgrade.exe` 文件运行
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-Link_Upgrade.png)
+重新插拔 ST-Link，点击 Device Connect，然后再点击 Yes，就完成了固件的下载。这里的固件是 Keil 安装自带的，也就是适配你安装的这个 Keil 软件的，所以一定是可以识别并使用的。
+
+之后就可以正常下载了。
+
+## ST-LINK 突然无法连接设备下载
+
+突然无法下载，于是尝试使用 `ST-LINK utility` 连接下载，依然无法连接失败。又尝试使用`ST-LINK upgrade` 连接，弹窗显示报错 "the content of STLink is corrupt" ，意思说是仿真器损坏，貌似遇到这个问题的人不多，用windows版程序升级固件的时候报这个错，解决办法是用 java 版的升级程序来升级固件。
+
+在 [官网](https://www.st.com/en/development-tools/stsw-link007.html) 下载 `STSW-LINK007`，解压文件中找到 `STLinkUpgrade.jar` ，双击运行即可（需提前安装JAVA）。之后再使用`ST-LINK upgrade`更新一次固件
+
+但我这里更新了固件之后依然是无法使用的，连接不上，于是使用 `ST-LINK utility` 连接下载器，从该软件内再更新一次固件，就好了。必须从这个软件中更新？？？
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK_utility_固件更新.png)
+
+**参考链接**
+- [stlink仿真器报错及处理过程记录](https://blog.csdn.net/flikyly/article/details/102082047)
+
+## ST-LINK utility 去除芯片读保护
+
+**问题：**  
+芯片使用离线下载器，下载时设置了读保护。这次使用ST-Link连接无法下载代码，提示芯片程序存储空间无法擦除    
+以下是STM32CubeIDE控制台输出的信息。
+
+![图 1](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-link%E4%B8%8B%E8%BD%BD%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E6%8F%90%E7%A4%BA.png)  
+
+**解决方法：**
+1. 使用ST-Link连接到STM32芯片，点击Connect
+![图 2](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LInk%20utility%E5%8E%BB%E9%99%A4%E8%AF%BB%E4%BF%9D%E6%8A%A41.png)  
+2. 软件会弹出以下警告，提示无法读取内存，存在读保护
+![图 3](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A42.png)  
+3. 进入修改选项字节
+![图 4](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A43.png)  
+4. 将读保护等级修改为Level 0。取消所有扇区保护勾选。单击 `Apply ` 重新写入选项字节。
+![图 5](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A44.png)  
+5. 等待写入完成。
+![图 6](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A45.png)  
+6. 写入完成
+![图 7](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A46.png)  
+
+之后就可以正常的下载、调试程序了。
+
+**参考连接**
+- [使用ST-Link Utility去除STM32芯片读写保护](https://blog.csdn.net/hxiaohai/article/details/78546431)
+- [使用ST-Link Utility对STM32单片机读写保护设置与去除](https://bbs.21ic.com/blog-342049-176534.html)
+### ST-LINK utility擦除设备后无法连接
+
+>经过测试，如果你的芯片之前没有设置过 `读保护`，是不会出现该问题，也不需要阅读后续内容。
+
+在使用 ST-LINK utility 连接 **之前设置了读保护的芯片**，并使用该软件擦除了flash用于删除读保护配置，可删除之后就怎么也无法连接设备了，显示  
+“Can not connect to target!  
+Please select "Connect Under Reset" mode from Target->Settings menu and try again.
+Can't reset the core"  
+![图 2](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/.png)  
+ 
+
+**具体状态：**
+- 擦除 flash 后，ST-LINK utility 无法连接设备，也就无法下载程序
+- 使用脱机下载器，正常连接、下载程序。
+- 使用 IDE（STM32CubeIDea） 仿真调试，可以正常连接、下载程序。
+- 使用上述两种方法下载程序之后再使用 ST-LINK utility 擦除 flash，ST-LINK utility 依旧无法连接设备
+
+总之就是 ST-LINK utility 擦除 flash 之后，，ST-LINK utility 就无法连接设备。
+
+**解决方法：**
+- ST-LINK utility 菜单栏中点击 `Target` ->　`Settings...`。按照下图修改，并点击 `OK` 保存。
+![图 1](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E9%85%8D%E7%BD%AE.png)  
+实测修改配置后，无论芯片之前有没有设置读都保护，ST-LINK utility 都可以正常擦除 flash，并连接下载程序
+
+**参考链接**
+
+- [STM32 ST-LINK Utility连接不上单片机的解决办法“Can not connect to target!”](http://bbs.eeworld.com.cn/thread-1116915-1-1.html)
+
+
+### ST-LINK 能连接设备但无法下载、擦除芯片
+
+**出现问题原因：**
+芯片使能了读保护。在使用 `ST-LINK utility` 连接设备后，没有先取消保护，直接点击下载程序，提示错误（有读保护无法下载）后
+![图 1](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/读保护擦除.gif) 
+在 ST Link->Target->Option Bytes 中将读保护去除，再重新连接设备，擦除芯片，显示擦除失败，也无法下载新程序
+![图 1](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/读保护无法擦除2.gif) 
+
+**解决办法：**
+1. 进入ST Link->Target->Option Bytes.
+我们可以看到经过上面的操作，这里的读保护等级竟然变成了0（原本应该是1或2）
+将保护等级改为1，并勾选 `PCROP_RDP `！勾选 `PCROP_RDP `！勾选 `PCROP_RDP `！。然后单击apply应用更改，成功后软件弹窗提示芯片有读保护。
+![图 8](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A47.png)  
+2. 重新连接芯片。将保护等级改为0，保持勾选 `PCROP_RDP `！。然后单击apply应用更改，成功后软件自动退出Option Bytes。
+此时我们再重新打开Option Bytes。保护等级仍为0，但`PCROP_RDP `勾选已经自动消失了。
+这时候我们就可以正常擦除芯片，下载程序了。
+![图 9](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ST-LINK%20utility%20%E5%8E%BB%E9%99%A4%E8%8A%AF%E7%89%87%E8%AF%BB%E4%BF%9D%E6%8A%A48.png)  
+
+提醒：对于有读保护的芯片，一定要先去除读保护，才能下载程序。不可直接硬刚直接下载，否则就会导致这里的可以连接但无法擦除、下载的错误。
+
+以上错误出现的根本原因是我们强行下载，导致PCROP保护启动。PCROP保护应该是下载器设置读保护时添加的，
+
+ >PCROP是闪存中IP-code的读写保护。PCROP应用于扇区（0至7），保护专利代码不被最终用户代码、调试器工具或RAM Trojan代码修改或读取。  
+ 通过ITCM或AXI总线对PCROP扇区的任何读访问（获取操作除外）都会触发：
+ - 给定总线上出现总线错误
+ - FLASH_SR状态寄存器中RDERR标志置位。如果FLASH_CR寄存器中读错误中断使能位（Read Error Interrupt Enable，RDERRIE）置位，也会生成一个中断。
+
+任何对PCROP扇区的编程/擦除操作都会触发WRPERR标志错误。受保护的IP-code可以很容易地被最终用户应用程序所调用，并且仍能受到保护，不可直接访问IP-code本身。PCROP不会阻止执行受保护的代码。
+
+**如何禁止PCROP**
+根据RDP级别，如果RDP级别为1或0，则PCROP保护可被禁用，但是如果RDP设置为级别2，PCROP不能被禁用。当RDP设为级别2，所有选项字节都会被冻结，不能修改。因此，PCROP保护的扇区不能再被擦除或修改，这样就成为永久性保护。
+禁用受保护扇区上PCROP的唯一方式是：
+- 清除对应扇区的PCROPi位（多个扇区可同时可进行）
+- 实现从级别1退回到级别0•
+- 将PCROP_RDP位置位
+
+如果PCROP_RDP位被置位，则执行主闪存的批量擦除，并根据PCROPi值，对应扇区的PCROP保护保持使能或禁用。  
+如果PCROP_RDP位被清零，则完全批量擦除由部分批量擦除所代替，该部分页面擦除是对PCROP激活的存储区内进行连续页面擦除（PCROP保护的页面除外）。这样做是为了保持PCROP代码
+
+**参考资料**
+- STM32F72xxx和STM32F73xxx微控制器上的专有代码读取保护- AN4968
+- [Unable to program using ST-Link](https://community.st.com/s/question/0D50X0000Avgsey/unable-to-program-using-stlink)
+## Keil 使用问题
+
+### Keil 打开闪退
+
+之前装过 Keil 软件，卸载了。现在 又重新安装。但是当安装完成后，点击图标打开软件，软件界面显示几秒钟后，就自动推出了。怎么也打不开软件。每次点击都是闪退。
+
+后来尝试安装了很多版本，最新的，旧的。都试过，问题依旧。
+
+然后我尝试点击了一下 一个 keil 工程文件（自动使用 keil 打开），然后 Keil 就打开了。。。难道keil打开需要先加载一个工程文件吗？
+
+
+## 不同型号单片机SPI通信时序不同
+
+采用STM32F103RCT6，设置为单向主模式，通信时序如下：
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/20201215153040.png)
+采用STM32F401CCU6，设置为单向主模式，通信时序如下：
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/20201215152923.png)
+
+橙色是时钟 SCK，蓝色是数据发送 MOSI。其中红框部分为一个主程序循环，每个循环发送两次数据。可以看到 103 的时序似乎有些问题，其中一个数据的发送看似是平的，而 401 的则正常。但两者都可以驱动设备正常工作（屏幕显示）。一开始怀疑是硬件问题或者底层配置问题，纠结一天没有解决。然后，当我把这两个图放在一起对比时，忽然明白：那个看似时平的数据时序其实也是在发送数据，不过他的数据全是1。查看程序，果然，103 驱动屏幕显示的颜色在白色和红色之间切换，而白色对应的数据为 0xFFFF，导致波形数据是平的。401的则是在蓝色和红色之间切换。
+
+所以这并不是问题，只是再次提醒自己，遇到问题应冷静分析，使用数据说话，而不是在哪瞎猜或者瞎尝试。
+
+## IO映射偏移
+
+https://ebf-stm32f429-tiaozhanzhe-std-tutorial.readthedocs.io/zh_CN/latest/book/GPIO_bit.html
+https://msd.misuland.com/pd/4146263742822225282
+
+
+## 从Flash读取bin图片显示
+
+- 一开始调试时，始终显示错误，查看读取的数据 移植为0.发现再初始化时程序进行了flash的读写操作，导致bin文件变成了空文件。
+
+
+## SAME54-J-Link-SWD下载错误"
+
+
+### 测试环境
+
+J-Link：淘宝购买的J-Link V9.5（非官方）
+设备：SAME54P20A MCU（自制）
+软件IDE：Atmel Sudio 7
+下载模式：SWD三线（CLK，DIO，GND） 
+
+<!--more-->
+### 错误类型
+
+以下皆为在**IDE**中单击**调试下载按钮 Debugging**之后，出现的**弹窗错误**。
+
+**错误1：**
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/unsecured.png)
+
+```
+Secured Atmel SAMD device detected.
+For debugger connection the device needs to be unsecured.
+Note: Unsecuring will trigger a mass erase of the internal flash.
+
+检测到安全保护的Atmel SAMD设备。
+对于调试器连接，设备需要安全解除。
+注意：安全解除会触发内部闪存的大量擦除。
+```
+
+**错误2：**
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/error_connect.png)
+```
+Failed to launch program
+Error:Error connecting to device over SWD
+
+无法启动程序
+错误：通过SWD连接设备时出错
+```
+
+**错误3：**
+
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/unexpected_chip.png)
+```
+Failed to launch program
+Error:Unexpected Chip Identifier 0x23000042（expected 0x61840300）
+
+无法启动程序
+错误：意外的芯片标识符0x23000042（预期的0x61840300）
+```
+
+### 解决方案
+
+一开始我是各种搜索问题答案，但是资料是在太少，且基本是没有解决问题。自己整了2小时，才解决。
+
+问题竟是出在杜邦线上，我是使用杜邦线连接J-Link和设备的，且下载速率设为了4MHz。这就导致两个问题：
+- 杜邦线接触不良，会导致**错误1**或**错误2**
+- 杜邦线下载速率太高，会导致**错误2**或**错误3**
+
+**解决方法：**
+- 更换杜邦线，选择接头紧的，不要出现松动
+- 降低下载速率，1MHz以下
+
+### 错误补充
+
+1. 一个程序两次下载，一次正常，一次死机，死机时：Debug发现系统执行直接报错。此时重新插拔J-Link，重新下载，问题解决，也是无语。。。
+
+
+
+## RT_Thread
+
+- [当前STM32几种最流行的开发环境对比](https://zhuanlan.zhihu.com/p/324793923)
+- [Thread 文档中心](https://www.rt-thread.org/document/site/)
+- [Use RT-Thread in STM32CubeIDE](https://www.programmersought.com/article/72977464838/)
+- [在stm32cubeide上编译rt-thread](https://blog.csdn.net/cylinc/article/details/108939619)
+- [STM32CUBEIDE，RT-THREAD基础环境配置](https://www.freesion.com/article/6449423341/)
+- [用STM32cubeIDE环境移植rtthread](https://www.pianshen.com/article/11031138888/)
+
+- [stm32cubeMX学习十一、配置RT-Thread操作系统组件(基于野火stm32f103)](https://zhuanlan.zhihu.com/p/80532282)
+- [第13期：如何将RT-Thread移植到自己的STM32开发板](https://www.bilibili.com/video/av838031630/)
+- [CubeMX与RT-Thread接合的工作流](https://www.bilibili.com/video/av56958199/)
+- [RT-Thread实时操作系统系列教程](https://www.bilibili.com/video/BV1hJ41167bq?p=3)
+
+## STM32串口程序printf突然不能用
+
+今天重新打开串口程序下载，发现printf不能使用了（printf使用重定义实现）。但自己并没有更改什么啊？
+于是重新建立工程，并将原来的程序一模一样复制过来，下载执行却可以了。推测时工程文件除了问题，对比二者的文件内容，发现原来的工程文件 Core -> Src 下少了两个文件：syscalls.c 和 sysmem.c 。于是复制过去，重新编译下载，一切正常。
+
+printf重定义使用的 _write 就是在该文件中。
