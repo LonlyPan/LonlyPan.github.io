@@ -3,7 +3,11 @@ layout: post
 title:    "GitHub Desktop使用指南"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GitHub_Desktop使用指南/github_desktop_logo.png
 date:   2019-12-07  9:33 
-categories: 编程语言
+categories: hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
 简单介绍如何安装和使用 **GitHub Desktop** 软件，完成线上仓库的克隆，并将本地更改内容同步更新到线上仓库。主要配合 **Jekyll** 更新博客文档使用。
