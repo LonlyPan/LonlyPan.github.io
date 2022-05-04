@@ -162,7 +162,6 @@ custom_css: /css/custom.css
 
 hexo自身图片存储地址是指定的，并不好用。决定使用 Github 图床存储，并用   [jsDelivr CDN官网](https://www.jsdelivr.com/?docs=gh) 加速访问。
 
-
 只需要修改文件名生成规则
 ```
 hexo_images/{{title}}/{{filename}}
