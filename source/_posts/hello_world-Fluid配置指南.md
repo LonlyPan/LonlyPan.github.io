@@ -168,7 +168,7 @@ hexo_images/{{title}}/{{filename}}
 ```
 和url前缀即可，
 ```
-https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/
+https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@main/
 ```
 `LonlyPan/LonlyPan.github.io`是 存储图片的 `hexo_images` 文件夹地址，`@master`  必须要加。
 
