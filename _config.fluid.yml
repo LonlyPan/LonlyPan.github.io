@@ -460,7 +460,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/default_banner.jpg
+  banner_img: /img/default_banner1.png
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -934,7 +934,7 @@ about:
   banner_img: /img/default.png
   banner_img_height: 80
   banner_mask_alpha: 0.3
-  avatar: /img/favicon.png
+  avatar: /img/avator.ico
   name: "LonyPan"
   intro: "热爱、分享、快乐、自由"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
@@ -979,8 +979,8 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img: /img/default_banner2.png
+  banner_img_height: 100
   banner_mask_alpha: 0.3
   # 友链的成员项
   # Member item of page
