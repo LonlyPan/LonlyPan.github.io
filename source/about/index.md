@@ -8,15 +8,15 @@ layout: about
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=513357061&auto=1&height=66"></iframe>
 </html>
 
-### 关于 LonlyPan
+#### 关于 LonlyPan
 
 - 专业：主攻ARM单片机软硬件开发，副攻3D打印技术。正进阶Linux开发
 - 信仰：熟能生巧，努力改变人生
 
-### 版权声明
+#### 版权声明
 - 除特殊说明，博文均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)协议。
 
-### 更新日志
+#### 更新日志
 
 - 2022.05.04
 >博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
@@ -27,7 +27,7 @@ layout: about
 - 20119.12.01
 >基于Github+[Jekyll框架](https://www.jekyll.com.cn/)+[mzlogin主题](https://github.com/mzlogin/mzlogin.github.io)，首次搭建。
 
-### 个人留言板
+#### 个人留言板
 - 2019.11.19
 > 我将之间的美好留在了丽江这美丽的地方；往后：上班、练字、图书馆、写博客、玩游戏
 
