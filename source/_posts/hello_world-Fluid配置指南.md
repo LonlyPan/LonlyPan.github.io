@@ -1,6 +1,6 @@
 ---
 title: 搭配 Fluid 如何优雅的写一篇文章
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hello_World_&_Fluid_配置指南/hexo+fluid.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/搭配_Fluid_如何优雅的写一篇文章/hexo+fluid.png
 date: 2021-06-12 03:14:33
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
