@@ -3,7 +3,11 @@ layout: post
 title: "基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/daplink.png
 date: 2021-01-17
-categories: 单片机
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
 STM32cubeIDE 是ST官方推出的一款用于开发 STM32 的工具，整合了 STM32CubeMX 和 TrueSTUDIO 而成，对于 STM32 的开发这个工具应该会在未来成为主流，毕竟有官方加持又商用免费。但仿真烧录只支持 J-LINK 和 ST-LINK 或 OpenOCD。
