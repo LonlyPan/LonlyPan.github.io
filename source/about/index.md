@@ -17,7 +17,7 @@ layout: about
 - 除特殊说明，博文均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)协议。
 
 ### 更新日志
----
+
 - 2022.05.04
 >博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
 
