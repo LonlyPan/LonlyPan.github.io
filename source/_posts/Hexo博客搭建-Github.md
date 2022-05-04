@@ -3,8 +3,13 @@ layout: post
 title:    "Hexo博客搭建-Github"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png
 date:   2022-05-03  10:27 
-categories: 网页
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
+
 
 如何使用github和hexo搭建个人博客
 - Hexo 博客框架。使用 Markdown解析文章，利用主题生成静态网页。
