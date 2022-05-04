@@ -3,7 +3,11 @@ layout: post
 title: "wps隐私问题"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/wps隐私问题/wps隐私.png
 data: 2019-04-23 13:52
-categories: 其它
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
 
 **以下内容基于网页版wps云文档操作。**  
