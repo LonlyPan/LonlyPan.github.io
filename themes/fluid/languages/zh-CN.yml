@@ -29,9 +29,9 @@ about:
   subtitle: '关于'
 
 links:
-  menu: '友链'
-  title: '友链'
-  subtitle: '友情链接'
+  menu: '朋友'
+  title: '朋友'
+  subtitle: '朋友们'
 
 page404:
   menu: '页面不存在'
