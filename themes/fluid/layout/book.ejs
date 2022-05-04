@@ -1,0 +1,105 @@
+/**
+ * 项目名 Firmware
+ * Copyright (c) 2020-2021 LonlyPan. All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+<!--
+ * @file         : index copy.ejs
+ * @Author       : Lonly
+ * @Since        : 2022-05-04 09:39
+ * @Description  : Header file of xxx module   // 用于详细说明此程序文件完成的主要功能，与其他模块  
+ *                                           // 或函数的接口，输出值、取值范围、含义及参数间的控 
+ *                                           // 制、顺序、独立或依赖等关系
+ * @attention:             //注意事项
+ * ------------------------------------------------
+ * @version: v0.1
+ * @LastAuthor   : Lonly
+ * @LastEditTime : 2022-05-04 09:39
+ * @Modification: 本次版本修改添加了xxxx
+ *  
+ * @History:        // 修改历史记录表
+ *   1.Version: 历史版本号
+ *       Author: 
+ *       date: 历史版本日期
+ *       Modification: 历史版本修改内容
+ *   2.Version: 历史版本号
+ *       ...
+-->
+<%
+if (theme.index.slogan.enable) {
+  page.subtitle = theme.index.slogan.text || config.subtitle || ''
+}
+page.banner_img = theme.index.banner_img
+page.banner_img_height = theme.index.banner_img_height
+page.banner_mask_alpha = theme.index.banner_mask_alpha
+%>
+
+<% page.posts.each(function (post) { %>
+  <div class="row mx-auto index-card">
+    <% var post_url = url_for(post.path), index_img = post.index_img || theme.post.default_index_img %>
+    <% if(index_img) { %>
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="<%= post_url %>" target="<%- theme.index.post_url_target %>">
+          <img src="<%= url_for(index_img) %>" alt="<%= post.title %>">
+        </a>
+      </div>
+    <% } %>
+    <article class="col-12 col-md-<%= index_img ? '8' : '12' %> mx-auto index-info">
+      <h1 class="index-header">
+        <% if (theme.index.post_sticky && theme.index.post_sticky.enable && post.sticky > 0) { %>
+          <i class="index-pin <%= theme.index.post_sticky && theme.index.post_sticky.icon %>" title="Pin on top"></i>
+        <% } %>
+        <a href="<%= post_url %>" target="<%- theme.index.post_url_target %>">
+          <%= post.title %>
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="<%= post_url %>" target="<%- theme.index.post_url_target %>">
+        <div>
+          <% var excerpt = post.description || post.excerpt || (theme.index.auto_excerpt.enable && post.content) %>
+          <%- escape_html(strip_html(excerpt).substring(0, 200).trim()).replace(/\n/g, ' ') %>
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        <% if(theme.index.post_meta.date ) { %>
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="<%= full_date(post.date, 'YYYY-MM-DD HH:mm') %>" pubdate>
+              <%- date(post.date, config.date_format) %>
+            </time>
+          </div>
+        <% } %>
+        <% if(theme.index.post_meta.category && post.categories.length > 0) { %>
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            <%- partial('_partials/category-chains', { categories: post.categories, limit: 1 }) %>
+          </div>
+        <% } %>
+        <% if(theme.index.post_meta.tag && post.tags.length > 0) { %>
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            <% post.tags.each(function(tag){ %>
+              <a href="<%= url_for(tag.path) %>">#<%- tag.name %></a>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+    </article>
+  </div>
+<% }) %>
+
+<%- partial('_partials/paginator') %>
