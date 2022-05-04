@@ -80,6 +80,26 @@ WARNING
 ```
 <a id="demo">跳转位置演示（跳转位置设置点）</a> 
 
+## details 标签
+用于展示代码较多需要折叠或折叠相关内容，以下为演示。summary 填写显示名称。
+
+<details>
+<summary>Demo</summary>
+<pre><code>
+coding...
+</pre></code>
+</details>
+
+```
+<details>
+<summary>Demo</summary>
+<pre><code>
+  coding...
+</pre></code>
+</details>
+```
+
+
 ## iframe 页面镶套 
 iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下演示页面。
 <iframe src="http://lonlypan.com" width="100%" height="500" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
@@ -89,6 +109,7 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
 ```
 width="100%" 为宽度自适应，高度请根据实际需求跳转，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
 
+# 额外配置
 ## 哔哩哔哩视频嵌入
 
 <div class="bilibili">
@@ -102,7 +123,6 @@ width="100%" 为宽度自适应，高度请根据实际需求跳转，注意移�
 custom_css: /css/custom.css
 ```
 
-custom_css: /css/custom.css
 在主题的 `fluid\source\css` 文件夹下新建 `custom.css` 文件，并添加以下css代码：
 ```c
 /*哔哩哔哩视频适配*/
@@ -136,24 +156,6 @@ custom_css: /css/custom.css
 - [Hexo中插入Bilibili视频](https://liuzhihang.com/2019/09/14/hexo-inserts-bilibili-video.html)
 - [HEXO博客引用B站视频并自动适配](https://hongcyu.cn/posts/hexo-bilibili.html)
 
-## details 标签
-用于展示代码较多需要折叠或折叠相关内容，以下为演示。summary 填写显示名称。
-
-<details>
-<summary>Demo</summary>
-<pre><code>
-coding...
-</pre></code>
-</details>
-
-```
-<details>
-<summary>Demo</summary>
-<pre><code>
-  coding...
-</pre></code>
-</details>
-```
 
 ## 图床绑定
 
