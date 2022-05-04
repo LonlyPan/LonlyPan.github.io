@@ -1,9 +1,13 @@
 ---
 layout: post
 title:  "Arduino 1.8.9 和 VS code兼容乱码问题"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Arduino_1.8.9_和_VS_code兼容乱码问题/下载.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino_1.8.9_和_VS_code兼容乱码问题/下载.png
 date:   2019-05-17 20:12
-categories: 单片机
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
  近期Arduino推出了新版本1.8.9，兴奋的去官网进行了升级替换了老版本1.8.8。然后问题出现了：
