@@ -222,6 +222,7 @@ github_username:  jekyll  #账户名
 
 **参考链接**
 
+- [码志](https://mazhuang.org/)
 - [Jekyll中文官网](https://www.jekyll.com.cn/)
 - [如何快速给自己构建一个温馨的"家"——用Jekyll搭建静态博客](https://www.jianshu.com/p/9a6bc31d329d)
 - [Jekyll博客系统初探(持续更新中...)](https://www.jianshu.com/p/558a5d50e077)
