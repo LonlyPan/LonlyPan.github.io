@@ -3,9 +3,6 @@ name: '简体中文'
 home:
   menu: '首页'
   title: '首页'
-book:
-  menu: '阅读'
-  title: '阅读'
 
 archive:
   menu: '归档'
