@@ -170,7 +170,7 @@ hexo_images/{{title}}/{{filename}}
 ```
 https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@main/
 ```
-`LonlyPan/LonlyPan.github.io`是 存储图片的 `hexo_images` 文件夹地址，`@master`  必须要加。
+`LonlyPan/LonlyPan.github.io`是 存储图片的 `hexo_images` 文件夹地址，`@main`  必须要加。
 
 **参考资料：**
 - [使用 jsDelivr CDN 对 Github 图床进行加速，带给你如丝滑般的图片体验](https://zhuanlan.zhihu.com/p/138582151)
