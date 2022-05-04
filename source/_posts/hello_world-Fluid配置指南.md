@@ -185,5 +185,6 @@ Fusion 软件中生成分享链接，按如下格式编写即可：
 ```
 `width="640" height="480"` 指定了显示大小，测试该参数最合适，也可以自定义参数，随便填。
 
+**最终效果**
 **原链接640\*480像素**
 <iframe src="https://myqq12509.autodesk360.com/shares/public/SH919a0QTf3c32634dcf004d92fd38c51ead?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
