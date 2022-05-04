@@ -1,11 +1,11 @@
 ---
 layout: post
 title:    "Arduino-可穿戴运动监测设备"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png
+index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png
 date:   2019-6-23  23:18 
 categories: 单片机
 ---
-
+![arduino_logo](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png)
 ## 项目简介
 
 ### 功能：
