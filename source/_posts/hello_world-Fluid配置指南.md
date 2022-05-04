@@ -22,12 +22,8 @@ Hexo官网文档：[hexo文档](https://hexo.io/zh-cn/docs/)
 - [Wallhaven](https://wallhaven.cc/)
 - [Unsplash](https://unsplash.com/)
  
-# HEXO指令
-
-更多指令：[hexo指令](https://hexo.io/zh-cn/docs/commands.html)
-
-
 # 便签
+Fluid主题语法
 表示强调、提示，类似 ">" 语法。
 在 markdown 中加入如下的代码来使用便签：
 ```
