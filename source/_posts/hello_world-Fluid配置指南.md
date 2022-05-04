@@ -9,6 +9,7 @@ hide: false
 categories: 03-瞎折腾
 ---
 
+基于Hexo-Fluid，当前博客的一些常用语法以及进阶使用配置
 
 <!--more-->
 
