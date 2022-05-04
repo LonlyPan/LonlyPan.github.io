@@ -3,7 +3,11 @@ layout: post
 title: "我的世界-Litematica投影mod"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/我的世界-Litematica投影mod/minecraft_logo_icon_168974.png
 date: 2020-11-01
-categories: 娱乐
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
 
 litematica 是由作者 masa 发布的一款工具项模组，投影 mod 可以把其它地图中的任何结构（包括模组方块）的空间结构（又称该空间结构为：原理图）保存起来，然后投影到当前地图中形成3D虚像（全息影像），然后玩家就可以照着虚像建造一个一模一样的结构。  
