@@ -22,8 +22,9 @@ Hexo官网文档：[hexo文档](https://hexo.io/zh-cn/docs/)
 - [Wallhaven](https://wallhaven.cc/)
 - [Unsplash](https://unsplash.com/)
  
-# 便签
-Fluid主题语法
+# Fluid主题语法
+## 便签
+
 表示强调、提示，类似 ">" 语法。
 在 markdown 中加入如下的代码来使用便签：
 ```
@@ -86,7 +87,7 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
 ```
 <iframe src="http://lonlypan.com" width="100%" height="500" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
 ```
-一些参数说明，width="100%" 为宽度自适应，高度请根据实际需求跳转，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
+width="100%" 为宽度自适应，高度请根据实际需求跳转，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
 
 ## 哔哩哔哩视频嵌入
 
@@ -94,7 +95,7 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
     <iframe src="////player.bilibili.com/player.html?aid=248260059&bvid=BV1Qv411G76v&cid=343709769&page=1&high_quality=1"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>
 
-修改主题配置文件即：
+需要修改主题配置文件即_config.fluid.yml文件：
 ```
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
