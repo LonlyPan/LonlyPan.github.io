@@ -179,7 +179,7 @@ https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@main/
 
 
 ## Fusion360 模型在线展示
-Fusion 软件中，文件->共享，生成分享链接，按如下格式编写即可：
+Fusion 软件中，文件->共享，生成分享链接，不过只能看不能下载，按如下格式编写即可：
 ```
 <iframe src="https://a360.co/38PcGXr" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
 ```
