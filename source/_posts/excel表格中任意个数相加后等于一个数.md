@@ -3,7 +3,11 @@ layout: post
 title: "excel表格求任意个数相加后等于一个数"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/unnamed.png
 date: 2020-05-13
-categories: 其它
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
 
 本文主要介绍通过 Microsoft Office 的 excel 表格的`规划求解`和`sumproduct`函数，来计算表格中任意几个数相加后等于一个数。  
