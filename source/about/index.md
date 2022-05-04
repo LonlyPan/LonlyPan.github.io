@@ -8,7 +8,7 @@ layout: about
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=513357061&auto=1&height=66"></iframe>
 </html>
 
-#### 关于 LonlyPan
+#### 关于 LonlyPan 
 
 - 专业：主攻ARM单片机软硬件开发，副攻3D打印技术。正进阶Linux开发
 - 信仰：熟能生巧，努力改变人生
@@ -24,7 +24,7 @@ layout: about
 - 2021.06.24
 >博客改版，采用NanoPi（Linux开发板）+[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)+内网穿透，重新出发，加油💪
 
-- 20119.12.01
+- 2019.12.01
 >基于Github+[Jekyll框架](https://www.jekyll.com.cn/)+[mzlogin主题](https://github.com/mzlogin/mzlogin.github.io)，首次搭建。
 
 #### 个人留言板
