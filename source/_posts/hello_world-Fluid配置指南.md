@@ -1,5 +1,5 @@
 ---
-title: Hello World & Fluid 配置指南
+title: Hexo-Fluid 配置指南
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/Hello_World_&_Fluid_配置指南/hexo+fluid.png
 date: 2021-06-12 03:14:33
 hide: false
@@ -8,6 +8,9 @@ hide: false
 # comment: false
 categories: 03-瞎折腾
 ---
+
+
+<!--more-->
 
 
 fluid官网文档：[Fuild 配置指南](https://hexo.fluid-dev.com/docs/guide/)  
