@@ -14,8 +14,8 @@ categories: 03-瞎折腾
 <!--more-->
 
 
-fluid官网文档：[Fuild 配置指南](https://hexo.fluid-dev.com/docs/guide/)  
-hexo官网文档：[hexo文档](https://hexo.io/zh-cn/docs/)
+Fluid官网文档：[Fuild 配置指南](https://hexo.fluid-dev.com/docs/guide/)  
+Hexo官网文档：[hexo文档](https://hexo.io/zh-cn/docs/)
 
 **常用配图资源**
 - [wallpaperhub](https://wallpaperhub.app/)
