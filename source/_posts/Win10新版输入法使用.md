@@ -3,7 +3,11 @@ layout: post
 title: "Win10新版输入法使用"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10新版输入法使用/featured.png
 date: 2020-07-10
-categories: 其它
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
 
 ## Win10新版输入法使用
