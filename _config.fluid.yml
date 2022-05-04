@@ -979,7 +979,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default_banner2.png
+  banner_img: /img/default_banner2.jpeg
   banner_img_height: 100
   banner_mask_alpha: 0.3
   # 友链的成员项
