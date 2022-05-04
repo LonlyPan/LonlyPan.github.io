@@ -3,7 +3,11 @@ layout: post
 title:    "Jekyll博客搭建-Github"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Jekyll博客搭建-Github/下载.png
 date:   2019-12-01  10:7 
-categories: 网页
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
 
 
