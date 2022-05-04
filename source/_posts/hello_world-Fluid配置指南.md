@@ -109,7 +109,8 @@ iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下�
 ```
 width="100%" 为宽度自适应，高度请根据实际需求跳转，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。
 
-# 额外配置
+# 进阶配置
+
 ## 哔哩哔哩视频嵌入
 
 <div class="bilibili">
@@ -157,7 +158,7 @@ custom_css: /css/custom.css
 - [HEXO博客引用B站视频并自动适配](https://hongcyu.cn/posts/hexo-bilibili.html)
 
 
-## 图床绑定
+## 图片加速
 
 hexo自身图片存储地址是指定的，并不好用。决定使用 Github 图床存储，并用   [jsDelivr CDN官网](https://www.jsdelivr.com/?docs=gh) 加速访问。
 
