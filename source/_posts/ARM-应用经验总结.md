@@ -3,7 +3,11 @@ layout: post
 title: "ARM-应用经验总结"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ARM-应用经验总结/ARM_logo.png
 date: 2020-10-09
-categories: 单片机
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
 <!--more-->
