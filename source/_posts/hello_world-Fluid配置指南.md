@@ -192,5 +192,4 @@ Fusion 软件中，文件->共享，生成分享链接，不过只能看不能�
 `src=" "`  填写的就是软件生成的共享链接，`width="100%" height="480"` 指定了显示大小，也可以自定义参数，随便填。
 
 **最终效果**
-**原链接640\*480像素**
 <iframe src="https://a360.co/38PcGXr" width="100%" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
