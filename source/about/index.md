@@ -8,6 +8,8 @@ layout: about
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=513357061&auto=1&height=66"></iframe>
 </html>
 
+# 关于 Eren
+
 我是LonlyPan，2018年毕业于河南工业大学，从事软硬件开发
 
 坚信熟能生巧，努力改变人生
