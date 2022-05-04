@@ -175,5 +175,12 @@ hexo d
 - [Jekyll和Hexo详细对比](https://zuoridangnian.com/archives/3043)
 - [我的个人博客之旅：从jekyll到hexo](https://blog.csdn.net/u011475210/article/details/79023429)
 - [nodemon运行 提示错误：无法加载文件 C:\Users\gxf\AppData\Roaming\npm\nodemon.ps1](https://www.cnblogs.com/xiaofenguo/p/11511789.html)
+- [使用 GitHub Actions 自动部署 Hexo 博客到 GitHub Pages](https://zhuanlan.zhihu.com/p/161969042)
+- [Hexo使用GitHub Action进行自动部署](https://www.igerm.ee/cn/tech/Hexo%E4%BD%BF%E7%94%A8GitHub%20Action%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/)
+- [利用 Github Actions 自动部署 Hexo 博客](https://sanonz.github.io/2020/deploy-a-hexo-blog-from-github-actions/)
+- [Github Actions 初体验之自动化部署 Hexo 博客](https://razeen.me/posts/use-github-action-to-deploy-your-hexo-blog/)
+- [使用 GitHub Actions 自动部署 Hexo 博客](https://printempw.github.io/use-github-actions-to-deploy-hexo-blog/)
+- [hexo配合github action 自动构建（多种形式）](https://segmentfault.com/a/1190000040767893)
+- [如何使用 GitHub Actions 自动部署 Hexo 博客](https://juejin.cn/post/6943895271751286821)
 
 
