@@ -156,7 +156,6 @@ custom_css: /css/custom.css
 ```
 `<iframe ...></iframe>`所有内容，在bilibili网页端点击视频下方分享图标->嵌入代码，直接获取。追加 `&high_quality=1`可设置默认清晰度为最高
 
-
 >该方法也适用于所有iframe 页面镶套 ，做到页面自适应和显示调整。
 
 **参考资料：**
