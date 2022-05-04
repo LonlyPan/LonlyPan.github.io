@@ -9,8 +9,6 @@ hide: false
 categories: 01-专业
 ---
 
-
-
 ## USART引脚&问题描述
 
 官方芯片手册 ==SAM D5x/E5x Family Data Sheet== 在描述**SERCOM  USART**章节的**信号说明 Signal_Description**小结处，对引脚信号只给了一个表格，如下：
