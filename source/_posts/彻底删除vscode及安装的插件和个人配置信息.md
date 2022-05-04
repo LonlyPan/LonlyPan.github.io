@@ -3,7 +3,11 @@ layout: post
 title:  "彻底删除vscode及安装的插件和个人配置信息"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/彻底删除vscode及安装的插件和个人配置信息/1200px-Visual_Studio_Code_1.35_icon.svg.png
 date:   2019-05-17 11:12
-categories: 编程语言
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
 ---
 
 原文在：https://www.cnblogs.com/muou2125/p/10388440.html
