@@ -12,7 +12,7 @@ categories: 03-瞎折腾
 基于Hexo-Fluid，记录当前博客的一些常用语法以及进阶使用配置。
 ```
 {% note success %}
-文字 或者 `markdown` 均可
+文章参考：https://hexo.fluid-dev.com/posts/fluid-write/
 {% endnote %}
 ```
 <!--more-->
