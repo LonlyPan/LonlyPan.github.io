@@ -3,6 +3,7 @@ layout: post
 title: "基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/基于_OpenOCD_的_STM32CubeIDE_开发烧录调试环境搭建-DAPLINK/daplink.png
 date: 2021-01-17
+updated: 2021-01-17
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
