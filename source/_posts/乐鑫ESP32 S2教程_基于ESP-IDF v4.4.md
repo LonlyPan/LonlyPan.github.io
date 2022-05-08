@@ -10,7 +10,7 @@ hide: false
 categories: 00-项目
 ---
 
-个人教程，第一次制作，有配套视频教程，bilibili个人空间：[合集和列表](https://space.bilibili.com/94050349/channel/series)。使用自制开发板，教程最后会使用该开发板制作实物（产品集），也算是一个实践项目
+个人教程，第一次制作，有配套视频教程，bilibili个人空间：[合集和列表](https://space.bilibili.com/94050349/channel/series)。使用自制开发板，教程最后会使用该开发板制作实物（产品集），也算是一个实践项目，正在更新中，慢更。
 <!--more-->
 
 
