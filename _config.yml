@@ -4,7 +4,7 @@
 
 # Site
 title: LonlyPan个人站
-subtitle: ''
+subtitle: '热爱、分享、快乐、自由'
 description: 'LonlyPan个人站，STM32，嵌入式，Linux，读书笔记，博客网站'
 keywords: 'LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安'
 author: LonlyPan
@@ -81,7 +81,7 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'empty'
+updated_option: 'mtime'
 
 # 分页（归档）
 ## Set per_page to 0 to disable pagination
