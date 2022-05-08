@@ -3,7 +3,7 @@ layout: post
 title:    "Hexo博客搭建-Github"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png
 date:   2022-05-03  10:27 
-updated: 2022年05月08日 14时57分51秒
+updated: 2022-05-08 10:27
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
