@@ -3,6 +3,7 @@ layout: post
 title: GuiLite 学习笔记
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/GuiLite_学习笔记/logo.png
 date: 2021-04-15
+updated: 2021-04-15
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
