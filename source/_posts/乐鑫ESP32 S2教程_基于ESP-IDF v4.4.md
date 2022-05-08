@@ -1,6 +1,6 @@
 ---
 title: "乐鑫ESP32 S2教程_基于ESP-IDF v4.4"
-index_img:  #/img/example.jpg
+index_img:  https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/乐鑫ESP32_S2教程_基于ESP-IDF_v4.4/ESP32_S2教程封面-合集.png
 date: 2022-05-08 19:23
 updated: 2022-05-08 19:23
 hide: false
@@ -10,6 +10,7 @@ hide: false
 categories: 00-项目
 ---
 
+![ESP32 S2教程封面-合集]()
 
 <!--more-->
 
