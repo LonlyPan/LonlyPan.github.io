@@ -19,7 +19,7 @@ layout: about
 #### 更新日志
 
 - 2022.05.08
-文章头部数据添加`updated`用于显示文章最后更新时间，修复使用 Github Action 自动构建导致的最后更新时间bug
+文章头部数据添加`updated`标签，用于显示文章最后更新时间，修复使用 Github Action 自动构建导致的最后更新时间bug
 
 - 2022.05.04
 博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
