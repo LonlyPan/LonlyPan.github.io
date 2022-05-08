@@ -10,7 +10,7 @@ hide: false
 categories: 00-项目
 ---
 
-个人教程，第一次制作，有配套视频教程，bilibili个人空间：[合集和列表](https://space.bilibili.com/94050349/channel/series)，文章章节顺序和列表一致。使用自制 ESP32 S2 开发板，基于ESP-IDF v4.4库，教程最后会使用该开发板制作实物（产品级），也算是一个实践项目，正在更新中，慢更。
+个人教程，第一次制作，有配套视频教程，bilibili个人空间：[合集和列表](https://space.bilibili.com/94050349/channel/series)，文章章节顺序和列表一致。使用自制 ESP32 S2 开发板，基于ESP-IDF v4.4库，教程最后会使用该开发板制作实物（产品级），也算是一个实战项目。教程正在更新中，慢更。
 
 <!--more-->
 ## 01-官方开发环境 Espressif IDE 一键安装
