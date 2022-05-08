@@ -20,6 +20,9 @@ layout: about
 
 - 2022.05.04
 >博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
+>
+- 2022.05.04
+>博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
 
 - 2021.06.24
 >博客改版，采用NanoPi（Linux开发板）+[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)+内网穿透，重新出发，加油💪
