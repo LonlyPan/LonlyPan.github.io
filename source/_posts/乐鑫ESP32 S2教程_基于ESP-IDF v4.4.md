@@ -10,8 +10,6 @@ hide: false
 categories: 00-项目
 ---
 
-![ESP32 S2教程封面-合集]()
-
 <!--more-->
 
 
