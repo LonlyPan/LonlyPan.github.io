@@ -3,6 +3,7 @@ layout: post
 title:    "Hexo博客搭建-Github"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png
 date:   2022-05-03  10:27 
+updated: 2022年05月08日 14时57分51秒
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
@@ -16,7 +17,7 @@ categories: 03-瞎折腾
 - Github 一个托管网站
 - 小书匠拥有 文章试试在线编写
 
-## 安装Hexo
+# 安装Hexo
 
 这是 Hexo 的官方中文教程网站：[Hexo官方教程中文](https://hexo.io/zh-cn/docs/)  
 教程内容是根据自己个人情况书写的安装教程，包含一些官方未提及到的错误。
@@ -95,7 +96,7 @@ Hexo 就是我们的个人博客网站的框架， 这里需要自己在电脑�
 
 到这里为止，博客已经建立完成了，但这一切都只存在**本地-自己电脑**上，别人是无法通过互联网看到的，这时我们就需要借助 Github，将我们的本地博客部署-搬运上去，才能实现联网访问。
 
-## 写作部署
+# 写作部署
 
 ### hexo常用命令简写
 
