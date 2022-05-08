@@ -1,7 +1,7 @@
 ---
 title: "ATSAME54 SERCOM硬件设计问题"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/ATSAME54_SERCOM硬件设计问题/ATSAME54.png
-data: 2019-11-20 16:2
+date: 2019-11-20 16:2
 updated: 2019-11-20 16:2
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
