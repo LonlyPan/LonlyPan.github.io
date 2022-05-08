@@ -3,6 +3,7 @@ layout: post
 title:  "Arduino 1.8.9 和 VS code兼容乱码问题"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino_1.8.9_和_VS_code兼容乱码问题/下载.png
 date:   2019-05-17 20:12
+updated: 2019-05-17 20:12
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
