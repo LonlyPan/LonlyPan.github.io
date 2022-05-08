@@ -3,6 +3,7 @@ layout: post
 title: "excel表格求任意个数相加后等于一个数"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/unnamed.png
 date: 2020-05-13
+updated: 2020-05-13
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
