@@ -19,16 +19,16 @@ layout: about
 #### 更新日志
 
 - 2022.05.08
->文章头部数据添加`updated`用于显示文章最后更新时间，修复使用 Github Action 导致的时间bug
+文章头部数据添加`updated`用于显示文章最后更新时间，修复使用 Github Action 自动构建导致的时间bug
 
 - 2022.05.04
->博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
+博客迁回Github，基于[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)，自此博客彻底稳定，以后专注写作。
 
 - 2021.06.24
->博客改版，采用NanoPi（Linux开发板）+[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)+内网穿透，重新出发，加油💪
+博客改版，采用NanoPi（Linux开发板）+[Hexo框架](https://hexo.io/zh-cn/)+[fluid主题](https://github.com/fluid-dev/hexo-theme-fluid)+内网穿透，重新出发，加油💪
 
 - 2019.12.01
->基于Github+[Jekyll框架](https://www.jekyll.com.cn/)+[mzlogin主题](https://github.com/mzlogin/mzlogin.github.io)，首次搭建。
+基于Github+[Jekyll框架](https://www.jekyll.com.cn/)+[mzlogin主题](https://github.com/mzlogin/mzlogin.github.io)，首次搭建。
 
 #### 个人留言板
 - 2019.11.19
