@@ -3,6 +3,7 @@ layout: post
 title: "我的世界-Litematica投影mod"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/我的世界-Litematica投影mod/minecraft_logo_icon_168974.png
 date: 2020-11-01
+updated: 2020-11-01
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
