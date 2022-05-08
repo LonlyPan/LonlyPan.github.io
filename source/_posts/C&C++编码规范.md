@@ -3,7 +3,7 @@ layout: post
 title: "C&C++编码规范"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/C&C++编码规范/C_C++.png
 data: 2019-9-3 15:15
-updated: 2018-01-01 12:00:00
+updated: 2020-01-01 12:00:00
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
