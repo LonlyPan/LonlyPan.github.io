@@ -3,6 +3,7 @@ layout: post
 title: "STM32CubeIDE学习笔记"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/STM32CubeIDE学习笔记/stm32-cube-ide.png
 date: 2020-12-18
+updated: 2020-12-18
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
