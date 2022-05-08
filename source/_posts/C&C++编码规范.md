@@ -3,14 +3,14 @@ layout: post
 title: "C&C++编码规范"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/C&C++编码规范/C_C++.png
 data: 2019-9-3 15:15
-
+updated: 2022年05月08日 14时32分34秒
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
 # comment: false
 categories: 01-专业
 ---
-
+2022年05月08日 14时29分57秒
 ## 自己需要改正的地方
 
 * 建议使用 `/*...*/` 进行注释，多行单行都适用
