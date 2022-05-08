@@ -21,10 +21,15 @@ categories: 03-瞎折腾
 Fluid官网文档：[Fuild 配置指南](https://hexo.fluid-dev.com/docs/guide/)  
 Hexo官网文档：[hexo文档](https://hexo.io/zh-cn/docs/)
 
+
+# 配图
+
 **常用配图资源**
 - [wallpaperhub](https://wallpaperhub.app/)
 - [Wallhaven](https://wallhaven.cc/)
 - [Unsplash](https://unsplash.com/)
+ 
+文章首页封面图推荐大小 540x320px
  
 # Fluid主题语法
 ## 便签
