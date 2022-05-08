@@ -2,8 +2,8 @@
 layout: post
 title:    "Arduino-可穿戴运动监测设备"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png
-date:   2019-6-23  23:18 
-updated: 2019-6-23  23:18 
+date:   2019-06-23  23:18 
+updated: 2019-06-23  23:18 
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
