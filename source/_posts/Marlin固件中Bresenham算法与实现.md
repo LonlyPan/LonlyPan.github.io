@@ -3,6 +3,7 @@ layout: post
 title: "Marlin固件中Bresenham算法与实现"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png
 date: 2020-01-08
+updated: 2020-01-08
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
