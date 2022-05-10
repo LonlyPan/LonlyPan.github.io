@@ -350,7 +350,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154429562.png)
 1. 配置插件
 首次使用，需要配置 3d模型目录位置，在FreeCAD按如下不走打开配置界面
-- KICAD6_3DMODEL_DIR：配置KICAD软件自带的3d模型库位置，一般为
+- main 3d floder location：填写KICAD软件自带的3d模型库位置，一般为
  `C:/Program Files/KiCad/6.0/share/kicad/3dmodels`
 - 下面的 `ALT2\3\4 3DMOD` 配置自己的3D模型库目录，如果没有的话，不用填
 
