@@ -349,7 +349,9 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 从 Github下载 kicadStepUpMod插件，解压，重命名为 `kicadStepUpMod`，复制到Mod 文件夹下
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154429562.png)
 1. 配置插件
-首次使用，需要配置 3d模型目录位置，在FreeCAD按如下不走打开配置界面
+首次使用，需要配置 3d模型目录位置，
+不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型
+。在FreeCAD按如下不走打开配置界面
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154656598.png)
 - main 3d floder location：填写KICAD软件自带的3d模型库位置，一般为
  `C:/Program Files/KiCad/6.0/share/kicad/3dmodels`
@@ -357,8 +359,6 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 库地址要和KICAD中库的地址一样（我的KICAD库在D盘）
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154938442.png)
 
-
-不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型
 
 2. 导入dxf
 
