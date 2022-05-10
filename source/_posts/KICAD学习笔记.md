@@ -357,7 +357,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 库地址要和KICAD中库的地址一样（我的KICAD库在D盘）
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154938442.png)
 3. 使用
-4. 
+
 
 2. 导入dxf
 
