@@ -352,7 +352,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 首次使用，需要配置 3d模型目录位置，在FreeCAD按如下不走打开配置界面
 - KICAD6_3DMODEL_DIR：配置KICAD软件自带的3d模型库位置，一般为
  `C:/Program Files/KiCad/6.0/share/kicad/3dmodels`
-- 下面的 `ALT2 3DMOD` 配置自己的3D模型库目录，如果没有的话，不用填
+- 下面的 `ALT2\3\4 3DMOD` 配置自己的3D模型库目录，如果没有的话，不用填
 
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154656598.png)
 不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型
