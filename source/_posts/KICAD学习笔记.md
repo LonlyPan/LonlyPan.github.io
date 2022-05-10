@@ -343,6 +343,11 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 [使用文档kicadStepUp-starter-Guide](https://github.com/easyw/kicadStepUpMod/blob/master/demo/kicadStepUp-starter-Guide.pdf)
 
 1. 插件安装
+一般可以通过FreeCAD的插件管理器在线安装，但由于网络问题经常失败，这里使用手动安装。
+插件一般都安装在FreeCAD的软件路径 Mod 文件夹下，默认路径
+`C:\Program Files\FreeCAD 0.19\Mod`
+从 Github下载 kicadStepUpMod插件，解压，重命名为 `kicadStepUpMod`，复制到Mod 文件夹下
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154429562.png)
 1. 配置KiCAD元件模型库路径
 
 不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型
