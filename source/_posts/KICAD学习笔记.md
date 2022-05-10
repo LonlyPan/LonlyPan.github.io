@@ -357,7 +357,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 库地址要和KICAD中库的地址一样（我的KICAD库在D盘）
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154938442.png)
 3. 使用
-- 导入PCB和布线，直接选择PCB文件即可
+- 导入PCB和布线，直接选择PCB（.kicad_pcb）文件即可
 - 导入丝印，需要KICAD单独将丝印层导出为 DXF 格式，然后选中该文件即可导入
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652159076649.png)
 
