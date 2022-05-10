@@ -357,23 +357,18 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 库地址要和KICAD中库的地址一样（我的KICAD库在D盘）
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652154938442.png)
 3. 使用
+- 导入PCB和布线，直接选择PCB文件即可
+- 导入丝印，需要KICAD单独将丝印层导出为 DXF 格式，然后选中该文件即可导入
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/1652159076649.png)
 
 
-2. 导入dxf
-
-https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
-
-https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
-
-https://github.com/easyw/kicadStepUpMod
-
-https://www.youtube.com/watch?v=KSeicvr6Rog
-
-https://www.youtube.com/watch?v=6R6UEUScjgA
-
-https://www.youtube.com/watch?v=n04M6nFvdxs
 ## 参考链接
-
+- https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
+- https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
+- https://github.com/easyw/kicadStepUpMod
+- https://www.youtube.com/watch?v=KSeicvr6Rog
+- https://www.youtube.com/watch?v=6R6UEUScjgA
+- https://www.youtube.com/watch?v=n04M6nFvdxs
 1. [KiCad官方文档](https://docs.kicad-pcb.org/5.1.6/zh/)
 2. [开源 EDA 工具 KiCad 5.1.5 电路设计手册](https://uinika.github.io/Electronics/KiCad.html)
 3. [KiCad基本使用](https://an_kang.gitee.io/2020/ck93pvj620008u0rhh0qaa55i/)  
