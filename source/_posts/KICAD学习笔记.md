@@ -336,16 +336,16 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 ### 与KiCAD
 
 
-#### kicadStepUpMod
+## kicadStepUpMod插件
 
 可以导入Kicad的PCB模型，并且还可以导入布线层和丝印层，使得模型更加逼真。
-
 [Github地址]( https://github.com/easyw/kicadStepUpMod)
 [使用文档kicadStepUp-starter-Guide](https://github.com/easyw/kicadStepUpMod/blob/master/demo/kicadStepUp-starter-Guide.pdf)
 
+1. 插件安装
 1. 配置KiCAD元件模型库路径
 
-不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型，这里配置路径，就是让插件再导入时将wrl文件自动转为step文件，
+不配置的化，导如模型是，会提示找不到wrl模型文件（默认支持step文件），模型就会缺少3d模型
 
 2. 导入dxf
 
