@@ -3,7 +3,7 @@ layout: post
 title: "KICAD学习笔记"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/KICAD学习笔记/kicad.png
 date: 2020-05-21
-updated: 2020-05-21
+updated: 2022-05-10
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
