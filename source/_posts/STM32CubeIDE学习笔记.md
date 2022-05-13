@@ -321,7 +321,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 * -> `MCU G++ Compiler` -> `include paths` 和 
 * -> `MCU GCC Compiler` -> `include paths`
 3. 编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）`extern "C" `。
-   ```
+```
    #ifndef MY_MAIN_H_
    #define MY_MAIN_H_
 
@@ -338,7 +338,7 @@ http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/
 
    #endif /* CPP_TEST_H_ */
   
-    ```
+```
 4. 之后就可以自由使用 C++ 了。
 
 **参考链接**
@@ -426,3 +426,24 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 **参考资料**
 - [eclipse cdt中.c文件而且灰色有个斜杠是什么意思](https://bbs.csdn.net/topics/390858204)
+
+## STLINK 下载仿真问题-Failure starting GDB server: TCP port 61234 not available.
+
+下载或Debug时，报如下错误
+Failed to bind to port 61235, error code -1: No error
+Failure starting SWV server on TCP port: 61235
+Failed to bind to port 61234, error code -1: No error
+Failure starting GDB server: TCP port 61234 not available.
+Exit.
+使用 STlink Utililty软件下载，可正常连接并下载程序。
+查询资料：
+https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-i-entering-into-debug-mode-getting-this-error-please-help-me-to-crack-thisfailed-to-bind-to-port-61234-error-code-1-no-errorfailure-starting-gdb-server-tcp-port-61234-not-available
+猜测是端口占用问题。有两种解决方案：
+1. 可通过重启电脑解决问题，但后续仍会失败
+2. （推荐）在调试配置中将 GDB 服务器的端口号从 61234 更改为 41234（其它任意值均可），并且无需重新启动计算机即可正常工作。
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/STM32CubeIDE学习笔记/1652411465211.png)
+参考资料：
+• i am using stm32IDE if i entering into debug mode getting this error please help me to crack this.
+• Fix Failure starting GDB server - ST LINK V2 Failed to bind to port 61234
+• Failure starting GDB server
+• RT-Thread Studio调试错误 Failed to bind to port 61234, error code -1: No error
