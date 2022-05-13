@@ -443,7 +443,7 @@ https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-
 2. （推荐）在调试配置中将 GDB 服务器的端口号从 61234 更改为 41234（其它任意值均可），并且无需重新启动计算机即可正常工作。
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/STM32CubeIDE学习笔记/1652411465211.png)
 参考资料：
-• i am using stm32IDE if i entering into debug mode getting this error please help me to crack this.
-• Fix Failure starting GDB server - ST LINK V2 Failed to bind to port 61234
-• Failure starting GDB server
-• RT-Thread Studio调试错误 Failed to bind to port 61234, error code -1: No error
+• [i am using stm32IDE if i entering into debug mode getting this error please help me to crack this.](https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-i-entering-into-debug-mode-getting-this-error-please-help-me-to-crack-thisfailed-to-bind-to-port-61234-error-code-1-no-errorfailure-starting-gdb-server-tcp-port-61234-not-available)
+• [Fix Failure starting GDB server - ST LINK V2 Failed to bind to port 61234](https://www.youtube.com/watch?v=SVIacozy9j8)
+• [Failure starting GDB server](https://www.youtube.com/watch?v=VVQr6nx7LBc)
+• [RT-Thread Studio调试错误 Failed to bind to port 61234, error code -1: No error](https://blog.csdn.net/qq_27508477/article/details/103705143)
