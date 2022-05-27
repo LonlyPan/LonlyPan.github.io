@@ -41,7 +41,7 @@ https://blog.csdn.net/m0_47005349/article/details/115551801
 `netsh int ip reset`
 现在，关闭命令窗口，然后重新启动PC。
 ## 修复2 –手动设置IP地址(有效)
-
+1. 右键点击 在您的WiFi适配器上，然后选择 特性 。
 
 # Win10新版输入法使用
 
