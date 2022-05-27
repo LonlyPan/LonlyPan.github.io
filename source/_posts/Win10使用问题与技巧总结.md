@@ -27,6 +27,22 @@ categories: 03-瞎折腾
 https://blog.csdn.net/m0_47005349/article/details/115551801
 
 # WLAN没有有效的IP分配
+
+之前都是正常上网，就这两天开始开机后可以连上wlan，但是无internet。然后我就一直试疑难解答，它只能显示出问题：wlan没有有效的IP配置。
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10使用问题与技巧总结/1653663306710.png)
+
+## 修复1 –重置TCP / IP(没效果)
+1. 搜索 指令 在Windows 10任务栏搜索框中。
+2. 右键单击 指令 图标，然后选择 以管理员身份运行 
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10使用问题与技巧总结/1653663404497.png)
+3.在命令提示符窗口中，只需复制并粘贴以下给定的命令，然后按Enter键即可执行该程序。
+`netsh winsock reset `
+4.现在，复制并粘贴下面给出的命令并执行它。
+`netsh int ip reset`
+现在，关闭命令窗口，然后重新启动PC。
+## 修复2 –手动设置IP地址(有效)
+
+
 # Win10新版输入法使用
 
 ## 模糊拼音
