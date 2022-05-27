@@ -24,19 +24,19 @@ categories: 03-瞎折腾
 **用例：**
 以下多个数中（见下图），哪几个数相加的和是38481
 
-### 1. 填入数字
+## 1. 填入数字
 
 首先我们在表格的列中填入所有数字，**注意第一行不要填写**
 
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/1添加数据_3.png)
 
-### 2. 加载宏
+## 2. 加载宏
 
 点击菜单栏的 `工具` 选项，选择单击 `加载宏`, 在弹窗中勾选上 `规划求解`，单击 `确定` 退出。
 
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/2加载宏.png)
 
-### 3. 添加公式
+## 3. 添加公式
 
 单击选择 C1 单元格，输入以下函数：  
 `= sumproduct(A2:A19*B2:B19)`  
@@ -47,7 +47,7 @@ categories: 03-瞎折腾
 
 输入完成后，依旧选择 C1 单元格，单击菜单栏的 `工具` 选项，选择单击 `规划求解`，进入下一步
 
-### 4. 规划求解 
+## 4. 规划求解 
 
 1. 设置目标单元格 ：默认设置好了，就是 C1 单元格，如果不是，单击输入框，再单击单元格 C1 即可  
 2. 等于：选择 `值` 并填入要求和的值 `38481`
@@ -61,7 +61,7 @@ categories: 03-瞎折腾
 
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/8约束.gif)
 
-### 5. 求解
+## 5. 求解
 
 以上设置完成后，`规划求解参数界面`应该如下左图所示。没有问题后，单击 `求解` 按钮，开始自动计算。  
 计算完成（有解），在弹窗中选择 `保存` ，单击 `确认` 结束。  
