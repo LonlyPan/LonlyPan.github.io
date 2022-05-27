@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "office使用技巧总结"
+title: "Office使用技巧总结"
 index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/excel表格中任意个数相加后等于一个数/unnamed.png
 date: 2020-05-13
 updated: 2020-05-13
