@@ -42,7 +42,9 @@ https://blog.csdn.net/m0_47005349/article/details/115551801
 1. 右键点击 在您的WiFi适配器上，然后选择 属性 。
 ![enter description here](./img/Win10使用问题与技巧总结/1653664226423.png)
 2. 选择 Internet协议版本4（TCP / IPv4） 然后点击 属性 。IP地址改为手动设置，IP地址不要和已有的冲突。
-默认网关一般是：192.168.1.1，我这里不太一样。
+- 首选DNS：8.8.8.8 备用DNS：8.8.4.4
+- 子网掩码：255.255.255.0
+- 网关地址是您的路由器IP地址。并且IP地址应该在您的路由器IP地址范围内。例如：如果您的路由器IP地址是192.168.0.1，则键入IP地址192.168.0.xx。单击Tab键，这将自动分配子网掩码。在网关地址上，键入您的路由器IP地址。
 可以手机连接WiFi，在手机的WiFi详细信息里查看到默认网关地址
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10使用问题与技巧总结/1653664287776.png)
 
