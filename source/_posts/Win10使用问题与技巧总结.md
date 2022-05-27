@@ -41,8 +41,12 @@ https://blog.csdn.net/m0_47005349/article/details/115551801
 `netsh int ip reset`
 现在，关闭命令窗口，然后重新启动PC。
 ## 修复2 –手动设置IP地址(有效)
-1. 右键点击 在您的WiFi适配器上，然后选择 特性 。
-
+1. 右键点击 在您的WiFi适配器上，然后选择 属性 。
+![enter description here](./img/Win10使用问题与技巧总结/1653664226423.png)
+2. 选择 Internet协议版本4（TCP / IPv4） 然后点击 属性 。IP地址改为手动设置，IP地址不要和已有的冲突。
+默认网关一般是：192.168.1.1，我这里不太一样。
+可以手机连接WiFi，在手机的WiFi详细信息里查看到默认网关地址
+![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10使用问题与技巧总结/1653664287776.png)
 # Win10新版输入法使用
 
 ## 模糊拼音
