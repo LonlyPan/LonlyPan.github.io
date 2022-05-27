@@ -48,6 +48,9 @@ https://blog.csdn.net/m0_47005349/article/details/115551801
 可以手机连接WiFi，在手机的WiFi详细信息里查看到默认网关地址
 ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Win10使用问题与技巧总结/1653664287776.png)
 
+## 参考链接
+- [已解决：WiFi没有有效的IP配置（2020年更新）](https://zh.theihccforum.com/solved-wifi-doesn-t-have-valid-ip-configuration)
+
 # Win10新版输入法使用
 
 ## 模糊拼音
