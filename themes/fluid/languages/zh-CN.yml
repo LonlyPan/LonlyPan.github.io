@@ -4,6 +4,12 @@ home:
   menu: '首页'
   title: '首页'
 
+book:
+  menu: '书影'
+  title: '书影'
+  subtitle: '书影'
+  post_total: '已阅 %d 篇书影'
+
 archive:
   menu: '归档'
   title: '归档'

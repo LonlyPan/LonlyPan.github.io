@@ -3,6 +3,11 @@ name: 'English'
 home:
   menu: 'Home'
   title: 'Home'
+book:
+  menu: 'Books'
+  title: 'Books'
+  subtitle: 'Books'
+  post_total: '%d Books in total'
 
 archive:
   menu: 'Archives'

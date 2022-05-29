@@ -29,6 +29,17 @@ hexo.extend.generator.register('_tags', function(locals) {
   }
 });
 
+// generate books Page
+hexo.extend.generator.register('_book', function(locals) {
+    if (this.theme.config.book.enable !== false) {
+      return {
+        path  : 'books/index.html',
+        data  : locals.theme,
+        layout: 'books'
+      };
+    }
+  });
+
 // generate categories Page
 hexo.extend.generator.register('_categories', function(locals) {
   if (this.theme.config.category.enable !== false) {

@@ -341,6 +341,7 @@ navbar:
   # Navigation bar menu. `key` is used to associate languages/*.yml. If there is no association, the value of `key` itself will be displayed; if `icon` is a css class, it can be omitted; adding `name` can force the display of the specified name
   menu:
     - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
+    - { key: "book", link: "/books/", icon: "iconfont icon-book" }
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
     # - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
@@ -878,7 +879,41 @@ archive:
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
+book:
+  enable: true
+  banner_img: /img/book_banner.jpeg
+  banner_img_height: 60
+  banner_mask_alpha: 0.3
+  # 书籍副标题的独立设置
+  slogan:
+    enable: true
 
+    # 为空则按 hexo config.subtitle 显示
+    # If empty, text based on `subtitle` in hexo config
+    text: "但是 还有书籍"
+
+  # 自动截取文章摘要
+  # Auto extract post
+  auto_excerpt:
+    enable: true
+
+  # 打开文章的标签方式
+  # The browser tag to open the post
+  # Available: _blank | _self
+  post_url_target: _blank
+
+  # 是否显示文章信息（时间、分类、标签）
+  # Meta information of post
+  post_meta:
+    date: true
+    category: true
+    tag: true
+
+  # 文章通过 sticky 排序后，在首页文章标题前显示图标
+  # If the posts are sorted by `sticky`, an icon is displayed in front of the post title
+  post_sticky:
+    enable: true
+    icon: "iconfont icon-top"
 #---------------------------
 # 分类页
 # Category Page

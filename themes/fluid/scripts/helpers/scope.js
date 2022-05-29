@@ -6,6 +6,8 @@ const pageInScope = (page, scope) => {
   switch (scope) {
     case 'home':
       return Boolean(page.__index);
+    case 'books'|| 'book':
+      return page.layout === 'books';
     case 'post':
       return Boolean(page.__post);
     case 'archives' || 'archive':
