@@ -47,7 +47,7 @@ page.banner_mask_alpha = theme.book.banner_mask_alpha
 
             <a class="book-excerpt" href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
                 <div>
-                <% var excerpt = post.description || post.excerpt || (theme.index.auto_excerpt.enable && post.content) %>
+                <% var excerpt = post.description || post.excerpt || (theme.book.auto_excerpt.enable && post.content) %>
                 <%- escape_html(strip_html(excerpt).substring(0, 200).trim()).replace(/\n/g, ' ') %>
                 </div>
             </a>
