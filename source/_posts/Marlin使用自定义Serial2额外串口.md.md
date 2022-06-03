@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Marlin 使用自定义Serial1/2/3额外串口"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png
 date: 2019-6-14 9:23
 updated: 2019-6-14 9:23
 hide: false

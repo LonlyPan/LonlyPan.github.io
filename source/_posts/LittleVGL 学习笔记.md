@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "LittleVGL 学习笔记"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/logo3_lvgl.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/logo3_lvgl.png
 date: 2020-11-05
 updated: 2020-11-05
 hide: false
@@ -118,7 +118,7 @@ lv_slider_set_action(slider1, my_action);     /*设置回调函数*/
 
 (0;0) 坐标表示对象的位置会保持在他们各自父对象的左上角
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606962374407.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606962374407.png)
 ```
 lv_obj_t * par = lv_obj_create(lv_scr_act(), NULL);  /*在当前屏幕上创建一个父对象*/
 lv_obj_set_size(par, 100, 80);	               /*设置父对象大小*/
@@ -128,7 +128,7 @@ lv_obj_set_pos(obj1, 10, 10);	                 /*为新的子对象设置位置*
 ```
 Modify the position of the parent:
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606962536983.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606962536983.png)
 ```
 lv_obj_set_pos(par, 50, 50);	/*移动父对象，子对象也会随之移动*/
 ```
@@ -137,7 +137,7 @@ lv_obj_set_pos(par, 50, 50);	/*移动父对象，子对象也会随之移动*/
 #### 子对象只可显示在父对象上
 
 如果子对象的一部分在父对象的外面,那么子对象的这一部分将不会被显示出来
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606962601758.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606962601758.png)
 ```
 lv_obj_set_x(obj1, -30);	/*在父对象移动子对象的位置，-30 已经超出了父对象的大小范围*/
 ```
@@ -250,7 +250,7 @@ Setting `auto_del` to `true` 会在动画结束时自动删除旧屏幕.
 默认情况下，LVGL在背景上绘制旧对象，在前景上绘制新对象。
 
 例如，假设我们向一个名为button1的父对象添加了一个按钮，然后向另一个名为button2的按钮添加了一个按钮。然后button1（及其子对象）将在背景中，并且可以被button2及其子对象覆盖。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606973910550.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606973910550.png)
 ```
 /*创建一个屏幕*/
 lv_obj_t*scr=lv_obj_create(NULL,NULL);
@@ -617,7 +617,7 @@ lv_obj_set_style_local_bg_color(btn,LV_BTN_PART_MAIN,LV_STATE_DEFAULT,LV_COLOR_R
 - bg_grad_dir（lv_grad_dir_t）指定渐变的方向。可以LV_GRAD_DIR_NONE/HOR/VER。默认值：LV_GRAD_DIR_NONE。
 - bg_blend_mode（lv_blend_mode_t）：将混合模式设置为背景。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 - 
-![](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979430122.png)
+![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979430122.png)
 
 ```
 #include "../../lv_examples.h"
@@ -659,7 +659,7 @@ void lv_ex_style_1(void)
 - border_post（bool）：如果true在绘制完所有子级之后绘制边框。默认值：false
 - border_blend_mode（lv_blend_mode_t）：设置边框的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979543577.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979543577.png)
 ```
 #include "../../lv_examples.h"
 
@@ -698,7 +698,7 @@ void lv_ex_style_2(void)
 - outline_pad（lv_style_int_t）设置对象和轮廓之间的空间。默认值：0
 - outline_blend_mode（lv_blend_mode_t）：设置轮廓的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
  
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979605995.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979605995.png)
 ```
 #include "../../lv_examples.h"
 
@@ -737,7 +737,7 @@ void lv_ex_style_3(void)
 - shadow_ofs_y（lv_style_int_t）：设置阴影的Y偏移量。默认值：0
 - shadow_spread（lv_style_int_t）：在每个方向上使阴影大于背景的值达到此值。默认值：0
 - shadow_blend_mode（lv_blend_mode_t）：设置阴影的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979690907.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979690907.png)
 ```
 #include "../../lv_examples.h"
 
@@ -776,7 +776,7 @@ void lv_ex_style_4(void)
 - pattern_repeat（bool）：：true图案将作为马赛克重复。false：将图案放置在背景中间。默认值：false。
 - pattern_blend_mode（lv_blend_mode_t）：设置图案的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 
-![](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979811531.png)
+![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979811531.png)
 ```
 #include "../../lv_examples.h"
 
@@ -819,7 +819,7 @@ void lv_ex_style_5(void)
 - value_ofs_x（lv_style_int_t）：与路线原始位置的X偏移量。默认值：0。
 - value_ofs_y（lv_style_int_t）：从路线的原始位置偏移Y。默认值：0。
 - value_blend_mode（lv_blend_mode_t）：设置文本的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606979916503.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606979916503.png)
 
 ```
 #include "../../lv_examples.h"
@@ -866,7 +866,7 @@ void lv_ex_style_6(void)
 - text_sel_color（lv_color_t）：设置文本选择的背景色。默认值：LV_COLOR_BLACK
 - text_blend_mode（lv_blend_mode_t）：设置文本的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606980103626.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606980103626.png)
 
 ```
 #include "../../lv_examples.h"
@@ -915,7 +915,7 @@ void lv_ex_style_7(void)
 - line_rounded（bool）：：true绘制圆角的线尾。默认值：false。
 - line_blend_mode（lv_blend_mode_t）：设置线条的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606980179758.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606980179758.png)
 
 ```c
 #include "../../lv_examples.h"
@@ -950,7 +950,7 @@ void lv_ex_style_8(void)
 - image_opa（lv_opa_t）：图像的不透明度。默认值：LV_OPA_COVER
 - image_blend_mode（lv_blend_mode_t）：设置图像的混合模式。可以LV_BLEND_MODE_NORMAL/ADDITIVE/SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606980309881.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606980309881.png)
 ```c
 #include "../../lv_examples.h"
 
@@ -1001,7 +1001,7 @@ void lv_ex_style_9(void)
 - transition_prop_6（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。
 - transition_path（lv_anim_path_t）：过渡的动画path。（需要为静态或全局变量，因为仅保存了其指针）。默认值：（lv_anim_path_def线性path）。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/Transition_properties.gif)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/Transition_properties.gif)
 ```
 #include "../../lv_examples.h"
 
@@ -1049,7 +1049,7 @@ void lv_ex_style_10(void)
 - scale_end_border_width（lv_style_int_t）：在结束区域的刻度外侧上绘制边框的宽度。默认值：0。
 - scale_end_line_width（lv_style_int_t）：结束区域中比例线的宽度。默认值：0。
 
-![](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606981343856.png)
+![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606981343856.png)
 ```
 #include "../../lv_examples.h"
 
@@ -1154,7 +1154,7 @@ static void custom_apply_cb(lv_theme_t * th, lv_obj_t * obj, lv_theme_style_t na
 
 ### Example
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/1606981634954.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/1606981634954.png)
 
 ```
 #include "../../lv_examples.h"
@@ -1365,9 +1365,9 @@ If everything goes well, you should see your simulator running.
 5. 打开 codeblocks，开始界面点击 `Open an existing project`，进入我们刚下载的 `lv_sim_codeblocks_win`文件夹并选择 ittlevGL.cbp` ，确认打开。
 6. 单击 `Click on Build` 图标或者按 `F9` 编译运行工程。
 如果编译时提示找不到编译器，出现无法编译的情况，则需对程序的编译环境进行重新配置
-![图 1](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/codeblock_settings.png) 
+![图 1](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/codeblock_settings.png) 
 这里先点击 `Auto-detect`自动检测看自己电脑上有没有，如果没有的话， 则需要单独下载mingw：[mingw-w64](http://mingw-w64.org/doku.php)。再设置mingw路径。
-![图 2](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/settings_compiler.png)  
+![图 2](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/settings_compiler.png)  
 7. 开始使用仿真。
 
 >这里下载仿真的 LVGL 版本比较老，7.6.0 版本，不过这与最新版差别并不大，新版主要时修复了一些bug。
@@ -1573,14 +1573,14 @@ Create a display buffer for LVGL. LVGL will render the graphics here first, and 
 For a more detailed guide go to the[ Porting ](https://docs.lvgl.io/v7/en/html/porting/index.html)section.
 
 以上的 9-10 步其实官方已经有例程了，我们不用再自己编写，只需要修改即可。例程在 `lvgl\examples\porting`，这里面存放的就是对外接口适配例程。用哪一个，就更改那个名字，并在相应文件中修改 `#if 0` 启用。
-![图 3](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/porting%E6%9B%B4%E5%90%8D.png)  
+![图 3](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/porting%E6%9B%B4%E5%90%8D.png)  
 
 - lv_port_disp：显示相关。
 - lv_port_indev：输入相关。
 - lv_port_fs：文件系统相关。
 
 这里我们只使用 `lv_port_disp` 其它保持不动。并将 `lv_port_disp.c/h`文件复制到 lvgl 同级的 `lvgl_porting`目录下。 然后删除其它无关文件夹，最终文件结构如下：
-![图 4](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/LVGL%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84png.png)  
+![图 4](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/LVGL%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84png.png)  
 
 这里我们按照上面的 8-10 步骤修改 lv_port_disp.c/h 文件
 
@@ -1654,9 +1654,9 @@ For a more detailed guide go to the[ Porting ](https://docs.lvgl.io/v7/en/html/p
     }
     ```
 6. 编译，检查错误。主要就是头文件包含错误。注意在STM32CubeIDE中一定要将GUI文件夹设置源文件夹
-![图 6](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/LVGL_GUI_Sr_Loc.png)  
+![图 6](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/LVGL_GUI_Sr_Loc.png)  
 其余头文件包含如下：
-![图 5](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/LittleVGL_学习笔记/LVGL_%E5%A4%B4%E6%96%87%E4%BB%B6.png)  
+![图 5](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/LVGL_%E5%A4%B4%E6%96%87%E4%BB%B6.png)  
 
 7. 编写主函数，驱动例程。
     ```

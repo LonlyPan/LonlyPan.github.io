@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C&C++编码规范"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/C&C++编码规范/C_C++.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C&C++编码规范/C_C++.png
 date: 2019-9-3 15:15
 updated: 2019-9-3 15:15
 hide: false

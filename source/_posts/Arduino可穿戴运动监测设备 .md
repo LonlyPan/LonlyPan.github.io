@@ -1,7 +1,7 @@
 ---
 layout: post
 title:    "Arduino-可穿戴运动监测设备"
-index_img: https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/arduino_logo.png
 date:   2019-06-23  23:18 
 updated: 2019-06-23  23:18 
 hide: false
@@ -44,14 +44,14 @@ const int accelZ = 4;                  // z-axis pin (only on 3-axis models)
 
 更具 [ADI官方资料](https://www.analog.com/cn/analog-dialogue/articles/pedometer-design-3-axis-digital-acceler.html) 我们知道：无论如何穿戴计步器，总有至少一个轴具有相对较大的周期性加速度变化，那么我们就可以从这里着手，进行数据分析，判断步伐。
 
-![ADX运动数据](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/ADX运动数据.png)
+![ADX运动数据](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/ADX运动数据.png)
 ### 算法
 
 #### 1，均值滤波器---滤波
 
 均值滤波器实现均值滤波，其实就是拿到多组x,y,z三轴数据，相加再求平均值。最后的平均值作为输出结果（采样值）。目的是使输出结果更加平滑。完成初步滤波。  
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/均值滤波.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/均值滤波.png)
 
 ```cpp
 // Reads the acces and returns an 'energy' value
@@ -76,14 +76,14 @@ float filter_calculate(){    // 定义一个返回值为浮点数的函数
 
 有了滤波后的值，我们可以将其输出到串口，以图形显示运动状态下的数据特征。下图为AD官方的数据图，显示了来自一名步行者所戴计步器的最活跃轴的滤波数据。对于跑步者，峰峰值（每个山峰的最大值也可以看作最大值）会更高。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/最活跃轴的滤波数据.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/最活跃轴的滤波数据.png)
 
 FILTERD DATA：**1** 滤波后的值  
 THRESHOLD：阈值（步判断的参考值），阈值获取 **3** 再讲解，目前可以看作是一段时间所有最大最小值（滤波值）的中间值（平均值）  
 
 图像分析：绿色线条是运动的实时数据，类似于一个一个三角波（一次运动即一次摆臂来回），可以看到，每步运动绿色线条会有两次跨过橙色线（阈值），那么我们就可以设法先后获取两次滤波值（不相等），判断是否有一个值 > 阈值，另一个值 < 阈值，就可以认为佩戴者是走了一步。 
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/摆臂运动对比图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/摆臂运动对比图.png)
 
 步伐迈出的条件定义为：当加速度曲线跨过动态阈值下方时，加速度曲线的斜率为负值.  
 
@@ -132,7 +132,7 @@ char slid_update(float sample){
 }
 ```
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/动态精度.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/动态精度.png)
 
 #### 4、步判断
 
@@ -156,7 +156,7 @@ int detect_step(){
 }
 ```
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/步判断.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/步判断.png)
 
 ## 主程序
 
@@ -193,7 +193,7 @@ void loop() {
 
 ## 流程图
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@hexo_source/hexo_images/Arduino-可穿戴运动监测设备/流程图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Arduino-可穿戴运动监测设备/流程图.png)
 
 ## 参考资料链接：
 
