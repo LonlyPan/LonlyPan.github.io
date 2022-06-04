@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "彻底删除vscode及安装的插件和个人配置信息"
+title:  "VS Code使用经验总结"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/彻底删除vscode及安装的插件和个人配置信息/1200px-Visual_Studio_Code_1.35_icon.svg.png
 date:   2019-05-17 11:12
 updated: 2019-05-17 11:12
@@ -11,6 +11,7 @@ hide: false
 categories: 01-专业
 ---
 
+# 彻底删除vscode及安装的插件和个人配置信息
 原文在：https://www.cnblogs.com/muou2125/p/10388440.html
 此贴完全复制粘贴，作为个人备份使用。感谢作者。
 
