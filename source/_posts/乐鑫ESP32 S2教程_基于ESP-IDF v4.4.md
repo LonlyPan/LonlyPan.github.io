@@ -136,3 +136,58 @@ idf_component_register(): idf文件注册
 
 file()： 文件操作命令
 - 参数： GLOB 通过正则表达式匹配文件名并保存到变量中
+
+# ESP32/ESP8266程序下载电路"
+
+## 官方一键下载电路分析
+https://www.espressif.com/zh-hans/products/modules
+
+https://zhuanlan.zhihu.com/p/145369083
+https://blog.csdn.net/weixin_41975300/article/details/104834771
+https://blog.csdn.net/woniulx2014/article/details/117172805
+https://blog.csdn.net/wutongpro/article/details/109101063
+https://www.jianshu.com/p/d7c0dbb223a0
+https://www.jianshu.com/p/fe98713e40eb
+https://www.cnblogs.com/cai-zi/p/13942615.html
+
+官方下载程序的SDK代码：
+```
+	# issue reset-to-bootloader:
+    # RTS = either CH_PD/EN or nRESET (both active low = chip in reset
+    # DTR = GPIO0 (active low = boot to flasher)
+    #
+    # DTR & RTS are active low signals,
+    # ie True = pin @ 0V, False = pin @ VCC.
+    if mode != 'no_reset':
+        self._setDTR(False)  # IO0=HIGH
+    1)  self._setRTS(True)   # EN=LOW, chip in reset
+        time.sleep(0.1)
+    2)  self._setDTR(True)   # IO0=LOW
+    3)  self._setRTS(False)  # EN=HIGH, chip out of reset
+        time.sleep(0.05)
+    4)  self._setDTR(False)  # IO0=HIGH, done
+
+```
+分析代码可知，下载程序有四步：
+1. IO0=HIGH  EN=LOW, chip in reset  延时 100ms
+2. IO0=LOW EN=HIGH, chip out of reset  延时 50ms
+2. IO0=HIGH done
+程序下载流程：
+1. 芯片断电，设置 IO0 = 0  EN = 0 进入下载模式
+2. 上电，
+
+## S2 硬件设计注意事项
+
+- IO0相当于 WAKEUP，EN相当于 RESET
+- U0TXD 需串联 499R 电阻，S2 模组已经内置。
+- S2模组的管脚 IO26 默认用于连接至模组上集成的 PSRAM 的 CS 端，不可用于其他功能
+- IO0 和  IO46 为系统启动模式功能。为0下载模式，为1从内部flash启动
+    |管脚|默认|SPI启动模式|下载启动模式|
+	|---|---|---|---|
+	| IO0 |  上拉 | 1| 0|
+	|IO46|下拉|x|0|
+	复位放开后， 管脚和普通管脚功能相同
+- IO45 设置 VDD_SPI 电压。下拉为3.3V，上拉为1.8V。S2模组中 VDD_SPI为扩展的SPI、PSRAM电压。
+- GPIO18 作为 U1RXD，在芯片上电时是不确定状态，可能会影响芯片正常进入下载启动模式，需要在外部增加一个上拉电阻来解决
+
+[用Arduino玩ESP32（05）：GPIO使用](https://www.jianshu.com/p/6f2042f7064e)
