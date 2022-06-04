@@ -1,6 +1,6 @@
 ---
 title: 搭配 Fluid 如何优雅的写一篇文章
-index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/搭配_Fluid_如何优雅的写一篇文章/hexo+fluid.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E6%90%AD%E9%85%8D_Fluid_%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%86%99%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/hexo%2Bfluid.png
 date: 2021-06-12 14:33
 updated: 2020-05-08 14:33
 hide: false
@@ -9,6 +9,8 @@ hide: false
 # comment: false
 categories: 03-瞎折腾
 ---
+
+
 
 {% note success %}
 文章参考：https://hexo.fluid-dev.com/posts/fluid-write/
