@@ -106,7 +106,7 @@ HTML的属性只能作用域局部，而网页设计它的排版通常会涉及�
 
 你可以使用任何文本编译器，如：记事本、写字板。将上述代码复制过去，并保存为 **xxx.html**，确保**保存类型**选择**所有文件**。  
 
-![add_html](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/HTML&CSS_设计与构建网站/add_html.png)
+![add_html](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/add_html.png)
 
 然后右键该文件，选择打开方式，选择浏览器打开，即可查看显示效果。
 
@@ -142,7 +142,7 @@ HTML描述页面的结构与一般的文档结构是一个道理：使用标题�
 
 >“标签” 和 “元素” 两个术语经常混用，但仍要注意区分
 
-![页面结构](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/HTML&CSS_设计与构建网站/页面结构.png)
+![页面结构](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/页面结构.png)
 
 ## 元素的特性
 
@@ -191,7 +191,7 @@ HTML描述页面的结构与一般的文档结构是一个道理：使用标题�
 
 \<title> 元素中的内容要么显示在浏览器的顶端，即页面的 URL 地址栏的上方；要么显示在页面所在的标签页上。
 
-![title](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/HTML&CSS_设计与构建网站/title.png)
+![title](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/title.png)
 
 ## 小结
 
@@ -213,7 +213,7 @@ HTML描述页面的结构与一般的文档结构是一个道理：使用标题�
 
 HTML标题一共有六个级别，h 即 heading 的首字母
  
-![标题](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/HTML&CSS_设计与构建网站/标题.png)
+![标题](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/标题.png)
 
 虽然各标题显示有大小之分，但这是各浏览器自己的默认显示样式（其本身是无大小之分的）。所以其显示大小也因浏览器而异，后期还需要使用 CSS 来具体控制其大小。
 
@@ -221,7 +221,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 标签 \<p> 和 \</p>  之间的文字内容都属于一个段落。p 即 paragraph 的首字母。
 
-![paragraphs](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/HTML&CSS_设计与构建网站/paragraphs.png)
+![paragraphs](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/paragraphs.png)
 
 默认情况下，浏览器在显示段落时会另起一行并于后续段落保持一定的距离。
 
@@ -229,7 +229,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 在文本内容中，我们通常会添加空格或换行；但在 HTML 中，如果有多个空格和一个换行，浏览器都会将其解释为**一个空格**；其存在的意义仅是为了增加代码的可读性，并不影响实际显示。所以不要试图使用空格来表缩进，用换行表示另起一行等等。
 
-![bold](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/bold.png)
+![bold](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/bold.png)
 
 ## 空元素
 
@@ -241,20 +241,20 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 表示引用了一段或一句别人的话，名言。 \<blockquote> 表示一长段引用，通常会显示整段缩进。\<q> 表示短引用，之间的内容会自动添加双引号。
 
-![quote](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/quote.png)
+![quote](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/quote.png)
 
 ## 缩写词
 
 缩写词表示这之间的文本是缩写形式，如果你使用 title 属性指定了原词，则当鼠标停留在该缩写词上时，浏览器会自动显示原词内容。  
 \<abbr> 和 \<acronym> 完全相同，所以在 HTML5 中只保留使用 \<abbr> 
 
-![abbr](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/abbr.png)
+![abbr](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/abbr.png)
 
 ## 引文和定义
 
 引文 \<cite> 表示引用一部作品，区别引用（引用其中的内容），通常斜体显示。定义 \<dfn> 表示一个新术语的定义，通常斜体。
 
-![cite_dfn](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/cite_dfn.png)
+![cite_dfn](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/cite_dfn.png)
 
 ## 其它元素
 
@@ -299,7 +299,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 \<ul> 表示创建一个无序列表
 
-![list](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/list.png)
+![list](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/list.png)
 
 ## 定义列表
 
@@ -307,7 +307,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 \<dl> 表示创建一个定义列表，\<dt> 表示被定义的术语，\<dd> 表示被、具体定义。一个术语可以有多个定义，反之也可。
 
-![dfnlist](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/dfnlist.png)
+![dfnlist](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/dfnlist.png)
 
 # 第4章 链接
 
@@ -323,7 +323,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 
 链接的显示文字应尽量表达清楚要跳转到何处，而不至于让读者困惑。
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/link.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/link.png)
 
 **在新窗口打开链接**
 
@@ -348,7 +348,7 @@ HTML标题一共有六个级别，h 即 heading 的首字母
 通常较大的网站，都会采用不同类别的文件夹来保存相应的网站文件。称之为目录。  
 下图是一个网站的目录结构。
 
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/struture.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/struture.png)
 
 **结构**  
 最顶端的文件夹称为根文件夹（图中examplearts文件夹），根文件夹包含了网站中其他所有的文件夹及文件。
@@ -475,13 +475,13 @@ id 属性相当于一个标记，表明可以通过寻找这个标记就可以�
 
 注意 alt 和 title 属性值正常时不会显示出来。
 
-![add_img](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/add_img.png)
+![add_img](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/add_img.png)
 
 ## 在代码中插入图像
 
 上述都只是图像单独占用一行内容显示的效果，如果将上述代码插入文本中的任意位置会有不同的效果。以下示例三个位置：
 
-![img_side](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/img_side.png)
+![img_side](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/img_side.png)
 
 ## 旧代码 align
 
@@ -497,7 +497,7 @@ id 属性相当于一个标记，表明可以通过寻找这个标记就可以�
 
 **代码示例：**
 
-![align](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/align.png)
+![align](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/align.png)
 
 ## 创建图像的三条原则
 
@@ -561,7 +561,7 @@ HTML中，表格按照**行的顺序**逐行进行编写
 ```
 
 显示效果：
-![enter description here](https://LonlyPan.github.io/images/Posts/2019-04-02-HTML&CSS学习笔记/table_base.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&CSS_设计与构建网站/table_base.png)
 
 \<th>
 用法和 \<td> 一样，也会占用一个单元格，但其代表意义不同其表示行或列的标题（一般会粗体显示）。
