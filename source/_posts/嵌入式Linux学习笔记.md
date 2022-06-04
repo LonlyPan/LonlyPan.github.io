@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "嵌入式Linux学习笔记"
-index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/2022-04-06-Linux学习/1654315471941.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png
 date: 2022-04-06
 updated: 2022-04-06
 hide: false
