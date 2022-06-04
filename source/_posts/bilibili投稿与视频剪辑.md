@@ -1,10 +1,16 @@
 ---
 layout: post
-title: "bilibili投稿与视频剪辑"
+title: "bilibili投稿与视频剪辑-必剪"
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/图像_25.png
 date: 2021-05-24
-categories: 娱乐
-hide: true
+updated: 2021-05-24
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 03-瞎折腾
 ---
+
 ## 视频录制
 
 OBS 
