@@ -137,7 +137,7 @@ idf_component_register(): idf文件注册
 file()： 文件操作命令
 - 参数： GLOB 通过正则表达式匹配文件名并保存到变量中
 
-# ESP32/ESP8266程序下载电路"
+# ESP32/ESP8266程序下载电路
 
 ## 官方一键下载电路分析
 https://www.espressif.com/zh-hans/products/modules
