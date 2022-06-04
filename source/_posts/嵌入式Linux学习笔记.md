@@ -23,21 +23,21 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 扩展包这里下载错了，应该是其上一个，名称中带 `140961`。和 VirtualBox 主体安装包版本保持一致。--20201107
  
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/VirtualBox_下载.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_下载.png)
 
 ## 2、安装
 
 上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机。安装过程全程按照提示进行，一路点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
 软件安装后，双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
 ## 3、新建虚拟机
 
 安装好虚拟机软件 VirtualBox 后，便可以用它新建一台虚拟机，相当于新建一台虚拟的电脑，用于后面的 Linux 操作系统安装。
 
 1. 单击新建
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/新建.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建.png)
 
 
 2. 虚拟机配置
@@ -47,17 +47,17 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 **版本：** Ubuntu（64-bit）
 **内存大小：** 一般是本机的一半，例如你电脑是16G内存，这里就选8G
 勾选 `现在创建虚拟硬盘`，点击 `创建`
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/新建1.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建1.png)
 
 3. 创建虚拟硬盘
 虚拟硬盘文件类型：VDI
 内存分配：固定大小。建议先单独创建一个电脑硬盘分区，且大小最好在100G以上，用来安装 LInux 操作系统，学习中可能会经常格式化。
- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/分区.png)
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/分区.png)
 文件位置和大小：文件位置就选择我们上面新建的分区，大小全选
 点击创建，配置完毕，等待软件自动创建完成。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/新建2.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建2.png)
 4. 虚拟机创建完成的样子
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/创建完成.png)  
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/创建完成.png)  
   
 ## 4、Ubuntu安装
 
@@ -69,32 +69,32 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 1. 下载 Ubuntu，进入[Ubuntu 阿里云镜像下载](https://mirrors.aliyun.com/ubuntu-releases/)，下载 18.04.5 版   
 **不推荐下载最新版，软件适配不足，bug较多。资料较少。还是下载老版本。--20201207  
 后面教程中版本都是 20.04.1。以你安装的 18.04.5 版本为准**
- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/ubuntu下载18.png)
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ubuntu下载18.png)
 2. 点击`启动`
 提前在虚拟机设置中，调整磁盘启动顺序，硬盘在首位
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/创建完成.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/创建完成.png)
 3. 选择启动盘
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/选择iso.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/选择iso.png)
 4. 点击注册，在弹出界面选择我们第一步下载好的 ISO 文件
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/注册.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/注册.png)
 5. 点击选择
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/选择.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/选择.png)
 6. 点击启动
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/启动.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动.png)
 7. 等待安装启动，语言选择 `English`（个人推荐，程序员应该拥抱英语），然后选择 `install Ubuntu`
-！[enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/语言.png)
+！[enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/语言.png)
 8. 选择  `Nomal installation`，安装时更新（系统自带的软件更新）可以不勾选，安装时间会加长，我这里选了。点击继续。  
 安装类型选择 `擦除磁盘并安装`。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/更新.png）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/更新.png）
 9. 写入磁盘。弹窗里点击继续。
 时区正常选择中国时区就可以，继续
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/继续.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/继续.png)
 10. 设置用户名和密码。有图是其会出现的位置。最常用的是用户名和密码，这个在命令终端中操作会经常输入，所有尽量简单短小。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/用户信息2.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/用户信息2.png)
 11. 接下来就是漫长的安装过长，我这里大概用了2小时。出现下面弹窗表示安装完成，点击重新启动即可。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/图像_25.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/图像_25.png)
 12. 启动顺序。如果你点击重启后有显示重新安装，那么就需要设置启动顺序（下图）或者将之前下载 iso 文件删除。就可以正常进入了。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/启动顺序.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动顺序.png)
 
 **参考资料**
 - [Drag and Drop not working for Ubuntu 20.04 VirtualBox](https://askubuntu.com/questions/1230102/drag-and-drop-not-working-for-ubuntu-20-04-virtualbox)
@@ -119,7 +119,7 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 
 Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
 1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/下载源.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/下载源.png)
 
 **参考资料**
 - [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
@@ -129,11 +129,11 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
 
 1. 关闭虚拟机，virtualbox主界面打开 `设置` -> `USB设备`，勾选USB 3.0。并将USB设备添加进来（只有添加进这里的才能在虚拟机中被识别到）。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/USB.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/USB.png)
 2. 打开虚拟机，一般会自动加载设备（左下角两个设备图标），直接双击即可打开。如果没有：`设备`->`USB`，单击USB设备名字，将完成设备加载。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/打开usb.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/打开usb.png)
 3. 移除设备，右键左下角设备图标，单击 `Eject` 弹出；或者虚拟机右下角，右键U盘图标，单击设备名弹出
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/弹出usb.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/弹出usb.png)
 
 **参考链接**
 - [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
@@ -146,22 +146,22 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 - 剪贴板共享等等等等
 
 1. 设备->安装增强功能 
-![增强设备](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/增强设备.png)
+![增强设备](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/增强设备.png)
 2.  弹窗点击 `Run`，输入密码。（数字小键盘关闭可能会无法输入。）
-![安装确认](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/安装确认.png)
+![安装确认](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/安装确认.png)
 3.  不出意外的话，会出现下左图的安装失败。我们需要打开终端，并输入   
 `sudo apt-get install build-essential gcc make perl dkms`  
 等待系统自动安装，再重新安装增强功能。知道出现下右图表示安装成功。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/wenti.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/wenti.png)
 安装失败后，桌面会多出一个 iso 文件，双击打开，点击运行，就可以直接安装增强功能，不用再从菜单栏选择了。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/运行.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/运行.png)
 4. 关闭虚拟机，在virtualbox主界面打开 `设置`->`常规`->`高级`：**共享剪切板** 和 **拖拽**都 选择 **双向**  
 `存储`->`控制器SATA`：勾选 **使用主机输入输出(I/O)缓存**  
 `存储`->`控制器SATA`->`Ubuntu-Embeded.vdi`：勾选 **固态驱动器**    
 启动虚拟机。此时就可以直接从 Windows 系统窗口拖动文件到 Linux 界面了。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/设置copy.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/设置copy.png)
 6. 更改分辨率。在设置里找到设备，选择合适的屏幕分辨率即可。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/分辨率.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/分辨率.png)
 
 **参考链接**
 - [Install guest additions on a VirtualBox](https://www.youtube.com/watch?v=V4tGpsZiOdw)
@@ -171,12 +171,12 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 虽然LInux基本都是命令行操作，但桌面有时也会偶尔存放东西。默认拖动到桌面的文件图标会堆叠在一起，不像 Windows 或自动整理、对齐。其实这里需要我们自己选择。在桌面右键：
 - keep aligned：保持对齐
 - Organize Desktop by Name：按名称排序桌面
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
 
 ## 锁屏
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/锁屏.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
 
 # 四、shell命令
 
@@ -661,7 +661,7 @@ gcc -S test.c  # 把源文件test.c转换为相应的汇编程序源文件test.s
 
 ## 1、软件商店安装
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/software.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/software.png)
 
 ## 2、 sudo apt-get
 
@@ -688,7 +688,7 @@ make install
 
 # 六、Ubuntu 文件系统结构
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/目录结构.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/目录结构.png)
 
 
 ### /bin：
@@ -1287,9 +1287,9 @@ c 装置文件里面的串行端口设备，例如键盘、鼠标(一次性读�
 ```
 
 接下来的字符中，以三个为一组，且均为 r、w、x 三个参数的组合。其中， r 代表可读(read)、 w 代表可写(write)、 x 代表可执行(execute)。 要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号 - 而已。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1605200269941.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605200269941.png)
 每个文件的属性由左边第一部分的 10 个字符来确定（如下图）。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1605200284013.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605200284013.png)
 从左至右用 0-9 这些数字来表示。  
 
 - 第 0 位确定文件类型，第 1-3 位确定属主（该文件的所有者）拥有该文件的权限。
@@ -1364,7 +1364,7 @@ chmod [-R] u=rwx,g=rwx,o-rwx 文件名
 # 连接文件
 
 文件都有文件名与数据，这在 Linux 上被分成两个部分：用户数据 (user data) 与元数据 (metadata)。用户数据，即文件数据块 (data block)，是记录文件真实内容的地方；而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（索引节点号，inode 是元数据的一部分但并不包含文件名）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序实际是通过 inode 号寻找正确的文件数据块。下图展示了程序通过文件名获取文件内容的过程。
-![通过文件名打开文件](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1605795008761.png)
+![通过文件名打开文件](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605795008761.png)
 
 在 Linux 系统中查看 inode 号可使用命令 stat 或 ls -i。
 
@@ -1407,7 +1407,7 @@ inode 是随着文件的存在而存在，因此只有当文件存在时才可�
 
 硬链接实际上是为文件建一个别名，链接文件和原文件实际上是同一个文件。而软链接建立的是一个指向，即链接文件内的内容是指向原文件的指针，它们是两个文件。  
 不论是硬链接或软链接都不会将原本的档案复制一份，只会占用非常少量的磁碟空间。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1605796713610.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605796713610.png)
 
 ## ln命令
 
@@ -1496,7 +1496,7 @@ q! 不保存退出
 ```
 按ESC键可随时退出底线命令模式。
 简单的说，我们可以将这三个模式想成底下的图标来表示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1605799065000.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605799065000.png)
 
 
 ### 编写第一个程序
@@ -3444,7 +3444,7 @@ write_enable=YES
 ```
 确保上面两行前面没有“#”，有的话就取消掉，完成以后如图所示：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1606147159517.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1606147159517.png)
 
 修改修改完vsftpd.conf以后保存退出，使用如下命令重启FTP服务：
 ```
@@ -3458,10 +3458,10 @@ sudo /etc/init.d/vsftpd restart
 下载后，安装一路默认即可，可更改安装路径。
 
 Ubuntu作为FTP服务器，FileZilla作为FTP客户端，客户端肯定要连接到服务器上，打开站点管理器，点击：文件->站点管理器，或者直接点击左上角图标
-![](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1606231575210.png)
+![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1606231575210.png)
 打开以后，按下图所示设置：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Filezilla设置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Filezilla设置.png)
 
 其中用户名就是当前登录的用户，注意不是开始时登录界面显示的那个。我们可以使用命令查看：
 ```
@@ -3481,7 +3481,7 @@ lonly    :0       :0               23:21   ?xdm?   8.15s  0.00s /usr/lib/gdm3/g
 但是Ubuntu 文件目录下的中文目录都是乱码的，这是因为编码方式没有选对，先断开连接，点击：
 服务器(S)->断开连接，然后打开站点管理器，选中要设置的站点“Ubuntu”，选择“字符集”，
 设置所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/2022-04-06-Linux学习/1649328733209.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/2022-04-06-Linux学习/1649328733209.png)
 
 #### ip地址
 
@@ -3564,7 +3564,7 @@ Windows IP 配置
 查看 `以太网适配器 以太网:`项中的 IPv4 地址：`192.168.1.7` 就是我们的主机地址了。可以看到和我们的虚拟主机地址只有最后一位不一样的。如果这里你发现你的虚拟机网络地址和主机的完全不一样，如：`10.0.2.15`。那就说明网络设置有错误，我们需要修改 VirtualBox 软件的网络配置。
 
 1. Ubuntu 关键，进入 VirtualBox的网络配置界面：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Virtual网络设置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Virtual网络设置.png)
 2. 按如下要求设置
  - 连接方式 选择 桥接网卡
  - 界面名称 选择 （如果你的笔记本有无线网卡和有线网卡，需要根据现在的上网方式对应选择）
@@ -3615,7 +3615,7 @@ Windows IP 配置
 	 - Gateway：`以太网适配器 以太网:` 默认网关
 	 - DNS 一般是和网关类似，再最后一位是1
 	 - 右上角 Apply 保存。重启Ubuntu，再次查看IP地址，即可看到已经修改过来了。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Ip.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Ip.png)
 
 #### 参考链接：
 
@@ -3689,22 +3689,22 @@ ARM裸机、Uboot移植、Linux移植这些都需要在Ubuntu下进行编译，�
 
 交叉编译器有很多种，我们使用Linaro出品的交叉编译器，Linaro一间非营利性质的开放源代码软件工程公司，Linaro开发了很多软件，最著名的就是LinaroGCC编译工具链(编译器)，下载地址如下：https://www.linaro.org/ 。  
 再官网右上 support 中单击 download 进入下载界面，这里有很多种GCC交叉编译工具链，因为我们所使用的I.MX6U-ALPHA开发板是一个Cortex-A7内核的开发板，因此选择arm-linux-gnueabihf，点击后面的“Binaries”进入可执行文件下载界面
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/linaro_download.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_download.png)
 
 上面下载界面默认进入的是最新版的下载界面，最新版往往会有问题，教程里使用的是 4.9 版本。这里给出版本存档地址，可以自由选择下载之前的版本。
 https://releases.linaro.org/components/toolchain/binaries/
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/linaro_release.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_release.png)
 
 进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/linaro_download2.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_download2.png)
 
 我们要先将交叉编译工具拷贝到Ubuntu中，前文中我们在当前用户根目录下创建了一个名为“linux”的文件夹，在这个linux文件夹里面再创建一个名为“tool”的文件夹，用来存放一些开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
 >这里传输文件到Ubuntu不再使用 VirtualBox 自带的复制粘贴功能，因为在以后的开发中是无法使用的，设备都是远程连线控制的，所以要转变思路和方法。
 
 操作如下图所示：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/filezilla_传输文件.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/filezilla_传输文件.png)
 
 在Ubuntu中创建目录：/usr/local/arm，命令如下
 ```
@@ -3743,7 +3743,7 @@ export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnuea
 ```
 添加完成以后的/etc/profile如下图所示
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/linaro_profile.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_profile.png)
 
 修改好以后就保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
@@ -3761,7 +3761,7 @@ sudo apt-get install lsb-core lib32stdc++6
 arm-linux-gnueabihf-gcc -v
 ```
 如果交叉编译器安装正确的话就会显示版本号，如下图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/linaro_version.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_version.png)
 
 注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
 ![enter description here](./img/2022-04-06-Linux学习/1651061897534.png)
@@ -3800,7 +3800,7 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 
 VSCode是微软出的一款编辑器，但是免费的。VSCode有Windows、Linux和macOS三个版本的，是一个跨平台的编辑器。VSCode下载地址是：https://code.visualstudio.com/
 下载界面如下图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/vscode_download.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_download.png)
 本教程需要Windows和Linux这两个版本，所以下载这两个即可
 ### Windows版本安装
 
@@ -3826,12 +3826,12 @@ lonly@lonly-VirtualBox:~/linux/tools$
 ```
 
 安装完成以后搜索“VisualStudioCode”就可以找到，如下图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/vscode_search.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_search.png)
 
 #### VisualStudio Code插件的安装
 
 VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主要用来编写C/C++程序的，所以需要安装C/C++的扩展包，扩展包安装很简单，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/vscode_插件.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_插件.png)
 
 我们需要按照的插件有下面几个：
 
@@ -3854,12 +3854,12 @@ VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主�
 
 新建一个文件夹用于存放工程，比如我新建了文件夹目录为E:\VScode_Program\1_test，路径尽量不要有中文和空格。  
 然后打开VSCode，点击文件->打开文件夹...，选刚刚创建的“1_test”文件夹，
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/vscode_打开的文件夹.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_打开的文件夹.png)
 
 可以看出此时的文件夹“1_TEST”是空的，点击文件->将工作区另存为...，打开工作区命名对话框，输入要保存的工作区路径和工作区名字，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/vscode_工作区保存设置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_工作区保存设置.png)
 工作区保存成功以后，点击“新建文件”按钮创建main.c和main.h这两个文件，创建成功以后VSCode如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/新建文件以后的VSCode.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建文件以后的VSCode.png)
 之后就可以编写代码了。
 
 ## CH340串口驱动安装
@@ -3867,19 +3867,19 @@ VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主�
 我们一般在Windwos下通过串口来调试程序，或者使用串口作为终端，I.MX6U-ALPHA开发板使用CH340这个芯片实现了USB转串口功能，。先通过USB线将开发板的串口和电脑连接起来起来
 >一定要先将开发板与电脑连接，否则驱动会安装失败。
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/开发板串口连接方式.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/开发板串口连接方式.png)
 
 点击 “安装”按钮开始安装驱动，等待驱动安装完成。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/CH340驱动安装.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/CH340驱动安装.png)
 
 进入设备管理器 -> 端口，可以看到有“USB-SERIAL CH340”字样的端口设备就说明CH340驱动成功了。
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/设备管理器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/设备管理器.png)
 
 ## Putty软件的安装和使用
 
 Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT功能强大，但是Putty用来作为嵌入式Linux的串口终端是绰绰有余。Putty在官网下载即可，下载地址为：[Download PuTTY](https://www.putty.org/)。下载界面如图所示  
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Download_PuTTY.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Download_PuTTY.png)
 
 根据自己电脑下载 32位或64位版本，双击开始安装，安装一路默认即可，可自行更改安装路径。
 
@@ -3888,10 +3888,10 @@ Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT�
 
 我们要用到串口功能，所以在左侧选择“Serial”，然后在右侧配置串口，配置完成以后如下左半图所示；还需要设置“Session”，设置如下右半图所示。  
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/putty_串口配置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/putty_串口配置.png)
 
 设置好以后，点击“Open”打开串口。此时重启开发板，如果开发板里面烧写了Linux系统的话，Putty就会显示Linux启动过程的信息，并且作为开发板的终端，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Putty作为串口终端.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Putty作为串口终端.png)
 
 > 另外还有一款类似的但功能更加强大的软件：[MobaXterm](https://mobaxterm.mobatek.net/)。但我们开发时仅作为串口终端，所以 Putty 已完全满足需求。
 
@@ -3925,7 +3925,7 @@ https://mobaxterm.mobatek.net
 STM32只有两种运行模式，特权模式和非特权模式，但是Cortex-A就有9种运行模式。
 
 以前的ARM处理器有7中运行模型：User、FIQ、IRQ、Supervisor(SVC)、Abort、Undef和System，其中User是非特权模式，其余6中都是特权模式。但新的Cortex-A7处理器有9种处理模式，如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/九种运行模式.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/九种运行模式.png)
 
  - 在表中，除了User(USR)用户模式以外，其它8种运行模式都是特权模式。
  - 这几个运行模式可以通过软件进行任意切换，也可以通过中断或者异常来进行切换。
@@ -3946,7 +3946,7 @@ ARM架构提供了16个32位的通用寄存器(R0~R15)供软件使用
  - 备份程序状态寄存器SPSR，SPSR寄存器就是CPSR寄存器的备份。
 
 这18个寄存器如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Cortex-A寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Cortex-A寄存器.png)
 
 Cortex-A7有9种运行模式
 
@@ -3954,7 +3954,7 @@ Cortex-A7有9种运行模式
  2. 每一种模式可见的寄存器包括15个通用寄存器(R0~R14)，一两个程序状态寄存器和一个程序计数器PC。
 
 在这些寄存器中，有些是所有模式所共用的同一个物理寄存器，有一些是各模式自己所独立拥有的，各个模式所拥有的寄存器如图所示
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/九种模式所对应的寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/九种模式所对应的寄存器.png)
  - 图中浅色字体的是与User模式所共有的寄存器
  - 蓝绿色背景的是各个模式所独有的寄存器
  
@@ -4022,7 +4022,7 @@ R15 (PC)值= 当前执行的程序位置+8个字节。
 
 因为User和Sys这两个模式不是异常模式，所以并没有配备SPSR，因此**不能在User和Sys模式下访问SPSR**，会导致不可预知的结果。由于SPSR是CPSR的备份，因此SPSR和CPSR的寄存器结构相同，如图所示：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/CPSR寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/CPSR寄存器.png)
 
 **N(bit31)：** 当两个补码表示的有符号整数运算的时候，N=1表示运算对的结果为负数，N=0表示结果为正数。  
 **Z(bit30)：** Z=1表示运算结果为零，Z=0表示运算结果不为零，对于CMP指令，Z=1表示进行比较的两个数大小相等。  
@@ -4228,13 +4228,13 @@ LDR和STR都是按照字进行读取和写入的，也就是操作的32位数据
 PUSH {R0~R3, R12}	@将R0~R3和R12压栈
 ```
 压栈完成以后的堆栈如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/压栈以后的堆栈.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/压栈以后的堆栈.png)
 图7.2.3.1就是对R0~R3,R12进行压栈以后的堆栈示意图，此时的SP指向了0X7FFFFFEC，假如我们现在要再将LR进行压栈，汇编代码如下：
 ```
 PUSH {LR}@将LR进行压栈
 ```
 对LR进行压栈完成以后的堆栈模型如图7.2.3.2所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/LR压栈以后的堆栈.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/LR压栈以后的堆栈.png)
 
 图7.2.3.2就是分两步对R0~R3,R2和LR进行压栈以后的堆栈模型，如果我们要出栈的话就是使用如下代码：
 ```
@@ -4296,13 +4296,13 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ### 算术运算指令
 
 汇编中也可以进行算术运算，比如加减乘除，常用的运算指令用法如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/常用运算指令.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/常用运算指令.png)
 在嵌入式开发中最常会用的就是加减指令，乘除基本用不到。
 
 ### 逻辑运算指令
 
 我们用C语言进行CPU寄存器配置的时候常常需要用到逻辑运算符号，比如“&”、“|”等逻辑运算符。使用汇编语言的时候也可以使用逻辑运算指令，常用的运算指令用法如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/逻辑运算指令.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/逻辑运算指令.png)
 逻辑运算指令都很好理解，后面时候汇编配置I.MX6UL的外设寄存器的时候可能会用到，ARM汇编就讲解到这里，
 
 本节主要讲解了一些最常用的指令。要想详细的学习ARM的所有指令请参考
@@ -4335,7 +4335,7 @@ STM32的GPIO初始化就是以上四步，那么会不会也适用于I.MX6U的�
 
 STM32中的IO都是PA0\~15、PB0\~15这样命名的，I.MX6U的IO是怎么命名的呢？打开I.MX6UL参考手册的第30章“Chapter30: IOMUX Controller(IOMUXC)”
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/I.MX6U_GPIO命名.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6U_GPIO命名.png)
 
 图中：命名形式就是“IOMUXC_SW_MUC_CTL_PAD_XX_XX”，后面的“XX_XX”就是GPIO命名，比如：GPIO1_IO01、UART1_TX_DATA、JTAG_MOD、SNVS_TAMPER1等等。  
 > 该章节中一共有两中命名方式：SW_MUX_CTL_PAD_* 和SW_PAD_CTL_PAD_\*。这其实就是 IO配置的两种寄存器。用来设置 IO 的复用功能和 IO 属性配置。
@@ -4351,11 +4351,11 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 ### I.MX6U IO复用
 
 以IO“IOMUXC_SW_MUX_CTL_PAD_GPIO1_IO00”为例，打开参考手册的1329页，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/GPIO1_IO00复用.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO1_IO00复用.png)
 从图可以看到有个名为：IOMUXC_SW_MUX_CTL_PAD_GPIO1_IO00的寄存器，寄存器地址为0X020E005C，这个寄存器是32位的，但是只用到了最低5位，其中bit0\~bit3(MUX_MODE)就是设置GPIO1_IO00的复用功能的。GPIO1_IO00一共可以复用为9种功能IO，分别对应ALT0~ALT8，其中ALT5就是作为GPIO1_IO00。GPIO1_IO00还可以作为I2C2_SCL、GPT1_CAPTURE1、ANATOP_OTG1_ID等。这个就是I.MX6U的IO复用。
 
 再来看一个“IOMUXC_SW_MUX_CTL_PAD_UART1_TX_DATA”这个IO，这个IO对应的复用如图8.1.3.2所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/UART1_TX_DATA_IO复用.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/UART1_TX_DATA_IO复用.png)
 
 同样的，从图可以看出，UART1_TX_DATA可以复用为8种不同功能的IO，分为ALT0~ALT5和ALT8、ATL9，其中ALT5表示UART1_TX_DATA可以复用为GPIO1_IO16。
 
@@ -4375,22 +4375,22 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 #### SW_PAD_CTL_PAD_\*
 
 用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。以 `IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00`举例讲解：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00寄存器.png)
 图中可以看出，寄存器地址为0X020E02E8。这也是个32位寄存器，但是只用到了其中的低17位，在看这写位的具体含义之前，先来看一下下图所示的GPIO功能图
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
 
 我们对照着图来详细看一下寄存器各个位的含义：
 
  - HYS(bit16)：对应图中HYS，用来使能迟滞比较器，当IO作为输入功能的时候有效，用于设置输入接收器的施密特触发器是否使能。如果需要对输入波形进行整形的话可以使能此位。此位为0的时候禁止迟滞比较器，为1的时候使能迟滞比较器。
  - PUS(bit15:14)：对应图中的PUS，用来设置上下拉电阻的，一共有四种选项可以选择，如表所示
- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/上下拉设置.png)
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/上下拉设置.png)
 - PUE(bit13)：图中没有给出来，当IO作为输入的时候，这个位用来设置IO使用上下拉还是状态保持器。当为0的时候使用状态保持器，当为1的时候使用上下拉。状态保持器在IO作为输入的时候才有用，顾名思义，就是当外部电路断电以后此IO口可以保持住以前的状态。
 - PKE(bit12)：对应图中的PKE，此为用来使能或者禁止上下拉/状态保持器功能，为0时禁止上下拉/状态保持器，为1时使能上下拉和状态保持器。
 - ODE(bit11)：对应图中的ODE，当IO作为输出的时候，此位用来禁止或者使能开路输出，此位为0的时候禁止开路输出，当此位为1的时候就使能开路输出功能。
 - SPEED(bit7:6)：对应图中的SPEED，当IO用作输出的时候，此位用来设置IO速度，设置如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/速度配置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/速度配置.png)
 - DSE(bit5:3)：对应图中的DSE，当IO用作输出的时候用来设置IO的驱动能力，总共有8个可选选项，如表所示： 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/驱动能力设置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/驱动能力设置.png)
 - SRE(bit0)：对应图中的SRE，设置压摆率，当此位为0的时候是低压摆率，当为1的时候是高压摆率。这里的压摆率就是IO电平跳变所需要的时间，比如从0到1需要多少时间，时间越小波形就越陡，说明压摆率越高；反之，时间越多波形就越缓，压摆率就越低。如果你的产品要过EMC的话那就可以使用小的压摆率，因为波形缓和，如果你当前所使用的IO做高速通信的话就可以使用高压摆率。
   
  通过上面的介绍，我们解决了 IO 的复用配置、属性配置。但是我们没有看到如何设置IO的功能（如：GPIOP、UART等）？所以我们接着继续看。
@@ -4400,12 +4400,12 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 `IOMUXC_SW_MUX_CTL_PAD_XX_XX`和`IOMUXC_SW_PAD_CTL_PAD_XX_XX`这两种寄存器都是配置IO的，注意是IO！不是GPIO，GPIO是一个IO众多复用功能中的一种。
 
 比如GPIO1_IO00这个IO可以复用为9个功能，GPIO1_IO00是其中的一种。如果我们要用GPIO1_IO00来点个灯、作为按键输入啥的就是使用其GPIO(通用输入输出)的功能。将其复用为GPIO以后还需要对其GPIO的功能进行配置，关于I.MX6U的GPIO请参考《IMX6UL参考手册》的第26章“Chapter 26 General Purpose Input/Ouput(GPIO)”，GPIO结构如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/GPIO结构图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO结构图.png)
 
 在图中的 左下角 的IOMUXC框 图 里 面 就 有SW_MUX_CTL_PAD_\*和SW_PAD_CTL_PAD_\*两种寄存器。这两种寄存器前面说了用来设置IO的复用功能和IO属性配置。左上角部分的GPIO框图就是，当IO用作GPIO的时候需要设置的寄存器，一共有八个：DR、GDIR、PSR、ICR1、ICR2、EDGE_SEL、IMR和ISR。前面我们说了I.MX6U一共有GPIO1~GPIO5共五组GPIO，每组GPIO都有这8个寄存器。我们来看一下这8个寄存器都是什么含义。
 
 首先来看一下DR寄存器，此寄存器是数据寄存器，结构图如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/DR寄存器结构图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/DR寄存器结构图.png)
 
 此寄存器是32位的，一个GPIO组最大只有32个IO，因此
 - DR寄存器中的每个位都对应一个GPIO。
@@ -4413,14 +4413,14 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 - 当GPIO被配置为输入模式以后，此寄存器就保存着对应IO的电平值。例如，当GPIO1_IO00这个引脚接地的话，那么GPIO1.DR的bit0就是0。
 
 看完DR寄存器，接着看GDIR寄存器，这是方向寄存器，用来设置某个GPIO的工作方向的，即输入/输出，GDIR寄存器结构如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/GDIR寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GDIR寄存器.png)
 GDIR寄存器也是32位的，同样的，每个IO对应一个位，
 - 此寄存器用来设置某个IO的工作方向，是输入还是输出。
 - 要设置GPIO为输入的话就设置相应的位为0
 - 如果要设置为输出的话就设置为1。
 
 接下来看PSR寄存器，这是GPIO状态寄存器，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/PSR状态寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/PSR状态寄存器.png)
 
 同样的PSR寄存器也是一个GPIO对应一个位，
 - 读取相应的位即可获取对应的GPIO的状态，也就是GPIO的高低电平值。
@@ -4428,24 +4428,24 @@ GDIR寄存器也是32位的，同样的，每个IO对应一个位，
 
 接下来看ICR1和ICR2这两个寄存器，都是中断控制寄存器，ICR1用于配置低16个GPIO，ICR2用于配置高16个GPIO，ICR1寄存器如图所示：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/ICR1寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ICR1寄存器.png)
 ICR1用于IO0~15的配置，ICR2用于IO16~31的配置。ICR1寄存器中一个GPIO用两个位，这两个位用来配置中断的触发方式，和STM32的中断很类似，可配置的选线如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/中断触发配置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/中断触发配置.png)
 
 接下来看IMR寄存器，这是中断屏蔽寄存器，如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/IMR寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IMR寄存器.png)
 IMR寄存器也是一个GPIO对应一个位，
 - IMR寄存器用来控制GPIO的中断禁止和使能，如果使能某个GPIO的中断，那么设置相应的位为1即可，反之，如果要禁止中断，那么就设置相应的位为0即可。
 
 例如，要使能GPIO1_IO00的中断，那么就可以设置GPIO1.MIR=1即可。
 
 接下来看寄存器ISR，ISR是中断状态寄存器，寄存器如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/ISR寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ISR寄存器.png)
 
 ISR寄存器也是32位寄存器，一个GPIO对应一个位，只要某个GPIO的中断发生，那么ISR中相应的位就会被置1。所以，我们可以通过读取ISR寄存器来判断GPIO中断是否发生，相当于ISR中的这些位就是中断标志位。当我们处理完中断以后，必须清除中断标志位，清除方法就是向ISR中相应的位写1，也就是写1清零。
 
 最后来看一下EDGE_SEL寄存器，这是边沿选择寄存器，寄存器如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/EDGE_SEL寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/EDGE_SEL寄存器.png)
 
 EDGE_SEL寄存器用来设置边沿中断，这个寄存器会覆盖ICR1和ICR2的设置，同样是一个GPIO对应一个位。如果相应的位被置1，那么就相当与设置了对应的GPIO是上升沿和下降沿(双边沿)触发。例如，我们设置GPIO1.EDGE_SEL=1，那么就表示GPIO1_IO01是双边沿触发中断，无论GFPIO1_CR1的设置为多少，都是双边沿触发。
 
@@ -4457,9 +4457,9 @@ I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”�
 CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关
 以CCM_CCGR0为例：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/CCM_CCGR0寄存器.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/CCM_CCGR0寄存器.png)
 CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，比如 bit31:30 控制着GPIO2 的外设时钟，两个位就有 4 种操作方式。
-- ![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/外设时钟控制.png)
+- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设时钟控制.png)
 
 如果我们要打开GPIO2的外设时钟，那么只需要设置CCM_CCGR0的bit31和bit30都为1即可，也就是
 ```
@@ -4475,7 +4475,7 @@ CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，
 
 ## 硬件原理图
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/LED原理图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/LED原理图.png)
 
 从图可以看出，LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
@@ -4633,7 +4633,7 @@ lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ chmod 777 imxdownload
 >解决方法就是重新插拔SD卡，但一般出现这种情况，重新插拔SD卡基本没啥用，只有重启Ubuntu，原因不清楚。
 
 最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
 # I.MX6U启动方式详解
 
@@ -5261,7 +5261,7 @@ NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库�
 使用Cortex-A内核芯片的时候不要想着有类似STM32库一样的东西，I.MX6ULL是一个特例，基本所有的Cortex-A内核的芯片都不会提供裸机SDK包。
 
 I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-6-processors/i-mx-6ull-single-core-processor-with-arm-cortex-a7-core:i.MX6ULL?tab=Design_Tools_Tab)，下载界面如图所示
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/I.MX6ULL_SDK包下载界面.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6ULL_SDK包下载界面.png)
 
 双击SDK_2.2_MCIM6ULL_RFP_Win.exe安装SDK包，安装的时候需要记住安装位置
 
@@ -5489,7 +5489,7 @@ Makefile文件是在前面的Makefile上修改的，只是使用到了变量替�
 
 # BSP工程管理实验
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1607522806467.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607522806467.png)
 
 嵌入式硬件工程师主要职责是负责设计嵌入式系统的硬件原理图，使用相应的工具画出PCB图，后期配合嵌入式软件工程师调试系统。  
 嵌入式软件工程师从系统软件上又可以分为两种：
@@ -5679,7 +5679,7 @@ SECTIONS{
 # 蜂鸣器实验
 
 ## 硬件原理分析
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1607528528485.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607528528485.png)
 
 当SNVS_TAMPER1输出低电平的时候Q1导通，相当于蜂鸣器的正极连接到DCDC_3V3，蜂鸣器形成一个通路，因此蜂鸣器会鸣叫。同理，当SNVS_TAMPER1输出高电平的时候Q2不导通，那么蜂鸣器就没有形成一个通路，因此蜂鸣器也就不会鸣叫。
 
@@ -5807,7 +5807,7 @@ clean:
  
  按键KEY0的原理图如图15.2.1所示
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/1607612224969.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607612224969.png)
 
 ## 实验程序编写
 
@@ -6091,7 +6091,7 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 
 ### 系统时钟来源
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/开发板时钟原理图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/开发板时钟原理图.png)
 
 I.MX6U-ALPHA开发板的系统时钟来源于两部分：32.768KHz和24MHz的晶振，其中32.768KHz晶振是I.MX6U 的RTC时钟源，24MHz晶振是I.MX6U内核和其它外设的时钟源，也是我们重点要分析的。
 
@@ -6099,7 +6099,7 @@ I.MX6U-ALPHA开发板的系统时钟来源于两部分：32.768KHz和24MHz的晶
 
 I.MX6U的外设有很多，不同的外设时钟源不同，NXP将这些外设的时钟源进行了分组，一共有7组，这7组时钟源都是从24MHz晶振PLL而来的，因此也叫做7组PLL，这7组PLL结构如图所示：
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/初级PLLs时钟源生成图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/初级PLLs时钟源生成图.png)
 
 1. ARM_PLL（PLL1），此路PLL是供ARM内核使用的，ARM内核时钟就是由此PLL生成的，此PLL通过编程的方式最高可倍频到1.3GHz。
 2. 528_PLL(PLL2)，此路PLL也叫做System_PLL，此路PLL是固定的22倍频，不可编程修改。因此，此路PLL时钟=24MHz* 22 =528MHz，这也是为什么此PLL叫做528_PLL的原因。此PLL分出了4路PFD，分别为：PLL2_PFD0~PLL2_PFD3，这4路PFD和528_PLL共同作为其它很多外设的根时钟源。通常528_PLL和这4路PFD是I.MX6U内部系统总线的时钟源，比如内处理逻辑单元、DDR接口、NAND/NOR接口等等。
@@ -6112,19 +6112,19 @@ I.MX6U的外设有很多，不同的外设时钟源不同，NXP将这些外设�
 ### 时钟树简介
 
 《IMX6ULL参考手册》里时钟树在“Chapter 18Clock Controller Module (CCM)”的18.3小节给出了I.MX6U详细的时钟树图：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/I.MX6U时钟树.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6U时钟树.png)
 
 左边的CLOCK_SWITCHER就是我们上一小节讲解的那7路PLL和8路PFD，右边的SYSTEM CLOCKS就是芯片外设，中间的CLOCK ROOT GENERATOR是最复杂的！这一部分就像“月老”一样，给左边的CLOCK_SWITCHER和右边的SYSTEM CLOCKS进行牵线搭桥。外设时钟源是有多路可以选择的，CLOCK ROOT GENERATOR就负责从7路PLL和8路PFD中选择合适的时钟源给外设使用。
 
 《IMX6ULL参考手册》里时钟树在“Chapter 18Clock Controller Module (CCM)”的18.5.1.5.1 Clock Switcher  
 Switcher clocks 见下图
 
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/Switcher_clock_generation.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Switcher_clock_generation.png)
 
 ### 内核时钟设置
 
 先从主频开始，我们将I.MX6U的主频设置为528MHz，ARM内核时钟如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
 - ① 内核时钟源来自于PLL1
 - ② 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
 - ③ 大家不要被此处的2分频给骗了，此处没有进行2分频(我就被这个2分频骗了好久，主频一直配置不正确！)。
@@ -6143,7 +6143,7 @@ Switcher clocks 见下图
 ### PFD时钟设置
 
 置好主频以后我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
 
 ### AHB、IPG和PERCLK外设时钟设置
 
@@ -6154,19 +6154,19 @@ Switcher clocks 见下图
 - PERCLK：即PERCLK_CLK_ROOT。用于EPIT-I2C。貌似目前并没有用到这个外设。
  
 I.MX6U外设时钟可设置范围如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/外设根时钟可设置范围.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设根时钟可设置范围.png)
 
 图给出了大多数外设的根时钟设置范围，AHB_CLK_ROOT最高可以设置132MHz，IPG_CLK_ROOT和PERCLK_CLK_ROOT最高可以设置66MHz。
 
 AHB_CLK_ROOT和IPG_CLK_ROOT的涉及如图所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/总线时钟图.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/总线时钟图.png)
 - ① 此选择器用来选择pre_periph_clk的时钟源，可以选择PLL2、PLL2_PFD2、PLL2_PFD0和PLL2_PFD2/2。寄存器CCM_CBCMR的PRE_PERIPH_CLK_SEL位决定选择哪一个，默认选择PLL2_PFD2，因此pre_periph_clk=PLL2_PFD2=396MHz。
 - ② 此选择器用来选择periph_clk的时钟源，由寄存器CCM_CBCDR的PERIPH_CLK_SEL位与PLL_bypass_en2组成的或来选择。当CCM_CBCDR的PERIPH_CLK_SEL位为0的时候periph_clk=pr_periph_clk=396MHz。
 - ③ 通过CBCDR的AHB_PODF位来设置AHB_CLK_ROOT的分频值，可以设置1~8分频，如果想要AHB_CLK_ROOT=132MHz的话就应该设置为3分频：396/3=132MHz。图16.1.2中虽然写的是默认4分频，但是I.MX6U的内部bootrom将其改为了3分频！
 - ④ 通过CBCDR的IPG_PODF位来设置IPG_CLK_ROOT的分频值，可以设置1~4分频，IPG_CLK_ROOT时钟源是AHB_CLK_ROOT，要想IPG_CLK_ROOT=66MHz的话就应该设置2分频：132/2=66MHz。
   
 最后要设置的就是PERCLK_CLK_ROOT时钟频率，其时钟结构图如图16.1.6.3所示：
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/嵌入式Linux学习笔记/PERCLK_CLK_ROOT时钟结构.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/PERCLK_CLK_ROOT时钟结构.png)
 PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CCM_CSCMR1的PERCLK_CLK_SEL位来决定，如果为0的话PERCLK_CLK_ROOT的时钟源就是IPG_CLK_ROOT=66MHz。可以通过寄存器CCM_CSCMR1的PERCLK_PODF位来设置分频，如果要设置PERCLK_CLK_ROOT为66MHz的话就要设置为1分频。
 
 在修改如下时钟选择器或者分频器的时候会引起与MMDC的握手发生：
