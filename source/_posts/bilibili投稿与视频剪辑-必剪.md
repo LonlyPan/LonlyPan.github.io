@@ -26,13 +26,13 @@ OBS
 
 ### 录音设置
 1. 使用NVDIA的降噪软件，麦克风源选择我们的麦克风，开启噪音消除效果，强度最大
-![enter description here](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/bilibili投稿与视频剪辑/图像_1.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/图像_1.png)
 2. win10 右下角声音设置，输入选择插入设备的，右侧打开声音控制面板
-![图像 7](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/bilibili投稿与视频剪辑/图像_7.png)
+![图像 7](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/图像_7.png)
 3. 选择输入麦克风，打开属性，加强10dB（后面根据实际使用改为10dB更好）
-![图像 8](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/bilibili投稿与视频剪辑/图像_8.png)
+![图像 8](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/图像_8.png)
 4. 视频录制软件，麦克风音源选择 NVDIA Broadcast。即可开启录制
-![图像 9](https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/bilibili投稿与视频剪辑/图像_9.png)
+![图像 9](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/图像_9.png)
 
 
 ## 视频剪辑
