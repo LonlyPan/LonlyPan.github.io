@@ -5,7 +5,7 @@ index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Hexo�
 date:   2022-05-03  10:27 
 updated: 2022-05-08 10:27
 hide: false
-# sticky: 100 #置顶，数字越大越靠前
+sticky: 90 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
 # comment: false
 categories: 03-瞎折腾
