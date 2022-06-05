@@ -367,14 +367,12 @@ MM32F003、MM32F0010 基本没差别
 ### 开发资料下载
 官网资料：[开发工具 > SDK 配套资料 > 资料下载](http://www.holychip.cn/download.php?class_id=102108101)。下载 `SDK-HC89S003F4配套资料V1.3`
 解压文件内容如下：
-![enter description here](https://LonlyPan.github.io/images/Posts/2021-02-19-芯圣HC89S003F4学习笔记/芯圣官网资料.png)
-
+![芯圣官网资料](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/国产单片机MCU/芯圣官网资料.png)
 ### 硬件平台
 
 [芯圣淘宝官方旗舰店](https://shop155767245.taobao.com/?spm=a1z10.1-c-s.0.0.ef5c2d42FjWxWU)
 芯圣SDK-HC89S003F4单片机开发板
-![enter description here](https://LonlyPan.github.io/images/Posts/2021-02-19-芯圣HC89S003F4学习笔记/O1CN01wOLWld1fFVoLlGQ8D_!!2649473977.png)
-
+![O1CN01wOLWld1fFVoLlGQ8D__2649473977](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/国产单片机MCU/O1CN01wOLWld1fFVoLlGQ8D_!!2649473977.png)
 ### 软件平台
 
 1. 提前安装 Keil C51，并和谐完成
@@ -430,10 +428,9 @@ CLKCON &=~ 0x02; //关闭内部高频RC
 
 1. Options -> Dedug -> Settings
 单击 Option
-![enter description here](https://LonlyPan.github.io/images/Posts/2021-02-19-芯圣HC89S003F4学习笔记/下载配置_setting.png)
+![下载配置_setting](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/国产单片机MCU/下载配置_setting.png)
 2. 进入配置界面。修改 BORVS，随便更改一个值，然后重新编译程序并下载。之后再将电压值改回来（2.4V）,重新编译，再下载就好了。
-![enter description here](https://LonlyPan.github.io/images/Posts/2021-02-19-芯圣HC89S003F4学习笔记/BORV_设置.png)
-
+![BORV_设置](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/国产单片机MCU/BORV_设置.png)
 #### 仿真下载接口
 
 HC89S003F4 只支持 JTAG 4线仿真下载，不支持 SWD 两线。另外支持 ISP（串口）下载，但需要先使用 HC-LINK 烧写固化 ISP 固件，从而支持 ISP 下载。有另外已出厂固化好 ISP 固件的芯片，到手就可以进行串口下载。
