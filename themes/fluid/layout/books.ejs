@@ -12,74 +12,72 @@ page.banner_mask_alpha = theme.book.banner_mask_alpha
         <div class="row mx-auto book-card">
             <% var post_url = url_for(post.path), index_img = post.index_img || theme.post.default_index_img %>
             <% if(index_img) { %>
-            <div class="col-12 col-md-4 m-auto book-img">
-                <a href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
-                <img src="<%= url_for(index_img) %>" alt="<%= post.title %>">
-                </a>
-            </div>
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
+                        <img src="<%= url_for(index_img) %>" alt="<%= post.title %>">
+                    </a>
+                </div>
             <% } %>
             <article class="col-12 col-md-<%= index_img ? '8' : '12' %> mx-auto book-info">
-            <h1 class="book-header">
-                <% if (theme.book.post_sticky && theme.book.post_sticky.enable && post.sticky > 0) { %>
-                <i class="book-pin <%= theme.book.post_sticky && theme.book.post_sticky.icon %>" title="Pin on top"></i>
-                <% } %>
-                <a href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
-                <%= post.title %>
+                <h1 class="book-header">
+                    <% if (theme.book.post_sticky && theme.book.post_sticky.enable && post.sticky > 0) { %>
+                        <i class="book-pin <%= theme.book.post_sticky && theme.book.post_sticky.icon %>" title="Pin on top"></i>
+                    <% } %>
+                    <a href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
+                        <%= post.title %>
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        <%= post.author%>
+                        <%= "/" %>
+                        <%= post.translator %>
+                        <%= "-译 /" %>
+                        <%= post.press %>
+                        <%= "/" %>
+                        <%= post.publishdate %>
+                    </div>
+                    <div class="post-meta mr-3">
+                        <%= "已阅: " %>
+                        <%= post.readdate %>
+                        <%= " / 评分: " %>
+                        <%= post.stars %>
+                    </div>
+                </div>
+                <a class="book-excerpt" href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
+                    <div>
+                        <% var excerpt = post.description || post.excerpt || (theme.book.auto_excerpt.enable && post.content) %>
+                        <%- escape_html(strip_html(excerpt).substring(0, 200).trim()).replace(/\n/g, ' ') %>
+                    </div>
                 </a>
-            </h1>
-            <a class="post-meta">
-                <div>
-                <%= post.author%>
-                <%= "/" %>
-                <%= post.translator %>
-                <%= "-译 /" %>
-                <%= post.press %>
-                <%= "/" %>
-                <%= post.publishdate %>
-                </div>
-                <div>
-                <%= "已阅: " %>
-                <%= post.readdate %>
-                <%= " / 评分: " %>
-                <%= post.stars %>
-                </div>
-            </a>
-
-            <a class="book-excerpt" href="<%= post_url %>" target="<%- theme.book.post_url_target %>">
-                <div>
-                <% var excerpt = post.description || post.excerpt || (theme.book.auto_excerpt.enable && post.content) %>
-                <%- escape_html(strip_html(excerpt).substring(0, 200).trim()).replace(/\n/g, ' ') %>
-                </div>
-            </a>
         
-            <div class="book-btm post-metas">
-                <% if(theme.book.post_meta.date ) { %>
-                <div class="post-meta mr-3">
-                    <i class="iconfont icon-date"></i>
-                    <time datetime="<%= full_date(post.date, 'YYYY-MM-DD HH:mm') %>" pubdate>
-                    <%- date(post.date, config.date_format) %>
-                    </time>
+                <div class="book-btm post-metas">
+                    <% if(theme.book.post_meta.date ) { %>
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="<%= full_date(post.date, 'YYYY-MM-DD HH:mm') %>" pubdate>
+                                <%- date(post.date, config.date_format) %>
+                            </time>
+                        </div>
+                    <% } %>
+                    <% if(theme.book.post_meta.category && post.categories.length > 0) { %>
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            <%- partial('_partials/category-chains', { categories: post.categories, limit: 1 }) %>
+                        </div>
+                    <% } %>
+                    <% if(theme.book.post_meta.tag && post.tags.length > 0) { %>
+                        <div class="post-meta">
+                            <i class="iconfont icon-tags"></i>
+                            <% post.tags.each(function(tag){ %>
+                                <a href="<%= url_for(tag.path) %>">#<%- tag.name %></a>
+                            <% }) %>
+                        </div>
+                    <% } %>
                 </div>
-                <% } %>
-                <% if(theme.book.post_meta.category && post.categories.length > 0) { %>
-                <div class="post-meta mr-3 d-flex align-items-center">
-                    <i class="iconfont icon-category"></i>
-                    <%- partial('_partials/category-chains', { categories: post.categories, limit: 1 }) %>
-                </div>
-                <% } %>
-                <% if(theme.book.post_meta.tag && post.tags.length > 0) { %>
-                <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    <% post.tags.each(function(tag){ %>
-                    <a href="<%= url_for(tag.path) %>">#<%- tag.name %></a>
-                    <% }) %>
-                </div>
-                <% } %>
-            </div>
             </article>
-        
         </div>
-      <% } %>
-    <% }) %>
+    <% } %>
+<% }) %>
     
-    <%- partial('_partials/paginator') %>
+<%- partial('_partials/paginator') %>
