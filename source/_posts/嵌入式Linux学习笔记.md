@@ -6369,6 +6369,11 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_alientek_emmc_defconfig
 make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
+编译
+```
+chmod 777 mx6ull_alientek_emmc.sh //给予可执行权限，一次即可
+./mx6ull_alientek_emmc.sh //运行脚本编译 uboot
+```
 烧录
 ```
 chmod 777 imxdownload //给予 imxdownload 可执行权限
@@ -6383,7 +6388,6 @@ grep -nR "mx6ull_alientek_emmc.h"
 此时的 Board 还是“MX6ULL 14x14 EVK”
 LCD 屏幕和网络依旧失败
 还需要修改。
-
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
