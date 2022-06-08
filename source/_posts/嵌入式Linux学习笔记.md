@@ -6235,6 +6235,11 @@ make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
 ./mx6ull_14x14_evk_emmc.sh
 ```
+3. 将 imxdownload 软件拷贝到 uboot 源码根目录下，烧写到SD卡中
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
 
 
 # 嵌入式Linux学习笔记-朱有鹏"
