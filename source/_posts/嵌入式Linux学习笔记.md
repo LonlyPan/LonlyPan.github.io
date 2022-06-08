@@ -6343,7 +6343,7 @@ F:	board/freescale/mx6ull_alientek_emmc/
 F:	include/configs/mx6ull_alientek_emmc.h
 ```
 
-#### 修改 U-Boot 图形界面配置文件
+#### 4. 修改 U-Boot 图形界面配置文件
 
 uboot 是支持图形界面配置，关于 uboot 的图形界面配置下一章会详细的讲解。修改文件
 arch/arm/cpu/armv7/mx6/Kconfig(如果用的 I.MX6UL 的话，应该修改 arch/arm/Kconfig 这个文
@@ -6359,7 +6359,7 @@ config TARGET_MX6ULL_ALIENTEK_EMMC
 示例代码 33.2.4.2 Kconfig 文件
 `source "board/freescale/mx6ull_alientek_emmc/Kconfig"`
 
-#### 重新编译
+#### 5. 重新编译
 
 在 uboot 根目录下新建一个名为 mx6ull_alientek_emmc.sh 的 shell 脚本，在这个 shell 脚本
 里面输入如下内容：
@@ -6378,6 +6378,12 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 ```
 grep -nR "mx6ull_alientek_emmc.h"
 ```
+#### 6. 运行
+
+此时的 Board 还是“MX6ULL 14x14 EVK”
+LCD 屏幕和网络依旧失败
+还需要修改。
+
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
