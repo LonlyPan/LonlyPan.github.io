@@ -6247,8 +6247,20 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 - 网络失败：无驱动
 
 ### uboot修改
+1. 在 configs 目录下创建默认配置文件，复制 mx6ull_14x14_evk_emmc_defconfig(原版配置文件)，并重命名为 mx6ull_alientek_emmc_defconfig（自定义配置文件）：
+```
+cd configs
+cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
+```
+然后将文件 mx6ull_alientek_emmc_defconfig 中的内容改成下面的：
+```
+CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
+CONFIG_ARM=y
+CONFIG_ARCH_MX6=y
+CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
+CONFIG_CMD_GPIO=y
 
-
+```
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
