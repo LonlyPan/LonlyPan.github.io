@@ -6215,6 +6215,7 @@ uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
 
+### 原厂uboot编译并运行测试
 1. 原版Uboot发送到到ubuntu中，并解压
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
@@ -6244,6 +6245,8 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 - uboot启动中共南昌，DRAM识别正确，SD和EMMC正常
 - LCD失败：默认只支持4.3 寸 480x272 分辨率的屏幕，开发板时7寸的
 - 网络失败：无驱动
+
+### uboot修改
 
 
 # 嵌入式Linux学习笔记-朱有鹏"
