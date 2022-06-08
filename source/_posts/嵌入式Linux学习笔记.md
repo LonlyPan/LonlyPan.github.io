@@ -6252,7 +6252,10 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 cd configs
 cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
 ```
-然后将文件 mx6ull_alientek_emmc_defconfig 中的内容改成下面的：
+内容改成下面的：
+- 第一行时地址路径，后面会用到
+- 第四行时宏定义，后面会用到
+- 2、3两行内容和原版一致
 ```
 CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
 CONFIG_ARM=y
