@@ -16,7 +16,7 @@ categories: 01-专业
 <!--more-->
 # 二、Linux系统安装
 
-1、下载
+## 1、下载
  
 VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 选择你需要下载的版本 (64位系统选择可用的最高版本,32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 6.1.16（下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 扩展包，一个是 VirtualBox 主体安装包。
@@ -113,9 +113,11 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
  - https://segmentfault.com/a/1190000022468063
  - https://www.codeleading.com/article/61115145053/
 
-# 三、Ubuntu初体验
+## 5. Ubuntu系统配置
 
-## 软件和更新源
+系统配置可选
+
+### 软件和更新源
 
 Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
 1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
@@ -124,7 +126,7 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考资料**
 - [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
 
-## U盘支持
+### U盘支持
 
 我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
 
@@ -138,7 +140,7 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考链接**
 - [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
 
-## 增强扩展功能
+### 增强扩展功能
 
 安装增强扩展功能。解决以下问题：
 - 更改屏幕分辨率，解决显示界面太小问题
@@ -166,14 +168,14 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考链接**
 - [Install guest additions on a VirtualBox](https://www.youtube.com/watch?v=V4tGpsZiOdw)
 
-## 图标对齐
+### 图标对齐
 
 虽然LInux基本都是命令行操作，但桌面有时也会偶尔存放东西。默认拖动到桌面的文件图标会堆叠在一起，不像 Windows 或自动整理、对齐。其实这里需要我们自己选择。在桌面右键：
 - keep aligned：保持对齐
 - Organize Desktop by Name：按名称排序桌面
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
 
-## 锁屏
+### 锁屏
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
