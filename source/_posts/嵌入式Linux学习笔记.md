@@ -6240,6 +6240,10 @@ make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 chmod 777 imxdownload //给予 imxdownload 可执行权限
 ./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
 ```
+4. SD启动，串口连接查看输出信息。
+- uboot启动中共南昌，DRAM识别正确，SD和EMMC正常
+- LCD失败：默认只支持4.3 寸 480x272 分辨率的屏幕，开发板时7寸的
+- 网络失败：无驱动
 
 
 # 嵌入式Linux学习笔记-朱有鹏"
