@@ -6247,9 +6247,10 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 - 网络失败：无驱动
 
 ### uboot修改
-1. 在 configs 目录下创建默认配置文件，复制 mx6ull_14x14_evk_emmc_defconfig(原版配置文件)，并重命名为 mx6ull_alientek_emmc_defconfig（自定义配置文件）：
+
+#### 1. 在 configs 目录下创建默认配置文件
+复制 mx6ull_14x14_evk_emmc_defconfig(原版配置文件)，并重命名为 mx6ull_alientek_emmc_defconfig（自定义配置文件）：
 ```
-cd configs
 cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
 ```
 内容改成下面的：
@@ -6264,6 +6265,49 @@ CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
 CONFIG_CMD_GPIO=y
 
 ```
+#### 2. 在 include/configs 目录下添加开发板对应的头文件
+
+复 制include/configs/mx6ullevk.h，并重命名为 mx6ull_alientek_emmc.h：
+ ```
+cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
+```
+
+拷贝完成以后将：
+```
+#ifndef __MX6ULLEVK_CONFIG_H
+#define __MX6ULLEVK_CONFIG_H
+```
+改为：
+```
+#ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+#define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+```
+#### 3. 添加开发板对应的板级文件夹
+board/freescale 目录下，在这个目录下
+复制 mx6ullevk文件夹，将其重命名为 mx6ull_alientek_emmc，命令如下：
+```
+cp mx6ullevk/ -r mx6ull_alientek_emmc
+```
+进 入 mx6ull_alientek_emmc 目 录 中 ， 将 其 中 的 mx6ullevk.c 文 件 重 命 名 为 mx6ull_alientek_emmc.c，命令如下：
+```
+mv mx6ullevk.c mx6ull_alientek_emmc.c
+```
+	
+1. 修改 mx6ull_alientek_emmc 目录下的 Makefile 文件
+第 6 行改为 mx6ull_alientek_emmc.o，这样才会编译 mx6ull_alientek_emmc.c这个文件。
+```
+# (C) Copyright 2015 Freescale Semiconductor, Inc.
+#
+# SPDX-License-Identifier:	GPL-2.0+
+#
+
+obj-y  := mx6ull_alientek_emmc.o
+
+extra-$(CONFIG_USE_PLUGIN) :=  plugin.bin
+$(obj)/plugin.bin: $(obj)/plugin.o
+	$(OBJCOPY) -O binary --gap-fill 0xff $< $@
+```
+
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
