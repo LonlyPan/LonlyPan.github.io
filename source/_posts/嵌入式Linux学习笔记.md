@@ -100,7 +100,7 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 - [Drag and Drop not working for Ubuntu 20.04 VirtualBox](https://askubuntu.com/questions/1230102/drag-and-drop-not-working-for-ubuntu-20-04-virtualbox)
 - [VirtualBox Ubuntu 20.04 LTS super buggy](https://www.linux.org/threads/virtualbox-ubuntu-20-04-lts-super-buggy.29161/)
 
-## 参考链接
+### 参考链接
 
  - [virtualbox虚拟机使用教程](https://zsxwz.com/2020/01/27/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
  - [Oracle VM VirtualBox 使用教程(Windows操作系统下)](https://www.xckjsys.com/2019/08/20/154/)
@@ -114,8 +114,6 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
  - https://www.codeleading.com/article/61115145053/
 
 ## 5. Ubuntu系统配置
-
-系统配置可选
 
 ### 软件和更新源
 
@@ -6217,13 +6215,25 @@ uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
 
-1. 原版Uboot放松到ubuntu中，解压
+1. 原版Uboot发送到到ubuntu中，并解压
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
 ```
-2. 创建sh文件
+2. 再uboot目录下创建sh文件
 ```
 vim mx6ull_14x14_emmc.sh
+```
+添加代码：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
+
+```
+执行脚本，完成编译
+```
+./mx6ull_14x14_evk_emmc.sh
 ```
 
 
