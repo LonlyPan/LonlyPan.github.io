@@ -6369,7 +6369,11 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_alientek_emmc_defconfig
 make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
-
+烧录
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
