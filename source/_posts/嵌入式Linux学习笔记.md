@@ -6268,7 +6268,7 @@ CONFIG_CMD_GPIO=y
 #### 2. 在 include/configs 目录下添加开发板对应的头文件
 
 复 制include/configs/mx6ullevk.h，并重命名为 mx6ull_alientek_emmc.h：
- ```
+```
 cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 ```
 
@@ -6282,6 +6282,7 @@ cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 #ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
 #define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
 ```
+
 #### 3. 添加开发板对应的板级文件夹
 board/freescale 目录下，在这个目录下
 复制 mx6ullevk文件夹，将其重命名为 mx6ull_alientek_emmc，命令如下：
@@ -6306,6 +6307,67 @@ obj-y  := mx6ull_alientek_emmc.o
 extra-$(CONFIG_USE_PLUGIN) :=  plugin.bin
 $(obj)/plugin.bin: $(obj)/plugin.o
 	$(OBJCOPY) -O binary --gap-fill 0xff $< $@
+```
+2、修改 mx6ull_alientek_emmc 目录下的 imximage.cfg 文件
+将 imximage.cfg 中的下面一句：
+`PLUGIN board/freescale/mx6ullevk/plugin.bin 0x00907000`
+改为：
+`PLUGIN board/freescale/mx6ull_alientek_emmc /plugin.bin 0x00907000`
+
+3、修改 mx6ull_alientek_emmc 目录下的 Kconfig 文件
+修改 Kconfig 文件，修改后的内容如下
+```
+if TARGET_MX6ULL_ALIENTEK_EMMC
+
+config SYS_BOARD
+	default "mx6ull_alientek_emmc"
+
+config SYS_VENDOR
+	default "freescale"
+
+config SYS_SOC
+	default "mx6"
+
+config SYS_CONFIG_NAME
+	default "mx6ull_alientek_emmc"
+
+endif
+```
+4、修改 mx6ull_alientek_emmc 目录下的 MAINTAINERS 文件
+修改 MAINTAINERS 文件，修改后的内容如下：
+```
+MX6ULL_ALIENTEK_EMMC BOARD
+M:	Peng Fan <peng.fan@nxp.com>
+S:	Maintained
+F:	board/freescale/mx6ull_alientek_emmc/
+F:	include/configs/mx6ull_alientek_emmc.h
+```
+
+#### 修改 U-Boot 图形界面配置文件
+
+uboot 是支持图形界面配置，关于 uboot 的图形界面配置下一章会详细的讲解。修改文件
+arch/arm/cpu/armv7/mx6/Kconfig(如果用的 I.MX6UL 的话，应该修改 arch/arm/Kconfig 这个文
+件)，在 207 行加入如下内容：
+```
+config TARGET_MX6ULL_ALIENTEK_EMMC
+	bool "Support mx6ull_alientek_emmc"
+	select MX6ULL
+	select DM
+	select DM_THERMAL
+```
+在最后一行的 endif 的前一行添加如下内容：
+示例代码 33.2.4.2 Kconfig 文件
+`source "board/freescale/mx6ull_alientek_emmc/Kconfig"`
+
+#### 重新编译
+
+在 uboot 根目录下新建一个名为 mx6ull_alientek_emmc.sh 的 shell 脚本，在这个 shell 脚本
+里面输入如下内容：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_alientek_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
 
 # 嵌入式Linux学习笔记-朱有鹏"
