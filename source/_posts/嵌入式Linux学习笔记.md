@@ -3879,28 +3879,28 @@ Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries
 
 创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
 
-在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`。存放编译器
 
 进入tool目录，将交叉编译器下载文件（不要解压、不要解压）复制到arm目录中
 `sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/filezilla_传输文件.png)
 
+这里一定要保证压缩文件名是.xz 结尾，否则后面uboot编译时会出错，下图第第二个文件就是错的
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651106667942.png)
 
 进入arm目录，解压：
 `sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
 
-
-
-
-
-在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
-
-
-
 修改环境变量，`sudo vi /etc/profile`
 最后面输入如下所示内容：
 `export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
+
+添加完成以后的/etc/profile如下图所示
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_profile.png)
+
+修改好以后就保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
 保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
@@ -3931,46 +3931,11 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
 
 
-在Ubuntu中创建目录：/usr/local/arm，命令如下
-```
- sudo mkdir /usr/local/arm
-```
- 创建完成以后将刚刚拷贝的交叉编译器复制到/usr/local/arm这个目录中，在终端使用命令“cd” 进 入 到 存 放 有 交 叉 编 译 器 的 目 录 ， 比 我 前 面 将 交 叉 编 译 器 拷 贝 到 了 目 录 "linux/tool”中，然后使用如下命令将交叉编译器复制到/usr/local/arm中：
-```
- sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f
-```
- 步骤如下：
-```
-lonly@lonly-VirtualBox:~/linux/tools$ ls
-gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
-lonly@lonly-VirtualBox:~/linux/tools$ sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz .xz/usr/local/arm/ -f
-lonly@lonly-VirtualBox:~/linux/tools$ cd /usr/local/arm
-lonly@lonly-VirtualBox:/usr/local/arm$ ls
-gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
-```
 
-这里一定要保证压缩文件名是.xz 结尾，否则后面uboot编译时会出错，下图第第二个文件就是错的
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651106667942.png)
 
-拷贝完成以后在/usr/local/arm目录中对交叉编译工具进行解压，解压命令如下：
 
-```
-sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar
-```
-等待解压完成，解压完成以后会生成一个名为“gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf”的文件夹，这个文件夹里面就是我们的交叉编译工具链。  
-修改环境变量，使用VI打开/etc/profile文件，命令如下：
-```
-sudo vi /etc/profile
-```
-打开/etc/profile以后，在最后面输入如下所示内容：
-```
-export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
-```
-添加完成以后的/etc/profile如下图所示
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_profile.png)
 
-修改好以后就保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
 ##### 安装相关库
 
