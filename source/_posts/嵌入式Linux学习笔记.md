@@ -12,6 +12,7 @@ categories: 01-专业
 ---
 
 <!--more-->
+# 入门篇
 
 # 一、 基础概念
 
@@ -96,11 +97,8 @@ Linux内核由林纳斯·托瓦兹（Linus Torvalds）在1991年10月5日首次�
 - [Linux 简介](https://www.runoob.com/linux/linux-intro.html)
 - [Linux-wiki](https://zh.wikipedia.org/zh-hans/Linux)
 
+## gcc编译
 
-
-`
-
-## gcc -v
 gcc编译器ubuntu自带，`gcc -v` 查看当前版本
 
 `gcc [选项] [文件名字]`
@@ -129,282 +127,6 @@ int main(int argc, char *argv[])
 
 我们需要操作的步骤：.o 和可执行文件
 
-## Makefile
-
-多文件编译演示：
-```
-main.c
-#include <stdio.h>
-#include "input.h"
-#include "calcu.h"
-
-int main(int argc, char *argv[])
-{
-	int a, b, num;
-
-	input_int(&a, &b);
-	num = calcu(a, b);
-	printf("%d + %d = %d\r\n", a, b, num);
-}
-
-input.c 
-
-#include <stdio.h>
-#include "input.h"
-
-void input_int(int *a, int *b)
-{
-	printf("input two num:");
-	scanf("%d %d", a, b);
-	printf("\r\n");
-}
-
-#ifndef _INPUT_H
-#define _INPUT_H
-
-void input_int(int *a, int *b);
-#endif
-
-calcu.c 
-
-#include "calcu.h"
-int calcu(int a, int b)
-{
- return (a + b);
-}
-
-calcu.h
-#ifndef _CALCU_H
-#define _CALCU_H
-
-int calcu(int a, int b);
-#endif
-```
-```
-gcc main.c calcu.c input.c -o main
-```
-
-Makefile好处：
-- 大量文件编译
-- 只编译修改的文件
-- 简便
-
-新建Makefile
-**命令列表中的每条命令必须以 TAB 键开始，不能使用空格！**
-```
-main: main.o input.o calcu.o
-	gcc -o main main.o input.o calcu.o
-main.o: main.c
-	gcc -c main.c
-input.o: input.c
-	gcc -c input.c
-calcu.o: calcu.c
-	gcc -c calcu.c
-
-clean:
-	rm *.o
-	rm main
-```
-自动化变量：
-```
-objects = main.o input.o calcu.o
-main: $(objects)
-	gcc -o main $(objects)
-
-%.o : %.c
-	gcc -c $<
-
-clean:
-	rm *.o
-	rm main
-```
-
-
-# LInux系统移植
-
-操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用）
-
-Linux功能：
-进程管理
-内存管理（运存？）
-网络协议
-文件系统
-设备管理（LED、键鼠、屏幕）
-系统移植过程
-windows系统                                           Linux系统
-windows系统镜像、U盘启动盘            Linux内核镜像（需要裁剪移植）、SD卡启动盘（Uboot）
-BIOS选择启动方式（U盘启动）          拨码开关选择启动方式（SD启动）
-通过U盘中的引导程序安装系统           通过SD卡中的引导程序（Uboot）安装系统
-安装驱动
-安装应用
-开发板启动过程
-开发板上电后首先运行 SOC 内部 iROM 中固化的代码（BL0），这段代码先对基本的软银见环境（时钟等）初始化，然后检测拨码开关获取启动方式，再将对应存储器（SD卡）中的Uboot搬移到内存，然后跳转到uboot运行
-uboot开始运行后首先对开发板软硬件环境初始化，然后将 linux内核、设备树（dtb） 、根文件系统（rootfs）从外部存储器（或网络）搬移到内存，然后跳转到linux运行
-linux开始运行，先对系统环境初始化，当系统启动完成后，linux再从内存中（或网络）挂在根文件系统
-
-![enter description here](./img/2022-04-07-Linux快速入门/1652410941723.png)
-根据启动过程得出移植步骤：
-uboot移植
-linux内核移植（包含设备树）
-根文件系统移植
-开发环境准备
-我们再linux系统中（安装再PC上的，一般是Ubuntu）编辑要移植的linux系统，然后再编译，最后生成一个安装包，再使用SD卡安装到开发板
-注：后面说Ubuntu指安装在PC上的Linux系统，说Linux指要移植的linux系统
-
-Ubuntu联网，下载文件机、开发板通信
-tftp服务器环境搭建：基于网络通信协议（TCP/IP）在客户机（开发板）和服务器（PC）直接进行简单的文件传输
-nfs环境搭建：基于网络通信协议（UDP/IP）在不同计算机之间通过网络进行文件共享，既可以在客户端（开发板）访问服务器（PC）文件，不需要频繁通过 tftp 先传输再访问
-
-SD卡启动盘制作
-选择SD卡启动，处理器上电默认从第一个扇区开始搬移到内存
-
-uboot使用
-uboot模式
-自启动模式
-uboot启动后若没有用户介入，倒计时结束后会自动执行自启动环境变量（bootcmd）中设置的命令（一般叫做加载和启动内核）
-交互模式
-倒计时结束前按下任意按键，uboot会进入交互模式，用户可输入uboot命令
-     
-	 
-	
-
-# linux内核
-
-Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
-
-设备驱动程序和内核扩展运行于内核空间（在很多CPU架构中是ring 0），可以完全访问硬件，但也有运行于用户空间的一些例外，例如基于FUSE/CUSE的文件系统，和部分UIO[29][30]。多数人与Linux一起使用的图形系统不运行在内核中。与标准单体内核不同，Linux的设备驱动程序可以轻易的配置为内核模块，并在系统运行期间可直接装载或卸载。也不同于标准单体内核，设备驱动程序可以在特定条件下被抢占；增加这个特征用于正确处理硬件中断并更好的支持对称多处理[28]。出于自愿选择，Linux内核没有二进制内核接口[31]。
-
-硬件也被集成入文件层级中。用户应用到设备驱动的接口是在/dev或/sys目录下的入口文件[32]。进程信息也通过/proc目录映射到文件系统[32]。
-
-![enter description here](./img/2022-04-07-Linux快速入门/1652321949009.png)
-
-- [Linux内核-wiki](https://zh.wikipedia.org/wiki/Linux%E5%86%85%E6%A0%B8)
-- [鸟哥linux第四版-基礎學習篇目錄 - for CentOS 7](https://linux.vbird.org/linux_basic/centos7/)
-
-shell
-- [Chapter 11 Shell 和 Shell Script](https://www.cyut.edu.tw/~ywfan/1109linux/201109chapter11shell%20script.htm)
-- [Linux Shell 版本问题](https://achelous.org/BI-solutions/Linux_shell_version.html)
-- [这些贝壳的插图哪一个是准确的？外壳是否仅通过外壳与内核对话？](https://www.reddit.com/r/linux4noobs/comments/kufgft/which_of_these_illustrations_of_the_shell_is/)
-- https://imgur.com/a/VuvJ3dy
-- [一篇文章從了解到入門shell](https://kknews.cc/code/3va5oq8.html)
-- [Shell脚本是什么](http://c.biancheng.net/view/932.html)
-- [Linux shell脚本](https://www.cnblogs.com/gd-luojialin/p/15028076.html)
-- [Linux Shell程式設計及自動化運維實現——shell概述及變數](https://www.gushiciku.cn/pl/gLvW/zh-tw)
-- [Bash 参考手册](https://www.gnu.org/software/bash/manual/bash.html)
-- [bash (Bourne again shell)](https://www.techtarget.com/searchdatacenter/definition/bash-Bourne-Again-Shell)
-- [什么是 Linux，为什么有 100 种 Linux 发行版？](https://itsfoss.com/what-is-linux/)
-- [linux系统组成及结构](https://blog.csdn.net/kai_zone/article/details/80444872)
-
-[Linux操作系统综述](https://blog.51cto.com/u_13800449/3049118)
-[Linux系统组成.md](https://github.com/sunnyandgood/BigData)
-![enter description here](./img/2022-04-07-Linux快速入门/1652327045769.png)
-
-
-## 常用指令
-
-<!--more-->
-
-
-
-### SD卡相关
-
-查询设备
-`ls /dev/sd*`
-
-下载到SD卡
-- imxdownload 复制到工程目录下
-- 给与权限 `chmod 777 imxdownloa`
-
-烧录到SD卡
-`./imxdownload led.bin /dev/sdd`
-
-
-重复执行上条命令的 4 种方法：
-- 使用上方向键，并回车执行。（推荐）
-- 按 Ctrl+P 并回车执行。（备选，有的命令上下键会没有，这个绝对会有）
-
-## 串口连接
-[MobaXterm]( https://mobaxterm.mobatek.net/) 
-
-波特率根据不同开发板修改
-![enter description here](./img/2022-04-07-Linux快速入门/1651834770833.png)
-
-## uboot移植
-
-### uboot编译
-
-无uboot源码，跳过次步骤，直接进入uboot下载
-首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
-`sudo apt-get install libncurses5-dev`
-
-ubuntu新建文件夹，拷贝开发板厂商的uboot到其中，例如正点原子的：uboot-imx-2016.03-2.1.0-ge468cdc-v1.5.tar.bz2
-解压：
-`tar -vxjf uboot-imx-2016.03-2.1.0-g8b546e4.tar.bz2`
-新建 shell脚本文件 `mx6ull_alientek_emmc.sh`
-输入如下内容(正点原子EMMC版本)：
-```
-1 #!/bin/bash
-2 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
-3 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- (加空格)
-mx6ull_14x14_ddr512_emmc_defconfig
-4 make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j12
-```
-给与shell文件权限：
-```
-chmod 777 mx6ull_alientek_emmc.sh
-```
-编译
-`./mx6ull_alientek_emmc.sh`
-
-### uboot烧写
-
-将 imxdownload 文件复制到uboot.bin 同级目录中
-```
-chmod 777 imxdownload //给予 imxdownload 可执行权限，一次即可
-./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡，不能烧写到/dev/sda 或 sda1 设备里面！
-```
-
->烧写速度在几百 KB/s 以下那么就是正常烧写。如果这个烧写速度大于几十 MB/s、甚至几百 MB/s 那么肯定是烧写失败了！
-
-### uboot配置
-
-修改环境变量
-```
-setenv bootdelay 5
-saveenv
-```
-
-有空格的环境变量用单引号括起来
-```
-etenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
-saveenv
-```
-
-#### 设置网络
-
-dhcp 命令:自动获取ip地址,不用设置下面的ipaddr
-
-
- - ipaddr 开发板 ip 地址，可以不设置，使用 dhcp 命令来从路由器获取 IP 地址。
- - ethaddr 开发板的 MAC 地址，一定要设置。不同开发板地址要不同
- - gatewayip 网关地址。
- - netmask 子网掩码。
- - serverip 服务器 IP 地址，也就是 Ubuntu 主机 IP 地址，用于调试代码。
-
-```
-setenv ipaddr 192.168.1.50
-setenv ethaddr b8:ae:1d:01:00:0
-setenv gatewayip 192.168.1.1
-setenv netmask 255.255.255.0
-setenv serverip 192.168.1.253
-saveenv
-```
-
-#### nfs网络传出镜像和设备树到DRAM中
-`nfs [loadAddress] [[hostIPaddr:]bootfilename]`
-
-下载(uboot操作):
-`nfs 80800000 192.168.1.253:/home/zuozhongkai/linux/nfs/zImage`
 
 
 
@@ -1730,7 +1452,7 @@ chown [-R] 属主名：属组名 文件名
 ```
 #### 3、chmod：更改文件9个属性
 
-##### 数字格式
+###### 数字格式
 
 文件的权限字符为： -rwxrwxrwx ， 这九个权限是三个三个一组的！其中，我们可以使用数字来代表各个权限，各权限的分数对照表如下：
 
@@ -3835,7 +3557,8 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 
 ### NFS
 
-sudo apt-get install nfs-kernel-server rpcbind
+`sudo apt-get install nfs-kernel-server rpcbind`
+
 新建 linux->nfs 文件夹
 sudo vi /etc/exports
 文件后追加
@@ -4405,21 +4128,6 @@ https://mobaxterm.mobatek.net
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347394139.png)
 串口设置
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347512693.png)
-
-
-# I.MX6U-ALPHA/Mini开发平台介绍
-
-嵌入式Linux和单片机的开发方式以及应用场合不同。单片机学名叫做Microcontroller，也就是微控制器，主要用于控制相关的应用，因此单片机的外设都比较多，比如很多路的IIC、SPI、UART、定时器等等。嵌入式Linux开发主要注重于高端应用场合，比如音视频处理、网络处理等等。比如一个机器人，高性能处理器加Linux系统(或者其他系统)作为机器人的大脑，主要负责接收各个传感器采集的数据然后对原始数据进行处理，得到下一步执行指令，这个往往需要很高的性能。当处理完成得到下一步要做的动作之后大脑就会将数据发给控制机器人各个关节电机的驱动控制器，这些驱动控制器一般都是单片机做的。所以大家在学习嵌入式Linux开发的时候一定不要深陷裸机，我们之所以讲解裸机是为了给嵌入式Linux打基础，让大家了解所使用的SOC、了解GCC那一套工作流程，最终的目的都是为了嵌入式Linux做准备的。
-
-
-## 开发板使用注意事项
-
-①、1个USB供电最多500mA，且由于导线电阻存在，供到开发板的电压，一般都不会有5V，如果使用了很多大负载外设，比如4.3寸屏、网络、摄像头模块等，那么可能引起USB供电不够，所以如果是使用4.3屏的朋友，或者同时用到多个模块的时候，建议大家使用一个独立电源供电。如果没有独立电源，建议可以同时插2个USB口，并插上仿真器，这样供电可以更足一些。
-②、当你想使用某个IO口用作其他用处的时候，请先看看开发板的原理图，该IO口是否有连接在开发板的某个外设上，如果有，该外设的这个信号是否会对你的使用造成干扰，先确定无干扰，再使用这个IO。
-③、开发板上的跳线帽比较多，大家在使用某个功能的时候，要先查查这个是否需要设置跳线帽，以免浪费时间。
-④、当液晶显示白屏的时候，请先检查液晶模块是否插好（拔下来重插试试）。
-⑤、开发板的USB OTG的USB SLAVE和USB HOST共用同一个USB口，所以，他们不可以同时使用。使用的时候多加注意。
-⑥、当需要从底板上拆转接板下来的时候，请左右晃动取下，不要太大幅度，否则有可能拆坏座子。
 
 
 # Cortex-A7 MPCore架构
@@ -6687,22 +6395,30 @@ PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CC
  本试验在上一章试验“7_key”的基础上完成，因为本试验只配置I.MX6U的系统时钟，因此我们直接在文件“bsp_clk.c”上做修改，修改bsp_clk.c的内容如下：   s
  
  
-# 系统移植篇
- 
-bootloader（U-Boot） -> Linux内核 -> 根文件系统(rootfs) 。这三者一起构成了一个完整的Linux系统，一个可以正常使用、功能完善的Linux系统。在本篇我们就来讲解U-Boot、LinuxKernel和rootfs的移植，与其说是“移植”，倒不如说是“适配”，因为大部分的移植工作都由NXP完成了，我们这里所谓的“移植”主要是使其能够在I.MX6U-ALPHA开发板上跑起来。
+# LInux系统移植
 
-## U-Boot 使用实验
-
-直接编译移植好的U-Boot，然后烧写到SD卡里面启动，启动U-Boot以后就可以学习使用U-Boot的命令。
+操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用
  
-**嵌入式系统启动过程**
+bootloader（U-Boot） -> Linux内核 -> 根文件系统(rootfs) 。这三者一起构成了一个完整的Linux系统，一个可以正常使用、功能完善的Linux系统。
+
+开发板上电后首先运行 SOC 内部 iROM 中固化的代码（BL0），这段代码先对基本的软银见环境（时钟等）初始化，然后检测拨码开关获取启动方式，再将对应存储器（SD卡）中的Uboot搬移到内存，然后跳转到uboot运行
+uboot开始运行后首先对开发板软硬件环境初始化，然后将 linux内核、设备树（dtb） 、根文件系统（rootfs）从外部存储器（或网络）搬移到内存，然后跳转到linux运行
+linux开始运行，先对系统环境初始化，当系统启动完成后，linux再从内存中（或网络）挂在根文件系统
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652410941723.png)
+根据启动过程得出移植步骤：
+
+ - uboot移植
+ - linux内核移植（包含设备树）
+ - 根文件系统移植
+
+## uboot简介
+
 嵌入式系统上电后先执行bootloader、先初始化DDR，Flash 等外设，然后将 Linux 内核从 Flash(NAND，NOR FLASH，SD，MMC等)中读取到 DDR 中，最后启动Linux内核。
 
 bootloader和Linux内核的关系就跟PC上的BIOS和Windows的关系一样，bootloader就相当于BIOS。
 
 现成的bootloader软件有很多，比如U-Boot、vivi、RedBoot等等，其中以U-Boot使用最为广泛，为了方便书写，本书会将U-Boot写为uboot。
-
-**uboot简介**
 
 一般不会直接用uboot官方的U-Boot源码的。uboot官方的uboot源码是给半导体厂商准备的，半导体厂商会下载uboot官方的uboot源码，然后将自家相应的芯片移植进去。也就是说半导体厂商会自己维护一个版本的uboot，这个版本的uboot相当于是他们定制的。既然是定制的，那么肯定对自家的芯片支持会很全，虽然uboot官网的源码中一般也会支持他们的芯片，但是绝对是没有半导体厂商自己维护的uboot全面
 NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://source.codeaurora.org/external/imx/uboot-imx/refs/heads)
@@ -6718,6 +6434,9 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+
+首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
+`sudo apt-get install libncurses5-dev`
 
 1. 原版Uboot复制到ubuntu中，解压
 ```
@@ -6788,6 +6507,36 @@ https://www.bilibili.com/video/BV19v411H7d3?p=13
 ![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
 
 
+# linux内核
+
+Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
+
+设备驱动程序和内核扩展运行于内核空间（在很多CPU架构中是ring 0），可以完全访问硬件，但也有运行于用户空间的一些例外，例如基于FUSE/CUSE的文件系统，和部分UIO[29][30]。多数人与Linux一起使用的图形系统不运行在内核中。与标准单体内核不同，Linux的设备驱动程序可以轻易的配置为内核模块，并在系统运行期间可直接装载或卸载。也不同于标准单体内核，设备驱动程序可以在特定条件下被抢占；增加这个特征用于正确处理硬件中断并更好的支持对称多处理[28]。出于自愿选择，Linux内核没有二进制内核接口[31]。
+
+硬件也被集成入文件层级中。用户应用到设备驱动的接口是在/dev或/sys目录下的入口文件[32]。进程信息也通过/proc目录映射到文件系统[32]。
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652321949009.png)
+
+- [Linux内核-wiki](https://zh.wikipedia.org/wiki/Linux%E5%86%85%E6%A0%B8)
+- [鸟哥linux第四版-基礎學習篇目錄 - for CentOS 7](https://linux.vbird.org/linux_basic/centos7/)
+
+shell
+- [Chapter 11 Shell 和 Shell Script](https://www.cyut.edu.tw/~ywfan/1109linux/201109chapter11shell%20script.htm)
+- [Linux Shell 版本问题](https://achelous.org/BI-solutions/Linux_shell_version.html)
+- [这些贝壳的插图哪一个是准确的？外壳是否仅通过外壳与内核对话？](https://www.reddit.com/r/linux4noobs/comments/kufgft/which_of_these_illustrations_of_the_shell_is/)
+- https://imgur.com/a/VuvJ3dy
+- [一篇文章從了解到入門shell](https://kknews.cc/code/3va5oq8.html)
+- [Shell脚本是什么](http://c.biancheng.net/view/932.html)
+- [Linux shell脚本](https://www.cnblogs.com/gd-luojialin/p/15028076.html)
+- [Linux Shell程式設計及自動化運維實現——shell概述及變數](https://www.gushiciku.cn/pl/gLvW/zh-tw)
+- [Bash 参考手册](https://www.gnu.org/software/bash/manual/bash.html)
+- [bash (Bourne again shell)](https://www.techtarget.com/searchdatacenter/definition/bash-Bourne-Again-Shell)
+- [什么是 Linux，为什么有 100 种 Linux 发行版？](https://itsfoss.com/what-is-linux/)
+- [linux系统组成及结构](https://blog.csdn.net/kai_zone/article/details/80444872)
+
+[Linux操作系统综述](https://blog.51cto.com/u_13800449/3049118)
+[Linux系统组成.md](https://github.com/sunnyandgood/BigData)
+![enter description here](./img/2022-04-07-Linux快速入门/1652327045769.png)
 
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
@@ -6810,25 +6559,25 @@ date: 2020-12-13
 
 #### 2.1.1.为什么要有uboot
 
-##### 计算机系统的主要部件
+###### 计算机系统的主要部件
 (1)计算机系统就是有CPU来做核心进行运行的系统。所有的计算机系统运行时需要的主要核心部件都是3个东西：CPU + 外部存储器（Flash/硬盘） + 内部存储器（DDR SDRAM/SDRAM/SRAM）
 
-##### PC机的启动过程
+###### PC机的启动过程
 (1)典型的PC机的部署：BIOS程序部署在PC机主板上（随主板出厂时已经预制了），操作系统部署在硬盘上，内存在掉电时无作用，CPU在掉电时不工作。
 (2)启动过程：PC上电后先执行BIOS程序（实际上PC的BIOS就是NorFlash），BIOS程序负责初始化DDR内存，负责初始化硬盘，然后从硬盘上将OS镜像读取到DDR中，然后跳转到DDR中去执行OS直到启动（OS启动后BIOS就无用了）
 
-##### 典型嵌入式linux系统启动过程
+###### 典型嵌入式linux系统启动过程
 (1)嵌入式系统的部署和启动都是参考PC机的。只是设备上有一些差别
 (2)典型嵌入式系统的部署：uboot程序部署在Flash（能作为启动设备的Flash）上、OS部署在FLash（嵌入式系统中用Flash代替了硬盘）上、内存在掉电时无作用，CPU在掉电时不工作。
 (3)启动过程：嵌入式系统上电后先执行uboot、然后uboot负责初始化DDR，初始化Flash，然后将OS从Flash中读取到DDR中，然后启动OS（OS启动后uboot就无用了）
 
 总结：嵌入式系统和PC机的启动过程几乎没有两样，只是BIOS成了uboot，硬盘成了Flash。
 
-##### android系统启动过程
+###### android系统启动过程
 (1)android系统的启动和linux系统（前面讲的典型的嵌入式系统启动）几乎一样。几乎一样意思就是前面完全一样，只是在内核启动后加载根文件系统后不同了。
 (1)可以认为启动分为2个阶段：第一个阶段是uboot到OS启动；第二个阶段是OS启动后到rootfs加载到命令行执行；现在我们主要研究第一个阶段，android的启动和linux的差别在第二阶段。
 
-##### 总结：uboot到底是干嘛的
+###### 总结：uboot到底是干嘛的
 (1)uboot主要作用是用来启动操作系统内核。
 (2)uboot还要负责部署整个计算机系统。
 (3)uboot中还有操作Flash等板子上硬盘的驱动。
@@ -6836,111 +6585,111 @@ date: 2020-12-13
 
 
 #### 2.1.2.为什么是uboot
-##### uboot从哪里来的？
+###### uboot从哪里来的？
 (1)uboot是SourceForge上的开源项目
 (2)uboot项目的作者：一个德国人最早发起的项目
 (3)uboot就是由一个人发起，然后由整个网络上所有感兴趣的人共同维护发展而来的一个bootloader。
 
-##### uboot的发展历程
+###### uboot的发展历程
 (1)自己使用的小开源项目。
 (2)被更多人认可使用
 (3)被SoC厂商默认支持。
 总结：uboot经过多年发展，已经成为事实上的业内bootloader标准。现在大部分的嵌入式设备都会默认使用uboot来做为bootloader。
 
-##### uboot的版本号问题
+###### uboot的版本号问题
 (1)早期的uboot的版本号类似于这样：uboot1.3.4。后来版本号便成了类似于uboot-2010.06。
 (2)uboot的核心部分几乎没怎么变化，越新的版本支持的开发板越多而已，对于一个老版本的芯片来说，新旧版本的uboot并没有差异。
-##### uboot的可移植性的正确理解
+###### uboot的可移植性的正确理解
 (1)uboot就是universal bootloader（通用的启动代码），通用的意思就是在各种地方都可以用。所以说uboot具有可移植性。
 (2)uboot具有可移植性并不是说uboot在哪个开发板都可以随便用，而是说uboot具有在源代码级别的移植能力，可以针对多个开发板进行移植，移植后就可以在这个开发板上使用了。
 
-##### 总结：
+###### 总结：
 时势造英雄，任何牛逼的东西都是时代的产物
 uboot的出现是一种必然，如果没有uboot也会有另一个bootloader来代替。
 
 #### 2.1.3.uboot必须解决哪些问题
-##### 自身可开机直接启动
+###### 自身可开机直接启动
 (1)一般的SoC都支持多种启动方式，譬如SD卡启动、NorFlash启动、NandFlash启动等·····uboot要能够开机启动，必须根据具体的SoC的启动设计来设计uboot
 (2)uboot必须进行和硬件相对应的代码级别的更改和移植，才能够保证可以从相应的启动介质启动。uboot中第一阶段的start.S文件中具体处理了这一块。
 
-##### 能够引导操作系统内核启动并给内核传参
+###### 能够引导操作系统内核启动并给内核传参
 (1)uboot的终极目标就是启动内核。
 (2)linux内核在设计的时候，设计为可以被传参。也就是说我们可以在uboot中事先给linux内核准备一些启动参数放在内存中特定位置然后传给内核，内核启动后会到这个特定位置去取uboot传给他的参数，然后在内核中解析这些参数，这些参数将被用来指导linux内核的启动过程。
 
-##### 能提供系统部署功能
+###### 能提供系统部署功能
 (1)uboot必须能够被人借助而完成整个系统（包括uboot、kernel、rootfs等的镜像）在Flash上的烧录下载工作。
 (2)裸机教程中刷机（ARM裸机第三部分）就是利用uboot中的fastboot功能将各种镜像烧录到iNand中，然后从iNand启动。
 
-##### 能进行soc级和板级硬件管理
+###### 能进行soc级和板级硬件管理
 (1)uboot中实现了一部分硬件的控制能力（uboot中初始化了一部分硬件），因为uboot为了完成一些任务必须让这些硬件工作。譬如uboot要实现刷机必须能驱动iNand，譬如uboot要在刷机时LCD上显示进度条就必须能驱动LCD，譬如uboot能够通过串口提供操作界面就必须驱动串口。譬如uboot要实现网络功能就必须驱动网卡芯片。
 (2)SoC级（譬如串口）就是SoC内部外设，板级就是SoC外面开发板上面的硬件（譬如网卡、iNand）
 
-##### uboot的“生命周期”
+###### uboot的“生命周期”
 (1)uboot的生命周期就是指：uboot什么时候开始运行，什么时候结束运行。
 (2)uboot本质上是一个**裸机程序（不是操作系统）**，一旦uboot开始SoC就会单纯运行uboot（意思就是uboot运行的时候别的程序是不可能同时运行的），一旦uboot结束运行则无法再回到uboot（所以uboot启动了内核后uboot自己本身就死了，要想再次看到uboot界面只能重启系统。重启并不是复活了刚才的uboot，重启只是uboot的另一生）
 (3)uboot的入口和出口。uboot的入口就是开机自动启动，uboot的唯一出口就是启动内核。uboot还可以执行很多别的任务（譬如烧录系统），但是其他任务执行完后都可以回到uboot的命令行继续执行uboot命令，而启动内核命令一旦执行就回不来了。
 
-##### 总结
+###### 总结
 一切都是为了启动内核
 
 #### 2.1.4.uboot的工作方式
-##### 从裸机程序镜像uboot.bin说起
+###### 从裸机程序镜像uboot.bin说起
 1. uboot的本质就是一个裸机程序，和我们裸机全集中写的那些裸机程序xx.bin并没有本质区别。如果非说要有区别，那就是：我们写的大部分小于16KB，而uboot大于16KB（一般uboot在180k-400k之间）
 2. uboot本身是一个开源项目，由若干个.c文件和.h文件组成，配置编译之后会生成一个uboot.bin，这就是uboot这个裸机程序的镜像文件。然后这个镜像文件被合理的烧录到启动介质中拿给SoC去启动。也就是说uboot在没有运行时表现为uboot.bin，一般躺在启动介质中。
 3. uboot运行时会被加载到内存中然后一条指令一条指令的拿给CPU去运行。
 
-##### uboot的命令式shell界面
+###### uboot的命令式shell界面
 1. 普通的裸机程序运行起来就直接执行了，执行时效果和代码有关。
 2. 有些程序需要和人进行交互，于是乎程序中就实现了一个shell（shell就是提供人机交互的一个界面，回想ARM裸机全集第十六部分），uboot就实现了一个shell。
 >注意：shell并不是操作系统，和操作系统一点关系都没有。linux中打开一个终端后就得到了一个shell，可以输入命令回车执行。uboot中的shell工作方式和linux中的终端shell非常像（其实几乎是一样的，只是命令集不一样。譬如linux中可以ls，uboot中ls就不识别）
 
-##### 掌握uboot使用的2个关键点：命令和环境变量
+###### 掌握uboot使用的2个关键点：命令和环境变量
 1. uboot启动后大部分时间和工作都是在shell下完成的（譬如uboot要部署系统要在shell下输命令、要设置环境变量也得在命令行地下，要启动内核也要在命令行底下敲命令）
 2. 命令就是uboot的shell中可以识别的各种命令。uboot中有几十个命令，其中有一些常用另一些不常用（我们还可以自己给uboot添加命令），后面会用几节课时间来依次学习uboot中常用命令。
 3. uboot的环境变量和操作系统的环境变量工作原理和方式几乎完全相同。uboot在设计时借助了操作系统的设计理念（命令行工作方式借鉴了linux终端命令行，环境变量借鉴了操作系统的环境变量，uboot的驱动管理几乎完全照抄了linux的驱动框架）。
 4. 环境变量可以被认为是系统的全局变量，环境变量名都是系统内置的（认识就认识，不认识就不认识，这部分是系统自带的默认的环境变量，譬如PATH；但是也有一部分环境变量是自己添加的，系统不认识但是我们自己认识）。系统或者我们自己的程序在运行时可以通过读取环境变量来指导程序的运行。这样设计的好处就是灵活，譬如我们要让一个程序更改运行方法，不用去重新修改程序代码再重新编译运行，而只要修改相应的环境变量就可以了。
 5. 环境变量就是运行时的配置属性。
 
-##### 思考：结合ARM裸机部分进行理解和印证
+###### 思考：结合ARM裸机部分进行理解和印证
 (1)及时复习ARM裸机中和现在讲到的相关的知识点，在复习中巩固ARM裸机中学到的。
 (2)及时对照原来ARM裸机中讲到的相关部分，可以帮助理解当前讲到的知识点。
 (3)结合ARM裸机中和现在讲的，对比分析思考，会得到更多。
 
 #### 2.1.5.uboot的常用命令1
 
-##### 类似linux终端的行缓冲命令行
+###### 类似linux终端的行缓冲命令行
 1. 行缓冲的意思就是：当我们向终端命令行输入命令的时候，这些命令没有立即被系统识别，而是被缓冲到一个缓存区（也就是系统认为我们还没有输入完），当我们按下回车键（换行）后系统就认为我们输入完了，然后将缓冲区中所有刚才输入的作为命令拿去分析处理。
 2. linux终端设计有3种缓冲机制：无缓冲（输入一个字符识别一个）、行缓冲（按回车后才识别）、全缓冲（缓冲满了才识别）
 3. `ctrl + c` 退出当前操作
 4. `help 命令` 查询命令帮助信息
 5. `help` 获取所有命令列表
 
-##### 有些命令有简化的别名
+###### 有些命令有简化的别名
 同一个命令有多个名字，都可以执行该命令。省事。。。
 1. 譬如printenv命令可以简化为print，
 2. 譬如setenv可以简化为set
 
-##### 有些命令会带参数（注意格式是固定的）
+###### 有些命令会带参数（注意格式是固定的）
 1. uboot的每个命令都有事先规定好的各种格式。有些命令就是不带参数的，譬如printenv/print命令；有些命令带可选的参数（可以带也可以不带，当然带不带参数的执行结果是不同的）；有些命令带必须的参数（譬如setenv/set命令）
 
-##### 命令中的特殊符号（譬如单引号）
+###### 命令中的特殊符号（譬如单引号）
 1. uboot的有些命令带的参数非常长，为了告诉uboot这个非常长而且中间有好多个空格的东西是给他的一整个参数，所以用单引号将这个很长且中间有空格隔开的参数引起来。
 2. 别的符号也许也有，而且有特定的意义。当碰到uboot的命令行有特殊符号时要注意不是弄错了，而是可能有特别的含义。
 
-##### 有些命令是一个命令族（譬如movi）
+###### 有些命令是一个命令族（譬如movi）
 1. 命令族意思就是好多个命令开头都是用同一个命令关键字的，但是后面的参数不一样，这些命令的功能和作用也不同。这就叫一个命令族。
 1. 同一个命令族中所有的命令都有极大的关联，譬如movi开头的命令族都和moviNand（EMMC、iNand）操作有关。
 
-##### 第一个命令：printenv/print
+###### 第一个命令：printenv/print
 1. print命令不用带参数，作用是打印出系统中所有的环境变量。
 2. 环境变量就好像程序的全局变量一样。程序中任何地方都可以根据需要去调用或者更改环境变量（一般都是调用），环境变量和全局变量不同之处在于：环境变量被存储在Flash的另一块专门区域（Flash上有一个环境变量分区），一旦我们在程序中保存了该环境变量，那么下次开机时该环境变量的值将维持上一次更改保存后的值。
 
 #### 2.1.6.uboot的常用命令2
-##### 设置（添加/更改）环境变量：setenv/set
+###### 设置（添加/更改）环境变量：setenv/set
 
 1. 用法：set name value
 
-##### 保存环境变量的更改：saveenv/save
+###### 保存环境变量的更改：saveenv/save
 1. saveenv/save命令不带参数，直接执行，作用是将内存中的环境变量的值同步保存到Flash中环境变量的分区。注意：环境变量的保存是整体的覆盖保存，也就是说内存中所有的环境变量都会整体的将Flash中环境变量分区中原来的内容整体覆盖。
 
 总结：彻底更改一个环境变量的值，需要2步：第一步set命令来更改内存中的环境变量，第二步用save命令将其同步到Flash中环境变量的分区。
