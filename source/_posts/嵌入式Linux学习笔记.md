@@ -14,9 +14,609 @@ categories: 01-专业
 
 
 <!--more-->
+
+速复习
+
+# 嵌入式和单片机的区别
+
+**较早的定义**
+ - **英国电器工程师协会定义的：** 嵌入式系统（Embedded System），是一种“完全嵌入受控器件内部，为特定应用而设计的专用计算机系统”。
+ - **行业定义：** 以应用为中心，计算机技术为基础，**软硬件可剪裁，适应应用系统对功能、成本、体积、可靠性、功耗严格要求的计算机系统**。
+ - **个人总结**：除PC外的所有带有程序，可独立工作的系统都是嵌入式系统，包含单片机
+
+**目前行业定义**
+- 行业中普遍将两者区分开来，依据则是从软件上进行区分。
+
+	![表格](./img/2022-04-07-Linux快速入门/1652268620123.table.html)
+	![enter description here](./img/2022-04-07-Linux快速入门/1652267294777.png)
+	
+> CPU概念基本指中央处理器，微处理器都可以称为CPU
+> MPU，和SOC概念模糊，不做区分，认为是一个
+
+**参考资料**
+- [CPU、MPU、MCU、SOC的区别（概念）](https://www.cnblogs.com/y4247464/p/12910642.html)
+- [芯片名词对比](https://book.crifan.com/books/ic_chip_industry_chain_summary/website/ic_chip_summary/chip_names_compare.html)
+- [嵌入式和单片机，是同一个东西吗？](http://www.xzclass.com/?p=464)
+- [嵌入式Linux和stm32区别?之间有什么关系吗？](https://www.eet-china.com/mp/a125116.html)
+
+## MMU（内存管理单元）
+
+没有MMU，CPU执行单元发出的内存地址将直接传到芯片引脚上，被内存芯片接收，这称为物理地址（Physical Address）：
+
+有MMU，CPU执行单元发出的内存地址将被MMU截获，从CPU到MMU的地址称为虚拟地址（Virtual Address），而MMU将这个地址翻译成另一个地址发到CPU芯片的外部地址引脚上，也就是将虚拟地址映射成物理地址：
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652319855851.png)
+
+处理器一般有用户模式（User Mode）和特权模式（privileged Mode）之分。当CPU要访问一个VA（Virtual Address）时，MMU会检查CPU当前处于用户模式还是特权模式，访问内存的目的是读数据、写数据还是取指令执行，如果与操作系统设定的权限相符，则允许访问，把VA转换成PA，否则不允许执行，产生异常（Exception）。
+
+**参考资料**
+- [关于MMU那些事儿](https://zhuanlan.zhihu.com/p/137061978)
+- [用于MCU/MPU的uCLinux与Linux有什么区别？](https://www.eet-china.com/mp/a11350.html)
+- [arm-linux学习-（MMU内存管理单元）](https://www.cnblogs.com/alantu2018/p/9002309.html)
+- [MMU原理](https://zhuanlan.zhihu.com/p/354142930)
+- [arm-linux学习-（MMU内存管理单元）](https://www.cnblogs.com/alantu2018/p/9002309.html)
+
+## 嵌入式软件
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652319626783.png)
+**参考资料**
+- [嵌入式linux 和 用stm32进行的嵌入式开发 这两者之间有什么关联性吗？](https://www.zhihu.com/question/53880054/answer/164501004)
+
+## STM32是否可以跑linux
+
+操作系统有两种 用MMU的 和 不用MMU的
+- 用MMU的是Windows MacOS Linux Android
+- 不用MMU的是FreeRTOS VxWorks ucOS...
+
+CPU有两种 带MMU的 和 不带MMU的
+- 带MMU的有 Cortex-A系列 ARM9 ARM11系列
+- 不带MMU的有 Cortex-M系列...
+
+STM32是M系列...不可能运行Linux...（ucLinux不算Linux的...）
+**在开发环境、程序开发上也都有很大区别，基本算是两种开发模式**
+
+参考资料：
+- [STM32是否可以跑linux](https://www.cnblogs.com/AI-Algorithms/p/3866586.html)
+
+# 什么是linux
+
+区分linux内核和linux操作系统
+ - Linux严格来说是单指作业系统的内核。
+ - 如今Linux常用来指基于Linux的完整操作系统，内核则改以Linux内核称之。
+
+Linux内核由林纳斯·托瓦兹（Linus Torvalds）在1991年10月5日首次发布，在加上使用者空间的应用程序之后，成为Linux操作系统。除了一部分专家之外，大多数人都是直接使用Linux 发行版（Linux操作系统），而不是自己选择每一样组件或自行设置。
+![enter description here](./img/2022-04-07-Linux快速入门/1652326905352.png)
+![enter description here](./img/2022-04-07-Linux快速入门/1652320923467.png)
+
+**参考资料：**
+- [Linux 简介](https://www.runoob.com/linux/linux-intro.html)
+- [Linux-wiki](https://zh.wikipedia.org/zh-hans/Linux)
+
+
+# ubuntu安装与使用
+
+开发板不涉及linux知识，使用ubuntu
+
+1. ubuntu 系统安装：
+	 - VirtualBox虚拟机。
+2. ubuntu 系统系统使用：
+	 - U盘支持(SD卡是2.0，推荐使用读卡器3.0接口)、增强扩展功能、分辨率、终端、Shell命令（命令行操作、大众用户都是图形操作）、APT下载源
+	 - 更新本地数据库：sudo apt-get update
+	- sudo apt-get install vim
+	- vim /etc/vim/vimrc  ：`set ts=4   set nu`
+
+## gcc -v
+gcc编译器ubuntu自带，`gcc -v` 查看当前版本
+
+`gcc [选项] [文件名字]`
+选项如下：
+- c： 只编译不链接为可执行文件，编译器将输入的.c 文件编译为.o 的目标文件。
+- o：编译成可执行文件，默认编译出来的可执行文件名字为 a.out。
+  \+  <输出文件名>指定编译结束以后的输出文件名
+
+```
+#include <stdio.h>
+int main(int argc, char *argv[])
+{
+	printf("Hello World!\n");
+}
+```
+	gcc main.c –o main.out
+	./main.out
+
+编译流程：
+ 1. 预处理（Preprocessing）：.c 文件中的文件包含（include）、预处理语句（e.g. 宏定义 define 等）进行分析，并替换成为真正的内容。
+ 2. 编译（Compilation）：生成 .s 汇编文件。
+ 3. 汇编（Assembly）：.生成以 .o 的目标文件。
+ 4. 链接（Linking）：多个.o文件、库文件链接成一个文件，变成可执行文件。
+![enter description here](./img/2022-04-07-Linux快速入门/1652338937644.png)
+
+我们需要操作的步骤：.o 和可执行文件
+
+## Makefile
+
+多文件编译演示：
+```
+main.c
+#include <stdio.h>
+#include "input.h"
+#include "calcu.h"
+
+int main(int argc, char *argv[])
+{
+	int a, b, num;
+
+	input_int(&a, &b);
+	num = calcu(a, b);
+	printf("%d + %d = %d\r\n", a, b, num);
+}
+
+input.c 
+
+#include <stdio.h>
+#include "input.h"
+
+void input_int(int *a, int *b)
+{
+	printf("input two num:");
+	scanf("%d %d", a, b);
+	printf("\r\n");
+}
+
+#ifndef _INPUT_H
+#define _INPUT_H
+
+void input_int(int *a, int *b);
+#endif
+
+calcu.c 
+
+#include "calcu.h"
+int calcu(int a, int b)
+{
+ return (a + b);
+}
+
+calcu.h
+#ifndef _CALCU_H
+#define _CALCU_H
+
+int calcu(int a, int b);
+#endif
+```
+```
+gcc main.c calcu.c input.c -o main
+```
+
+Makefile好处：
+- 大量文件编译
+- 只编译修改的文件
+- 简便
+
+新建Makefile
+**命令列表中的每条命令必须以 TAB 键开始，不能使用空格！**
+```
+main: main.o input.o calcu.o
+	gcc -o main main.o input.o calcu.o
+main.o: main.c
+	gcc -c main.c
+input.o: input.c
+	gcc -c input.c
+calcu.o: calcu.c
+	gcc -c calcu.c
+
+clean:
+	rm *.o
+	rm main
+```
+自动化变量：
+```
+objects = main.o input.o calcu.o
+main: $(objects)
+	gcc -o main $(objects)
+
+%.o : %.c
+	gcc -c $<
+
+clean:
+	rm *.o
+	rm main
+```
+
+
+# 裸机开发
+
+## 开发环境
+
+### FTP 服务（文件互传）
+
+**Ubuntu安装**
+`sudo apt-get install vsftpd` 安装。
+`sudo vi /etc/vsftpd.conf`  取消下图两行语句注释
+![enter description here](./img/2022-04-07-Linux快速入门/1652344863715.png)
+`sudo /etc/init.d/vsftpd restart` 重启FTP服务
+**windows安装**
+下载地址：https://www.filezilla.cn/download
+新建站点，设置如下
+地址通过 `ifconfig`获得，字符集修改未 UTF-8
+![enter description here](./img/2022-04-07-Linux快速入门/1652345151392.png)
+
+### NFS
+
+sudo apt-get install nfs-kernel-server rpcbind
+新建 linux->nfs 文件夹
+sudo vi /etc/exports
+文件后追加
+`/home/用户名/linux/nfs *(rw,sync,no_root_squash)`
+`sudo /etc/init.d/nfs-kernel-server restart` 重启服务
+
+### SSH
+
+`sudo apt-get install openssh-server`  开启服务
+配置文件为/etc/ssh/sshd_config，使用默认配置即可。
+
+
+### 交叉编译链安装
+
+Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
+
+选择7.5-2019.12，选择arm-linux-gnueabihf，单击 gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz 下载
+
+创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
+
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
+
+进入tool目录，将交叉编译器复制到arm目录中
+`sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
+进入arm目录，解压：
+`sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
+
+修改环境变量，`sudo vi /etc/profile`
+最后面输入如下所示内容：
+`export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
+
+保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
+
+安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
+
+验证：`arm-linux-gnueabihf-gcc -v`
+注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
+![enter description here](./img/2022-04-06-Linux学习/1651061897534.png)
+
+编译第一个裸机例程“1_leds”试试，在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程
+将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
+rm -rf *.o led.bin led.elf led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
+arm-linux-gnueabihf-gcc -g -c led.s -o led.o
+arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
+arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
+arm-linux-gnueabihf-objdump -D led.elf > led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
+imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
+```
+可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
+led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
+```
+可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
+
+### vscode
+
+图标都在目录/usr/share/applications 中，找到 Visual Studio Code 的图标，点击鼠标右键，选择复制到->桌面
+
+**插件：**
+- C/C++，这个肯定是必须的。
+- C/C++ Snippets，即 C/C++重用代码块
+-  C/C++ Advanced Lint,即 C/C++静态检测 。
+-   Code Runner，即代码运行。
+-   Include AutoComplete，即自动头文件包含。
+-   GBKtoUTF8，将 GBK 转换为 UTF8。
+-   ARM，即支持 ARM 汇编语法高亮显示。
+-   compareit，比较插件，可以用于比较两个文件的差异。
+-   DeviceTree，设备树语法插件。
+-   TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！
+
+### 串口驱动
+
+### MobaXterm 
+
+https://mobaxterm.mobatek.net
+点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
+![enter description here](./img/2022-04-06-Linux学习/1652347394139.png)
+串口设置
+![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
+
+
+##  前置知识
+
+A7架构和运行模式简单了解
+汇编简单应用
+- 其实 STM32 也一样的，一开始也是汇编，以 STM32F103 为例，启动文件startup_stm32f10x_hd.
+
+## LED
+
+### 汇编代码编写：
+
+linux/driver/board_driver/01-leds
+
+**程序烧录：**
+
+`chmod 777 inxdownload` 权限
+`ls /dev/sd*`查看设备
+`./imxdownload led.bin /dev/sdd` 下载，速度几百KB/s 
+
+
+# 以下内容为后期课程内容，待编写
+
+# LInux系统移植
+
+## U-Boot移植
+
+uboot 移植的一般流程：
+1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
+2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+
+1. 原版Uboot放松到ubuntu中，解压
+```
+tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
+```
+2. 原版编译烧录测试
+创建sh文件
+```
+vim mx6ull_14x14_emmc.sh
+```
+填入内容：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
+```
+编译：
+```
+./mx6ull_14x14_emmc.sh
+```
+烧录：
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
+3.  创建自定义配置文件
+```
+cd configs
+cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
+```
+修改内容
+```
+CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
+CONFIG_ARM=y
+CONFIG_ARCH_MX6=y
+CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
+CONFIG_CMD_GPIO=y
+```
+拷贝头文件
+```
+cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
+```
+将
+```
+#ifndef __MX6ULLEVK_CONFIG_H
+#define __MX6ULLEVK_CONFIG_H
+```
+改为：
+```
+#ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+#define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+```
+
+https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
+https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
+https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
+https://www.bilibili.com/video/BV15W411m7AQ/?spm_id_from=333.788.recommend_more_video.1
+https://www.bilibili.com/video/BV1qb4y127xc/?spm_id_from=333.788.recommend_more_video.0
+https://www.cnblogs.com/lialong1st/p/11351095.html
+https://0uyangsheng.github.io/2018/04/20/Build-Ubuntu-for-ARM-Platform-From-Scratch/
+https://www.icode9.com/content-3-924261.html
+https://wiki.t-firefly.com/zh_CN/ROC-RK3328-CC/flash_emmc.html
+https://www.t-firefly.com/doc/download/page/id/34.html
+https://www.t-firefly.com/doc/product/info/id/360.html
+https://www.bilibili.com/video/BV19v411H7d3?p=13
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
+
+操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用）
+
+Linux功能：
+进程管理
+内存管理（运存？）
+网络协议
+文件系统
+设备管理（LED、键鼠、屏幕）
+系统移植过程
+windows系统                                           Linux系统
+windows系统镜像、U盘启动盘            Linux内核镜像（需要裁剪移植）、SD卡启动盘（Uboot）
+BIOS选择启动方式（U盘启动）          拨码开关选择启动方式（SD启动）
+通过U盘中的引导程序安装系统           通过SD卡中的引导程序（Uboot）安装系统
+安装驱动
+安装应用
+开发板启动过程
+开发板上电后首先运行 SOC 内部 iROM 中固化的代码（BL0），这段代码先对基本的软银见环境（时钟等）初始化，然后检测拨码开关获取启动方式，再将对应存储器（SD卡）中的Uboot搬移到内存，然后跳转到uboot运行
+uboot开始运行后首先对开发板软硬件环境初始化，然后将 linux内核、设备树（dtb） 、根文件系统（rootfs）从外部存储器（或网络）搬移到内存，然后跳转到linux运行
+linux开始运行，先对系统环境初始化，当系统启动完成后，linux再从内存中（或网络）挂在根文件系统
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652410941723.png)
+根据启动过程得出移植步骤：
+uboot移植
+linux内核移植（包含设备树）
+根文件系统移植
+开发环境准备
+我们再linux系统中（安装再PC上的，一般是Ubuntu）编辑要移植的linux系统，然后再编译，最后生成一个安装包，再使用SD卡安装到开发板
+注：后面说Ubuntu指安装在PC上的Linux系统，说Linux指要移植的linux系统
+
+Ubuntu联网，下载文件机、开发板通信
+tftp服务器环境搭建：基于网络通信协议（TCP/IP）在客户机（开发板）和服务器（PC）直接进行简单的文件传输
+nfs环境搭建：基于网络通信协议（UDP/IP）在不同计算机之间通过网络进行文件共享，既可以在客户端（开发板）访问服务器（PC）文件，不需要频繁通过 tftp 先传输再访问
+
+SD卡启动盘制作
+选择SD卡启动，处理器上电默认从第一个扇区开始搬移到内存
+
+uboot使用
+uboot模式
+自启动模式
+uboot启动后若没有用户介入，倒计时结束后会自动执行自启动环境变量（bootcmd）中设置的命令（一般叫做加载和启动内核）
+交互模式
+倒计时结束前按下任意按键，uboot会进入交互模式，用户可输入uboot命令
+     
+	 
+	
+
+# linux内核
+
+Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
+
+设备驱动程序和内核扩展运行于内核空间（在很多CPU架构中是ring 0），可以完全访问硬件，但也有运行于用户空间的一些例外，例如基于FUSE/CUSE的文件系统，和部分UIO[29][30]。多数人与Linux一起使用的图形系统不运行在内核中。与标准单体内核不同，Linux的设备驱动程序可以轻易的配置为内核模块，并在系统运行期间可直接装载或卸载。也不同于标准单体内核，设备驱动程序可以在特定条件下被抢占；增加这个特征用于正确处理硬件中断并更好的支持对称多处理[28]。出于自愿选择，Linux内核没有二进制内核接口[31]。
+
+硬件也被集成入文件层级中。用户应用到设备驱动的接口是在/dev或/sys目录下的入口文件[32]。进程信息也通过/proc目录映射到文件系统[32]。
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652321949009.png)
+
+- [Linux内核-wiki](https://zh.wikipedia.org/wiki/Linux%E5%86%85%E6%A0%B8)
+- [鸟哥linux第四版-基礎學習篇目錄 - for CentOS 7](https://linux.vbird.org/linux_basic/centos7/)
+
+shell
+- [Chapter 11 Shell 和 Shell Script](https://www.cyut.edu.tw/~ywfan/1109linux/201109chapter11shell%20script.htm)
+- [Linux Shell 版本问题](https://achelous.org/BI-solutions/Linux_shell_version.html)
+- [这些贝壳的插图哪一个是准确的？外壳是否仅通过外壳与内核对话？](https://www.reddit.com/r/linux4noobs/comments/kufgft/which_of_these_illustrations_of_the_shell_is/)
+- https://imgur.com/a/VuvJ3dy
+- [一篇文章從了解到入門shell](https://kknews.cc/code/3va5oq8.html)
+- [Shell脚本是什么](http://c.biancheng.net/view/932.html)
+- [Linux shell脚本](https://www.cnblogs.com/gd-luojialin/p/15028076.html)
+- [Linux Shell程式設計及自動化運維實現——shell概述及變數](https://www.gushiciku.cn/pl/gLvW/zh-tw)
+- [Bash 参考手册](https://www.gnu.org/software/bash/manual/bash.html)
+- [bash (Bourne again shell)](https://www.techtarget.com/searchdatacenter/definition/bash-Bourne-Again-Shell)
+- [什么是 Linux，为什么有 100 种 Linux 发行版？](https://itsfoss.com/what-is-linux/)
+- [linux系统组成及结构](https://blog.csdn.net/kai_zone/article/details/80444872)
+
+[Linux操作系统综述](https://blog.51cto.com/u_13800449/3049118)
+[Linux系统组成.md](https://github.com/sunnyandgood/BigData)
+![enter description here](./img/2022-04-07-Linux快速入门/1652327045769.png)
+
+
+## 常用指令
+
+<!--more-->
+
+
+
+### SD开相关
+
+查询设备
+`ls /dev/sd*`
+
+下载到SD卡
+- imxdownload 复制到工程目录下
+- 给与权限 `chmod 777 imxdownloa`
+
+烧录到SD卡
+`./imxdownload led.bin /dev/sdd`
+
+
+重复执行上条命令的 4 种方法：
+- 使用上方向键，并回车执行。（推荐）
+- 按 Ctrl+P 并回车执行。（备选，有的命令上下键会没有，这个绝对会有）
+
+## 串口连接
+[MobaXterm]( https://mobaxterm.mobatek.net/) 
+
+波特率根据不同开发板修改
+![enter description here](./img/2022-04-07-Linux快速入门/1651834770833.png)
+
+## uboot移植
+
+### uboot编译
+
+无uboot源码，跳过次步骤，直接进入uboot下载
+首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
+`sudo apt-get install libncurses5-dev`
+
+ubuntu新建文件夹，拷贝开发板厂商的uboot到其中，例如正点原子的：uboot-imx-2016.03-2.1.0-ge468cdc-v1.5.tar.bz2
+解压：
+`tar -vxjf uboot-imx-2016.03-2.1.0-g8b546e4.tar.bz2`
+新建 shell脚本文件 `mx6ull_alientek_emmc.sh`
+输入如下内容(正点原子EMMC版本)：
+```
+1 #!/bin/bash
+2 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+3 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- (加空格)
+mx6ull_14x14_ddr512_emmc_defconfig
+4 make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j12
+```
+给与shell文件权限：
+```
+chmod 777 mx6ull_alientek_emmc.sh
+```
+编译
+`./mx6ull_alientek_emmc.sh`
+
+### uboot烧写
+
+将 imxdownload 文件复制到uboot.bin 同级目录中
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限，一次即可
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡，不能烧写到/dev/sda 或 sda1 设备里面！
+```
+
+>烧写速度在几百 KB/s 以下那么就是正常烧写。如果这个烧写速度大于几十 MB/s、甚至几百 MB/s 那么肯定是烧写失败了！
+
+### uboot配置
+
+修改环境变量
+```
+setenv bootdelay 5
+saveenv
+```
+
+有空格的环境变量用单引号括起来
+```
+etenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+saveenv
+```
+
+#### 设置网络
+
+dhcp 命令:自动获取ip地址,不用设置下面的ipaddr
+
+
+ - ipaddr 开发板 ip 地址，可以不设置，使用 dhcp 命令来从路由器获取 IP 地址。
+ - ethaddr 开发板的 MAC 地址，一定要设置。不同开发板地址要不同
+ - gatewayip 网关地址。
+ - netmask 子网掩码。
+ - serverip 服务器 IP 地址，也就是 Ubuntu 主机 IP 地址，用于调试代码。
+
+```
+setenv ipaddr 192.168.1.50
+setenv ethaddr b8:ae:1d:01:00:0
+setenv gatewayip 192.168.1.1
+setenv netmask 255.255.255.0
+setenv serverip 192.168.1.253
+saveenv
+```
+
+#### nfs网络传出镜像和设备树到DRAM中
+`nfs [loadAddress] [[hostIPaddr:]bootfilename]`
+
+下载(uboot操作):
+`nfs 80800000 192.168.1.253:/home/zuozhongkai/linux/nfs/zImage`
+
+
+
+
 # 二、Linux系统安装
 
-## 1、下载
+1、下载
  
 VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 选择你需要下载的版本 (64位系统选择可用的最高版本,32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 6.1.16（下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 扩展包，一个是 VirtualBox 主体安装包。
@@ -100,7 +700,7 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 - [Drag and Drop not working for Ubuntu 20.04 VirtualBox](https://askubuntu.com/questions/1230102/drag-and-drop-not-working-for-ubuntu-20-04-virtualbox)
 - [VirtualBox Ubuntu 20.04 LTS super buggy](https://www.linux.org/threads/virtualbox-ubuntu-20-04-lts-super-buggy.29161/)
 
-### 参考链接
+## 参考链接
 
  - [virtualbox虚拟机使用教程](https://zsxwz.com/2020/01/27/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
  - [Oracle VM VirtualBox 使用教程(Windows操作系统下)](https://www.xckjsys.com/2019/08/20/154/)
@@ -113,9 +713,9 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
  - https://segmentfault.com/a/1190000022468063
  - https://www.codeleading.com/article/61115145053/
 
-## 5. Ubuntu系统配置
+# 三、Ubuntu初体验
 
-### 软件和更新源
+## 软件和更新源
 
 Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
 1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
@@ -124,7 +724,7 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考资料**
 - [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
 
-### U盘支持
+## U盘支持
 
 我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
 
@@ -138,7 +738,7 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考链接**
 - [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
 
-### 增强扩展功能
+## 增强扩展功能
 
 安装增强扩展功能。解决以下问题：
 - 更改屏幕分辨率，解决显示界面太小问题
@@ -166,14 +766,14 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考链接**
 - [Install guest additions on a VirtualBox](https://www.youtube.com/watch?v=V4tGpsZiOdw)
 
-### 图标对齐
+## 图标对齐
 
 虽然LInux基本都是命令行操作，但桌面有时也会偶尔存放东西。默认拖动到桌面的文件图标会堆叠在一起，不像 Windows 或自动整理、对齐。其实这里需要我们自己选择。在桌面右键：
 - keep aligned：保持对齐
 - Organize Desktop by Name：按名称排序桌面
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
 
-### 锁屏
+## 锁屏
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
@@ -6215,280 +6815,16 @@ uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
 
-### 原厂uboot编译并运行测试
-1. 原版Uboot发送到到ubuntu中，并解压
+1. 原版Uboot放松到ubuntu中，解压
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
 ```
-2. 再uboot目录下创建sh文件
+2. 创建sh文件
 ```
 vim mx6ull_14x14_emmc.sh
 ```
-添加代码：
-```
-#!/bin/bash
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
-make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 
-```
-执行脚本，完成编译
-```
-./mx6ull_14x14_evk_emmc.sh
-```
-3. 将 imxdownload 软件拷贝到 uboot 源码根目录下，烧写到SD卡中
-```
-chmod 777 imxdownload //给予 imxdownload 可执行权限
-./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
-```
-4. SD启动，串口连接查看输出信息。
-- uboot启动中共南昌，DRAM识别正确，SD和EMMC正常
-- LCD失败：默认只支持4.3 寸 480x272 分辨率的屏幕，开发板时7寸的
-- 网络失败：无驱动
 
-### uboot修改
-
-#### 1. 在 configs 目录下创建默认配置文件
-复制 mx6ull_14x14_evk_emmc_defconfig(原版配置文件)，并重命名为 mx6ull_alientek_emmc_defconfig（自定义配置文件）：
-```
-cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
-```
-内容改成下面的：
-- 第一行时地址路径，后面会用到
-- 第四行时宏定义，后面会用到
-- 2、3两行内容和原版一致
-```
-CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
-CONFIG_ARM=y
-CONFIG_ARCH_MX6=y
-CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
-CONFIG_CMD_GPIO=y
-
-```
-#### 2. 在 include/configs 目录下添加开发板对应的头文件
-
-复 制include/configs/mx6ullevk.h，并重命名为 mx6ull_alientek_emmc.h：
-```
-cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
-```
-
-拷贝完成以后将：
-```
-#ifndef __MX6ULLEVK_CONFIG_H
-#define __MX6ULLEVK_CONFIG_H
-```
-改为：
-```
-#ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
-#define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
-```
-
-#### 3. 添加开发板对应的板级文件夹
-board/freescale 目录下，在这个目录下
-复制 mx6ullevk文件夹，将其重命名为 mx6ull_alientek_emmc，命令如下：
-```
-cp mx6ullevk/ -r mx6ull_alientek_emmc
-```
-进 入 mx6ull_alientek_emmc 目 录 中 ， 将 其 中 的 mx6ullevk.c 文 件 重 命 名 为 mx6ull_alientek_emmc.c，命令如下：
-```
-mv mx6ullevk.c mx6ull_alientek_emmc.c
-```
-	
-1. 修改 mx6ull_alientek_emmc 目录下的 Makefile 文件
-第 6 行改为 mx6ull_alientek_emmc.o，这样才会编译 mx6ull_alientek_emmc.c这个文件。
-```
-# (C) Copyright 2015 Freescale Semiconductor, Inc.
-#
-# SPDX-License-Identifier:	GPL-2.0+
-#
-
-obj-y  := mx6ull_alientek_emmc.o
-
-extra-$(CONFIG_USE_PLUGIN) :=  plugin.bin
-$(obj)/plugin.bin: $(obj)/plugin.o
-	$(OBJCOPY) -O binary --gap-fill 0xff $< $@
-```
-2、修改 mx6ull_alientek_emmc 目录下的 imximage.cfg 文件
-将 imximage.cfg 中的下面一句：
-`PLUGIN board/freescale/mx6ullevk/plugin.bin 0x00907000`
-改为：
-`PLUGIN board/freescale/mx6ull_alientek_emmc /plugin.bin 0x00907000`
-
-3、修改 mx6ull_alientek_emmc 目录下的 Kconfig 文件
-修改 Kconfig 文件，修改后的内容如下
-```
-if TARGET_MX6ULL_ALIENTEK_EMMC
-
-config SYS_BOARD
-	default "mx6ull_alientek_emmc"
-
-config SYS_VENDOR
-	default "freescale"
-
-config SYS_SOC
-	default "mx6"
-
-config SYS_CONFIG_NAME
-	default "mx6ull_alientek_emmc"
-
-endif
-```
-4、修改 mx6ull_alientek_emmc 目录下的 MAINTAINERS 文件
-修改 MAINTAINERS 文件，修改后的内容如下：
-```
-MX6ULL_ALIENTEK_EMMC BOARD
-M:	Peng Fan <peng.fan@nxp.com>
-S:	Maintained
-F:	board/freescale/mx6ull_alientek_emmc/
-F:	include/configs/mx6ull_alientek_emmc.h
-```
-
-#### 4. 修改 U-Boot 图形界面配置文件
-
-uboot 是支持图形界面配置，关于 uboot 的图形界面配置下一章会详细的讲解。修改文件
-arch/arm/cpu/armv7/mx6/Kconfig(如果用的 I.MX6UL 的话，应该修改 arch/arm/Kconfig 这个文
-件)，在 207 行加入如下内容：
-```
-config TARGET_MX6ULL_ALIENTEK_EMMC
-	bool "Support mx6ull_alientek_emmc"
-	select MX6ULL
-	select DM
-	select DM_THERMAL
-```
-在最后一行的 endif 的前一行添加如下内容：
-示例代码 33.2.4.2 Kconfig 文件
-`source "board/freescale/mx6ull_alientek_emmc/Kconfig"`
-
-#### 5. 重新编译
-
-在 uboot 根目录下新建一个名为 mx6ull_alientek_emmc.sh 的 shell 脚本，在这个 shell 脚本
-里面输入如下内容：
-```
-#!/bin/bash
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_alientek_emmc_defconfig
-make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
-```
-编译imx
-```
-chmod 777 mx6ull_alientek_emmc.sh //给予可执行权限，一次即可
-./mx6ull_alientek_emmc.sh //运行脚本编译 uboot
-```
-烧录
-```
-chmod 777 imxdownload //给予 imxdownload 可执行权限
-./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
-```
-查看一下添加的 `mx6ull_alientek_emmc.h` 这个头文件有没有被引用，如果有很多文件都引用了 `mx6ull_alientek_emmc.h` 这个头文件，那就说明新板子添加成功
-```
-grep -nR "mx6ull_alientek_emmc.h"
-```
-#### 6. 运行
-
-此时的 Board 还是“MX6ULL 14x14 EVK”
-LCD 屏幕和网络依旧失败
-还需要修改。
-
-### uboot 适配
-
-#### 1. LCD 驱动修改
-
-一般修改 LCD 驱动重点注意以下几点：
-①、 LCD 所使用的 GPIO，查看 uboot 中 LCD 的 IO 配置是否正确。
-②、 LCD 背光引脚 GPIO 的配置。
-③、 LCD 配置参数是否正确。
-
-正点原子的 I.MX6U-ALPHA 开发板 LCD 原理图和 NXP 官方 I.MX6ULL 开发板一致，也就是 LCD 的 IO 和背光 IO 都一样的，所以 IO 部分就不用修改了。只需要修改 LCD 参数，
-打开文件 mx6ull_alientek_emmc.c，找到如下所示内容：
-```
-struct display_info_t const displays[] = {{
-	.bus = MX6UL_LCDIF1_BASE_ADDR,
-	.addr = 0,
-	.pixfmt = 24,
-	.detect = NULL,
-	.enable	= do_enable_parallel_lcd,
-	.mode	= {
-		.name			= "TFT43AB",
-		.xres           = 480,
-		.yres           = 272,
-		.pixclock       = 108695,
-		.left_margin    = 8,
-		.right_margin   = 4,
-		.upper_margin   = 2,
-		.lower_margin   = 4,
-		.hsync_len      = 41,
-		.vsync_len      = 10,
-		.sync           = 0,
-		.vmode          = FB_VMODE_NONINTERLACED
-} } };
-```
-
-- pixfmt 是像素格式，也就是一个像素点是多少位，如果是 RGB565 的话就是 16 位，如果是 888 的话就是 24 位，一般使用 RGB888。
-- name： LCD 名字，要和环境变量中的 panel 相等。
-- xres、 yres： LCD X 轴和 Y 轴像素数量。
-- pixclock：像素时钟，每个像素时钟周期的长度，单位为皮秒。
-	- 以正点原子的 7 寸 1024\*600 分辨率的屏幕(ATK7016)为例，屏幕要求的像素时钟为 51.2MHz，因此：
-`pixclock=(1/51200000)*10^12=19531`
-- left_margin： HBP，水平同步后肩。
-- right_margin： HFP，水平同步前肩。
-- upper_margin： VBP，垂直同步后肩。
-- lower_margin： VFP，垂直同步前肩。
-- hsync_len： HSPW，行同步脉宽。
-- sync_len： VSPW，垂直同步脉宽
-- vmode： 大多数使用 FB_VMODE_NONINTERLACED，也就是不使用隔行扫描。
-
-打开 mx6ull_alientek_emmc.h，找到所有如下语句：
-`panel=TFT43AB`
-将其改为：
-`panel=TFT7016`
-也就是设置 panel 为 TFT7016， panel 的值要与示例代码 33.2.6.4 中的.name 成员变量的值
-一致。修改完成以后重新编译一遍 uboot 并烧写到 SD 中启动
-
-重启以后 LCD 驱动一般就会工作正常了， LCD 上回显示 NXP 的 logo。
-
-但是有可能会遇到LCD 并没有工作，还是黑屏，这是什么原因呢？在 uboot 命令模式输入“print”来查看环境变量 panel 的值，会发现 panel 的值要是 TFT43AB(或其他的，反正不是 TFT7016)
-
-这是因为之前有将环境变量保存到 EMMC 中， uboot 启动以后会先从 EMMC 中读取环境变量，如果 EMMC 中没有环境变量的话才会使用 mx6ull_alientek_emmc.h 中的默认环境变量。如果 EMMC 中的环境变量 panel 不等于 TFT7016，那么 LCD 显示肯定不正常，我们只需要在
-uboot 中修改 panel 的值为 TFT7016 即可，在 uboot 的命令模式下输入如下命令：
-```
-setenv panel TFT7016
-saveenv
-```
-重启 uboot，此时 LCD 驱动就工作正常了。
-
-#### 2. 网络驱动修改
-所示我们要修改 ENET1 网络驱动的话重点就三点：
-①、 ENET1 复位引脚初始化。
-②、 LAN8720A 的器件 ID。0X0
-③、 LAN8720 驱动
-
-关于 ENET2 网络驱动的修改也注意一下三点：
-①、 ENET2 的复位引脚，
-②、 ENET2 所使用的 PHY 芯片器件地址，PHY 器件地址为 0X1。
-③、 LAN8720 驱动， ENET1 和 ENET2 都使用的 LAN8720，所以驱动肯定是一样的
-
-1、网络 PHY 地址修改
-首先修改 uboot 中的 ENET1 和 ENET2 的 PHY 地址和驱动，打开 mx6ull_alientek_emmc.h这个文件，找到如下代码
-有三处要修改：
-①、修改 ENET1 网络 PHY 的地址。
-②、修改 ENET2 网络 PHY 的地址。
-③、使能 SMSC 公司的 PHY 驱动
-```
-#if (CONFIG_FEC_ENET_DEV == 0)
-#define IMX_FEC_BASE			ENET_BASE_ADDR
-#define CONFIG_FEC_MXC_PHYADDR          0x0
-#define CONFIG_FEC_XCV_TYPE             RMII
-#elif (CONFIG_FEC_ENET_DEV == 1)
-#define IMX_FEC_BASE			ENET2_BASE_ADDR
-#define CONFIG_FEC_MXC_PHYADDR		0x1
-#define CONFIG_FEC_XCV_TYPE		RMII
-#endif
-#define CONFIG_ETHPRIME			"FEC"
-
-#define CONFIG_PHYLIB
-#define CONFIG_PHY_SMSC
-#endif
-```
 # 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
