@@ -4132,7 +4132,7 @@ Windows IP 配置
 
 在ubuntu中输入命令  
 `sudo service network-manager restart`  
-重启网络服务，再重新查看IP地址，确保虚拟机和主机的IP地址只有最后一位不同即可。为了保险起见，我们可以再windows命令行中 ping 一下虚拟机地址。
+重启网络服务，再重新查看IP地址，确保虚拟机和主机的IP地址只有最后一位不同即可（仅主机(Host-Only)网络模式下，有两位不同）。为了保险起见，我们可以在windows命令行中 ping 一下虚拟机地址。
 ```
  C:\Users\23714>ping 192.168.1.9
 
