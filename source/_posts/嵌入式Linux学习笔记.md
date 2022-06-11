@@ -4130,9 +4130,7 @@ Windows IP 配置
 原网络配置不动（默认网络地址转换模式），再启动一个网卡2，设置为 `仅主机(Host-Only)网络`
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654934586335.png)
 
-在ubuntu中输入命令  
-`sudo service network-manager restart`  
-重启网络服务，再重新查看IP地址，确保虚拟机和主机的IP地址只有最后一位不同即可（仅主机(Host-Only)网络模式下，有两位不同）。为了保险起见，我们可以在windows命令行中 ping 一下虚拟机地址。
+重启 ubuntu，再重新查看IP地址，确保虚拟机和主机的IP地址只有最后一位不同即可（仅主机(Host-Only)网络模式下，有两位不同）。为了保险起见，我们可以在windows命令行中 ping 一下虚拟机地址。
 ```
  C:\Users\23714>ping 192.168.1.9
 
