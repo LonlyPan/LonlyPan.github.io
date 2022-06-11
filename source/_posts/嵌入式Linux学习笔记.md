@@ -3879,13 +3879,12 @@ Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries
 
 创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
 
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
 
 进入tool目录，将交叉编译器下载文件（不要解压、不要解压）复制到arm目录中
 `sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/filezilla_传输文件.png)
-
-在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
 
 
 进入arm目录，解压：
