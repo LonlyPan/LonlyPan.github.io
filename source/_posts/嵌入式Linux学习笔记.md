@@ -222,127 +222,7 @@ clean:
 
 # 裸机开发
 
-## 开发环境
 
-### FTP 服务（文件互传）
-
-**Ubuntu安装**
-`sudo apt-get install vsftpd` 安装。
-`sudo vi /etc/vsftpd.conf`  取消下图两行语句注释
-![enter description here](./img/2022-04-07-Linux快速入门/1652344863715.png)
-`sudo /etc/init.d/vsftpd restart` 重启FTP服务
-**windows安装**
-下载地址：https://www.filezilla.cn/download
-新建站点，设置如下
-地址通过 `ifconfig`获得，字符集修改未 UTF-8
-![enter description here](./img/2022-04-07-Linux快速入门/1652345151392.png)
-
-### NFS
-
-sudo apt-get install nfs-kernel-server rpcbind
-新建 linux->nfs 文件夹
-sudo vi /etc/exports
-文件后追加
-`/home/用户名/linux/nfs *(rw,sync,no_root_squash)`
-`sudo /etc/init.d/nfs-kernel-server restart` 重启服务
-
-### SSH
-
-`sudo apt-get install openssh-server`  开启服务
-配置文件为/etc/ssh/sshd_config，使用默认配置即可。
-
-
-### 交叉编译链安装
-
-Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
-
-选择7.5-2019.12，选择arm-linux-gnueabihf，单击 gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz 下载
-
-创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
-
-在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
-
-进入tool目录，将交叉编译器复制到arm目录中
-`sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
-进入arm目录，解压：
-`sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
-
-修改环境变量，`sudo vi /etc/profile`
-最后面输入如下所示内容：
-`export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
-
-保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
-
-安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
-
-验证：`arm-linux-gnueabihf-gcc -v`
-注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
-![enter description here](./img/2022-04-06-Linux学习/1651061897534.png)
-
-编译第一个裸机例程“1_leds”试试，在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程
-将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
-rm -rf *.o led.bin led.elf led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
-arm-linux-gnueabihf-gcc -g -c led.s -o led.o
-arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
-arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
-arm-linux-gnueabihf-objdump -D led.elf > led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
-imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
-```
-可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
-led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
-```
-可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
-
-### vscode
-
-图标都在目录/usr/share/applications 中，找到 Visual Studio Code 的图标，点击鼠标右键，选择复制到->桌面
-
-**插件：**
-- C/C++，这个肯定是必须的。
-- C/C++ Snippets，即 C/C++重用代码块
--  C/C++ Advanced Lint,即 C/C++静态检测 。
--   Code Runner，即代码运行。
--   Include AutoComplete，即自动头文件包含。
--   GBKtoUTF8，将 GBK 转换为 UTF8。
--   ARM，即支持 ARM 汇编语法高亮显示。
--   compareit，比较插件，可以用于比较两个文件的差异。
--   DeviceTree，设备树语法插件。
--   TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！
-
-### 串口驱动
-
-### MobaXterm 
-
-https://mobaxterm.mobatek.net
-点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
-![enter description here](./img/2022-04-06-Linux学习/1652347394139.png)
-串口设置
-![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
-
-
-##  前置知识
-
-A7架构和运行模式简单了解
-汇编简单应用
-- 其实 STM32 也一样的，一开始也是汇编，以 STM32F103 为例，启动文件startup_stm32f10x_hd.
-
-## LED
-
-### 汇编代码编写：
-
-linux/driver/board_driver/01-leds
-
-**程序烧录：**
-
-`chmod 777 inxdownload` 权限
-`ls /dev/sd*`查看设备
-`./imxdownload led.bin /dev/sdd` 下载，速度几百KB/s 
 
 
 # 以下内容为后期课程内容，待编写
@@ -507,7 +387,7 @@ shell
 
 
 
-### SD开相关
+### SD卡相关
 
 查询设备
 `ls /dev/sd*`
@@ -616,19 +496,6 @@ Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要
 **本章内容：**
 虚拟机安装 -> 使用虚拟机安装ubuntu -> ubuntu配置使用
 
-## ubuntu安装与使用
-
-开发板不涉及linux知识，使用ubuntu
-
-1. ubuntu 系统安装：
-	 - VirtualBox虚拟机。
-2. ubuntu 系统系统使用：
-	 - U盘支持(SD卡是2.0，推荐使用读卡器3.0接口)、增强扩展功能、分辨率、终端、Shell命令（命令行操作、大众用户都是图形操作）、APT下载源
-	 - 更新本地数据库：sudo apt-get update
-	- sudo apt-get install vim
-	- vim /etc/vim/vimrc  ：`set ts=4   set nu`
-
-
 ## 1. 虚拟机安装
 
 要想在windows系统安装 ubuntu ，就得借助虚拟机。这样就可以在电脑上同时存在两个操作系统，并且可以同时运行。
@@ -645,7 +512,7 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 ### 安装
 
 上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装VirtualBox。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
-VirtualBox安装后，先关闭软件。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
+VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
@@ -730,31 +597,7 @@ VirtualBox安装后，先关闭软件。双击 `Oracle_VM_VirtualBox_Extension_P
 
 ## 3. Ubuntu配置
 
-### 软件和更新源
-
-Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
-1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/下载源.png)
-
-**参考资料**
-- [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
-
-### U盘支持
-
-我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
-> 这里实测，不安装扩展包，是可以使用 usb3.0 的hub识别usb2.0读卡器读写SD卡
-
-1. 关闭虚拟机，virtualbox主界面打开 `设置` -> `USB设备`，勾选USB 3.0。并将USB设备添加进来（只有添加进这里的才能在虚拟机中被识别到）。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/USB.png)
-2. 打开虚拟机，一般会自动加载设备（左下角两个设备图标），直接双击即可打开。如果没有：`设备`->`USB`，单击USB设备名字，将完成设备加载。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/打开usb.png)
-3. 移除设备，右键左下角设备图标，单击 `Eject` 弹出；或者虚拟机右下角，右键U盘图标，单击设备名弹出
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/弹出usb.png)
-
-**参考链接**
-- [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
-
-## 增强扩展功能
+### 增强扩展功能
 
 安装增强扩展功能。解决以下问题：
 - 更改屏幕分辨率，解决显示界面太小问题
@@ -767,29 +610,54 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 ![安装确认](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/安装确认.png)
 3.  不出意外的话，会出现下左图的安装失败。我们需要打开终端，并输入   
 `sudo apt-get install build-essential gcc make perl dkms`  
-等待系统自动安装，再重新安装增强功能。知道出现下右图表示安装成功。
+等待系统自动安装，再重新安装增强功能。直到出现下右图表示安装成功。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/wenti.png)
 安装失败后，桌面会多出一个 iso 文件，双击打开，点击运行，就可以直接安装增强功能，不用再从菜单栏选择了。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/运行.png)
-4. 关闭虚拟机，在virtualbox主界面打开 `设置`->`常规`->`高级`：**共享剪切板** 和 **拖拽**都 选择 **双向**  
+4. 关闭虚拟机，在virtualbox主界面打开 `设置`：
+`常规`->`高级`：**共享剪切板** 和 **拖拽**都 选择 **双向**  
 `存储`->`控制器SATA`：勾选 **使用主机输入输出(I/O)缓存**  
 `存储`->`控制器SATA`->`Ubuntu-Embeded.vdi`：勾选 **固态驱动器**    
 启动虚拟机。此时就可以直接从 Windows 系统窗口拖动文件到 Linux 界面了。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/设置copy.png)
-6. 更改分辨率。在设置里找到设备，选择合适的屏幕分辨率即可。
+6. 更改分辨率。在设置里找到系统设置，选择合适的屏幕分辨率即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/分辨率.png)
 
 **参考链接**
 - [Install guest additions on a VirtualBox](https://www.youtube.com/watch?v=V4tGpsZiOdw)
+- 
+### 软件和更新源
 
-## 图标对齐
+Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
+1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/下载源.png)
+
+**参考资料**
+- [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
+
+### U盘支持
+
+我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
+- 这里实测，不安装扩展包，也是可以使用 usb3.0 的hub识别usb2.0读卡器读写SD卡
+
+1. 关闭虚拟机，virtualbox主界面打开 `设置` -> `USB设备`，勾选USB 3.0。并将USB设备添加进来（只有添加进这里的才能在虚拟机中被识别到）。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/USB.png)
+2. 打开虚拟机，一般会自动加载设备（左下角两个设备图标），直接双击即可打开。如果没有：`设备`->`USB`，单击USB设备名字，将完成设备加载。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/打开usb.png)
+3. 移除设备，右键左下角设备图标，单击 `Eject` 弹出；或者虚拟机右下角，右键U盘图标，单击设备名弹出
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/弹出usb.png)
+
+**参考链接**
+- [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
+
+### 图标对齐
 
 虽然LInux基本都是命令行操作，但桌面有时也会偶尔存放东西。默认拖动到桌面的文件图标会堆叠在一起，不像 Windows 或自动整理、对齐。其实这里需要我们自己选择。在桌面右键：
 - keep aligned：保持对齐
 - Organize Desktop by Name：按名称排序桌面
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
 
-## 锁屏
+### 锁屏
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
@@ -2056,6 +1924,8 @@ LInux下编程分为两步：
 1. 编写
 2. 编译
 而这两步是使用不同的软件实现的。
+
+更新本地数据库：sudo apt-get update
 
 ## vim编译器
 
@@ -4039,21 +3909,116 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 
 # 开发环境搭建
 
-## Ubuntu和Windows文件互传
 
+## 开发环境
+
+
+### NFS
+
+sudo apt-get install nfs-kernel-server rpcbind
+新建 linux->nfs 文件夹
+sudo vi /etc/exports
+文件后追加
+`/home/用户名/linux/nfs *(rw,sync,no_root_squash)`
+`sudo /etc/init.d/nfs-kernel-server restart` 重启服务
+
+### SSH
+
+`sudo apt-get install openssh-server`  开启服务
+配置文件为/etc/ssh/sshd_config，使用默认配置即可。
+
+
+### 交叉编译链安装
+
+Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
+
+选择7.5-2019.12，选择arm-linux-gnueabihf，单击 gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz 下载
+
+创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
+
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
+
+进入tool目录，将交叉编译器复制到arm目录中
+`sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
+进入arm目录，解压：
+`sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
+
+修改环境变量，`sudo vi /etc/profile`
+最后面输入如下所示内容：
+`export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
+
+保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
+
+安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
+
+验证：`arm-linux-gnueabihf-gcc -v`
+注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651061897534.png)
+
+编译第一个裸机例程“1_leds”试试，在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程
+将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
+rm -rf *.o led.bin led.elf led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
+arm-linux-gnueabihf-gcc -g -c led.s -o led.o
+arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
+arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
+arm-linux-gnueabihf-objdump -D led.elf > led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
+imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
+```
+可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
+led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
+```
+可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
+
+### vscode
+
+图标都在目录/usr/share/applications 中，找到 Visual Studio Code 的图标，点击鼠标右键，选择复制到->桌面
+
+**插件：**
+- C/C++，这个肯定是必须的。
+- C/C++ Snippets，即 C/C++重用代码块
+-  C/C++ Advanced Lint,即 C/C++静态检测 。
+-   Code Runner，即代码运行。
+-   Include AutoComplete，即自动头文件包含。
+-   GBKtoUTF8，将 GBK 转换为 UTF8。
+-   ARM，即支持 ARM 汇编语法高亮显示。
+-   compareit，比较插件，可以用于比较两个文件的差异。
+-   DeviceTree，设备树语法插件。
+-   TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！
+
+### 串口驱动
+
+### MobaXterm 
+
+https://mobaxterm.mobatek.net
+点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
+![enter description here](./img/2022-04-06-Linux学习/1652347394139.png)
+串口设置
+![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
+
+
+## FTP 服务（文件互传）
 这里的互传不是使用 VirtualBox 的扩展功能，而是借用 FTP 服务，这样，我们就可以远程互传文件。
 
-## 开启Ubuntu下的FTP服务
 
-打开Ubuntu的终端窗口，然后执行如下命令来安装FTP服务：
+
+
+### 开启Ubuntu下的FTP服务
+
+安装FTP服务：
 ```
 sudo apt-get install vsftpd
 ```
-等待软件自动安装，安装完成以后使用如下VI命令打开/etc/vsftpd.conf，命令如下：
+安装完成以后使用如下VI命令打开/etc/vsftpd.conf：
 ```
 sudo vi /etc/vsftpd.conf
 ```
-打开以后vsftpd.conf文件以后找到如下两行：
+找到如下两行：
 ```
 local_enable=YES
 write_enable=YES
@@ -4069,39 +4034,10 @@ sudo /etc/init.d/vsftpd restart
 
 ### Windows 下 FTP 安装
 
-[FileZilla官网](https://www.filezilla.cn/download/client)
-
-下载后，安装一路默认即可，可更改安装路径。
-
-Ubuntu作为FTP服务器，FileZilla作为FTP客户端，客户端肯定要连接到服务器上，打开站点管理器，点击：文件->站点管理器，或者直接点击左上角图标
-![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1606231575210.png)
-打开以后，按下图所示设置：
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Filezilla设置.png)
-
-其中用户名就是当前登录的用户，注意不是开始时登录界面显示的那个。我们可以使用命令查看：
-```
-lonly@lonly-VirtualBox:~$ pwd
-/home/lonly
-lonly@lonly-VirtualBox:~$ w
- 23:36:09 up 15 min,  1 user,  load average: 0.00, 0.01, 0.03
-USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-lonly    :0       :0               23:21   ?xdm?   8.15s  0.00s /usr/lib/gdm3/g
-```
-`pwd`或`w`命令都可以，可以看到当前用户名是`lonly`.
-密码就是开机的登录密码了
-
-连接成功后，会看到如下界面，左边是 Windows 系统的目录文件，右边是Ubuntu 系统的目录文件。
-
-
-但是Ubuntu 文件目录下的中文目录都是乱码的，这是因为编码方式没有选对，先断开连接，点击：
-服务器(S)->断开连接，然后打开站点管理器，选中要设置的站点“Ubuntu”，选择“字符集”，
-设置所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/2022-04-06-Linux学习/1649328733209.png)
 
 #### ip地址
 
-这里是一个大坑，为了避免问题，可以先搁置上面的设置。  
+这里是一个大坑，为了避免问题，需要有限解决该问题。  
 
 我们先在Ubuntu的命令行输入  `ifconfig` 查询虚拟机当前的地址：
 
@@ -4177,7 +4113,7 @@ Windows IP 配置
 
 ...
 ```
-查看 `以太网适配器 以太网:`项中的 IPv4 地址：`192.168.1.7` 就是我们的主机地址了。可以看到和我们的虚拟主机地址只有最后一位不一样的。如果这里你发现你的虚拟机网络地址和主机的完全不一样，如：`10.0.2.15`。那就说明网络设置有错误，我们需要修改 VirtualBox 软件的网络配置。
+`以太网适配器 以太网:`项中的 IPv4 地址：`192.168.1.7` 就是我们的主机地址了。可以看到和我们的虚拟主机地址只有最后一位不一样的。如果这里你发现你的虚拟机网络地址和主机的完全不一样，如：`10.0.2.15`。那就说明网络设置有错误，我们需要修改 VirtualBox 软件的网络配置。
 
 1. Ubuntu 关键，进入 VirtualBox的网络配置界面：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Virtual网络设置.png)
@@ -4238,6 +4174,35 @@ Windows IP 配置
  - [VirtualBox虚拟机网络设置（四种方式）](https://blog.51cto.com/11585002/2476265)
  - [VirtualBox 网络模式总结](https://rqsir.github.io/2019/05/23/VirtualBox-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/)
  - [VirtualBox虚拟机网络搭建NAT、桥接、Host-Only、Internal等(centos7)](https://www.jianshu.com/p/0537b056790b)
+
+下载地址：[FileZilla官网](https://www.filezilla.cn/download/client)
+
+下载后，安装一路默认即可，可更改安装路径。
+打开站点管理器，点击：文件->站点管理器，或者直接点击左上角图标
+![](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1606231575210.png)
+打开以后，按下图所示设置：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Filezilla设置.png)
+
+其中用户名就是当前登录的用户，注意不是系统登录界面显示的那个。我们可以使用命令查看：
+```
+lonly@lonly-VirtualBox:~$ pwd
+/home/lonly
+lonly@lonly-VirtualBox:~$ w
+ 23:36:09 up 15 min,  1 user,  load average: 0.00, 0.01, 0.03
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+lonly    :0       :0               23:21   ?xdm?   8.15s  0.00s /usr/lib/gdm3/g
+```
+`pwd`或`w`命令都可以，可以看到当前用户名是`lonly`.
+密码就是开机的登录密码了
+
+连接成功后，会看到如下界面，左边是 Windows 系统的目录文件，右边是Ubuntu 系统的目录文件。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/filezilla_界面.png)
+
+但是Ubuntu 文件目录下的中文目录都是乱码的，这是因为编码方式没有选对，先断开连接，点击：
+服务器(S)->断开连接，然后打开站点管理器，选中要设置的站点“Ubuntu”，选择“字符集”，
+设置所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1649328733209.png)
 
 ## NFS和SSH服务开启
 
@@ -4341,7 +4306,7 @@ gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
 ```
 
 这里一定要保证压缩文件名是.xz 结尾，否则后面uboot编译时会出错，下图第第二个文件就是错的
-![enter description here](./img/2022-04-06-Linux学习/1651106667942.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651106667942.png)
 
 拷贝完成以后在/usr/local/arm目录中对交叉编译工具进行解压，解压命令如下：
 
@@ -4380,7 +4345,7 @@ arm-linux-gnueabihf-gcc -v
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_version.png)
 
 注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
-![enter description here](./img/2022-04-06-Linux学习/1651061897534.png)
+![enter description here](./img/嵌入式Linux学习笔记/1651061897534.png)
 
 最好的验证验证方法就是直接编译一个例程，我们就编译第一个裸机例程“1_leds”试试，裸机例程在开发板光盘中的路径为：1、程序源码->1、裸机例程->1_leds。在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程，如下所示：
 ```
@@ -4514,9 +4479,9 @@ Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT�
 ## MobaXterm 软件安装和使用
 https://mobaxterm.mobatek.net
 点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
-![enter description here](./img/2022-04-06-Linux学习/1652347394139.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347394139.png)
 串口设置
-![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347512693.png)
 
 
 # I.MX6U-ALPHA/Mini开发平台介绍
