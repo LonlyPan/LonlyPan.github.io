@@ -3634,16 +3634,6 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 -   DeviceTree，设备树语法插件。
 -   TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！
 
-#### 串口驱动
-
-#### MobaXterm 
-
-https://mobaxterm.mobatek.net
-点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
-![enter description here](./img/2022-04-06-Linux学习/1652347394139.png)
-串口设置
-![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
-
 
 ### FTP 服务（文件互传）
 这里的互传不是使用 VirtualBox 的扩展功能，而是借用 FTP 服务，这样，我们就可以远程互传文件。
@@ -3767,7 +3757,22 @@ Windows IP 配置
  
 方法2. （20220611）
 原网络配置不动（默认网络地址转换模式），再启动一个网卡2，设置为 `仅主机(Host-Only)网络`
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654934586335.png)
+网络地址转换模式：
+ - 连接方式 选择 网络地址转换
+ - 界面名称 无
+ - 高级-控制芯片 选择 PCnet-FAST III
+ - 高级-混杂模式 拒绝
+ - 高级-接入网线 √
+ 
+网络地址转换模式：
+ - 连接方式 选择 仅主机(Host-Only)网络
+ - 界面名称 选择 （如果你的笔记本有无线网卡和有线网卡，需要根据现在的上网方式对应选择）
+ - 高级-控制芯片 默认
+ - 高级-混杂模式 拒绝（默认）
+ - 高级-接入网线 √（默认）
+ - 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654940601857.png)
+
 
 重启 ubuntu，再重新查看IP地址，确保虚拟机和主机的IP地址只有最后一位不同即可（仅主机(Host-Only)网络模式下，有两位不同）。为了保险起见，我们可以在windows命令行中 ping 一下虚拟机地址。
 ```
