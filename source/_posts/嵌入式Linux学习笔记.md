@@ -15,9 +15,9 @@ categories: 01-专业
 
 <!--more-->
 
-速复习
+# 一、 基础概念
 
-# 嵌入式和单片机的区别
+## 嵌入式和单片机的区别
 
 **较早的定义**
  - **英国电器工程师协会定义的：** 嵌入式系统（Embedded System），是一种“完全嵌入受控器件内部，为特定应用而设计的专用计算机系统”。
@@ -29,9 +29,11 @@ categories: 01-专业
 
 ![表格](./img/嵌入式Linux学习笔记/1654926750967.table.html)
 
-	![表格](./img/2022-04-07-Linux快速入门/1652268620123.table.html)
-	![enter description here](./img/2022-04-07-Linux快速入门/1652267294777.png)
-	
+
+![表格](./img/2022-04-07-Linux快速入门/1652268620123.table.html)
+
+![22db60b9-1d64-4af5-832f-a0b661b7b1c9](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/22db60b9-1d64-4af5-832f-a0b661b7b1c9.png)
+
 > CPU概念基本指中央处理器，微处理器都可以称为CPU
 > MPU，和SOC概念模糊，不做区分，认为是一个
 
@@ -41,13 +43,13 @@ categories: 01-专业
 - [嵌入式和单片机，是同一个东西吗？](http://www.xzclass.com/?p=464)
 - [嵌入式Linux和stm32区别?之间有什么关系吗？](https://www.eet-china.com/mp/a125116.html)
 
-## MMU（内存管理单元）
+### MMU（内存管理单元）
 
 没有MMU，CPU执行单元发出的内存地址将直接传到芯片引脚上，被内存芯片接收，这称为物理地址（Physical Address）：
 
 有MMU，CPU执行单元发出的内存地址将被MMU截获，从CPU到MMU的地址称为虚拟地址（Virtual Address），而MMU将这个地址翻译成另一个地址发到CPU芯片的外部地址引脚上，也就是将虚拟地址映射成物理地址：
 
-![enter description here](./img/2022-04-07-Linux快速入门/1652319855851.png)
+![1652319855851](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652319855851.png)
 
 处理器一般有用户模式（User Mode）和特权模式（privileged Mode）之分。当CPU要访问一个VA（Virtual Address）时，MMU会检查CPU当前处于用户模式还是特权模式，访问内存的目的是读数据、写数据还是取指令执行，如果与操作系统设定的权限相符，则允许访问，把VA转换成PA，否则不允许执行，产生异常（Exception）。
 
@@ -58,13 +60,14 @@ categories: 01-专业
 - [MMU原理](https://zhuanlan.zhihu.com/p/354142930)
 - [arm-linux学习-（MMU内存管理单元）](https://www.cnblogs.com/alantu2018/p/9002309.html)
 
-## 嵌入式软件
+### 嵌入式软件
 
-![enter description here](./img/2022-04-07-Linux快速入门/1652319626783.png)
+![1652319626783](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652319626783.png)
+
 **参考资料**
 - [嵌入式linux 和 用stm32进行的嵌入式开发 这两者之间有什么关联性吗？](https://www.zhihu.com/question/53880054/answer/164501004)
 
-## STM32是否可以跑linux
+### STM32是否可以跑linux
 
 操作系统有两种 用MMU的 和 不用MMU的
 - 用MMU的是Windows MacOS Linux Android
@@ -80,22 +83,24 @@ STM32是M系列...不可能运行Linux...（ucLinux不算Linux的...）
 参考资料：
 - [STM32是否可以跑linux](https://www.cnblogs.com/AI-Algorithms/p/3866586.html)
 
-# 什么是linux
+## 什么是linux
 
 区分linux内核和linux操作系统
  - Linux严格来说是单指作业系统的内核。
  - 如今Linux常用来指基于Linux的完整操作系统，内核则改以Linux内核称之。
 
 Linux内核由林纳斯·托瓦兹（Linus Torvalds）在1991年10月5日首次发布，在加上使用者空间的应用程序之后，成为Linux操作系统。除了一部分专家之外，大多数人都是直接使用Linux 发行版（Linux操作系统），而不是自己选择每一样组件或自行设置。
-![enter description here](./img/2022-04-07-Linux快速入门/1652326905352.png)
-![enter description here](./img/2022-04-07-Linux快速入门/1652320923467.png)
+
+![1652326905352](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652326905352.png)
+![1652320923467](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652320923467.png)
 
 **参考资料：**
 - [Linux 简介](https://www.runoob.com/linux/linux-intro.html)
 - [Linux-wiki](https://zh.wikipedia.org/zh-hans/Linux)
 
 
-# ubuntu安装与使用
+
+## ubuntu安装与使用
 
 开发板不涉及linux知识，使用ubuntu
 
@@ -131,7 +136,8 @@ int main(int argc, char *argv[])
  2. 编译（Compilation）：生成 .s 汇编文件。
  3. 汇编（Assembly）：.生成以 .o 的目标文件。
  4. 链接（Linking）：多个.o文件、库文件链接成一个文件，变成可执行文件。
-![enter description here](./img/2022-04-07-Linux快速入门/1652338937644.png)
+
+![1652338937644](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652338937644.png)
 
 我们需要操作的步骤：.o 和可执行文件
 
