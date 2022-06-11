@@ -629,11 +629,11 @@ Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要
 	- vim /etc/vim/vimrc  ：`set ts=4   set nu`
 
 
-## 1、虚拟机安装
+## 1. 虚拟机安装
 
 要想在windows系统安装 ubuntu ，就得借助虚拟机。这样就可以在电脑上同时存在两个操作系统，并且可以同时运行。
 
-### 1、下载
+### 下载
 
 VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 选择你需要下载的版本 (32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 （下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 VirtualBox 主体安装包，一个是 扩展包，扩展包必须和 VirtualBox 主体安装包版本保持一致。
@@ -642,16 +642,16 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
  
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_下载.png)
 
-## 2、安装
+### 安装
 
-上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机软件。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
-虚拟机件安装后，先关闭虚拟机件。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
+上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装VirtualBox。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
+VirtualBox安装后，先关闭软件。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
-## 3、新建虚拟机
+### 新建虚拟机
 
-安装好虚拟机软件 VirtualBox 后，便可以用它新建一台虚拟机，相当于新建一台虚拟的电脑，用于后面的 Linux 操作系统安装。
+虚拟机，相当于一台虚拟的电脑，用于后面的 Ubuntu 操作系统安装。
 
 1. 单击新建
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建.png)
@@ -659,7 +659,7 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 
 2. 虚拟机配置
 **名称：** 随意
-**文件夹：** 存放虚拟机的配置文件，区别与存放操作系统的文件夹。随意。
+**文件夹：** 存放虚拟机的配置文件，区别与存放Ubuntu操作系统的文件夹。随意。
 **类型：** Linux
 **版本：** Ubuntu（64-bit）
 **内存大小：** 一般是本机的一半，例如你电脑是16G内存，这里就选8G
@@ -667,28 +667,26 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建1.png)
 
 3. 创建虚拟硬盘
-虚拟硬盘文件类型：VDI
-内存分配：固定大小。建议先单独创建一个电脑硬盘分区，且大小最好在100G以上，用来安装 LInux 操作系统，学习中可能会经常格式化。
+建议单独创建一个电脑硬盘分区，且大小最好在100G以上，用来安装 LInux 操作系统，学习中可能会经常格式化。
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/分区.png)
-文件位置和大小：文件位置就选择我们上面新建的分区，大小全选
+虚拟硬盘文件类型：VDI
+内存分配：固定大小。
+文件位置和大小：文件位置就选择我们上面新建的分区，大小剩5-10G作用，用于存放我们的ubuntu映像文件（即.iso文件）
 点击创建，配置完毕，等待软件自动创建完成。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建2.png)
 4. 虚拟机创建完成的样子
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/创建完成.png)  
   
-## 4、Ubuntu安装
+## 2. Ubuntu安装
 
-嵌入式Linux 开发需要在 Linux 系统下进行，我们这里选择 Ubuntu Linux 系统  
->严格来说，Linux 这个词并不是指操作系统，而是指操作系统的内核   
->Ubuntu 是指基于这种内核的桌面PC操作系统，是在 linux 这个内核上又加上了如界面等许多其他功能。
->术语上喜欢称 Ubuntu 是一个 Linux 发行版。类似的还有 Centos、Debian。都称为 Linux 发行版
+0. 修改启动顺序。设置 -> 系统，将硬盘移到首位。不然会默认使用光驱启动，这会导致下面系统安装成功后会又进入系统安装界面。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动顺序.png)
 
-1. 下载 Ubuntu，进入[Ubuntu 阿里云镜像下载](https://mirrors.aliyun.com/ubuntu-releases/)，下载 18.04.5 版   
+1. 下载 Ubuntu，进入[Ubuntu 阿里云镜像下载](https://mirrors.aliyun.com/ubuntu-releases/)，下载 18.04.5 版。建议放在我们之前新建的磁盘分区中即E盘下，后面可能会涉及频繁重装系统，所以 iso 文件最好不要删。
 **不推荐下载最新版，软件适配不足，bug较多。资料较少。还是下载老版本。--20201207  
-后面教程中版本都是 20.04.1。以你安装的 18.04.5 版本为准**
+后面教程中版本都是 20.04.1（写教程时一开始使用的最新版，后面出现很多问题，亲身教训）。实际以 18.04.5 版本为准**
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ubuntu下载18.png)
 2. 点击`启动`
-提前在虚拟机设置中，调整磁盘启动顺序，硬盘在首位
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/创建完成.png)
 3. 选择启动盘
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/选择iso.png)
@@ -699,7 +697,9 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 6. 点击启动
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动.png)
 7. 等待安装启动，语言选择 `English`（个人推荐，程序员应该拥抱英语），然后选择 `install Ubuntu`
-！[enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/语言.png)
+>选择英文，后面会涉及输入法无法写中文的问题，需要在系统中安装语言包。如果怕麻烦，这里可以选中文，安装时系统会自动安装。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/语言.png)
 8. 选择  `Nomal installation`，安装时更新（系统自带的软件更新）可以不勾选，安装时间会加长，我这里选了。点击继续。  
 安装类型选择 `擦除磁盘并安装`。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/更新.png）
@@ -710,8 +710,6 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/用户信息2.png)
 11. 接下来就是漫长的安装过长，我这里大概用了2小时。出现下面弹窗表示安装完成，点击重新启动即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/图像_25.png)
-12. 启动顺序。如果你点击重启后有显示重新安装，那么就需要设置启动顺序（下图）或者将之前下载 iso 文件删除。就可以正常进入了。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动顺序.png)
 
 **参考资料**
 - [Drag and Drop not working for Ubuntu 20.04 VirtualBox](https://askubuntu.com/questions/1230102/drag-and-drop-not-working-for-ubuntu-20-04-virtualbox)
