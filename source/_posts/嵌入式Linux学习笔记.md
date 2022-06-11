@@ -613,6 +613,8 @@ saveenv
 # 二、Ubuntu系统安装与使用
 
 Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要在win10系统上一样，我们之后的linux软件开发也需要在 Linux 系统上（即Ubuntu系统）
+**本章内容：**
+虚拟机安装 -> 使用虚拟机安装ubuntu -> ubuntu配置使用
 
 ## ubuntu安装与使用
 
@@ -627,19 +629,23 @@ Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要
 	- vim /etc/vim/vimrc  ：`set ts=4   set nu`
 
 
-1、下载
- 
-VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
-选择你需要下载的版本 (64位系统选择可用的最高版本,32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 6.1.16（下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 扩展包，一个是 VirtualBox 主体安装包。
-扩展包这里下载错了，应该是其上一个，名称中带 `140961`。和 VirtualBox 主体安装包版本保持一致。--20201107
- 
+## 1、虚拟机安装
 
+要想在windows系统安装 ubuntu ，就得借助虚拟机。这样就可以在电脑上同时存在两个操作系统，并且可以同时运行。
+
+### 1、下载
+
+VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
+选择你需要下载的版本 (32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 （下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 VirtualBox 主体安装包，一个是 扩展包，扩展包必须和 VirtualBox 主体安装包版本保持一致。
+
+- 扩展包提供了对USB 2.0、USB 3.0、远程桌面协议 VRDP（VirtualBox Remote Desktop Protocol）等实用功能的支持。但相关扩展包并非开源软件，而是在 VirtualBox Personal Use and Evaluation License (PUEL) 许可证限制下发布的软件，所以扩展包并未与 VirtulBox 安装文件集成在一起，而是需要单独下载和安装。
+ 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_下载.png)
 
 ## 2、安装
 
-上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机。安装过程全程按照提示进行，一路点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
-软件安装后，双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
+上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
+虚拟机安装后，双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
