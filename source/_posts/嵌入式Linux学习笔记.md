@@ -6710,7 +6710,7 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 
 后面我们学习uboot移植的时候就是使用 uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 版本
 
-参考资料：
+**参考资料：**
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 
 ## U-Boot移植
