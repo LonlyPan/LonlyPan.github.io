@@ -644,8 +644,8 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 
 ## 2、安装
 
-上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
-虚拟机安装后，双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
+上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装虚拟机软件。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
+虚拟机件安装后，先关闭虚拟机件。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
