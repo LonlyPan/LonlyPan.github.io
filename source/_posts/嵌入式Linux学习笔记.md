@@ -5,18 +5,18 @@ index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌�
 date: 2022-04-06
 updated: 2022-04-06
 hide: false
-# sticky: 100 #置顶，数字越大越靠前
-# banner_img: #/img/post_banner.jpg
-# comment: false
+## sticky: 100 #置顶，数字越大越靠前
+## banner_img: #/img/post_banner.jpg
+## comment: false
 categories: 01-专业
 ---
 
 <!--more-->
 # 入门篇
 
-# 一、 基础概念
+## 一、 基础概念
 
-## 嵌入式和单片机的区别
+### 嵌入式和单片机的区别
 
 **较早的定义**
  - **英国电器工程师协会定义的：** 嵌入式系统（Embedded System），是一种“完全嵌入受控器件内部，为特定应用而设计的专用计算机系统”。
@@ -42,7 +42,7 @@ categories: 01-专业
 - [嵌入式和单片机，是同一个东西吗？](http://www.xzclass.com/?p=464)
 - [嵌入式Linux和stm32区别?之间有什么关系吗？](https://www.eet-china.com/mp/a125116.html)
 
-### MMU（内存管理单元）
+#### MMU（内存管理单元）
 
 没有MMU，CPU执行单元发出的内存地址将直接传到芯片引脚上，被内存芯片接收，这称为物理地址（Physical Address）：
 
@@ -59,14 +59,14 @@ categories: 01-专业
 - [MMU原理](https://zhuanlan.zhihu.com/p/354142930)
 - [arm-linux学习-（MMU内存管理单元）](https://www.cnblogs.com/alantu2018/p/9002309.html)
 
-### 嵌入式软件
+#### 嵌入式软件
 
 ![1652319626783](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652319626783.png)
 
 **参考资料**
 - [嵌入式linux 和 用stm32进行的嵌入式开发 这两者之间有什么关联性吗？](https://www.zhihu.com/question/53880054/answer/164501004)
 
-### STM32是否可以跑linux
+#### STM32是否可以跑linux
 
 操作系统有两种 用MMU的 和 不用MMU的
 - 用MMU的是Windows MacOS Linux Android
@@ -82,7 +82,7 @@ STM32是M系列...不可能运行Linux...（ucLinux不算Linux的...）
 参考资料：
 - [STM32是否可以跑linux](https://www.cnblogs.com/AI-Algorithms/p/3866586.html)
 
-## 什么是linux
+### 什么是linux
 
 区分linux内核和linux操作系统
  - Linux严格来说是单指作业系统的内核。
@@ -97,7 +97,7 @@ Linux内核由林纳斯·托瓦兹（Linus Torvalds）在1991年10月5日首次�
 - [Linux 简介](https://www.runoob.com/linux/linux-intro.html)
 - [Linux-wiki](https://zh.wikipedia.org/zh-hans/Linux)
 
-## gcc编译
+### gcc编译
 
 gcc编译器ubuntu自带，`gcc -v` 查看当前版本
 
@@ -131,17 +131,17 @@ int main(int argc, char *argv[])
 
 
 
-# 二、Ubuntu系统安装与使用
+## 二、Ubuntu系统安装与使用
 
 Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要在win10系统上一样，我们之后的linux软件开发也需要在 Linux 系统上（即Ubuntu系统）
 **本章内容：**
 虚拟机安装 -> 使用虚拟机安装ubuntu -> ubuntu配置使用
 
-## 1. 虚拟机安装
+### 1. 虚拟机安装
 
 要想在windows系统安装 ubuntu ，就得借助虚拟机。这样就可以在电脑上同时存在两个操作系统，并且可以同时运行。
 
-### 下载
+#### 下载
 
 VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 选择你需要下载的版本 (32位系统请务必选择5.2)。这里我的是 64 位系统，选择最新版 （下图左半图红框）。单击进入文件选择界面（下图右半图）选择文件下载，其中一个是 VirtualBox 主体安装包，一个是 扩展包，扩展包必须和 VirtualBox 主体安装包版本保持一致（后缀140961也要一样）。
@@ -150,14 +150,14 @@ VirtualBox[下载地址](http://download.virtualbox.org/virtualbox/ )
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654930130364.png) 
 
 
-### 安装
+#### 安装
 
 上述两个文件下载完成后，先双击运行 `VirtualBox-6.1.16-140961-Win.exe` 安装VirtualBox。安装过程全程按照提示进行，点击下一步，遇到弹窗，点选 "是" 或 “安装” 即可。可以更改软件安装位置。                                                                                                                                                                                              
 VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-extpack` 安装扩展包。（下图左半图）。安装完成后，运行 VirtualBox，在左上角 `管理` -> `全局设定` -> `扩展`，确认扩展包安装成功。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/VirtualBox_.png)
 
-### 新建虚拟机
+#### 新建虚拟机
 
 虚拟机，相当于一台虚拟的电脑，用于后面的 Ubuntu 操作系统安装。
 
@@ -185,7 +185,7 @@ VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-ex
 4. 虚拟机创建完成的样子
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/创建完成.png)  
   
-## 2. Ubuntu安装
+### 2. Ubuntu安装
 
 0. 修改启动顺序。设置 -> 系统，将硬盘移到首位。不然会默认使用光驱启动，这会导致下面系统安装成功后会又进入系统安装界面。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/启动顺序.png)
@@ -224,9 +224,9 @@ VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-ex
 - [VirtualBox Ubuntu 20.04 LTS super buggy](https://www.linux.org/threads/virtualbox-ubuntu-20-04-lts-super-buggy.29161/)
 
 
-## 3. Ubuntu配置
+### 3. Ubuntu配置
 
-### 增强扩展功能
+#### 增强扩展功能
 
 安装增强扩展功能。解决以下问题：
 - 更改屏幕分辨率，解决显示界面太小问题
@@ -255,7 +255,7 @@ VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-ex
 **参考链接**
 - [Install guest additions on a VirtualBox](https://www.youtube.com/watch?v=V4tGpsZiOdw)
 - 
-### 软件和更新源
+#### 软件和更新源
 
 Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外的软件源进行软件包的下载/安装/更新等操作。而由于不可抗力，这些下载操作可能会很慢。此时可以采用国内的镜像软件源替换 Ubuntu 的默认软件源，提高软件更新下载速度。
 1. 打开 Software&Updates -> Ubuntu Software,其界面有个 Download from 项，找到 China 项，会有很多源，选择其中一个即可。
@@ -264,7 +264,7 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考资料**
 - [Ubuntu18.04 设置国内镜像软件源进行软件下载/更新](https://www.cnblogs.com/yhjoker/p/12813423.html)
 
-### U盘支持
+#### U盘支持
 
 我们也希望能在 LInux 系统中读取电脑上的 usb 设备。此时就发挥我们之前安装的扩展包作用了。
 - 这里实测，不安装扩展包，也是可以使用 usb3.0 的hub识别usb2.0读卡器读写SD卡
@@ -279,19 +279,19 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 **参考链接**
 - [How to Enable USB in VirtualBox](https://www.tecmint.com/enable-usb-in-virtualbox/)
 
-### 图标对齐
+#### 图标对齐
 
 虽然LInux基本都是命令行操作，但桌面有时也会偶尔存放东西。默认拖动到桌面的文件图标会堆叠在一起，不像 Windows 或自动整理、对齐。其实这里需要我们自己选择。在桌面右键：
 - keep aligned：保持对齐
 - Organize Desktop by Name：按名称排序桌面
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/keep_aligned.png)
 
-### 锁屏
+#### 锁屏
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
 
-## 参考链接
+### 参考链接
 
  - [virtualbox虚拟机使用教程](https://zsxwz.com/2020/01/27/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
  - [Oracle VM VirtualBox 使用教程(Windows操作系统下)](https://www.xckjsys.com/2019/08/20/154/)
@@ -304,7 +304,7 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
  - https://segmentfault.com/a/1190000022468063
  - https://www.codeleading.com/article/61115145053/
 
-# 四、shell命令
+## 四、shell命令
 
 这里的命令一定**多多动手尝试，多多动手尝试，多多动手尝试**。不要死记硬背，光看是无法学会且领会不到真谛的。
  - 命令都是带参数的，自己多上网查查其它用法
@@ -317,7 +317,7 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
 - [Linux命令大全(手册)](https://www.linuxcool.com/)
 - [Linux 命令大全](https://www.runoob.com/linux/linux-command-manual.html)
 
-### 重复执行上条命令的 4 种方法：
+#### 重复执行上条命令的 4 种方法：
 
  - 使用上方向键，并回车执行。（推荐）
  - 按 Ctrl+P 并回车执行。（备选，有的命令上下键会没有，这个绝对会有）
@@ -328,7 +328,7 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
 **参考链接**
 - [Linux系统下Shell重复执行上条命令的几种方法](https://www.nenew.net/linux-shell-rerun-command.html)
  
-## cd 切换目录
+### cd 切换目录
 
 `changeDirectorym`，这是一个非常基本、经常需要使用的命令，它用于切换当前目录，它的参数是要切换到的目录的路径，可以是绝对路径，也可以是相对路径。如：
 
@@ -350,7 +350,7 @@ lonly@lonly-VirtualBox:~$ cd /  # 默认用户目录 '$' 为 '~' 符号
 lonly@lonly-VirtualBox:/$   # 根目录 '$' 为 '/' 符号
 ```
  
-## ls 查看文件与目录
+### ls 查看文件与目录
 
 `list` ，查看文件与目录的命令，它的参数非常多，下面就列出一些我常用的参数吧，如下：
 ```
@@ -364,7 +364,7 @@ lonly@lonly-VirtualBox:/$   # 根目录 '$' 为 '/' 符号
 -h：将文件容量以较易读的方式（GB，kB等）列出来
 -R：连同子目录的内容一起列出（递归列出），等于该目录下的所有文件都会显示出来
 ```
-## uname 显示系统相关信息
+### uname 显示系统相关信息
 
 `Unix name`，用于显示系统相关信息，比如主机名、内核版本号、硬件架构等。
 
@@ -379,11 +379,11 @@ lonly@lonly-VirtualBox:/$   # 根目录 '$' 为 '/' 符号
 -o：显示操作系统名称
 -i：显示硬件平台
 ```
-## clear 清除屏幕
+### clear 清除屏幕
 
 clear命令用于清除屏幕。这个命令将会刷新屏幕，本质上只是让终端显示页向后翻了一页，如果向上滚动屏幕还可以看到之前的操作信息。
 
-## cat 查看文本
+### cat 查看文本
 
 该命令用于查看文本文件的内容，后接要查看的文件名
 `cat [参数] [文件]`
@@ -394,7 +394,7 @@ clear命令用于清除屏幕。这个命令将会刷新屏幕，本质上只是
 -E：每行结束处显示$符号
 ```
 
-## sudo 超级用户
+### sudo 超级用户
 
 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。
 
@@ -406,7 +406,7 @@ clear命令用于清除屏幕。这个命令将会刷新屏幕，本质上只是
 `sudo xxx指令 # 以超级用户（管理员）执行该指令，临时切换当前身份  `  
 `sudo su # 切换身份为超级用户（永久），不建议这么做，可能会误删除一些系统核心文件，导致系统崩溃`
 
-## cp 复制文件
+### cp 复制文件
 
 `copy`，该命令用于复制文件，它还可以把多个文件一次性地复制到一个目录下， 常用参数如下：
 ```
@@ -424,7 +424,7 @@ clear命令用于清除屏幕。这个命令将会刷新屏幕，本质上只是
 `cp -a file1 file2 #连同文件的所有特性把文件file1复制成文件file2`  
 `cp file1 file2 file3 dir #把文件file1、file2、file3复制到目录dir中，以默认 "-i" 方式`
 
-## touch 创建新的空文件
+### touch 创建新的空文件
 
 touch命令有两个功能：一是创建新的空文件，二是改变已有文件的时间戳属性。
 touch命令会根据当前的系统时间更新指定文件的访问时间和修改时间。如果文件不存在，将会创建新的空文件，除非指定了”-c”或”-h”选项。
@@ -438,7 +438,7 @@ touch命令会根据当前的系统时间更新指定文件的访问时间和修
 --no-create: 不创建新文件
 ```
 
-## rm 删除文件或目录
+### rm 删除文件或目录
 
 `remove`，该命令用于删除文件或目录，它的常用参数如下：
 ```
@@ -450,7 +450,7 @@ touch命令会根据当前的系统时间更新指定文件的访问时间和修
 `rm -i file # 删除文件file，在删除之前会询问是否进行该操作`  
 `rm -fr dir # 强制删除目录dir中的所有文件`
 
-## mkdir
+### mkdir
 `make directories`创建目录。
 ```
 -p:	递归创建多级目录
@@ -463,7 +463,7 @@ touch命令会根据当前的系统时间更新指定文件的访问时间和修
 `mkdir dir1 dir2 dir3 # 同时创建子目录dir1，dir2，dir3`  
 `mkdir -p linuxcool/dir # 同时创建目录linuxcool，并在linuxcool目录下创建子目录dir`
 
-## rmdir
+### rmdir
 `remove directory`，删除空的目录  
 **注意：** rmdir命令只能删除空目录。当要删除非空目录时，就要使用带有 “-r” 选项的rm命令。
 ```
@@ -471,7 +471,7 @@ touch命令会根据当前的系统时间更新指定文件的访问时间和修
 ```
 
 
-## mv
+### mv
 
 `move`，用于移动文件、目录或更名，常用参数如下：
 ```
@@ -489,7 +489,7 @@ touch命令会根据当前的系统时间更新指定文件的访问时间和修
 `mv a.c test1/ # 将 a.c 移动到 test1 文件夹下`
 
 
-## ifconfig
+### ifconfig
 
 `network interfaces configuring`，配置和显示Linux内核中网络接口的网络参数。用ifconfig命令配置的网卡信息，在网卡重启后机器重启后，配置就不存在。要想将上述的配置信息永远的存的电脑里，那就要修改网卡的配置文件了。
 
@@ -540,7 +540,7 @@ ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 # 给enp0s3网卡配置IP地�
 ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255 # 给enp0s3网卡配置IP地址,加上子掩码,加上个广播地址
 ```
 
-## reboot
+### reboot
 
 用于用来重新启动计算机，和Windows系统中的restart一样。但是机器重启必须要root用户才有权限。
 ```
@@ -551,7 +551,7 @@ ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255 # 给
 -i	在重开机之前先把所有网络相关的装置先停止
 ```
 
-## poweroff
+### poweroff
 
 关闭计算机操作系统并且切断系统电源。如果确认系统中已经没有用户存在且所有数据都已保存，需要立即关闭系统，可以使用poweroff命令。
 ```
@@ -563,12 +563,12 @@ ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255 # 给
 -h: 关闭操作系统之前将系统中所有的硬件设置为备用模式（standby节电模式）。
 ```
 
-## sync
+### sync
 
  在Linux/Unix系统中，在文件或数据处理过程中一般先放到内存缓冲区中，等到适当的时候再写入磁盘，以提高系统的运行效率。  
 sync命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。用户通常不需执行sync命令，系统会自动执行update或bdflush操作，将缓冲区的数据写 入磁盘。只有在update或bdflush无法执行或用户需要非正常关机时，才需手动执行sync命令。
 
-## find命令
+### find命令
 
 find是一个基于查找的功能非常强大的命令，相对而言，它的使用也相对较为复杂，参数也比较多，所以在这里将给把它们分类列出，它的基本语法如下：
 `find [PATH] [option] [action]`
@@ -609,7 +609,7 @@ find是一个基于查找的功能非常强大的命令，相对而言，它的�
 `find . -perm 0755 # 查找当前目录中文件权限的0755的文件`  
 `find . -size +12k # 查找当前目录中大于12KB的文件，注意c表示byte`
 
-## grep命令
+### grep命令
 
 `global search regular expression and print out the line`，用于查找内容包含指定的范本样式的文件，如果发现某文件的内容符合所指定的范本样式，预设 grep 指令会把含有范本样式的那一列显示出来。若不指定任何文件名称，或是所给予的文件名为 -，则 grep 指令会从标准输入设备读取数据。
 
@@ -654,7 +654,7 @@ testfile1:Lin
 testfile_1:HELLO LINUX!  
 ...
 ```
-## du
+### du
 
 `Disk Usage`，即用于查看磁盘占用空间的意思。但是与df命令不同的是du命令是对文件和目录磁盘使用的空间的查看，而不是某个分区。
 ```
@@ -671,7 +671,7 @@ du log2012.log  # 显示指定文件所占空间 ：
 du -h scf/  # 以易读方式显示文件夹内及子文件夹大小 ：
 ```
 
-## df
+### df
 
 `Disk Free`，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“df -h”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读。  
 日常普遍用该命令可以查看磁盘被占用了多少空间、还剩多少空间等信息。
@@ -689,7 +689,7 @@ du -h scf/  # 以易读方式显示文件夹内及子文件夹大小 ：
 /dev/mapper/fedora_linuxcool-root 15718400 2040836 13677564   13% /
 ```
 
-## gedit
+### gedit
 
 gedit命令是GNOME桌面环境的官方文本编辑器，尽管gedit旨在简化和易用，但它是功能强大的通用文本编辑器；它可以用来创建和编辑各种文本文件。和 notepad 类似。
 
@@ -700,7 +700,7 @@ gedit命令是GNOME桌面环境的官方文本编辑器，尽管gedit旨在简�
 -s	以独立模式运行gedit
 ```
 
-## ps
+### ps
 
 `process status`，显示当前系统的进程状态。可以搭配 `kill` 指令随时中断、删除不必要的程序。
 
@@ -721,7 +721,7 @@ ps axjf # 查看连同一部分进程树状态
 ```
 
 
-## kill
+### kill
 linux系统中kill命令用来删除执行中的程序或工作。  
 kill命令可将指定的信号发送给相应的进程或工作。 kill命令默认使用信号为15，用于结束进程或工作。如果进程或工作忽略此信号，则可以使用信号9，强制杀死进程或作业。  
 语法格式：`kill [参数] [进程号]`
@@ -741,12 +741,12 @@ kill -SIGTERM %1
 kill -SIGHUP PID
 ```
 
-## file
+### file
 
 file命令用来识别文件类型，也可用来辨别一些文件的编码格式。因为在Linux下文件的类型并不是以后缀为分的，所以这个命令对我们来说就很有用了，它的用法非常简单，基本语法如下：  
 `file filename`
 
-## top
+### top
 
 Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，常用于服务端性能分析。
 
@@ -764,7 +764,7 @@ Linux下常用的性能分析工具，能够实时显示系统中各个进程的
 [root@linuxcool ~]# top -n 2  # 设置信息更新次数
 ```
 
-## gcc命令
+### gcc命令
 
 gcc命令使用GNU推出的基于C/C++的编译器，是开放源代码领域应用最广泛的编译器，具有功能强大，编译代码支持性能优化等特点。现在很多程序员都应用gcc，目前gcc可以用来编译C/C++、FORTRAN、JAVA、OBJC、ADA等语言的程序，可根据需要选择安装支持的语言。
 ```
@@ -783,18 +783,18 @@ gcc -o test test.c -lm -std=c99  # 把源文件test.c按照c99标准编译成可
 gcc -S test.c  # 把源文件test.c转换为相应的汇编程序源文件test.s
 ```
 
-# 五、Ubuntu 软件安装
+## 五、Ubuntu 软件安装
 
-## 1、软件商店安装
+### 1、软件商店安装
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/software.png)
 
-## 2、 sudo apt-get
+### 2、 sudo apt-get
 
 直接使用该命令在线下载并自动安装软件。  
 `sudo apt-get install git  # 安装 get 工具 `
 
-## 3. deb 软件包
+### 3. deb 软件包
 
 类似windows下的 `.exe` 安装包。要先去官网下载软件的 .deb 安装包。
 ```
@@ -802,7 +802,7 @@ sudo dpkg -i|netease.xxx.deb  # 安装网易云，得先进入到 .deb 所在文
 安装好的图标文件再 /usr/share/applications 下
 ```
 
-## 4、源码编译
+### 4、源码编译
 
 一般下下载好软件的源码并解压，进入到源码根目录下，执行 
 ```
@@ -812,52 +812,52 @@ make install
 ```
 >  安装命令各软件不尽相同，这里仅举一般例子说明
 
-# 六、Ubuntu 文件系统结构
+## 六、Ubuntu 文件系统结构
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/目录结构.png)
 
 
-### /bin：
+#### /bin：
 bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。存放着最常用的程序和指令
 
-### /sbin：
+#### /sbin：
 s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是系统管理员使用的程序和指令。
 
-### /boot：
+#### /boot：
 这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。
 
-### /dev ：
+#### /dev ：
 dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。
 
-### /etc：
+#### /etc：
 etc 是 Etcetera(等等) 的缩写,这个目录用来存放所有的系统管理所需要的配置文件和子目录。更改目录下的文件可能会导致系统不能启动。
 
-### /home：
+#### /home：
 用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的，如上图中的 alice、bob 和 eve。
 
-### /lib：
+#### /lib：
 lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库。
 
-### /media：
+#### /media：
 linux 系统会自动识别一些设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下。
 
-### /mnt：
+#### /mnt：
 系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。
 
-### /opt：
+#### /opt：
 opt 是 optional(可选) 的缩写，这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。
 
-### /proc：
+#### /proc：
 管理内存空间！proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。  
 这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：  
 `echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all`
-### /root：
+#### /root：
 该目录为系统管理员，也称作超级权限者的用户主目录。
 
-### /srv：
+#### /srv：
  该目录存放一些服务启动之后需要提取的数据。（不用服务器就是空）
 
-### /sys：
+#### /sys：
 
 这是 Linux2.6 内核的一个很大的变化。该目录下安装了 2.6 内核中新出现的一个文件系统 sysfs 。
 
@@ -867,33 +867,33 @@ sysfs 文件系统集成了下面3种文件系统的信息：针对进程信息�
 
 当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。
 
-###  /tmp：
+####  /tmp：
 tmp 是 temporary(临时) 的缩写这个目录是用来存放一些临时文件的。
 
-### /usr：
+#### /usr：
  usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。
 
-### /usr/bin：
+#### /usr/bin：
 系统用户使用的应用程序。
 
-### /usr/sbin：
+#### /usr/sbin：
 超级用户使用的比较高级的管理程序和系统守护程序。
 
-### /usr/src：
+#### /usr/src：
 内核源代码默认的放置目录。
 
-### /var：
+#### /var：
 var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。
 >这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。
 
-### /run：
+#### /run：
 是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。
 
-# 七、磁盘管理
+## 七、磁盘管理
 
 Linux下，不像Windows可以有C,D,E,多个目录，Linux只有一个根目录/。在装系统时，我们分配给linux的所有区都在/下的某个位置，比如/home等等。
 
-### df
+#### df
 
 该命令上文有说说明，这里更多以实例讲解回顾。  
 检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。  
@@ -925,7 +925,7 @@ Filesystem            Size  Used Avail Use% Mounted on
 /dev/hdc2             9.5G  3.7G  5.4G  41% /
 ```
 
-### du
+#### du
 
 该命令上文有说说明，这里更多以实例讲解回顾。    
 du命令也是查看使用空间的，但是与df命令不同的是Linux du命令是对文件和目录磁盘使用的空间的查看，还是和df命令有一些区别的，这里介绍Linux du命令。  
@@ -970,7 +970,7 @@ du命令只计算文件或目录占用的空间
 77      /var
 ```
 
-### fdisk
+#### fdisk
 
 `Partition table manipulator for Linux`，Linux 的磁盘分区表操作工具。  进行硬盘分区从实质上说就是对硬盘的一种格式化， 用一个形象的比喻，分区就好比在一张白纸上画一个大方框，而格式化好比在方框里打上格子。  
 **语法：** `fdisk [-l] 装置名称`
@@ -1037,8 +1037,8 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
 Disk identifier: 0xf6057dc9
 
-# 笔者注释
-# 分区        开始扇区位置 结束位置 扇区大小 字节大小
+## 笔者注释
+## 分区        开始扇区位置 结束位置 扇区大小 字节大小
 Device     Boot   Start      End  Sectors  Size Id Type
 /dev/sdc1          2048  6291456  6289409    3G 83 Linux
 /dev/sdc2       6293504 30564351 24270848 11.6G 83 Linux
@@ -1079,7 +1079,7 @@ Last sector, +sectors or +size{K,M,G,T,P} (2048-30564351, default 30564351): +3G
 
 Created a new partition 1 of type 'Linux' and of size 3 GiB.
 
-# 剩余空间再建立一个分区
+## 剩余空间再建立一个分区
 Command (m for help): n
 Partition type
    p   primary (1 primary, 0 extended, 3 free)
@@ -1091,7 +1091,7 @@ Last sector, +sectors or +size{K,M,G,T,P} (6293504-30564351, default 30564351): 
 
 Created a new partition 2 of type 'Linux' and of size 11.6 GiB.
 
-# 查看分区情况，确认
+## 查看分区情况，确认
 Command (m for help): p 
 Disk /dev/sdc: 14.6 GiB, 15648948224 bytes, 30564352 sectors
 Units: sectors of 1 * 512 = 512 bytes
@@ -1138,9 +1138,9 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 /dev/sdc1        15G  3.8G   11G  27% /media/lonly/sdc1
 /dev/sdc2        12G  8.0K   12G   1% /media/lonly/sdc2
 ```
-## 主分区、扩展分区和逻辑分区
+### 主分区、扩展分区和逻辑分区
 
-### 概念
+#### 概念
 
 硬盘分区有三种，主磁盘分区、扩展磁盘分区、逻辑分区。这三个术语是针对操作系统而言，主要是从**功能上**划分的概念。
 
@@ -1159,7 +1159,7 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 
 
 
-### 补充
+#### 补充
 
 给新硬盘上建立分区时都要遵循以下的顺序：`建立主分区→建立扩展分区→建立逻辑分区→激活主分区→格式化所有分区。`
 
@@ -1174,13 +1174,13 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 
 MBR（主引导记录）的分区表（主分区表）只能存放4个分区，如果要分更多的分区的话就要 一个扩展分区表（EBR），扩展分区表放在一个系统ID为0x05的主分区上，这个主分区就是扩展分区， 扩展分区能可以分若干个分区，每个分区都是个逻辑分区
 
-### 参考链接
+#### 参考链接
 
 - [Linux 磁盘和分区](https://gtcsq.readthedocs.io/en/latest/linux_tools/disk_note.html)
 - [主分区、扩展分区和逻辑分区的区别，系统分区、引导分区和启动分区的区别](https://blog.csdn.net/buzaikoulan/article/details/44405915)
 - [磁盘分区——主分区、扩展分区、逻辑分区](https://www.cnblogs.com/jiechn/p/4494958.html)
 
-## 磁盘格式化
+### 磁盘格式化
 
 磁盘分割完毕后自然就是要进行文件系统的格式化，格式化的命令非常的简单，使用 mkfs（make filesystem） 命令。
 
@@ -1206,7 +1206,7 @@ lonly@lonly-VirtualBox:$ mkfs.vfat /dev/sdc1
 mkfs.fat 4.1 (2017-01-24)
 ```
 
-## 磁盘挂载与卸除
+### 磁盘挂载与卸除
 1. 提一句Windows下，mount挂载，就是给磁盘分区提供一个盘符（C,D,E,...）。比如插入U盘后系统自动分配给了它I:盘符其实就是挂载，退优盘的时候进行安全弹出，其实就是卸载unmount。
 2.  插入了新硬盘，分了新磁盘区sdb1。它现在还不属于/。我们虽然可以在一些图形桌面系统里找到他的位置，浏览管理里面的文件，但在命令行却不知怎么访问它的目录，比如无法使用cd或者ls。也无法在编程时指定一个目录对它操作。
 3. 这时使用了 mount /dev/sdb1 ~/Share/ ，把新硬盘的区sdb1挂载到工作目录的~/Share/文件夹下，之后访问这个~/Share/文件夹就相当于访问这个硬盘2的sdb1分区了。对/Share/的任何操作，都相当于对sdb1里文件的操作。
@@ -1244,7 +1244,7 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 [root@www ~]# umount /dev/hdc6     
 ```
 
-# 八、压缩与解压缩
+## 八、压缩与解压缩
 
 压缩格式：windows (zip、rar)    
 
@@ -1256,13 +1256,13 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 **压缩：** 把打包后的那个文件压缩，文件大小减小。先将多个购物袋放进一个袋子，再抽真空压缩，减小尺寸。
 先打包再压缩， 打包后可以拆包，压缩后可以解压	。一般压缩软件自带打包与压缩，所以看似是只有压缩一步。
 
-## 压缩软件
+### 压缩软件
 
 该压缩软件是要**安装在 windows系统下**，方便和 linux 文件传输，同意格式。**LInux 不安装 。**  
 我经常使用的 360 压缩不支持 gzip、bzip2 压缩格式，所以不选择。另一个免费的 [7-Zip](https://www.7-zip.org/download.html) 支持这两种格式。
 
 
-## tar命令
+### tar命令
 
 该命令用于对文件进行打包，ta文件通常都是以 .tar 结尾。默认情况并不会压缩，如果指定了相应的参数，它还会调用相应的压缩程序（如gzip和bzip等）进行压缩和解压。它的常用参数如下：
 
@@ -1290,7 +1290,7 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 [root@localhost tmp]# tar -jvxf buodo.tar.bz2
 ```
 
-## rar压缩格式
+### rar压缩格式
 
 要在 linux 下处理 .rar 文件，需要安装 RAR for Linux。 安装方式：  
 `sudo apt-get install rar`
@@ -1300,7 +1300,7 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 
 ```
 
-## ZIP压缩格式
+### ZIP压缩格式
 
 linux 下自带了 zip 和 unzip 程序，zip 是压缩程序，unzip 是解压程序。它们的参数选项很多，这里只做简单介绍，依旧举例说明一下其用法：
 
@@ -1317,7 +1317,7 @@ linux 下自带了 zip 和 unzip 程序，zip 是压缩程序，unzip 是解压�
 [root@localhost tmp]$ unzip all.zip   # 将 all.zip 中的所有文件解压出来。
 ```
 
-# 九、用户和用户组
+## 九、用户和用户组
 
 Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪，并控制他们对系统资源的访问；另一方面也可以帮助用户组织文件，并为用户提供安全性保护。  
 每个用户账号都拥有一个唯一的用户名（UID）和各自的口令。
@@ -1331,7 +1331,7 @@ Linux系统是一个多用户多任务的分时操作系统，任何一个要使
  - /etc/group 存储用户组的关键信息
  - /etc/shadow 存储用户的密码信息
 
-## Linux用户
+### Linux用户
 Linux是一个多用户操作系统，不同的用户拥有不同的权限。可以查看和操作不同的文件。 Ubuntu有三种用户：
 
  - 初次创建的用户
@@ -1340,7 +1340,7 @@ Linux是一个多用户操作系统，不同的用户拥有不同的权限。可
 
 root 用户和初次创建的用户其实就是一个用户，是第一次安装这个 Linux 系统的那个用户。初次创建的用户权限其实就是 root 用户约束了一部分权力（防止误操作删除了系统文件，导致系统崩溃），但仍可以使用 sudo 命令获取临时的root权限或永久切换为 root 权限。普通用户无法创建用户，也无法获得 root 权限。
 
-## Linux用户组
+### Linux用户组
 
 为了方便管理，将用户进行分组。这样就可以设置非本组人员不能访问某些文件。每个用户可以属于多个不同的组。
 
@@ -1351,13 +1351,13 @@ root 用户和初次创建的用户其实就是一个用户，是第一次安装
 用户和用户组的存在就是为了控制文件的访问权限的。  
 每个用户组都有一个ID，叫做GID。
 
-## 创建用户和用户组
-### 图形化界面创建
+### 创建用户和用户组
+#### 图形化界面创建
 
 要使用图形化界面创建用户和用户组的话就需要安装gnome-system-tools这个工具：
 `sudo apt-get install gnome-system-tools`
 
-### 命令创建用户和用户组
+#### 命令创建用户和用户组
 
 ```
 -c comment 指定一段注释性描述。
@@ -1380,11 +1380,11 @@ root 用户和初次创建的用户其实就是一个用户，是第一次安装
 [root@localhost tmp]$ groupdel 用户组名  # 删除用户组
 ```
 
-### 参考链接
+#### 参考链接
 
 - Linux 用户和用户组管理[enter description here](https://www.runoob.com/linux/linux-user-manage.html)
 - [管理文件权限和所有权](https://developer.ibm.com/zh/technologies/linux/tutorials/l-lpic1-104-5/)
-# 文件基本属性
+## 文件基本属性
 
 inux 系统是一种典型的多用户系统，不同的用户处于不同的地位，拥有不同的权限。
 
@@ -1424,7 +1424,7 @@ c 装置文件里面的串行端口设备，例如键盘、鼠标(一次性读�
 - 第 2、5、8 位表示写权限，如果用 w 字符表示，则有写权限，如果用 - 字符表示没有写权限；
 - 第 3、6、9 位表示可执行权限，如果用 x 字符表示，则有执行权限，如果用 - 字符表示，则没有执行权限。
 
-## Linux文件属主和属组
+### Linux文件属主和属组
 ```
 [root@www /]# ls -l
 total 64
@@ -1437,20 +1437,20 @@ drwxr-xr-x 3 mysql mysql 4096 Apr 21  2014 mysql
 在以上实例中，mysql 文件是一个目录文件，属主和属组都为 mysql，属主有可读、可写、可执行的权限；与属主同组的其他用户有可读和可执行的权限；其他用户也有可读和可执行的权限。
 对于 root 用户来说，一般情况下，文件的权限对其不起作用。
 
-## 更改文件属性
-### 1、chgrp：更改文件属组
+### 更改文件属性
+#### 1、chgrp：更改文件属组
 语法：`chgrp [-R] 属组名 文件名`
 ```
 -R：递归更改文件属组，就是在更改某个目录文件的属组时，如果加上-R的参数，那么该目录下的所有文件的属组都会更改。
 ```
-### 2、chown：更改文件属主，也可以同时更改文件属组
+#### 2、chown：更改文件属主，也可以同时更改文件属组
 
 语法：
 ```
 chown [–R] 属主名 文件名
 chown [-R] 属主名：属组名 文件名
 ```
-#### 3、chmod：更改文件9个属性
+##### 3、chmod：更改文件9个属性
 
 ###### 数字格式
 
@@ -1467,7 +1467,7 @@ xyz : 代表属主权限、属组权限、代表其他权限
 
 -R : 进行递归(recursive)的持续变更，亦即连同次目录下的所有文件都会变更
 ```
-#### 符号格式
+##### 符号格式
 
 user：用户
 group：组
@@ -1483,11 +1483,11 @@ chmod [-R] u=rwx,g=rwx,o-rwx 文件名
 // o 代表其他
 ```
 ```
-# chmod u=rwx,g=rx,o=r  test1    // 修改 test1 权限
-#  chmod  a-x test1   // a 则代表 all，即全部的身份。
+## chmod u=rwx,g=rx,o=r  test1    // 修改 test1 权限
+##  chmod  a-x test1   // a 则代表 all，即全部的身份。
 ```
 
-# 连接文件
+## 连接文件
 
 文件都有文件名与数据，这在 Linux 上被分成两个部分：用户数据 (user data) 与元数据 (metadata)。用户数据，即文件数据块 (data block)，是记录文件真实内容的地方；而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（索引节点号，inode 是元数据的一部分但并不包含文件名）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序实际是通过 inode 号寻找正确的文件数据块。下图展示了程序通过文件名获取文件内容的过程。
 ![通过文件名打开文件](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605795008761.png)
@@ -1507,7 +1507,7 @@ lonly@lonly-VirtualBox:~$ ls -i file1.c
 
 为解决文件的共享使用，Linux 系统引入了两种链接：硬链接 (hard link) 与软链接（又称符号链接，即 soft link 或 symbolic link）。链接为 Linux 系统解决了文件的共享使用，还带来了隐藏文件路径、增加权限安全及节省存储等好处。
 
-## 硬链接：
+### 硬链接：
 若一个 inode 号对应多个文件名，则称这些文件为硬链接。换言之，硬链接就是同一个文件使用了多个别名。由于硬链接是有着相同 inode 号仅文件名不同的文件，因此硬链接存在以下几点特性：
  - 文件有相同的 inode 及 data block；
  - 只能对已存在的文件进行创建；
@@ -1518,7 +1518,7 @@ lonly@lonly-VirtualBox:~$ ls -i file1.c
 
 inode 是随着文件的存在而存在，因此只有当文件存在时才可创建硬链接，inode 号仅在各文件系统下是唯一的，当 Linux 挂载多个文件系统后将出现 inode 号重复的现象，因此硬链接创建时不可跨文件系统。
 
-## 软链接
+### 软链接
 软链接（也叫符号链接），类似于windows系统中的快捷方式。软链接就是一个普通文件，只是数据块内容有点特殊，存放的内容是另一文件的路径名的指向，通过这个方式可以快速定位到软连接所指向的源文件实体。软链接有着自己的 inode 号以及用户数据块。因此软链接的创建与使用没有类似硬链接的诸多限制：
 
  - 软链接有自己的文件属性及权限等；
@@ -1529,13 +1529,13 @@ inode 是随着文件的存在而存在，因此只有当文件存在时才可�
 
 软链接创建时原文件的路径指向使用绝对路径较好。使用相对路径创建的软链接被移动后该软链接文件将成为一个死链接，因为链接数据块中记录的亦是相对路径指向。
 
-## 二者区别
+### 二者区别
 
 硬链接实际上是为文件建一个别名，链接文件和原文件实际上是同一个文件。而软链接建立的是一个指向，即链接文件内的内容是指向原文件的指针，它们是两个文件。  
 不论是硬链接或软链接都不会将原本的档案复制一份，只会占用非常少量的磁碟空间。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605796713610.png)
 
-## ln命令
+### ln命令
 
 软链接和硬链接都是通过ln命令来创建，只是参数不同。命令格式如下：  
 `ln 参数 源文件或目录 目标文件或目录`  
@@ -1553,14 +1553,14 @@ inode 是随着文件的存在而存在，因此只有当文件存在时才可�
 创建软链接 （符号链接）使用：`ln -s source target `
 创建硬链接 （实体链接）使用：`ln source target`
 
-### 参考链接
+#### 参考链接
 
  - [理解 Linux 的硬链接与软链接](https://www.ibm.com/developerworks/cn/linux/l-cn-hardandsymb-links/)
  - [浅谈linux中的硬链接和软链接文件以及ln的使用方法](https://blog.csdn.net/LEON1741/article/details/100136449)
  - [Linux ln 命令](https://www.runoob.com/linux/linux-comm-ln.html)
  - [在Linux系统，关于硬链接的描述正确的是（）](https://www.nowcoder.com/questionTerminal/efad6d9702d042d1bc21fe750af606eb)
 
-# linux 编程
+## linux 编程
 
 LInux下编程分为两步：
 1. 编写
@@ -1569,16 +1569,16 @@ LInux下编程分为两步：
 
 更新本地数据库：sudo apt-get update
 
-## vim编译器
+### vim编译器
 
 Linux系统都会自带vi编辑器，但是vi编辑器太难用了！所以建议大家安装vim编辑器，安装命令：
 `sudo apt-get install vim`
 
-### vi/vim 的使用
+#### vi/vim 的使用
 `vi xxx`	使用vi编辑器打开文件，没有则自动创建。 
 基本上 vi/vim 共分为三种模式，分别是命令模式（Command mode），输入模式（Insert mode）和底线命令模式（Last line mode）。 这三种模式的作用分别是：
 
-### 命令模式
+#### 命令模式
  
 用户刚刚启动 vi/vim，便进入了命令模式。  
 此状态下敲击键盘动作会被Vim识别为命令，而非输入字符。比如我们此时按下i，并不会输入一个字符，i被当作了一个命令。  
@@ -1596,7 +1596,7 @@ Linux系统都会自带vi编辑器，但是vi编辑器太难用了！所以建�
 
 命令模式只有一些最基本的命令，因此仍要依靠底线命令模式输入更多命令
 
-### 输入模式
+#### 输入模式
 
 在命令模式下按下i就进入了输入模式。  
 在输入模式中，可以使用以下按键：
@@ -1611,7 +1611,7 @@ Linux系统都会自带vi编辑器，但是vi编辑器太难用了！所以建�
  - Insert，切换光标为输入/替换模式，光标将变成竖线/下划线
  - ESC，退出输入模式，切换到命令模式
 
-### 底线命令模式
+#### 底线命令模式
 在命令模式下按下`:`（英文冒号）就进入了底线命令模式。  
 底线命令模式可以输入单个或多个字符的命令，可用的命令非常多。  
 在底线命令模式中，基本的命令有（已经省略了冒号）`：`
@@ -1627,7 +1627,7 @@ q! 不保存退出
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1605799065000.png)
 
 
-### 编写第一个程序
+#### 编写第一个程序
 
 使用前，还需要简单配置一下
  1. `vim /etc/vim/vimrc` 打开文件（如果保存时提示错误，加 sudo）
@@ -1661,7 +1661,7 @@ int main(int argc,char *argv[])
 - [Linux vi/vim](https://www.runoob.com/linux/linux-vim.html)
 - [VIM 编辑器简介 ： VIM 编辑器教程](https://dasunhegoda.com/tutorial-in-vim-editor-introduction-vim/510/)
 
-## GCC
+### GCC
 
 gcc命令使用GNU推出的基于C/C++的编译器，是开放源代码领域应用最广泛的编译器，具有功能强大，编译代码支持性能优化等特点。
 
@@ -1701,7 +1701,7 @@ Hello World!
 
 ```
 
-### 程序编译流程
+#### 程序编译流程
 
  1. 预处理：生成 .i 的文件[预处理器cpp]
 展开所有的头文件、替换程序中的宏、解析条件编译并添加到文件中
@@ -1718,9 +1718,9 @@ Hello World!
 - [GCC 参数详解](https://www.runoob.com/w3cnote/gcc-parameter-detail.html)
 - [gcc命令 – GUN C/C++编译器](https://www.linuxcool.com/gcc)
 
-# Makefile编写
+## Makefile编写
 
-## make工具
+### make工具
 利用make工具可以自动完成编译工作。这些工作包括：
 
  - 如果仅仅修改了某几个源文件，则只重新编译这几个源文件；
@@ -1728,15 +1728,15 @@ Hello World!
 
 利用这种自动编译可大大简化开发工作，避免不必要的重新编译。
 
-## Makefile
+### Makefile
 
 make工具通过一个称为Makefile的文件来完成并自动维护编译工作。Makefile文件描述了整个工程的编译、链接等规则。
 
 
-## Makefile一般规则
+### Makefile一般规则
 
 ```c++
-# 注释   注释开头使用 '#',不能使用 '//'、'/* */'
+## 注释   注释开头使用 '#',不能使用 '//'、'/* */'
 目标...:  依赖文件集合...
 		命令1
 		命令2
@@ -1772,7 +1772,7 @@ clean:
 
 `clean` 是一个伪目标文件，因为它没有依赖项。我们只是想通过 `make clean` 来将 `.o` 文件删除，但是我们通常要指定 `.PHONY:clean` 这条语句，用来显式的指定 `clean` 是伪目标，来防止当前目录下有一个同名的 `clean` 文件。这样，一个简单呢的Makefile文件就写好了。
 
-### 实例
+#### 实例
 
 我们完成这样一个小工程，通过键盘输入两个整形数字，然后计算他们的和并将结果显示在屏幕上，在这个工程中我们有main.c、input.c和calcu.c这三个C文件和input.h、calcu.h这两个头文件。其中main.c是主体，input.c负责接收从键盘输入的数值，calcu.h进行任意两个数相加。  
 
@@ -1827,7 +1827,7 @@ int calcu(int a,int b);
 #endif
 ```
 1
-#### gcc方法
+##### gcc方法
 
 ```
 lonly@lonly-VirtualBox:~/Desktop/program_test$ gcc main.c input.c calcu.c -o main
@@ -1850,7 +1850,7 @@ gcc方法特点：
   
 能够完成这个功能的就是Makefile了。
  
-#### make方法
+##### make方法
 
 在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！  Makefile和C文件是处于同一个目录的。
 ```
@@ -1892,7 +1892,7 @@ input two num:2 5
 2 + 5 = 7
 ```
 
-## Makefile变量
+### Makefile变量
 
 Makefile中变量的引用方法是：  
 `$(变量名)`  
@@ -1928,7 +1928,7 @@ xxx.o:xxx.c
 ```
 那么能不能够用一两句来替代上述语句呢，答案是有的。此时我们需要引入 Makefile 模式规则和自动化变量。
 
-## Makefile模式规则
+### Makefile模式规则
 
 模式规则中，至少在规则的目标定义中要包含 "%"，否则，就是一般的规则（上述内容就是一般规则）。  格式如下：
 
@@ -1946,7 +1946,7 @@ xxx.o:xxx.c
        <command ......>
 ```
 
-## Makefile自动化变量
+### Makefile自动化变量
 
 在上述的模式规则中，目标和依赖文件都是一系例的文件，但在每一次的对模式规则的解析时，都会是不同的目标和依赖文件。命令 ` gcc -c xxx.c` 中的 `xxx.c` 也就会不一样， 那么我们如何代替 `xxx.c`呢，答案是自动化变量。
 
@@ -1989,7 +1989,7 @@ print.o:print.c print.h
 可以看出相比原来的代码要精简了很多，1、3 行使用了变量，4、6 行使用了自动化变量，5 行使用了模式规则
 
 
-## Makefile 条件判断
+### Makefile 条件判断
 
 在C语言中我们通过条件判断语句来根据不同的情况来执行不同的分支，Makefile也支持条件判断，语法有两种如下：
 ```
@@ -2014,7 +2014,7 @@ endif
 |   ifdef	  |  判断是否有值，有值为 true，没有值为 false。   |
 |   ifndef	  |  判断是否有值，没有值为 true，有值为 false。   |
 
-### ifeq 和 ifneq
+#### ifeq 和 ifneq
 条件判断的使用方式如下：
 ```
 ifeq(<参数1>,    <参数2>)
@@ -2040,7 +2040,7 @@ endif
 
 ifneq的用法类似，只不过ifneq是用来了比较“参数1”和“参数2”是否不相等，如果不相等的话就为真。
 
-### ifdef和ifndef
+#### ifdef和ifndef
 
 的用法如下：
 ```
@@ -2076,7 +2076,7 @@ ifndef用法类似，但是含义用户ifdef相反
 
 >注意：在条件表达式中不能使用自动化变量，自动化变量在规则命令执行时才有效
 
-## Makefile 函数使用
+### Makefile 函数使用
 
 Makefile支持函数，类似C语言一样，Makefile中的函数是已经定义好的，我们直接使用，**不支持我们自定义函数**。make所支持的函数不多，但是绝对够我们使用了，函数的用法如下：
 ```
@@ -2088,7 +2088,7 @@ ${函数名 参数集合}  # 大括号
 ```
 可以看出，调用函数和调用普通变量一样，使用符号“$”来标识。参数集合是函数的多个参数，参数之间以逗号“,”隔开，函数名和参数之间以“空格”分隔开，函数的调用以“$”开头。接下来我们介绍几个常用的函数。
 
-### 1、subst
+#### 1、subst
 函数subst用来完成字符串替换，调用形式如下：
 ```
 $(subst <from>,<to>,<text>)
@@ -2099,7 +2099,7 @@ $(subst  zzk,ZZK,my name is zzk)
 ```
 把字符串 “myname is zzk” 中的 “zzk” 替换为“ZZK”，替换完成以后的字符串为“my name is ZZK”。
 
-### 2、patsubst
+#### 2、patsubst
 函数patsubst用来完成模式字符串替换，使用方法如下：
 ```
 $(patsubst <pattern>,<replacement>,<text>)
@@ -2110,7 +2110,7 @@ $(patsubst %.c,%.o,a.c b.c c.c)
 ```
 将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。
 
-### 3、dir
+#### 3、dir
 
 函数dir用来获取目录，使用方法如下：
 ```
@@ -2122,7 +2122,7 @@ $(dir </src/a.c>)
 ```
 提取文件“/src/a.c”的目录部分，也就是“/src”。
 
-### 4、notdir
+#### 4、notdir
 
 去除文件中的目录部分，也就是提取文件名，用法如下：
 ```
@@ -2134,7 +2134,7 @@ $(notdir </src/a.c>)
 ```
 提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。
 
-### 5、foreach
+#### 5、foreach
 foreach函数用来完成循环，用法如下：
 ```
 $(foreach <var>, <list>,<text>)
@@ -2148,7 +2148,7 @@ all:
 ```
 执行 make 命令，我们得到的值是“a.o b.o c.o d.o”。
 
-### 6、wildcard
+#### 6、wildcard
 通配符“%”只能用在规则中，只有在规则中它才会展开，如果在变量定义和函数使用时，通配符不会自动展开，这个时候就要用到函数wildcard，使用方法如下：
 ```
 $(wildcard PATTERN...)
@@ -2160,7 +2160,7 @@ $(wildcard *.c)
 上面的代码是用来获取当前目录下所有的 .c文件，类似“%”。这个函数通常跟的通配符 "\*" 连用，使用在依赖规则的描述的时候被展开
 
 
-## 参考链接：
+### 参考链接：
 [跟我一起写Makefile](https://www.google.com.hk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjOovyO4pXtAhWCGaYKHfQjBuQQjBAwAXoECAYQAQ&url=https%3A%2F%2Fseisman.github.io%2Fhow-to-write-makefile%2FMakefile.pdf&usg=AOvVaw3n6s_cIN9yn7MR2DstZbhd)
 [Make 命令教程](http://www.ruanyifeng.com/blog/2015/02/make.html)
 [GNU make](https://www.gnu.org/software/make/manual/make.html)
@@ -2168,7 +2168,7 @@ $(wildcard *.c)
 [Makefile的工作流程](http://c.biancheng.net/view/7091.html)
 [Makefile编写入门教程](https://www.linuxidc.com/Linux/2018-01/150580.htm)
 
-## shell 脚本
+### shell 脚本
 
 Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。  
 Shell 脚本（shell script），是一种为 shell 编写的脚本程序。类似windows的批处理文件，shell脚本就是将连续执行的命令写成一个文件。      
@@ -2192,7 +2192,7 @@ Linux 的 Shell 种类众多，常见的有：
 
 >所以脚本其实就是短小的、用来让计算机自动化完成一系列工作的程序，这类程序可以用文本编辑器修改，不需要编译，通常是解释运行的。
 
-### 第一个shell脚本
+#### 第一个shell脚本
 
 shell脚本是个纯文本文件，命令从上而下，一行一行的开始执行。  
 使用 vim 新建一个文件 test.sh，**扩展名并不影响脚本执行**，见名知意就好。文本内容如下：
@@ -2219,15 +2219,15 @@ chmod +x ./test.sh  #使脚本具有执行权限
 ```
 这种方式运行的脚本，不需要在程序第一行指定解释器信息（`#!/bin/bash`），写了也没用。
 
-### Shell 注释
+#### Shell 注释
 
 以 # 开头的行就是注释，会被解释器忽略。
 ```
 #!/bin/bash
-# 这是一个注释
+## 这是一个注释
 echo "Hello World !"
 ```
-#### 多行注释
+##### 多行注释
 
 多行注释可以使用以下格式：
 ```
@@ -2250,7 +2250,7 @@ EOF 也可以使用其他符号:
 注释内容...
 !
 ```
-### Shell 变量
+#### Shell 变量
 
 定义变量时，变量名不加美元符号（$，PHP语言中变量需要），如：
 ```
@@ -2263,7 +2263,7 @@ your_name="runoob.com"
  - 不能使用标点符号。
  - 不能使用bash里的关键字（可用help命令查看保留关键字）。
 
-#### 使用变量
+##### 使用变量
 使用一个定义过的变量，只要在变量名前面加美元符号即可，和 Makefile 类似：
 ```
 your_name="qinjx"
@@ -2271,7 +2271,7 @@ echo ${your_name}
 ```
 变量名外面的花括号是可选的，加不加都行，推荐给所有变量加上花括号。
 
-#### 只读变量
+##### 只读变量
 使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。
 
 下面的例子尝试更改只读变量，结果报错：
@@ -2285,7 +2285,7 @@ myUrl="https://www.runoob.com"
 ```
 /bin/sh: NAME: This variable is read only.
 ```
-#### 删除变量
+##### 删除变量
 使用 unset 命令可以删除变量。语法：
 ```
 unset variable_name
@@ -2301,7 +2301,7 @@ echo $myUrl
 ```
 以上实例执行将没有任何输出。
 
-#### 变量类型
+##### 变量类型
 
 运行shell时，会同时存在三种变量：
 
@@ -2309,11 +2309,11 @@ echo $myUrl
 2) 环境变量 所有的程序，包括shell启动的程序，都能访问环境变量，有些程序需要环境变量来保证其正常运行。必要的时候shell脚本也可以定义环境变量。
 3) shell变量 shell变量是由shell程序设置的特殊变量。shell变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了shell的正常运行
 
-### Shell 字符串
+#### Shell 字符串
 
 字符串是shell编程中最常用最有用的数据类型（除了数字和字符串，也没啥其它类型好用了），字符串可以用单引号，也可以用双引号，也可以不用引号。
 
-#### 单引号
+##### 单引号
 ```
 str='this is a string'
 ```
@@ -2322,7 +2322,7 @@ str='this is a string'
  - 单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；
  - 单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。
 
-#### 双引号
+##### 双引号
 ```
 your_name='runoob'
 str="Hello, I know you are \"$your_name\"! \n"
@@ -2337,14 +2337,14 @@ Hello, I know you are "runoob"!
  - 双引号里可以有变量
  - 双引号里可以出现转义字符
 
-#### 拼接字符串
+##### 拼接字符串
 ```
 your_name="runoob"
-# 使用双引号拼接
+## 使用双引号拼接
 greeting="hello, "$your_name" !"
 greeting_1="hello, ${your_name} !"
 echo $greeting  $greeting_1
-# 使用单引号拼接
+## 使用单引号拼接
 greeting_2='hello, '$your_name' !'
 greeting_3='hello, ${your_name} !'  # 不能使用变量，会原样输出
 echo $greeting_2  $greeting_3
@@ -2354,13 +2354,13 @@ echo $greeting_2  $greeting_3
 hello, runoob ! hello, runoob !
 hello, runoob ! hello, ${your_name} !
 ```
-#### 获取字符串长度
+##### 获取字符串长度
 ```c++
 string="abcd"
 echo ${#string} #输出 4
 ```
 
-#### 提取子字符串
+##### 提取子字符串
 以下实例从字符串第 2 个字符开始截取 4 个字符：
 ```
 string="runoob is a great site"
@@ -2368,7 +2368,7 @@ echo ${string:1:4} # 输出 unoo
 ```
 注意：第一个字符的索引值为 0。
 
-#### 查找子字符串
+##### 查找子字符串
 
 查找字符 i 或 o 的位置(哪个字母先出现就计算哪个)：
 ```
@@ -2378,13 +2378,13 @@ echo `expr index "$string" io`  # 输出 4
 
 注意： 以上脚本中  \`  是反引号(键盘数字 1 左边按键)，而不是单引号 `'`，不要看错了哦。
 
-### Shell 数组
+#### Shell 数组
 
 bash支持一维数组（不支持多维数组），并且没有限定数组的大小。  
 类似于 C 语言，数组元素的下标由 0 开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于 0。  
 
 
-#### 定义数组  
+##### 定义数组  
 
 在 Shell 中，用括号来表示数组，数组元素用 "空格" 符号分割开。定义数组的一般形式为：
 ```
@@ -2413,7 +2413,7 @@ array_name[n]=valuen
 
 
 
-#### 读取数组
+##### 读取数组
 
 读取数组元素值的一般格式是：
 ```c++
@@ -2429,19 +2429,19 @@ echo ${array_name[@]}
 ```
 会依次打印出数组中的所有元素。
 
-#### 获取数组的长度
+##### 获取数组的长度
 
 获取数组长度的方法与获取字符串长度的方法相同，例如：
 ```c++
-# 取得数组元素的个数
+## 取得数组元素的个数
 length=${#array_name[@]}
-# 或者
+## 或者
 length=${#array_name[*]}
-# 取得数组单个元素的长度
+## 取得数组单个元素的长度
 lengthn=${#array_name[n]}
 ```
 
-### Shell 传递参数
+#### Shell 传递参数
 
 我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：$n。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推……。
 >0 为执行的文件名（包含文件路径）：
@@ -2529,7 +2529,7 @@ $ ./test.sh 1 2 3
 echo  执行默认回车，演示1 这里实际只执行了一次，演示2 执行了两次。 这里涉及 for 语句，后续将会讲解。
  
  
-### 运算符
+#### 运算符
 
 Shell 和其他编程语言一样，支持多种运算符，包括：
 
@@ -2561,7 +2561,7 @@ echo "两数之和为 : $val"
  - 表达式和运算符之间要有空格，例如 `2+2` 是不对的，必须写成 `2 + 2`，这与我们熟悉的大多数编程语言不一样。
  - 完整的表达式要被 ` ` 反引号包含，注意这个字符不是常用的单引号，在 Esc 键下边。
 
-#### 算术运算符
+##### 算术运算符
 
 下表列出了常用的算术运算符，假定变量 a 为 10，变量 b 为 20：
 
@@ -2624,7 +2624,7 @@ a 不等于 b
 > - if...then...fi 是条件语句，后续将会讲解。
 > - 在 MAC 中 shell 的 expr 语法是：$((表达式))，此处表达式中的 "\*" 不需要转义符号 "\" 。
 
-#### 关系运算符
+##### 关系运算符
 关系运算符只支持数字，不支持字符串，除非字符串的值是数字。
 
 下表列出了常用的关系运算符，假定变量 a 为 10，变量 b 为 20：
@@ -2693,7 +2693,7 @@ fi
 10 -le 20: a 小于或等于 b
 ```
 
-#### 布尔运算符
+##### 布尔运算符
 
 下表列出了常用的布尔运算符，假定变量 a 为 10，变量 b 为 20：
 
@@ -2743,7 +2743,7 @@ fi
 10 小于 5 或 20 大于 100 : 返回 false
 ```
 
-#### 逻辑运算符
+##### 逻辑运算符
 
 以下介绍 Shell 的逻辑运算符，假定变量 a 为 10，变量 b 为 20:
 
@@ -2779,7 +2779,7 @@ fi
 返回 true
 ```
 
-#### 字符串运算符
+##### 字符串运算符
 
 下表列出了常用的字符串运算符，假定变量 a 为 "abc"，变量 b 为 "efg"：
 
@@ -2840,7 +2840,7 @@ abc : 字符串不为空
 ```
 
 
-#### 文件测试运算符
+##### 文件测试运算符
 
 文件测试运算符用于检测 Unix 文件的各种属性。
 
@@ -2927,7 +2927,7 @@ fi
 文件存在
 ```
 
-### Shell printf 命令
+#### Shell printf 命令
 
 printf 命令模仿 C 程序库（library）里的 printf() 程序。
 
@@ -2975,11 +2975,11 @@ printf "%-10s %-8s %-4.2f\n" 郭芙 女 47.9876
 %-4.2f 指格式化为小数，其中.2指保留2位小数。
 
 
-### test命令
+#### test命令
 
 Shell中的 test 命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试。
 
-#### 数值测试
+##### 数值测试
 
 | 参数	| 说明 |
 |---|---|
@@ -3022,7 +3022,7 @@ echo "result 为： $result"
 result 为： 11
 ```
 
-#### 字符串测试
+##### 字符串测试
 
 |  参数	|  说明  |
 |---|---|
@@ -3046,7 +3046,7 @@ fi
 ```
 两个字符串不相等!
 ```
-#### 文件测试
+##### 文件测试
 
 | 参数 |	说明 |
 | -e 文件名	|如果文件存在则为真|
@@ -3090,15 +3090,15 @@ fi
 ```
 至少有一个文件存在!
 ```
-#### 参考链接
+##### 参考链接
 
 - [Shell test 命令](https://www.runoob.com/linux/linux-shell-test.html)
 
 test命令用于查看文件是否存在、权限等信息，可以进行数值，字符，文件三方面的测试。
 
-### Shell 流程控制
+#### Shell 流程控制
 
-#### if else
+##### if else
 
 **if 语句语法格式：**
 ```
@@ -3177,7 +3177,7 @@ fi
 ```
 两个数字相等!
 ```
-#### for 循环
+##### for 循环
 
 for循环一般格式为：
 ```
@@ -3245,7 +3245,7 @@ done
 ```
 This is a string
 ```
-#### while 语句
+##### while 语句
 
 while循环用于不断执行一系列命令，也用于从输入文件中读取数据；命令通常为测试条件。其格式为：
 ```
@@ -3274,7 +3274,7 @@ done
 ```
 以上实例使用了 Bash let 命令，它用于执行一个或多个表达式，变量计算中不需要加上 $ 来表示变量，具体可查阅：Bash let 命令。
 
-#### 无限循环
+##### 无限循环
 
 无限循环语法格式：
 ```
@@ -3294,7 +3294,7 @@ done
 ```
 for (( ; ; ))
 ```
-#### until 循环
+##### until 循环
 
 until 循环执行一系列命令直至条件为 true 时停止。  
 until 循环与 while 循环在处理方式上刚好相反。  
@@ -3336,7 +3336,7 @@ done
 8
 9
 ```
-#### case
+##### case
 
 case ... esac 与其他语言中的 switch ... case 语句类似，是一种多分枝选择结构，每个 case 分支用右圆括号开始，用两个分号 ;; 表示 break，即执行结束，跳出整个 case ... esac 语句，esac（就是 case 反过来）作为结束标记。case语句格式如下：
 ```
@@ -3383,7 +3383,7 @@ esac
 3
 你选择了 3
 ```
-#### 跳出循环
+##### 跳出循环
 
 在循环过程中，有时候需要在未达到循环结束条件时强制跳出循环，Shell使用两个命令来实现该功能：break和continue。
 
@@ -3414,7 +3414,7 @@ done
 输入 1 到 5 之间的数字:7
 你输入的数字不是 1 到 5 之间的! 游戏结束
 ```
-#### continue
+##### continue
 
 continue命令与break命令类似，只有一点差别，它不会跳出所有循环，仅仅跳出当前循环。
 
@@ -3438,7 +3438,7 @@ done
 运行代码发现，当输入大于5的数字时，该例中的循环不会结束，语句 echo "游戏结束" 永远不会被执行。
 
 
-### Shell函数
+#### Shell函数
 
 linux shell 可以用户定义函数，然后在shell脚本中可以随便调用。
 
@@ -3506,7 +3506,7 @@ echo "输入的两个数字之和为 $? !"
 
 注意：所有函数在使用前必须定义。这意味着必须将函数放在脚本开始部分，直至shell解释器首次发现它时，才可以使用。调用函数仅使用其函数名即可。
 
-#### 函数参数
+##### 函数参数
 
 在Shell中，调用函数时可以向其传递参数。在函数体内部，通过 $n 的形式来获取参数的值，例如，$1表示第一个参数，$2表示第二个参数...
 
@@ -3549,13 +3549,13 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 | $-	| 显示Shell使用的当前选项，与set命令功能相同。 |
 | $?	| 显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。|
 
-# 开发环境搭建
+## 开发环境搭建
 
 
-## 开发环境
+### 开发环境
 
 
-### NFS
+#### NFS
 
 `sudo apt-get install nfs-kernel-server rpcbind`
 
@@ -3565,13 +3565,13 @@ sudo vi /etc/exports
 `/home/用户名/linux/nfs *(rw,sync,no_root_squash)`
 `sudo /etc/init.d/nfs-kernel-server restart` 重启服务
 
-### SSH
+#### SSH
 
 `sudo apt-get install openssh-server`  开启服务
 配置文件为/etc/ssh/sshd_config，使用默认配置即可。
 
 
-### 交叉编译链安装
+#### 交叉编译链安装
 
 Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
 
@@ -3618,7 +3618,7 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 ```
 可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
 
-### vscode
+#### vscode
 
 图标都在目录/usr/share/applications 中，找到 Visual Studio Code 的图标，点击鼠标右键，选择复制到->桌面
 
@@ -3634,9 +3634,9 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 -   DeviceTree，设备树语法插件。
 -   TabNine，一款 AI 自动补全插件，强烈推荐，谁用谁知道！
 
-### 串口驱动
+#### 串口驱动
 
-### MobaXterm 
+#### MobaXterm 
 
 https://mobaxterm.mobatek.net
 点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
@@ -3645,10 +3645,10 @@ https://mobaxterm.mobatek.net
 ![enter description here](./img/2022-04-06-Linux学习/1652347512693.png)
 
 
-## FTP 服务（文件互传）
+### FTP 服务（文件互传）
 这里的互传不是使用 VirtualBox 的扩展功能，而是借用 FTP 服务，这样，我们就可以远程互传文件。
 
-### 开启Ubuntu下的FTP服务
+#### 开启Ubuntu下的FTP服务
 
 安装FTP服务：
 ```
@@ -3672,10 +3672,10 @@ write_enable=YES
 sudo /etc/init.d/vsftpd restart
 ```
 
-### Windows 下 FTP 安装
+#### Windows 下 FTP 安装
 
 
-#### ip地址
+##### ip地址
 
 这里是一个大坑，为了避免问题，需要有限解决该问题。  
 
@@ -3787,7 +3787,7 @@ Windows IP 配置
 可以看到网络能够ping通（虚拟机有回复）。  
 此时我们就可以将虚拟机地址点入上面的设置中了。
 
-#### 指定ip地址
+##### 指定ip地址
 
 虚拟机的 ip 地址是随机分配的，每次开机时可能会不一样，这样每次我们都需要重新设置 Ip 地址，我们可以通过指定ip地址，来保持一致。
 
@@ -3813,7 +3813,7 @@ Windows IP 配置
 	 - 右上角 Apply 保存。重启Ubuntu，再次查看IP地址，即可看到已经修改过来了。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Ip.png)
 
-#### FTP安装
+##### FTP安装
 下载地址：[FileZilla官网](https://www.filezilla.cn/download/client)
 
 下载后，安装一路默认即可，可更改安装路径。
@@ -3843,16 +3843,16 @@ lonly    :0       :0               23:21   ?xdm?   8.15s  0.00s /usr/lib/gdm3/g
 设置所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1649328733209.png)
 
-#### 参考链接：
+##### 参考链接：
 
  - [VirtualBox虚拟机网络设置（四种方式）](https://blog.51cto.com/11585002/2476265)
  - [VirtualBox 网络模式总结](https://rqsir.github.io/2019/05/23/VirtualBox-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/)
  - [VirtualBox虚拟机网络搭建NAT、桥接、Host-Only、Internal等(centos7)](https://www.jianshu.com/p/0537b056790b)
 - [Windows下VirtualBox虚拟机互ping+外网配置](https://www.jianshu.com/p/a88a37957960)
  
-## NFS和SSH服务开启
+### NFS和SSH服务开启
 
-### NFS服务开启
+#### NFS服务开启
 
 后面进行Linux驱动开发的时候需要NFS启动，因此要先安装并开启Ubuntu中的NFS服务，使用如下命令安装NFS服务：
 ```
@@ -3895,7 +3895,7 @@ sudovi /etc/exports
 sudo /etc/init.d/nfs-kernel-server restart
 ```
 
-### SSH服务开启开启
+#### SSH服务开启开启
 
 Ubuntu的SSH服务以后我们就可以在Windwos下使用终端软件登陆到Ubuntu，比如使用SecureCRT，Ubuntu下使用如下命令开启SSH服务：
 ```
@@ -3904,7 +3904,7 @@ sudo apt-get install openssh-server
 
 上述命令安装ssh服务，ssh的配置文件为/etc/ssh/sshd_config，使用默认配置即可。
 
-## 交叉编译器安装
+### 交叉编译器安装
 
 ARM裸机、Uboot移植、Linux移植这些都需要在Ubuntu下进行编译，编译就需要编译器，我们在第三章“LinuxC编程入门”里面已经讲解了如何在Liux进行C语言开发，里面使用GCC编译器进行代码编译，但是Ubuntu自带的gcc编译器是针对X86架构的！而我们现在要编译的是ARM架构的代码，所以我们需要一个在X86架构的PC上运行，可以编译ARM架构代码的GCC编译器，这个编译器就叫做交叉编译器，总结一下交叉编译器就是：
 
@@ -3974,7 +3974,7 @@ export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnuea
 
 修改好以后就保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
-#### 安装相关库
+##### 安装相关库
 
 在使用交叉编译器之前还需要安装一下其它的库，命令如下：
 ```
@@ -3982,7 +3982,7 @@ sudo apt-get install lsb-core lib32stdc++6
 ```
 等待这些库安装完成
 
-#### 交叉编译器验证
+##### 交叉编译器验证
 首先查看一下交叉编译工具的版本号，输入如下命令：
 ```
 arm-linux-gnueabihf-gcc -v
@@ -4023,17 +4023,17 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 ```
 可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
 
-## VisualStudioCode软件的安装和使用
+### VisualStudioCode软件的安装和使用
 
 VSCode是微软出的一款编辑器，但是免费的。VSCode有Windows、Linux和macOS三个版本的，是一个跨平台的编辑器。VSCode下载地址是：https://code.visualstudio.com/
 下载界面如下图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_download.png)
 本教程需要Windows和Linux这两个版本，所以下载这两个即可
-### Windows版本安装
+#### Windows版本安装
 
 Windows版本的安装和容易，和其他Windows软件一样，双击.exe安装包，然后一路“下一步”即可，安装完成以后在桌面上就会有VSCode的图标。
 
-### Linux版本安装
+#### Linux版本安装
 
 我们有时候也需要在Ubuntu下阅读代码，所以还需要在Ubuntu下安装VSCode。将下载的 .deb软件包拷贝到Ubuntu系统中的 tools 目录下，然后使用如下命令安装：
 ```
@@ -4055,7 +4055,7 @@ lonly@lonly-VirtualBox:~/linux/tools$
 安装完成以后搜索“VisualStudioCode”就可以找到，如下图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_search.png)
 
-#### VisualStudio Code插件的安装
+##### VisualStudio Code插件的安装
 
 VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主要用来编写C/C++程序的，所以需要安装C/C++的扩展包，扩展包安装很简单，如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_插件.png)
@@ -4077,7 +4077,7 @@ VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主�
  - DeviceTree，设备树语法插件。
  - TabNine，一款AI自动补全插件，强烈推荐，谁用谁知道！
 
-### VisualStudioCode新建工程
+#### VisualStudioCode新建工程
 
 新建一个文件夹用于存放工程，比如我新建了文件夹目录为E:\VScode_Program\1_test，路径尽量不要有中文和空格。  
 然后打开VSCode，点击文件->打开文件夹...，选刚刚创建的“1_test”文件夹，
@@ -4089,7 +4089,7 @@ VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/新建文件以后的VSCode.png)
 之后就可以编写代码了。
 
-## CH340串口驱动安装
+### CH340串口驱动安装
 
 我们一般在Windwos下通过串口来调试程序，或者使用串口作为终端，I.MX6U-ALPHA开发板使用CH340这个芯片实现了USB转串口功能，。先通过USB线将开发板的串口和电脑连接起来起来
 >一定要先将开发板与电脑连接，否则驱动会安装失败。
@@ -4102,7 +4102,7 @@ VSCode支持多种语言，比如C/C++、Python、C#等等，本教程我们主�
 进入设备管理器 -> 端口，可以看到有“USB-SERIAL CH340”字样的端口设备就说明CH340驱动成功了。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/设备管理器.png)
 
-## Putty软件的安装和使用
+### Putty软件的安装和使用
 
 Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT功能强大，但是Putty用来作为嵌入式Linux的串口终端是绰绰有余。Putty在官网下载即可，下载地址为：[Download PuTTY](https://www.putty.org/)。下载界面如图所示  
 
@@ -4110,7 +4110,7 @@ Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT�
 
 根据自己电脑下载 32位或64位版本，双击开始安装，安装一路默认即可，可自行更改安装路径。
 
-### Putty软件使用
+#### Putty软件使用
 使用USB线将开发板串口和电脑连接起来，打开Putty软件，打开以后是配置界面。  
 
 我们要用到串口功能，所以在左侧选择“Serial”，然后在右侧配置串口，配置完成以后如下左半图所示；还需要设置“Session”，设置如下右半图所示。  
@@ -4122,17 +4122,18 @@ Putty软件是用来作为SSH或者串口终端的，虽然Putty没有SecureCRT�
 
 > 另外还有一款类似的但功能更加强大的软件：[MobaXterm](https://mobaxterm.mobatek.net/)。但我们开发时仅作为串口终端，所以 Putty 已完全满足需求。
 
-## MobaXterm 软件安装和使用
+### MobaXterm 软件安装和使用
 https://mobaxterm.mobatek.net
 点击菜单栏中的“Sessions->New session”按钮，打开新建会话窗口
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347394139.png)
 串口设置
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347512693.png)
 
+# 裸机开发篇
 
-# Cortex-A7 MPCore架构
+## Cortex-A7 MPCore架构
 
-## Cortex-A处理器运行模型
+### Cortex-A处理器运行模型
 
 STM32只有两种运行模式，特权模式和非特权模式，但是Cortex-A就有9种运行模式。
 
@@ -4146,7 +4147,7 @@ STM32只有两种运行模式，特权模式和非特权模式，但是Cortex-A�
 
 当中断或者异常发生以后，处理器就会进入到相应的异常模式种，每一种模式都有一组寄存器供异常处理程序使用，这样的目的是为了保证在进入异常模式以后，用户模式下的寄存器不会被破坏。
 
-## Cortex-A寄存器组
+### Cortex-A寄存器组
 
 ARM架构提供了16个32位的通用寄存器(R0~R15)供软件使用
 
@@ -4182,7 +4183,7 @@ Cortex-A7有9种运行模式
  - 8个状态寄存器，包括CPSR和SPSR。
  - Hyp模式下独有一个ELR_Hyp寄存器。
 
-### 通用寄存器
+#### 通用寄存器
 
 请配合上图阅读该小节文字，R0~R15就是通用寄存器，通用寄存器可以分为以下三类：
 
@@ -4192,11 +4193,11 @@ Cortex-A7有9种运行模式
 
 分别来看一下这三类寄存器
 
-#### 1、未备份寄存器
+##### 1、未备份寄存器
 
 R0~R7。所有的运行模式共享这8个寄存器，在**不同的模式下，这8个寄存器中的数据就会被破坏**。所以这8个寄存器并没有被用作特殊用途。
 
-#### 2、备份寄存器
+##### 2、备份寄存器
 
 R8~R12。快速中断模式下(FIQ)独有 **Rx_irq(x=8~12)** 物理寄存器，其他模式下共享 **Rx(8~12)** 物理寄存器。
 FIQ模式要求快速执行！因为FIQ模式下的R8~R12是独立的，因此中断处理程序可以不用执行保存和恢复中断现场的指令，从而加速中断的执行过程。
@@ -4220,7 +4221,7 @@ R14。一共有7个物理寄存器，其中一个是用户模式(User)、系统�
 ```
  2. 当异常发生以后，该异常模式对应的R14寄存器被设置成该异常模式将要返回的地址，R14也可以当作普通寄存器使用
 
-#### 3、程序计数器R15
+##### 3、程序计数器R15
 
 R15。也叫做PC，R15保存着当前执行的指令地址值加8个字节，这是因为ARM的流水线机制导致的。ARM处理器3级流水线：  
 **取指->译码->执行**   
@@ -4228,7 +4229,7 @@ R15。也叫做PC，R15保存着当前执行的指令地址值加8个字节，�
 ```
 R15 (PC)值= 当前执行的程序位置+8个字节。
 ```
-### 程序状态寄存器
+#### 程序状态寄存器
 
 所有的处理器模式都共用一个CPSR物理寄存器，因此CPSR可以在任何模式下被访问。该寄存器包含了条件标志位、中断禁止位、当前处理器模式标志等一些状态位以及一些控制位。所有的处理器模式都共用一个CPSR必然会导致冲突，为此，除了User和Sys这两个模式以外，其他7个模式每个都配备了一个专用的物理状态寄存器，叫做SPSR(备份程序状态寄存器)，**当特定的异常中断发生时，SPSR寄存器用来保存当前程序状态寄存器(CPSR)的值，当异常退出以后可以用SPSR中保存的值来恢复CPSR。**
 
@@ -4271,10 +4272,10 @@ R15 (PC)值= 当前执行的程序位置+8个字节。
 | 11011  | Undef(UND)模式  |
 | 11111  | System(SYS)模式  |
 
-# ARM汇编基础
+## ARM汇编基础
 我们在进行嵌入式Linux开发的时候是绝对要掌握基本的ARM汇编，因为Cortex-A芯片一上电SP指针还没初始化，C环境还没准备好，所以肯定不能运行C代码，必须先用汇编语言设置好C环境，比如初始化DDR、设置SP指针等等，当汇编把C环境设置好了以后才可以运行C代码。所以Cortex-A一开始肯定是汇编代码，其实STM32也一样的，一开始也是汇编，以STM32F103为例，启动文件startup_stm32f10x_hd.s就是汇编文件，只是这个文件ST已经写好了，我们根本不用去修改，所以大部分学习者都没有深入的去研究。汇编的知识很庞大，本章我们只讲解最常用的一些指令，满足我们后续学习即可。
 
-## GNU汇编语法
+### GNU汇编语法
 
 我们要编写的是ARM汇编，编译使用的GCC交叉编译器，所以我们的汇编代码要符合GNU语法。
 
@@ -4352,9 +4353,9 @@ PrefAbort_Handler:
 上述代码中定义了三个汇编函数：Undefined_Handler、SVC_Handler和PrefAbort_Handler。  
 以函数Undefined_Handler为例我们来看一下汇编函数组成，“Undefined_Handler”就是函数名，“ldr r0, =Undefined_Handler”是函数体，“bx r0”是函数返回语句，“bx”指令是返回指令，函数返回语句不是必须的。
 
-## Cortex-A7常用汇编指令
+### Cortex-A7常用汇编指令
 
-### 处理器内部数据传输指令
+#### 处理器内部数据传输指令
 使用处理器做的最多事情就是在处理器内部来回的传递数据，常见的操作有：
 
  1. 将数据从一个寄存器传递到另外一个寄存器。
@@ -4370,26 +4371,26 @@ PrefAbort_Handler:
 |  MRS   |  Rx   |   xPSR  |   特殊寄存器xPSR数据复制到Rx  |
 | MSR    |   xPSR  |  Rx   |  Rx数据复制到特殊寄存器xPSR   |
 
-#### MOV指令
+##### MOV指令
 
 MOV指令用于将数据从一个寄存器拷贝到另外一个寄存器，或者将一个立即数传递到寄存器里面，使用示例如下：
 ```
 MOV R0，R1    @将寄存器R1中的数据传递给R0，即R0=R1
 MOV R0, #0X12 @将立即数0X12传递给R0寄存器，即R0=0X122、
 ```
-#### MRS指令
+##### MRS指令
 
 MRS指令用于将特殊寄存器(如CPSR和SPSR)中的数据传递给通用寄存器，要读取特殊寄存器的数据只能使用MRS指令！使用示例如下：
 ```
 MRS R0, CPSR@将特殊寄存器CPSR里面的数据传递给R0，即R0=CPSR
 ```
-#### MSR指令
+##### MSR指令
 
 MSR指令和MRS刚好相反，MSR指令用来将普通寄存器的数据传递给特殊寄存器，也就是写特殊寄存器，写特殊寄存器只能使用MSR，使用示例如下：
 ```
 MSR CPSR, R0@将R0中的数据复制到CPSR中，即CPSR=R0
 ```
-### 存储器访问指令
+#### 存储器访问指令
 
 上述的 MOV、MRS、MSR 是无法直接访问 ARM存储器的，比如 RAM （运存）中的数据，I.MX6UL中的存储器（数据地址）就是 RAM 类型的，我们用汇编来配置 I.MX6UL 的时候需要借助存储器访问指令。一般先将要配置的值写入到Rx(x=0~12)寄存器中，然后借助存储器访问指令将Rx中的数据写入到I.MX6UL存储器中。读取I.MX6UL存储器也是一样的，只是过程相反。常用的存储器访问指令有两种：LDR和STR，用法如表所示：
 >所有运算处理都是发生通用寄存器(一般是R0~R14)的之中。所有存储器空间(如C语言变量的本质就是一个存储器空间上的几个BYTE)的值的处理，都是要传送到通用寄存器来完成。因此代码中大量需要LDR,STR指令来传送值
@@ -4399,7 +4400,7 @@ MSR CPSR, R0@将R0中的数据复制到CPSR中，即CPSR=R0
 |  LDR Rd, [Rn , #offset]   |   从存储器Rn+offset的位置读取数据存放到Rd中。  |
 |  STR Rd, [Rn, #offset]   |  将Rd中的数据写入到存储器中的Rn+offset位置。   |
 
-#### 1、LDR指令
+##### 1、LDR指令
 
 L表示LOAD，LOAD的含义应该理解为：Load from memory into register。  
 LDR主要用于从存储加载数据到寄存器Rx中，LDR也可以将一个立即数加载到寄存器Rx中，LDR加载立即数的时候要使用“=”，而不是“#”。  
@@ -4413,7 +4414,7 @@ LDR R1,0X0209C004
 ```
 上述代码就是读取寄存器GPIO1_GDIR中的值，读取到的寄存器值保存在R1寄存器中，上面代码中offset是0，也就是没有用到offset。
 
-#### 2、STR指令
+##### 2、STR指令
 
 S表示STORE，STORE的含义应该理解为：Store from a register into memory。 
 LDR是从存储器读取数据，STR就是将数据写入到存储器中，同样以I.MX6UL寄存器GPIO1_GDIR为例，现在我们要配置寄存器GPIO1_GDIR的值为0X2000002，示例代码如下：示例代码7.2.2.2    
@@ -4424,7 +4425,7 @@ STR R1,[R0]			@将R1中的值写入到R0中所保存的地址中
 ```
 LDR和STR都是按照字进行读取和写入的，也就是操作的32位数据，如果要按照字节、半字进行操作的话可以在指令“LDR”后面加上B或H，比如按字节操作的指令就是LDRB和STRB，按半字操作的指令就是LDRH和STRH。
 
-### 压栈和出栈指令
+#### 压栈和出栈指令
 
 我们通常会在A函数中调用B函数，当B函数执行完以后再回到A函数继续执行。要想在跳回A函数以后代码能够接着正常运行，那就必须在跳到B函数之前将当前处理器状态保存起来(就是保存R0~R15这些寄存器值)，当B函数执行完成以后再用前面保存的寄存器值恢复R0~R15即可。  
 
@@ -4466,7 +4467,7 @@ FD是FullDescending的缩写，即满递减的意思。根据ATPCS规则,ARM使�
 
 `LDMFD SP!,{R0~R3,R12}`：把sp指向的3个连续地址段（应该是3\*4=12字节)中数据拷贝到 r0,r1,r2 这3个寄存器中去了（因为 r0,r1,r2 都是32位，所以数据要分别存储 ）。
 
-### 跳转指令
+#### 跳转指令
 
 有多种跳转操作，比如：
  - 直接使用跳转指令B、BL、BX等。
@@ -4480,7 +4481,7 @@ FD是FullDescending的缩写，即满递减的意思。根据ATPCS规则,ARM使�
 |  BL \<label>    |  跳转到标号地址，并将返回地址保存在LR中   |
 |  BLX\<Rm>   |   结合BX和BL的特点，跳转到Rm指定的地址，并将返回地址保存在LR中，切换指令集  |
 
-#### 1、B指令
+##### 1、B指令
 
 有去无回。这是最简单的跳转指令，B指令会将PC寄存器的值设置为跳转目标地址，一旦执行B指令，ARM处理器就会立即跳转到指定的目标地址。如果要调用的函数不会再返回到原来的执行处，那就可以用B指令，如下示例：
 ```
@@ -4490,7 +4491,7 @@ _start:
 ```
 上述代码只是初始化了SP指针，有些处理器还需要做其他的初始化，比如初始化DDR等等。因为跳转到C文件以后再也不会回到汇编了，所以在第4行使用了B指令来完成跳转。
 
-#### 2、BL指令
+##### 2、BL指令
 
 BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC寄存器值，所以可以通过将LR寄存器中的值重新加载到PC中来继续从跳转之前的代码处运行，这是子程序调用的一个基本但常用的手段。常用在中断处理中。示例代码如下：
 ```
@@ -4505,13 +4506,13 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ```
 上述代码中第5行就是执行C语言版的中断处理函数，当处理完成以后是需要返回来继续执行下面的程序，所以使用了BL指令。
 
-### 算术运算指令
+#### 算术运算指令
 
 汇编中也可以进行算术运算，比如加减乘除，常用的运算指令用法如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/常用运算指令.png)
 在嵌入式开发中最常会用的就是加减指令，乘除基本用不到。
 
-### 逻辑运算指令
+#### 逻辑运算指令
 
 我们用C语言进行CPU寄存器配置的时候常常需要用到逻辑运算符号，比如“&”、“|”等逻辑运算符。使用汇编语言的时候也可以使用逻辑运算指令，常用的运算指令用法如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/逻辑运算指令.png)
@@ -4519,13 +4520,13 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 
 本节主要讲解了一些最常用的指令。要想详细的学习ARM的所有指令请参考
 
-### 参考文档
+#### 参考文档
  - [ARM® Cortex™-A Series Programmer's Guide  Version: 4.0](https://developer.arm.com/documentation/den0013/d)
  - [ARM ArchitectureReference Manual ARMv7-A and ARMv7-R edition.pdf](https://developer.arm.com/documentation/ddi0406/cd)
 
-# 汇编LED灯实验
+## 汇编LED灯实验
 
-## I.MX6U GPIO详解
+### I.MX6U GPIO详解
 
 在学习I.MX6U的GPIO之前，我们先来回顾一下STM32的GPIO初始化步骤：
 
@@ -4543,7 +4544,7 @@ STM32的GPIO初始化就是以上四步，那么会不会也适用于I.MX6U的�
 [i.MX 6UltraLite Applications Processors for Consumer Products 数据手册英文版](https:www.nxp.com/docs/en/data-sheet/IMX6ULCEC.pdf )
 [i.MX 6UltraLite Applications Processors for Consumer Products 数据手册中文版-较旧](https://www.nxp.com.cn/docs/zh/data-sheet/IMX6ULCEC.pdf)
 
-### I.MX6U IO命名
+#### I.MX6U IO命名
 
 STM32中的IO都是PA0\~15、PB0\~15这样命名的，I.MX6U的IO是怎么命名的呢？打开I.MX6UL参考手册的第30章“Chapter30: IOMUX Controller(IOMUXC)”
 
@@ -4560,7 +4561,7 @@ I.MX6U的GPIO是根据某个IO所拥有的功能来命名的。比如我们一�
 根据 IO 功能命名，GPIO只有GPIO1_IO00~GPIO_IO09，其他为复用IO。
 I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其中 GPIO1 有 32 个 IO，GPIO2 有 22 个 IO，GPIO3 有 29 个 IO、GPIO4 有 29 个 IO，GPIO5最少，只有 12 个 IO，这样一共有 124 个 GPIO。
 
-### I.MX6U IO复用
+#### I.MX6U IO复用
 
 以IO“IOMUXC_SW_MUX_CTL_PAD_GPIO1_IO00”为例，打开参考手册的1329页，如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO1_IO00复用.png)
@@ -4573,18 +4574,18 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 
 如果只想看每个IO能复用什么外设的话可以直接查阅《IMX6UL参考手册》的第4章“Chapter4ExternalSignalsandPinMultiplexing”。如果我们要编写代码，设置某个IO的复用功能的话就需要查阅第30章“Chapter30: IOMUX Controller(IOMUXC)”,第30章详细的列出了所有IO对应的复用配置寄存器。
 
-### I.MX6U IO配置
+#### I.MX6U IO配置
 
 前面说过，配置 IO 需要两种寄存器。
 
  - SW_MUX_CTL_PAD_\*负责设置管脚使用什么复用功能，
  - SW_PAD_CTL_PAD_\*用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。
 
-#### SW_MUX_CTL_PAD_\*
+##### SW_MUX_CTL_PAD_\*
 
 该寄存器用来配置 IO 的复用功能，上面已经举了2个例子讲解，这里不再描述。
 
-#### SW_PAD_CTL_PAD_\*
+##### SW_PAD_CTL_PAD_\*
 
 用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。以 `IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00`举例讲解：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00寄存器.png)
@@ -4663,7 +4664,7 @@ EDGE_SEL寄存器用来设置边沿中断，这个寄存器会覆盖ICR1和ICR2�
 
 关于GPIO的寄存器就讲解到这里，因为GPIO是最常用的功能，我们详细的讲解了GPIO的8个寄存器。
 
-### I.MX6U GPIO时钟使能
+#### I.MX6U GPIO时钟使能
 
 I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”，这一章主要讲解I.MX6U的时钟系统，很复杂。我们先不研究I.MX6U的时钟系统，我们只看一下CCM里面的外设时钟使能寄存器。
 CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关
@@ -4685,13 +4686,13 @@ CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，
  3. 设置寄存器IOMUXC_SW_PAD_CTL_PAD_XX_XX，设置IO的上下拉、速度等等。
  4. 配置GPIO，设置输入/输出、是否使用中断、默认输出电平等。
 
-## 硬件原理图
+### 硬件原理图
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/LED原理图.png)
 
 从图可以看出，LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
-## 实验程序编写
+### 实验程序编写
 
 **所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
 
@@ -4789,7 +4790,7 @@ loop:
 
 ```
 
-## 编译下载验证
+### 编译下载验证
 
 创建Makefile文件
 ```
@@ -4821,7 +4822,7 @@ clean:
 位置无关码：B、BL、MOV都是位置位置无关码。
 位置有关码：LDR PC,=LABEL等类似的代码都是位置有关码。
 
-### 代码烧写
+#### 代码烧写
 
 将正点原子的软件“imxdownload”，拷贝到工程根目录下，也就是和led.bin处于同一个文件夹下
 ```
@@ -4847,14 +4848,14 @@ lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ chmod 777 imxdownload
 最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
-# I.MX6U启动方式详解
+## I.MX6U启动方式详解
 
 STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的，然后stm32从flash中读取程序运行。
 而I.MX6U是没有flash的，它需要外挂存储器，开发版挂载的就是 DDR3 外部存储器，代码最终会存储到其中，然后运行。
 >DDR 是掉电不保存的，我们的基本都是通过sd拷贝到DDR中运行的
 >NAND 是掉电保存的
 
-## 启动方式选择
+### 启动方式选择
 
 |   BOOT_MODE[1:0]  |  BOOT类型   |
 | --- | --- |
@@ -4865,11 +4866,11 @@ STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的
 
 我们一般用到的只有第二和第三种BOOT方式。
 
-### 串行下载
+#### 串行下载
 
 串行下载的意思就是可以通过USB或者UART将代码下载到板子上的外置存储设备中，我们可以使用OTG1这个USB口向开发板上的SD/EMMC、NAND等存储设备下载代码。这个下载是需要用到NXP提供的一个软件，一般用来最终量产的时候将代码烧写到外置存储设备中的，我们后面讲解如何使用。
 
-### 内部BOOT模式
+#### 内部BOOT模式
 
 在此模式下，芯片会执行内部的bootROM代码，这段boot ROM代码会进行硬件初始化(一部分外设)，然后从boot设备(就是存放代码的设备、比如SD/EMMC、NAND)中将代码拷贝出来复制到指定的RAM中，一般是DDR。
 
@@ -4888,7 +4889,7 @@ STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的
 
 总结一下，我们编译出来的.bin文件不能直接烧写到SD卡中，需要在.bin文件前面加上IVT、BootData和DCD这三个数据块( **bootROM**)。这三个数据块是有指定格式的，我们必须按照格式填写，然后将其放到.bin文件前面，最终合成的才是可以直接烧写到SD卡中的文件。
 
-# C语言版LED灯
+## C语言版LED灯
 
 我们有两部分文件要做：
 
@@ -4897,7 +4898,7 @@ STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的
  
  以STM32F103为例，其启动文件startup_stm32f10x_hd.s这个汇编文件就是完成C语言环境搭建的，当然还有一些其他的处理，比如中断向量表等等。当startup_stm32f10x_hd.s把C语言环境初始化完成以后就会进入C语言环境。
  
-## 实验程序编写
+### 实验程序编写
 
 新建VScode工程，工程名字为“ledc”，新建三个文件：start.S、main.c和main.h。其中start.S是汇编文件，main.c和main.h是C语言相关文件。
  
@@ -5090,7 +5091,7 @@ int main(void)
 }
 ```
 
-## 编译下载验证
+### 编译下载验证
 
 ```java
 objs:=start.o main.o
@@ -5137,7 +5138,7 @@ chmod777 imxdownload//给予imxdownoad可执行权限，一次即可.
 /imxdownload ledc.bin /dev/sdd//下载到SD卡中
 ```
 
-## 链接脚本
+### 链接脚本
 
 在上面的Makefile中我们链接代码的时候使用如下语句：
 ```java
@@ -5188,7 +5189,7 @@ SECTIONS{
 第6行是main.o这个文件，其实可以不用写出来，因为main.o的位置就无所谓了，可以由编译器自行决定链接位置。
 在第11、13行有“\_\_bss_start”和“\_\_bss_end”符号，对这两个符号进行赋值，其值为定位符“.”，这两个符号用来保存.bss段的起始地址和结束地址。前面说了.bss段是定义了但是没有被初始化的变量，我们需要手动对.bss段的变量清零的，因此我们需要知道.bss段的起始和结束地址，这样我们直接对这段内存赋0即可完成清零。通过第11、13行代码，.bss段的起始地址和结束地址就保存在了“\_\_bss_start”和“\_\_bss_end”中，我们就可以直接在汇编或者C文件里面使用这两个符号。
 
-### 修改Makefile
+#### 修改Makefile
 
 将Makefile中的如下一行代码：
 ```
@@ -5200,7 +5201,7 @@ arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
 ```
 其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了。
 
-## arm-linux-gcc/ld/objcopy/objdump参数总结
+### arm-linux-gcc/ld/objcopy/objdump参数总结
 
 **arm-linux-gcc -wall -O2 -c -o $@ $<**
  
@@ -5266,12 +5267,12 @@ SECTIONS{
  - -section=name或者-j name显示指定section 的信息
  - -architecture=machine或者-m machine 指定反汇编目标文件时使用的架构
 
-## 参考链接
+### 参考链接
 
 [Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/htmls/index.html)
 [arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
 
-# 模仿STM32驱动开发格式实验
+## 模仿STM32驱动开发格式实验
 
 创建VSCode工程，工作区名字为“ledc_stm32”，新建三个文件：start.S、main.c和imx6ul.h。其中start.S是汇编文件，start.S文件的内容和第十章的start.S一样，直接复制过来就可以。main.c 和imx6ul.h是C文件。
 
@@ -5460,11 +5461,11 @@ int main(void)
 
 main.c中7个函数，这7个函数的含义和前面的main.c文件一样，只是函数体写法变了，寄存器的访问采用imx6ul.h中定义的外设指针。比如第27行设置GPIO1_IO03的复用功能就可以通过“IOMUX_SW_MUX->GPIO1_IO03”来给寄存SW_MUX_CTL_PAD_GPIO1_IO03赋值。
 
-# 官方SDK移植实验
+## 官方SDK移植实验
 
 在上一章中，我们参考ST官方给STM32编写的stm32f10x.h来自行编写I.MX6U的寄存器定义文件。自己编写这些寄存器定义不仅费时费力，没有任何意义，而且很容易写错，幸好NXP官方为I.MX6ULL编写了SDK包，在SDK包里面NXP已经编写好了寄存器定义文件，所以我们可以直接移植SDK包里面的文件来用。虽然NXP是为I.MX6ULL编写的SDK包，但是I.MX6UL也是可以使用的！
 
-## I.MX6ULL官方SDK包简介
+### I.MX6ULL官方SDK包简介
 
 NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，这个SDK包提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写代码的，因此我们使用的是Windows版本的。Windows版本SDK里面的例程提供了IAR版本。
 
@@ -5485,13 +5486,13 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 
 整个SDK包我们就需要上面这三个文件，把这三个文件准备好，我们后面移植要用。
 
-## 实验程序编写
+### 实验程序编写
 
-### SDK文件移植
+#### SDK文件移植
 
 使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中，这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
 
-### cc.h 文件
+#### cc.h 文件
 新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
 ```
 #ifndef __CC_H
@@ -5526,7 +5527,7 @@ typedef	unsigned long long int u64;
 ```
 在cc.h文件中我们定义了很多的数据类型，因为有些第三方库会用到这些变量类型。其实就是有些第三方库包括这个 SDK 使用的数据类型名大多时简写，需要重新定义一下。
 
-### 编写实验代码
+#### 编写实验代码
 
 start.S 和上文一样，直接复制。  
 main.c 如下：
@@ -5665,7 +5666,7 @@ IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;`
 
 其余部分则是使用的 SDK 内部寄存器定义，替代前面我们自己写的寄存器定义。
 
-### 编译下载验证
+#### 编译下载验证
 
 Makefile文件内容如下：
 ```
@@ -5699,7 +5700,7 @@ clean:
 
 Makefile文件是在前面的Makefile上修改的，只是使用到了变量替代一些文本，更懒了。。。效果实际是一样的。链接脚本imx6ul.lds的内容和前面一样，直接使用。
 
-# BSP工程管理实验
+## BSP工程管理实验
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607522806467.png)
 
@@ -5752,7 +5753,7 @@ BSP工程师，顾名思义就是负责板级支持包的开发、调试和维�
  
 因此我们可以在bsp文件夹下创建三个子文件夹：clk、delay和led，分别用来存放时钟驱动文件、延时驱动文件和LED驱动文件，这样main.c函数就会清爽很多，程序功能模块清晰。工程文件夹都创建好了，接下来就是将时钟驱动、LED驱动和延时驱动相关的函数从main.c中提取出来做成一个独立的驱动文件。
 
-## 实验程序编写
+### 实验程序编写
 
 新建文件imx6ul.h，然后保存到文件夹imx6ul中，就是引用了一些头文件，以后我们就可以在其他文件中需要引用imx6ul.h就可以了。
 
@@ -5883,19 +5884,19 @@ SECTIONS{
 }
 ```
 
-## 编译下载
+### 编译下载
 
 这里下载遇到了问题，sd卡插入，能够识别，使用命令下载也正常。但是接到板子，程序并不能读取运行。尝试了弹出sd卡再下载，都不行。最后重启了 Ubuntu 问题解决了。
 其实这个问题在第一个例程下载时有说过。
 
-# 蜂鸣器实验
+## 蜂鸣器实验
 
-## 硬件原理分析
+### 硬件原理分析
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607528528485.png)
 
 当SNVS_TAMPER1输出低电平的时候Q1导通，相当于蜂鸣器的正极连接到DCDC_3V3，蜂鸣器形成一个通路，因此蜂鸣器会鸣叫。同理，当SNVS_TAMPER1输出高电平的时候Q2不导通，那么蜂鸣器就没有形成一个通路，因此蜂鸣器也就不会鸣叫。
 
-## 试验程序编写
+### 试验程序编写
 
 新建文件夹“6_beep”，然后将上一章试验中的所有内容拷贝到刚刚新建的“6_beep”里面。
 
@@ -5962,7 +5963,7 @@ void beep_switch(int status)
 ```
 beep.c文件一共有两个函数：beep_init和beep_switch，其中beep_init用来初始化BEEP所使用的GPIO，也就是SNVS_TAMPER1，将其复用为GPIO5_IO01，和上一章的LED灯初始化函数一样。beep_switch函数用来控制BEEP的开关，也就是设置GPIO5_IO01的高低电平。
 
-## 编写Makefile和链接脚本
+### 编写Makefile和链接脚本
 ```
 CROSS_COMPILE 	?= arm-linux-gnueabihf-
 TARGET		  	?= beep
@@ -6010,7 +6011,7 @@ clean:
  
  链接脚本就使用之前的链接脚本文件imx6ul.lds即可。
 	
-# 按键输入实验
+## 按键输入实验
 
 本试验我们用到的硬件有：
 - LED灯LED0。
@@ -6021,7 +6022,7 @@ clean:
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607612224969.png)
 
-## 实验程序编写
+### 实验程序编写
 
 重新创建VSCode工程，工作区名字为“key”，在工程目录的bsp文件夹中创建名为“key”和“gpio”两个文件夹。按键相关的驱动文件都放到“key”文件夹中，本章试验我们对GPIO的操作编写一个函数集合，也就是编写一个GPIO驱动文件，GPIO的驱动文件放到“gpio”文件夹里面。新建bsp_gpio.c和bsp_gpio.h这两个文件，将这两个文件都保存到刚刚创建的bsp/gpio文件夹里面，然后在bsp_gpio.h文件夹里面输入如下内容：
 ```
@@ -6259,7 +6260,7 @@ int main(void)
 }
 ```
 
-## 编译下载验证
+### 编译下载验证
 
 Makefile在之前章节的基础上修改变量TARGET为key，在变量INCDIRS和SRCDIRS中追加“bsp/gpio”和“bsp/key”，修改完成以后如下所示：
 ```
@@ -6293,21 +6294,21 @@ clean:
 
 烧写成功以后将SD卡插到开发板的SD卡槽中，然后复位开发板。如果代码运行正常的话LED0会以大约500ms周期闪烁，按下开发板上的KEY0按键，蜂鸣器打开，再按下KEY0按键，蜂鸣器关闭。
 
-# 主频和时钟配置实验
+## 主频和时钟配置实验
 
 系统会有时钟默认配置，所以不修改的时钟理论是不需要再单独设置，保持默认即可。但如果该时钟的上一级时钟更改了，就要看是否会影响到默认设置再做修改。
 
-## I.MX6U时钟系统详解
+### I.MX6U时钟系统详解
 
 I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认情况下内部bootrom会将I.MX6U的主频设置为396MHz。我们在使用I.MX6U的时候肯定是要发挥它的最大性能，那么主频肯定要设置到528MHz(其它型号可以设置更高，比如696MHz)，其它的外设时钟也要设置到NXP推荐的值。I.MX6U的系统时钟在《I.MX6ULL/I.MX6UL参考手册》的第10章“Chapter 10Clock and Power Management”和第18章“Chapter 18Clock Controller Module (CCM)”这两章有详细的讲解。
 
-### 系统时钟来源
+#### 系统时钟来源
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/开发板时钟原理图.png)
 
 I.MX6U-ALPHA开发板的系统时钟来源于两部分：32.768KHz和24MHz的晶振，其中32.768KHz晶振是I.MX6U 的RTC时钟源，24MHz晶振是I.MX6U内核和其它外设的时钟源，也是我们重点要分析的。
 
-### 7路PLL时钟源
+#### 7路PLL时钟源
 
 I.MX6U的外设有很多，不同的外设时钟源不同，NXP将这些外设的时钟源进行了分组，一共有7组，这7组时钟源都是从24MHz晶振PLL而来的，因此也叫做7组PLL，这7组PLL结构如图所示：
 
@@ -6321,7 +6322,7 @@ I.MX6U的外设有很多，不同的外设时钟源不同，NXP将这些外设�
 6. VIDEO_PLL(PLL5),此路PLL用于显示相关的外设，比如LCD，此路PLL的倍频可以调整，PLL的输出范围在650MHz~1300MHz。此路PLL在最终输出的时候还可以进行分频，可选1/2/4/8/16分频。
 7. AUDIO_PLL(PLL4),此路PLL用于音频相关的外设，此路PLL的倍频可以调整，PLL的输出范围同样也是650MHz~1300MHz，此路PLL在最终输出的时候也可以进行分频，可选1/2/4分频。
 
-### 时钟树简介
+#### 时钟树简介
 
 《IMX6ULL参考手册》里时钟树在“Chapter 18Clock Controller Module (CCM)”的18.3小节给出了I.MX6U详细的时钟树图：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6U时钟树.png)
@@ -6333,7 +6334,7 @@ Switcher clocks 见下图
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Switcher_clock_generation.png)
 
-### 内核时钟设置
+#### 内核时钟设置
 
 先从主频开始，我们将I.MX6U的主频设置为528MHz，ARM内核时钟如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
@@ -6352,12 +6353,12 @@ Switcher clocks 见下图
 4. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，重新将pll1_sw_clk的时钟源切换回pll1_main_clk，切换回来以后的pll1_sw_clk就等于1056MHz。
 5. 最后设置寄存器CCM_CACRR的ARM_PODF为2分频，I.MX6U的内核主频就为1056/2=528MHz。
 
-### PFD时钟设置
+#### PFD时钟设置
 
 置好主频以后我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
 
-### AHB、IPG和PERCLK外设时钟设置
+#### AHB、IPG和PERCLK外设时钟设置
 
 
 这里正点原子教程称为根时钟，但自认为叫外设时钟要好一下，概念越多容易混乱。参考时钟树知道：
@@ -6390,12 +6391,13 @@ PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CC
 - 
  发生握手信号以后需要等待握手完成，寄存器CCM_CDHIPR中保存着握手信号是否完成，如果相应的位为1的话就表示握手没有完成，如果为0的话就表示握手完成。另外在修改arm_podf和ahb_podf的时候需要先关闭其时钟输出，等修改完成以后再打开，否则的话可能会出现在修改完成以后没有时钟输出的问题。本教程需要修改寄存器CCM_CBCDR的AHB_PODF位来设置AHB_ROOT_CLK的时钟，所以在修改之前必须先关闭AHB_ROOT_CLK的输出。但是笔者**没有找到相应的寄存器，因此目前没法关闭，那也就没法设置AHB_PODF了。不过AHB_PODF内部bootrom设置为了3分频**，如果pre_periph_clk的时钟源选择PLL2_PFD2的话，AHB_ROOT_CLK也是396MHz/3=132MHz。
  
-##  实验程序编写
+###  实验程序编写
  
  本试验在上一章试验“7_key”的基础上完成，因为本试验只配置I.MX6U的系统时钟，因此我们直接在文件“bsp_clk.c”上做修改，修改bsp_clk.c的内容如下：   s
  
- 
-# LInux系统移植
+# 系统移植篇
+
+## LInux系统移植
 
 操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用
  
@@ -6405,14 +6407,15 @@ bootloader（U-Boot） -> Linux内核 -> 根文件系统(rootfs) 。这三者一
 uboot开始运行后首先对开发板软硬件环境初始化，然后将 linux内核、设备树（dtb） 、根文件系统（rootfs）从外部存储器（或网络）搬移到内存，然后跳转到linux运行
 linux开始运行，先对系统环境初始化，当系统启动完成后，linux再从内存中（或网络）挂在根文件系统
 
-![enter description here](./img/2022-04-07-Linux快速入门/1652410941723.png)
+![1652410941723](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652410941723.png)
+
 根据启动过程得出移植步骤：
 
  - uboot移植
  - linux内核移植（包含设备树）
  - 根文件系统移植
 
-## uboot简介
+### uboot简介
 
 嵌入式系统上电后先执行bootloader、先初始化DDR，Flash 等外设，然后将 Linux 内核从 Flash(NAND，NOR FLASH，SD，MMC等)中读取到 DDR 中，最后启动Linux内核。
 
@@ -6429,7 +6432,7 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 **参考资料：**
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 
-## U-Boot移植
+### U-Boot移植
 
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
@@ -6507,15 +6510,14 @@ https://www.bilibili.com/video/BV19v411H7d3?p=13
 ![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
 
 
-# linux内核
+## linux内核
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
 设备驱动程序和内核扩展运行于内核空间（在很多CPU架构中是ring 0），可以完全访问硬件，但也有运行于用户空间的一些例外，例如基于FUSE/CUSE的文件系统，和部分UIO[29][30]。多数人与Linux一起使用的图形系统不运行在内核中。与标准单体内核不同，Linux的设备驱动程序可以轻易的配置为内核模块，并在系统运行期间可直接装载或卸载。也不同于标准单体内核，设备驱动程序可以在特定条件下被抢占；增加这个特征用于正确处理硬件中断并更好的支持对称多处理[28]。出于自愿选择，Linux内核没有二进制内核接口[31]。
 
 硬件也被集成入文件层级中。用户应用到设备驱动的接口是在/dev或/sys目录下的入口文件[32]。进程信息也通过/proc目录映射到文件系统[32]。
-
-![enter description here](./img/2022-04-07-Linux快速入门/1652321949009.png)
+![1652321949009](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652321949009.png)
 
 - [Linux内核-wiki](https://zh.wikipedia.org/wiki/Linux%E5%86%85%E6%A0%B8)
 - [鸟哥linux第四版-基礎學習篇目錄 - for CentOS 7](https://linux.vbird.org/linux_basic/centos7/)
@@ -6536,9 +6538,12 @@ shell
 
 [Linux操作系统综述](https://blog.51cto.com/u_13800449/3049118)
 [Linux系统组成.md](https://github.com/sunnyandgood/BigData)
-![enter description here](./img/2022-04-07-Linux快速入门/1652327045769.png)
 
-# 嵌入式Linux学习笔记-朱有鹏"
+![1652327045769](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652327045769.png)
+
+# 驱动开发篇
+
+## 嵌入式Linux学习笔记-朱有鹏"
 date: 2020-12-13
 
 [S5PV210刷机](https://www.bbsmax.com/A/lk5aObYqz1/)
@@ -6553,11 +6558,11 @@ date: 2020-12-13
 [s5pv210 cpu运行debian](https://www.cnblogs.com/dakewei/p/5933350.html)
 [IMX6U U-BOOT移植](https://blog.csdn.net/divel_/article/details/107390686)
 <!--more-->
-## 二、uboot和系统移植
+### 二、uboot和系统移植
 
-### 2.1 uboot学习前传
+#### 2.1 uboot学习前传
 
-#### 2.1.1.为什么要有uboot
+##### 2.1.1.为什么要有uboot
 
 ###### 计算机系统的主要部件
 (1)计算机系统就是有CPU来做核心进行运行的系统。所有的计算机系统运行时需要的主要核心部件都是3个东西：CPU + 外部存储器（Flash/硬盘） + 内部存储器（DDR SDRAM/SDRAM/SRAM）
@@ -6584,7 +6589,7 @@ date: 2020-12-13
 (4)uboot还得提供一个命令行界面供人来操作。
 
 
-#### 2.1.2.为什么是uboot
+##### 2.1.2.为什么是uboot
 ###### uboot从哪里来的？
 (1)uboot是SourceForge上的开源项目
 (2)uboot项目的作者：一个德国人最早发起的项目
@@ -6607,7 +6612,7 @@ date: 2020-12-13
 时势造英雄，任何牛逼的东西都是时代的产物
 uboot的出现是一种必然，如果没有uboot也会有另一个bootloader来代替。
 
-#### 2.1.3.uboot必须解决哪些问题
+##### 2.1.3.uboot必须解决哪些问题
 ###### 自身可开机直接启动
 (1)一般的SoC都支持多种启动方式，譬如SD卡启动、NorFlash启动、NandFlash启动等·····uboot要能够开机启动，必须根据具体的SoC的启动设计来设计uboot
 (2)uboot必须进行和硬件相对应的代码级别的更改和移植，才能够保证可以从相应的启动介质启动。uboot中第一阶段的start.S文件中具体处理了这一块。
@@ -6632,7 +6637,7 @@ uboot的出现是一种必然，如果没有uboot也会有另一个bootloader来
 ###### 总结
 一切都是为了启动内核
 
-#### 2.1.4.uboot的工作方式
+##### 2.1.4.uboot的工作方式
 ###### 从裸机程序镜像uboot.bin说起
 1. uboot的本质就是一个裸机程序，和我们裸机全集中写的那些裸机程序xx.bin并没有本质区别。如果非说要有区别，那就是：我们写的大部分小于16KB，而uboot大于16KB（一般uboot在180k-400k之间）
 2. uboot本身是一个开源项目，由若干个.c文件和.h文件组成，配置编译之后会生成一个uboot.bin，这就是uboot这个裸机程序的镜像文件。然后这个镜像文件被合理的烧录到启动介质中拿给SoC去启动。也就是说uboot在没有运行时表现为uboot.bin，一般躺在启动介质中。
@@ -6655,7 +6660,7 @@ uboot的出现是一种必然，如果没有uboot也会有另一个bootloader来
 (2)及时对照原来ARM裸机中讲到的相关部分，可以帮助理解当前讲到的知识点。
 (3)结合ARM裸机中和现在讲的，对比分析思考，会得到更多。
 
-#### 2.1.5.uboot的常用命令1
+##### 2.1.5.uboot的常用命令1
 
 ###### 类似linux终端的行缓冲命令行
 1. 行缓冲的意思就是：当我们向终端命令行输入命令的时候，这些命令没有立即被系统识别，而是被缓冲到一个缓存区（也就是系统认为我们还没有输入完），当我们按下回车键（换行）后系统就认为我们输入完了，然后将缓冲区中所有刚才输入的作为命令拿去分析处理。
@@ -6684,7 +6689,7 @@ uboot的出现是一种必然，如果没有uboot也会有另一个bootloader来
 1. print命令不用带参数，作用是打印出系统中所有的环境变量。
 2. 环境变量就好像程序的全局变量一样。程序中任何地方都可以根据需要去调用或者更改环境变量（一般都是调用），环境变量和全局变量不同之处在于：环境变量被存储在Flash的另一块专门区域（Flash上有一个环境变量分区），一旦我们在程序中保存了该环境变量，那么下次开机时该环境变量的值将维持上一次更改保存后的值。
 
-#### 2.1.6.uboot的常用命令2
+##### 2.1.6.uboot的常用命令2
 ###### 设置（添加/更改）环境变量：setenv/set
 
 1. 用法：set name value
