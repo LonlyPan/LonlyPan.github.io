@@ -3864,7 +3864,6 @@ sudo apt-get install openssh-server
 
 ### 交叉编译器安装
 
-
 下载地址如下：https://www.linaro.org/ 
 
 从官方很难找到编译器下载地址，建议使用一下链接直接进入下载界面
@@ -3902,11 +3901,12 @@ Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries
 
 修改好以后就保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
 
-保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
-
 安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
 
 验证：`arm-linux-gnueabihf-gcc -v`
+如果交叉编译器安装正确的话就会显示版本号，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_version.png)
+
 注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651061897534.png)
 
@@ -3930,93 +3930,18 @@ led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info,
 ```
 可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
 
-
-
-
-
-
-
-
-##### 安装相关库
-
-在使用交叉编译器之前还需要安装一下其它的库，命令如下：
-```
-sudo apt-get install lsb-core lib32stdc++6
-```
-等待这些库安装完成
-
-##### 交叉编译器验证
-首先查看一下交叉编译工具的版本号，输入如下命令：
-```
-arm-linux-gnueabihf-gcc -v
-```
-如果交叉编译器安装正确的话就会显示版本号，如下图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_version.png)
-
-注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
-![enter description here](./img/嵌入式Linux学习笔记/1651061897534.png)
-
-最好的验证验证方法就是直接编译一个例程，我们就编译第一个裸机例程“1_leds”试试，裸机例程在开发板光盘中的路径为：1、程序源码->1、裸机例程->1_leds。在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程，如下所示：
-```
-lonly@lonly-VirtualBox:~/linux$ mkdir driver
-lonly@lonly-VirtualBox:~/linux$ cd driver/
-lonly@lonly-VirtualBox:~/linux/driver$ mkdir board_driver
-lonly@lonly-VirtualBox:~/linux/driver$ ls
-board_driver
-```
-将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
-imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
-rm -rf *.o led.bin led.elf led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
-arm-linux-gnueabihf-gcc -g -c led.s -o led.o
-arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
-arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
-arm-linux-gnueabihf-objdump -D led.elf > led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
-imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
-```
-可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
-
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
-led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
-```
-可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
-
 ### VisualStudioCode软件的安装和使用
 
 VSCode是微软出的一款编辑器，但是免费的。VSCode有Windows、Linux和macOS三个版本的，是一个跨平台的编辑器。VSCode下载地址是：https://code.visualstudio.com/
-下载界面如下图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_download.png)
+
 本教程需要Windows和Linux这两个版本，所以下载这两个即可
-#### Windows版本安装
 
-Windows版本的安装和容易，和其他Windows软件一样，双击.exe安装包，然后一路“下一步”即可，安装完成以后在桌面上就会有VSCode的图标。
+**windows版本安装**
+默认安装即可。
 
-#### Linux版本安装
-
-我们有时候也需要在Ubuntu下阅读代码，所以还需要在Ubuntu下安装VSCode。将下载的 .deb软件包拷贝到Ubuntu系统中的 tools 目录下，然后使用如下命令安装：
-```
-lonly@lonly-VirtualBox:~/linux/tools$ sudo dpkg -i code_1.51.1-1605051630_amd64.deb
-[sudo] password for lonly: 
-Selecting previously unselected package code.
-(Reading database ... 193123 files and directories currently installed.)
-Preparing to unpack code_1.51.1-1605051630_amd64.deb ...
-Unpacking code (1.51.1-1605051630) ...
-Setting up code (1.51.1-1605051630) ...
-gpg: WARNING: unsafe ownership on homedir '/home/lonly/.gnupg'
-Processing triggers for gnome-menus (3.13.3-11ubuntu1.1) ...
-Processing triggers for desktop-file-utils (0.23-1ubuntu3.18.04.2) ...
-Processing triggers for mime-support (3.60ubuntu1) ...
-Processing triggers for shared-mime-info (1.9-2) ...
-lonly@lonly-VirtualBox:~/linux/tools$ 
-```
-
-安装完成以后搜索“VisualStudioCode”就可以找到，如下图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/vscode_search.png)
+**Linux版本安装**
+在Ubuntu主要是阅读代码，不要用于编写代码等用途（请培养 VIM 的使用习惯 ）
+直接在应用商店搜索下载安装即可，速度可能比较慢，但不要退出，否则重装很麻烦。
 
 ##### VisualStudio Code插件的安装
 
