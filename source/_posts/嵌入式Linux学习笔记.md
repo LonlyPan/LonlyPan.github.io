@@ -220,88 +220,7 @@ clean:
 ```
 
 
-# 裸机开发
-
-
-
-
-# 以下内容为后期课程内容，待编写
-
 # LInux系统移植
-
-## U-Boot移植
-
-uboot 移植的一般流程：
-1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
-2. 参考原厂开发板移植 uboot 到我们所使用的开发板
-
-1. 原版Uboot放松到ubuntu中，解压
-```
-tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
-```
-2. 原版编译烧录测试
-创建sh文件
-```
-vim mx6ull_14x14_emmc.sh
-```
-填入内容：
-```
-#!/bin/bash
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
-make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
-```
-编译：
-```
-./mx6ull_14x14_emmc.sh
-```
-烧录：
-```
-chmod 777 imxdownload //给予 imxdownload 可执行权限
-./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
-```
-3.  创建自定义配置文件
-```
-cd configs
-cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
-```
-修改内容
-```
-CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
-CONFIG_ARM=y
-CONFIG_ARCH_MX6=y
-CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
-CONFIG_CMD_GPIO=y
-```
-拷贝头文件
-```
-cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
-```
-将
-```
-#ifndef __MX6ULLEVK_CONFIG_H
-#define __MX6ULLEVK_CONFIG_H
-```
-改为：
-```
-#ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
-#define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
-```
-
-https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
-https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
-https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
-https://www.bilibili.com/video/BV15W411m7AQ/?spm_id_from=333.788.recommend_more_video.1
-https://www.bilibili.com/video/BV1qb4y127xc/?spm_id_from=333.788.recommend_more_video.0
-https://www.cnblogs.com/lialong1st/p/11351095.html
-https://0uyangsheng.github.io/2018/04/20/Build-Ubuntu-for-ARM-Platform-From-Scratch/
-https://www.icode9.com/content-3-924261.html
-https://wiki.t-firefly.com/zh_CN/ROC-RK3328-CC/flash_emmc.html
-https://www.t-firefly.com/doc/download/page/id/34.html
-https://www.t-firefly.com/doc/product/info/id/360.html
-https://www.bilibili.com/video/BV19v411H7d3?p=13
-
-![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
 
 操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用）
 
@@ -4006,9 +3925,6 @@ https://mobaxterm.mobatek.net
 ## FTP 服务（文件互传）
 这里的互传不是使用 VirtualBox 的扩展功能，而是借用 FTP 服务，这样，我们就可以远程互传文件。
 
-
-
-
 ### 开启Ubuntu下的FTP服务
 
 安装FTP服务：
@@ -4174,12 +4090,7 @@ Windows IP 配置
 	 - 右上角 Apply 保存。重启Ubuntu，再次查看IP地址，即可看到已经修改过来了。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Ip.png)
 
-#### 参考链接：
-
- - [VirtualBox虚拟机网络设置（四种方式）](https://blog.51cto.com/11585002/2476265)
- - [VirtualBox 网络模式总结](https://rqsir.github.io/2019/05/23/VirtualBox-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/)
- - [VirtualBox虚拟机网络搭建NAT、桥接、Host-Only、Internal等(centos7)](https://www.jianshu.com/p/0537b056790b)
-
+#### FTP安装
 下载地址：[FileZilla官网](https://www.filezilla.cn/download/client)
 
 下载后，安装一路默认即可，可更改安装路径。
@@ -4209,6 +4120,13 @@ lonly    :0       :0               23:21   ?xdm?   8.15s  0.00s /usr/lib/gdm3/g
 设置所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1649328733209.png)
 
+#### 参考链接：
+
+ - [VirtualBox虚拟机网络设置（四种方式）](https://blog.51cto.com/11585002/2476265)
+ - [VirtualBox 网络模式总结](https://rqsir.github.io/2019/05/23/VirtualBox-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/)
+ - [VirtualBox虚拟机网络搭建NAT、桥接、Host-Only、Internal等(centos7)](https://www.jianshu.com/p/0537b056790b)
+- [Windows下VirtualBox虚拟机互ping+外网配置](https://www.jianshu.com/p/a88a37957960)
+ 
 ## NFS和SSH服务开启
 
 ### NFS服务开启
@@ -6809,6 +6727,82 @@ tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2
 ```
 vim mx6ull_14x14_emmc.sh
 ```
+
+
+## U-Boot移植
+
+uboot 移植的一般流程：
+1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
+2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+
+1. 原版Uboot复制到ubuntu中，解压
+```
+tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
+```
+2. 原版编译烧录测试
+创建sh文件
+```
+vim mx6ull_14x14_emmc.sh
+```
+填入内容：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
+```
+编译：
+```
+./mx6ull_14x14_emmc.sh
+```
+烧录：
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
+3.  创建自定义配置文件
+```
+cd configs
+cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
+```
+修改内容
+```
+CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=board/freescale/mx6ull_alientek_emmc/imximage.cfg,MX6ULL_EVK_EMMC_REWORK"
+CONFIG_ARM=y
+CONFIG_ARCH_MX6=y
+CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
+CONFIG_CMD_GPIO=y
+```
+拷贝头文件
+```
+cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
+```
+将
+```
+#ifndef __MX6ULLEVK_CONFIG_H
+#define __MX6ULLEVK_CONFIG_H
+```
+改为：
+```
+#ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+#define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
+```
+
+https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
+https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
+https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
+https://www.bilibili.com/video/BV15W411m7AQ/?spm_id_from=333.788.recommend_more_video.1
+https://www.bilibili.com/video/BV1qb4y127xc/?spm_id_from=333.788.recommend_more_video.0
+https://www.cnblogs.com/lialong1st/p/11351095.html
+https://0uyangsheng.github.io/2018/04/20/Build-Ubuntu-for-ARM-Platform-From-Scratch/
+https://www.icode9.com/content-3-924261.html
+https://wiki.t-firefly.com/zh_CN/ROC-RK3328-CC/flash_emmc.html
+https://www.t-firefly.com/doc/download/page/id/34.html
+https://www.t-firefly.com/doc/product/info/id/360.html
+https://www.bilibili.com/video/BV19v411H7d3?p=13
+
+![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
+
 
 
 # 嵌入式Linux学习笔记-朱有鹏"
