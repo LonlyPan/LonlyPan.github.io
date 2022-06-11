@@ -26,10 +26,7 @@ categories: 01-专业
 **目前行业定义**
 - 行业中普遍将两者区分开来，依据则是从软件上进行区分。
 
-![表格](./img/嵌入式Linux学习笔记/1654926750967.table.html)
-
-
-![表格](./img/2022-04-07-Linux快速入门/1652268620123.table.html)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654947926414.png)
 
 ![22db60b9-1d64-4af5-832f-a0b661b7b1c9](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/22db60b9-1d64-4af5-832f-a0b661b7b1c9.png)
 
