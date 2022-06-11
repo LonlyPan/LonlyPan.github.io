@@ -582,18 +582,6 @@ VirtualBox安装后。双击 `Oracle_VM_VirtualBox_Extension_Pack-6.1.16.vbox-ex
 - [Drag and Drop not working for Ubuntu 20.04 VirtualBox](https://askubuntu.com/questions/1230102/drag-and-drop-not-working-for-ubuntu-20-04-virtualbox)
 - [VirtualBox Ubuntu 20.04 LTS super buggy](https://www.linux.org/threads/virtualbox-ubuntu-20-04-lts-super-buggy.29161/)
 
-## 参考链接
-
- - [virtualbox虚拟机使用教程](https://zsxwz.com/2020/01/27/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
- - [Oracle VM VirtualBox 使用教程(Windows操作系统下)](https://www.xckjsys.com/2019/08/20/154/)
- - [优麒麟使用教程第二期：VirtualBox 虚拟机安装](https://www.ubuntukylin.com/news/1513-cn.html)
- - [win10虚拟机Oracle VM VirtualBox安装和使用教程](https://zhuanlan.zhihu.com/p/111567471)
- - [虚拟框 / Windows 10 主机 / 文件位置](http://learn.openwaterfoundation.org/owf-learn-virtualbox/install-host/win/file-locations/)
- - [一张图搞懂Ubuntu安装时姓名、计算机名、用户名](https://blog.csdn.net/weixin_43350051/article/details/104874088)
- - https://zhuanlan.zhihu.com/p/35619204
- - https://www.jianshu.com/p/796866e933e1
- - https://segmentfault.com/a/1190000022468063
- - https://www.codeleading.com/article/61115145053/
 
 ## 3. Ubuntu配置
 
@@ -661,6 +649,19 @@ Ubuntu 使用 apt 进行软件包安装管理，默认情况下其使用国外�
 
 Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面，找到`Power`,设置自己的时间即可。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/锁屏.png)
+
+## 参考链接
+
+ - [virtualbox虚拟机使用教程](https://zsxwz.com/2020/01/27/virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
+ - [Oracle VM VirtualBox 使用教程(Windows操作系统下)](https://www.xckjsys.com/2019/08/20/154/)
+ - [优麒麟使用教程第二期：VirtualBox 虚拟机安装](https://www.ubuntukylin.com/news/1513-cn.html)
+ - [win10虚拟机Oracle VM VirtualBox安装和使用教程](https://zhuanlan.zhihu.com/p/111567471)
+ - [虚拟框 / Windows 10 主机 / 文件位置](http://learn.openwaterfoundation.org/owf-learn-virtualbox/install-host/win/file-locations/)
+ - [一张图搞懂Ubuntu安装时姓名、计算机名、用户名](https://blog.csdn.net/weixin_43350051/article/details/104874088)
+ - https://zhuanlan.zhihu.com/p/35619204
+ - https://www.jianshu.com/p/796866e933e1
+ - https://segmentfault.com/a/1190000022468063
+ - https://www.codeleading.com/article/61115145053/
 
 # 四、shell命令
 
@@ -4113,16 +4114,21 @@ Windows IP 配置
 
 ...
 ```
-`以太网适配器 以太网:`项中的 IPv4 地址：`192.168.1.7` 就是我们的主机地址了。可以看到和我们的虚拟主机地址只有最后一位不一样的。如果这里你发现你的虚拟机网络地址和主机的完全不一样，如：`10.0.2.15`。那就说明网络设置有错误，我们需要修改 VirtualBox 软件的网络配置。
+`以太网适配器 以太网:`项中的 IPv4 地址：`192.168.1.7` 就是我们的主机地址了。可以看到和我们的虚拟主机地址只有最后一位不一样的，如果你的虚拟机不知最后一位不一样，如：`10.0.2.15`。那就说明网络设置有错误，我们需要修改 VirtualBox 软件的网络配置。
 
 1. Ubuntu 关键，进入 VirtualBox的网络配置界面：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Virtual网络设置.png)
-2. 按如下要求设置
+
+方法1. 按如下要求设置（该方法可能导致ubuntu无法正常上网，推荐方法2）
  - 连接方式 选择 桥接网卡
  - 界面名称 选择 （如果你的笔记本有无线网卡和有线网卡，需要根据现在的上网方式对应选择）
  - 高级-控制芯片 选择 PCnet-FAST III
  - 高级-混杂模式 拒绝
  - 高级-接入网线 √
+ 
+方法2. （20220611）
+原网络配置不动（默认网络地址转换模式），再启动一个网卡2，设置为 `仅主机(Host-Only)网络`
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654934586335.png)
 
 在ubuntu中输入命令  
 `sudo service network-manager restart`  
