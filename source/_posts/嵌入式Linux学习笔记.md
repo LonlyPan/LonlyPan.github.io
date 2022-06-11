@@ -3552,8 +3552,9 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 ## 开发环境搭建
 
 
-### 开发环境
-
+#### VIM编辑器
+Linux系统都会自带vi编辑器，但是vi编辑器太难用了！所以建议大家安装vim编辑器，安装命令：
+`sudo apt-get install vim`
 
 #### NFS
 
@@ -3569,54 +3570,6 @@ sudo vi /etc/exports
 
 `sudo apt-get install openssh-server`  开启服务
 配置文件为/etc/ssh/sshd_config，使用默认配置即可。
-
-
-#### 交叉编译链安装
-
-Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
-
-选择7.5-2019.12，选择arm-linux-gnueabihf，单击 gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz 下载
-
-创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
-
-在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
-
-进入tool目录，将交叉编译器复制到arm目录中
-`sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
-进入arm目录，解压：
-`sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
-
-修改环境变量，`sudo vi /etc/profile`
-最后面输入如下所示内容：
-`export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
-
-保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
-
-安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
-
-验证：`arm-linux-gnueabihf-gcc -v`
-注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651061897534.png)
-
-编译第一个裸机例程“1_leds”试试，在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程
-将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
-rm -rf *.o led.bin led.elf led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
-arm-linux-gnueabihf-gcc -g -c led.s -o led.o
-arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
-arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
-arm-linux-gnueabihf-objdump -D led.elf > led.dis
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
-imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
-```
-可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
-led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
-```
-可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
 
 #### vscode
 
@@ -3873,12 +3826,12 @@ nfs
 ```
 创建的nfs文件夹供nfs服务器使用，以后我们可以在开发板上通过网络文件系统来访问nfs文件夹，要先配置nfs，使用如下命令打开nfs配置文件 `exports：`
 ```
-sudovi /etc/exports
+sudo vi /etc/exports
 ```
 
 打开/etc/exports以后在后面添加如下所示内容：
 ```
-/home/zuozhongkai/linux/nfs *(rw,sync,no_root_squash)
+/home/lonly/linux/nfs *(rw,sync,no_root_squash)
 ```
 添加完成以后的/etc/exports如下所示：
 ```
@@ -3911,32 +3864,73 @@ sudo apt-get install openssh-server
 
 ### 交叉编译器安装
 
-ARM裸机、Uboot移植、Linux移植这些都需要在Ubuntu下进行编译，编译就需要编译器，我们在第三章“LinuxC编程入门”里面已经讲解了如何在Liux进行C语言开发，里面使用GCC编译器进行代码编译，但是Ubuntu自带的gcc编译器是针对X86架构的！而我们现在要编译的是ARM架构的代码，所以我们需要一个在X86架构的PC上运行，可以编译ARM架构代码的GCC编译器，这个编译器就叫做交叉编译器，总结一下交叉编译器就是：
 
- - 它肯定是一个GCC编译器。
- - 这个GCC编译器是运行在X86架构的PC上的。
- - 这个GCC编译器是编译ARM架构代码的，也就是编译出来的可执行文件是在ARM芯片上运行的。
+下载地址如下：https://www.linaro.org/ 
 
-交叉编译器中“交叉”的意思就是在一个架构上编译另外一个架构的代码，相当于两种架构“交叉”起来了。  
-
-交叉编译器有很多种，我们使用Linaro出品的交叉编译器，Linaro一间非营利性质的开放源代码软件工程公司，Linaro开发了很多软件，最著名的就是LinaroGCC编译工具链(编译器)，下载地址如下：https://www.linaro.org/ 。  
-再官网右上 support 中单击 download 进入下载界面，这里有很多种GCC交叉编译工具链，因为我们所使用的I.MX6U-ALPHA开发板是一个Cortex-A7内核的开发板，因此选择arm-linux-gnueabihf，点击后面的“Binaries”进入可执行文件下载界面
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_download.png)
-
-上面下载界面默认进入的是最新版的下载界面，最新版往往会有问题，教程里使用的是 4.9 版本。这里给出版本存档地址，可以自由选择下载之前的版本。
-https://releases.linaro.org/components/toolchain/binaries/
+从官方很难找到编译器下载地址，建议使用一下链接直接进入下载界面
+Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries/
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_release.png)
 
-进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。
+进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要
+使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_download2.png)
 
-我们要先将交叉编译工具拷贝到Ubuntu中，前文中我们在当前用户根目录下创建了一个名为“linux”的文件夹，在这个linux文件夹里面再创建一个名为“tool”的文件夹，用来存放一些开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
->这里传输文件到Ubuntu不再使用 VirtualBox 自带的复制粘贴功能，因为在以后的开发中是无法使用的，设备都是远程连线控制的，所以要转变思路和方法。
+创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
 
-操作如下图所示：
+
+进入tool目录，将交叉编译器下载文件（不要解压、不要解压）复制到arm目录中
+`sudo cp gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz /usr/local/arm/ -f`
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/filezilla_传输文件.png)
+
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
+
+
+进入arm目录，解压：
+`sudo tar -vxf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`
+
+
+
+
+
+在Ubuntu中创建目录：`sudo mkdir /usr/local/arm`
+
+
+
+修改环境变量，`sudo vi /etc/profile`
+最后面输入如下所示内容：
+`export PATH=$PATH:/usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin`
+
+保存退出，重启Ubuntu系统，交叉编译工具链(编译器)就安装成功了。
+
+安装相关库：`sudo apt-get install lsb-core lib32stdc++6`
+
+验证：`arm-linux-gnueabihf-gcc -v`
+注意，以下内容一定要有，特别是COLLECT_LTO_WRAPPER这一行。这一行没有的话，裸机编译可能没错，但是后面的uboot移植编译就会出错
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1651061897534.png)
+
+编译第一个裸机例程“1_leds”试试，在前面创建的linux文件夹下创建driver/board_driver文件夹，用来存放裸机例程
+将第一个裸机例程“1_leds”拷贝到board_driver中，然后执行make命令进行编译，
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make clean
+rm -rf *.o led.bin led.elf led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ make
+arm-linux-gnueabihf-gcc -g -c led.s -o led.o
+arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf
+arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin
+arm-linux-gnueabihf-objdump -D led.elf > led.dis
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ ls
+imxdownload  led.bin  led.dis  led.elf  led.o  led.s  leds.code-workspace  load.imx  Makefile  SI
+```
+可以看到例程“1_leds”编译成功了，编译生成了led.o和led.bin这两个文件，使用如下命令查看led.o文件信息：
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_leds$ file led.o
+led.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), with debug_info, not stripped
+```
+可以看到led.o是32位LSB 的ELF格式文件，目标机架构为ARM，说明我们的交叉编译器工作正常
+
 
 在Ubuntu中创建目录：/usr/local/arm，命令如下
 ```
