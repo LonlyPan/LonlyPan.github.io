@@ -6710,24 +6710,8 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 
 后面我们学习uboot移植的时候就是使用 uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 版本
 
-
-[nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
-
-## U-Boot移植
-
-uboot 移植的一般流程：
-1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
-2. 参考原厂开发板移植 uboot 到我们所使用的开发板
-
-1. 原版Uboot放松到ubuntu中，解压
-```
-tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
-```
-2. 创建sh文件
-```
-vim mx6ull_14x14_emmc.sh
-```
-
+参考资料：
+- [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 
 ## U-Boot移植
 
