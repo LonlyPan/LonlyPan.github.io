@@ -6428,6 +6428,9 @@ u32 get_cpu_speed_grade_hz(void)
 	}
 ```
 
+**参考资料：**
+- [修复使用 792MHz 的 I.MX6ULL，uboot显示主频为 69MHz](http://www.openedv.com/forum.php?mod=viewthread&tid=315050&highlight=uboot%2B%D6%F7%C6%B5)
+
 ### uboot修改移植
 
 #### 1. 添加开发板默认配置文件
