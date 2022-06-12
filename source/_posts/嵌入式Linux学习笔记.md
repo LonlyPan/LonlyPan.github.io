@@ -6382,7 +6382,7 @@ Hit any key to stop autoboot:  0
 
 #### 1. 添加开发板默认配置文件
 
-前置配置，不同的配置决定了编译时会调用不同的文件，是最高一级的配置文件。
+前置配置，不同的配置决定了编译时会调用不同的文件（包括后面要修改的），是最高一级的配置文件。
 
 1.  创建自定义配置文件  
 ```
@@ -6424,8 +6424,16 @@ cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 uboot 中每个板子都有一个对应的文件夹来存放板级文件，比如开发板上外设驱动文件等
 等。
 
-
-
+复制 mx6ullevk文件夹，将其重命名为 mx6ull_alientek_emmc，命令如下：
+```
+cd board/freescale/
+cp mx6ullevk/ -r mx6ull_alientek_emmc
+```
+进 入mx6ull_alientek_emmc目 录 中 ， 将 其 中 的mx6ullevk.c文 件 重 命 名 为mx6ull_alientek_emmc.c，命令如下：
+```
+cd mx6ull_alientek_emmc
+mv mx6ullevk.c mx6ull_alientek_emmc.c
+```
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
