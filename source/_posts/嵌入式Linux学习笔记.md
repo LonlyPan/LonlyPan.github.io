@@ -6525,7 +6525,7 @@ chmod 777 mx6ull_alientek_emmc.sh
 ```grep -nR "mx6ull_alientek_emmc.h"```
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655001869905.png)
 
-#### LCD驱动修改
+#### 6. LCD驱动修改
 
 一般 uboot 中修改驱动基本都是在 xxx.h 和 xxx.c 这两个文件中进行的，xxx 为板子名称，
 比如 mx6ull_alientek_emmc.h 和 mx6ull_alientek_emmc.c 这两个文件。
@@ -6577,6 +6577,34 @@ struct display_info_t const displays[] = {{
 `panel=TFT43AB`
 将其改为：
 `panel=TFT7016`
+
+也就是设置 panel 为 TFT7016，panel 的值要与示例代码中的.name 成员变量的值一致。修改完成以后重新编译一遍 uboot 并烧写到 SD 中启动。重启以后 LCD 驱动一般就会工作正常了，LCD 上回显示 NXP 的 logo。
+
+但是有可能会遇到LCD 并没有工作，还是黑屏，这是什么原因呢？在 uboot 命令模式输入“print”来查看环境变
+量 panel 的值，会发现 panel 的值要是 TFT43AB(或其他的，反正不是 TFT7016)，这是因为之前有将环境变量保存到 EMMC 中，uboot 启动以后会先从 EMMC 中读取环境变量，如果 EMMC 中没有环境变量的话才会使用 mx6ull_alientek_emmc.h 中的默认环境变量。如果 EMMC 中的环境变量 panel 不等于 TFT7016，那么 LCD 显示肯定不正常.。
+在uboot 中修改 panel 的值为 TFT7016 即可，在 uboot 的命令模式下输入如下命令：
+```
+setenv panel TFT7016
+saveenv
+```
+#### 7. 网络驱动修改
+
+1. 网络 PHY 地址修改
+```
+331 #define CONFIG_FEC_ENET_DEV
+1
+332
+333 #if (CONFIG_FEC_ENET_DEV == 0)
+334 #define IMX_FEC_BASE
+ENET_BASE_ADDR
+335 #define CONFIG_FEC_MXC_PHYADDR 0x2
+336 #define CONFIG_FEC_XCV_TYPE RMII
+337 #elif (CONFIG_FEC_ENET_DEV == 1)
+338 #define IMX_FEC_BASE
+ENET2_BASE_ADDR
+339 #define CONFIG_FEC_MXC_PHYADDR 0x1
+```
+2. 
 
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
