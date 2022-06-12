@@ -6966,25 +6966,6 @@ Kernel image @ 0x80800000 [ 0x000000 - 0x678ce0 ]
 Starting kernel ...
 
 [    0.000000] Booting Linux on physical CPU 0x0
-[    0.000000] Linux version 4.1.15-g52f6b26 (alientek@ubuntu) (gcc version 5.3.                                            0 (GCC) ) #1 SMP PREEMPT Wed Jan 15 17:44:30 CST 2020
-[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c53c7d
-[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instructio                                            n cache
-[    0.000000] Machine model: Freescale i.MX6 ULL 14x14 EVK Board
-[    0.000000] Reserved memory: created CMA memory pool at 0x98000000, size 128                                             MiB
-[    0.000000] Reserved memory: initialized node linux,cma, compatible id shared                                            -dma-pool
-[    0.000000] Memory policy: Data cache writealloc
-[    0.000000] PERCPU: Embedded 12 pages/cpu @97b90000 s16780 r8192 d24180 u4915                                            2
-[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pag                                            es: 130048
-[    0.000000] Kernel command line: console=ttymxc0,115200 root=/dev/mmcblk1p2 r                                            ootwait rw
-[    0.000000] PID hash table entries: 2048 (order: 1, 8192 bytes)
-[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
-[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
-[    0.000000] Memory: 375280K/524288K available (8547K kernel code, 450K rwdata                                            , 2964K rodata, 524K init, 451K bss, 17936K reserved, 131072K cma-reserved, 0K h                                            ighmem)
-[    0.000000] Virtual kernel memory layout:
-[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
-[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
-[    0.000000]     vmalloc : 0xa0800000 - 0xff000000   (1512 MB)
-
 ......
 ```
 
@@ -7041,7 +7022,7 @@ cp zImage /home/lonly/linux/tftpboot/
 cp imx6ull-14x14-emmc-7-1024x600-c.dtb /home/lonly/linux/tftpboot/
 cd /home/lonly/linux/tftpboot/
 chmod 777 zImage
-chmod 777 zImage
+chmod 777 imx6ull-14x14-emmc-7-1024x600-c.dtb
 ```
 
 uboot启动，设置如下
