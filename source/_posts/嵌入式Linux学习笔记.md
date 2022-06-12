@@ -6395,7 +6395,7 @@ Net:   FEC1
 Normal Boot
 Hit any key to stop autoboot:  0
 ```
-可以发现 CPU频率显示69MHz，如果使用 528MHz 的 I.MX6ULL，此处会显示主频为 528MHz。但是如果使用 800MHz 的 I.MX6ULL 的话此处会显示 69MHz，这个是 uboot内部主频读取错误，但是不影响运行，可以不用管。不管是528MHz还是800MHz的I.MX6ULL，此时都运行在 396MHz。
+可以发现 CPU频率显示69MHz，如果使用 528MHz 的 I.MX6ULL，此处会显示主频为 528MHz。但是如果使用 800MHz 的 I.MX6ULL 的话此处会显示 69MHz，这个是 uboot 文件的bug，只作为输出，不影响实际运行，可以不用管。不管是528MHz还是800MHz的I.MX6ULL，此时都运行在 396MHz。
 
 可以打开 arch\arm\cpu\armv7\mx6\soc.c 文件，修改这个小bug，修改后的如下：
 - 注释代码就是原来的代码，其下面的时修改后的，共两处
