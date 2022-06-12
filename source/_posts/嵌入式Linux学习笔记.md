@@ -7041,6 +7041,7 @@ cp zImage /home/lonly/linux/tftpboot/
 cp imx6ull-14x14-emmc-7-1024x600-c.dtb /home/lonly/linux/tftpboot/
 cd /home/lonly/linux/tftpboot/
 chmod 777 zImage
+chmod 777 zImage
 ```
 
 uboot启动，设置如下
