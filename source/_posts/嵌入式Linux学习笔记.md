@@ -7067,9 +7067,6 @@ Kernel image @ 0x80800000 [ 0x000000 - 0x6789c8 ]
 Starting kernel ...
 ```
 
-
-
-
 ### bootcmd 和 bootargs 环境变量
 
 bootcmd 和 bootagrs 是采用类似 shell 脚本语言编写的，里面有很多的变量引用，这些变量其实都是环境变量 ， 有很多是NXP自 己定义的 。 文件mx6ull_alientek_emmc.h 中的宏 `CONFIG_EXTRA_ENV_SETTINGS` 保存着这些环境变量的默认值。
@@ -7140,7 +7137,17 @@ https://www.t-firefly.com/doc/download/page/id/34.html
 https://www.t-firefly.com/doc/product/info/id/360.html
 https://www.bilibili.com/video/BV19v411H7d3?p=13
 
-## linux内核
+## linux内核移植
+
+### 顶层Makefile详解
+
+### 内核启动流程
+
+### 内核移植
+
+## 根文件系统构建
+
+## 系统烧写
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
