@@ -6380,6 +6380,8 @@ Hit any key to stop autoboot:  0
 
 ### uboot修改移植
 
+#### 1. 添加开发板默认配置文件
+
 1.  创建自定义配置文件  
 ```
 cd configs
@@ -6393,6 +6395,12 @@ CONFIG_ARCH_MX6=y
 CONFIG_TARGET_MX6ULL_ALIENTEK_EMMC=y
 CONFIG_CMD_GPIO=y
 ```
+
+#### 2. 添加开发板对应的头文件
+
+里面有很多宏定义，这些宏定义基本用于配置 uboot，也有一些
+I.MX6ULL 的配置项目。
+
 拷贝头文件
 ```
 cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
@@ -6409,6 +6417,10 @@ cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 ```
 其他内容默认
 
+#### 3. 添加开发板对应的板级文件夹
+
+uboot 中每个板子都有一个对应的文件夹来存放板级文件，比如开发板上外设驱动文件等
+等。
 
 
 
