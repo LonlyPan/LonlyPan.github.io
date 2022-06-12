@@ -6869,10 +6869,158 @@ resetting ...
 
 ```
 
+#### 8. 开发板名称修改
+在 uboot 启动信息中会有“Board: MX6ULL 14x14 EVK”这一句，也就是说板子名字为“MX6ULL 14x14 EVK”，要将其改为我们所使用的板子名字，比如“MX6ULL ALIENTEK EMMC”或者“MX6ULL ALIENTEK NAND”。打开文件 mx6ull_alientek_emmc.c，找到函数
+checkboard，将其改为如下所示内容：
+```
+int checkboard(void)
+{
+if (is_mx6ull_9x9_evk())
+puts("Board: MX6ULL 9x9 EVK\n");
+else
+puts("Board: MX6ULL ALIENTEK EMMC\n");
+return 0;
+}
+```
+至此 uboot 的驱动部分就修改完成了，uboot 移植也完成了
+
+#### 9. uboot 启动linux测试
+
+uboot 的最终目的就是启动 Linux 内核，所以需要通过启动 Linux 内核来判断 uboot 移植是否成功。
+> uboot在linux启动后，就失效了，但会传递一些信息给linux
+> 所以uboot中的设备驱动是不能在linux中使用的，所以linux中也要有上面移植时的那些设备驱动，这在后面linux驱动开发再讲解。
+
+##### 从 EMMC 启动 Linux 系统
+从 EMMC 启动也就是将编译出来的 Linux 镜像文件 zImage 和设备树文件保存在 EMMC中，uboot 从 EMMC 中读取这两个文件并启动，这个是我们产品最终的启动方式。但是我们目前还没有讲解如何移植 linux 和设备树文件，以及如何将 zImage 和设备树文件保存到 EMMC中。不过大家拿到手的 I.MX6U-ALPHA 开发板(EMMC 版本)已经将 zImage 文件和设备树文件烧写到了 EMMC 中，所以我们可以直接读取来测试。先检查一下 EMMC 的分区 1 中有没有zImage 文件和设备树文件，输入命令
+
+```ls mmc 1:1```
+结果下所示：
+```
+=> ls mmc 1:1
+    38823   imx6ull-14x14-emmc-10.1-1280x800-c.dtb
+    38823   imx6ull-14x14-emmc-4.3-480x272-c.dtb
+    38823   imx6ull-14x14-emmc-4.3-800x480-c.dtb
+    38823   imx6ull-14x14-emmc-7-1024x600-c.dtb
+    38823   imx6ull-14x14-emmc-7-800x480-c.dtb
+    39655   imx6ull-14x14-emmc-hdmi.dtb
+    39563   imx6ull-14x14-emmc-vga.dtb
+  6786272   zimage
+
+8 file(s), 0 dir(s)
+```
+
+uboot启动，进入命令模式，设置如下
+```
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+setenv bootcmd 'mmc dev 1; fatload mmc 1:1 80800000 zImage; fatload mmc 1:1 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000;'
+saveenv
+```
+设置好以后直接输入 boot，或者 run bootcmd 即可启动 Linux 内核，如果 Linux 内核启动成功的话就会输出如下的启动信息：
+```
+=> boot
+switch to partitions #0, OK
+mmc1(part 0) is current device
+reading zImage
+6786272 bytes read in 226 ms (28.6 MiB/s)
+reading imx6ull-14x14-emmc-7-1024x600-c.dtb
+38823 bytes read in 20 ms (1.9 MiB/s)
+Kernel image @ 0x80800000 [ 0x000000 - 0x678ce0 ]
+## Flattened Device Tree blob at 83000000
+   Booting using the fdt blob at 0x83000000
+   Using Device Tree in place at 83000000, end 8300c7a6
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 4.1.15-g52f6b26 (alientek@ubuntu) (gcc version 5.3.                                            0 (GCC) ) #1 SMP PREEMPT Wed Jan 15 17:44:30 CST 2020
+[    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c53c7d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instructio                                            n cache
+[    0.000000] Machine model: Freescale i.MX6 ULL 14x14 EVK Board
+[    0.000000] Reserved memory: created CMA memory pool at 0x98000000, size 128                                             MiB
+[    0.000000] Reserved memory: initialized node linux,cma, compatible id shared                                            -dma-pool
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] PERCPU: Embedded 12 pages/cpu @97b90000 s16780 r8192 d24180 u4915                                            2
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pag                                            es: 130048
+[    0.000000] Kernel command line: console=ttymxc0,115200 root=/dev/mmcblk1p2 r                                            ootwait rw
+[    0.000000] PID hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.000000] Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 375280K/524288K available (8547K kernel code, 450K rwdata                                            , 2964K rodata, 524K init, 451K bss, 17936K reserved, 131072K cma-reserved, 0K h                                            ighmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xa0800000 - 0xff000000   (1512 MB)
+
+......
+```
+
+##### 从网络启动 Linux 系统
+
+从网络启动 linux 系统的唯一目的就是为了调试！不管是为了调试 linux 系统还是 linux 下的驱动。每次修改 linux 系统文件或者 linux 下的某个驱动以后都要将其烧写到 EMMC 中去测试，这样太麻烦了。我们可以设置 linux 从网络启动，也就是将 linux 镜像文件和根文件系统都放到 Ubuntu 下某个指定的文件夹中，这样每次重新编译 linux 内核或者某个 linux 驱动以后只需要使用 cp 命令将其拷贝到这个指定的文件夹中即可，这样就不用需要频繁的烧写 EMMC。我们可以通过 nfs 或者 tftp 从 Ubuntu 中下载 zImage 和设备树文件，根文件系统的话也可以通过 nfs 挂载。
+
+这里我们使用 tftp 从 Ubuntu 中下载 zImage 和设备树文件，前提是要将 zImage 和设备树文件放到 Ubuntu 下的 tftp 目录中
+
+
+设置 bootargs 和 bootcmd 这两个环境变量，设置如下：
+
+
+### bootcmd 和 bootargs 环境变量
+
+bootcmd 和 bootagrs 是采用类似 shell 脚本语言编写的，里面有很多的变量引用，这些变量其实都是环境变量 ， 有很多是NXP自 己定义的 。 文件mx6ull_alientek_emmc.h 中的宏 `CONFIG_EXTRA_ENV_SETTINGS` 保存着这些环境变量的默认值。
+
+- bootcmd：保存着 uboot 默认命令
+- bootargs：保存着 uboot 传递给 Linux 内核的参数
+
+#### bootcmd
+
+bootcmd 保存着 uboot 默认命令，uboot 倒计时结束以后就会执行 bootcmd 中的命令。
+可以在 uboot 启动以后进入命令行设置 bootcmd 环境变量的值。板子第一次运行 uboot 的时候都会使用默认值来设置 bootcmd 环境变量
+
+文件 include/env_default.h。指定了很多环境变量的默认值，比如 bootcmd 的默认值就是CONFIG_BOOTCOMMAND，bootargs 的默认值就是 CONFIG_BOOTARGS。我们可以在 mx6ull_alientek_emmc.h 文件中通过设置宏 CONFIG_BOOTCOMMAND 来设置 bootcmd 的默认值，
+
+打开文 件 mx6ull_alientek_emmc.h，找到宏 `CONFIG_BOOTCOMMAND` ,
+
+经过分析，浓缩出来的仅仅是 4 行精华：
+```
+mmc dev 1	//切换到 EMMC
+fatload mmc 1:1 0x80800000 zImage	//读取 zImage 到 0x80800000 处
+fatload mmc 1:1 0x83000000 imx6ull-14x14-evk.dtb //读取设备树到 0x83000000 处
+bootz 0x80800000 - 0x83000000	//启动 Linux
+```
+NXP 官方将 CONFIG_BOOTCOMMAND 写的这么复杂只有一个目的：为了兼容多个板子，所以写了个很复杂的脚本。当我们明确知道我们所使用的板子的时候就可以大幅简化宏CONFIG_BOOTCOMMAND的 设 置 ， 比如我们要从EMMC启 动 ，那么宏
+CONFIG_BOOTCOMMAND 就可简化为：
+```
+#define CONFIG_BOOTCOMMAND \
+"mmc dev 1;" \
+"fatload mmc 1:1 0x80800000 zImage;" \
+"fatload mmc 1:1 0x83000000 imx6ull-alientek-emmc.dtb;" \
+"bootz 0x80800000 - 0x83000000;"
+```
+或者可以直接在 uboot  启动后，使用命令设置 bootcmd 的值，这个值就是保存到 EMMC 中的，命令如下：
 ```
 setenv bootcmd 'mmc dev 1; fatload mmc 1:1 80800000 zImage; fatload mmc 1:1 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000;'
-
 ```
+
+#### bootargs
+bootargs 保存着 uboot 传递给 Linux 内核的参数，bootargs 环境变量是由 mmcargs 设置的，mmcargs 环境变量如下：
+```mmcargs=setenv bootargs console=${console},${baudrate} root=${mmcroot}```
+其中 console=ttymxc0，baudrate=115200，mmcroot=/dev/mmcblk1p2 rootwait rw，因此将mmcargs 展开以后就是：
+```mmcargs=setenv bootargs console= ttymxc0, 115200 root= /dev/mmcblk1p2 rootwait rw```
+
+常用的参数有：
+1. console
+console 用来设置 linux 终端(或者叫控制台)，也就是通过什么设备来和 Linux 进行交互，是串口还是 LCD 屏幕？一般设置串口作为 Linux 终端。这里设置 console 为 ttymxc0，因为 linux启动以后 I.MX6ULL 的串口 1 在 linux 下的设备文件就是/dev/ttymxc0，ttymxc0 后面有个“,115200”，这是设置串口的波特率
+
+2. root
+root 用来设置根文件系统的位置，root=/dev/mmcblk1p2 用于指明根文件系统存放在mmcblk1 设备的分区 2 中。EMMC 版本的核心板启动 linux 以后会存在/dev/mmcblk0、/dev/mmcblk1、/dev/mmcblk0p1、/dev/mmcblk0p2、/dev/mmcblk1p1 和/dev/mmcblk1p2 这样的文件，其中/dev/mmcblkx(x=0~n)表示 mmc 设备，而/dev/mmcblkxpy(x=0~n,y=1~n)表示 mmc 设备x 的分区 y。在 I.MX6U-ALPHA 开发板中/dev/mmcblk1 表示 EMMC，而/dev/mmcblk1p2 表示EMMC 的分区 2。
+root 后面有“rootwait rw”，rootwait 表示等待 mmc 设备初始化完成以后再挂载，否则的话mmc 设备还没初始化完成就挂载根文件系统会出错的。rw 表示根文件系统是可以读写的，不加rw 的话可能无法在根文件系统中进行写操作，只能进行读操作。
+
+3. rootfstype
+
+此选项一般配置 root 一起使用，rootfstype 用于指定根文件系统类型，如果根文件系统为ext 格式的话此选项无所谓。如果根文件系统是 yaffs、jffs 或 ubifs 的话就需要设置此选项，指定根文件系统的类型。
+
+
+
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
