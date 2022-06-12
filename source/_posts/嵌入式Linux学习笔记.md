@@ -6407,6 +6407,8 @@ cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 #ifndef __MX6ULL_ALIENTEK_EMMC_CONFIG_H
 #define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
 ```
+其他内容默认
+
 
 
 
