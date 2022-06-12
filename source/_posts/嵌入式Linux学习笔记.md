@@ -6282,7 +6282,7 @@ PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CC
  
 # 系统移植篇
 
-## LInux系统移植
+## LInux系统移植概念
 
 操作系统向下管理硬件（I/O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用
  
@@ -6300,7 +6300,7 @@ linux开始运行，先对系统环境初始化，当系统启动完成后，lin
  - linux内核移植（包含设备树）
  - 根文件系统移植
 
-### uboot简介
+## uboot简介
 
 嵌入式系统上电后先执行bootloader、先初始化DDR，Flash 等外设，然后将 Linux 内核从 Flash(NAND，NOR FLASH，SD，MMC等)中读取到 DDR 中，最后启动Linux内核。
 
@@ -6317,8 +6317,9 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 **参考资料：**
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 
-### U-Boot移植
+## U-Boot移植
 
+### NXP-uboot编译烧录
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
@@ -6351,7 +6352,9 @@ make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 chmod 777 imxdownload //给予 imxdownload 可执行权限
 ./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
 ```
-3.  创建自定义配置文件
+### uboot修改移植
+
+1.  创建自定义配置文件
 ```
 cd configs
 cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
@@ -6379,6 +6382,8 @@ cp include/configs/mx6ullevk.h mx6ull_alientek_emmc.h
 #define __MX6ULL_ALIENTEK_EMMC_CONFIG_H
 ```
 
+
+
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
@@ -6391,9 +6396,6 @@ https://wiki.t-firefly.com/zh_CN/ROC-RK3328-CC/flash_emmc.html
 https://www.t-firefly.com/doc/download/page/id/34.html
 https://www.t-firefly.com/doc/product/info/id/360.html
 https://www.bilibili.com/video/BV19v411H7d3?p=13
-
-![enter description here](./img/2022-04-07-Linux快速入门/1652410918609.png)
-
 
 ## linux内核
 
