@@ -6319,10 +6319,12 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 
 ## U-Boot移植
 
-### NXP-uboot编译烧录
+
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+
+### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
 `sudo apt-get install libncurses5-dev`
@@ -6354,7 +6356,7 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 ```
 ### uboot修改移植
 
-1.  创建自定义配置文件
+1.  创建自定义配置文件  
 ```
 cd configs
 cp mx6ull_14x14_evk_emmc_defconfig mx6ull_alientek_emmc_defconfig
