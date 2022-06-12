@@ -6322,6 +6322,35 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+### alentek-uboot编译烧录测试
+
+1. 正点原子 uboot 复制到 ubuntu的linux -> uboot -> alentek_uboot下，解压
+
+```
+tar -vxjf uboot-imx-2016.03-2.1.0-gee88051-v1.6.tar.bz2
+```
+
+2. 创建sh文件
+```
+vim mx6ull_alientek_emmc.sh
+```
+填入内容：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_ddr512_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
+```
+编译：
+```
+chmod 777 mx6ull_alientek_emmc.sh //给予可执行权限
+./mx6ull_alientek_emmc.sh
+```
+烧录：
+```
+chmod 777 imxdownload //给予 imxdownload 可执行权限
+./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
 
 ### NXP-uboot编译烧录测试
 
@@ -6332,8 +6361,7 @@ uboot 移植的一般流程：
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
 ```
-2. 原版编译烧录测试
-创建sh文件
+2. 创建sh文件
 ```
 vim mx6ull_14x14_emmc.sh
 ```
@@ -6344,11 +6372,12 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_14x14_evk_emmc_defconfig
 make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
-编译：
+3. 编译：
 ```
+chmod 777 mx6ull_14x14_emmc.sh //给予可执行权限
 ./mx6ull_14x14_emmc.sh
 ```
-烧录：
+4. 烧录：
 ```
 chmod 777 imxdownload //给予 imxdownload 可执行权限
 ./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
@@ -6696,7 +6725,7 @@ int board_init(void)
 ```
 3. 添加 I.MX6U-ALPHA 开发板网络复位引脚驱动
 在 mx6ull_alientek_emmc.c 中找到如下所示代码并修改如下：
-- 添加了 651和667 两行代码
+- 添加了 651和667 两行代码，分别是 ENET1 和 ENET2 的复位 IO 配置参数。
 ```
 640 static iomux_v3_cfg_t const fec1_pads[] = {
 641 	MX6_PAD_GPIO1_IO06__ENET1_MDIO | MUX_PAD_CTRL(MDIO_PAD_CTRL),
@@ -6716,6 +6745,103 @@ int board_init(void)
 667 	MX6_PAD_SNVS_TAMPER8__GPIO5_IO08 | MUX_PAD_CTRL(NO_PAD_CTRL),
 668 };
 ```
+继续在文件 mx6ull_alientek_emmc.c 中找到函数 setup_iomux_fec，函数 setup_iomux_fec 就是根据 fec1_pads 和 fec2_pads 这两个网络 IO 配置数组来初始化I.MX6ULL 的网络 IO。我们需要在其中添加网络复位 IO 的初始化代码，并且复位一下 PHY 芯片，修改后的 setup_iomux_fec 函数如下
+- 第 676 行~679 行和第 685 行~688 行分别对应 ENET1 和 ENET2 的复位 IO 初始化，将这两个 IO 设置为输出并且硬件复位一下 LAN8720A，这个硬件复位很重要！否则可能导致 uboot 无法识别 LAN8720A。
+```
+668 static void setup_iomux_fec(int fec_id)
+669 {
+670 	if (fec_id == 0)
+671 	{
+672
+673 		imx_iomux_v3_setup_multiple_pads(fec1_pads,
+674 				ARRAY_SIZE(fec1_pads));
+675
+676 		gpio_direction_output(ENET1_RESET, 1);
+677 		gpio_set_value(ENET1_RESET, 0);
+678 		mdelay(20);
+679 		gpio_set_value(ENET1_RESET, 1);
+680 	}
+681 	else
+682 	{
+683 		imx_iomux_v3_setup_multiple_pads(fec2_pads,
+684 		ARRAY_SIZE(fec2_pads));
+685 		gpio_direction_output(ENET2_RESET, 1);
+686 		gpio_set_value(ENET2_RESET, 0);
+687 		mdelay(20);
+688 		gpio_set_value(ENET2_RESET, 1);
+689 	}
+690 }
+```
+
+4. 修改 drivers/net/phy/phy.c 文件中的函数 genphy_update_link
+uboot 中的 LAN8720A 驱动有点问题，打开文件drivers/net/phy/phy.c，找到函数 genphy_update_link，这是个通用 PHY 驱动函数，此函数用于更新 PHY 的连接状态和速度。使用 LAN8720A 的时候需要在此函数中添加一些代码，修改后的
+函数 genphy_update_link 如下所示：
+```
+221 int genphy_update_link(struct phy_device *phydev)
+222 {
+223 	unsigned int mii_reg;
+224
+225 	#ifdef CONFIG_PHY_SMSC
+226 		static int lan8720_flag = 0;
+227 		int bmcr_reg = 0;
+228 		if (lan8720_flag == 0) {
+229 			bmcr_reg = phy_read(phydev, MDIO_DEVAD_NONE, MII_BMCR);
+230 			phy_write(phydev, MDIO_DEVAD_NONE, MII_BMCR, BMCR_RESET);
+231 			while(phy_read(phydev, MDIO_DEVAD_NONE, MII_BMCR) & 0X8000) {
+232 				udelay(100);
+233 			}
+234 			phy_write(phydev, MDIO_DEVAD_NONE, MII_BMCR, bmcr_reg);
+235 			lan8720_flag = 1;
+236 		}
+237 	#endif
+238
+239 	/*
+240 	* Wait if the link is up, and autonegotiation is in progress
+241 	* (ie - we're capable and it's not done)
+242 	*/
+243 	mii_reg = phy_read(phydev, MDIO_DEVAD_NONE, MII_BMSR);
+......
+291
+292 	return 0;
+293 }
+```
+
+225 行~237 行就是新添加的代码，为条件编译代码段，只有使用 SMSC 公司的 PHY 这段代码才会执行(目前只测试了 LAN8720A，SMSC 公司其他的芯片还未测试)。第 229 行读取LAN8720A 的 BMCR 寄存器(寄存器地址为 0)，此寄存器为 LAN8720A 的配置寄存器，这里先读取此寄存器的默认值并保存起来。230 行向寄存器 BMCR 寄存器写入 BMCR_RESET(值为0X8000)，因为 BMCR 的 bit15 是软件复位控制位，因此 230 行就是软件复位 LAN8720A，复位
+完成以后此位会自动清零。第 231~233 行等待 LAN8720A 软件复位完成，也就是判断 BMCR的 bit15 位是否为 1，为 1 的话表示还没有复位完成。第 234 行重新向 BMCR 寄存器写入以前的值，也就是 229 行读出的那个值。
+
+至此网络的复位引脚驱动修改完成，重新编译 uboot，然后将 u-boot.bin 烧写到 SD 卡中并启动，uboot 启动信息所示：
+```
+U-Boot 2016.03 (Jun 12 2022 - 10:24:10 +0800)
+
+CPU:   Freescale i.MX6ULL rev1.1 69 MHz (running at 396 MHz)
+CPU:   Industrial temperature grade (-40C to 105C) at 48C
+Reset cause: POR
+Board: MX6ULL 14x14 EVK
+I2C:   ready
+DRAM:  512 MiB
+MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+unsupported panel ATK-LCD-7-1024x600
+In:    serial
+Out:   serial
+Err:   serial
+switch to partitions #0, OK
+mmc0 is current device
+Net:   FEC1
+Normal Boot
+Hit any key to stop autoboot:  0
+```
+从图 33.2.6.4 中可以看到“Net： FEC1”这一行，提示当前使用的 FEC1 这个网口，也就是 ENET2。在 uboot 中使用网络之前要先设置几个环境变量，命令如下：
+```
+setenv ipaddr 192.168.1.55          //开发板 IP 地址
+setenv ethaddr b8:ae:1d:01:00:00    //开发板网卡 MAC 地址
+setenv gatewayip 192.168.1.1	    //开发板默认网关
+setenv netmask 255.255.255.0	    //开发板子网掩码
+setenv serverip 192.168.1.250	    //服务器地址，也就是 Ubuntu 地址
+saveenv	                            //保存环境变量
+```
+设置好环境变量以后就可以在 uboot 中使用网络了，用网线将 I.MX6U-ALPHA 上的 ENET2与电脑或者路由器连接起来，保证开发板和电脑在同一个网段内，通过 ping 命令来测试一下网络连接，命令如下：
+ping 192.168.1.250
+
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
