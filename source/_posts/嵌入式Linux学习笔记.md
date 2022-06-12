@@ -6994,6 +6994,67 @@ Starting kernel ...
 
 这里我们使用 tftp 从 Ubuntu 中下载 zImage 和设备树文件，前提是要将 zImage 和设备树文件放到 Ubuntu 下的 tftp 目录中
 
+需要在 Ubuntu 上搭建 TFTP 服务器，需要安装 tftp-hpa 和 tftpd-hpa，命令如下：
+```
+sudo apt-get install tftp-hpa tftpd-hpa
+sudo apt-get install xinetd
+```
+在用户目录下新建一个目录存放文件，命令如下：
+```
+mkdir /home/lonly/linux/tftpboot
+chmod 777 /home/lonly/linux/tftpboot
+```
+最后配置 tftp，安装完成以后新建文件/etc/xinetd.d/tftp，如果没有/etc/xinetd.d 目录的话自行创建，然后在里面输入如下内容：
+```
+server tftp
+{
+socket_type	= dgram
+protocol	= udp
+wait	= yes
+user	= root
+server	= /usr/sbin/in.tftpd
+server_args	= -s /home/lonly/linux/tftpboot/
+disable	= no
+per_source	= 11
+cps	= 100 2
+flags	= IPv4
+}
+```
+完了以后启动 tftp 服务，命令如下：
+sudo service tftpd-hpa start
+打开/etc/default/tftpd-hpa 文件，将其修改为如下所示内容：
+```
+# /etc/default/tftpd-hpa
+
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="/home/zuozhongkai/linux/tftpboot"
+TFTP_ADDRESS=":69"
+TFTP_OPTIONS="-l -c -s"
+```
+最后输入如下命令， 重启 tftp 服务器：
+`sudo service tftpd-hpa restart`
+
+tftp 服务器已经搭建好了，接下来就是使用了。将 zImage 镜像文件拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
+```
+cp zImage /home/zuozhongkai/linux/tftpboot/
+cd /home/zuozhongkai/linux/tftpboot/
+chmod 777 zImage
+```
+将 tftpboot 文件夹里面的 zImage 文件下载到开发板 DRAM 的 0X80800000 地址处，命令如下：
+`tftp 80800000 zImage`
+从图可以看，zImage 下载成功了，网速为 1.4MibB/s，文件大小为 6071136 字节。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655044989337.png)
+
+1. 路径为：8、系统镜像->1、出厂系统镜像->2、kernel 镜像\linux-imx-4.1.15-2.1.0-gbfed875-v1.6 ->zImage。将文件zImage通 过
+FileZilla发 送 到Ubuntu中 的NFS目 录 下 ， 比 如 我 的 就 是 放 到/home/zuozhongkai/linux/nfs 
+
+准备好以后就可以使用 nfs 命令来将 zImage 下载到开发板 DRAM 的 0X80800000 地址处，
+命令如下：
+nfs 80800000 192.168.1.253:/home/zuozhongkai/linux/nfs/zImage
+
+这里下载
+的 6785272 字节(出厂系统在不断的更更新中，因此以实际的 zImage 大小为准)，而 zImage 的
+大小就是 6785272 字节，如图 30.4.4.7 所示：
 
 设置 bootargs 和 bootcmd 这两个环境变量，设置如下：
 
