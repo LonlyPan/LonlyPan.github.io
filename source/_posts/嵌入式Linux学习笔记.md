@@ -3868,10 +3868,14 @@ Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_release.png)
 
-进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要
-使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。
+***经测试，这里不能安装最新版本，会导致后面uboot编译出问题（正常程序的编译没问题），会导致在uboot中无法使用 `dhcp` 和`ping` 命令。所以不要使用最新版！不要使用最新！不要使用最新！请下载和正点原子教程同样的版本 `4.9.4-2017.01`***
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/linaro_download2.png)
+**下载地址：** https://releases.linaro.org/components/toolchain/binaries/4.9-2017.01/arm-linux-gnueabihf/
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655037345847.png)
+
+~~进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要
+使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。~~
 
 创建一个“tool”的文件夹：  `linux/tool`，存放开发工具（这里只是存放，安装在别的位置）。使用前面已经安装好的FileZilla将交叉编译器拷贝到Ubuntu中刚刚新建的“tool”文件夹中。
 
