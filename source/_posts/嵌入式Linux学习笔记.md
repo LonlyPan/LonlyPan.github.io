@@ -6842,6 +6842,45 @@ saveenv	                            //保存环境变量
 设置好环境变量以后就可以在 uboot 中使用网络了，用网线将 I.MX6U-ALPHA 上的 ENET2与电脑或者路由器连接起来，保证开发板和电脑在同一个网段内，通过 ping 命令来测试一下网络连接，命令如下：
 ping 192.168.1.250
 
+```
+
+=> ping 192.168.0.198
+FEC1 Waiting for PHY auto negotiation to complete... done
+Using FEC1 device
+data abort
+pc : [<9ff83ad0>]          lr : [<9ff84d98>]
+reloc pc : [<8783bad0>]    lr : [<8783cd98>]
+sp : 9ef45d08  ip : 00000000     fp : 9ff53520
+r10: 00000002  r9 : 9ef45eb8     r8 : 00000000
+r7 : 00000001  r6 : 00000000     r5 : 0000002a  r4 : 9ffed0ce
+r3 : 14000045  r2 : bc00a8c0     r1 : 9ef45d10  r0 : 9ffed0ce
+Flags: nZCv  IRQs off  FIQs off  Mode SVC_32
+Resetting CPU ...
+
+resetting ...
+
+
+=> dhcp
+FEC1 Waiting for PHY auto negotiation to complete... done
+BOOTP broadcast 1
+data abort
+pc : [<9ff821e0>]          lr : [<9ff839e4>]
+reloc pc : [<8783a1e0>]    lr : [<8783b9e4>]
+sp : 9ef45cc0  ip : 00000000     fp : 9ff534c8
+r10: 00000001  r9 : 9ef45eb8     r8 : 9ffecbe8
+r7 : 0000000e  r6 : 9ffeef30     r5 : 00000000  r4 : 9ffed0ce
+r3 : 00060101  r2 : 00000008     r1 : 9ffed0a2  r0 : 0000000e
+Flags: nZCv  IRQs off  FIQs off  Mode SVC_32
+Resetting CPU ...
+
+resetting ...
+
+```
+
+```
+setenv bootcmd 'mmc dev 1; fatload mmc 1:1 80800000 zImage; fatload mmc 1:1 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000;'
+
+```
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
