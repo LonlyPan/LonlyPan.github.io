@@ -6377,6 +6377,7 @@ Net:   FEC1
 Normal Boot
 Hit any key to stop autoboot:  0
 ```
+
 ### uboot修改移植
 
 1.  创建自定义配置文件  
