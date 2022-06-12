@@ -3874,6 +3874,10 @@ Linaro GCC 编译器：https://releases.linaro.org/components/toolchain/binaries
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655037345847.png)
 
+参考资料：
+- [用uboot命令dhcp后为什么会重启uboot进入倒计时呢？](http://47.111.11.73/forum.php?mod=viewthread&tid=319724&highlight=dhcp%2B%D6%D8%C6%F4)
+- [学习教材中uboot下命令试验ping失败导致重启](http://47.111.11.73/forum.php?mod=viewthread&tid=325306&highlight=uboot%2Bping%CA%A7%B0%DC)
+
 ~~进入下面的下载界面，其中有很多种交叉编译器，我们只需要关注红框中部分，一个是针对32位系统的，第二个是针对64位系统的。大家根据自己所使用的Ubuntu系统类型选择合适的版本，我安装的Ubuntu16.04是64位系统，因此我要
 使用 `gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz`。~~
 
