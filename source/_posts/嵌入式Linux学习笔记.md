@@ -7006,57 +7006,87 @@ chmod 777 /home/lonly/linux/tftpboot
 ```
 最后配置 tftp，安装完成以后新建文件/etc/xinetd.d/tftp，如果没有/etc/xinetd.d 目录的话自行创建，然后在里面输入如下内容：
 ```
+sudo vi /etc/xinetd.d/tftp
+```
+```
 server tftp
 {
-socket_type	= dgram
-protocol	= udp
-wait	= yes
-user	= root
-server	= /usr/sbin/in.tftpd
-server_args	= -s /home/lonly/linux/tftpboot/
-disable	= no
-per_source	= 11
-cps	= 100 2
-flags	= IPv4
+	socket_type	= dgram
+	protocol	= udp
+	wait	= yes
+	user	= root
+	server	= /usr/sbin/in.tftpd
+	server_args	= -s /home/lonly/linux/tftpboot/
+	disable	= no
+	per_source	= 11
+	cps	= 100 2
+	flags	= IPv4
 }
 ```
 完了以后启动 tftp 服务，命令如下：
-sudo service tftpd-hpa start
-打开/etc/default/tftpd-hpa 文件，将其修改为如下所示内容：
+`sudo service tftpd-hpa start`
+打开 `sudo vi /etc/default/tftpd-hpa` 文件，将其修改为如下所示内容：
 ```
 # /etc/default/tftpd-hpa
 
 TFTP_USERNAME="tftp"
-TFTP_DIRECTORY="/home/zuozhongkai/linux/tftpboot"
+TFTP_DIRECTORY="/home/lonly/linux/tftpboot"
 TFTP_ADDRESS=":69"
 TFTP_OPTIONS="-l -c -s"
 ```
-最后输入如下命令， 重启 tftp 服务器：
+重启 tftp 服务器：
 `sudo service tftpd-hpa restart`
 
-tftp 服务器已经搭建好了，接下来就是使用了。将 zImage 镜像文件拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
+将 zImage 镜像文件拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
 ```
-cp zImage /home/zuozhongkai/linux/tftpboot/
-cd /home/zuozhongkai/linux/tftpboot/
+cp zImage /home/lonly/linux/tftpboot/
+cd /home/lonly/linux/tftpboot/
 chmod 777 zImage
 ```
-将 tftpboot 文件夹里面的 zImage 文件下载到开发板 DRAM 的 0X80800000 地址处，命令如下：
-`tftp 80800000 zImage`
-从图可以看，zImage 下载成功了，网速为 1.4MibB/s，文件大小为 6071136 字节。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655044989337.png)
 
-1. 路径为：8、系统镜像->1、出厂系统镜像->2、kernel 镜像\linux-imx-4.1.15-2.1.0-gbfed875-v1.6 ->zImage。将文件zImage通 过
-FileZilla发 送 到Ubuntu中 的NFS目 录 下 ， 比 如 我 的 就 是 放 到/home/zuozhongkai/linux/nfs 
+uboot启动，设置如下
+```
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000'
+saveenv
+```
+重启`boot`
 
-准备好以后就可以使用 nfs 命令来将 zImage 下载到开发板 DRAM 的 0X80800000 地址处，
-命令如下：
-nfs 80800000 192.168.1.253:/home/zuozhongkai/linux/nfs/zImage
+显示如下：
+```
+=> boot
+Using FEC1 device
+TFTP from server 192.168.0.254; our IP address is 192.168.0.111
+Filename 'zImage'.
+Load address: 0x80800000
+Loading: #################################################################
+         #################################################################
+         #################################################################
+         #############################################################T ####
+         #################################################################
+         ###################################################T ##############
+         #################################################################
+         ########
+         204.1 KiB/s
+done
+Bytes transferred = 6785480 (6789c8 hex)
+Using FEC1 device
+TFTP from server 192.168.0.254; our IP address is 192.168.0.111
+Filename 'imx6ull-14x14-emmc-7-1024x600-c.dtb'.
+Load address: 0x83000000
+Loading: ###
+         233.4 KiB/s
+done
+Bytes transferred = 39327 (999f hex)
+Kernel image @ 0x80800000 [ 0x000000 - 0x6789c8 ]
+## Flattened Device Tree blob at 83000000
+   Booting using the fdt blob at 0x83000000
+   Using Device Tree in place at 83000000, end 8300c99e
 
-这里下载
-的 6785272 字节(出厂系统在不断的更更新中，因此以实际的 zImage 大小为准)，而 zImage 的
-大小就是 6785272 字节，如图 30.4.4.7 所示：
+Starting kernel ...
+```
 
-设置 bootargs 和 bootcmd 这两个环境变量，设置如下：
+
 
 
 ### bootcmd 和 bootargs 环境变量
