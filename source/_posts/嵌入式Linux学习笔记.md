@@ -6591,8 +6591,7 @@ saveenv
 
 1. 网络 PHY 地址修改
 ```
-331 #define CONFIG_FEC_ENET_DEV
-1
+331 #define CONFIG_FEC_ENET_DEV  1
 332
 333 #if (CONFIG_FEC_ENET_DEV == 0)
 334 #define IMX_FEC_BASE
@@ -6603,9 +6602,120 @@ ENET_BASE_ADDR
 338 #define IMX_FEC_BASE
 ENET2_BASE_ADDR
 339 #define CONFIG_FEC_MXC_PHYADDR 0x1
+340 #define CONFIG_FEC_XCV_TYPE  RMII
+341 #endif
+342 #define CONFIG_ETHPRIME   "FEC"
+343
+344 #define CONFIG_PHYLIB
+345 #define CONFIG_PHY_MICREL
+346 #endif
 ```
-2. 
+第 331 行的宏 CONFIG_FEC_ENET_DEV 用于选择使用哪个网口，默认为 1，也就是选择ENET2。第 335 行为 ENET1 的 PHY 地址，默认是 0X2，第 339 行为 ENET2 的 PHY 地址，默认为 0x1。正点原子的 I.MX6U-ALPHA 开发板 ENET1 的 PHY 地址为0X0，ENET2 的 PHY 地址为 0X1，所以需要将第 335 行的宏 CONFIG_FEC_MXC_PHYADDR改为 0x0。
 
+第 345 行定了一个宏 CONFIG_PHY_MICREL，此宏用于使能 uboot 中 Micrel 公司的 PHY驱动，KSZ8081 这颗 PHY 芯片就是 Micrel 公司生产的，不过 Micrel 已经被 Microchip 收购了。如果要使用 LAN8720A，那么就得将CONFIG_PHY_MICREL 改为 CONFIG_PHY_SMSC，也就是使能 uboot 中的 SMSC 公司中的 PHY 驱动，因为 LAN8720A 就是 SMSC 公司生产的。所
+以示例代码 33.2.7.1 有三处要修改：
+①、修改 ENET1 网络 PHY 的地址。
+②、修改 ENET2 网络 PHY 的地址。
+③、使能 SMSC 公司的 PHY 驱动。
+修改后的网络 PHY 地址参数如下所示：
+```
+#define CONFIG_FEC_ENET_DEV		1
+
+#if (CONFIG_FEC_ENET_DEV == 0)
+#define IMX_FEC_BASE			ENET_BASE_ADDR
+#define CONFIG_FEC_MXC_PHYADDR          0x0
+#define CONFIG_FEC_XCV_TYPE             RMII
+#elif (CONFIG_FEC_ENET_DEV == 1)
+#define IMX_FEC_BASE			ENET2_BASE_ADDR
+#define CONFIG_FEC_MXC_PHYADDR		0x1
+#define CONFIG_FEC_XCV_TYPE		RMII
+#endif
+#define CONFIG_ETHPRIME			"FEC"
+
+#define CONFIG_PHYLIB
+#define CONFIG_PHY_SMSC
+#endif
+```
+2. 删除 uboot 中 74LV595 的驱动代码
+uboot 中网络 PHY 芯片地址修改完成以后就是网络复位引脚的驱动修改了，打开mx6ull_alientek_emmc.c，找到如下代码：
+```
+#define IOX_SDI IMX_GPIO_NR(5, 10)
+#define IOX_STCP IMX_GPIO_NR(5, 7)
+#define IOX_SHCP IMX_GPIO_NR(5, 11)
+#define IOX_OE  IMX_GPIO_NR(5, 8)
+```
+以 IOX 开头的宏定义是 74LV595 的相关 GPIO，因为 NXP 官方I.MX6ULL EVK 开发板使用 74LV595 来扩展 IO，两个网络的复位引脚就是由 74LV595 来控制的。正点原子的 I.MX6U-ALPHA 开发板并没有使用 74LV595，因此我们将代码删除掉，替换为如下所示代码：
+```
+#define ENET1_RESET IMX_GPIO_NR(5, 7)
+#define ENET2_RESET IMX_GPIO_NR(5, 8)
+```
+ENET1 的复位引脚连接到 SNVS_TAMPER7 上，对应 GPIO5_IO07，ENET2 的复位引脚连接到 SNVS_TAMPER8 上，对应 GPIO5_IO08。继续在 mx6ull_alientek_emmc.c 中找到如下代码：
+- 代码是 74LV595 的 IO 配置参数结构体，将其删除掉。
+```
+static iomux_v3_cfg_t const iox_pads[] = {
+	/* IOX_SDI */
+	MX6_PAD_BOOT_MODE0__GPIO5_IO10 | MUX_PAD_CTRL(NO_PAD_CTRL),
+	/* IOX_SHCP */
+	MX6_PAD_BOOT_MODE1__GPIO5_IO11 | MUX_PAD_CTRL(NO_PAD_CTRL),
+	/* IOX_STCP */
+	MX6_PAD_SNVS_TAMPER7__GPIO5_IO07 | MUX_PAD_CTRL(NO_PAD_CTRL),
+	/* IOX_nOE */
+	MX6_PAD_SNVS_TAMPER8__GPIO5_IO08 | MUX_PAD_CTRL(NO_PAD_CTRL),
+};
+```
+
+示例继续在mx6ull_alientek_emmc.c 中找到函数 iox74lv_init 函数是 74LV595 的初始化函数，iox74lv_set 函数用于控制 74LV595 的 IO 输出电平，将这两个函数全部删除掉！
+```
+static void iox74lv_init(void)
+{
+	int i;
+	gpio_direction_output(IOX_OE, 0);
+	......
+	gpio_direction_output(IOX_STCP, 1);
+};
+
+void iox74lv_set(int index)
+{
+	int i;
+	......
+	gpio_direction_output(IOX_STCP, 1);
+};
+```
+
+在 mx6ull_alientek_emmc.c 中找到 board_init 函数，此函数是板子初始化函数，会被 board_init_r 调用，board_init 函数内容如下：
+- board_init 会调用 imx_iomux_v3_setup_multiple_pads 和 iox74lv_init 这两个函数来初始化 74lv595 的 GPIO，将这两行删除掉。至此，mx6ull_alientek_emmc.c 中关于 74LV595 芯片的驱动代码都删除掉了，接下来就是添加 I.MX6U-ALPHA 开发板两个网络复位引脚了。
+```
+int board_init(void)
+{
+	......
+	imx_iomux_v3_setup_multiple_pads(iox_pads, ARRAY_SIZE(iox_pads));
+	iox74lv_init();
+	......
+	return 0;
+}
+```
+3. 添加 I.MX6U-ALPHA 开发板网络复位引脚驱动
+在 mx6ull_alientek_emmc.c 中找到如下所示代码并修改如下：
+- 添加了 651和667 两行代码
+```
+640 static iomux_v3_cfg_t const fec1_pads[] = {
+641 	MX6_PAD_GPIO1_IO06__ENET1_MDIO | MUX_PAD_CTRL(MDIO_PAD_CTRL),
+642 	MX6_PAD_GPIO1_IO07__ENET1_MDC | MUX_PAD_CTRL(ENET_PAD_CTRL),
+......
+649 	MX6_PAD_ENET1_RX_ER__ENET1_RX_ER | MUX_PAD_CTRL(ENET_PAD_CTRL),
+650 	MX6_PAD_ENET1_RX_EN__ENET1_RX_EN | MUX_PAD_CTRL(ENET_PAD_CTRL),
+651		MX6_PAD_SNVS_TAMPER7__GPIO5_IO07 | MUX_PAD_CTRL(NO_PAD_CTRL),
+652 };
+653
+654 static iomux_v3_cfg_t const fec2_pads[] = {
+655 	MX6_PAD_GPIO1_IO06__ENET2_MDIO | MUX_PAD_CTRL(MDIO_PAD_CTRL),
+656 	MX6_PAD_GPIO1_IO07__ENET2_MDC | MUX_PAD_CTRL(ENET_PAD_CTRL),
+......
+665 	MX6_PAD_ENET2_RX_EN__ENET2_RX_EN | MUX_PAD_CTRL(ENET_PAD_CTRL),
+666 	MX6_PAD_ENET2_RX_ER__ENET2_RX_ER | MUX_PAD_CTRL(ENET_PAD_CTRL),
+667 	MX6_PAD_SNVS_TAMPER8__GPIO5_IO08 | MUX_PAD_CTRL(NO_PAD_CTRL),
+668 };
+```
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
