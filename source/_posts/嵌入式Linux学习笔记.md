@@ -6374,8 +6374,7 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 ```
 
 运行输出
-- CPU频率显示69MHz，不知道是不是错的，正点原子的是528MHz
-- 
+
 ```
 U-Boot 2016.03 (Jun 12 2022 - 10:24:10 +0800)
 
@@ -6395,6 +6394,38 @@ mmc0 is current device
 Net:   FEC1
 Normal Boot
 Hit any key to stop autoboot:  0
+```
+可以发现 CPU频率显示69MHz，如果使用 528MHz 的 I.MX6ULL，此处会显示主频为 528MHz。但是如果使用 800MHz 的 I.MX6ULL 的话此处会显示 69MHz，这个是 uboot内部主频读取错误，但是不影响运行，可以不用管。不管是528MHz还是800MHz的I.MX6ULL，此时都运行在 396MHz。
+
+可以打开 arch\arm\cpu\armv7\mx6\soc.c 文件，修改这个小bug，修改后的如下：
+- 注释代码就是原来的代码，其下面的时修改后的，共两处
+  
+```  
+#define OCOTP_CFG3_SPEED_528MHZ 1
+//#define OCOTP_CFG3_SPEED_696MHZ 2
+#define OCOTP_CFG3_SPEED_792MHZ 2
+
+u32 get_cpu_speed_grade_hz(void)
+{
+	struct ocotp_regs *ocotp = (struct ocotp_regs *)OCOTP_BASE_ADDR;
+	struct fuse_bank *bank = &ocotp->bank[0];
+	struct fuse_bank0_regs *fuse =
+		(struct fuse_bank0_regs *)bank->fuse_regs;
+	uint32_t val;
+
+	val = readl(&fuse->cfg3);
+	val >>= OCOTP_CFG3_SPEED_SHIFT;
+	val &= 0x3;
+
+	if (is_cpu_type(MXC_CPU_MX6UL) || is_cpu_type(MXC_CPU_MX6ULL)) {
+		if (val == OCOTP_CFG3_SPEED_528MHZ)
+			return 528000000;
+		else if (val == OCOTP_CFG3_SPEED_792MHZ)
+			//return 69600000;
+			return 792000000;
+		else
+			return 0;
+	}
 ```
 
 ### uboot修改移植
