@@ -6319,7 +6319,6 @@ NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://sour
 
 ## U-Boot移植
 
-
 uboot 移植的一般流程：
 1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
 2. 参考原厂开发板移植 uboot 到我们所使用的开发板
@@ -6353,6 +6352,30 @@ make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
 ```
 chmod 777 imxdownload //给予 imxdownload 可执行权限
 ./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
+```
+
+运行输出
+- CPU频率显示69MHz，不知道是不是错的，正点原子的是528MHz
+- 
+```
+U-Boot 2016.03 (Jun 12 2022 - 10:24:10 +0800)
+
+CPU:   Freescale i.MX6ULL rev1.1 69 MHz (running at 396 MHz)
+CPU:   Industrial temperature grade (-40C to 105C) at 46C
+Reset cause: POR
+Board: MX6ULL 14x14 EVK
+I2C:   ready
+DRAM:  512 MiB
+MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+unsupported panel ATK-LCD-7-1024x600
+In:    serial
+Out:   serial
+Err:   serial
+switch to partitions #0, OK
+mmc0 is current device
+Net:   FEC1
+Normal Boot
+Hit any key to stop autoboot:  0
 ```
 ### uboot修改移植
 
