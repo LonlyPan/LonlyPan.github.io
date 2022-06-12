@@ -6434,6 +6434,150 @@ cp mx6ullevk/ -r mx6ull_alientek_emmc
 cd mx6ull_alientek_emmc
 mv mx6ullevk.c mx6ull_alientek_emmc.c
 ```
+
+1). 修改 mx6ull_alientek_emmc 目录下的 Makefile 文件
+- 重点是第 6 行的 obj-y，改为 mx6ull_alientek_emmc.o，这样才会编译 mx6ull_alientek_emmc.c
+这个文件。
+```
+# (C) Copyright 2015 Freescale Semiconductor, Inc.
+#
+# SPDX-License-Identifier:	GPL-2.0+
+#
+
+obj-y  := mx6ull_alientek_emmc.o
+
+extra-$(CONFIG_USE_PLUGIN) :=  plugin.bin
+$(obj)/plugin.bin: $(obj)/plugin.o
+	$(OBJCOPY) -O binary --gap-fill 0xff $< $@
+```
+2). 修改 mx6ull_alientek_emmc 目录下的 imximage.cfg 文件
+将 imximage.cfg 中的下面一句：
+```
+PLUGIN board/freescale/mx6ullevk/plugin.bin 0x00907000
+```
+改为：
+```
+PLUGIN board/freescale/mx6ull_alientek_emmc /plugin.bin 0x00907000
+```
+3). 修改 mx6ull_alientek_emmc 目录下的 Kconfig 文件
+修改 Kconfig 文件，修改后的内容如下：
+```
+if TARGET_MX6ULL_ALIENTEK_EMMC
+
+config SYS_BOARD
+	default "mx6ull_alientek_emmc"
+
+config SYS_VENDOR
+	default "freescale"
+
+config SYS_SOC
+	default "mx6"
+
+config SYS_CONFIG_NAME
+	default "mx6ull_alientek_emmc"
+
+endif
+```
+4). 修改 mx6ull_alientek_emmc 目录下的 MAINTAINERS 文件
+```
+MX6ULL_ALIENTEK_EMMC BOARD
+M:	Peng Fan <peng.fan@nxp.com>
+S:	Maintained
+F:	board/freescale/mx6ull_alientek_emmc/
+F:	include/configs/mx6ull_alientek_emmc.h
+```
+
+#### 4. 修改 U-Boot 图形界面配置文件
+
+uboot 是支持图形界面配置，关于 uboot 的图形界面配置下一章会详细的讲解。修改文件
+arch/arm/cpu/armv7/mx6/Kconfig(如果用的 I.MX6UL 的话，应该修改 arch/arm/Kconfig 这个文
+件)，在 207 行加入如下内容：
+```
+config TARGET_MX6ULL_ALIENTEK_EMMC
+	bool "Support mx6ull_alientek_emmc"
+	select MX6ULL
+	select DM
+	select DM_THERMAL
+```
+在最后一行的 endif 的前一行添加如下内容：
+```
+source "board/freescale/mx6ull_alientek_emmc/Kconfig"
+```
+
+#### 5. 编译新 uboot
+在 uboot 根目录下新建一个名为 mx6ull_alientek_emmc.sh 的 shell 脚本，在这个 shell 脚本
+里面输入如下内容：
+```
+#!/bin/bash
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- mx6ull_alientek_emmc_defconfig
+make V=1 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16
+```
+
+```
+chmod 777 mx6ull_alientek_emmc.sh
+//给予可执行权限，一次即可
+./mx6ull_alientek_emmc.sh
+//运行脚本编译 uboot
+```
+等待编译完成 ， 编译完成后输入如下命令 ， 查看一下添加的mx6ull_alientek_emmc.h 这个头文件有没有被引用。
+如果有很多文件都引用了 mx6ull_alientek_emmc.h 这个头文件，那就说明新板子添加成功，如图所示：
+```grep -nR "mx6ull_alientek_emmc.h"```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1655001869905.png)
+
+#### LCD驱动修改
+
+一般 uboot 中修改驱动基本都是在 xxx.h 和 xxx.c 这两个文件中进行的，xxx 为板子名称，
+比如 mx6ull_alientek_emmc.h 和 mx6ull_alientek_emmc.c 这两个文件。
+一般修改 LCD 驱动重点注意以下几点：
+①、LCD 所使用的 GPIO，查看 uboot 中 LCD 的 IO 配置是否正确。
+②、LCD 背光引脚 GPIO 的配置。
+③、LCD 配置参数是否正确。
+正点原子的 I.MX6U-ALPHA 开发板 LCD 原理图和 NXP 官方 I.MX6ULL 开发板一致，所以 IO 部分就不用修改了。需要修改的之后 LCD 参数，
+打开文件 mx6ull_alientek_emmc.c，找到如下所示内容：
+```
+struct display_info_t const displays[] = {{
+	.bus = MX6UL_LCDIF1_BASE_ADDR,
+	.addr = 0,
+	.pixfmt = 24,
+	.detect = NULL,
+	.enable	= do_enable_parallel_lcd,
+	.mode	= {
+		.name			= "TFT7016",
+		.xres           = 1024,
+		.yres           = 600,
+		.pixclock       = 19531,
+		.left_margin    = 140,
+		.right_margin   = 160,
+		.upper_margin   = 20,
+		.lower_margin   = 12,
+		.hsync_len      = 20,
+		.vsync_len      = 3,
+		.sync           = 0,
+		.vmode          = FB_VMODE_NONINTERLACED
+} } };
+```
+ 
+- pixfmt 是像素格式，也就是一个像素点是多少位，如果是 RGB565 的话就是 16 位，如果是 888 的话就是 24 位，一般使用 RGB888。
+ - name：LCD 名字，要和环境变量中的 panel 相等。
+ - xres、yres：LCD X 轴和 Y 轴像素数量。
+ - pixclock：像素时钟，每个像素时钟周期的长度，单位为皮秒。
+	 - 以正点原子的 7 寸 1024\*600 分辨率的屏幕(ATK7016)为例，屏幕要求的像素时钟为 51.2MHz，因此：pixclock=(1/51200000)*10^12=19531
+ - left_margin：HBP，水平同步后肩。
+ - right_margin：HFP，水平同步前肩。
+ - upper_margin：VBP，垂直同步后肩。
+ - lower_margin：VFP，垂直同步前肩。
+ - hsync_len：HSPW，行同步脉宽。
+ - vsync_len：VSPW，垂直同步脉宽。
+ - vmode：大多数使用 FB_VMODE_NONINTERLACED，也就是不使用隔行扫描。
+
+以上参数都可以从lCD的规格书中获取。
+
+打开 mx6ull_alientek_emmc.h，找到所有如下语句：
+`panel=TFT43AB`
+将其改为：
+`panel=TFT7016`
+
 https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
 https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
 https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
