@@ -7004,10 +7004,8 @@ sudo apt-get install xinetd
 mkdir /home/lonly/linux/tftpboot
 chmod 777 /home/lonly/linux/tftpboot
 ```
-最后配置 tftp，安装完成以后新建文件/etc/xinetd.d/tftp，如果没有/etc/xinetd.d 目录的话自行创建，然后在里面输入如下内容：
-```
-sudo vi /etc/xinetd.d/tftp
-```
+新建文件`sudo vi /etc/xinetd.d/tftp`，然后在里面输入如下内容：
+
 ```
 server tftp
 {
@@ -7037,9 +7035,10 @@ TFTP_OPTIONS="-l -c -s"
 重启 tftp 服务器：
 `sudo service tftpd-hpa restart`
 
-将 zImage 镜像文件拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
+将 zImage 镜像文件 和 设备树 拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
 ```
 cp zImage /home/lonly/linux/tftpboot/
+cp imx6ull-14x14-emmc-7-1024x600-c.dtb /home/lonly/linux/tftpboot/
 cd /home/lonly/linux/tftpboot/
 chmod 777 zImage
 ```
