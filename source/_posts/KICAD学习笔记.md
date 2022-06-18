@@ -363,6 +363,8 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 
 ## stp/step 3d文件编辑
 
+很多元器件官方或可以网络上找到器件对应的step模型，但是导入封装是，未知不匹配，需要手动添加偏移。KICAD官方推荐是最好不要由偏移，stp文件导入进去就是和封装对齐的。
+
 ## 参考链接
 - https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
 - https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
