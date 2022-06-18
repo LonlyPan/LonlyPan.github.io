@@ -361,6 +361,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 导入丝印，需要KICAD单独将丝印层导出为 DXF 格式，然后选中该文件即可导入
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1652159076649.png)
 
+## stp/step 3d文件编辑
 
 ## 参考链接
 - https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
