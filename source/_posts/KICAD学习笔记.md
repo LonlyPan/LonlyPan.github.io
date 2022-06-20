@@ -444,7 +444,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 此时引脚1的坐标已经对到零点了
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692707007.png)
 
-切换到 KicadSetpUP工作台（需要单独安装改插件，请自行查阅资料）。
+切换到 [kicadStepUp-WB](https://github.com/easyw/kicadStepUpMod) 工作台（需要单独安装改插件，请自行查阅资料）。
 选择左侧栏黄色零件图标，选择导出图标
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693185513.png)
 
@@ -457,6 +457,10 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693364131.png)
 导出完成，会同时导出step和wrl两种格式，kicad都支持
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693401386.png)
+
+参考资料：
+- [kicadStepUp-WB](https://github.com/easyw/kicadStepUpMod)
+- [KiCad Packages3D](https://gitlab.com/kicad/libraries/kicad-packages3D)
 ## 参考链接
 - https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
 - https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
