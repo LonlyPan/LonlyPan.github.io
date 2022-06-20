@@ -461,6 +461,7 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 参考资料：
 - [kicadStepUp-WB](https://github.com/easyw/kicadStepUpMod)
 - [KiCad Packages3D](https://gitlab.com/kicad/libraries/kicad-packages3D)
+- [How to move and align STEP assembly](https://forum.freecadweb.org/viewtopic.php?t=16817)
 ## 参考链接
 - https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
 - https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
