@@ -461,6 +461,8 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 导出完成，会同时导出step和wrl两种格式，kicad都支持
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693401386.png)
 
+导入到KICAD中，模型就和封装完全对齐了，不用修改任何数据
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655695905779.png)
 参考资料：
 - [kicadStepUp-WB](https://github.com/easyw/kicadStepUpMod)
 - [KiCad Packages3D](https://gitlab.com/kicad/libraries/kicad-packages3D)
