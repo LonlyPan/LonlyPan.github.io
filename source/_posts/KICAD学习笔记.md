@@ -369,7 +369,8 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 我们需要使用工具修改stp文件，使位置对其。
 ### 0. 首先安装官方手册，绘制好 封装。
 注意kicad中的封装视图最好和手册中的移植，不能出现旋转（一般是180旋转，不推荐）.不然后面3d模型对齐调整时，就得自己进行额外的换算。
-![enter description here](./img/KICAD学习笔记/1655687948012.png)
+
+![1655687948012](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655687948012.png)
 
 ### 1. 下载安装 [FreeCAD](https://www.freecadweb.org/) 软件，并打开
 
@@ -395,17 +396,67 @@ KiCad 有两种相关但不同的快捷键: 快捷键 (accelerator keys) 和热�
 - 另外可以发现，我们如果是左右翻转，则翻转后的正好和数据手册一样
 - 但如果是上下翻转，则和数据手册是镜像模式，还需要再旋转180度，所以我们执行左右翻转，可以省事，这里需要额外多考虑一步
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690043379.png)
+
 点击视图切换的上下图标，将模型旋转到前（或后）视图。这里为什么左右翻转要先将视角上下旋转，可以自己尝试看看，主要是操作时二维的，所以我们左右旋转的旋转轴是垂直前后视图对应的平面，就需要在该平面操作。并使用auto 和 移动工作平面 将工作平面也切换到当前视角
 
-![enter description here](./img/KICAD学习笔记/1655689893459.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655689983301.png)
 
+选中所有实体（可以按住鼠标左键不动，全部选中），不要选中上面黄色的零件图标，单击旋转图标
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690619391.png)
 
+将鼠标移到左侧栏，确保下面的三个单选框没有勾选，再将坐标全部改为0（可以在输入完一栏后按Enter切换到下一栏），数据输完后，可以再按Enter确定（或者单击下面的输入点按钮）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690636375.png)
+和上面操作一样，取消所有单选框，角度改为0，Enter确定
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690650952.png)
+旋转角度180，Enter确定
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690670081.png)
 
+可以发现模型已经翻转过来了
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655690741161.png)
+可以切换到 TOP 俯视图，单击选中实体（选中部分会高亮显示），右键切换可见性，隐藏其显示。这样就可以俯视图就可以看到引脚了，可以和数据手册对比，完全一致。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655691175171.png)
 
+再左右旋转视图，切换到左（或右）视图，将工作平面切换到俯视平面（相当于PCB板的那个面），这里不要单击移动到工作平面按钮，可以发现模型和平面还存在具体，需要左右移动，不饶导入到封装中，模型就是嵌入到板子里的，不是贴在板子上（就是位置还是不对的）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655691355931.png)
 
+同样选中所有实体，单击移动图标
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655691866221.png)
+选中端点捕获突变，将鼠标移动到任意线段上，选择一个紧贴PCB的点（点会白色高亮显示），单击确定选中
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655691901472.png)
+此时模型会跟随鼠标移动，我们将鼠标移到左侧栏，将坐标全改为0（有时只能修改一个轴的坐标，那就改那一个），单击Enter确定修改
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692018053.png)
+可以发现模型地面已经和俯视平面（PCB）齐平了
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692128317.png)
+下面就是将引脚1的坐标对齐到零点了（和封装库引脚1的坐标一致，一般插件会规定引脚1的坐标再零点）。
 
+将视图切换到俯视，工作平面依旧是俯视，隐藏主要实体，只保留引脚的。
+选中所有实体（包含隐藏的），选择移动图标
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692662715.png)
+
+选中圆心捕获图标，选择引脚1的圆心（白点）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692686463.png)
+
+再左侧栏将坐标改为0，单击Enter确定修改
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692698199.png)
+此时引脚1的坐标已经对到零点了
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655692707007.png)
+
+切换到 KicadSetpUP工作台（需要单独安装改插件，请自行查阅资料）。
+选择左侧栏黄色零件图标，选择导出图标
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693185513.png)
+
+尺寸精度，默认
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693287144.png)
+
+折角平缓，默认
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693311624.png)
+材料颜色，全部默认（和step显示的一样，你也可以自行修改）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693364131.png)
+导出完成，会同时导出step和wrl两种格式，kicad都支持
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/KICAD学习笔记/1655693401386.png)
 ## 参考链接
 - https://www.youtube.com/watch?v=b3NoAOxOGxA&feature=emb_rel_end
 - https://forum.kicad.info/t/kicad-to-dxf-or-dwg/7994
