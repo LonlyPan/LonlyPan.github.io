@@ -6285,7 +6285,7 @@ PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CC
  
  本试验在上一章试验“7_key”的基础上完成，因为本试验只配置I.MX6U的系统时钟，因此我们直接在文件“bsp_clk.c”上做修改，修改bsp_clk.c的内容如下：   s
 
-## 嵌入式Linux学习笔记-朱有鹏"
+## 嵌入式Linux学习笔记-朱有鹏
 date: 2020-12-13
 
 [S5PV210刷机](https://www.bbsmax.com/A/lk5aObYqz1/)
