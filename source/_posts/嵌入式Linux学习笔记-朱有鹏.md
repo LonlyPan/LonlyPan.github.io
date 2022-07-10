@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 嵌入式Linux学习笔记-朱有鹏
+title: "嵌入式Linux学习笔记-朱有鹏"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png
 date: 2020-12-13
 updated: 2022-07-10 22:35
