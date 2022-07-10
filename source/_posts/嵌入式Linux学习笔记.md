@@ -6314,16 +6314,24 @@ bootloader和Linux内核的关系就跟PC上的BIOS和Windows的关系一样，b
 现成的bootloader软件有很多，比如U-Boot、vivi、RedBoot等等，其中以U-Boot使用最为广泛，为了方便书写，本书会将U-Boot写为uboot。
 
 一般不会直接用uboot官方的U-Boot源码的。uboot官方的uboot源码是给半导体厂商准备的，半导体厂商会下载uboot官方的uboot源码，然后将自家相应的芯片移植进去。也就是说半导体厂商会自己维护一个版本的uboot，这个版本的uboot相当于是他们定制的。既然是定制的，那么肯定对自家的芯片支持会很全，虽然uboot官网的源码中一般也会支持他们的芯片，但是绝对是没有半导体厂商自己维护的uboot全面
+
 NXP官方uboot下载地址：https://source.codeaurora.org/external/imx/ 
-正点原子教程和NXP官方教程中的 linux与uboot下载链接都失效了，上面是最新的链接。
+
+正点原子教程和NXP官方教程中的 linux与uboot下载链接都失效了，上面是最新的链接。这个网站是Linux基金会维护的一个开源网站。有点类似github。
 在页面最底部找到 uboot-imx，点进去。
-
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1657424931774.png)
-[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://source.codeaurora.org/external/imx/uboot-imx/refs/heads)
-> uboot并不是越新越好，新版本只是添加了对新处理器得到支持，越新越冗余
->
 
-点击以后发现现在NXP已经在网站发布源码，这个网站是Linux基金会维护的一个开源网站。有点类似github。
+点开Tags栏。记住下面的链接地址。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1657425111997.png)
+
+找到你想下载的版本，比如我想下载rel_imx_4.1.15_2.1.0_ga版本。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1657425180071.png)
+
+通过git clone下载（电脑需预先安装git），地址就是上面记住的链接地址，用-b指定你想下载的tag或分支。注意空格
+```
+git clone https://source.codeaurora.org/external/imx/linux-imx -b rel_imx_4.1.15_2.1.0_ga
+```
+> uboot并不是越新越好，新版本只是添加了对新处理器得到支持，越新越冗余
 
 后面我们学习uboot移植的时候就是使用 uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 版本
 
