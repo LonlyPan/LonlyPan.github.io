@@ -6317,7 +6317,7 @@ bootloader和Linux内核的关系就跟PC上的BIOS和Windows的关系一样，b
 NXP官方uboot下载地址：[nxp/scm-imx_v2016.03_4.1.15_2.0.0_ga](https://source.codeaurora.org/external/imx/uboot-imx/refs/heads)
 > uboot并不是越新越好，新版本只是添加了对新处理器得到支持，越新越冗余
 
-点击以后发现现在NXP已经在https://source.codeaurora.org/ 网站发布源码，这个网站是Linux基金会维护的一个开源网站。有点类似github。
+点击以后发现现在NXP已经在https://source.codeaurora.org/external/imx/  网站发布源码，这个网站是Linux基金会维护的一个开源网站。有点类似github。
 
 后面我们学习uboot移植的时候就是使用 uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 版本
 
