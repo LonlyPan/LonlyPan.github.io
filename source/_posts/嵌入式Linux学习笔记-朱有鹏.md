@@ -1,7 +1,7 @@
 ---
 title: "嵌入式Linux学习笔记-朱有鹏"
 index_img:  #/img/example.jpg
-date: 2022-07-10 22:38
+date: 2020-12-13
 updated: 2022-07-10 22:38
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
@@ -9,10 +9,6 @@ hide: false
 # comment: false
 categories: 00-项目,01-专业,02-文学,03-瞎折腾
 ---
-
-
-## 
-date: 2020-12-13
 
 [S5PV210刷机](https://www.bbsmax.com/A/lk5aObYqz1/)
 [开发板镜像烧写](https://www.daimajiaoliu.com/daima/4762019491003fe)
