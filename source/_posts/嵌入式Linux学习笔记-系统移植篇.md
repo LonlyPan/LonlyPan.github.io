@@ -894,6 +894,7 @@ NXP 会从 https://www.kernel.org 下载某个版本的 Linux 内核，然后将
 rel_imx_4.1.15_2.1.0_ga版本。与正点原子教程一样
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657549835485.png)
 
+### Linux 内核初次编译
 
 ### 顶层Makefile详解
 
