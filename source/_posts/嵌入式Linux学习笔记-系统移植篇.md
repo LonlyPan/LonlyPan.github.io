@@ -922,11 +922,17 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 可以看出，Linux 的编译过程基本和 uboot 一样，都要先执行“make xxx_defconfig”来配置一下，然后在执行“make”进行编译。如果需要使用图形界面配置的话就执行“make menuconfig”。
 
 ```
-chmod 777 mx6ull_alientek_emmc.sh
+sudo chmod 777 mx6ull_alientek_emmc.sh
 //给予可执行权限，一次即可
 ./mx6ull_alientek_emmc.sh
 //运行脚本编译 uboot
 ```
+
+Linux 的图行界面配置和 uboot 是一样的，这里我们不需要做任何的配置，直接按两下 ESC键退出，退出图形界面以后会自动开始编译 Linux。等待编译完成，大概十几分钟。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657550586516.png)
+编译完成以后就会在 arch/arm/boot 这个目录下生成一个叫做 zImage 的文件，zImage 就是我们要用的 Linux 镜像文件。另外也会在 arch/arm/boot/dts 下生成很多.dtb 文件，这些.dtb 就是设备树文件。
+
+
 ### 顶层Makefile详解
 
 ### 内核启动流程
