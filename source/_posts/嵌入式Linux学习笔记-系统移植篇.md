@@ -914,6 +914,16 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_defconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 ```
+第 2 行，执行“make distclean”，清理工程，所以 mx6ull_alientek_emmc.sh 每次都会清理一
+下工程。如果通过图形界面配置了 Linux，但是还没保存新的配置文件，那么就要慎重使用
+mx6ull_alientek_emmc.sh 编译脚本了，因为它会把你的配置信息都删除掉！
+第 3 行，执行“make xxx_defconfig”，配置工程。
+第 4 行，执行“make menuconfig”，打开图形配置界面，对 Linux 进行配置，如果不想每次
+编译都打开图形配置界面的话可以将这一行删除掉。
+第 5 行，执行“make”，编译 Linux 源码。
+可以看出，Linux 的编译过程基本和 uboot 一样，都要先执行“make xxx_defconfig”来配置
+一下，然后在执行“make”进行编译。如果需要使用图形界面配置的话就执行“make menuconfig”。
+
 ```
 chmod 777 mx6ull_alientek_emmc.sh
 //给予可执行权限，一次即可
