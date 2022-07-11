@@ -919,8 +919,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 第 4 行，执行“make menuconfig”，打开图形配置界面，对 Linux 进行配置，如果不想每次编译都打开图形配置界面的话可以将这一行删除掉。
 第 5 行，执行“make”，编译 Linux 源码。
 
-可以看出，Linux 的编译过程基本和 uboot 一样，都要先执行“make xxx_defconfig”来配置
-一下，然后在执行“make”进行编译。如果需要使用图形界面配置的话就执行“make menuconfig”。
+可以看出，Linux 的编译过程基本和 uboot 一样，都要先执行“make xxx_defconfig”来配置一下，然后在执行“make”进行编译。如果需要使用图形界面配置的话就执行“make menuconfig”。
 
 ```
 chmod 777 mx6ull_alientek_emmc.sh
