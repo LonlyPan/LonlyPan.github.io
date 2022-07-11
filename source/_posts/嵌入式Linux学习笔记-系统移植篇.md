@@ -886,6 +886,7 @@ root 后面有“rootwait rw”，rootwait 表示等待 mmc 设备初始化完�
 
 ## linux内核移植
 
+### Linux 内核获取
 NXP 会从 https://www.kernel.org 下载某个版本的 Linux 内核，然后将其移植到自己的 CPU上，测试成功以后就会将其开放给 NXP 的 CPU 开发者。开发者下载 NXP 提供的 Linux 内核，然后将其移植到自己的产品上。
 
 课参考上文uboot源码下载方式，从网站中下载NXP的linux内核源码
