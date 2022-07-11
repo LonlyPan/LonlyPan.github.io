@@ -945,11 +945,29 @@ Linux 不可或缺的文件。编译完成以后使用 tar 压缩命令对其进
 
 图 35.3.3 是 arch/arm 的一部分子目录，这些子目录用于控制系统引导、系统调用、动态调频、主频设置等。arch/arm/configs 目录是不同平台的默认配置文件：xxx_defconfig，如图 35.3.4所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657550940237.png)
-在 arch/arm/configs 中就包含有 I.MX6U-ALPHA 开发板的默认配置文件：imx_v7_defconfig,执行“make imx_v7_defconfig”即可完成配置。arch/arm/boot/dts 目录里面是对应开发平台的设备树文件，正点原子 I.MX6U-ALPHA 开发板对应的设备树文件如图 35.3.5 所示：
+在 arch/arm/configs 中就包含有 I.MX6U-ALPHA 开发板的默认配置文件：imx_v7_defconfig，执行“make imx_v7_defconfig”即可完成配置。
+arch/arm/boot/dts 目录里面是对应开发平台的设备树文件，正点原子 I.MX6U-ALPHA 开发板对应的设备树文件如图 35.3.5 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657550960076.png)
 arch/arm/boot 目录下会保存编译出来的 Image 和 zImage 镜像文件，而 zImage 就是我们要用的 linux 镜像文件。
 
 arch/arm/mach-xxx 目录分别为相应平台的驱动和初始化文件，比如 mach-imx 目录里面就是 I.MX 系列 CPU 的驱动和初始化文件。
+
+#### 2、block 目录
+block 是 Linux 下块设备目录，像 SD 卡、EMMC、NAND、硬盘等存储设备就属于块设备，
+block 目录中存放着管理块设备的相关文件。
+#### 3、crypto 目录
+crypto 目录里面存放着加密文件，比如常见的 crc、crc32、md4、md5、hash 等加密算法。
+#### 4、Documentation 目录
+此目录里面存放着 Linux 相关的文档，如果要想了解 Linux 某个功能模块或驱动架构的功
+能，就可以在 Documentation 目录中查找有没有对应的文档。
+#### 5、drivers 目录
+驱动目录文件，此目录根据驱动类型的不同，分门别类进行整理，比如 drivers/i2c 就是 I2C
+相关驱动目录，drivers/gpio 就是 GPIO 相关的驱动目录，这是我们学习的重点。
+#### 6、firmware 目录
+此目录用于存放固件。
+#### 7、fs 目录
+此目录存放文件系统，比如 fs/ext2、fs/ext4、fs/f2fs 等，分别是 ext2、ext4 和 f2fs 等文件系
+统。
 ### 顶层Makefile详解
 
 ### 内核启动流程
