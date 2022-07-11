@@ -929,9 +929,11 @@ sudo chmod 777 mx6ull_alientek_emmc.sh
 ```
 
 Linux 的图行界面配置和 uboot 是一样的，这里我们不需要做任何的配置，直接按两下 ESC键退出，退出图形界面以后会自动开始编译 Linux。等待编译完成，大概十几分钟。
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657550586516.png)
 编译完成以后就会在 arch/arm/boot 这个目录下生成一个叫做 zImage 的文件，zImage 就是我们要用的 Linux 镜像文件。另外也会在 arch/arm/boot/dts 下生成很多.dtb 文件，这些.dtb 就是设备树文件。
 
+### Linux 工程目录分析
 
 ### 顶层Makefile详解
 
