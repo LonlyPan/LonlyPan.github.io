@@ -904,6 +904,16 @@ sudo apt-get install lzop
 ```
 tar -vxjf linux-imx-4.1.15-2.1.0-g8a006db.tar.bz2
 ```
+
+编译出对应的 Linux 镜像文件。新建名为
+“mx6ull_alientek_emmc.sh”的 shell 脚本，然后在这个 shell 脚本里面输入如下所示内容：
+```
+#!/bin/sh
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
+```
 ### 顶层Makefile详解
 
 ### 内核启动流程
