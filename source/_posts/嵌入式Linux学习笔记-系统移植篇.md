@@ -915,7 +915,10 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 ```
 ```
+chmod 777 mx6ull_alientek_emmc.sh
+//给予可执行权限，一次即可
 ./mx6ull_alientek_emmc.sh
+//运行脚本编译 uboot
 ```
 ### 顶层Makefile详解
 
