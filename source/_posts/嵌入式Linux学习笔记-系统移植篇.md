@@ -46,7 +46,8 @@ NXP官方uboot下载地址：https://source.codeaurora.org/external/imx/
 
 正点原子教程和NXP官方教程中的 linux与uboot下载链接都失效了，上面是最新的链接。这个网站是Linux基金会维护的一个开源网站。有点类似github。
 在页面最底部找到 uboot-imx，点进去。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1657424931774.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657549783413.png)
+
 
 点开Tags栏。记住下面的链接地址。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1657425111997.png)
@@ -64,7 +65,7 @@ git clone https://source.codeaurora.org/external/imx/linux-imx -b rel_imx_4.1.15
 
 **参考资料：**
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
-
+- [NXP IMX6ULL老版本源码下载方法](https://blog.csdn.net/huohongpeng/article/details/106472024)
 ## U-Boot移植
 
 uboot 移植的一般流程：
@@ -729,6 +730,8 @@ Starting kernel ...
 
 ##### 从网络启动 Linux 系统
 
+> 前提必须先设置好开发板的网络参数和服务器地址。详见上文 `网络驱动修改`
+>  
 从网络启动 linux 系统的唯一目的就是为了调试！不管是为了调试 linux 系统还是 linux 下的驱动。每次修改 linux 系统文件或者 linux 下的某个驱动以后都要将其烧写到 EMMC 中去测试，这样太麻烦了。我们可以设置 linux 从网络启动，也就是将 linux 镜像文件和根文件系统都放到 Ubuntu 下某个指定的文件夹中，这样每次重新编译 linux 内核或者某个 linux 驱动以后只需要使用 cp 命令将其拷贝到这个指定的文件夹中即可，这样就不用需要频繁的烧写 EMMC。我们可以通过 nfs 或者 tftp 从 Ubuntu 中下载 zImage 和设备树文件，根文件系统的话也可以通过 nfs 挂载。
 
 这里我们使用 tftp 从 Ubuntu 中下载 zImage 和设备树文件，前提是要将 zImage 和设备树文件放到 Ubuntu 下的 tftp 目录中
@@ -882,6 +885,14 @@ root 后面有“rootwait rw”，rootwait 表示等待 mmc 设备初始化完�
 
 
 ## linux内核移植
+
+NXP 会从 https://www.kernel.org 下载某个版本的 Linux 内核，然后将其移植到自己的 CPU上，测试成功以后就会将其开放给 NXP 的 CPU 开发者。开发者下载 NXP 提供的 Linux 内核，然后将其移植到自己的产品上。
+
+课参考上文uboot源码下载方式，从网站中下载NXP的linux内核源码
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657549798768.png)
+rel_imx_4.1.15_2.1.0_ga版本。与正点原子教程一样
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657549835485.png)
+
 
 ### 顶层Makefile详解
 
