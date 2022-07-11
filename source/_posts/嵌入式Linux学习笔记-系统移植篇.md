@@ -895,6 +895,13 @@ rel_imx_4.1.15_2.1.0_ga版本。与正点原子教程一样
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657549835485.png)
 
 ### Linux 内核初次编译
+编译内核之前需要先在 ubuntu 上安装 lzop 库，否则内核编译会失败！命令如下：
+```
+sudo apt-get install lzop
+```
+
+在 Ubuntu 中 新 建 名 为 “ alientek_linux ” 的 文 件 夹 ， 然 后 将 linux-imx-4.1.15-2.1.0-
+g8a006db.tar.bz2 这个压缩包拷贝到前面新建的 alientek_linux 文件夹中并解压，命令如下：
 
 ### 顶层Makefile详解
 
