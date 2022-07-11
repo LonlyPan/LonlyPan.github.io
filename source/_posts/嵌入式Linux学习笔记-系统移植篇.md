@@ -914,6 +914,9 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_defconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 ```
+```
+./mx6ull_alientek_emmc.sh
+```
 ### 顶层Makefile详解
 
 ### 内核启动流程
