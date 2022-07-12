@@ -1128,20 +1128,15 @@ cp arch/arm/boot/dts/imx6ull-14x14-evk.dtb /home/zuozhongkai/linux/tftpboot/ -f
 ```
 拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，环境变量 bootargs 内容如下：
 ```
-console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw
-setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
 setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
 ```
 然后输入如下命令将zImage 和 imx6ull-14x14-evk.dtb 下载到开发板中并启动：
 
 
-setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000'
-saveenv
 
 ```
-tftp 80800000 zImage
-tftp 83000000 imx6ull-14x14-evk.dtb
-bootz 80800000 - 83000000
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-evk.dtb; bootz 80800000 - 83000000'
+saveenv
 ```
 结果图 37.2.3.1 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634839814.png)
