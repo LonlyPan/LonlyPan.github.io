@@ -1107,6 +1107,34 @@ make imx_v7_mfg_defconfig   //配置 Linux 内核
 配置完成以后如图 37.2.2.1 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634658847.png)
 
+配置完成以后就可以编译了，使用如下命令编译 Linux 内核：
+```
+make -j16  //编译 Linux 内核
+```
+
+等待编译完成，结果如图 37.2.2.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634708747.png)
+
+Linux 内核编译完成以后会在 arch/arm/boot 目录下生成 zImage 镜像文件，如果使用设备树的话还会在 arch/arm/boot/dts 目录下开发板对应的.dtb(设备树)文件，比如 imx6ull-14x14-evk.dtb就是 NXP 官方的 I.MX6ULL EVK 开发板对应的设备树文件。至此我们得到两个文件：
+①、Linux 内核镜像文件：zImage。
+②、NXP 官方 I.MX6ULL EVK 开发板对应的设备树文件：imx6ull-14x14-evk.dtb。
+
+37.2.3 Linux 内核启动测试
+在上一小节我们已经得到了 NXP 官方 I.MX6ULL EVK 开发板对应的 zImage 和 imx6ull-
+14x14-evk.dtb 这两个文件。这两个文件能不能在正点原子的 I.MX6U-ALPHA EMMC 版开发板
+上启动呢？测试一下不就知道了，在测试之前确保 uboot 中的环境变量 bootargs 内容如下：
+console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw
+将上一小节编译出来的 zImage 和 imx6ull-14x14-evk.dtb 复制到 Ubuntu 中的 tftp 目录下，
+因为我们要在 uboot 中使用 tftp 命令将其下载到开发板中，拷贝命令如下：
+cp arch/arm/boot/zImage /home/zuozhongkai/linux/tftpboot/ -f
+cp arch/arm/boot/dts/imx6ull-14x14-evk.dtb /home/zuozhongkai/linux/tftpboot/ -f
+拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，然后输入如下命令将
+zImage 和 imx6ull-14x14-evk.dtb 下载到开发板中并启动：
+tftp 80800000 zImage
+tftp 83000000 imx6ull-14x14-evk.dtb
+bootz 80800000 - 83000000
+结果图 37.2.3.1 所示：
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
