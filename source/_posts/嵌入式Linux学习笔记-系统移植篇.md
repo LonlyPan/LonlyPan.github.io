@@ -968,8 +968,146 @@ crypto 目录里面存放着加密文件，比如常见的 crc、crc32、md4、m
 #### 7、fs 目录
 此目录存放文件系统，比如 fs/ext2、fs/ext4、fs/f2fs 等，分别是 ext2、ext4 和 f2fs 等文件系
 统。
-### 顶层Makefile详解
+### 内核移植
 
+#### 创建VSCode工程
+
+这里我们使用 NXP 官方提供的 Linux 源码，将其移植到正点原子 I.MX6U-ALPHA 开发板上。使用 FileZilla 将其发送到 Ubuntu
+中并解压，得到名为 linux-imx-rel_imx_4.1.15_2.1.0_ga 的目录，
+```
+tar -vxjf linux-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2
+```
+
+为了和 NXP 官方的名字区分，将其重命名为 “ linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek”，命令如下：
+```
+mv linux-imx-rel_imx_4.1.15_2.1.0_ga linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek
+```
+完成以后创建 VSCode 工程，
+新建 .vscode/settings.json 文件屏蔽不用文件夹显示，内容如下
+
+```
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.o":true,
+        "**/*.su":true,
+        "**/*.cmd":true,
+        "Documentation":true,
+
+        /* 屏蔽不用的架构相关的文件 */
+        "arch/alpha":true,
+        "arch/arc":true,
+        "arch/arm64":true,
+        "arch/avr32":true,
+        "arch/[b-z]*":true,
+        "arch/arm/plat*":true,
+        "arch/arm/mach-[a-h]*":true,
+        "arch/arm/mach-[n-z]*":true,
+        "arch/arm/mach-i[n-z]*":true,
+        "arch/arm/mach-m[e-v]*":true,
+        "arch/arm/mach-k*":true,
+        "arch/arm/mach-l*":true,
+
+        /* 屏蔽排除不用的配置文件 */
+        "arch/arm/configs/[a-h]*":true,
+        "arch/arm/configs/[j-z]*":true,
+        "arch/arm/configs/imo*":true,
+        "arch/arm/configs/in*":true,
+        "arch/arm/configs/io*":true,
+        "arch/arm/configs/ix*":true,
+
+        /* 屏蔽掉不用的 DTB 文件 */
+        "arch/arm/boot/dts/[a-h]*":true,
+        "arch/arm/boot/dts/[k-z]*":true,
+        "arch/arm/boot/dts/in*":true,
+        "arch/arm/boot/dts/imx1*":true,
+        "arch/arm/boot/dts/imx7*":true,
+        "arch/arm/boot/dts/imx2*":true,
+        "arch/arm/boot/dts/imx3*":true,
+        "arch/arm/boot/dts/imx5*":true,
+        "arch/arm/boot/dts/imx6d*":true,
+        "arch/arm/boot/dts/imx6q*":true,
+        "arch/arm/boot/dts/imx6s*":true,
+        "arch/arm/boot/dts/imx6ul-*":true,
+        "arch/arm/boot/dts/imx6ull-9x9*":true,
+        "arch/arm/boot/dts/imx6ull-14x14-ddr*":true,
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.o":true,
+        "**/*.su":true,
+        "**/*.cmd":true,
+        "Documentation":true,
+
+        /* 屏蔽不用的架构相关的文件 */
+        "arch/alpha":true,
+        "arch/arc":true,
+        "arch/arm64":true,
+        "arch/avr32":true,
+        "arch/[b-z]*":true,
+        "arch/arm/plat*":true,
+        "arch/arm/mach-[a-h]*":true,
+        "arch/arm/mach-[n-z]*":true,
+        "arch/arm/mach-i[n-z]*":true,
+        "arch/arm/mach-m[e-v]*":true,
+        "arch/arm/mach-k*":true,
+        "arch/arm/mach-l*":true,
+
+        /* 屏蔽排除不用的配置文件 */
+        "arch/arm/configs/[a-h]*":true,
+        "arch/arm/configs/[j-z]*":true,
+        "arch/arm/configs/imo*":true,
+        "arch/arm/configs/in*":true,
+        "arch/arm/configs/io*":true,
+        "arch/arm/configs/ix*":true,
+
+        /* 屏蔽掉不用的 DTB 文件 */
+        "arch/arm/boot/dts/[a-h]*":true,
+        "arch/arm/boot/dts/[k-z]*":true,
+        "arch/arm/boot/dts/in*":true,
+        "arch/arm/boot/dts/imx1*":true,
+        "arch/arm/boot/dts/imx7*":true,
+        "arch/arm/boot/dts/imx2*":true,
+        "arch/arm/boot/dts/imx3*":true,
+        "arch/arm/boot/dts/imx5*":true,
+        "arch/arm/boot/dts/imx6d*":true,
+        "arch/arm/boot/dts/imx6q*":true,
+        "arch/arm/boot/dts/imx6s*":true,
+        "arch/arm/boot/dts/imx6ul-*":true,
+        "arch/arm/boot/dts/imx6ull-9x9*":true,
+        "arch/arm/boot/dts/imx6ull-14x14-ddr*":true,
+    }
+ }
+```
+
+#### NXP内核编译
+
+##### 修改顶层Makefile
+
+
+修改顶层 Makefile，直接在顶层 Makefile 文件里面定义 ARCH 和 CROSS_COMPILE 这两个的变量值为 arm 和 arm-linux-gnueabihf-，结果如图所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634667576.png)
+图中第 252 和 253 行分别设置了 ARCH 和 CROSS_COMPILE 这两个变量的值，这样在编译的时候就不用输入很长的命令了。
+
+##### 配置并编译 Linux 内核
+
+和 uboot 一样，在编译 Linux 内核之前要先配置 Linux 内核。每个板子都有其对应的默认配 置 文 件 ， 这 些 默 认 配 置 文 件 保 存 在 arch/arm/configs 目 录 中 。 imx_v7_defconfig 和imx_v7_mfg_defconfig 都可作为 I.MX6ULL EVK 开发板所使用的默认配置文件。但是这里建议使用 imx_v7_mfg_defconfig 这个默认配置文件，首先此配置文件默认支持 I.MX6UL 这款芯片，而且重要的一点就是此文件编译出来的 zImage 可以通过 NXP 官方提供的 MfgTool 工具烧写！！imx_v7_mfg_defconfig 中的“mfg”的意思就是 MfgTool。
+
+进入到 Ubuntu 中的 Linux 源码根目录下，执行如下命令配置 Linux 内核：
+```
+make clean  //第一次编译 Linux 内核之前先清理一下
+make imx_v7_mfg_defconfig   //配置 Linux 内核
+```
+配置完成以后如图 37.2.2.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634658847.png)
+
+### 顶层Makefile详解
 ### 内核启动流程
 
 ### 内核移植
