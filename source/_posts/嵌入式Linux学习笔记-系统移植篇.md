@@ -1140,7 +1140,7 @@ saveenv
 看到 Starting Kernel 就可以了
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634839814.png)
 
-如果EMMC里没有跟文件系统的话，内核是无法正常运行的
+如果EMMC里没有跟文件系统的话
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657635727173.png)
 
