@@ -1123,8 +1123,8 @@ Linux 内核编译完成以后会在 arch/arm/boot 目录下生成 zImage 镜像
 
 将上一小节编译出来的 zImage 和 imx6ull-14x14-evk.dtb 复制到 Ubuntu 中的 tftp 目录下，因为我们要在 uboot 中使用 tftp 命令将其下载到开发板中，拷贝命令如下：
 ```
-cp arch/arm/boot/zImage /home/zuozhongkai/linux/tftpboot/ -f
-cp arch/arm/boot/dts/imx6ull-14x14-evk.dtb /home/zuozhongkai/linux/tftpboot/ -f
+cp arch/arm/boot/zImage /home/lonly/linux/tftpboot/ -f
+cp arch/arm/boot/dts/imx6ull-14x14-evk.dtb /home/lonly/linux/tftpboot/ -f
 ```
 拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，环境变量 bootargs 内容如下：
 ```
