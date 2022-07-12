@@ -1164,6 +1164,41 @@ cp imx_v7_mfg_defconfig imx_alientek_emmc_defconfig
 make imx_alientek_emmc_defconfig
 ```
 
+##### 添加开发板对应的设备树文件
+
+添加适合正点原子 EMMC 版开发板的设备树文件，进入目录 arch/arm/boot/dts 中，复制一份 imx6ull-14x14-evk.dts，然后将其重命名为 imx6ull-alientek-emmc.dts，命令如下：
+```
+cd arch/arm/boot/dts
+cp imx6ull-14x14-evk.dts imx6ull-alientek-emmc.dts
+```
+.dts 是设备树源码文件，编译 Linux 的时候会将其编译为.dtb 文件。imx6ull-alientek-emmc.dts创 建 好 以 后 我 们 还 需 要 修 改 文 件arch/arm/boot/dts/Makefile ， 找 到 “ dtb-$(CONFIG_SOC_IMX6ULL)”配置项，在此配置项中加入“imx6ull-alientek-emmc.dtb” ，如下所示：
+```
+400 dtb-$(CONFIG_SOC_IMX6ULL) += \
+401 imx6ull-14x14-ddr3-arm2.dtb \
+402 imx6ull-14x14-ddr3-arm2-adc.dtb \
+403 imx6ull-14x14-ddr3-arm2-cs42888.dtb \
+404 imx6ull-14x14-ddr3-arm2-ecspi.dtb \
+405 imx6ull-14x14-ddr3-arm2-emmc.dtb \
+406 imx6ull-14x14-ddr3-arm2-epdc.dtb \
+407 imx6ull-14x14-ddr3-arm2-flexcan2.dtb \
+408 imx6ull-14x14-ddr3-arm2-gpmi-weim.dtb \
+409 imx6ull-14x14-ddr3-arm2-lcdif.dtb \
+410 imx6ull-14x14-ddr3-arm2-ldo.dtb \
+411 imx6ull-14x14-ddr3-arm2-qspi.dtb \
+412 imx6ull-14x14-ddr3-arm2-qspi-all.dtb \
+413 imx6ull-14x14-ddr3-arm2-tsc.dtb \
+414 imx6ull-14x14-ddr3-arm2-uart2.dtb \
+415 imx6ull-14x14-ddr3-arm2-usb.dtb \
+416 imx6ull-14x14-ddr3-arm2-wm8958.dtb \
+417 imx6ull-14x14-evk.dtb \
+418 imx6ull-14x14-evk-btwifi.dtb \
+419 imx6ull-14x14-evk-emmc.dtb \
+420 imx6ull-14x14-evk-gpmi-weim.dtb \
+421 imx6ull-14x14-evk-usb-certi.dtb \
+422 imx6ull-alientek-emmc.dtb \
+```
+第 422 行为“imx6ull-alientek-emmc.dtb”，这样编译 Linux 的时候就可以从 imx6ull-alientek-emmc.dts 编译出 imx6ull-alientek-emmc.dtb 文件了。
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
