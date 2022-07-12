@@ -1139,7 +1139,7 @@ setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-evk.dtb; bootz
 saveenv
 ```
 结果图 37.2.3.1 所示：
-看到 Starting Kernel 就可以了，如果EMMC里没有跟文件系统的话，内核时无法正长会失败的
+看到 Starting Kernel 就可以了，如果EMMC里没有跟文件系统的话，内核时无法正常运行的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634839814.png)
 
 ### 顶层Makefile详解
