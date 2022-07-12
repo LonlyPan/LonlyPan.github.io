@@ -1218,6 +1218,8 @@ cp imx6ull-14x14-evk.dts imx6ull-alientek-emmc.dts
 ```
 第 422 行为“imx6ull-alientek-emmc.dtb”，这样编译 Linux 的时候就可以从 imx6ull-alientek-emmc.dts 编译出 imx6ull-alientek-emmc.dtb 文件了。
 
+这里可以编译测试一下，看是否则正确，再进行下面的修改操作。
+
 ##### 主频修改
 
 ### 顶层Makefile详解
