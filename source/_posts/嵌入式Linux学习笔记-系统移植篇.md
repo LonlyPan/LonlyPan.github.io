@@ -1120,16 +1120,24 @@ Linux 内核编译完成以后会在 arch/arm/boot 目录下生成 zImage 镜像
 ②、NXP 官方 I.MX6ULL EVK 开发板对应的设备树文件：imx6ull-14x14-evk.dtb。
 
 ##### Linux 内核启动测试
-在测试之前确保 uboot 中的环境变量 bootargs 内容如下：
-```
-console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw
-```
+
 将上一小节编译出来的 zImage 和 imx6ull-14x14-evk.dtb 复制到 Ubuntu 中的 tftp 目录下，因为我们要在 uboot 中使用 tftp 命令将其下载到开发板中，拷贝命令如下：
 ```
 cp arch/arm/boot/zImage /home/zuozhongkai/linux/tftpboot/ -f
 cp arch/arm/boot/dts/imx6ull-14x14-evk.dtb /home/zuozhongkai/linux/tftpboot/ -f
 ```
-拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，然后输入如下命令将zImage 和 imx6ull-14x14-evk.dtb 下载到开发板中并启动：
+拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，环境变量 bootargs 内容如下：
+```
+console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+```
+然后输入如下命令将zImage 和 imx6ull-14x14-evk.dtb 下载到开发板中并启动：
+
+
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000'
+saveenv
+
 ```
 tftp 80800000 zImage
 tftp 83000000 imx6ull-14x14-evk.dtb
