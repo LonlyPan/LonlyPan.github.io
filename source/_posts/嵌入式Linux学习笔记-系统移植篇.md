@@ -1137,8 +1137,17 @@ setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-evk.dtb; bootz
 saveenv
 ```
 结果图 37.2.3.1 所示：
-看到 Starting Kernel 就可以了，如果EMMC里没有跟文件系统的话，内核是无法正常运行的
+看到 Starting Kernel 就可以了
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634839814.png)
+
+如果EMMC里没有跟文件系统的话，内核是无法正常运行的
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657635727173.png)
+
+```
+Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
+```
+也就是提示内核崩溃，因为 VFS(虚拟文件系统)不能挂载根文件系统，因为根文件系统目录不存在。即使根文件系统目录存在，如果根文件系统目录里面是空的依旧会提示内核崩溃。这个就是根文件系统缺失导致的内核崩溃，但是内核是启动了的，只是根文件系统不存在而已。
 
 ### 顶层Makefile详解
 ### 内核启动流程
