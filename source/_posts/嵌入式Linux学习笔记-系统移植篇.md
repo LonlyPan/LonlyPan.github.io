@@ -1121,6 +1121,15 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
 ```
 
+第 2 行，清理工程。
+第 3 行，使用默认配置文件 imx_alientek_emmc_defconfig 来配置 Linux 内核。
+第 4 行，打开 Linux 的图形配置界面，如果不需要每次都打开图形配置界面可以删除此行。
+第 5 行，编译 Linux。
+
+```
+chmod 777 imx6ull_alientek_emmc.sh  //给予可执行权限
+./imx6ull_alientek_emmc.sh  //执行 shell 脚本编译内核
+```
 等待编译完成，结果如图 37.2.2.2 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634708747.png)
 
