@@ -1113,6 +1113,13 @@ make -j16  //编译 Linux 内核
 ```
 
 也可 以 创 建 一 个 编 译 脚 本 ，imx6ull_nxp_emmc.sh，脚本内容如下：
+```
+#!/bin/sh
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- imx_v7_mfg_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- all -j16
+```
 
 等待编译完成，结果如图 37.2.2.2 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634708747.png)
