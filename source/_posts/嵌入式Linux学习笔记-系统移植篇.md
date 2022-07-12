@@ -1150,6 +1150,19 @@ Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
 
 #### 添加自己的开发板
 
+参考 I.MX6ULL EVK 开发板的设置，在 Linux 内核中添加正点原子的 I.MX6U-ALPHA 开发板。
+
+##### 添加开发板默认配置文件
+将arch/arm/configs目 录 下 的imx_v7_mfg_defconfig重 新 复 制 一 份 ， 命 名 为imx_alientek_emmc_defconfig，命令如下：
+```
+cd arch/arm/configs
+cp imx_v7_mfg_defconfig imx_alientek_emmc_defconfig
+```
+以后 imx_alientek_emmc_defconfig 就是正点原子的 EMMC 版开发板默认配置文件了。
+以后就可以使用如下命令来配置正点原子 EMMC 版开发板对应的 Linux 内核了：
+```
+make imx_alientek_emmc_defconfig
+```
 
 ### 顶层Makefile详解
 ### 内核启动流程
