@@ -1136,6 +1136,7 @@ tftp 83000000 imx6ull-14x14-evk.dtb
 bootz 80800000 - 83000000
 ```
 结果图 37.2.3.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657634839814.png)
 
 ### 顶层Makefile详解
 ### 内核启动流程
