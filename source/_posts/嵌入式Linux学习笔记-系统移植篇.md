@@ -1225,10 +1225,15 @@ cp imx6ull-14x14-evk.dts imx6ull-alientek-emmc.dts
 
 1、设置 I.MX6U-ALPHA 开发板工作在 792MHz
 
-确保 EMMC 中的根文件系统可用！然后重新启动开发板，进入终端(可以输入命令)，如图
-37.4.1.1 所示：
+确保 EMMC 中的根文件系统可用！然后重新启动开发板，进入终端(可以输入命令)，输入如下命令查看 cpu 信息：
+```
+cat /proc/cpuinfo
+```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802714406.png)
+在中有 BogoMIPS 这一条，此时 BogoMIPS 为 3.00，BogoMIPS 是 Linux 系统中衡量处理器运行速度的一个“尺子”，我们可以通过 BogoMIPS 值来大致的判断当前处理器的性能。处理器性能越强，主频越高，BogoMIPS 值就越大。BogoMIPS 只是粗略的计算 CPU 性能，并不十分准确。
 
-
+进入到目录/sys/bus/cpu/devices/cpu0/cpufreq 中，此目录下
+会有很多文件，如图 37.4.1.3 所示：
 ### 顶层Makefile详解
 ### 内核启动流程
 
