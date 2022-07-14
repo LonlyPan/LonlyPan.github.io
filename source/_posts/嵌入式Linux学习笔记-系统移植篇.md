@@ -1232,8 +1232,70 @@ cat /proc/cpuinfo
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802714406.png)
 在中有 BogoMIPS 这一条，此时 BogoMIPS 为 3.00，BogoMIPS 是 Linux 系统中衡量处理器运行速度的一个“尺子”，我们可以通过 BogoMIPS 值来大致的判断当前处理器的性能。处理器性能越强，主频越高，BogoMIPS 值就越大。BogoMIPS 只是粗略的计算 CPU 性能，并不十分准确。
 
-进入到目录/sys/bus/cpu/devices/cpu0/cpufreq 中，此目录下
-会有很多文件，如图 37.4.1.3 所示：
+进入到目录/sys/bus/cpu/devices/cpu0/cpufreq 中，此目录下会有很多文件，此目录中记录了 CPU 频率等信息
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802753901.png)
+
+ - cpuinfo_cur_freq：当前 cpu 工作频率，从 CPU 寄存器读取到的工作频率。
+ - cpuinfo_max_freq：处理器所能运行的最高工作频率(单位: KHz）。
+ - cpuinfo_min_freq ：处理器所能运行的最低工作频率(单位: KHz）。
+ - cpuinfo_transition_latency：处理器切换频率所需要的时间(单位:ns)。
+ - scaling_available_frequencies：处理器支持的主频率列表(单位: KHz）。
+ - scaling_available_governors：当前内核中支持的所有 governor(调频)类型。
+ - scaling_cur_freq：保存着 cpufreq 模块缓存的当前 CPU 频率，不会对 CPU 硬件寄存器进
+ - 行检查。
+ - scaling_driver：该文件保存当前 CPU 所使用的调频驱动。
+ - scaling_governor：governor(调频)策略，Linux 内核一共有 5 中调频策略，
+	 - ①、Performance，最高性能，直接用最高频率，不考虑耗电。
+	 - ②、Interactive，一开始直接用最高频率，然后根据 CPU 负载慢慢降低。
+	 - ③、Powersave，省电模式，通常以最低频率运行，系统性能会受影响，一般不会用这个！
+	 - ④、Userspace，可以在用户空间手动调节频率。
+	 - ⑤、Ondemand，定时检查负载，然后根据负载来调节频率。负载低的时候降低 CPU 频率，这样省电，负载高的时候提高 CPU 频率，增加性能。
+ - scaling_max_freq：governor(调频)可以调节的最高频率。
+ - cpuinfo_min_freq：governor(调频)可以调节的最低频率。
+- stats 目录下给出了 CPU 各种运行频率的统计情况，比如 CPU 在各频率下的运行时间以及变频次数。
+使用如下命令查看当前 CPU 频率：
+```
+cat cpuinfo_cur_freq
+```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802844631.png)
+从图可以看出，当前 CPU 频率为 198MHz，工作频率很低！其他的值如下：
+```
+cpuinfo_cur_freq = 198000
+cpuinfo_max_freq = 792000
+cpuinfo_min_freq = 198000
+scaling_cur_freq = 198000
+scaling_max_freq = 792000
+cat scaling_min_freq = 198000
+scaling_available_frequencies = 198000 396000 528000 792000
+cat scaling_governor = ondemand
+```
+
+调频策略为 ondemand，也就是定期检查负载，然后根据负载情况调节 CPU 频率。查看 stats 目录下的 time_in_state 文件可以看到 CPU 在各频率下的工作时间，命令如下：
+```
+cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
+```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657803051168.png)
+假如我们想让 CPU 一直工作在 792MHz 那该怎么办？很简单，配置 Linux 内核，将调频策略选择为 performance。或者修改 imx_alientek_emmc_defconfig 文件，此文件中有下面几行：
+```
+41 CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=y
+42 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
+43 CONFIG_CPU_FREQ_GOV_USERSPACE=y
+44 CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
+```
+第 41 行，配置 ondemand 为默认调频策略。
+第 42 行，使能 powersave 策略。
+第 43 行，使能 userspace 策略。
+第 44 行，使能 interactive 策略。
+将示例代码 37.4.1.1 中的第 41 行屏蔽掉，然后在 44 行后面添加：
+`CONFIG_CPU_FREQ_GOV_ONDEMAND=y`
+结果下所示：
+```
+#CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=y
+42 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
+43 CONFIG_CPU_FREQ_GOV_USERSPACE=y
+44 CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
+45 CONFIG_CPU_FREQ_GOV_ONDEMAND=y
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
