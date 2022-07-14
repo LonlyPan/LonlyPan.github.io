@@ -1265,9 +1265,9 @@ cpuinfo_max_freq = 792000
 cpuinfo_min_freq = 198000
 scaling_cur_freq = 198000
 scaling_max_freq = 792000
-cat scaling_min_freq = 198000
+scaling_min_freq = 198000
 scaling_available_frequencies = 198000 396000 528000 792000
-cat scaling_governor = ondemand
+scaling_governor = ondemand
 ```
 
 调频策略为 ondemand，也就是定期检查负载，然后根据负载情况调节 CPU 频率。查看 stats 目录下的 time_in_state 文件可以看到 CPU 在各频率下的工作时间，命令如下：
