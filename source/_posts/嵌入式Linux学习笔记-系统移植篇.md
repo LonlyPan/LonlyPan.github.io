@@ -1566,6 +1566,41 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 	status = "okay";
 ......
 };
+
+&fec1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet1
+							&pinctrl_enet1_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy0>;
+	status = "okay";
+};
+
+&fec2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet2
+							&pinctrl_enet2_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy1>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ethphy0: ethernet-phy@2 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <2>;
+		};
+
+		ethphy1: ethernet-phy@1 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			reg = <1>;
+		};
+	};
+};
+
+
 ```
 第 3~4 行，修改后的 fec1 节点“pinctrl-0”属性值。
 第 14~15 行，修改后的 fec2 节点“pinctrl-0”属性值。
@@ -1573,7 +1608,10 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ###### 3、修改 LAN8720A 的 PHY 地址
 
 在 uboot 移植章节中，我们说过 ENET1 的 LAN8720A 地址为 0x0，ENET2 的 LAN8720A地址为 0x1。在 imx6ull-alientek-emmc.dts 中找到如下代码：
+```
 
+
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
