@@ -1369,7 +1369,44 @@ Linux 内核驱动里面 EMMC 默认是 4 线模式的，4 线模式肯定没有
 make dtbs
 ```
 
+##### 修改网络驱动
 
+因为在后面学习 Linux 驱动开发的时候要用到网络调试驱动，所以必须要把网络驱动调试好。在讲解 uboot 移植的时候就已经说过了，正点原子开发板的网络和 NXP 官方的网络硬件上不同，网络 PHY 芯片由 KSZ8081 换为了 LAN8720A，两个网络 PHY 芯片的复位 IO 也不同。所以 Linux 内核自带的网络驱动是驱动不起来 I.MX6U-ALPHA 开发板上的网络的，需要做修改。
+
+这里如果没有修改，直接
+
+```
+Configuring network interfaces... fec 20b4000.ethernet eth0: Freescale FEC PHY driver [Generic PHY] (mii_bus:phy_addr=20b4000.ethernet:01, irq=-1)
+IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+done.
+Starting system message bus: Starting Xserver
+dbus.
+Starting Connection Manager
+Starting Dropbear SSH server: dropbear.
+Starting rpcbind daemon...done.
+starting statd: done
+Starting advanced power management daemon: No APM support in kernel
+(failed.)
+Starting atd: OK
+exportfs: can't open /etc/exports for reading
+NFS daemon support not enabled in kernel
+Starting system log daemon...0
+Starting kernel log daemon...0
+ * Starting Avahi mDNS/DNS-SD Daemon: avahi-daemon                       [ ok ]
+Starting Telephony daemon
+Starting Linux NFC daemon
+Starting crond: OK
+Running local boot scripts (/etc/rc.local).
+
+root@ATK-IMX6U:~# fec 20b4000.ethernet eth0: Link is Up - 100Mbps/Full - flow control rx/tx
+IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+random: nonblocking pool is initialized
+```
+
+1. 修改 LAN8720 的复位以及网络时钟引脚驱动
+ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2
+的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-
+alientek-emmc.dts，找到如下代码：
 
 ### 顶层Makefile详解
 ### 内核启动流程
