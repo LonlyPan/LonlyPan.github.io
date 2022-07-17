@@ -1373,7 +1373,7 @@ make dtbs
 
 因为在后面学习 Linux 驱动开发的时候要用到网络调试驱动，所以必须要把网络驱动调试好。在讲解 uboot 移植的时候就已经说过了，正点原子开发板的网络和 NXP 官方的网络硬件上不同，网络 PHY 芯片由 KSZ8081 换为了 LAN8720A，两个网络 PHY 芯片的复位 IO 也不同。所以 Linux 内核自带的网络驱动是驱动不起来 I.MX6U-ALPHA 开发板上的网络的，需要做修改。
 
-这里如果没有修改，直接
+这里如果没有修改，网络是可以用的，下面启动信息中
 
 ```
 Configuring network interfaces... fec 20b4000.ethernet eth0: Freescale FEC PHY driver [Generic PHY] (mii_bus:phy_addr=20b4000.ethernet:01, irq=-1)
@@ -1403,6 +1403,36 @@ IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
 random: nonblocking pool is initialized
 ```
 
+```
+
+PING 192.168.0.254 (192.168.0.254) 56(84) bytes of data.
+64 bytes from 192.168.0.254: icmp_seq=1 ttl=64 time=99.2 ms
+64 bytes from 192.168.0.254: icmp_seq=2 ttl=64 time=3.28 ms
+^C
+--- 192.168.0.254 ping statistics ---
+11 packets transmitted, 11 received, 0% packet loss, time 10016ms
+rtt min/avg/max/mdev = 2.294/18.786/99.204/32.362 ms
+root@ATK-IMX6U:~# ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:ae:1d:01:00:00
+          inet addr:192.168.0.174  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::baae:1dff:fe01:0/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1634 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:109 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:193151 (188.6 KiB)  TX bytes:12995 (12.6 KiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:14 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:14 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1552 (1.5 KiB)  TX bytes:1552 (1.5 KiB)
+
+
+```
 1. 修改 LAN8720 的复位以及网络时钟引脚驱动
 ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2
 的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-
