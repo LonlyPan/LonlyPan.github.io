@@ -1610,8 +1610,44 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 第 179~200 行，ENET2 对应的设备树节点。但是第 186~198 行的 mdio 节点描述了 ENET1
 和 ENET2 的 PHY 地址信息。将示例代码 37.4.3.6 改为如下内容：
 ```
+&fec1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet1
+							&pinctrl_enet1_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy0>;
+	phy-reset-gpios = <&gpio5 7 GPIO_ACTIVE_LOW>;
+	phy-reset-duration = <200>;
+	status = "okay";
+};
 
+&fec2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet2
+							&pinctrl_enet2_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy1>;
+	phy-reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+    phy-reset-duration = <200>;
+	status = "okay";
 
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ethphy0: ethernet-phy@2 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			smsc,disable-energy-detect;
+			reg = <2>;
+		};
+
+		ethphy1: ethernet-phy@1 {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			smsc,disable-energy-detect;
+			reg = <1>;
+		};
+	};
+};
 ```
 ### 顶层Makefile详解
 ### 内核启动流程
