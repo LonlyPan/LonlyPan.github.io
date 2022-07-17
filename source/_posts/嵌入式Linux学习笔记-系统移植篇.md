@@ -1329,6 +1329,7 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 `CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y`
 结果下所示：
 > 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
+> 并且教程中修改是错误的，按视频修改后仍是Ondemand策略
 
 ```
 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
@@ -1346,6 +1347,8 @@ root@ATK-IMX6U:/sys/devices/system/cpu/cpu0/cpufreq# cat scaling_governor
 performance
 
 ```
+
+
 
 
 > 参考正点原子教程 ：37.4.2 使能 8 线 EMMC 驱动
