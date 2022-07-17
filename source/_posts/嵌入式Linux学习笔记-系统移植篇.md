@@ -625,6 +625,9 @@ saveenv	                            //保存环境变量
 设置好环境变量以后就可以在 uboot 中使用网络了，用网线将 I.MX6U-ALPHA 上的 ENET2与电脑或者路由器连接起来，保证开发板和电脑在同一个网段内，通过 ping 命令来测试一下网络连(与ubuntu主机))，命令如下：
 ping 192.168.1.250
 
+如果主机一直ping不通，请尝试关闭ubuntu，退出虚拟机（包括后台），然后重新打开虚拟机和ubuntu，再尝试使用开发板ping主机网络。
+>ps：一次使用时，重启了路由器，PC电脑无线网络重连（我的开发板和PC都连接到路由器）。然后开发板ping网络不同，重启ubuntu也不行，在ubuntu打开浏览器也没有网络，于是退出虚拟机，重开。后一切正常。
+
 如果ping或dhcp后系统不断重启（如下所示），那是因为交叉编译链版本太高，不兼容，请参考 **开发环境搭建** 章节，重新安装旧版的编译环境。
 
 ```
@@ -1232,7 +1235,7 @@ cat /proc/cpuinfo
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802714406.png)
 在中有 BogoMIPS 这一条，此时 BogoMIPS 为 3.00，BogoMIPS 是 Linux 系统中衡量处理器运行速度的一个“尺子”，我们可以通过 BogoMIPS 值来大致的判断当前处理器的性能。处理器性能越强，主频越高，BogoMIPS 值就越大。BogoMIPS 只是粗略的计算 CPU 性能，并不十分准确。
 
-进入到目录/sys/bus/cpu/devices/cpu0/cpufreq 中，此目录下会有很多文件，此目录中记录了 CPU 频率等信息
+进入到目录`/sys/devices/system/cpu/cpu0/cpufreq`中，此目录下会有很多文件，此目录中记录了 CPU 频率等信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802753901.png)
 
  - cpuinfo_cur_freq：当前 cpu 工作频率，从 CPU 寄存器读取到的工作频率。
