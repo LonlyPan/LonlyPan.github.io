@@ -1590,7 +1590,7 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 	phy-handle = <&ethphy1>;
 	status = "okay";
 
-	mdio {
+186	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
 
@@ -1602,13 +1602,12 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 		ethphy1: ethernet-phy@1 {
 			compatible = "ethernet-phy-ieee802.3-c22";
 			reg = <1>;
-		};
+198		};
 	};
 200 };
 ```
 第 171~177 行，ENET1 对应的设备树节点。
-第 179~200 行，ENET2 对应的设备树节点。但是第 186~198 行的 mdio 节点描述了 ENET1
-和 ENET2 的 PHY 地址信息。将示例代码 37.4.3.6 改为如下内容：
+第 179~200 行，ENET2 对应的设备树节点。但是第 186~198 行的 mdio 节点描述了 ENET1和 ENET2 的 PHY 地址信息。将示例代码 37.4.3.6 改为如下内容：
 ```
 &fec1 {
 	pinctrl-names = "default";
