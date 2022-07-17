@@ -1268,7 +1268,7 @@ cat /proc/cpuinfo
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802714406.png)
 在中有 BogoMIPS 这一条，此时 BogoMIPS 为 3.00，BogoMIPS 是 Linux 系统中衡量处理器运行速度的一个“尺子”，我们可以通过 BogoMIPS 值来大致的判断当前处理器的性能。处理器性能越强，主频越高，BogoMIPS 值就越大。BogoMIPS 只是粗略的计算 CPU 性能，并不十分准确。
 
-进入到目录`/sys/devices/system/cpu/cpu0/cpufreq`中，此目录下会有很多文件，此目录中记录了 CPU 频率等信息
+进入到目录`cd /sys/devices/system/cpu/cpu0/cpufreq`中，此目录下会有很多文件，此目录中记录了 CPU 频率等信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802753901.png)
 
  - cpuinfo_cur_freq：当前 cpu 工作频率，从 CPU 寄存器读取到的工作频率。
@@ -1336,8 +1336,12 @@ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
 ```
 
 > 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
-
-
+修改后，重新启动，查看运行频率
+```
+root@ATK-IMX6U:~# cd /sys/devices/system/cpu/cpu0/cpufreq
+root@ATK-IMX6U:/sys/devices/system/cpu/cpu0/cpufreq# cat cpuinfo_cur_freq
+792000
+```
 
 
 > 参考正点原子教程 ：37.4.2 使能 8 线 EMMC 驱动
