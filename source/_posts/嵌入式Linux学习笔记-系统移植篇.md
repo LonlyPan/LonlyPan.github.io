@@ -1702,6 +1702,12 @@ CONFIG_SMSC_PHY=y
 ```
 make imx_alientek_emmc_defconfig
 ```
+###### 6、修改 smsc.c 
+
+鉴于 LAN8720A 有“前车之鉴”，那就是在 uboot 中需要对LAN8720A 进行一次软复位，要设置 LAN8720A 的 BMCR(寄存器地址为 0)寄存器 bit15 为 1。所以我猜测，在 Linux 中也需要对 LAN8720A 进行一次软复位。
+
+首先需要找到 LAN8720A 的驱动文件，LAN8720A 的驱动文件是 drivers/net/phy/smsc.c，在此文件中有个叫做 smsc_phy_reset 的函数，看名字都知道这是 SMSC PHY 的复位函数，因此，LAN8720A 肯定也会使用到这个复位函数，修改此函数的内容，修改以后的 smsc_phy_reset函数内容如下所示
+
 
 ### 顶层Makefile详解
 ### 内核启动流程
