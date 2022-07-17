@@ -1329,7 +1329,7 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 `CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y`
 结果下所示：
 > 这里正点原子教程中的配置文件是用图形界面生成的，我这是修改的原始的config文件，所以文件内容和修改的地方与教程不同
-> 并且教程中修改是错误的，按视频修改后仍是 Ondemand 策略
+> 并且教程中修改是错误的，按教程修改后仍是 Ondemand 策略
 
 ```
 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
