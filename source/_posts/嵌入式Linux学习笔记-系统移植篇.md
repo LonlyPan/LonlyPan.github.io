@@ -1474,7 +1474,7 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 第 133 行，设置 GPIO5_IO07 作为 SPI4 的片选引脚，而 GPIO5_IO07 就是 SNVS_TAMPER7的 GPIO 功能引脚。
 现在我们需要 GPIO5_IO07 和 GPIO5_IO08 分别作为 ENET1 和 ENET2 的复位引脚，将示例代码 37.4.3.2 中的第 129 行和第 133 行处的代码屏蔽掉！！否则会干扰到网络复位引脚！
 
-在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点，然后在此节点下添加网络复位引脚信息，添加完成以后的“iomuxc_snvs”的节点内容如下：
+在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点(561行)，然后在此节点下添加网络复位引脚信息，添加完成以后的“iomuxc_snvs”的节点内容如下：
 ```
 1 &iomuxc_snvs {
 2 pinctrl-names = "default_snvs";
@@ -1520,8 +1520,7 @@ MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08 0x10B0
 第 1 行，imx6ull-alientek-emmc.dts 文件中 iomuxc_snvs 节点。
 第 45~50 行，ENET1 网络复位引脚配置信息。
 第 53~58 行，ENET2 网络复位引脚配置信息。
-最后还需要修改一下 ENET1 和 ENET2 的网络时钟引脚配置，继续在 imx6ull-alientek-
-emmc.dts 中找到如下所示代码：
+最后还需要修改一下 ENET1 和 ENET2 的网络时钟引脚配置，继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
 ```
 309 pinctrl_enet1: enet1grp {
 310 fsl,pins = <
@@ -1559,10 +1558,8 @@ emmc.dts 中找到如下所示代码：
 334 >;
 335 };
 ```
-第 318 和 333 行，分别为 ENET1 和 ENET2 的网络时钟引脚配置信息，将这两个引脚的电
-气属性值改为 0x4001b009，原来默认值为 0x4001b031。
-修改完成以后记得保存一下 imx6ull-alientek-emmc.dts，网络复位以及时钟引脚驱动就修改
-好了
+第 318 和 333 行，分别为 ENET1 和 ENET2 的网络时钟引脚配置信息，将这两个引脚的电气属性值改为 0x4001b009，原来默认值为 0x4001b031。修改完成以后记得保存一下 imx6ull-alientek-emmc.dts，网络复位以及时钟引脚驱动就修改好了
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
