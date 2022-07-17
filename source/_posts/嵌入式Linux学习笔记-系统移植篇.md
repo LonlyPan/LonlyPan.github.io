@@ -1773,6 +1773,14 @@ static int smsc_phy_reset(struct phy_device *phydev)
 #include <linux/of_gpio.h>
 #include <linux/io.h>
 
+###### 7. 测试
+
+重新编译linux内核，得到新的镜像文件和设备树文件，
+
+starting statd: fec 2188000.ethernet eth1: Freescale FEC PHY driver [SMSC LAN8710/LAN8720] (mii_bus:phy_addr=20b4000.ethernet:00, irq=-1)
+IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
