@@ -1879,8 +1879,7 @@ lib 是 library 的简称，也就是库的意思，因此此目录下存放着 
 官网比较简陋，如图38.2.1.1 所示：
 ![image](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/image.jpg)
 
-在官网左侧的“Get BusyBox”栏有一行“Download Source”，点击“Download Source”即
-可打开 BusyBox 的下载页，如图 38.2.1.2 所示：
+在官网左侧的“Get BusyBox”栏有一行“Download Source”，点击“Download Source”即可打开 BusyBox 的下载页，如图 38.2.1.2 所示：
 
 ## 系统烧写
 
