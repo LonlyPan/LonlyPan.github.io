@@ -1336,11 +1336,14 @@ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
 ```
 
 > 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
-修改后，重新启动，查看运行频率
+修改后，重新启动，查看运行频率和运行策略
 ```
 root@ATK-IMX6U:~# cd /sys/devices/system/cpu/cpu0/cpufreq
 root@ATK-IMX6U:/sys/devices/system/cpu/cpu0/cpufreq# cat cpuinfo_cur_freq
 792000
+root@ATK-IMX6U:/sys/devices/system/cpu/cpu0/cpufreq# cat scaling_governor
+performance
+
 ```
 
 
