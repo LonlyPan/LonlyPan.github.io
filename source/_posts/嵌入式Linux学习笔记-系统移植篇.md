@@ -1550,15 +1550,14 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ```
 171 &fec1 {
 172 	pinctrl-names = "default";
-173 	pinctrl-0 = <&pinctrl_enet1
-174 				 &pinctrl_enet1_reset>;
+173 	pinctrl-0 = <&pinctrl_enet1 
+174					&pinctrl_enet1_reset>;
 175 	phy-mode = "rmii";
 176 	phy-handle = <&ethphy0>;
 177 	status = "okay";
 178 };
-
-&fec2 {
-	pinctrl-names = "default";
+179 &fec2 {
+180	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet2
 							&pinctrl_enet2_reset>;
 	phy-mode = "rmii";
