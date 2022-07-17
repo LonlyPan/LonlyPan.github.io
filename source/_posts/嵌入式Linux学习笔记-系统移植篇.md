@@ -1238,10 +1238,23 @@ saveenv
 boot
 ```
 
-如果出现下属状态，是因为没有跟文件系统，使用开发板的话，厂家一般都会在emmc中下载好根文件系统，所以不会出现如下错误，这里并不影响测试linux内核和设备树。
+如果出现下述状态，是因为没有根文件系统，使用开发板的话，厂家一般都会在emmc中下载好根文件系统，所以不会出现如下错误，这里并不影响测试linux内核和设备树。
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658042955983.png)
 
-
+> 这里正点原子视频教程中还出现了emmc设备树问题，视频弹幕反馈和自己实测并不会出现
+> 如果上述启动信息中有该行内容：`mmcblk1: mmc1:0001 8GTF4R 7.28 GiB` ，表示你的emmc是没问题的，看时评
+```
+Waiting for root device /dev/mmcblk1p2...
+hub 1-1:1.0: USB hub found
+mmc1: MAN_BKOPS_EN bit is not set
+hub 1-1:1.0: 4 ports detected
+mmc1: new HS200 MMC card at address 0001
+mmcblk1: mmc1:0001 8GTF4R 7.28 GiB
+mmcblk1boot0: mmc1:0001 8GTF4R partition 1 4.00 MiB
+mmcblk1boot1: mmc1:0001 8GTF4R partition 2 4.00 MiB
+mmcblk1rpmb: mmc1:0001 8GTF4R partition 3 512 KiB
+```
 ##### 主频修改
 正点原子 I.MX6U-ALPHA 开发板所使用的 I.MX6ULL 芯片主频都是 792MHz 的。后续可能会生产 528MHz 核心板供企业级批量用户，但是开发板搭配的都是 792MHz 主频的，本节教程也就以 792MHz 的核心板为例讲解。
 
