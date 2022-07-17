@@ -1349,9 +1349,9 @@ performance
 ```
 
 
-##### 37.4.2 使能 8 线 EMMC 驱动
+##### 使能 8 线 EMMC 驱动
+Linux 内核驱动里面 EMMC 默认是 4 线模式的，4 线模式肯定没有 8 线模式的速度快，所以我们将 EMMC 的驱动修改为 8 线模式。打开设备树文件 imx6ull-alientek-emmc.dts，找到如下所示内容：
 
-> 参考正点原子教程 ：37.4.2 使能 8 线 EMMC 驱动
 ```
 734 &usdhc2 {
 735 pinctrl-names = "default", "state_100mhz", "state_200mhz";
