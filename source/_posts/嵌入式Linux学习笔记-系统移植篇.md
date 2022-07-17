@@ -1695,7 +1695,7 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 
 ###### 5、配置 Linux 内核，使能 LAN8720 驱动
 
-在 imx_alientek_emmc_defconfig 添加如下代码：
+在 imx_alientek_emmc_defconfig 添加如下代码（任意行）：
 ```
 CONFIG_SMSC_PHY=y
 ```
