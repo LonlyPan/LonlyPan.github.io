@@ -1820,10 +1820,6 @@ ifconfig eth1 up
 ifconfig eth0 192.168.1.251
 ifconfig eth1 192.168.1.252
 ```
-### 顶层Makefile详解
-### 内核启动流程
-
-### 内核移植
 
 ## 根文件系统构建
 
