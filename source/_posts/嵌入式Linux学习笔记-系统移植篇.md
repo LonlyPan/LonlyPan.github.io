@@ -1309,11 +1309,11 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 第 42 行，使能 powersave 策略。
 第 43 行，使能 userspace 策略。
 第 44 行，使能 interactive 策略。 
-将示例代码 37.4.1.1 中的第 41 行屏蔽掉，然后在 44 行后面添加：
-`CONFIG_CPU_FREQ_GOV_ONDEMAND=y`
+
+在 41 行前面添加：
+`CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y`
 结果下所示：
 ```
-CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
 CONFIG_CPU_FREQ_GOV_USERSPACE=y
 CONFIG_CPU_FREQ_GOV_ONDEMAND=y
