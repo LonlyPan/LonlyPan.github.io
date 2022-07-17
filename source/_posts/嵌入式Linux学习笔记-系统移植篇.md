@@ -1640,10 +1640,10 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 199			reg = <0>;
 		};
 
-		ethphy1: ethernet-phy@1 {
+202		ethphy1: ethernet-phy@1 {
 			compatible = "ethernet-phy-ieee802.3-c22";
 204			smsc,disable-energy-detect;
-			reg = <1>;
+205			reg = <1>;
 		};
 	};
 };
@@ -1658,6 +1658,9 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 
 至此，LAN8720A 的 PHY 地址就改好了，保存一下 imx6ull-alientek-emmc.dts 文件。然后使用“make dtbs”命令重新编译一下设备树。
 
+###### 4、修改 fec_main.c 文件
+要 在 I.MX6ULL 上 使 用 LAN8720A ， 需 要 修 改 一 下 Linux 内 核 源 码 ， 打 开
+drivers/net/ethernet/freescale/fec_main.c，找到函数 fec_probe，在 fec_probe 中加入如下代码：
 ### 顶层Makefile详解
 ### 内核启动流程
 
