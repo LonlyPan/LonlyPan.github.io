@@ -1328,6 +1328,8 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 在 41 行前面添加：
 `CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y`
 结果下所示：
+> 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
+
 ```
 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
 CONFIG_CPU_FREQ_GOV_USERSPACE=y
@@ -1335,7 +1337,6 @@ CONFIG_CPU_FREQ_GOV_ONDEMAND=y
 CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
 ```
 
-> 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
 修改后，重新启动，查看运行频率和运行策略
 ```
 root@ATK-IMX6U:~# cd /sys/devices/system/cpu/cpu0/cpufreq
