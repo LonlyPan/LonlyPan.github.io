@@ -1443,12 +1443,23 @@ lo        Link encap:Local Loopback
 
 ```
 
+那为什么修改呢，主要是因为使用默认驱动时网络是没有问题，但硬件终究是不同的，不保证后期使用时不会有问题，比如复位网络等功能。所以这里还是要修改一下，将通用网络驱动改为芯片对应的驱动，即`SMSC LAN8720`。
 
  1. 修改 LAN8720 的复位以及网络时钟引脚驱动
 ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2
 的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-
 alientek-emmc.dts，找到如下代码：
 
+```
+584 pinctrl_spi4: spi4grp {
+585				fsl,pins = <
+586						MX6ULL_PAD_BOOT_MODE0__GPIO5_IO10        0x70a1
+587						MX6ULL_PAD_BOOT_MODE1__GPIO5_IO11        0x70a1
+588						/* MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07      0x70a1 */
+589						/* MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08      0x80000000 */
+590				>;
+591			};
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
