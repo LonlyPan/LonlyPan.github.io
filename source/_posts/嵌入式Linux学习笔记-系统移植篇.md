@@ -1476,45 +1476,30 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 
 在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点(561行)，然后在此节点下添加网络复位引脚信息，添加完成以后的“iomuxc_snvs”的节点内容如下：
 ```
-1 &iomuxc_snvs {
-2 pinctrl-names = "default_snvs";
-3 pinctrl-0 = <&pinctrl_hog_2>;
-4 imx6ul-evk {
-5
+&iomuxc_snvs {
+	pinctrl-names = "default_snvs";
+        pinctrl-0 = <&pinctrl_hog_2>;
+        imx6ul-evk {
 ......
 /*省略掉其他*/
-43
-44
-/*enet1 reset zuozhongkai*/
-45
-pinctrl_enet1_reset: enet1resetgrp {
-46
-fsl,pins = <
-47
-/* used for enet1 reset */
-48
-MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07 0x10B0
-49
->;
-50
+				
+				/*enet1 reset lonly*/
+				pinctrl_enet1_reset: enet1resetgrp {
+					fsl,pins = <
+						/* used for enet1 reset */
+						MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07 0x10B0
+					>;
+
+				};
+				/*enet2 reset lonly*/
+				pinctrl_enet2_reset: enet2resetgrp {
+					fsl,pins = <
+					/* used for enet2 reset */
+						MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08 0x10B0
+					>;
+				};
+        };
 };
-51
-52
-/*enet2 reset zuozhongkai*/
-53
-pinctrl_enet2_reset: enet2resetgrp {
-54
-fsl,pins = <
-55
-/* used for enet2 reset */
-56
-MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08 0x10B0
-57
->;
-58
-};
-59 };
-60 };
 ```
 
 第 1 行，imx6ull-alientek-emmc.dts 文件中 iomuxc_snvs 节点。
