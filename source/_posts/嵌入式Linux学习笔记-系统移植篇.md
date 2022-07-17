@@ -1701,7 +1701,78 @@ make imx_alientek_emmc_defconfig
 鉴于 LAN8720A 有“前车之鉴”，那就是在 uboot 中需要对LAN8720A 进行一次软复位，要设置 LAN8720A 的 BMCR(寄存器地址为 0)寄存器 bit15 为 1。所以我猜测，在 Linux 中也需要对 LAN8720A 进行一次软复位。
 
 首先需要找到 LAN8720A 的驱动文件，LAN8720A 的驱动文件是 drivers/net/phy/smsc.c，在此文件中有个叫做 smsc_phy_reset 的函数，看名字都知道这是 SMSC PHY 的复位函数，因此，LAN8720A 肯定也会使用到这个复位函数，修改此函数的内容，修改以后的 smsc_phy_reset函数内容如下所示
+```
+static int smsc_phy_reset(struct phy_device *phydev)
+{
 
+	int err, phy_reset;
+	int msec = 1;
+	struct device_node *np;
+	int timeout = 50000;
+7	if(phydev->addr == 0) /* FEC1 */ {
+		np = of_find_node_by_path("/soc/aips-bus@02100000/ethernet@02188000");
+		if(np == NULL) {
+			return -EINVAL;
+		}
+12	}
+
+14	if(phydev->addr == 1) /* FEC2 */ {
+		np = of_find_node_by_path("/soc/aips-bus@02000000/ethernet@020b4000");
+		if(np == NULL) {
+			return -EINVAL;
+		}
+19	}
+
+21  err = of_property_read_u32(np, "phy-reset-duration", &msec);
+	/* A sane reset duration should not be longer than 1s */
+	if (!err && msec > 1000)
+		msec = 1;
+25	phy_reset = of_get_named_gpio(np, "phy-reset-gpios", 0);
+	if (!gpio_is_valid(phy_reset))
+		return;
+29	gpio_direction_output(phy_reset, 0);
+	gpio_set_value(phy_reset, 0);
+
+	msleep(msec);
+32	gpio_set_value(phy_reset, 1);
+	int rc = phy_read(phydev, MII_LAN83C185_SPECIAL_MODES);
+	if (rc < 0)
+		return rc;
+
+		/* If the SMSC PHY is in power down mode, then set it
+			* in all capable mode before using it.
+		*/
+41	if ((rc & MII_LAN83C185_MODE_MASK) ==MII_LAN83C185_MODE_POWERDOWN) {
+	/* set "all capable" mode and reset the phy */
+
+		rc |= MII_LAN83C185_MODE_ALL;
+
+		phy_write(phydev, MII_LAN83C185_SPECIAL_MODES, rc);
+	}
+
+48	phy_write(phydev, MII_BMCR, BMCR_RESET);
+
+	/* wait end of reset (max 500 ms) */
+	do {
+		udelay(10);
+		if (timeout-- == 0)
+			return -1;
+		rc = phy_read(phydev, MII_BMCR);
+
+		} while (rc & BMCR_RESET);
+	return 0;
+}
+```
+第 7~12 行，获取 FEC1 网卡对应的设备节点。
+第 14~19 行，获取 FEC2 网卡对应的设备节点。
+第 21 行，从设备树中获取“phy-reset-duration”属性信息，也就是复位时间。
+第 25 行，从设备树中获取“phy-reset-gpios”属性信息，也就是复位 IO。
+第 29~32 行，设置 PHY 的复位 IO，复位 LAN8720A。
+第 41~48 行，以前的 smsc_phy_reset 函数会判断 LAN8720 是否处于 Powerdown 模式，只有处于 Powerdown 模式的时候才会软复位 LAN8720。这里我们将软复位代码移出来，这样每次调用 smsc_phy_reset 函数 LAN8720A 都会被软复位。
+最 后 我 们还 需 要在 drivers/net/phy/smsc.c 文 件中添 加 两 个头 文 件， 因为修 改 后的smsc_phy_reset 函数用到了 gpio_direction_output 和 gpio_set_value 这两个函数，需要添加的头
+文件如下所示：
+#include <linux/of_gpio.h>
+#include <linux/io.h>
 
 ### 顶层Makefile详解
 ### 内核启动流程
