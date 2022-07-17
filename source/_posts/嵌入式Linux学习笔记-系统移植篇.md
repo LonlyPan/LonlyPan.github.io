@@ -1573,7 +1573,6 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 
 在 uboot 移植章节中，我们说过 ENET1 的 LAN8720A 地址为 0x0，ENET2 的 LAN8720A地址为 0x1。在 imx6ull-alientek-emmc.dts 中找到如下代码（还是上述“fec1”和“fec2”的这两个节点）：
 ```
-
 &fec1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet1
