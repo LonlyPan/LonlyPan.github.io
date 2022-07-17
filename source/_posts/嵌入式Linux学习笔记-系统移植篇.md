@@ -1785,8 +1785,19 @@ root@ATK-IMX6U:~# fec 20b4000.ethernet eth0: Link is Up - 100Mbps/Full - flow co
 IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
 ```
 
-可以发现网络驱动已经更改为 `SMSC LAN8710/LAN8720`，并且也已经正常启动。
-
+可以发现网络驱动已经更改为 `SMSC LAN8710/LAN8720`，并且也已经正常启动。ping测试通过
+```
+root@ATK-IMX6U:~# ping 192.168.0.254
+PING 192.168.0.254 (192.168.0.254) 56(84) bytes of data.
+64 bytes from 192.168.0.254: icmp_seq=1 ttl=64 time=1084 ms
+64 bytes from 192.168.0.254: icmp_seq=2 ttl=64 time=84.5 ms
+64 bytes from 192.168.0.254: icmp_seq=3 ttl=64 time=34.7 ms
+^C
+--- 192.168.0.254 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2001ms
+rtt min/avg/max/mdev = 34.771/401.288/1084.497/483.529 ms, pipe 2
+root@ATK-IMX6U:~#
+```
 这里linux的网络是直接启动，但是教程中是要再继续设置的。以下作为备忘：
 查看网络情况
 ```
