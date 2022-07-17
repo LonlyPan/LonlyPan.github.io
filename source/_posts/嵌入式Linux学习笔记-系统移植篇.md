@@ -1246,6 +1246,7 @@ boot
 
 这个就是根文件系统缺失导致的内核崩溃，但是内核是启动了的，只是根文件系统不存在而已。
 可以通过修改 `arch/arm/boot/dts`中的 imx6ull-alientek-emmc.dts 文件
+> 参考正点原子教程 ：37.4.2 使能 8 线 EMMC 驱动
 ```
 734 &usdhc2 {
 735 pinctrl-names = "default", "state_100mhz", "state_200mhz";
