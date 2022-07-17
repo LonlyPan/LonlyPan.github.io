@@ -1373,8 +1373,7 @@ make dtbs
 
 因为在后面学习 Linux 驱动开发的时候要用到网络调试驱动，所以必须要把网络驱动调试好。在讲解 uboot 移植的时候就已经说过了，正点原子开发板的网络和 NXP 官方的网络硬件上不同，网络 PHY 芯片由 KSZ8081 换为了 LAN8720A，两个网络 PHY 芯片的复位 IO 也不同。所以 Linux 内核自带的网络驱动是驱动不起来 I.MX6U-ALPHA 开发板上的网络的，需要做修改。
 
-这里如果没有修改，网络是可以用的，下面启动信息中
-
+这里先不修改，查看linux启动信息
 ```
 Configuring network interfaces... fec 20b4000.ethernet eth0: Freescale FEC PHY driver [Generic PHY] (mii_bus:phy_addr=20b4000.ethernet:01, irq=-1)
 IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
@@ -1403,6 +1402,16 @@ IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
 random: nonblocking pool is initialized
 ```
 
+其中
+`ethernet eth0: Freescale FEC PHY driver [Generic PHY] (mii_bus:phy_addr=20b4000.ethernet:01, irq=-1)`
+表示使用默认通用网络驱动
+
+`root@ATK-IMX6U:~# fec 20b4000.ethernet eth0: Link is Up - 100Mbps/Full - flow control rx/tx
+IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+`
+表示端口0已经连接上网络，可以发现，网络是可以用的，
+
+使用ping和ifconfig测试网络都没问题
 ```
 
 PING 192.168.0.254 (192.168.0.254) 56(84) bytes of data.
@@ -1433,7 +1442,9 @@ lo        Link encap:Local Loopback
 
 
 ```
-1. 修改 LAN8720 的复位以及网络时钟引脚驱动
+
+
+ 1. 修改 LAN8720 的复位以及网络时钟引脚驱动
 ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2
 的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-
 alientek-emmc.dts，找到如下代码：
