@@ -1238,6 +1238,7 @@ saveenv
 boot
 ```
 
+如果出现下属状态，是因为没有跟文件系统，使用开发板的话，厂家一般都会在emmc中下载好根文件系统，所以不会出现如下错误，这里并不影响测试linux内核和设备树。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658042955983.png)
 
 
