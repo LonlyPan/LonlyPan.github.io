@@ -1243,7 +1243,7 @@ boot
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658042955983.png)
 
 > 这里正点原子视频教程中还出现了emmc设备树问题，视频弹幕反馈和自己实测并不会出现
-> 如果上述启动信息中有该行内容：`mmcblk1: mmc1:0001 8GTF4R 7.28 GiB` ，表示你的emmc是没问题的，不同内存卡容量可能不同，
+> 如果上述启动信息中有该行内容：`mmcblk1: mmc1:0001 8GTF4R 7.28 GiB` ，表示你的emmc是没问题的（不同内存卡容量可能不同）
 
 ```
 Waiting for root device /dev/mmcblk1p2...
