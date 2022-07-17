@@ -1156,6 +1156,7 @@ setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
 ```
 setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-evk.dtb; bootz 80800000 - 83000000'
 saveenv
+boot
 ```
 结果图 37.2.3.1 所示：只要出现如下内容就表示成功
 
