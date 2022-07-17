@@ -1261,7 +1261,7 @@ cat /proc/cpuinfo
 cat cpuinfo_cur_freq
 ```
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657802844631.png)
-从图可以看出，当前 CPU 频率为 198MHz，工作频率很低！其他的值如下（使用擦头查看伤处文件）：
+从图可以看出，当前 CPU 频率为 198MHz，工作频率很低！其他的值如下（使用`cat`查看上述文件）：
 ```
 cpuinfo_cur_freq = 198000
 cpuinfo_max_freq = 792000
