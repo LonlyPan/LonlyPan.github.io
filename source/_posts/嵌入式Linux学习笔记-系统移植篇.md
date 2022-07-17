@@ -1615,8 +1615,8 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 							&pinctrl_enet1_reset>;
 	phy-mode = "rmii";
 	phy-handle = <&ethphy0>;
-	phy-reset-gpios = <&gpio5 7 GPIO_ACTIVE_LOW>;
-	phy-reset-duration = <200>;
+177	phy-reset-gpios = <&gpio5 7 GPIO_ACTIVE_LOW>;
+178	phy-reset-duration = <200>;
 	status = "okay";
 };
 
@@ -1626,8 +1626,8 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 							&pinctrl_enet2_reset>;
 	phy-mode = "rmii";
 	phy-handle = <&ethphy1>;
-	phy-reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
-    phy-reset-duration = <200>;
+188	phy-reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+189 phy-reset-duration = <200>;
 	status = "okay";
 
 	mdio {
