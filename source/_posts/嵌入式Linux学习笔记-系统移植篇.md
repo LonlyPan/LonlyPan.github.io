@@ -1339,7 +1339,7 @@ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
 ```
 
 修改后，重新启动，查看运行频率和运行策略
-> ATK-IMX6U 是根文件系统中的
+> ATK-IMX6U 是根文件系统中的用户名
 ```
 root@ATK-IMX6U:~# cd /sys/devices/system/cpu/cpu0/cpufreq
 root@ATK-IMX6U:/sys/devices/system/cpu/cpu0/cpufreq# cat cpuinfo_cur_freq
