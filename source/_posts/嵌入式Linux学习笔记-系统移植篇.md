@@ -1445,12 +1445,9 @@ lo        Link encap:Local Loopback
 
 那为什么修改呢，主要是因为使用默认驱动时网络是没有问题，但硬件终究是不同的，不保证后期使用时不会有问题，比如复位网络等功能。所以这里还是要修改一下，将通用网络驱动改为芯片对应的驱动，即`SMSC LAN8720`。
 
-1. 修改 LAN8720 的复位以及网络时钟引脚驱动
-	ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-alientek-emmc.dts，找到如下代码：
- 588 和 589 行就是初始化 SNVS_TAMPER7 和 SNVS_TAMPER8 这两个
-引脚的，不过看样子好像是作为了 SPI4 的 IO，这不是我们想要的，所以将 588 和 589 这两行
-删除掉！删除掉以后继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
+###### 1. 修改 LAN8720 的复位以及网络时钟引脚驱动
 
+ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-alientek-emmc.dts，找到如下代码：
 ```
 584 pinctrl_spi4: spi4grp {
 585				fsl,pins = <
@@ -1461,6 +1458,9 @@ lo        Link encap:Local Loopback
 590				>;
 591			};
 ```
+	
+588 和 589 行就是初始化 SNVS_TAMPER7 和 SNVS_TAMPER8 这两个引脚的，不过是作为了 SPI4 的 IO（开发板中这两个引脚是LAN芯片的复位引脚），这不是我们想要的，所以将 588 和 589 这两行删除掉！删除掉以后继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
