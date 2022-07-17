@@ -1469,6 +1469,16 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ......
 133 cs-gpios = <&gpio5 7 0>;
 ```
+
+第 129 行，设置 GPIO5_IO08 为 SPI4 的一个功能引脚(我也不清楚具体作为什么功能用)，
+而 GPIO5_IO08 就是 SNVS_TAMPER8 的 GPIO 功能引脚。
+第 133 行，设置 GPIO5_IO07 作为 SPI4 的片选引脚，而 GPIO5_IO07 就是 SNVS_TAMPER7
+的 GPIO 功能引脚。
+现在我们需要 GPIO5_IO07 和 GPIO5_IO08 分别作为 ENET1 和 ENET2 的复位引脚，而不
+是 SPI4 的什么功能引脚，因此将示例代码 37.4.3.2 中的第 129 行和第 133 行处的代码删除掉！！
+否则会干扰到网络复位引脚！
+在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点(就是直接搜索)，
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
