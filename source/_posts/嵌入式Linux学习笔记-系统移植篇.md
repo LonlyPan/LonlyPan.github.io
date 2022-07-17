@@ -1279,6 +1279,8 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 ```
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1657803051168.png)
 假如我们想让 CPU 一直工作在 792MHz 那该怎么办？很简单，配置 Linux 内核，将调频策略选择为 performance。或者修改 imx_alientek_emmc_defconfig 文件，此文件中有下面几行：
+`cd arch/arm/configs`
+
 ```
 41 CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=y
 42 CONFIG_CPU_FREQ_GOV_POWERSAVE=y
