@@ -1548,14 +1548,14 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ###### 2、修改 fec1 和 fec2 节点的 pinctrl-0 属性
 在 imx6ull-alientek-emmc.dts 文件中找到名为“fec1”和“fec2”的这两个节点，修改其中的“pinctrl-0”属性值，修改以后如下所示：
 ```
-&fec1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_enet1
-							&pinctrl_enet1_reset>;
-	phy-mode = "rmii";
-	phy-handle = <&ethphy0>;
-	status = "okay";
-};
+171 &fec1 {
+172 	pinctrl-names = "default";
+173 	pinctrl-0 = <&pinctrl_enet1
+174 				 &pinctrl_enet1_reset>;
+175 	phy-mode = "rmii";
+176 	phy-handle = <&ethphy0>;
+177 	status = "okay";
+178 };
 
 &fec2 {
 	pinctrl-names = "default";
@@ -1608,6 +1608,10 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ###### 3、修改 LAN8720A 的 PHY 地址
 
 在 uboot 移植章节中，我们说过 ENET1 的 LAN8720A 地址为 0x0，ENET2 的 LAN8720A地址为 0x1。在 imx6ull-alientek-emmc.dts 中找到如下代码：
+
+第 171~177 行，ENET1 对应的设备树节点。
+第 179~200 行，ENET2 对应的设备树节点。但是第 186~198 行的 mdio 节点描述了 ENET1
+和 ENET2 的 PHY 地址信息。将示例代码 37.4.3.6 改为如下内容：
 ```
 
 
