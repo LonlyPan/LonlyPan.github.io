@@ -1548,30 +1548,24 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ###### 2、修改 fec1 和 fec2 节点的 pinctrl-0 属性
 在 imx6ull-alientek-emmc.dts 文件中找到名为“fec1”和“fec2”的这两个节点，修改其中的“pinctrl-0”属性值，修改以后如下所示：
 ```
-1 &fec1 {
-2
-pinctrl-names = "default";
-3
-pinctrl-0 = <&pinctrl_enet1
-4
-&pinctrl_enet1_reset>;
-5
-phy-mode = "rmii";
+&fec1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet1
+							&pinctrl_enet1_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy0>;
+	status = "okay";
+};
+
+&fec2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet2
+							&pinctrl_enet2_reset>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy1>;
+	status = "okay";
 ......
-9
-status = "okay";
-10 };
-11
-12 &fec2 {
-13
-pinctrl-names = "default";
-14
-pinctrl-0 = <&pinctrl_enet2
-15 &pinctrl_enet2_reset>;
-16
-phy-mode = "rmii";
-......
-36 };
+};
 ```
 第 3~4 行，修改后的 fec1 节点“pinctrl-0”属性值。
 第 14~15 行，修改后的 fec2 节点“pinctrl-0”属性值。
