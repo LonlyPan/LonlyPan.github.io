@@ -1228,12 +1228,34 @@ cp imx6ull-14x14-evk.dts imx6ull-alientek-emmc.dts
 cp arch/arm/boot/zImage /home/lonly/linux/tftpboot/ -f
 cp arch/arm/boot/dts/imx6ull-alientek-emmc.dtb /home/lonly/linux/tftpboot/ -f
 ```
+
+
 拷贝完成以后就可以测试了，启动开发板，进入 uboot 命令行模式，环境变量 bootargs 内容如下：
 ```
 setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
 setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-alientek-emmc.dtb; bootz 80800000 - 83000000'
 saveenv
 boot
+```
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658042955983.png)
+
+在图中最后会有下面这一行：
+`Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)`
+也就是提示内核崩溃，因为 VFS(虚拟文件系统)不能挂载根文件系统，因为根文件系统目录不存在。即使根文件系统目录存在，如果根文件系统目录里面是空的依旧会提示内核崩溃。
+
+这个就是根文件系统缺失导致的内核崩溃，但是内核是启动了的，只是根文件系统不存在而已。
+可以通过修改 `arch/arm/boot/dts`中的 imx6ull-alientek-emmc.dts 文件
+```
+734 &usdhc2 {
+735 pinctrl-names = "default", "state_100mhz", "state_200mhz";
+736 pinctrl-0 = <&pinctrl_usdhc2_8bit>;
+737 pinctrl-1 = <&pinctrl_usdhc2_8bit_100mhz>;
+738 pinctrl-2 = <&pinctrl_usdhc2_8bit_200mhz>;
+739 bus-width = <8>;
+740 non-removable;
+741 status = "okay";
+742 };
 ```
 ##### 主频修改
 正点原子 I.MX6U-ALPHA 开发板所使用的 I.MX6ULL 芯片主频都是 792MHz 的。后续可能会生产 528MHz 核心板供企业级批量用户，但是开发板搭配的都是 792MHz 主频的，本节教程也就以 792MHz 的核心板为例讲解。
@@ -1302,7 +1324,7 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 第 41 行，配置 ondemand 为默认调频策略。
 第 42 行，使能 powersave 策略。
 第 43 行，使能 userspace 策略。
-第 44 行，使能 interactive 策略。
+第 44 行，使能 interactive 策略。 
 将示例代码 37.4.1.1 中的第 41 行屏蔽掉，然后在 44 行后面添加：
 `CONFIG_CPU_FREQ_GOV_ONDEMAND=y`
 结果下所示：
