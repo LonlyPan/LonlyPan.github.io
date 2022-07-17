@@ -1320,6 +1320,11 @@ CONFIG_CPU_FREQ_GOV_ONDEMAND=y
 CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
 ```
 
+> 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
+
+
+
+
 > 参考正点原子教程 ：37.4.2 使能 8 线 EMMC 驱动
 ```
 734 &usdhc2 {
