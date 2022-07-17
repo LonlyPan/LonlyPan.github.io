@@ -1634,15 +1634,15 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		ethphy0: ethernet-phy@2 {
+196		ethphy0: ethernet-phy@2 {
 			compatible = "ethernet-phy-ieee802.3-c22";
-			smsc,disable-energy-detect;
-			reg = <2>;
+198			smsc,disable-energy-detect;
+199			reg = <0>;
 		};
 
 		ethphy1: ethernet-phy@1 {
 			compatible = "ethernet-phy-ieee802.3-c22";
-			smsc,disable-energy-detect;
+204			smsc,disable-energy-detect;
 			reg = <1>;
 		};
 	};
