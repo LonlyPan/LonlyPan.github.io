@@ -1573,16 +1573,16 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 
 在 uboot 移植章节中，我们说过 ENET1 的 LAN8720A 地址为 0x0，ENET2 的 LAN8720A地址为 0x1。在 imx6ull-alientek-emmc.dts 中找到如下代码（还是上述“fec1”和“fec2”的这两个节点）：
 ```
-&fec1 {
+171 &fec1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet1
 							&pinctrl_enet1_reset>;
 	phy-mode = "rmii";
 	phy-handle = <&ethphy0>;
 	status = "okay";
-};
+178 };
 
-&fec2 {
+180 &fec2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet2
 							&pinctrl_enet2_reset>;
@@ -1604,7 +1604,7 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 			reg = <1>;
 		};
 	};
-};
+200 };
 ```
 第 171~177 行，ENET1 对应的设备树节点。
 第 179~200 行，ENET2 对应的设备树节点。但是第 186~198 行的 mdio 节点描述了 ENET1
@@ -1649,6 +1649,11 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 	};
 };
 ```
+第 177 和 178 行，添加了 ENET1 网络复位引脚所使用的 IO 为 GPIO5_IO07，低电平有效。
+复位低电平信号持续时间为 200ms。
+第 188 和 189 行，ENET2 网络复位引脚所使用的 IO 为 GPIO5_IO08，同样低电平有效，持
+续时间同样为 200ms。
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
