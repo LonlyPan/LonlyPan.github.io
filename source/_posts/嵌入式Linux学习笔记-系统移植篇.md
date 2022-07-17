@@ -1699,8 +1699,9 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ```
 CONFIG_SMSC_PHY=y
 ```
-输入命令“make menuconfig”，打开图形化配置界面，选择使能 LAN8720A 的驱动，路径
-如下：
+```
+make imx_alientek_emmc_defconfig
+```
 
 ### 顶层Makefile详解
 ### 内核启动流程
