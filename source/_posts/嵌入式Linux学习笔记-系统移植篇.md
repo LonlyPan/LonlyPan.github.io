@@ -1474,8 +1474,95 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 第 133 行，设置 GPIO5_IO07 作为 SPI4 的片选引脚，而 GPIO5_IO07 就是 SNVS_TAMPER7的 GPIO 功能引脚。
 现在我们需要 GPIO5_IO07 和 GPIO5_IO08 分别作为 ENET1 和 ENET2 的复位引脚，将示例代码 37.4.3.2 中的第 129 行和第 133 行处的代码屏蔽掉！！否则会干扰到网络复位引脚！
 
-在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点，
+在 imx6ull-alientek-emmc.dts 里面找到名为“iomuxc_snvs”的节点，然后在此节点下添加网络复位引脚信息，添加完成以后的“iomuxc_snvs”的节点内容如下：
+```
+1 &iomuxc_snvs {
+2 pinctrl-names = "default_snvs";
+3 pinctrl-0 = <&pinctrl_hog_2>;
+4 imx6ul-evk {
+5
+......
+/*省略掉其他*/
+43
+44
+/*enet1 reset zuozhongkai*/
+45
+pinctrl_enet1_reset: enet1resetgrp {
+46
+fsl,pins = <
+47
+/* used for enet1 reset */
+48
+MX6ULL_PAD_SNVS_TAMPER7__GPIO5_IO07 0x10B0
+49
+>;
+50
+};
+51
+52
+/*enet2 reset zuozhongkai*/
+53
+pinctrl_enet2_reset: enet2resetgrp {
+54
+fsl,pins = <
+55
+/* used for enet2 reset */
+56
+MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08 0x10B0
+57
+>;
+58
+};
+59 };
+60 };
+```
 
+第 1 行，imx6ull-alientek-emmc.dts 文件中 iomuxc_snvs 节点。
+第 45~50 行，ENET1 网络复位引脚配置信息。
+第 53~58 行，ENET2 网络复位引脚配置信息。
+最后还需要修改一下 ENET1 和 ENET2 的网络时钟引脚配置，继续在 imx6ull-alientek-
+emmc.dts 中找到如下所示代码：
+```
+309 pinctrl_enet1: enet1grp {
+310 fsl,pins = <
+311 MX6UL_PAD_ENET1_RX_EN__ENET1_RX_EN
+0x1b0b0
+312 MX6UL_PAD_ENET1_RX_ER__ENET1_RX_ER
+0x1b0b0
+313 MX6UL_PAD_ENET1_RX_DATA0__ENET1_RDATA00 0x1b0b0
+314 MX6UL_PAD_ENET1_RX_DATA1__ENET1_RDATA01 0x1b0b0
+315 MX6UL_PAD_ENET1_TX_EN__ENET1_TX_EN
+0x1b0b0
+316 MX6UL_PAD_ENET1_TX_DATA0__ENET1_TDATA00 0x1b0b0
+317 MX6UL_PAD_ENET1_TX_DATA1__ENET1_TDATA01 0x1b0b0
+318 MX6UL_PAD_ENET1_TX_CLK__ENET1_REF_CLK1 0x4001b009
+319 >;
+320 };
+321
+322 pinctrl_enet2: enet2grp {
+323 fsl,pins = <
+324 MX6UL_PAD_GPIO1_IO07__ENET2_MDC
+0x1b0b0
+325 MX6UL_PAD_GPIO1_IO06__ENET2_MDIO
+0x1b0b0
+326 MX6UL_PAD_ENET2_RX_EN__ENET2_RX_EN
+0x1b0b0
+327 MX6UL_PAD_ENET2_RX_ER__ENET2_RX_ER
+0x1b0b0
+328 MX6UL_PAD_ENET2_RX_DATA0__ENET2_RDATA00 0x1b0b0
+329 MX6UL_PAD_ENET2_RX_DATA1__ENET2_RDATA01 0x1b0b0
+330 MX6UL_PAD_ENET2_TX_EN__ENET2_TX_EN
+0x1b0b0
+331 MX6UL_PAD_ENET2_TX_DATA0__ENET2_TDATA00 0x1b0b0
+332 MX6UL_PAD_ENET2_TX_DATA1__ENET2_TDATA01 0x1b0b0
+333 MX6UL_PAD_ENET2_TX_CLK__ENET2_REF_CLK2 0x4001b009
+334 >;
+335 };
+```
+第 318 和 333 行，分别为 ENET1 和 ENET2 的网络时钟引脚配置信息，将这两个引脚的电
+气属性值改为 0x4001b009，原来默认值为 0x4001b031。
+修改完成以后记得保存一下 imx6ull-alientek-emmc.dts，网络复位以及时钟引脚驱动就修改
+好了
 ### 顶层Makefile详解
 ### 内核启动流程
 
