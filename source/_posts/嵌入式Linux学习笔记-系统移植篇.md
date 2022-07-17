@@ -1234,11 +1234,6 @@ setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-alientek-emmc.dtb; b
 saveenv
 boot
 ```
-
-```
-
-```
-
 ##### 主频修改
 正点原子 I.MX6U-ALPHA 开发板所使用的 I.MX6ULL 芯片主频都是 792MHz 的。后续可能会生产 528MHz 核心板供企业级批量用户，但是开发板搭配的都是 792MHz 主频的，本节教程也就以 792MHz 的核心板为例讲解。
 
