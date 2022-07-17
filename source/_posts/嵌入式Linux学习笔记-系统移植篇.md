@@ -1545,6 +1545,8 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ```
 第 318 和 333 行，分别为 ENET1 和 ENET2 的网络时钟引脚配置信息，将这两个引脚的电气属性值改为 0x4001b009，原来默认值为 0x4001b031。修改完成以后记得保存一下 imx6ull-alientek-emmc.dts，网络复位以及时钟引脚驱动就修改好了
 
+###### 2、修改 fec1 和 fec2 节点的 pinctrl-0 属性
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
