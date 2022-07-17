@@ -1459,8 +1459,16 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 591			};
 ```
 	
-588 和 589 行就是初始化 SNVS_TAMPER7 和 SNVS_TAMPER8 这两个引脚的，不过是作为了 SPI4 的 IO（开发板中这两个引脚是LAN芯片的复位引脚），这不是我们想要的，所以将 588 和 589 这两行屏蔽！删除掉以后继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
-
+588 和 589 行就是初始化 SNVS_TAMPER7 和 SNVS_TAMPER8 这两个引脚的，不过是作为了 SPI4 的 IO（开发板中这两个引脚是LAN芯片的复位引脚），这不是我们想要的，所以将 588 和 589 这两行屏蔽！后继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
+```
+125 spi4 {
+126 compatible = "spi-gpio";
+127 pinctrl-names = "default";
+128 pinctrl-0 = <&pinctrl_spi4>;
+129 pinctrl-assert-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+......
+133 cs-gpios = <&gpio5 7 0>;
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
