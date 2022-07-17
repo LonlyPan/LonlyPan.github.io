@@ -1801,6 +1801,12 @@ ifconfig -a
 ifconfig eth0 up
 ifconfig eth1 up
 ```
+
+设置IP地址
+```
+ifconfig eth0 192.168.1.251
+ifconfig eth1 192.168.1.252
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
