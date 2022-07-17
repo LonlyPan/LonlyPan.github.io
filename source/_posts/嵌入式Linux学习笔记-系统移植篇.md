@@ -1328,7 +1328,7 @@ cat /sys/bus/cpu/devices/cpu0/cpufreq/stats/time_in_state
 在 41 行前面添加：
 `CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y`
 结果下所示：
-> 这里正点原子是用图形界面设置的，我这是修改config文件，所以文件内容和修改的地方与教程不同
+> 这里正点原子教程中的配置文件是用图形界面生成的，我这是修改的原始的config文件，所以文件内容和修改的地方与教程不同
 > 并且教程中修改是错误的，按视频修改后仍是 Ondemand 策略
 
 ```
@@ -1445,10 +1445,11 @@ lo        Link encap:Local Loopback
 
 那为什么修改呢，主要是因为使用默认驱动时网络是没有问题，但硬件终究是不同的，不保证后期使用时不会有问题，比如复位网络等功能。所以这里还是要修改一下，将通用网络驱动改为芯片对应的驱动，即`SMSC LAN8720`。
 
- 1. 修改 LAN8720 的复位以及网络时钟引脚驱动
-ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2
-的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-
-alientek-emmc.dts，找到如下代码：
+1. 修改 LAN8720 的复位以及网络时钟引脚驱动
+	ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上。ENET2的复位引脚 ENET2_RST 连接在 I.MX6ULL 的 SNVS_TAMPER8 上。打开设备树文件 imx6ull-alientek-emmc.dts，找到如下代码：
+ 588 和 589 行就是初始化 SNVS_TAMPER7 和 SNVS_TAMPER8 这两个
+引脚的，不过看样子好像是作为了 SPI4 的 IO，这不是我们想要的，所以将 588 和 589 这两行
+删除掉！删除掉以后继续在 imx6ull-alientek-emmc.dts 中找到如下所示代码：
 
 ```
 584 pinctrl_spi4: spi4grp {
