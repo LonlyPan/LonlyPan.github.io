@@ -1787,6 +1787,20 @@ IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
 
 可以发现网络驱动已经更改为 `SMSC LAN8710/LAN8720`，并且也已经正常启动。
 
+这里linux的网络是直接启动，但是教程中是要再继续设置的。以下作为备忘：
+查看网络情况
+```
+ifconfig
+```
+查看所有网卡
+```
+ifconfig -a
+```
+打开网卡
+```
+ifconfig eth0 up
+ifconfig eth1 up
+```
 ### 顶层Makefile详解
 ### 内核启动流程
 
