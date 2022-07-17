@@ -1693,6 +1693,8 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 ```
 第 3455~3462 就是新加入的代码，如果要在 I.MX6ULL 上使用 LAN8720A 就需要设置ENET1 和 ENET2 的 TX_CLK 引脚复位寄存器的 SION 位为 1。
 
+###### 5、配置 Linux 内核，使能 LAN8720 驱动
+输入命令“make menuconfig”，打开图形化配置界面，选择使能 LAN8720A 的驱动，路径
 
 ### 顶层Makefile详解
 ### 内核启动流程
