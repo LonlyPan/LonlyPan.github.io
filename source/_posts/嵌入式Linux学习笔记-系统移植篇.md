@@ -1659,8 +1659,41 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 至此，LAN8720A 的 PHY 地址就改好了，保存一下 imx6ull-alientek-emmc.dts 文件。然后使用“make dtbs”命令重新编译一下设备树。
 
 ###### 4、修改 fec_main.c 文件
-要 在 I.MX6ULL 上 使 用 LAN8720A ， 需 要 修 改 一 下 Linux 内 核 源 码 ， 打 开
-drivers/net/ethernet/freescale/fec_main.c，找到函数 fec_probe，在 fec_probe 中加入如下代码：
+要在 I.MX6ULL上使用LAN8720A，需要修改一下Linux内核源码，打开drivers/net/ethernet/freescale/fec_main.c，找到函数 fec_probe，在 fec_probe 中加入如下代码：
+```
+3438 static int
+3439 fec_probe(struct platform_device *pdev)
+3440 {
+3441 struct fec_enet_private *fep;
+3442 struct fec_platform_data *pdata;
+3443 struct net_device *ndev;
+3444 int i, irq, ret = 0;
+3445 struct resource *r;
+3446 const struct of_device_id *of_id;
+3447 static int dev_id;
+3448 struct device_node *np = pdev->dev.of_node, *phy_node;
+3449 int num_tx_qs;
+3450 int num_rx_qs;
+3451
+3452 /* 设置 MX6UL_PAD_ENET1_TX_CLK 和 MX6UL_PAD_ENET2_TX_CLK
+3453 * 这两个 IO 的复用寄存器的 SION 位为 1。
+3454 */
+3455 void __iomem *IMX6U_ENET1_TX_CLK;
+3456 void __iomem *IMX6U_ENET2_TX_CLK;
+3457
+3458 IMX6U_ENET1_TX_CLK = ioremap(0X020E00DC, 4);
+3459 writel(0X14, IMX6U_ENET1_TX_CLK);
+3460
+3461 IMX6U_ENET2_TX_CLK = ioremap(0X020E00FC, 4);
+3462 writel(0X14, IMX6U_ENET2_TX_CLK);
+3463
+......
+3656 return ret;
+3657 }
+```
+第 3455~3462 就是新加入的代码，如果要在 I.MX6ULL 上使用 LAN8720A 就需要设置ENET1 和 ENET2 的 TX_CLK 引脚复位寄存器的 SION 位为 1。
+
+
 ### 顶层Makefile详解
 ### 内核启动流程
 
