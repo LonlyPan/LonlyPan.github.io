@@ -1769,8 +1769,7 @@ static int smsc_phy_reset(struct phy_device *phydev)
 第 25 行，从设备树中获取“phy-reset-gpios”属性信息，也就是复位 IO。
 第 29~32 行，设置 PHY 的复位 IO，复位 LAN8720A。
 第 41~48 行，以前的 smsc_phy_reset 函数会判断 LAN8720 是否处于 Powerdown 模式，只有处于 Powerdown 模式的时候才会软复位 LAN8720。这里我们将软复位代码移出来，这样每次调用 smsc_phy_reset 函数 LAN8720A 都会被软复位。
-最 后 我 们还 需 要在 drivers/net/phy/smsc.c 文 件中添 加 两 个头 文 件， 因为修 改 后的smsc_phy_reset 函数用到了 gpio_direction_output 和 gpio_set_value 这两个函数，需要添加的头
-文件如下所示：
+最 后 我 们还 需 要在 drivers/net/phy/smsc.c 文 件中添 加 两 个头 文 件， 因为修 改 后的smsc_phy_reset 函数用到了 gpio_direction_output 和 gpio_set_value 这两个函数，需要添加的头文件如下所示：
 #include <linux/of_gpio.h>
 #include <linux/io.h>
 
