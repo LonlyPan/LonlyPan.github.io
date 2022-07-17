@@ -1782,8 +1782,10 @@ IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
 
 ......
 root@ATK-IMX6U:~# fec 20b4000.ethernet eth0: Link is Up - 100Mbps/Full - flow control rx/tx
-IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes read
+IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
 ```
+
+可以发现网络驱动已经更改为 `SMSC LAN8710/LAN8720`，并且也已经正常启动。
 
 ### 顶层Makefile详解
 ### 内核启动流程
