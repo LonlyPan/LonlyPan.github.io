@@ -1648,10 +1648,15 @@ ENET1 复位引脚 ENET1_RST 连接在 I.M6ULL 的 SNVS_TAMPER7 这个引脚上�
 	};
 };
 ```
-第 177 和 178 行，添加了 ENET1 网络复位引脚所使用的 IO 为 GPIO5_IO07，低电平有效。
-复位低电平信号持续时间为 200ms。
-第 188 和 189 行，ENET2 网络复位引脚所使用的 IO 为 GPIO5_IO08，同样低电平有效，持
-续时间同样为 200ms。
+第 177 和 178 行，添加了 ENET1 网络复位引脚所使用的 IO 为 GPIO5_IO07，低电平有效。复位低电平信号持续时间为 200ms。
+第 188 和 189 行，ENET2 网络复位引脚所使用的 IO 为 GPIO5_IO08，同样低电平有效，持续时间同样为 200ms。
+第 198 和 204 行，“smsc,disable-energy-detect”表明 PHY 芯片是 SMSC 公司的，这样 Linux内核就会找到 SMSC 公司的 PHY 芯片驱动来驱动 LAN8720A。
+第 196 行，注意“ethernet-phy@”后面的数字是 PHY 的地址，ENET1 的 PHY 地址为 0，所以“@”后面是 0(默认为 2)。
+第 199 行，reg 的值也表示 PHY 地址，ENET1 的 PHY 地址为 0，所以 reg=0。
+第 202 行，ENET2 的 PHY 地址为 1，因此“@”后面为 1。
+第 205 行，因为 ENET2 的 PHY 地址为 1，所以 reg=1。
+
+至此，LAN8720A 的 PHY 地址就改好了，保存一下 imx6ull-alientek-emmc.dts 文件。然后使用“make dtbs”命令重新编译一下设备树。
 
 ### 顶层Makefile详解
 ### 内核启动流程
