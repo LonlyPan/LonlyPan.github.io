@@ -1893,7 +1893,7 @@ lib 是 library 的简称，也就是库的意思，因此此目录下存放着 
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658332859324.png)
 
-打包错误导致启动linux后出现的错误，linux无法启动，系统
+打包错误导致启动linux后出现的错误，linux无法启动
 ```
 Waiting for root device /dev/mmcblk1p2...
 mmc1: new HS200 MMC card at address 0001
