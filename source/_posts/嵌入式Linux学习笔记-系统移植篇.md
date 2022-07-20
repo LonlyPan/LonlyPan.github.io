@@ -1893,6 +1893,28 @@ lib 是 library 的简称，也就是库的意思，因此此目录下存放着 
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658332859324.png)
 
+打包错误导致启动linux后出现的错误，linux无法启动，系统
+```
+Waiting for root device /dev/mmcblk1p2...
+mmc1: new HS200 MMC card at address 0001
+mmcblk1: mmc1:0001 8GTF4R 7.28 GiB
+mmcblk1boot0: mmc1:0001 8GTF4R partition 1 4.00 MiB
+mmcblk1boot1: mmc1:0001 8GTF4R partition 2 4.00 MiB
+mmcblk1rpmb: mmc1:0001 8GTF4R partition 3 512 KiB
+ mmcblk1: p1 p2
+hub 1-1:1.0: USB hub found
+hub 1-1:1.0: 4 ports detected
+kjournald starting.  Commit interval 5 seconds
+EXT3-fs (mmcblk1p2): using internal journal
+EXT3-fs (mmcblk1p2): mounted filesystem with ordered data mode
+VFS: Mounted root (ext3 filesystem) on device 179:2.
+devtmpfs: error mounting -2
+Freeing unused kernel memory: 404K (8090f000 - 80974000)
+Kernel panic - not syncing: No working init found.  Try passing init= option to kernel. See Linux Documentation/init.txt for guidance.
+---[ end Kernel panic - not syncing: No working init found.  Try passing init= option to kernel. See Linux Documentation/init.txt for guidance.
+
+```
+
 ## 系统烧写
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
