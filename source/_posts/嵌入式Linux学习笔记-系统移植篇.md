@@ -1888,6 +1888,11 @@ lib 是 library 的简称，也就是库的意思，因此此目录下存放着 
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658326803580.png)
 
+打包时，要进入rootfs 文件夹内部打包，不能和文件夹同级。否则下载后，系统不能工作。
+可以发现两种打包方式，生成的文件大小是不一样的，具体区别暂不深究，总之要进入文件夹内部再打包。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1658332859324.png)
+
 ## 系统烧写
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
