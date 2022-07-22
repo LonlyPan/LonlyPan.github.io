@@ -117,3 +117,5 @@ U模式总共包含三种模式，分别是笔画输入、拆分输入、符号�
 2、[Win10如何快速输入“表情/颜文字/符号”](https://www.windows10.pro/input-emoji-kaomoji-symbols/)，by Windows10.Pro
 
 
+# 微软应用商店打不开 代码: 0x80131500
+
