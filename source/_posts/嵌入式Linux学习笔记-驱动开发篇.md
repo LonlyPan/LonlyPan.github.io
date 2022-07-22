@@ -70,24 +70,20 @@ Linux 应用程序对驱动程序的调用如图所示：
 的文件内容如下所示：
 ```
 1 {
-2 "configurations": [
-3 {
-4 "name": "Linux",
-5 "includePath": [
-6 "${workspaceFolder}/**",
-7 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
-rel_imx_4.1.15_2.1.0_ga_alientek/include",
-8 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
-rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include",
-9 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
-rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include/gener
-ated/"
-10 ],
-11 "defines": [],
+2 	"configurations": [
+3 		{
+4 			"name": "Linux",
+5 			"includePath": [
+6 				"${workspaceFolder}/**",
+7				 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek/include",
+8 				"/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include",
+9 				"/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include/generated/"
+10 			],
+11 			"defines": [],
 ......
-16 }
-17 ],
-18 "version": 4
+16 		}
+17 	],
+18 	"version": 4
 19 }
 ```
 
