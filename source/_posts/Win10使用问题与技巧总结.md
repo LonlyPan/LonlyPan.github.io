@@ -119,3 +119,7 @@ U模式总共包含三种模式，分别是笔画输入、拆分输入、符号�
 
 # 微软应用商店打不开 代码: 0x80131500
 
+打开Windows的设置→选择网络和Internet→找到代理，将“使用代理服务器关闭”（若本来就是关闭的，则先打开再关闭）。上面的关于代理服务器的也关掉你会发现能打开了。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Win10使用问题与技巧总结/1658498226592.png)
+
