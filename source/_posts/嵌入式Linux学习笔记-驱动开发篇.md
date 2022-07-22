@@ -157,6 +157,11 @@ mknod /dev/chrdevbase c 200 0
 
 创建完成以后就会存在/dev/chrdevbase 这个文件：
 
+### 3、chrdevbase 设备操作测试
+一切准备就绪，使用 chrdevbaseApp 软件操作 chrdevbase 这个设备，看看读写是否正常，首先进行读操作，输入如下命令：
+```
+./chrdevbaseApp /dev/chrdevbase 1
+```
 ## 设备号
 
 ### 1.静态分配设备号
