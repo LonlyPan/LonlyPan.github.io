@@ -40,12 +40,13 @@ Linux 应用程序对驱动程序的调用如图所示：
 
 # 字符设备驱动
 
-
 驱动编译成模块
-1. 模块加载（insmod或modprobe ）：调用驱动程序中的 module_init(xxx_init)，再调用和初始化函数，xxx_init()
-2. 注册字符设备：一般加载时，在初始化函数中调用register_chrdev() 函数完成注册
+1. 编写驱动函数和APP函数：
+2. 模块加载（insmod或modprobe ）：调用驱动程序中的 module_init(xxx_init)，再调用和初始化函数，xxx_init()
+3. 注册字符设备：一般加载时，在初始化函数中同时会调用register_chrdev() 函数完成注册
 3. 创建设备节点文件，APP通过操作该文件控制设备。实际就是驱动文件的一个映射。因为用户空间无法直接操作内核空间，驱动属于内核空间
-4. 
+4. 通过给APP文件传输参数，从而控制设备
+5. 卸载设备
 
 字符设备是 Linux 驱动中最基本的一类设备驱动，字符设备就是一个一个字节，按照字节流进行读写操作的设备，读写数据是分先后顺序的。比如我们最常见的点灯、按键、IIC、SPI，LCD 等等都是字符设备，这些设备的驱动就叫做字符设备驱动。
 
@@ -161,6 +162,21 @@ mknod /dev/chrdevbase c 200 0
 一切准备就绪，使用 chrdevbaseApp 软件操作 chrdevbase 这个设备，看看读写是否正常，首先进行读操作，输入如下命令：
 ```
 ./chrdevbaseApp /dev/chrdevbase 1
+```
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658500242854.png)
+
+首先输出“kernel senddata ok!”这一行信息，这是驱动程序中 chrdevbase_read 函数输出的信息，因为 chrdevbaseAPP 使用 read 函数从 chrdevbase 设备读取数据，因此 chrdevbase_read 函数就会执行。chrdevbase_read 函数向 chrdevbaseAPP 发送“kerneldata!”数据，chrdevbaseAPP 接收到以后就打印出来，“read data:kernel data!”就是 chrdevbaseAPP打印出来的接收到的数据。说明对 chrdevbase 的读操作正常，接下来测试对 chrdevbase 设备的写操作，输入如下命令：
+```
+./chrdevbaseApp /dev/chrdevbase 2
+```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658500296784.png)
+只有一行“kernel recevdata:usr data!”，这个是驱动程序中的 chrdevbase_write 函数输出的。chrdevbaseAPP 使用 write 函数向 chrdevbase 设备写入数据“usr data!”。chrdevbase_write 函数接收到以后将其打印出来。说明对 chrdevbase 的写操作正常，既然读写都没问题，说明我们编写的 chrdevbase 驱动是没有问题的。
+
+### 4、卸载驱动模块
+如果不再使用某个设备的话可以将其驱动卸载掉，比如输入如下命令卸载掉 chrdevbase 这个设备：
+```
+rmmod chrdevbase.ko
 ```
 ## 设备号
 
