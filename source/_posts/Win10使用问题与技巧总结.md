@@ -125,3 +125,6 @@ U模式总共包含三种模式，分别是笔画输入、拆分输入、符号�
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Win10使用问题与技巧总结/1658498226592.png)
 
+参考资料：
+- [解决微软应用商店打不开 代码: 0x80131500](https://cloud.tencent.com/developer/article/1890362)
+
