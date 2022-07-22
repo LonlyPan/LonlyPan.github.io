@@ -38,7 +38,7 @@ Linux 应用程序对驱动程序的调用如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658498683107.png)
 
 
-# 字符设备驱动
+# 旧字符设备驱动
 
 字符设备是 Linux 驱动中最基本的一类设备驱动，字符设备就是一个一个字节，按照字节流进行读写操作的设备，读写数据是分先后顺序的。比如我们最常见的点灯、按键、IIC、SPI，LCD 等等都是字符设备，这些设备的驱动就叫做字符设备驱动。
 
@@ -302,6 +302,19 @@ int main(int argc, char *argv[])
 }
 ```
 
+- 数组 usrdata 是测试 APP 要向 chrdevbase 设备写入的数据。
+- `if(argc != 3)`，判断运行测试 APP 的时候输入的参数是不是为 3 个，main 函数的 argc 参数表示参数数量，argv[]保存着具体的参数，如果参数不为 3 个的话就表示测试 APP 用法错误。
+比如，现在要从 chrdevbase 设备中读取数据，需要输入如下命令：./chrdevbaseApp /dev/chrdevbase 1上述命令一共有三个参数“./chrdevbaseApp”、“/dev/chrdevbase”和“1”，这三个参数分别对应 argv[0]、argv[1]和 argv[2]。
+	- 第一个参数表示运行 chrdevbaseAPP 这个软件，
+	- 第二个参数表示测试APP要打开/dev/chrdevbase这个设备。
+	- 第三个参数就是要执行的操作，1表示从chrdevbase中读取数据，2 表示向 chrdevbase 写数据。
+
+
+- `if(atoi(argv[2]) == 1)`判断 argv[2]参数的值是 1 还是 2，因为输入命令的时候其参数都是字符串格式的，因此需要借助 atoi 函数将字符串格式的数字转换为真实的数字。
+	- 当 argv[2]为 1 的时候表示要从 chrdevbase 设备中读取数据，一共读取 50 字节的
+数据，读取到的数据保存在 readbuf 中，读取成功以后就在终端上打印出读取到的数据。
+	- 当 argv[2]为 2 的时候表示要向 chrdevbase 设备写数据。
+
 ## 运行测试
 
 ### 1、加载驱动模块
@@ -415,4 +428,10 @@ void unregister_chrdev_region(dev_t from, unsigned count)
 - from：要释放的设备号。
 - count：表示从 from 开始，要释放的设备号数量。
 
+
+# 新字符设备驱动实验
+
+字符设备驱动开发重点是使用 register_chrdev 函数注册字符设备，当不再使用设备的时候就使用unregister_chrdev 函数注销字符设备，驱动模块加载成功以后还需要手动使用 mknod 命令创建设备节点。register_chrdev 和 unregister_chrdev 这两个函数是老版本驱动使用的函数，现在新的字符设备驱动已经不再使用这两个函数，而是使用Linux内核推荐的新字符设备驱动API函数。
+
+本节我们就来学习一下如何编写新字符设备驱动，并且在驱动模块加载的时候自动创建设备节点文件。
 <!--more-->
