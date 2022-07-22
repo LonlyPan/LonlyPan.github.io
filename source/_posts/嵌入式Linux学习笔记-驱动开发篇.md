@@ -87,6 +87,9 @@ Linux 应用程序对驱动程序的调用如图所示：
 19 }
 ```
 
+第 7~9 行就是添加好的 Linux 头文件路径。分别是开发板所使用的 Linux 源码下的 include、
+arch/arm/include 和 arch/arm/include/generated 这三个目录的路径，注意，这里使用了绝对路径。
+
 ## 设备号
 
 ### 1.静态分配设备号
