@@ -42,7 +42,7 @@ Linux 应用程序对驱动程序的调用如图所示：
 
 
 驱动编译成模块
-1. 模块加载（insmod或modprobe ）：调用驱动程序中的 module_init(xxx_init)，再调用和初始化函数，xxx_init
+1. 模块加载（insmod或modprobe ）：调用驱动程序中的 module_init(xxx_init)，再调用和初始化函数，xxx_init()
 2. 注册字符设备
 
 
