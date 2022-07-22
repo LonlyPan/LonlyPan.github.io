@@ -3,7 +3,7 @@ layout: post
 title: "Win10使用问题与技巧总结"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Win10新版输入法使用/featured.png
 date: 2021-06-24 09:49:07
-updated: 2022-05-27 13:43
+updated: 2022-07-22 13:43
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
