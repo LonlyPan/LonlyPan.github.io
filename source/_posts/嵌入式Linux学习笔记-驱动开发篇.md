@@ -44,7 +44,7 @@ Linux 应用程序对驱动程序的调用如图所示：
 驱动编译成模块
 1. 模块加载（insmod或modprobe ）：调用驱动程序中的 module_init(xxx_init)，再调用和初始化函数，xxx_init()
 2. 注册字符设备：一般加载时，在初始化函数中调用register_chrdev() 函数完成注册
-
+3. 创建设备节点文件
 
 字符设备是 Linux 驱动中最基本的一类设备驱动，字符设备就是一个一个字节，按照字节流进行读写操作的设备，读写数据是分先后顺序的。比如我们最常见的点灯、按键、IIC、SPI，LCD 等等都是字符设备，这些设备的驱动就叫做字符设备驱动。
 
@@ -64,10 +64,8 @@ Linux 应用程序对驱动程序的调用如图所示：
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499365413.png)
 
-打开以后会自动在.vscode 目录下生成一个名为 c_cpp_properties.json 的文件，此文件默认内容如下所示：
+打开以后会自动在.vscode 目录下生成一个名为 c_cpp_properties.json 的文件，第 5 行的 includePath 表示头文件路径，需要将 Linux 源码里面的头文件路径添加进来，也就是我们前面移植的 Linux 源码中的头文件路径。添加头文件路径以后的 c_cpp_properties.json的文件内容如下所示：
 
-第 5 行的 includePath 表示头文件路径，需要将 Linux 源码里面的头文件路径添加进来，也就是我们前面移植的 Linux 源码中的头文件路径。添加头文件路径以后的 c_cpp_properties.json
-的文件内容如下所示：
 ```
 1 {
 2 	"configurations": [
@@ -87,8 +85,58 @@ Linux 应用程序对驱动程序的调用如图所示：
 19 }
 ```
 
-第 7~9 行就是添加好的 Linux 头文件路径。分别是开发板所使用的 Linux 源码下的 include、
-arch/arm/include 和 arch/arm/include/generated 这三个目录的路径，注意，这里使用了绝对路径。
+第 7~9 行就是添加好的 Linux 头文件路径。分别是开发板所使用的 Linux 源码下的 include、arch/arm/include 和 arch/arm/include/generated 这三个目录的路径，注意，这里使用了绝对路径。
+
+
+## 运行测试
+
+### 1、加载驱动模块
+为了方便测试，Linux 系统选择通过 TFTP 从网络启动，并且使用 NFS 挂载网络根文件系统，确保 uboot 中 bootcmd 环境变量的值为：
+```
+tftp 80800000 zImage;tftp 83000000 imx6ull-alientek-emmc.dtb;bootz 80800000 - 83000000
+```
+bootargs 环境变量的值为：
+```
+console=ttymxc0,115200 root=/dev/nfs rw nfsroot=192.168.1.250:/home/zuozhongkai/linux/nfs/rootfs ip=192.168.1.251:192.168.1.250:192.168.1.1:255.255.255.0::eth0:off
+```
+
+设置好以后启动 Linux 系统，检查开发板根文件系统中有没有“/lib/modules/4.1.15”这个目录，如果没有的话自行创建。注意，“/lib/modules/4.1.15”这个目录用来存放驱动模块，使用modprobe 命令加载驱动模块的时候，驱动模块要存放在此目录下。“/lib/modules”是通用的，不管你用的什么板子、什么内核，这部分是一样的。不一样的是后面的“4.1.15”，这里要根据你所使用的 Linux 内核版本来设置，比如 ALPHA 开发板现在用的是 4.1.15 版本的 Linux 内核，因此就是“/lib/modules/4.1.15”。
+
+因为是通过 NFS 将 Ubuntu 中的 rootfs(第三十八章制作好的根文件系统)目录挂载为根文件系统，所以可以很方便的将 chrdevbase.ko 和 chrdevbaseAPP 复制到 rootfs/lib/modules/4.1.15 目录中，命令如下：
+```
+sudo cp chrdevbase.ko chrdevbaseApp /home/zuozhongkai/linux/nfs/rootfs/lib/modules/4.1.15/ -f
+```
+拷 贝 完 成 以 后 就 会 在 开 发 板 的 /lib/modules/4.1.15 目 录 下 存 在 chrdevbase.ko 和chrdevbaseAPP 这两个文件，如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499732376.png)
+
+输入如下命令加载 chrdevbase.ko 驱动文件：
+```
+insmod chrdevbase.ko
+```
+或
+```
+modprobe chrdevbase.ko
+```
+如果使用 modprobe 加载驱动的话，可能会出现如图所示的提示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499758940.png)
+
+直接输入 depmod 命令即可自动生成modules.dep，有些根文件系统可能没有 depmod 这个命令，如果没有这个命令就只能重新配置busybox，使能此命令，然后重新编译 busybox。输入“depmod”命令以后会自动生成 modules.alias、modules.symbols 和 modules.dep 这三个文件，如图 40.4.4.3 所示
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499803604.png)
+
+重新使用 modprobe 加载 chrdevbase.ko，结果如图 40.4.4.4 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499833966.png)
+
+可以看到“chrdevbase init！”这一行，这一行正是 chrdevbase.c 中模块入口函数 chrdevbase_init 输出的信息，说明模块加载成功！输入“lsmod”命令即可查看当前系统中存在的模块，结果如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499857642.png)
+
+从图 40.4.4.5 可以看出，当前系统只有“chrdevbase”这一个模块。输入如下命令查看当前系统中有没有 chrdevbase 这个设备：
+```
+cat /proc/devices
+```
+
+### 2、创建设备节点文件
+
 
 ## 设备号
 
