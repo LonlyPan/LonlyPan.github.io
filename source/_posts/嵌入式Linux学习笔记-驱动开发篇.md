@@ -48,6 +48,49 @@ Linux 应用程序对驱动程序的调用如图所示：
 
 字符设备是 Linux 驱动中最基本的一类设备驱动，字符设备就是一个一个字节，按照字节流进行读写操作的设备，读写数据是分先后顺序的。比如我们最常见的点灯、按键、IIC、SPI，LCD 等等都是字符设备，这些设备的驱动就叫做字符设备驱动。
 
+## 程序编写
+
+### 1、创建 VSCode 工程
+
+在 Ubuntu 中创建一个目录用来存放 Linux 驱动程序，比如我创建了一个名为 Linux_Drivers的目录来存放所有的 Linux 驱动。在 Linux_Drivers 目录下新建一个名为 1_chrdevbase 的子目录来存放本实验所有文件
+
+在 1_chrdevbase 目录中新建 VSCode 工程，并且新建 chrdevbase.c 文件，完成以后1_chrdevbase 目录中的文件如图 40.4.1.2 所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499335278.png)
+
+### 2、添加头文件路径
+
+因为是编写 Linux 驱动，因此会用到 Linux 源码中的函数。我们需要在 VSCode 中添加 Linux源码中的头文件路径。打开 VSCode，按下“Crtl+Shift+P”打开 VSCode 的控制台，然后输入“C/C++: Edit configurations(JSON) ”，打开 C/C++编辑配置文件，如图所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499365413.png)
+
+打开以后会自动在.vscode 目录下生成一个名为 c_cpp_properties.json 的文件，此文件默认内容如下所示：
+
+第 5 行的 includePath 表示头文件路径，需要将 Linux 源码里面的头文件路径添加进来，也就是我们前面移植的 Linux 源码中的头文件路径。添加头文件路径以后的 c_cpp_properties.json
+的文件内容如下所示：
+```
+1 {
+2 "configurations": [
+3 {
+4 "name": "Linux",
+5 "includePath": [
+6 "${workspaceFolder}/**",
+7 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
+rel_imx_4.1.15_2.1.0_ga_alientek/include",
+8 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
+rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include",
+9 "/home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
+rel_imx_4.1.15_2.1.0_ga_alientek/arch/arm/include/gener
+ated/"
+10 ],
+11 "defines": [],
+......
+16 }
+17 ],
+18 "version": 4
+19 }
+```
+
 ## 设备号
 
 ### 1.静态分配设备号
@@ -59,22 +102,22 @@ cat /proc/devices
 命令即可查看当前系统中所有已经使用了的设备号。
 
 ### 2、动态分配设备号
-静态分配设备号需要我们检查当前系统中所有被使用了的设备号，然后挑选一个没有使用
-的。而且静态分配设备号很容易带来冲突问题，Linux 社区推荐使用动态分配设备号，在注册字
-符设备之前先申请一个设备号，系统会自动给你一个没有被使用的设备号，这样就避免了冲突。
-卸载驱动的时候释放掉这个设备号即可，设备号的申请函数如下：
+
+Linux 社区推荐使用动态分配设备号，在注册字符设备之前先申请一个设备号，系统会自动给你一个没有被使用的设备号，这样就避免了冲突。卸载驱动的时候释放掉这个设备号即可，设备号的申请函数如下：
+```
 int alloc_chrdev_region(dev_t *dev, unsigned baseminor, unsigned count, const char *name)
-函数 alloc_chrdev_region 用于申请设备号，此函数有 4 个参数：
-dev：保存申请到的设备号。
-baseminor：次设备号起始地址，alloc_chrdev_region 可以申请一段连续的多个设备号，这
-些设备号的主设备号一样，但是次设备号不同，次设备号以 baseminor 为起始地址地址开始递
-增。一般 baseminor 为 0，也就是说次设备号从 0 开始。
-count：要申请的设备号数量。
-name：设备名字。
+```
+
+- dev：保存申请到的设备号。
+- baseminor：次设备号起始地址，alloc_chrdev_region 可以申请一段连续的多个设备号，这些设备号的主设备号一样，但是次设备号不同，次设备号以 baseminor 为起始地址地址开始递增。一般 baseminor 为 0，也就是说次设备号从 0 开始。
+- count：要申请的设备号数量。
+- name：设备名字。
+
 注销字符设备之后要释放掉设备号，设备号释放函数如下：
+```
 void unregister_chrdev_region(dev_t from, unsigned count)
-此函数有两个参数：
-from：要释放的设备号。
-count：表示从 from 开始，要释放的设备号数量。
+```
+- from：要释放的设备号。
+- count：表示从 from 开始，要释放的设备号数量。
 
 <!--more-->
