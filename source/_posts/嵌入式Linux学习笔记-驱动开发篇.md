@@ -421,7 +421,7 @@ rmmod chrdevbase.ko
 
 本节我们就来学习一下如何编写新字符设备驱动，并且在驱动模块加载的时候自动创建设备节点文件。
 
-## 1、动态分配设备号
+## 动态分配设备号
 
 Linux 社区推荐使用动态分配设备号，在注册字符设备之前先申请一个设备号，系统会自动给你一个没有被使用的设备号，这样就避免了冲突。卸载驱动的时候释放掉这个设备号即可，设备号的申请函数如下：
 ```
@@ -467,5 +467,84 @@ void unregister_chrdev_region(dev_t from, unsigned count)
 
 ``1 unregister_chrdev_region(devid, 1);	/* 注销设备号 */``
 
+## 新的字符设备注册方法
+
+### 1、字符设备结构
+在 Linux 中使用 cdev 结构体表示一个字符设备，cdev 结构体在 include/linux/cdev.h 文件中的定义如下：
+
+```
+1 struct cdev {
+2	struct kobject	kobj;
+3	struct module	*owner;
+4	const struct file_operations *ops;
+5	struct list_head list;
+6	dev_t	dev;
+7	unsigned int	count;
+8 };```
+
+```
+在 cdev 中有两个重要的成员变量：ops 和 dev，这两个就是字符设备文件操作函数集合file_operations 以及设备号 dev_t。编写字符设备驱动之前需要定义一个 cdev 结构体变量，这个变量就表示一个字符设备，如下所示：
+```struct cdev test_cdev;```
+
+### 2、cdev_init 函数
+
+定义好 cdev 变量以后就要使用 cdev_init 函数对其进行初始化，cdev_init 函数原型如下：
+```
+void cdev_init(struct cdev *cdev, const struct file_operations *fops)
+```
+参数 cdev 就是要初始化的 cdev 结构体变量，参数 fops 就是字符设备文件操作函数集合。
+使用 cdev_init 函数初始化 cdev 变量的示例代码如下：
+```
+1 struct cdev testcdev;
+2
+3 /* 设备操作函数 */
+4 static struct file_operations test_fops = {
+5 	owner = THIS_MODULE,
+6	/* 其他具体的初始项 */
+7 };
+8
+9 testcdev.owner = THIS_MODULE;
+10 cdev_init(&testcdev, &test_fops); /* 初始化 cdev 结构体变量 */
+```
+
+### 3、cdev_add 函数
+
+cdev_add 函数用于向 Linux 系统添加字符设备(cdev 结构体变量)，首先使用 cdev_init 函数完成对 cdev 结构体变量的初始化，然后使用 cdev_add 函数向 Linux 系统添加这个字符设备。cdev_add 函数原型如下：
+```int cdev_add(struct cdev *p, dev_t dev, unsigned count)```
+- 参数 p 指向要添加的字符设备(cdev 结构体变量)
+- 参数 dev 就是设备所使用的设备号
+- 参数 count 是要添加的设备数量。
+ 
+完善上述示例代码，加入 cdev_add 函数，内容如下所示：
+```
+1 struct cdev testcdev;
+2
+3 /* 设备操作函数 */
+4 static struct file_operations test_fops = {
+	1. owner = THIS_MODULE,
+6	/* 其他具体的初始项 */
+7 };
+8
+9 testcdev.owner = THIS_MODULE;
+10 cdev_init(&testcdev, &test_fops);	/* 初始化 cdev 结构体变量*/
+11 cdev_add(&testcdev, devid, 1);	/* 添加字符设备*/
+```
+
+示例代码就是新的注册字符设备代码段，Linux 内核中大量的字符设备驱动都是采用这种方法向 Linux 内核添加字符设备。如果在加上分配设备号的程序，那么就它们一起实现的就是函数 register_chrdev 的功能。
+
+
+### 3、cdev_del 函数
+
+卸载驱动的时候一定要使用 cdev_del 函数从 Linux 内核中删除相应的字符设备，cdev_del函数原型如下：
+```
+void cdev_del(struct cdev *p)
+```
+
+参数 p 就是要删除的字符设备。如果要删除字符设备，参考如下代码：
+```
+1 cdev_del(&testcdev); /* 删除 cdev */
+```
+
+cdev_del 和 unregister_chrdev_region 这两个函数合起来的功能相当于unregister_chrdev 函数。
 
 <!--more-->
