@@ -553,14 +553,55 @@ void cdev_del(struct cdev *p)
 cdev_del 和 unregister_chrdev_region 这两个函数合起来的功能相当于unregister_chrdev 函数。
 
 ## 自动创建设备节点
-在前面的 Linux 驱动实验中，当我们使用 modprobe 加载驱动程序以后还需要使用命令
-“mknod”手动创建设备节点。本节就来讲解一下如何实现自动创建设备节点，在驱动中实现
-自动创建设备节点的功能以后，使用 modprobe 加载驱动模块成功的话就会自动在/dev 目录下
-创建对应的设备文件。
-42.2.1 mdev 机制
-udev 是一个用户程序，在 Linux 下通过 udev 来实现设备文件的创建与删除，udev 可以检
-测系统中硬件设备状态，可以根据系统中硬件设备状态来创建或者删除设备文件。比如使用
-modprobe 命令成功加载驱动模块以后就自动在/dev 目录下创建对应的设备节点文件,使用
-rmmod 命令卸载驱动模块以后就删除掉/dev 目录下的设备节点文件。使用 busybox 构建根文件
-系统的时候，busybox 会创建一个 udev 的简化版本—mdev，所以在嵌入式 Linux 中我们使用
+
+在驱动中实现自动创建设备节点的功能以后，使用 modprobe 加载驱动模块成功的话就会自动在/dev 目录下创建对应的设备文件。
+
+### mdev 机制
+
+udev 是一个用户程序，在 Linux 下通过 udev 来实现设备文件的创建与删除，udev 可以检测系统中硬件设备状态，可以根据系统中硬件设备状态来创建或者删除设备文件。比如使用modprobe 命令成功加载驱动模块以后就自动在/dev 目录下创建对应的设备节点文件,使用rmmod 命令卸载驱动模块以后就删除掉/dev 目录下的设备节点文件。使用 busybox 构建根文件系统的时候，busybox 会创建一个 udev 的简化版本—mdev，所以在嵌入式 Linux 中我们使用mdev 来实现设备节点文件的自动创建与删除，Linux 系统中的热插拔事件也由 mdev 管理，在/etc/init.d/rcS 文件中如下语句：
+
+```echo /sbin/mdev > /proc/sys/kernel/hotplug```
+
+上述命令设置热插拔事件由 mdev 来管理，关于 udev 或 mdev 更加详细的工作原理这里就不详细探讨了，我们重点来学习一下如何通过 mdev 来实现设备文件节点的自动创建与删除。
+
+### 42.2.1 创建和删除类
+
+自动创建设备节点的工作是在驱动程序的入口函数中完成的，一般在 cdev_add 函数后面添加自动创建设备节点相关代码。首先要创建一个 class 类，class 是个结构体，定义在文件include/linux/device.h 里面。class_create 是类创建函数，class_create 是个宏定义，内容如下：
+```
+1 #define class_create(owner, name) \
+2 ({ \
+3 	static struct lock_class_key __key; \
+4 	__class_create(owner, name, &__key); \
+5 })
+6
+7 struct class *__class_create(struct module *owner, const char *name,
+8 struct lock_class_key *key)
+```
+根据上述代码，将宏 class_create 展开以后内容如下：
+struct class *class_create (struct module *owner, const char *name)
+class_create 一共有两个参数，参数 owner 一般为 THIS_MODULE，参数 name 是类名字。
+返回值是个指向结构体 class 的指针，也就是创建的类。
+卸载驱动程序的时候需要删除掉类，类删除函数为 class_destroy，函数原型如下：
+void class_destroy(struct class *cls);
+参数 cls 就是要删除的类。
+42.2.2 创建设备
+上一小节创建好类以后还不能实现自动创建设备节点，我们还需要在这个类下创建一个设
+备。使用 device_create 函数在类下面创建设备，device_create 函数原型如下：
+struct device *device_create(struct class
+*class,
+struct device *parent,
+dev_t
+devt,
+void
+*drvdata,
+const char
+*fmt, ...)
+device_create 是个可变参数函数，参数 class 就是设备要创建哪个类下面；参数 parent 是父
+设备，一般为 NULL，也就是没有父设备；参数 devt 是设备号；参数 drvdata 是设备可能会使用
+的一些数据，一般为 NULL；参数 fmt 是设备名字，如果设置 fmt=xxx 的话，就会生成/dev/xxx
+这个设备文件。返回值就是创建好的设备。
+同样的，卸载驱动的时候需要删除掉创建的设备，设备删除函数为 device_destroy，函数原
+型如下：
+void device_destroy(struct class *class, dev_t devt)
+
 <!--more-->
