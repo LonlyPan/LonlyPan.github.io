@@ -988,4 +988,7 @@ modprobe newchrled.ko	//加载驱动
 ```./ledApp /dev/newchrled 0	//关闭 LED 灯```
 输入上述命令以后观察 I.MX6U-ALPHA 开发板上的红色 LED 灯是否熄灭。如果要卸载驱动的话输入如下命令即可：
 ```rmmod newchrled.ko```
+
+# linux设备树
+
 <!--more-->
