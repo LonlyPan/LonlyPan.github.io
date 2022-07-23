@@ -439,4 +439,19 @@ void unregister_chrdev_region(dev_t from, unsigned count)
 ```
 - from：要释放的设备号。
 - count：表示从 from 开始，要释放的设备号数量。
+
+```
+1 int major;	/* 主设备号*/
+2 int minor;	/* 次设备号*/
+3 dev_t devid;	/* 设备号*/
+4
+5 if (major) {	/* 定义了主设备号*/
+6	devid = MKDEV(major, 0);	/* 大部分驱动次设备号都选择 0 */
+7	register_chrdev_region(devid, 1, "test");
+8 } else {	/* 没有定义设备号*/
+9	alloc_chrdev_region(&devid, 0, 1, "test"); /* 申请设备号 */
+10	major = MAJOR(devid);	/* 获取分配号的主设备号*/
+11	minor = MINOR(devid);	/* 获取分配号的次设备号*/
+12 }
+```
 <!--more-->
