@@ -595,6 +595,7 @@ struct device *device_create(struct class	*class,
 	void	*drvdata,
 	const char	*fmt, ...)
 ```
+
 device_create 是个可变参数函数，参数 class 就是设备要创建哪个类下面；参数 parent 是父
 设备，一般为 NULL，也就是没有父设备；参数 devt 是设备号；参数 drvdata 是设备可能会使用
 的一些数据，一般为 NULL；参数 fmt 是设备名字，如果设置 fmt=xxx 的话，就会生成/dev/xxx
