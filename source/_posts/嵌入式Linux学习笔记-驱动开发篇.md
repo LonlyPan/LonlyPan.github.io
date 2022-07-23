@@ -454,4 +454,18 @@ void unregister_chrdev_region(dev_t from, unsigned count)
 11	minor = MINOR(devid);	/* 获取分配号的次设备号*/
 12 }
 ```
+
+第 1~3 行，定义了主/次设备号变量 major 和 minor，以及设备号变量 devid。
+第 5 行，判断主设备号 major 是否有效，在 Linux 驱动中一般给出主设备号的话就表示这个设备的设备号已经确定了，因为次设备号基本上都选择 0，这算个 Linux 驱动开发中约定俗成的一种规定了。
+第 6 行，如果 major 有效的话就使用 MKDEV 来构建设备号，次设备号选择 0。
+第 7 行，使用 register_chrdev_region 函数来注册设备号。
+第 9~11 行，如果 major 无效，那就表示没有给定设备号。此时就要使用 alloc_chrdev_region
+
+函数来申请设备号。设备号申请成功以后使用 MAJOR 和 MINOR 来提取出主设备号和次设备号，当然了，第 10 和 11 行提取主设备号和次设备号的代码可以不要。
+
+如果要注销设备号的话，使用如下代码即可：
+
+``1 unregister_chrdev_region(devid, 1);	/* 注销设备号 */``
+
+
 <!--more-->
