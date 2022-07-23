@@ -410,11 +410,6 @@ rmmod chrdevbase.ko
 ```
 
 
-
-
-
-
-
 # 新字符设备驱动实验
 
 字符设备驱动开发重点是使用 register_chrdev 函数注册字符设备，当不再使用设备的时候就使用unregister_chrdev 函数注销字符设备，驱动模块加载成功以后还需要手动使用 mknod 命令创建设备节点。register_chrdev 和 unregister_chrdev 这两个函数是老版本驱动使用的函数，现在新的字符设备驱动已经不再使用这两个函数，而是使用Linux内核推荐的新字符设备驱动API函数。
@@ -468,6 +463,15 @@ void unregister_chrdev_region(dev_t from, unsigned count)
 ``1 unregister_chrdev_region(devid, 1);	/* 注销设备号 */``
 
 ## 新的字符设备注册方法
+
+不再使用下属两种语句实现，而是使用 cdev 结构体
+```
+* 注册字符设备驱动 */
+retvalue = register_chrdev(CHRDEVBASE_MAJOR, CHRDEVBASE_NAME, &chrdevbase_fops);
+
+/* 注销字符设备驱动 */
+unregister_chrdev(CHRDEVBASE_MAJOR, CHRDEVBASE_NAME);
+```
 
 ### 1、字符设备结构
 在 Linux 中使用 cdev 结构体表示一个字符设备，cdev 结构体在 include/linux/cdev.h 文件中的定义如下：
@@ -545,6 +549,18 @@ void cdev_del(struct cdev *p)
 1 cdev_del(&testcdev); /* 删除 cdev */
 ```
 
+
 cdev_del 和 unregister_chrdev_region 这两个函数合起来的功能相当于unregister_chrdev 函数。
 
+## 自动创建设备节点
+在前面的 Linux 驱动实验中，当我们使用 modprobe 加载驱动程序以后还需要使用命令
+“mknod”手动创建设备节点。本节就来讲解一下如何实现自动创建设备节点，在驱动中实现
+自动创建设备节点的功能以后，使用 modprobe 加载驱动模块成功的话就会自动在/dev 目录下
+创建对应的设备文件。
+42.2.1 mdev 机制
+udev 是一个用户程序，在 Linux 下通过 udev 来实现设备文件的创建与删除，udev 可以检
+测系统中硬件设备状态，可以根据系统中硬件设备状态来创建或者删除设备文件。比如使用
+modprobe 命令成功加载驱动模块以后就自动在/dev 目录下创建对应的设备节点文件,使用
+rmmod 命令卸载驱动模块以后就删除掉/dev 目录下的设备节点文件。使用 busybox 构建根文件
+系统的时候，busybox 会创建一个 udev 的简化版本—mdev，所以在嵌入式 Linux 中我们使用
 <!--more-->
