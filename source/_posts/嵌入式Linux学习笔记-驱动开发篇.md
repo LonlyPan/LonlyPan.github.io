@@ -940,9 +940,9 @@ MODULE_AUTHOR("zuozhongkai");
 
 ### 编译
 
-1、编译驱动程序
+#### 1、编译驱动程序
 编写 Makefile 文件，本章实验的 Makefile 文件和就旧字符设备实验基本一样，只是将 obj-m 变量的值改为 newchrled.o，Makefile 内容如下所示：
-示例代码 42.6.1.1 Makefile 文件
+```
 1 KERNELDIR := /home/zuozhongkai/linux/IMX6ULL/linux/temp/linux-imx-
 rel_imx_4.1.15_2.1.0_ga_alientek
 ......
@@ -950,12 +950,16 @@ rel_imx_4.1.15_2.1.0_ga_alientek
 ......
 11 clean:
 12 $(MAKE) -C $(KERNELDIR) M=$(CURRENT_PATH) clean
+```
 第 4 行，设置 obj-m 变量的值为 newchrled.o。
 输入如下命令编译出驱动模块文件：
-make -j32
+```make -j32```
 编译成功以后就会生成一个名为“newchrled.ko”的驱动模块文件。
-2、编译测试 APP
+#### 2、编译测试 APP
 输入如下命令编译测试 ledApp.c 这个测试程序：
-arm-linux-gnueabihf-gcc ledApp.c -o ledApp
+```arm-linux-gnueabihf-gcc ledApp.c -o ledApp```
 编译成功以后就会生成 ledApp 这个应用程序。
+
+### 运行测试
+
 <!--more-->
