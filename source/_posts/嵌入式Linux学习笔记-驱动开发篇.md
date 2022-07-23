@@ -587,17 +587,14 @@ class_create 一共有两个参数，参数 owner 一般为 THIS_MODULE，参数
 参数 cls 就是要删除的类。
 
 ### 创建设备
-上一小节创建好类以后还不能实现自动创建设备节点，我们还需要在这个类下创建一个设
-备。使用 device_create 函数在类下面创建设备，device_create 函数原型如下：
-struct device *device_create(struct class
-*class,
-struct device *parent,
-dev_t
-devt,
-void
-*drvdata,
-const char
-*fmt, ...)
+我们还需要在这个类下创建一个设备。使用 device_create 函数在类下面创建设备，device_create 函数原型如下：
+```
+struct device *device_create(struct class	*class,
+	struct device *parent,
+	dev_t	devt,
+	void	*drvdata,
+	const char	*fmt, ...)
+```
 device_create 是个可变参数函数，参数 class 就是设备要创建哪个类下面；参数 parent 是父
 设备，一般为 NULL，也就是没有父设备；参数 devt 是设备号；参数 drvdata 是设备可能会使用
 的一些数据，一般为 NULL；参数 fmt 是设备名字，如果设置 fmt=xxx 的话，就会生成/dev/xxx
