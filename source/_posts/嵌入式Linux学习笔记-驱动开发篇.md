@@ -612,40 +612,27 @@ struct device *device_create(struct class	*class,
 ### 参考示例
 在驱动入口函数里面创建类和设备，在驱动出口函数里面删除类和设备，参考示例如下：
 ```
-1 struct class *class;
-/* 类
-*/
-2 struct device *device; /* 设备
-*/
-3 dev_t devid;
-/* 设备号 */
+1 struct class *class;	/* 类*/
+2 struct device *device; /* 设备*/
+3 dev_t devid;	/* 设备号 */
 4
 5 /* 驱动入口函数 */
 6 static int __init led_init(void)
 7 {
-8
-/* 创建类 */
-9
-class = class_create(THIS_MODULE, "xxx");
-10
-/* 创建设备 */
-11
-device = device_create(class, NULL, devid, NULL, "xxx");
-12
-return 0;
+8		/* 创建类 */
+9		class = class_create(THIS_MODULE, "xxx");
+10		/* 创建设备 */
+11		device = device_create(class, NULL, devid, NULL, "xxx");
+12		return 0;
 13 }
 14
 15 /* 驱动出口函数 */
 16 static void __exit led_exit(void)
 17 {
-18
-/* 删除设备 */
-19
-device_destroy(newchrled.class, newchrled.devid);
-20
-/* 删除类 */
-21
-class_destroy(newchrled.class);
+18		/* 删除设备 */
+19		device_destroy(newchrled.class, newchrled.devid);
+20		/* 删除类 */
+21		class_destroy(newchrled.class);
 22 }
 23
 24 module_init(led_init);
