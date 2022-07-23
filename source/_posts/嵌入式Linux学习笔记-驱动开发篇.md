@@ -936,4 +936,8 @@ MODULE_AUTHOR("zuozhongkai");
 
 与旧字符设备相同
 
+## 运行测试
+
+### 编译
+
 <!--more-->
