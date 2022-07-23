@@ -327,13 +327,13 @@ int main(int argc, char *argv[])
 ## 运行测试
 
 ### 1、加载驱动模块
-为了方便测试，Linux 系统选择通过 TFTP 从网络启动，并且使用 NFS 挂载网络根文件系统，确保 uboot 中 bootcmd 环境变量的值为：
+为了方便测试，Linux 系统选择通过 TFTP 从网络启动，并且使用 NFS 挂载网络根文件系统，确保 uboot 中环境变量的值为：
 ```
-tftp 80800000 zImage;tftp 83000000 imx6ull-alientek-emmc.dtb;bootz 80800000 - 83000000
-```
-bootargs 环境变量的值为：
-```
-console=ttymxc0,115200 root=/dev/nfs rw nfsroot=192.168.1.250:/home/zuozhongkai/linux/nfs/rootfs ip=192.168.1.251:192.168.1.250:192.168.1.1:255.255.255.0::eth0:off
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-alientek-emmc.dtb; bootz 80800000 - 83000000'
+setenv bootargs 'console=ttymxc0,115200 root=/dev/nfs nfsroot=192.168.0.254:/home/lonly/linux/nfs/rootfs,proto=tcp rw ip=192.168.0.121:192.168.0.254:192.168.0.1:255.255.255.0::eth0:off'
+
+saveenv
 ```
 
 设置好以后启动 Linux 系统，检查开发板根文件系统中有没有“/lib/modules/4.1.15”这个目录，如果没有的话自行创建。注意，“/lib/modules/4.1.15”这个目录用来存放驱动模块，使用modprobe 命令加载驱动模块的时候，驱动模块要存放在此目录下。“/lib/modules”是通用的，不管你用的什么板子、什么内核，这部分是一样的。不一样的是后面的“4.1.15”，这里要根据你所使用的 Linux 内核版本来设置，比如 ALPHA 开发板现在用的是 4.1.15 版本的 Linux 内核，因此就是“/lib/modules/4.1.15”。
