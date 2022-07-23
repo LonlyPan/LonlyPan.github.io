@@ -331,6 +331,7 @@ int main(int argc, char *argv[])
 - 从网络启动内核和设备树
 - 从网络启动根文件系统
 
+```
 setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-alientek-emmc.dtb; bootz 80800000 - 83000000'
 setenv bootargs 'console=ttymxc0,115200 root=/dev/nfs nfsroot=192.168.0.254:/home/lonly/linux/nfs/rootfs,proto=tcp rw ip=192.168.0.121:192.168.0.254:192.168.0.1:255.255.255.0::eth0:off'
 
@@ -979,6 +980,7 @@ modprobe newchrled.ko	//加载驱动
 
 从图 42.6.2.2 中可以看出，/dev/newchrled 这个设备文件存在，而且主设备号为 249，此设备号为 0，说明设备节点文件创建成功。
 驱动节点创建成功以后就可以使用 ledApp 软件来测试驱动是否工作正常，输入如下命令打开 LED 灯：
+> app 文件要下赋予可执行权限
 ```./ledApp /dev/newchrled 1	//打开 LED 灯```
 输入上述命令以后观察 I.MX6U-ALPHA 开发板上的红色 LED 灯是否点亮，如果点亮的话说明驱动工作正常。在输入如下命令关闭 LED 灯：
 ```./ledApp /dev/newchrled 0	//关闭 LED 灯```
