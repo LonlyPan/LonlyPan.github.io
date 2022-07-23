@@ -329,7 +329,6 @@ int main(int argc, char *argv[])
 ### 1、加载驱动模块
 为了方便测试，Linux 系统选择通过 TFTP 从网络启动，并且使用 NFS 挂载网络根文件系统，确保 uboot 中环境变量的值为：
 ```
-setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
 setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-alientek-emmc.dtb; bootz 80800000 - 83000000'
 setenv bootargs 'console=ttymxc0,115200 root=/dev/nfs nfsroot=192.168.0.254:/home/lonly/linux/nfs/rootfs,proto=tcp rw ip=192.168.0.121:192.168.0.254:192.168.0.1:255.255.255.0::eth0:off'
 
