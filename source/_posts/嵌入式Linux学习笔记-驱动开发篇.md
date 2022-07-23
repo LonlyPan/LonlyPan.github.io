@@ -934,4 +934,6 @@ MODULE_AUTHOR("zuozhongkai");
 ```
 ### APP
 
+与旧字符设备相同
+
 <!--more-->
