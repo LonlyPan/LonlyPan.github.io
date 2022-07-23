@@ -673,4 +673,11 @@ int minor;	/* 次设备号 */
 ```
 
 在 open 函数里面设置好私有数据以后，在 write、read、close 等函数中直接读取 private_data即可得到设备结构体。
+
+## 程序编写
+
+### 驱动程序
+
+### APP
+
 <!--more-->
