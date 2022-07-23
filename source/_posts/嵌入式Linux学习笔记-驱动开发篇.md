@@ -962,4 +962,25 @@ rel_imx_4.1.15_2.1.0_ga_alientek
 
 ### 运行测试
 
+将上一小节编译出来的 newchrled.ko 和 ledApp 这两个文件拷贝到 rootfs/lib/modules/4.1.15
+目录中，重启开发板，进入到目录 lib/modules/4.1.15 中，输入如下命令加载 newchrled.ko 驱动
+模块：
+```
+depmod	//第一次加载驱动的时候需要运行此命令
+modprobe newchrled.ko	//加载驱动
+```
+驱动加载成功以后会输出申请到的主设备号和次设备号，如图 42.6.2.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658565295083.png)
+
+从图 42.6.2.1 可以看出，申请到的主设备号为 249，次设备号为 0。驱动加载成功以后会自动在/dev 目录下创建设备节点文件/dev/newchrdev，输入如下命令查看/dev/newchrdev 这个设备节点文件是否存在：
+```ls /dev/newchrled -l```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658565321117.png)
+
+从图 42.6.2.2 中可以看出，/dev/newchrled 这个设备文件存在，而且主设备号为 249，此设备号为 0，说明设备节点文件创建成功。
+驱动节点创建成功以后就可以使用 ledApp 软件来测试驱动是否工作正常，输入如下命令打开 LED 灯：
+```./ledApp /dev/newchrled 1	//打开 LED 灯```
+输入上述命令以后观察 I.MX6U-ALPHA 开发板上的红色 LED 灯是否点亮，如果点亮的话说明驱动工作正常。在输入如下命令关闭 LED 灯：
+```./ledApp /dev/newchrled 0	//关闭 LED 灯```
+输入上述命令以后观察 I.MX6U-ALPHA 开发板上的红色 LED 灯是否熄灭。如果要卸载驱动的话输入如下命令即可：
+```rmmod newchrled.ko```
 <!--more-->
