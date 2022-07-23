@@ -638,4 +638,40 @@ struct device *device_create(struct class	*class,
 24 module_init(led_init);
 25 module_exit(led_exit);
 ```
+
+## 设置文件私有数据
+
+每个硬件设备都有一些属性，比如主设备号(dev_t)，类(class)、设备(device)、开关状态(state)等等，在编写驱动的时候你可以将这些属性全部写成变量的形式，如下所示：
+```
+dev_t devid;	/* 设备号 */
+struct cdev cdev; /* cdev */
+struct class *class; /* 类 */
+struct device *device; /* 设备 */
+int major;	/* 主设备号 */
+int minor;	/* 次设备号 */
+```
+这样写肯定没有问题，但是这样写不专业！对于一个设备的所有属性信息我们最好将其做成一个结构体。编写驱动 open 函数的时候将设备结构体作为私有数据添加到设备文件中，如下所示：
+```
+/* 设备结构体 */
+1 struct test_dev{
+2	dev_t devid;	/* 设备号	*/
+3	struct cdev cdev; /* cdev	*/
+4	struct class *class; /* 类	*/
+5	struct device *device; /* 设备 */
+6	int major;	/* 主设备号 */
+7	int minor;	/* 次设备号 */
+8 };
+9
+10 struct test_dev testdev;
+11
+12 /* open 函数 */
+13 static int test_open(struct inode *inode, struct file *filp)
+14 {
+15	filp->private_data = &testdev; /* 设置私有数据 */
+16	return 0;
+17 }
+```
+
+在 open 函数里面设置好私有数据以后，在 write、read、close 等函数中直接读取 private_data
+即可得到设备结构体。
 <!--more-->
