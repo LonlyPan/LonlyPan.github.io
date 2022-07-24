@@ -1232,11 +1232,11 @@ ranges属性值可以为空或者按照(child-bus-address,parent-bus-address,len
 - 
 ```
 137 soc {
-138 #address-cells = <1>;
-139 #size-cells = <1>;
-140 compatible = "simple-bus";
-141 interrupt-parent = <&gpc>;
-142 ranges;
+138 	#address-cells = <1>;
+139 	#size-cells = <1>;
+140 	compatible = "simple-bus";
+141 	interrupt-parent = <&gpc>;
+142 	ranges;
 ......
 1177 }
 ```
@@ -1246,92 +1246,81 @@ ranges 属性不为空的示例代码如下所示：
 
 ```
 1 soc {
-2 compatible = "simple-bus";
-3 #address-cells = <1>;
-4 #size-cells = <1>;
-5 ranges = <0x0 0xe0000000 0x00100000>;
-6 7
-serial {
-8 device_type = "serial";
-9 compatible = "ns16550";
-10 reg = <0x4600 0x100>;
-11 clock-frequency = <0>;
-12 interrupts = <0xA 0x8>;
-13 interrupt-parent = <&ipic>;
-14 };
+2 	compatible = "simple-bus";
+3 	#address-cells = <1>;
+4 	#size-cells = <1>;
+5 	ranges = <0x0 0xe0000000 0x00100000>;
+6 
+7	serial {
+8 		device_type = "serial";
+9 		compatible = "ns16550";
+10 		reg = <0x4600 0x100>;
+11 		clock-frequency = <0>;
+12 		interrupts = <0xA 0x8>;
+13 		interrupt-parent = <&ipic>;
+14 	};
 15 };
 ```
-第 5 行，节点 soc 定义的 ranges 属性，值为<0x0 0xe0000000 0x00100000>，此属性值指定
-了一个 1024KB(0x00100000)的地址范围，子地址空间的物理起始地址为 0x0，父地址空间的物
-理起始地址为 0xe0000000。
-第 10 行， serial 是串口设备节点， reg 属性定义了 serial 设备寄存器的起始地址为 0x4600，
-寄存器长度为 0x100。经过地址转换， serial 设备可以从 0xe0004600 开始进行读写操作，
-0xe0004600=0x4600+0xe0000000。
-7、 name 属性
-name 属性值为字符串， name 属性用于记录节点名字， name 属性已经被弃用，不推荐使用
-name 属性，一些老的设备树文件可能会使用此属性。
-8、 device_type 属性
-device_type 属性值为字符串， IEEE 1275 会用到此属性，用于描述设备的 FCode，但是设
-备树没有 FCode，所以此属性也被抛弃了。此属性只能用于 cpu 节点或者 memory 节点。
-imx6ull.dtsi 的 cpu0 节点用到了此属性，内容如下所示：
+第 5 行，节点 soc 定义的 ranges 属性，值为<0x0 0xe0000000 0x00100000>，此属性值指定了一个 1024KB(0x00100000)的地址范围，子地址空间的物理起始地址为 0x0，父地址空间的物理起始地址为 0xe0000000。
+第 10 行， serial 是串口设备节点， reg 属性定义了 serial 设备寄存器的起始地址为 0x4600，寄存器长度为 0x100。经过地址转换， serial 设备可以从 0xe0004600 开始进行读写操作，0xe0004600=0x4600+0xe0000000。
+
+#### 7、 name 属性
+name 属性值为字符串， name 属性用于记录节点名字， name 属性已经被弃用，不推荐使用name 属性，一些老的设备树文件可能会使用此属性。
+
+#### 8、 device_type 属性
+device_type 属性值为字符串， IEEE 1275 会用到此属性，用于描述设备的 FCode，但是设备树没有 FCode，所以此属性也被抛弃了。此属性只能用于 cpu 节点或者 memory 节点。imx6ull.dtsi 的 cpu0 节点用到了此属性，内容如下所示：
 
 ```
 54 cpu0: cpu@0 {
-55 compatible = "arm,cortex-a7";
-56 device_type = "cpu";
-57 reg = <0>;
+55 	compatible = "arm,cortex-a7";
+56 	device_type = "cpu";
+57 	reg = <0>;
 ......
 89 };
 ```
 
-#### 根节点 compatible 属性
-每个节点都有 compatible 属性，根节点“/”也不例外， imx6ull-alientek-emmc.dts 文件中根
-节点的 compatible 属性内容如下所示：
+### 根节点 compatible 属性
+
+每个节点都有 compatible 属性，根节点“/”也不例外， imx6ull-alientek-emmc.dts 文件中根节点的 compatible 属性内容如下所示：
 
 ```
 14 / {
-15 model = "Freescale i.MX6 ULL 14x14 EVK Board";
-16 compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+15 	model = "Freescale i.MX6 ULL 14x14 EVK Board";
+16 	compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
 ......
 148 }
 ```
 
-可以看出， compatible 有两个值：“fsl,imx6ull-14x14-evk”和“fsl,imx6ull”。前面我们说了，
-设备节点的 compatible 属性值是为了匹配 Linux 内核中的驱动程序，那么根节点中的 compatible
-属性是为了做什么工作的？ 通过根节点的 compatible 属性可以知道我们所使用的设备，一般第
-一个值描述了所使用的硬件设备名字，比如这里使用的是“imx6ull-14x14-evk”这个设备，第二
-个值描述了设备所使用的 SOC，比如这里使用的是“imx6ull”这颗 SOC。 Linux 内核会通过根
-节点的 compoatible 属性查看是否支持此设备，如果支持的话设备就会启动 Linux 内核。接下来
-我们就来学习一下 Linux 内核在使用设备树前后是如何判断是否支持某款设备的。
-1、使用设备树之前设备匹配方法
-在没有使用设备树以前， uboot 会向 Linux 内核传递一个叫做 machine id 的值， machine id
-也就是设备 ID，告诉 Linux 内核自己是个什么设备，看看 Linux 内核是否支持。 Linux 内核是
-支持很多设备的，针对每一个设备(板子)， Linux内核都用MACHINE_START和MACHINE_END
-来定义一个 machine_desc 结构体来描述这个设备，比如在文件 arch/arm/mach-imx/machmx35_3ds.c 中有如下定义：
+可以看出， compatible 有两个值：“fsl,imx6ull-14x14-evk”和“fsl,imx6ull”。前面我们说了，设备节点的 compatible 属性值是为了匹配 Linux 内核中的驱动程序，那么根节点中的 compatible属性是为了做什么工作的？ 通过根节点的 compatible 属性可以知道我们所使用的设备，一般第一个值描述了所使用的硬件设备名字，比如这里使用的是“imx6ull-14x14-evk”这个设备，第个值描述了设备所使用的 SOC，比如这里使用的是“imx6ull”这颗 SOC。 Linux 内核会通过根节点的 compoatible 属性查看是否支持此设备，如果支持的话设备就会启动 Linux 内核。
+
+接下来我们就来学习一下 Linux 内核在使用设备树前后是如何判断是否支持某款设备的。
+
+#### 1、使用设备树之前设备匹配方法
+
+在没有使用设备树以前， uboot 会向 Linux 内核传递一个叫做 machine id 的值， machine id 也就是设备 ID，告诉 Linux 内核自己是个什么设备，看看 Linux 内核是否支持。 Linux 内核是支持很多设备的，针对每一个设备(板子)， Linux内核都用MACHINE_START和MACHINE_END来定义一个 machine_desc 结构体来描述这个设备，比如在文件 arch/arm/mach-imx/machmx35_3ds.c 中有如下定义：
 
 ```
 613 MACHINE_START(MX35_3DS, "Freescale MX35PDK")
-614 /* Maintainer: Freescale Semiconductor, Inc */
-615 .atag_offset = 0x100,
-616 .map_io = mx35_map_io,
-617 .init_early = imx35_init_early,
-618 .init_irq = mx35_init_irq,
-619 .init_time = mx35pdk_timer_init,
-620 .init_machine = mx35_3ds_init,
-621 .reserve = mx35_3ds_reserve,
-622 .restart = mxc_restart,
+614 	/* Maintainer: Freescale Semiconductor, Inc */
+615 	.atag_offset = 0x100,
+616 	.map_io = mx35_map_io,
+617 	.init_early = imx35_init_early,
+618 	.init_irq = mx35_init_irq,
+619 	.init_time = mx35pdk_timer_init,
+620 	.init_machine = mx35_3ds_init,
+621 	.reserve = mx35_3ds_reserve,
+622 	.restart = mxc_restart,
 623 MACHINE_END
 ```
 
-上述代码就是定义了“ Freescale MX35PDK”这个设备，其中 MACHINE_START 和
-MACHINE_END 定义在文件 arch/arm/include/asm/mach/arch.h 中，内容如下：
+上述代码就是定义了“ Freescale MX35PDK”这个设备，其中 MACHINE_START 和MACHINE_END 定义在文件 arch/arm/include/asm/mach/arch.h 中，内容如下：
 ```
 #define MACHINE_START(_type,_name) \
 static const struct machine_desc __mach_desc_##_type \
 __used \
 __attribute__((__section__(".arch.info.init"))) = { \
-.nr = MACH_TYPE_##_type, \
-.name = _name,
+	.nr = MACH_TYPE_##_type, \
+	.name = _name,
 #define MACHINE_END \
 };
 ```
