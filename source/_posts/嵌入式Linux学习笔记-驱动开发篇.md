@@ -1326,8 +1326,7 @@ __attribute__((__section__(".arch.info.init"))) = { \
 };
 ```
 
-根据 MACHINE_START 和 MACHINE_END 的宏定义，将示例代码 43.3.4.2 展开后如下所
-示：
+根据 MACHINE_START 和 MACHINE_END 的宏定义，将示例代码 43.3.4.2 展开后如下所示：
 ```
 1 static const struct machine_desc __mach_desc_MX35_3DS \
 2 __used \
