@@ -991,4 +991,88 @@ modprobe newchrled.ko	//加载驱动
 
 # linux设备树
 
+## 什么是设备树？
+
+设备树(Device Tree)，将这个词分开就是“设备”和“树”，描述设备树的文件叫做 DTS(Device Tree Source)，这个 DTS 文件采用树形结构描述板级设备，也就是开发板上的设备信息，比如CPU 数量、 内存基地址、IIC 接口上接了哪些设备、SPI 接口上接了哪些设备等等，如图 43.1.1所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658628442853.png)
+
+在图中，树的主干就是系统总线，IIC 控制器、GPIO 控制器、SPI 控制器等都是接
+到系统主线上的分支。IIC 控制器有分为 IIC1 和 IIC2 两种，其中 IIC1 上接了 FT5206 和 AT24C02这两个 IIC 设备，IIC2 上只接了 MPU6050 这个设备。DTS 文件的主要功能就是按照图所示的结构来描述板子上的设备信息，DTS 文件描述设备信息是有相应的语法规则要求的，稍后我们会详细的讲解 DTS 语法规则。
+
+在 3.x 版本(具体哪个版本笔者也无从考证)以前的 Linux 内核中 ARM 架构并没有采用设备树。在没有设备树的时候 Linux 是如何描述 ARM 架构中的板级信息呢？在 Linux 内核源码中大量的 arch/arm/mach-xxx 和 arch/arm/plat-xxx 文件夹，这些文件夹里面的文件就是对应平台下的板级信息。
+
+随着智能手机的发展，每年新出的 ARM 架构芯片少说都在数十、数百款，Linux 内核下板级信息文件将会成指数级增长！这些板级信息文件都是.c 或.h 文件，都会被硬编码进 Linux 内核中，导致 Linux 内核“虚胖”。
+
+之后 ARM 社区就引入了 PowerPC 等架构已经采用的设备树(Flattened Device Tree)，将这些描述板级硬件信息的内容都从 Linux 内中分离开来，用一个专属的文件格式来描述，这个专属的文件就叫做设备树，文件扩展名为.dts。一个 SOC 可以作出很多不同的板子，这些不同的板子肯定是有共同的信息，将这些共同的信息提取出来作为一个通用的文件，其他的.dts 文件直接引用这个通用文件即可，这个通用文件就是.dtsi 文件，类似于 C 语言中的头文件。
+- 一般.dts 描述板级信息(也就是开发板上有哪些 IIC 设备、SPI 设备等)，
+- .dtsi 描述 SOC 级信息(也就是 SOC 有几个 CPU、主频是多少、各个外设控制器信息等)。
+
+## DTS、DTB 和 DTC
+
+DTS 是设备树源码文件，DTB 是将 DTS 编译以后得到的二进制文件。
+
+如果要编译 DTS 文件的话只需要进入到 Linux 源码根目录下，然后执行如下命令：
+`make all` 或者：`make dtbs`
+“make all”命令是编译 Linux 源码中的所有东西，包括 zImage，.ko 驱动模块以及设备
+树，如果只是编译设备树的话建议使用“make dtbs”命令。
+
+基于 ARM 架构的 SOC 有很多种，一种 SOC 又可以制作出很多款板子，每个板子都有一个对应的 DTS 文件，那么如何确定编译哪一个 DTS 文件呢？我们就以 I.MX6ULL 这款芯片对应的板子为例来看一下，打开 arch/arm/boot/dts/Makefile，有如下内容：
+
+```
+381 dtb-$(CONFIG_SOC_IMX6UL) += \
+382 imx6ul-14x14-ddr3-arm2.dtb \
+383 imx6ul-14x14-ddr3-arm2-emmc.dtb \
+......
+400 dtb-$(CONFIG_SOC_IMX6ULL) += \
+401 imx6ull-14x14-ddr3-arm2.dtb \
+402 imx6ull-14x14-ddr3-arm2-adc.dtb \
+403 imx6ull-14x14-ddr3-arm2-cs42888.dtb \
+404 imx6ull-14x14-ddr3-arm2-ecspi.dtb \
+405 imx6ull-14x14-ddr3-arm2-emmc.dtb \
+406 imx6ull-14x14-ddr3-arm2-epdc.dtb \
+407 imx6ull-14x14-ddr3-arm2-flexcan2.dtb \
+408 imx6ull-14x14-ddr3-arm2-gpmi-weim.dtb \
+409 imx6ull-14x14-ddr3-arm2-lcdif.dtb \
+410 imx6ull-14x14-ddr3-arm2-ldo.dtb \
+411 imx6ull-14x14-ddr3-arm2-qspi.dtb \
+412 imx6ull-14x14-ddr3-arm2-qspi-all.dtb \
+413 imx6ull-14x14-ddr3-arm2-tsc.dtb \
+414 imx6ull-14x14-ddr3-arm2-uart2.dtb \
+415 imx6ull-14x14-ddr3-arm2-usb.dtb \
+416 imx6ull-14x14-ddr3-arm2-wm8958.dtb \
+417 imx6ull-14x14-evk.dtb \
+418 imx6ull-14x14-evk-btwifi.dtb \
+419 imx6ull-14x14-evk-emmc.dtb \
+420 imx6ull-14x14-evk-gpmi-weim.dtb \
+421 imx6ull-14x14-evk-usb-certi.dtb \
+422 imx6ull-alientek-emmc.dtb \
+423 imx6ull-alientek-nand.dtb \
+424 imx6ull-9x9-evk.dtb \
+425 imx6ull-9x9-evk-btwifi.dtb \
+426 imx6ull-9x9-evk-ldo.dtb
+427 dtb-$(CONFIG_SOC_IMX6SLL) += \
+```
+
+可以看出，当选中 I.MX6ULL 这个 SOC 以后(CONFIG_SOC_IMX6ULL=y)，所有使用到I.MX6ULL 这个 SOC 的板子对应的.dts 文件都会被编译为.dtb。如果我们使用 I.MX6ULL 新做了一个板子，只需要新建一个此板子对应的.dts 文件，然后将对应的.dtb 文件名添加到 dtb-$(CONFIG_SOC_IMX6ULL)下，这样在编译设备树的时候就会将对应的.dts 编译为二进制的.dtb文件。
+
+示例代码 43.2.2 中第 422 和 423 行就是我们在给正点原子的 I.MX6U-ALPHA 开发板移植Linux 系统的时候添加的设备树。
+
+## DTS 语法
+
+大多时候是直接在 SOC 厂商提供的.dts文件上进行修改。我们肯定需要修改.dts文件。
+
+本节我们就以 imx6ull-alientek-emmc.dts 这个文件为例来讲解一下 DTS 语法。关于设备树详细的语法规则请参考开发板光盘中，路 径 为 ： 4 、 参 考 资 料 ->Devicetree SpecificationV0.2.pdf 、 4 、 参 考 资 料 ->Power_ePAPR_APPROVED_v1.12.pdf
+
+### .dtsi 头文件
+和 C 语言一样，设备树也支持头文件，设备树的头文件扩展名为.dtsi。在 imx6ull-alientek-emmc.dts 中有如下所示内容：
+```
+12 #include <dt-bindings/input/input.h>
+13 #include "imx6ull.dtsi"
+```
+- 第 12 行，使用“#include”来引用“input.h”这个.h 头文件。
+- 第 13 行，使用“#include”来引用“imx6ull.dtsi”这个.dtsi 头文件。
+
+在.dts 设备树文件中，可以通过 “#include”来引用.h、.dtsi 和.dts 文件。只是，我们在编写设备树头文件的时候最好选择.dtsi 后缀。
+
 <!--more-->
