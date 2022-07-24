@@ -1075,4 +1075,50 @@ DTS 是设备树源码文件，DTB 是将 DTS 编译以后得到的二进制文�
 
 在.dts 设备树文件中，可以通过 “#include”来引用.h、.dtsi 和.dts 文件。只是，我们在编写设备树头文件的时候最好选择.dtsi 后缀。
 
+一般.dtsi 文件用于描述 SOC 的内部外设信息，比如 CPU 架构、主频、外设寄存器地址范围，比如 UART、IIC 等等。比如 imx6ull.dtsi 就是描述 I.MX6ULL 这颗 SOC 内部外设情况信息的
+
+### 设备节点
+
+设备树是采用树形结构来描述板子上的设备信息的文件，每个设备都是一个节点，叫做设备节点，每个节点都通过一些属性信息来描述节点信息，属性就是键—值对。以下是从imx6ull.dtsi 文件中缩减出来的设备树文件内容：
+
+```
+1 / {
+2 		aliases {
+3 		can0 = &flexcan1;
+4 		};
+5 
+6		cpus {
+7 			#address-cells = <1>;
+8 			#size-cells = <0>;
+9
+10 			cpu0: cpu@0 {
+11 				compatible = "arm,cortex-a7";
+12 				device_type = "cpu";
+13 				reg = <0>;
+14 			};
+15 		};
+16
+17 		intc: interrupt-controller@00a01000 {
+18 			compatible = "arm,cortex-a7-gic";
+19 			#interrupt-cells = <3>;
+20 			interrupt-controller;
+21 			reg = <0x00a01000 0x1000>,
+22 				  <0x00a02000 0x100>;
+23 		};
+24 }
+```
+
+第 1 行，“/”是根节点，每个设备树文件只有一个根节点。细心的同学应该会发现， imx6ull.dtsi
+和 imx6ull-alientek-emmc.dts 这两个文件都有一个“/”根节点，这样不会出错吗？不会的，因为
+这两个“/”根节点的内容会合并成一个根节点。
+第 2、 6 和 17 行， aliases、 cpus 和 intc 是三个子节点，在设备树中节点命名格式如下：
+node-name@unit-address
+其中“node-name”是节点名字，为 ASCII 字符串，节点名字应该能够清晰的描述出节点的
+功能，比如“uart1”就表示这个节点是 UART1 外设。“unit-address”一般表示设备的地址或寄
+存器首地址，如果某个节点没有地址或者寄存器的话“unit-address”可以不要，比如“cpu@0”、
+“interrupt-controller@00a01000”。
+但是我们在示例代码 43.3.2.1 中我们看到的节点命名却如下所示：
+cpu0:cpu@0
+上述命令并不是“node-name@unit-address”这样的格式，而是用“：”隔开成了两部分，“：”
+前面的是节点标签(label)，“：”后面的才是节点名字，格式如下所示：
 <!--more-->
