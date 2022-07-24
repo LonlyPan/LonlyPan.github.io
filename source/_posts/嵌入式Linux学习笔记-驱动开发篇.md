@@ -1442,33 +1442,26 @@ machine_desc 结构体中有个.dt_compat 成员变量，此成员变量保存�
 250 }
 ```
 
-第 218 行，调用函数 of_flat_dt_match_machine 来获取匹配的 machine_desc，参数 mdesc_best
-是 默 认 的 machine_desc ， 参 数 arch_get_next_mach 是 个 函 数 ， 此 函 数 定 义 在 定 义 在
-arch/arm/kernel/devtree.c 文件中。找到匹配的 machine_desc 的过程就是用设备树根节点的
-compatible 属性值和 Linux 内核中 machine_desc 下.dt_compat 的值比较，看看那个相等，如果相
-等的话就表示找到匹配的 machine_desc， arch_get_next_mach 函数的工作就是获取 Linux 内核中
-下一个 machine_desc 结构体。
-最后再来看一下 of_flat_dt_match_machine 函数，此函数定义在文件 drivers/of/fdt.c 中，内
-容如下(有缩减)：
+第 218 行，调用函数 of_flat_dt_match_machine 来获取匹配的 machine_desc，参数 mdesc_best是 默 认 的 machine_desc ， 参 数 arch_get_next_mach 是 个 函 数 ， 此 函 数定 义 在arch/arm/kernel/devtree.c 文件中。找到匹配的 machine_desc 的过程就是用设备树根节点的compatible 属性值和 Linux 内核中 machine_desc 下.dt_compat 的值比较，看看那个相等，如果相等的话就表示找到匹配的 machine_desc， arch_get_next_mach 函数的工作就是获取 Linux 内核中下一个 machine_desc 结构体。
+
+最后再来看一下 of_flat_dt_match_machine 函数，此函数定义在文件 drivers/of/fdt.c 中，内容如下(有缩减)：
 
 ```
-705 const void * __init of_flat_dt_match_machine(const void
-*default_match,
-706 const void * (*get_next_compat)(const char * const**))
+705 const void * __init of_flat_dt_match_machine(const void *default_match, const void * (*get_next_compat)(const char * const**))
 707 {
-708 const void *data = NULL;
-709 const void *best_data = default_match;
-710 const char *const *compat;
-711 unsigned long dt_root;
-712 unsigned int best_score = ~1, score = 0;
+708 	const void *data = NULL;
+709 	const void *best_data = default_match;
+710 	const char *const *compat;
+711 	unsigned long dt_root;
+712 	unsigned int best_score = ~1, score = 0;
 713
-714 dt_root = of_get_flat_dt_root();
-715 while ((data = get_next_compat(&compat))) {
-716 score = of_flat_dt_match(dt_root, compat);
-717 if (score > 0 && score < best_score) {
-718 best_data = data;
-719 best_score = score;
-720 }
+714 	dt_root = of_get_flat_dt_root();
+715 	while ((data = get_next_compat(&compat))) {
+716 		score = of_flat_dt_match(dt_root, compat);
+717 		if (score > 0 && score < best_score) {
+718 			best_data = data;
+719 			best_score = score;
+720 		}
 721 }
 ......
 739
@@ -1479,30 +1472,22 @@ compatible 属性值和 Linux 内核中 machine_desc 下.dt_compat 的值比较�
 ```
 
 第 714 行，通过函数 of_get_flat_dt_root 获取设备树根节点。
-第 715~720 行，此循环就是查找匹配的 machine_desc 过程，第 716 行的 of_flat_dt_match 函
-数会将根节点 compatible 属性的值和每个 machine_desc 结构体中. dt_compat 的值进行比较，直
-至找到匹配的那个 machine_desc。
-总结一下， Linux 内核通过根节点 compatible 属性找到对应的设备的函数调用过程，如图
-43.3.4.2 所示：
+第 715~720 行，此循环就是查找匹配的 machine_desc 过程，第 716 行的 of_flat_dt_match 函数会将根节点 compatible 属性的值和每个 machine_desc 结构体中. dt_compat 的值进行比较，直至找到匹配的那个 machine_desc。
+总结一下， Linux 内核通过根节点 compatible 属性找到对应的设备的函数调用过程，如图43.3.4.2 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632543641.png)
 
-##### 43.3.5 向节点追加或修改内容
-产品开发过程中可能面临着频繁的需求更改，比如第一版硬件上有一个 IIC 接口的六轴芯
-片 MPU6050，第二版硬件又要把这个 MPU6050 更换为 MPU9250 等。一旦硬件修改了，我们
-就要同步的修改设备树文件，毕竟设备树是描述板子硬件信息的文件。假设现在有个六轴芯片
-fxls8471， fxls8471 要接到 I.MX6U-ALPHA 开发板的 I2C1 接口上，那么相当于需要在 i2c1 这
-个节点上添加一个 fxls8471 子节点。先看一下 I2C1 接口对应的节点，打开文件 imx6ull.dtsi 文
-件，找到如下所示内容：
+### 向节点追加或修改内容
+
+产品开发过程中可能面临着频繁的需求更改，比如第一版硬件上有一个 IIC 接口的六轴芯片 MPU6050，第二版硬件又要把这个 MPU6050 更换为 MPU9250 等。一旦硬件修改了，我们就要同步的修改设备树文件，毕竟设备树是描述板子硬件信息的文件。假设现在有个六轴芯片fxls8471， fxls8471 要接到 I.MX6U-ALPHA 开发板的 I2C1 接口上，那么相当于需要在 i2c1 这个节点上添加一个 fxls8471 子节点。先看一下 I2C1 接口对应的节点，打开文件 imx6ull.dtsi 文件，找到如下所示内容：
 ```
-点
 937 i2c1: i2c@021a0000 {
-938 #address-cells = <1>;
-939 #size-cells = <0>;
-940 compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
-941 reg = <0x021a0000 0x4000>;
-942 interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
-943 clocks = <&clks IMX6UL_CLK_I2C1>;
-944 status = "disabled";
+938 	#address-cells = <1>;
+939 	#size-cells = <0>;
+940 	compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
+941 	reg = <0x021a0000 0x4000>;
+942 	interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+943 	clocks = <&clks IMX6UL_CLK_I2C1>;
+944 	status = "disabled";
 945 };
 ```
 示例代码 43.3.5.1 就是 I.MX6ULL 的 I2C1 节点，现在要在 i2c1 节点下创建一个子节点，
