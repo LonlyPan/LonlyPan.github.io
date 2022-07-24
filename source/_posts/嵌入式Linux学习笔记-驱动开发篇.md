@@ -1116,25 +1116,802 @@ DTS 是设备树源码文件，DTB 是将 DTS 编译以后得到的二进制文�
 但是我们在示例代码 43.3.2.1 中我们看到的节点命名却如下所示：
 ```cpu0:cpu@0```
 用“：”隔开成了两部分，“：”前面的是节点标签(label)，“：”后面的才是节点名字，格式如下所示：
-
-label: node-name@unit-address
-引入 label 的目的就是为了方便访问节点，可以直接通过&label 来访问这个节点，比如通过
-&cpu0 就可以访问“cpu@0”这个节点，而不需要输入完整的节点名字。再比如节点 “intc:
-interrupt-controller@00a01000”，节点 label 是 intc，而节点名字就很长了，为“ interruptcontroller@00a01000”。很明显通过&intc 来访问“interrupt-controller@00a01000”这个节点要方
-便很多！
+```label: node-name@unit-address```
+引入 label 的目的就是为了方便访问节点，可以直接通过&label 来访问这个节点，比如通过&cpu0 就可以访问“cpu@0”这个节点，而不需要输入完整的节点名字。再比如节点 “intc:interrupt-controller@00a01000”，节点 label 是 intc，而节点名字就很长了，为“ interruptcontroller@00a01000”。很明显通过&intc 来访问“interrupt-controller@00a01000”这个节点要方便很多！
 第 10 行， cpu0 也是一个节点，只是 cpu0 是 cpus 的子节点。
-每个节点都有不同属性，不同的属性又有不同的内容，属性都是键值对，值可以为空或任
-意的字节流。设备树源码中常用的几种数据形式如下所示：
-①、字符串
+每个节点都有不同属性，不同的属性又有不同的内容，属性都是键值对，值可以为空或任意的字节流。设备树源码中常用的几种数据形式如下所示：
+- ①、字符串
 compatible = "arm,cortex-a7";
 上述代码设置 compatible 属性的值为字符串“arm,cortex-a7”。
-②、 32 位无符号整数
+- ②、 32 位无符号整数
 reg = <0>;
 上述代码设置 reg 属性的值为 0， reg 的值也可以设置为一组值，比如：
 reg = <0 0x123456 100>;
-③、字符串列表
+- ③、字符串列表
 属性值也可以为字符串列表，字符串和字符串之间采用“,”隔开，如下所示：
 compatible = "fsl,imx6ull-gpmi-nand", "fsl, imx6ul-gpmi-nand";
 上述代码设置属性 compatible 的值为“fsl,imx6ull-gpmi-nand”和“fsl, imx6ul-gpmi-nand”。
+
+### 标准属性
+
+节点是由一堆的属性组成，节点都是具体的设备，不同的设备需要的属性不同，用户可以自定义属性。除了用户自定义属性，有很多属性是标准属性， Linux 下的很多外设驱动都会使用这些标准属性，本节我们就来学习一下几个常用的标准属性。
+
+#### 1、 compatible 属性
+
+compatible 属性也叫做“兼容性”属性，这是非常重要的一个属性！ compatible 属性的值是一个字符串列表， compatible 属性用于将设备和驱动绑定起来。字符串列表用于选择设备所要使用的驱动程序， compatible 属性的值格式如下所示：
+```"manufacturer,model"```
+其中 manufacturer 表示厂商， model 一般是模块对应的驱动名字。比如 imx6ull-alientekemmc.dts 中 sound 节点是 I.MX6U-ALPHA 开发板的音频设备节点， I.MX6U-ALPHA 开发板上的音频芯片采用的欧胜(WOLFSON)出品的 WM8960， sound 节点的 compatible 属性值如下：
+```compatible = "fsl,imx6ul-evk-wm8960","fsl,imx-audio-wm8960";```
+属性值有两个，分别为“fsl,imx6ul-evk-wm8960”和“fsl,imx-audio-wm8960”，其中“fsl”表示厂商是飞思卡尔，“imx6ul-evk-wm8960”和“imx-audio-wm8960”表示驱动模块名字。 sound这个设备首先使用第一个兼容值在 Linux 内核里面查找，看看能不能找到与之匹配的驱动文件，如果没有找到的话就使用第二个兼容值查。
+
+驱动程序文件都会有一个 OF 匹配表，此 OF 匹配表保存着一些 compatible 值，如果设备节点的 compatible 属性值和 OF 匹配表中的任何一个值相等，那么就表示设备可以使用这个驱动。比如在驱动文件 imx-wm8960.c 中有如下内容：
+```
+632 static const struct of_device_id imx_wm8960_dt_ids[] = {
+633 	{ .compatible = "fsl,imx-audio-wm8960", },
+634 	{ /* sentinel */ }
+635 };
+636 MODULE_DEVICE_TABLE(of, imx_wm8960_dt_ids);
+637
+638 static struct platform_driver imx_wm8960_driver = {
+639 	.driver = {
+640 		.name = "imx-wm8960",
+641 		.pm = &snd_soc_pm_ops,
+642			 .of_match_table = imx_wm8960_dt_ids,
+643 	},
+644	 	.probe = imx_wm8960_probe,
+645 	.remove = imx_wm8960_remove,
+646 };
+```
+第 632~635 行的数组 imx_wm8960_dt_ids 就是 imx-wm8960.c 这个驱动文件的匹配表，此匹配表只有一个匹配值“fsl,imx-audio-wm8960”。如果在设备树中有哪个节点的 compatible 属性值与此相等，那么这个节点就会使用此驱动文件。
+第 642 行， wm8960 采用了 platform_driver 驱动模式，关于 platform_driver 驱动后面会讲解。此行设置.of_match_table 为 imx_wm8960_dt_ids，也就是设置这个 platform_driver 所使用的OF 匹配表。
+
+#### 2、 model 属性
+model 属性值也是一个字符串，一般 model 属性描述设备模块信息，比如名字什么的，比如：
+```model = "wm8960-audio";```
+
+#### 3、 status 属性
+status 属性看名字就知道是和设备状态有关的， status 属性值也是字符串，字符串是设备的状态信息，可选的状态如表 43.3.3.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658631410840.png)
+
+#### 4、 #address-cells 和#size-cells 属性
+这两个属性的值都是无符号 32 位整形， #address-cells 和#size-cells 这两个属性可以用在任何拥有子节点的设备中，用于描述子节点的地址信息。 #address-cells 属性值决定了子节点 reg 属性中地址信息所占用的字长(32 位)， #size-cells 属性值决定了子节点 reg 属性中长度信息所占的字长(32 位)。 #address-cells 和#size-cells 表明了子节点应该如何编写 reg 属性值，一般 reg 属性
+都是和地址有关的内容，和地址相关的信息有两种：起始地址和地址长度， reg 属性的格式一为：
+```reg = <address1 length1 address2 length2 address3 length3……>```
+每个“address length”组合表示一个地址范围，其中 address 是起始地址， length 是地址长度， #address-cells 表明 address 这个数据所占用的字长， #size-cells 表明 length 这个数据所占用的字长，比如:
+```
+1 spi4 {
+2 		compatible = "spi-gpio";
+3 		#address-cells = <1>;
+4 		#size-cells = <0>;
+5 
+6		gpio_spi: gpio_spi@0 {
+7 			compatible = "fairchild,74hc595";
+8 			reg = <0>;
+9 		};
+10 };
+11
+12 aips3: aips-bus@02200000 {
+13 		compatible = "fsl,aips-bus", "simple-bus";
+14 		#address-cells = <1>;
+15 		#size-cells = <1>;
+16
+17 		dcp: dcp@02280000 {
+18 			compatible = "fsl,imx6sl-dcp";
+19 			reg = <0x02280000 0x4000>;
+20 		};
+21 };
+```
+第 3， 4 行，节点 spi4 的#address-cells = <1>， #size-cells = <0>，说明 spi4 的子节点 reg 属性中起始地址所占用的字长为 1，地址长度所占用的字长为 0。
+第 8 行，子节点 gpio_spi: gpio_spi@0 的 reg 属性值为 <0>，因为父节点设置了#addresscells = <1>， #size-cells = <0>，因此 addres=0，没有 length 的值，相当于设置了起始地址，而没有设置地址长度。
+第 14， 15 行，设置 aips3: aips-bus@02200000 节点#address-cells = <1>， #size-cells = <1>，说明 aips3: aips-bus@02200000 节点起始地址长度所占用的字长为 1，地址长度所占用的字长也为 1。
+第 19 行，子节点 dcp: dcp@02280000 的 reg 属性值为<0x02280000 0x4000>，因为父节点设置了#address-cells = <1>， #size-cells = <1>， address= 0x02280000， length= 0x4000，相当于设置了起始地址为 0x02280000，地址长度为 0x40000。
+
+#### 5、 reg 属性
+reg 属性前面已经提到过了， reg 属性的值一般是(address， length)对。 reg 属性一般用于描述设备地址空间资源信息，一般都是某个外设的寄存器地址范围信息，比如在 imx6ull.dtsi 中有如下内容：
+```
+323 uart1: serial@02020000 {
+324 	compatible = "fsl,imx6ul-uart",
+325 		"fsl,imx6q-uart", "fsl,imx21-uart";
+326 	reg = <0x02020000 0x4000>;
+327 	interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+328 	clocks = <&clks IMX6UL_CLK_UART1_IPG>,
+329 		<&clks IMX6UL_CLK_UART1_SERIAL>;
+330 	clock-names = "ipg", "per";
+331 	status = "disabled";
+332 };
+```
+
+上述代码是节点 uart1， uart1 节点描述了 I.MX6ULL 的 UART1 相关信息，重点是第 326 行的 reg 属性。其中 uart1 的父节点 aips1: aips-bus@02000000 设置了#address-cells = <1>、 #sizecells = <1>，因此 reg 属性中 address=0x02020000， length=0x4000。查阅《I.MX6ULL 参考手册》可知， I.MX6ULL 的 UART1 寄存器首地址为 0x02020000，但是 UART1 的地址长度(范围)并没有 0x4000 这么多，这里我们重点是获取 UART1 寄存器首地址。
+
+#### 6、 ranges 属性
+
+ranges属性值可以为空或者按照(child-bus-address,parent-bus-address,length)格式编写的数字矩阵， ranges 是一个地址映射/转换表， ranges 属性每个项目由子地址、父地址和地址空间长度这三部分组成：
+- child-bus-address：子总线地址空间的物理地址，由父节点的#address-cells 确定此物理地址所占用的字长。
+- parent-bus-address： 父总线地址空间的物理地址，同样由父节点的#address-cells 确定此物理地址所占用的字长。
+- length： 子地址空间的长度，由父节点的#size-cells 确定此地址长度所占用的字长。如果 ranges 属性值为空值，说明子地址空间和父地址空间完全相同，不需要进行地址转换，对于我们所使用的 I.MX6ULL 来说，子地址空间和父地址空间完全相同，因此会在 imx6ull.dtsi中找到大量的值为空的 ranges 属性，如下所示：
+- 
+```
+137 soc {
+138 #address-cells = <1>;
+139 #size-cells = <1>;
+140 compatible = "simple-bus";
+141 interrupt-parent = <&gpc>;
+142 ranges;
+......
+1177 }
+```
+
+第 142 行定义了 ranges 属性，但是 ranges 属性值为空。
+ranges 属性不为空的示例代码如下所示：
+
+```
+1 soc {
+2 compatible = "simple-bus";
+3 #address-cells = <1>;
+4 #size-cells = <1>;
+5 ranges = <0x0 0xe0000000 0x00100000>;
+6 7
+serial {
+8 device_type = "serial";
+9 compatible = "ns16550";
+10 reg = <0x4600 0x100>;
+11 clock-frequency = <0>;
+12 interrupts = <0xA 0x8>;
+13 interrupt-parent = <&ipic>;
+14 };
+15 };
+```
+第 5 行，节点 soc 定义的 ranges 属性，值为<0x0 0xe0000000 0x00100000>，此属性值指定
+了一个 1024KB(0x00100000)的地址范围，子地址空间的物理起始地址为 0x0，父地址空间的物
+理起始地址为 0xe0000000。
+第 10 行， serial 是串口设备节点， reg 属性定义了 serial 设备寄存器的起始地址为 0x4600，
+寄存器长度为 0x100。经过地址转换， serial 设备可以从 0xe0004600 开始进行读写操作，
+0xe0004600=0x4600+0xe0000000。
+7、 name 属性
+name 属性值为字符串， name 属性用于记录节点名字， name 属性已经被弃用，不推荐使用
+name 属性，一些老的设备树文件可能会使用此属性。
+8、 device_type 属性
+device_type 属性值为字符串， IEEE 1275 会用到此属性，用于描述设备的 FCode，但是设
+备树没有 FCode，所以此属性也被抛弃了。此属性只能用于 cpu 节点或者 memory 节点。
+imx6ull.dtsi 的 cpu0 节点用到了此属性，内容如下所示：
+
+```
+54 cpu0: cpu@0 {
+55 compatible = "arm,cortex-a7";
+56 device_type = "cpu";
+57 reg = <0>;
+......
+89 };
+```
+
+#### 根节点 compatible 属性
+每个节点都有 compatible 属性，根节点“/”也不例外， imx6ull-alientek-emmc.dts 文件中根
+节点的 compatible 属性内容如下所示：
+
+```
+14 / {
+15 model = "Freescale i.MX6 ULL 14x14 EVK Board";
+16 compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+......
+148 }
+```
+
+可以看出， compatible 有两个值：“fsl,imx6ull-14x14-evk”和“fsl,imx6ull”。前面我们说了，
+设备节点的 compatible 属性值是为了匹配 Linux 内核中的驱动程序，那么根节点中的 compatible
+属性是为了做什么工作的？ 通过根节点的 compatible 属性可以知道我们所使用的设备，一般第
+一个值描述了所使用的硬件设备名字，比如这里使用的是“imx6ull-14x14-evk”这个设备，第二
+个值描述了设备所使用的 SOC，比如这里使用的是“imx6ull”这颗 SOC。 Linux 内核会通过根
+节点的 compoatible 属性查看是否支持此设备，如果支持的话设备就会启动 Linux 内核。接下来
+我们就来学习一下 Linux 内核在使用设备树前后是如何判断是否支持某款设备的。
+1、使用设备树之前设备匹配方法
+在没有使用设备树以前， uboot 会向 Linux 内核传递一个叫做 machine id 的值， machine id
+也就是设备 ID，告诉 Linux 内核自己是个什么设备，看看 Linux 内核是否支持。 Linux 内核是
+支持很多设备的，针对每一个设备(板子)， Linux内核都用MACHINE_START和MACHINE_END
+来定义一个 machine_desc 结构体来描述这个设备，比如在文件 arch/arm/mach-imx/machmx35_3ds.c 中有如下定义：
+
+```
+613 MACHINE_START(MX35_3DS, "Freescale MX35PDK")
+614 /* Maintainer: Freescale Semiconductor, Inc */
+615 .atag_offset = 0x100,
+616 .map_io = mx35_map_io,
+617 .init_early = imx35_init_early,
+618 .init_irq = mx35_init_irq,
+619 .init_time = mx35pdk_timer_init,
+620 .init_machine = mx35_3ds_init,
+621 .reserve = mx35_3ds_reserve,
+622 .restart = mxc_restart,
+623 MACHINE_END
+```
+
+上述代码就是定义了“ Freescale MX35PDK”这个设备，其中 MACHINE_START 和
+MACHINE_END 定义在文件 arch/arm/include/asm/mach/arch.h 中，内容如下：
+```
+#define MACHINE_START(_type,_name) \
+static const struct machine_desc __mach_desc_##_type \
+__used \
+__attribute__((__section__(".arch.info.init"))) = { \
+.nr = MACH_TYPE_##_type, \
+.name = _name,
+#define MACHINE_END \
+};
+```
+
+根据 MACHINE_START 和 MACHINE_END 的宏定义，将示例代码 43.3.4.2 展开后如下所
+示：
+```
+1 static const struct machine_desc __mach_desc_MX35_3DS \
+2 __used \
+3 __attribute__((__section__(".arch.info.init"))) = {
+4 .nr = MACH_TYPE_MX35_3DS,
+5 .name = "Freescale MX35PDK",
+6 /* Maintainer: Freescale Semiconductor, Inc */
+7 .atag_offset = 0x100,
+8 .map_io = mx35_map_io,
+9 .init_early = imx35_init_early,
+10 .init_irq = mx35_init_irq,
+11 .init_time = mx35pdk_timer_init,
+12 .init_machine = mx35_3ds_init,
+13 .reserve = mx35_3ds_reserve,
+14 .restart = mxc_restart,
+15 };
+```
+
+从示例代码 43.3.4.3 中可以看出，这里定义了一个 machine_desc 类型的结构体变量
+__mach_desc_MX35_3DS ， 这 个 变 量 存 储 在 “ .arch.info.init ” 段 中 。 第 4 行 的
+MACH_TYPE_MX35_3DS 就 是 “ Freescale MX35PDK ” 这 个 板 子 的 machine id 。
+MACH_TYPE_MX35_3DS 定义在文件 include/generated/mach-types.h 中，此文件定义了大量的
+machine id，内容如下所示：
+```
+15 #define MACH_TYPE_EBSA110 0
+16 #define MACH_TYPE_RISCPC 1
+17 #define MACH_TYPE_EBSA285 4
+18 #define MACH_TYPE_NETWINDER 5
+19 #define MACH_TYPE_CATS 6
+20 #define MACH_TYPE_SHARK 15
+21 #define MACH_TYPE_BRUTUS 16
+22 #define MACH_TYPE_PERSONAL_SERVER 17
+......
+287 #define MACH_TYPE_MX35_3DS 1645
+......
+1000 #define MACH_TYPE_PFLA03 4575
+```
+第 287 行就是 MACH_TYPE_MX35_3DS 的值，为 1645。
+前面说了， uboot 会给 Linux 内核传递 machine id 这个参数， Linux 内核会检查这个 machine
+id，其实就是将 machine id 与示例代码 43.3.4.3 中的这些 MACH_TYPE_XXX 宏进行对比，看
+看有没有相等的，如果相等的话就表示 Linux 内核支持这个设备，如果不支持的话那么这个设
+备就没法启动 Linux 内核。
+2、使用设备树以后的设备匹配方法
+当 Linux 内 核 引 入 设 备 树 以 后 就 不 再 使 用 MACHINE_START 了 ， 而 是 换 为 了
+DT_MACHINE_START。 DT_MACHINE_START 也定义在文件 arch/arm/include/asm/mach/arch.h
+里面，定义如下：
+
+```
+#define DT_MACHINE_START(_name, _namestr) \
+static const struct machine_desc __mach_desc_##_name \
+__used \
+__attribute__((__section__(".arch.info.init"))) = { \
+.nr = ~0, \
+.name = _namestr,
+```
+
+可以看出， DT_MACHINE_START 和 MACHINE_START 基本相同，只是.nr 的设置不同，
+在 DT_MACHINE_START 里面直接将.nr 设置为~0。说明引入设备树以后不会再根据 machine
+id 来检查 Linux 内核是否支持某个设备了。
+打开文件 arch/arm/mach-imx/mach-imx6ul.c，有如下所示内容：
+
+```
+208 static const char *imx6ul_dt_compat[] __initconst = {
+209 "fsl,imx6ul",
+210 "fsl,imx6ull",
+211 NULL,
+212 };
+213
+214 DT_MACHINE_START(IMX6UL, "Freescale i.MX6 Ultralite (Device Tree)")
+215 .map_io = imx6ul_map_io,
+216 .init_irq = imx6ul_init_irq,
+217 .init_machine = imx6ul_init_machine,
+218 .init_late = imx6ul_init_late,
+219 .dt_compat = imx6ul_dt_compat,
+220 MACHINE_END
+```
+
+machine_desc 结构体中有个.dt_compat 成员变量，此成员变量保存着本设备兼容属性，示
+例代码 43.3.4.5 中设置.dt_compat = imx6ul_dt_compat， imx6ul_dt_compat 表里面有"fsl,imx6ul"
+和"fsl,imx6ull"这两个兼容值。只要某个设备(板子)根节点“ /”的 compatible 属性值与
+imx6ul_dt_compat 表中的任何一个值相等，那么就表示 Linux 内核支持此设备。 imx6ull-alientekemmc.dts 中根节点的 compatible 属性值如下：
+compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+其中“fsl,imx6ull”与 imx6ul_dt_compat 中的“fsl,imx6ull”匹配，因此 I.MX6U-ALPHA 开
+发板可以正常启动 Linux 内核。如果将 imx6ull-alientek-emmc.dts 根节点的 compatible 属性改为
+其他的值，比如：
+compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ullll"
+重新编译 DTS，并用新的 DTS 启动 Linux 内核，结果如图 43.3.4.1 所示的错误提示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632385165.png)
+
+当我们修改了根节点 compatible 属性内容以后，因为 Linux 内核找不到对应的设备，因此
+Linux 内核无法启动。在 uboot 输出 Starting kernel…以后就再也没有其他信息输出了。
+接下来我们简单看一下 Linux 内核是如何根据设备树根节点的 compatible 属性来匹配出对
+应的 machine_desc， Linux 内核调用 start_kernel 函数来启动内核， start_kernel 函数会调用
+setup_arch 函数来匹配 machine_desc， setup_arch 函数定义在文件 arch/arm/kernel/setup.c 中，函
+数内容如下(有缩减)：
+```
+913 void __init setup_arch(char **cmdline_p)
+914 {
+915 const struct machine_desc *mdesc;
+916
+917 setup_processor();
+918 mdesc = setup_machine_fdt(__atags_pointer);
+919 if (!mdesc)
+920 mdesc = setup_machine_tags(__atags_pointer,
+__machine_arch_type);
+921 machine_desc = mdesc;
+922 machine_name = mdesc->name;
+......
+986 }
+```
+
+第 918 行，调用 setup_machine_fdt 函数来获取匹配的 machine_desc，参数就是 atags 的首
+地址，也就是 uboot 传递给 Linux 内核的 dtb 文件首地址， setup_machine_fdt 函数的返回值就是
+找到的最匹配的 machine_desc。
+函数 setup_machine_fdt 定义在文件 arch/arm/kernel/devtree.c 中，内容如下(有缩减)：
+```
+容
+204 const struct machine_desc * __init setup_machine_fdt(unsigned int
+dt_phys)
+205 {
+206 const struct machine_desc *mdesc, *mdesc_best = NULL;
+......
+214
+215 if (!dt_phys || !early_init_dt_verify(phys_to_virt(dt_phys)))
+216 return NULL;
+217
+218 mdesc = of_flat_dt_match_machine(mdesc_best,
+arch_get_next_mach);
+219
+......
+247 __machine_arch_type = mdesc->nr;
+248
+249 return mdesc;
+250 }
+```
+
+第 218 行，调用函数 of_flat_dt_match_machine 来获取匹配的 machine_desc，参数 mdesc_best
+是 默 认 的 machine_desc ， 参 数 arch_get_next_mach 是 个 函 数 ， 此 函 数 定 义 在 定 义 在
+arch/arm/kernel/devtree.c 文件中。找到匹配的 machine_desc 的过程就是用设备树根节点的
+compatible 属性值和 Linux 内核中 machine_desc 下.dt_compat 的值比较，看看那个相等，如果相
+等的话就表示找到匹配的 machine_desc， arch_get_next_mach 函数的工作就是获取 Linux 内核中
+下一个 machine_desc 结构体。
+最后再来看一下 of_flat_dt_match_machine 函数，此函数定义在文件 drivers/of/fdt.c 中，内
+容如下(有缩减)：
+
+```
+705 const void * __init of_flat_dt_match_machine(const void
+*default_match,
+706 const void * (*get_next_compat)(const char * const**))
+707 {
+708 const void *data = NULL;
+709 const void *best_data = default_match;
+710 const char *const *compat;
+711 unsigned long dt_root;
+712 unsigned int best_score = ~1, score = 0;
+713
+714 dt_root = of_get_flat_dt_root();
+715 while ((data = get_next_compat(&compat))) {
+716 score = of_flat_dt_match(dt_root, compat);
+717 if (score > 0 && score < best_score) {
+718 best_data = data;
+719 best_score = score;
+720 }
+721 }
+......
+739
+740 pr_info("Machine model: %s\n", of_flat_dt_get_machine_name());
+741
+742 return best_data;
+743 }
+```
+
+第 714 行，通过函数 of_get_flat_dt_root 获取设备树根节点。
+第 715~720 行，此循环就是查找匹配的 machine_desc 过程，第 716 行的 of_flat_dt_match 函
+数会将根节点 compatible 属性的值和每个 machine_desc 结构体中. dt_compat 的值进行比较，直
+至找到匹配的那个 machine_desc。
+总结一下， Linux 内核通过根节点 compatible 属性找到对应的设备的函数调用过程，如图
+43.3.4.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632543641.png)
+
+##### 43.3.5 向节点追加或修改内容
+产品开发过程中可能面临着频繁的需求更改，比如第一版硬件上有一个 IIC 接口的六轴芯
+片 MPU6050，第二版硬件又要把这个 MPU6050 更换为 MPU9250 等。一旦硬件修改了，我们
+就要同步的修改设备树文件，毕竟设备树是描述板子硬件信息的文件。假设现在有个六轴芯片
+fxls8471， fxls8471 要接到 I.MX6U-ALPHA 开发板的 I2C1 接口上，那么相当于需要在 i2c1 这
+个节点上添加一个 fxls8471 子节点。先看一下 I2C1 接口对应的节点，打开文件 imx6ull.dtsi 文
+件，找到如下所示内容：
+```
+点
+937 i2c1: i2c@021a0000 {
+938 #address-cells = <1>;
+939 #size-cells = <0>;
+940 compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
+941 reg = <0x021a0000 0x4000>;
+942 interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+943 clocks = <&clks IMX6UL_CLK_I2C1>;
+944 status = "disabled";
+945 };
+```
+示例代码 43.3.5.1 就是 I.MX6ULL 的 I2C1 节点，现在要在 i2c1 节点下创建一个子节点，
+这个子节点就是 fxls8471，最简单的方法就是在 i2c1 下直接添加一个名为 fxls8471 的子节点，
+如下所示：
+
+```
+937 i2c1: i2c@021a0000 {
+938 #address-cells = <1>;
+939 #size-cells = <0>;
+940 compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
+941 reg = <0x021a0000 0x4000>;
+942 interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+943 clocks = <&clks IMX6UL_CLK_I2C1>;
+944 status = "disabled";
+945
+946 //fxls8471 子节点
+947 fxls8471@1e {
+948 compatible = "fsl,fxls8471";
+949 reg = <0x1e>;
+950 };
+951 };
+```
+
+第 947~950 行就是添加的 fxls8471 这个芯片对应的子节点。但是这样会有个问题！ i2c1 节
+点是定义在 imx6ull.dtsi 文件中的，而 imx6ull.dtsi 是设备树头文件，其他所有使用到 I.MX6ULL
+这颗 SOC 的板子都会引用 imx6ull.dtsi 这个文件。直接在 i2c1 节点中添加 fxls8471 就相当于在
+其他的所有板子上都添加了 fxls8471 这个设备，但是其他的板子并没有这个设备啊！因此，按
+照示例代码 43.3.5.2 这样写肯定是不行的。
+这里就要引入另外一个内容，那就是如何向节点追加数据，我们现在要解决的就是如何向
+i2c1 节点追加一个名为 fxls8471 的子节点，而且不能影响到其他使用到 I.MX6ULL 的板子。
+I.MX6U-ALPHA 开发板使用的设备树文件为 imx6ull-alientek-emmc.dts，因此我们需要在
+imx6ull-alientek-emmc.dts 文件中完成数据追加的内容，方式如下：
+
+```
+1 &i2c1 {
+2 /* 要追加或修改的内容 */
+3 };
+```
+
+第 1 行， &i2c1 表示要访问 i2c1 这个 label 所对应的节点，也就是 imx6ull.dtsi 中的“i2c1:
+i2c@021a0000”。
+第 2 行，花括号内就是要向 i2c1 这个节点添加的内容，包括修改某些属性的值。
+打开 imx6ull-alientek-emmc.dts，找到如下所示内容：
+```
+224 &i2c1 {
+225 clock-frequency = <100000>;
+226 pinctrl-names = "default";
+227 pinctrl-0 = <&pinctrl_i2c1>;
+228 status = "okay";
+229
+230 mag3110@0e {
+231 compatible = "fsl,mag3110";
+232 reg = <0x0e>;
+233 position = <2>;
+234 };
+235
+236 fxls8471@1e {
+237 compatible = "fsl,fxls8471";
+238 reg = <0x1e>;
+239 position = <0>;
+240 interrupt-parent = <&gpio5>;
+241 interrupts = <0 8>;
+242 };
+243 };
+```
+
+示例代码 43.3.5.4 就是向 i2c1 节点添加/修改数据，比如第 225 行的属性“clock-frequency”
+就表示 i2c1 时钟为 100KHz。“clock-frequency”就是新添加的属性。
+第 228 行，将 status 属性的值由原来的 disabled 改为 okay。
+第 230~234 行， i2c1 子节点 mag3110，因为 NXP 官方开发板在 I2C1 上接了一个磁力计芯
+片 mag3110，正点原子的 I.MX6U-ALPHA 开发板并没有使用 mag3110。
+第 236~242 行， i2c1 子节点 fxls8471，同样是因为 NXP 官方开发板在 I2C1 上接了 fxls8471
+这颗六轴芯片。
+因为示例代码 43.3.5.4 中的内容是 imx6ull-alientek-emmc.dts 这个文件内的，所以不会对
+使用 I.MX6ULL 这颗 SOC 的其他板子造成任何影响。这个就是向节点追加或修改内容，重点
+就是通过&label 来访问节点，然后直接在里面编写要追加或者修改的内容。
+
+##### 创建小型模板设备树
+上一节已经对 DTS 的语法做了比较详细的讲解，本节我们就根据前面讲解的语法，从头到
+尾编写一个小型的设备树文件。当然了，这个小型设备树没有实际的意义，做这个的目的是为
+了掌握设备树的语法。在实际产品开发中，我们是不需要完完全全的重写一个.dts 设备树文件，
+一般都是使用 SOC 厂商提供好的.dts 文件，我们只需要在上面根据自己的实际情况做相应的修
+改即可。在编写设备树之前要先定义一个设备，我们就以 I.MX6ULL 这个 SOC 为例，我们需要
+在设备树里面描述的内容如下：
+①、 I.MX6ULL 这个 Cortex-A7 架构的 32 位 CPU。
+②、 I.MX6ULL 内部 ocram，起始地址 0x00900000，大小为 128KB(0x20000)。
+③、 I.MX6ULL 内部 aips1 域下的 ecspi1 外设控制器，寄存器起始地址为 0x02008000，大
+小为 0x4000。
+④、 I.MX6ULL 内部 aips2 域下的 usbotg1 外设控制器，寄存器起始地址为 0x02184000，大
+小为 0x4000。
+⑤、 I.MX6ULL 内部 aips3 域下的 rngb 外设控制器，寄存器起始地址为 0x02284000，大小
+为 0x4000。
+为了简单起见，我们就在设备树里面就实现这些内容即可，首先，搭建一个仅含有根节点
+“/”的基础的框架，新建一个名为 myfirst.dts 文件，在里面输入如下所示内容：
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 }
+```
+
+设备树框架很简单，就一个根节点“/”，根节点里面只有一个 compatible 属性。我们就在这
+个基础框架上面将上面列出的内容一点点添加进来。
+1、添加 cpus 节点
+首先添加 CPU 节点， I.MX6ULL 采用 Cortex-A7 架构，而且只有一个 CPU，因此只有一个
+cpu0 节点，完成以后如下所示：
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3
+4 cpus {
+5 #address-cells = <1>;
+6 #size-cells = <0>;
+7 8
+//CPU0 节点
+9 cpu0: cpu@0 {
+10 compatible = "arm,cortex-a7";
+11 device_type = "cpu";
+12 reg = <0>;
+13 };
+14 };
+15 }
+```
+
+第 4~14 行， cpus 节点，此节点用于描述 SOC 内部的所有 CPU，因为 I.MX6ULL 只有一个
+CPU，因此只有一个 cpu0 子节点。
+2、添加 soc 节点
+像 uart， iic 控制器等等这些都属于 SOC 内部外设，因此一般会创建一个叫做 soc 的父节点
+来管理这些 SOC 内部外设的子节点，添加 soc 节点以后的 myfirst.dts 文件内容如下所示：
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 4
+cpus {
+5 #address-cells = <1>;
+6 #size-cells = <0>;
+7 8
+//CPU0 节点
+9 cpu0: cpu@0 {
+10 compatible = "arm,cortex-a7";
+11 device_type = "cpu";
+12 reg = <0>;
+13 };
+14 };
+15
+16 //soc 节点
+17 soc {
+18 #address-cells = <1>;
+19 #size-cells = <1>;
+20 compatible = "simple-bus";
+21 ranges;
+22 }
+23 }
+```
+第 17~22 行， soc 节点， soc 节点设置#address-cells = <1>， #size-cells = <1>，这样 soc 子节
+点的 reg 属性中起始地占用一个字长，地址空间长度也占用一个字长。
+第 21 行， ranges 属性， ranges 属性为空，说明子空间和父空间地址范围相同。
+3、添加 ocram 节点
+根据第②点的要求，添加 ocram 节点， ocram 是 I.MX6ULL 内部 RAM，因此 ocram 节点应
+该是 soc 节点的子节点。 ocram 起始地址为 0x00900000，大小为 128KB(0x20000)，添加 ocram
+节点以后 myfirst.dts 文件内容如下所示：
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 4
+cpus {
+5 #address-cells = <1>;
+6 #size-cells = <0>;
+7 8
+//CPU0 节点
+9 cpu0: cpu@0 {
+10 compatible = "arm,cortex-a7";
+11 device_type = "cpu";
+12 reg = <0>;
+13 };
+14 };
+15
+16 //soc 节点
+17 soc {
+18 #address-cells = <1>;
+19 #size-cells = <1>;
+20 compatible = "simple-bus";
+21 ranges;
+22
+23 //ocram 节点
+24 ocram: sram@00900000 {
+25 compatible = "fsl,lpm-sram";
+26 reg = <0x00900000 0x20000>;
+27 };
+28 }
+29 }
+```
+
+第 24~27 行， ocram 节点，第 24 行节点名字@后面的 0x00900000 就是 ocram 的起始地址。
+第 26 行的 reg 属性也指明了 ocram 内存的起始地址为 0x00900000，大小为 0x20000。
+4、添加 aips1、 aips2 和 aips3 这三个子节点
+I.MX6ULL 内部分为三个域： aips1~3，这三个域分管不同的外设控制器， aips1~3 这三个域
+对应的内存范围如表 43.4.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632984260.png)
+
+我们先在设备树中添加这三个域对应的子节点。aips1~3 这三个域都属于 soc 节点的子节点，
+完成以后的 myfirst.dts 文件内容如下所示：
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 4
+cpus {
+5 #address-cells = <1>;
+6 #size-cells = <0>;
+7 8
+//CPU0 节点
+9 cpu0: cpu@0 {
+10 compatible = "arm,cortex-a7";
+11 device_type = "cpu";
+12 reg = <0>;
+13 };
+14 };
+15
+16 //soc 节点
+17 soc {
+18 #address-cells = <1>;
+19 #size-cells = <1>;
+20 compatible = "simple-bus";
+21 ranges;
+22
+23 //ocram 节点
+24 ocram: sram@00900000 {
+25 compatible = "fsl,lpm-sram";
+26 reg = <0x00900000 0x20000>;
+27 };
+28
+29 //aips1 节点
+30 aips1: aips-bus@02000000 {
+31 compatible = "fsl,aips-bus", "simple-bus";
+32 #address-cells = <1>;
+33 #size-cells = <1>;
+34 reg = <0x02000000 0x100000>;
+35 ranges;
+36 }
+37
+坛:www.openedv.com
+1103
+I.MX6U 嵌入式 Linux 驱动开发指南
+38 //aips2 节点
+39 aips2: aips-bus@02100000 {
+40 compatible = "fsl,aips-bus", "simple-bus";
+41 #address-cells = <1>;
+42 #size-cells = <1>;
+43 reg = <0x02100000 0x100000>;
+44 ranges;
+45 }
+46
+47 //aips3 节点
+48 aips3: aips-bus@02200000 {
+49 compatible = "fsl,aips-bus", "simple-bus";
+50 #address-cells = <1>;
+51 #size-cells = <1>;
+52 reg = <0x02200000 0x100000>;
+53 ranges;
+54 }
+55 }
+56 }
+```
+
+第 30~36 行， aips1 节点。
+第 39~45 行， aips2 节点。
+第 48~54 行， aips3 节点。
+5、添加 ecspi1、 usbotg1 和 rngb 这三个外设控制器节点
+最后我们在 myfirst.dts 文件中加入 ecspi1， usbotg1 和 rngb 这三个外设控制器对应的节点，
+其中 ecspi1 属于 aips1 的子节点， usbotg1 属于 aips2 的子节点， rngb 属于 aips3 的子节点。最终
+的 myfirst.dts 文件内容如下：
+
+```
+1 / {
+2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 4
+cpus {
+5 #address-cells = <1>;
+6 #size-cells = <0>;
+7 8
+//CPU0 节点
+9 cpu0: cpu@0 {
+10 compatible = "arm,cortex-a7";
+11 device_type = "cpu";
+12 reg = <0>;
+13 };
+14 };
+15
+16 //soc 节点
+17 soc {
+18 #address-cells = <1>;
+19 #size-cells = <1>;
+20 compatible = "simple-bus";
+21 ranges;
+22
+23 //ocram 节点
+24 ocram: sram@00900000 {
+25 compatible = "fsl,lpm-sram";
+26 reg = <0x00900000 0x20000>;
+27 };
+28
+29 //aips1 节点
+30 aips1: aips-bus@02000000 {
+31 compatible = "fsl,aips-bus", "simple-bus";
+32 #address-cells = <1>;
+33 #size-cells = <1>;
+34 reg = <0x02000000 0x100000>;
+35 ranges;
+36
+37 //ecspi1 节点
+38 ecspi1: ecspi@02008000 {
+39 #address-cells = <1>;
+40 #size-cells = <0>;
+41 compatible = "fsl,imx6ul-ecspi", "fsl,imx51-ecspi";
+42 reg = <0x02008000 0x4000>;
+43 status = "disabled";
+44 };
+45 }
+46
+47 //aips2 节点
+48 aips2: aips-bus@02100000 {
+49 compatible = "fsl,aips-bus", "simple-bus";
+50 #address-cells = <1>;
+51 #size-cells = <1>;
+52 reg = <0x02100000 0x100000>;
+53 ranges;
+54
+55 //usbotg1 节点
+56 usbotg1: usb@02184000 {
+57 compatible = "fsl,imx6ul-usb", "fsl,imx27-usb";
+58 reg = <0x02184000 0x4000>;
+59 status = "disabled";
+60 };
+61 }
+62
+63 //aips3 节点
+64 aips3: aips-bus@02200000 {
+65 compatible = "fsl,aips-bus", "simple-bus";
+66 #address-cells = <1>;
+67 #size-cells = <1>;
+68 reg = <0x02200000 0x100000>;
+69 ranges;
+70
+71 //rngb 节点
+72 rngb: rngb@02284000 {
+73 compatible = "fsl,imx6sl-rng", "fsl,imx-rng", "imxrng";
+74 reg = <0x02284000 0x4000>;
+75 };
+76 }
+77 }
+78 }
+```
+
+第 38~44 行， ecspi1 外设控制器节点。
+第 56~60 行， usbotg1 外设控制器节点。
+第 72~75 行， rngb 外设控制器节点。
+至此， myfirst.dts 这个小型的模板设备树就编写好了，基本和 imx6ull.dtsi 很像，可以看做
+是 imx6ull.dtsi 的缩小版。在 myfirst.dts 里面我们仅仅是编写了 I.MX6ULL 的外设控制器节点，
+像 IIC 接口， SPI 接口下所连接的具体设备我们并没有写，因为具体的设备其设备树属性内容不
+同，这个等到具体的实验在详细讲解。
+
+#### 第 38~44 行， ecspi1 外设控制器节点。
+第 56~60 行， usbotg1 外设控制器节点。
+第 72~75 行， rngb 外设控制器节点。
+至此， myfirst.dts 这个小型的模板设备树就编写好了，基本和 imx6ull.dtsi 很像，可以看做
+是 imx6ull.dtsi 的缩小版。在 myfirst.dts 里面我们仅仅是编写了 I.MX6ULL 的外设控制器节点，
+像 IIC 接口， SPI 接口下所连接的具体设备我们并没有写，因为具体的设备其设备树属性内容不
+同，这个等到具体的实验在详细讲解。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658633153328.png)
+
+图 43.5.1 就是目录/proc/device-tree 目录下的内容， /proc/device-tree 目录下是根节点“/”的
+所有属性和子节点，我们依次来看一下这些属性和子节点。
+1、根节点“/”各个属性
+在图 43.5.1 中，根节点属性属性表现为一个个的文件(图中细字体文件)，比如图 43.5.1 中
+的“#address-cells”、“#size-cells”、“compatible”、“model”和“name”这 5 个文件，它们在设
+备树中就是根节点的 5个属性。既然是文件那么肯定可以查看其内容，输入cat 命令来查看 model
+和 compatible 这两个文件的内容，结果如图 43.5.2 所示：
+
 
 <!--more-->
