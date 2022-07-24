@@ -1490,37 +1490,29 @@ machine_desc 结构体中有个.dt_compat 成员变量，此成员变量保存�
 944 	status = "disabled";
 945 };
 ```
-示例代码 43.3.5.1 就是 I.MX6ULL 的 I2C1 节点，现在要在 i2c1 节点下创建一个子节点，
-这个子节点就是 fxls8471，最简单的方法就是在 i2c1 下直接添加一个名为 fxls8471 的子节点，
-如下所示：
+示例代码 43.3.5.1 就是 I.MX6ULL 的 I2C1 节点，现在要在 i2c1 节点下创建一个子节点，这个子节点就是 fxls8471，最简单的方法就是在 i2c1 下直接添加一个名为 fxls8471 的子节点，如下所示：
 
 ```
 937 i2c1: i2c@021a0000 {
-938 #address-cells = <1>;
-939 #size-cells = <0>;
-940 compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
-941 reg = <0x021a0000 0x4000>;
-942 interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
-943 clocks = <&clks IMX6UL_CLK_I2C1>;
-944 status = "disabled";
+938 	#address-cells = <1>;
+939 	#size-cells = <0>;
+940 	compatible = "fsl,imx6ul-i2c", "fsl,imx21-i2c";
+941 	reg = <0x021a0000 0x4000>;
+942 	interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>;
+943 	clocks = <&clks IMX6UL_CLK_I2C1>;
+944 	status = "disabled";
 945
-946 //fxls8471 子节点
-947 fxls8471@1e {
-948 compatible = "fsl,fxls8471";
-949 reg = <0x1e>;
-950 };
+946 	//fxls8471 子节点
+947 	fxls8471@1e {
+948 		compatible = "fsl,fxls8471";
+949 		reg = <0x1e>;
+950 	};
 951 };
 ```
 
-第 947~950 行就是添加的 fxls8471 这个芯片对应的子节点。但是这样会有个问题！ i2c1 节
-点是定义在 imx6ull.dtsi 文件中的，而 imx6ull.dtsi 是设备树头文件，其他所有使用到 I.MX6ULL
-这颗 SOC 的板子都会引用 imx6ull.dtsi 这个文件。直接在 i2c1 节点中添加 fxls8471 就相当于在
-其他的所有板子上都添加了 fxls8471 这个设备，但是其他的板子并没有这个设备啊！因此，按
-照示例代码 43.3.5.2 这样写肯定是不行的。
-这里就要引入另外一个内容，那就是如何向节点追加数据，我们现在要解决的就是如何向
-i2c1 节点追加一个名为 fxls8471 的子节点，而且不能影响到其他使用到 I.MX6ULL 的板子。
-I.MX6U-ALPHA 开发板使用的设备树文件为 imx6ull-alientek-emmc.dts，因此我们需要在
-imx6ull-alientek-emmc.dts 文件中完成数据追加的内容，方式如下：
+第 947~950 行就是添加的 fxls8471 这个芯片对应的子节点。但是这样会有个问题！ i2c1 节点是定义在 imx6ull.dtsi 文件中的，而 imx6ull.dtsi 是设备树头文件，其他所有使用到 I.MX6ULL这颗 SOC 的板子都会引用 imx6ull.dtsi 这个文件。直接在 i2c1 节点中添加 fxls8471 就相当于在其他的所有板子上都添加了 fxls8471 这个设备，但是其他的板子并没有这个设备啊！因此，按照示例代码 43.3.5.2 这样写肯定是不行的。
+
+这里就要引入另外一个内容，那就是如何向节点追加数据，我们现在要解决的就是如何向i2c1 节点追加一个名为 fxls8471 的子节点，而且不能影响到其他使用到 I.MX6ULL 的板子。I.MX6U-ALPHA 开发板使用的设备树文件为 imx6ull-alientek-emmc.dts，因此我们需要在imx6ull-alientek-emmc.dts 文件中完成数据追加的内容，方式如下：
 
 ```
 1 &i2c1 {
@@ -1528,168 +1520,154 @@ imx6ull-alientek-emmc.dts 文件中完成数据追加的内容，方式如下：
 3 };
 ```
 
-第 1 行， &i2c1 表示要访问 i2c1 这个 label 所对应的节点，也就是 imx6ull.dtsi 中的“i2c1:
-i2c@021a0000”。
+第 1 行， &i2c1 表示要访问 i2c1 这个 label 所对应的节点，也就是 imx6ull.dtsi 中的“i2c1:i2c@021a0000”。
 第 2 行，花括号内就是要向 i2c1 这个节点添加的内容，包括修改某些属性的值。
 打开 imx6ull-alientek-emmc.dts，找到如下所示内容：
 ```
 224 &i2c1 {
-225 clock-frequency = <100000>;
-226 pinctrl-names = "default";
-227 pinctrl-0 = <&pinctrl_i2c1>;
-228 status = "okay";
+225 	clock-frequency = <100000>;
+226 	pinctrl-names = "default";
+227 	pinctrl-0 = <&pinctrl_i2c1>;
+228 	status = "okay";
 229
-230 mag3110@0e {
-231 compatible = "fsl,mag3110";
-232 reg = <0x0e>;
-233 position = <2>;
-234 };
+230 	mag3110@0e {
+231 		compatible = "fsl,mag3110";
+232 		reg = <0x0e>;
+233 		position = <2>;
+234 	};
 235
-236 fxls8471@1e {
-237 compatible = "fsl,fxls8471";
-238 reg = <0x1e>;
-239 position = <0>;
-240 interrupt-parent = <&gpio5>;
-241 interrupts = <0 8>;
-242 };
+236 	fxls8471@1e {
+237 		compatible = "fsl,fxls8471";
+238 		reg = <0x1e>;
+239 		position = <0>;
+240 		interrupt-parent = <&gpio5>;
+241 		interrupts = <0 8>;
+242 	};
 243 };
 ```
 
-示例代码 43.3.5.4 就是向 i2c1 节点添加/修改数据，比如第 225 行的属性“clock-frequency”
-就表示 i2c1 时钟为 100KHz。“clock-frequency”就是新添加的属性。
+示例代码 43.3.5.4 就是向 i2c1 节点添加/修改数据，比如第 225 行的属性“clock-frequency”就表示 i2c1 时钟为 100KHz。“clock-frequency”就是新添加的属性。
 第 228 行，将 status 属性的值由原来的 disabled 改为 okay。
-第 230~234 行， i2c1 子节点 mag3110，因为 NXP 官方开发板在 I2C1 上接了一个磁力计芯
-片 mag3110，正点原子的 I.MX6U-ALPHA 开发板并没有使用 mag3110。
-第 236~242 行， i2c1 子节点 fxls8471，同样是因为 NXP 官方开发板在 I2C1 上接了 fxls8471
-这颗六轴芯片。
-因为示例代码 43.3.5.4 中的内容是 imx6ull-alientek-emmc.dts 这个文件内的，所以不会对
-使用 I.MX6ULL 这颗 SOC 的其他板子造成任何影响。这个就是向节点追加或修改内容，重点
-就是通过&label 来访问节点，然后直接在里面编写要追加或者修改的内容。
+第 230~234 行， i2c1 子节点 mag3110，因为 NXP 官方开发板在 I2C1 上接了一个磁力计芯片 mag3110，正点原子的 I.MX6U-ALPHA 开发板并没有使用 mag3110。
+第 236~242 行， i2c1 子节点 fxls8471，同样是因为 NXP 官方开发板在 I2C1 上接了 fxls8471这颗六轴芯片。
+因为示例代码 43.3.5.4 中的内容是 imx6ull-alientek-emmc.dts 这个文件内的，所以不会对使用 I.MX6ULL 这颗 SOC 的其他板子造成任何影响。这个就是向节点追加或修改内容，重点就是通过&label 来访问节点，然后直接在里面编写要追加或者修改的内容。
 
-##### 创建小型模板设备树
-上一节已经对 DTS 的语法做了比较详细的讲解，本节我们就根据前面讲解的语法，从头到
-尾编写一个小型的设备树文件。当然了，这个小型设备树没有实际的意义，做这个的目的是为
-了掌握设备树的语法。在实际产品开发中，我们是不需要完完全全的重写一个.dts 设备树文件，
-一般都是使用 SOC 厂商提供好的.dts 文件，我们只需要在上面根据自己的实际情况做相应的修
-改即可。在编写设备树之前要先定义一个设备，我们就以 I.MX6ULL 这个 SOC 为例，我们需要
+## 创建小型模板设备树
+
+上一节已经对 DTS 的语法做了比较详细的讲解，本节我们就根据前面讲解的语法，从头到尾编写一个小型的设备树文件。当然了，这个小型设备树没有实际的意义，做这个的目的是为了掌握设备树的语法。在实际产品开发中，我们是不需要完完全全的重写一个.dts 设备树文件，一般都是使用 SOC 厂商提供好的.dts 文件，我们只需要在上面根据自己的实际情况做相应的修改即可。在编写设备树之前要先定义一个设备，我们就以 I.MX6ULL 这个 SOC 为例，我们需要
 在设备树里面描述的内容如下：
-①、 I.MX6ULL 这个 Cortex-A7 架构的 32 位 CPU。
-②、 I.MX6ULL 内部 ocram，起始地址 0x00900000，大小为 128KB(0x20000)。
-③、 I.MX6ULL 内部 aips1 域下的 ecspi1 外设控制器，寄存器起始地址为 0x02008000，大
-小为 0x4000。
-④、 I.MX6ULL 内部 aips2 域下的 usbotg1 外设控制器，寄存器起始地址为 0x02184000，大
-小为 0x4000。
-⑤、 I.MX6ULL 内部 aips3 域下的 rngb 外设控制器，寄存器起始地址为 0x02284000，大小
-为 0x4000。
-为了简单起见，我们就在设备树里面就实现这些内容即可，首先，搭建一个仅含有根节点
-“/”的基础的框架，新建一个名为 myfirst.dts 文件，在里面输入如下所示内容：
+- ①、 I.MX6ULL 这个 Cortex-A7 架构的 32 位 CPU。
+- ②、 I.MX6ULL 内部 ocram，起始地址 0x00900000，大小为 128KB(0x20000)。
+- ③、 I.MX6ULL 内部 aips1 域下的 ecspi1 外设控制器，寄存器起始地址为 0x02008000，大小为 0x4000。
+- ④、 I.MX6ULL 内部 aips2 域下的 usbotg1 外设控制器，寄存器起始地址为 0x02184000，大小为 0x4000。
+- ⑤、 I.MX6ULL 内部 aips3 域下的 rngb 外设控制器，寄存器起始地址为 0x02284000，大小为 0x4000。
+
+为了简单起见，我们就在设备树里面就实现这些内容即可，首先，搭建一个仅含有根节点“/”的基础的框架，新建一个名为 myfirst.dts 文件，在里面输入如下所示内容：
 ```
 1 / {
-2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+2 	compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
 3 }
 ```
 
-设备树框架很简单，就一个根节点“/”，根节点里面只有一个 compatible 属性。我们就在这
-个基础框架上面将上面列出的内容一点点添加进来。
-1、添加 cpus 节点
-首先添加 CPU 节点， I.MX6ULL 采用 Cortex-A7 架构，而且只有一个 CPU，因此只有一个
-cpu0 节点，完成以后如下所示：
+设备树框架很简单，就一个根节点“/”，根节点里面只有一个 compatible 属性。我们就在这个基础框架上面将上面列出的内容一点点添加进来。
+
+### 1、添加 cpus 节点
+
+首先添加 CPU 节点， I.MX6ULL 采用 Cortex-A7 架构，而且只有一个 CPU，因此只有一个cpu0 节点，完成以后如下所示：
 ```
 1 / {
-2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+2 	compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
 3
-4 cpus {
-5 #address-cells = <1>;
-6 #size-cells = <0>;
-7 8
-//CPU0 节点
-9 cpu0: cpu@0 {
-10 compatible = "arm,cortex-a7";
-11 device_type = "cpu";
-12 reg = <0>;
-13 };
-14 };
+4 	cpus {
+5 		#address-cells = <1>;
+6 		#size-cells = <0>;
+7 
+8		//CPU0 节点
+9 		cpu0: cpu@0 {
+10 			compatible = "arm,cortex-a7";
+11 			device_type = "cpu";
+12 			reg = <0>;
+13 		};
+14 	};
 15 }
 ```
 
-第 4~14 行， cpus 节点，此节点用于描述 SOC 内部的所有 CPU，因为 I.MX6ULL 只有一个
-CPU，因此只有一个 cpu0 子节点。
-2、添加 soc 节点
-像 uart， iic 控制器等等这些都属于 SOC 内部外设，因此一般会创建一个叫做 soc 的父节点
-来管理这些 SOC 内部外设的子节点，添加 soc 节点以后的 myfirst.dts 文件内容如下所示：
+第 4~14 行， cpus 节点，此节点用于描述 SOC 内部的所有 CPU，因为 I.MX6ULL 只有一个CPU，因此只有一个 cpu0 子节点。
+
+### 2、添加 soc 节点
+
+像 uart， iic 控制器等等这些都属于 SOC 内部外设，因此一般会创建一个叫做 soc 的父节点来管理这些 SOC 内部外设的子节点，添加 soc 节点以后的 myfirst.dts 文件内容如下所示：
 ```
 1 / {
-2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
-3 4
-cpus {
-5 #address-cells = <1>;
-6 #size-cells = <0>;
-7 8
-//CPU0 节点
-9 cpu0: cpu@0 {
-10 compatible = "arm,cortex-a7";
-11 device_type = "cpu";
-12 reg = <0>;
-13 };
-14 };
+2 	compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 
+4	cpus {
+5 		#address-cells = <1>;
+6 		#size-cells = <0>;
+7 
+8		//CPU0 节点
+9 		cpu0: cpu@0 {
+10 			compatible = "arm,cortex-a7";
+11 			device_type = "cpu";
+12 			reg = <0>;
+13 		};
+14 	};
 15
-16 //soc 节点
-17 soc {
-18 #address-cells = <1>;
-19 #size-cells = <1>;
-20 compatible = "simple-bus";
-21 ranges;
-22 }
+16 	//soc 节点
+17 	soc {
+18 		#address-cells = <1>;
+19 		#size-cells = <1>;
+20 		compatible = "simple-bus";
+21 		ranges;
+22 	}
 23 }
 ```
-第 17~22 行， soc 节点， soc 节点设置#address-cells = <1>， #size-cells = <1>，这样 soc 子节
-点的 reg 属性中起始地占用一个字长，地址空间长度也占用一个字长。
-第 21 行， ranges 属性， ranges 属性为空，说明子空间和父空间地址范围相同。
-3、添加 ocram 节点
-根据第②点的要求，添加 ocram 节点， ocram 是 I.MX6ULL 内部 RAM，因此 ocram 节点应
-该是 soc 节点的子节点。 ocram 起始地址为 0x00900000，大小为 128KB(0x20000)，添加 ocram
-节点以后 myfirst.dts 文件内容如下所示：
+第 17~22 行， soc 节点， soc 节点设置#address-cells = <1>， #size-cells = <1>，这样 soc 子节点的 reg 属性中起始地占用一个字长，地址空间长度也占用一个字长。
+第 21 行， ranges 属性， rangeWs 属性为空，说明子空间和父空间地址范围相同。
+
+### 3、添加 ocram 节点
+根据第②点的要求，添加 ocram 节点， ocram 是 I.MX6ULL 内部 RAM，因此 ocram 节点应该是 soc 节点的子节点。 ocram 起始地址为 0x00900000，大小为 128KB(0x20000)，添加 ocram节点以后 myfirst.dts 文件内容如下所示：
 ```
 1 / {
-2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
-3 4
-cpus {
-5 #address-cells = <1>;
-6 #size-cells = <0>;
-7 8
-//CPU0 节点
-9 cpu0: cpu@0 {
-10 compatible = "arm,cortex-a7";
-11 device_type = "cpu";
-12 reg = <0>;
-13 };
-14 };
+2 		compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
+3 
+4		cpus {
+5 			#address-cells = <1>;
+6 			#size-cells = <0>;
+7 
+8			//CPU0 节点
+9 			cpu0: cpu@0 {
+10 				compatible = "arm,cortex-a7";
+11 				device_type = "cpu";
+12 				reg = <0>;
+13 			};
+14 		};
 15
-16 //soc 节点
-17 soc {
-18 #address-cells = <1>;
-19 #size-cells = <1>;
-20 compatible = "simple-bus";
-21 ranges;
+16 		//soc 节点
+17 		soc {
+18 			#address-cells = <1>;
+19 			#size-cells = <1>;
+20 			compatible = "simple-bus";
+21 			ranges;
 22
-23 //ocram 节点
-24 ocram: sram@00900000 {
-25 compatible = "fsl,lpm-sram";
-26 reg = <0x00900000 0x20000>;
-27 };
-28 }
+23 			//ocram 节点
+24 			ocram: sram@00900000 {
+25 				compatible = "fsl,lpm-sram";
+26 				reg = <0x00900000 0x20000>;
+27 			};
+28 		}
 29 }
 ```
 
 第 24~27 行， ocram 节点，第 24 行节点名字@后面的 0x00900000 就是 ocram 的起始地址。
 第 26 行的 reg 属性也指明了 ocram 内存的起始地址为 0x00900000，大小为 0x20000。
-4、添加 aips1、 aips2 和 aips3 这三个子节点
-I.MX6ULL 内部分为三个域： aips1~3，这三个域分管不同的外设控制器， aips1~3 这三个域
-对应的内存范围如表 43.4.1 所示：
+
+### 4、添加 aips1、 aips2 和 aips3 这三个子节点
+
+I.MX6ULL 内部分为三个域： aips1~3，这三个域分管不同的外设控制器， aips1~3 这三个域对应的内存范围如表 43.4.1 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632984260.png)
 
-我们先在设备树中添加这三个域对应的子节点。aips1~3 这三个域都属于 soc 节点的子节点，
-完成以后的 myfirst.dts 文件内容如下所示：
+我们先在设备树中添加这三个域对应的子节点。aips1~3 这三个域都属于 soc 节点的子节点，完成以后的 myfirst.dts 文件内容如下所示：
 ```
 1 / {
 2 compatible = "fsl,imx6ull-alientek-evk", "fsl,imx6ull";
@@ -1728,9 +1706,6 @@ cpus {
 35 ranges;
 36 }
 37
-坛:www.openedv.com
-1103
-I.MX6U 嵌入式 Linux 驱动开发指南
 38 //aips2 节点
 39 aips2: aips-bus@02100000 {
 40 compatible = "fsl,aips-bus", "simple-bus";
@@ -1755,10 +1730,9 @@ I.MX6U 嵌入式 Linux 驱动开发指南
 第 30~36 行， aips1 节点。
 第 39~45 行， aips2 节点。
 第 48~54 行， aips3 节点。
-5、添加 ecspi1、 usbotg1 和 rngb 这三个外设控制器节点
-最后我们在 myfirst.dts 文件中加入 ecspi1， usbotg1 和 rngb 这三个外设控制器对应的节点，
-其中 ecspi1 属于 aips1 的子节点， usbotg1 属于 aips2 的子节点， rngb 属于 aips3 的子节点。最终
-的 myfirst.dts 文件内容如下：
+### 5、添加 ecspi1、 usbotg1 和 rngb 这三个外设控制器节点
+
+最后我们在 myfirst.dts 文件中加入 ecspi1， usbotg1 和 rngb 这三个外设控制器对应的节点，其中 ecspi1 属于 aips1 的子节点， usbotg1 属于 aips2 的子节点， rngb 属于 aips3 的子节点。最终的 myfirst.dts 文件内容如下：
 
 ```
 1 / {
@@ -1849,22 +1823,491 @@ cpus {
 像 IIC 接口， SPI 接口下所连接的具体设备我们并没有写，因为具体的设备其设备树属性内容不
 同，这个等到具体的实验在详细讲解。
 
-#### 第 38~44 行， ecspi1 外设控制器节点。
-第 56~60 行， usbotg1 外设控制器节点。
-第 72~75 行， rngb 外设控制器节点。
-至此， myfirst.dts 这个小型的模板设备树就编写好了，基本和 imx6ull.dtsi 很像，可以看做
-是 imx6ull.dtsi 的缩小版。在 myfirst.dts 里面我们仅仅是编写了 I.MX6ULL 的外设控制器节点，
-像 IIC 接口， SPI 接口下所连接的具体设备我们并没有写，因为具体的设备其设备树属性内容不
-同，这个等到具体的实验在详细讲解。
+## 设备树在系统中的体现
+
+Linux 内核启动的时候会解析设备树中各个节点的信息，并且在根文件系的/proc/devicetree 目录下根据节点名字创建不同文件夹，如图 43.5.1 所示：
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658633153328.png)
 
-图 43.5.1 就是目录/proc/device-tree 目录下的内容， /proc/device-tree 目录下是根节点“/”的
-所有属性和子节点，我们依次来看一下这些属性和子节点。
-1、根节点“/”各个属性
-在图 43.5.1 中，根节点属性属性表现为一个个的文件(图中细字体文件)，比如图 43.5.1 中
-的“#address-cells”、“#size-cells”、“compatible”、“model”和“name”这 5 个文件，它们在设
-备树中就是根节点的 5个属性。既然是文件那么肯定可以查看其内容，输入cat 命令来查看 model
-和 compatible 这两个文件的内容，结果如图 43.5.2 所示：
+图 43.5.1 就是目录/proc/device-tree 目录下的内容， /proc/device-tree 目录下是根节点“/”的所有属性和子节点，我们依次来看一下这些属性和子节点。
+
+### 1、根节点“/”各个属性
+
+在上图中，根节点属性属性表现为一个个的文件(图中细字体文件)，比如图 43.5.1 中的“#address-cells”、“#size-cells”、“compatible”、“model”和“name”这 5 个文件，它们在设备树中就是根节点的 5个属性。既然是文件那么肯定可以查看其内容，输入cat 命令来查看 model和 compatible 这两个文件的内容，结果如图 43.5.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658647137830.png)
+
+从图 43.5.2 可以看出，文件 model 的内容是“Freescale i.MX6 ULL 14x14 EVK Board”，文件 compatible 的内容为“fsl,imx6ull-14x14-evkfsl,imx6ull”。打开文件 imx6ull-alientek-emmc.dts查看一下，这不正是根节点“/”的 model 和 compatible 属性值吗！
+
+### 2、根节点“/”各子节点
+
+图 43.5.1 中各个文件夹(图中粗字体文件夹)就是根节点“/”的各个子节点，比如“aliases”、“ backlight”、“ chosen”和“ clocks”等等。大家可以查看一下 imx6ull-alientek-emmc.dts 和imx6ull.dtsi 这两个文件，看看根节点的子节点都有哪些，看看是否和图 43.5.1 中的一致。
+/proc/device-tree 目录就是设备树在根文件系统中的体现，同样是按照树形结构组织的，进入/proc/device-tree/soc 目录中就可以看到 soc 节点的所有子节点，如图 43.5.3 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658647586626.png)
+
+和根节点“/”一样，图 43.5.3 中的所有文件分别为 soc 节点的属性文件和子节点文件夹。
+大家可以自行查看一下这些属性文件的内容是否和 imx6ull.dtsi 中 soc 节点的属性值相同，也可以进入“busfreq”这样的文件夹里面查看 soc 节点的子节点信息
+
+## 特殊节点
+在根节点“/”中有两个特殊的子节点： aliases 和 chosen，我们接下来看一下这两个特殊的子节点。
+####  aliases 子节点
+打开 imx6ull.dtsi 文件， aliases 节点内容如下所示
+```
+18 aliases {
+19 can0 = &flexcan1;
+20 can1 = &flexcan2;
+21 ethernet0 = &fec1;
+22 ethernet1 = &fec2;
+23 gpio0 = &gpio1;
+24 gpio1 = &gpio2;
+......
+42 spi0 = &ecspi1;
+43 spi1 = &ecspi2;
+44 spi2 = &ecspi3;
+45 spi3 = &ecspi4;
+46 usbphy0 = &usbphy1;
+47 usbphy1 = &usbphy2;
+48 };
+```
+单词 aliases 的意思是“别名”，因此 aliases 节点的主要功能就是定义别名，定义别名的目的就是为了方便访问节点。不过我们一般会在节点命名的时候会加上 label，然后通过&label来访问节点，这样也很方便，而且设备树里面大量的使用&label 的形式来访问节点。
+
+#### chosen 子节点
+chosen 并不是一个真实的设备， chosen 节点主要是为了 uboot 向 Linux 内核传递数据，重点是 bootargs 参数。一般.dts 文件中 chosen 节点通常为空或者内容很少， imx6ull-alientekemmc.dts 中 chosen 节点内容如下所示：
+```
+18 chosen {
+19 stdout-path = &uart1;
+20 };
+```
+从示例代码 43.6.2.1 中可以看出， chosen 节点仅仅设置了属性“stdout-path”，表示标准输出使用 uart1。但是当我们进入到/proc/device-tree/chosen 目录里面，会发现多了 bootargs 这个属性，如图 43.6.2.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648294643.png)
+输入 cat 命令查看 bootargs 这个文件的内容，结果如图 43.6.2.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648317421.png)
+
+从图 43.6.2.2 可以看出， bootargs 这个文件的内容为“console=ttymxc0,115200……”，这个不就是我们在 uboot 中设置的 bootargs 环境变量的值吗？现在有两个疑点：
+- ①、我们并没有在设备树中设置 chosen 节点的 bootargs 属性，那么图 43.6.2.1 中 bootargs这个属性是怎么产生的？
+- ②、为何 bootargs 文件的内容和 uboot 中 bootargs 环境变量的值一样？它们之间有什么关系？
+
+前面讲解 uboot 的时候说过， uboot 在启动 Linux 内核的时候会将 bootargs 的值传递给 Linux内核， bootargs 会作为 Linux 内核的命令行参数， Linux 内核启动的时候会打印出命令行参数(也就是 uboot 传递进来的 bootargs 的值)，如图 43.6.2.3 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648354853.png)
+
+既然 chosen 节点的 bootargs 属性不是我们在设备树里面设置的，那么只有一种可能，那就是 uboot 自己在 chosen 节点里面添加了 bootargs 属性！并且设置 bootargs 属性的值为 bootargs环境变量的值。因为在启动 Linux 内核之前，只有 uboot 知道 bootargs 环境变量的值，并且 uboot 也知道.dtb 设备树文件在 DRAM 中的位置，因此 uboot 的“作案”嫌疑最大。在 uboot 源码中全局搜索“ chosen”这个字符串，看看能不能找到一些蛛丝马迹。果然不出所料，在common/fdt_support.c 文件中发现了“chosen”的身影， fdt_support.c 文件中有个 fdt_chosen 函数，此函数内容如下所示：
+```
+275 int fdt_chosen(void *fdt)
+276 {
+277 int nodeoffset;
+278 int err;
+279 char *str; /* used to set string properties */
+280
+281 err = fdt_check_header(fdt);
+282 if (err < 0) {
+283 printf("fdt_chosen: %s\n", fdt_strerror(err));
+284 return err;
+285 }
+286
+287 /* find or create "/chosen" node. */
+288 nodeoffset = fdt_find_or_add_subnode(fdt, 0, "chosen");
+289 if (nodeoffset < 0)
+290 return nodeoffset;
+291
+292 str = getenv("bootargs");
+293 if (str) {
+294 err = fdt_setprop(fdt, nodeoffset, "bootargs", str,
+295 strlen(str) + 1);
+296 if (err < 0) {
+297 printf("WARNING: could not set bootargs %s.\n",
+298 fdt_strerror(err));
+299 return err;
+300 }
+301 }
+302
+303 return fdt_fixup_stdout(fdt, nodeoffset);
+304 }
+```
+
+第 288 行，调用函数 fdt_find_or_add_subnode 从设备树(.dtb)中找到 chosen 节点，如果没有找到的话就会自己创建一个 chosen 节点。
+第 292 行，读取 uboot 中 bootargs 环境变量的内容。
+第 294 行，调用函数 fdt_setprop 向 chosen 节点添加 bootargs 属性，并且 bootargs 属性的值就是环境变量 bootargs 的内容。
+
+证据“实锤”了，就是 uboot 中的 fdt_chosen 函数在设备树的 chosen 节点中加入了 bootargs属性，并且还设置了 bootargs 属性值。接下来我们顺着 fdt_chosen 函数一点点的抽丝剥茧，看看都有哪些函数调用了 fdt_chosen，一直找到最终的源头。这里我就不卖关子了，直接告诉大家
+整个流程是怎么样的，见图 43.6.2.4：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648460428.png)
+图 43.6.2.4 中框起来的部分就是函数 do_bootm_linux 函数的执行流程，也就是说do_bootm_linux 函数会通过一系列复杂的调用，最终通过 fdt_chosen 函数在 chosen 节点中加入了 bootargs 属性。而我们通过 bootz 命令启动 Linux 内核的时候会运行 do_bootm_linux 函数，至此，真相大白，一切事情的源头都源于如下命令：
+```bootz 80800000 – 83000000```
+当我们输入上述命令并执行以后， do_bootz 函数就会执行，然后一切就按照图 43.6.2.4 中所示的流程开始运行。
+
+## Linux 内核解析 DTB 文件
+
+Linux 内核在启动的时候会解析 DTB 文件，然后在/proc/device-tree 目录下生成相应的设备树节点文件。接下来我们简单分析一下 Linux 内核是如何解析 DTB 文件的，流程如图 43.7.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648534547.png)
+从图 43.7.1 中可以看出，在 start_kernel 函数中完成了设备树节点解析的工作，最终实际工作的函数为 unflatten_dt_node。
+
+## 绑定信息文档
+设备树是用来描述板子上的设备信息的，不同的设备其信息不同，反映到设备树中就是属性不同。那么我们在设备树中添加一个硬件对应的节点的时候从哪里查阅相关的说明呢？在Linux 内核源码中有详细的.txt 文档描述了如何添加节点，这些.txt 文档叫做绑定文档，路径为：Linux 源码目录/Documentation/devicetree/bindings，如图 43.8.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658648591216.png)
+比如我们现在要想在 I.MX6ULL 这颗 SOC 的 I2C 下添加一个节点，那么就可以查看
+Documentation/devicetree/bindings/i2c/i2c-imx.txt，此文档详细的描述了 I.MX 系列的 SOC 如何在设备树中添加 I2C 设备节点，文档内容如下所示：
+```
+* Freescale Inter IC (I2C) and High Speed Inter IC (HS-I2C) for i.MX
+Required properties:
+- compatible :
+- "fsl,imx1-i2c" for I2C compatible with the one integrated on i.MX1
+SoC
+- "fsl,imx21-i2c" for I2C compatible with the one integrated on i.MX21
+SoC
+- "fsl,vf610-i2c" for I2C compatible with the one integrated on Vybrid
+vf610 SoC
+- reg : Should contain I2C/HS-I2C registers location and length
+- interrupts : Should contain I2C/HS-I2C interrupt
+- clocks : Should contain the I2C/HS-I2C clock specifier
+Optional properties:
+- clock-frequency : Constains desired I2C/HS-I2C bus clock frequency in
+Hz.
+The absence of the propoerty indicates the default frequency 100 kHz.
+- dmas: A list of two dma specifiers, one for each entry in dma-names.
+- dma-names: should contain "tx" and "rx".
+Examples:
+i2c@83fc4000 { /* I2C2 on i.MX51 */
+compatible = "fsl,imx51-i2c", "fsl,imx21-i2c";
+reg = <0x83fc4000 0x4000>;
+interrupts = <63>;
+};
+i2c@70038000 { /* HS-I2C on i.MX51 */
+compatible = "fsl,imx51-i2c", "fsl,imx21-i2c";
+reg = <0x70038000 0x4000>;
+interrupts = <64>;
+clock-frequency = <400000>;
+};
+i2c0: i2c@40066000 { /* i2c0 on vf610 */
+compatible = "fsl,vf610-i2c";
+reg = <0x40066000 0x1000>;
+interrupts =<0 71 0x04>;
+dmas = <&edma0 0 50>,
+<&edma0 0 51>;
+dma-names = "rx","tx";
+};
+```
+有时候使用的一些芯片在 Documentation/devicetree/bindings 目录下找不到对应的文档，这个时候就要咨询芯片的提供商，让他们给你提供参考的设备树文件。
+
+## 设备树常用 OF 操作函数
+
+设备树描述了设备的详细信息，这些信息包括数字类型的、字符串类型的、数组类型的，我们在编写驱动的时候需要获取到这些信息。比如设备树使用 reg 属性描述了某个外设的寄存器地址为 0X02005482，长度为 0X400，我们在编写驱动的时候需要获取到 reg 属性的0X02005482 和 0X400 这两个值，然后初始化外设。 Linux 内核给我们提供了一系列的函数来获取设备树中的节点或者属性信息，这一系列的函数都有一个统一的前缀“of_”，所以在很多资料里面也被叫做 OF 函数。这些 OF 函数原型都定义在 include/linux/of.h 文件中
 
 
-<!--more-->
+
+### 查找节点的 OF 函数
+设备都是以节点的形式“挂”到设备树上的，因此要想获取这个设备的其他属性信息，必
+须先获取到这个设备的节点。 Linux 内核使用 device_node 结构体来描述一个节点，此结构体定义在文件 include/linux/of.h 中，定义如下：
+```
+49 struct device_node {
+50 const char *name; /* 节点名字 */
+51 const char *type; /* 设备类型 */
+52 phandle phandle;
+53 const char *full_name; /* 节点全名 */
+54 struct fwnode_handle fwnode;
+55
+56 struct property *properties; /* 属性 */
+57 struct property *deadprops; /* removed 属性 */
+58 struct device_node *parent; /* 父节点 */
+59 struct device_node *child; /* 子节点 */
+60 struct device_node *sibling;
+61 struct kobject kobj;
+62 unsigned long _flags;
+63 void *data;
+64 #if defined(CONFIG_SPARC)
+65 const char *path_component_name;
+66 unsigned int unique_id;
+67 struct of_irq_controller *irq_trans;
+68 #endif
+69 };
+```
+
+与查找节点有关的 OF 函数有 5 个，我们依次来看一下。
+#### 1、 of_find_node_by_name 函数
+of_find_node_by_name 函数通过节点名字查找指定的节点，函数原型如下：
+```
+struct device_node *of_find_node_by_name(struct device_node *from,
+const char *name);
+```
+
+函数参数和返回值含义如下：
+- from：开始查找的节点，如果为 NULL 表示从根节点开始查找整个设备树。
+- name：要查找的节点名字。
+- 返回值： 找到的节点，如果为 NULL 表示查找失败。
+
+#### 2、 of_find_node_by_type 函数
+
+of_find_node_by_type 函数通过 device_type 属性查找指定的节点，函数原型如下：
+```struct device_node *of_find_node_by_type(struct device_node *from, const char *type)```
+
+函数参数和返回值含义如下：
+- from：开始查找的节点，如果为 NULL 表示从根节点开始查找整个设备树。
+- type：要查找的节点对应的 type 字符串，也就是 device_type 属性值。
+- 返回值： 找到的节点，如果为 NULL 表示查找失败。
+
+#### 3、 of_find_compatible_node 函数
+of_find_compatible_node 函数根据 device_type 和 compatible 这两个属性查找指定的节点，函数原型如下：
+```struct device_node *of_find_compatible_node(struct device_node *from, const char *type,const char *compatible)```
+
+函数参数和返回值含义如下：
+- from：开始查找的节点，如果为 NULL 表示从根节点开始查找整个设备树。
+- type：要查找的节点对应的 type 字符串，也就是 device_type 属性值，可以为 NULL，表示忽略掉 device_type 属性。
+- compatible： 要查找的节点所对应的 compatible 属性列表。
+- 返回值： 找到的节点，如果为 NULL 表示查找失败
+
+#### 4、 of_find_matching_node_and_match 函数
+of_find_matching_node_and_match 函数通过 of_device_id 匹配表来查找指定的节点，函数原型如下：
+```struct device_node *of_find_matching_node_and_match(struct device_node *from, const struct of_device_id *matches, const struct of_device_id **match)
+```
+函数参数和返回值含义如下：
+- from：开始查找的节点，如果为 NULL 表示从根节点开始查找整个设备树。
+- matches： of_device_id 匹配表，也就是在此匹配表里面查找节点。
+- match： 找到的匹配的 of_device_id。
+- 返回值： 找到的节点，如果为 NULL 表示查找失败
+
+#### 5、 of_find_node_by_path 函数
+of_find_node_by_path 函数通过路径来查找指定的节点，函数原型如下：
+```inline struct device_node *of_find_node_by_path(const char *path)```
+函数参数和返回值含义如下：
+- path：带有全路径的节点名，可以使用节点的别名，比如“/backlight”就是 backlight 这个节点的全路径。
+- 返回值： 找到的节点，如果为 NULL 表示查找失败
+
+### 查找父/子节点的 OF 函数
+Linux 内核提供了几个查找节点对应的父节点或子节点的 OF 函数，我们依次来看一下。
+#### 1、 of_get_parent 函数
+of_get_parent 函数用于获取指定节点的父节点(如果有父节点的话)，函数原型如下：
+```struct device_node *of_get_parent(const struct device_node *node)```
+函数参数和返回值含义如下：
+- node：要查找的父节点的节点。
+- 返回值： 找到的父节点。
+#### 2、 of_get_next_child 函数
+
+of_get_next_child 函数用迭代的方式查找子节点，函数原型如下：
+```struct device_node *of_get_next_child(const struct device_node *node,struct device_node *prev)```
+函数参数和返回值含义如下：
+- node：父节点。
+- prev：前一个子节点，也就是从哪一个子节点开始迭代的查找下一个子节点。可以设置为
+- NULL，表示从第一个子节点开始。
+- 返回值： 找到的下一个子节点。
+
+### 提取属性值的 OF 函数
+
+节点的属性信息里面保存了驱动所需要的内容，因此对于属性值的提取非常重要， Linux 内核中使用结构体 property 表示属性，此结构体同样定义在文件 include/linux/of.h 中，内容如下：
+```
+35 struct property {
+36 char *name; /* 属性名字 */
+37 int length; /* 属性长度 */
+38 void *value; /* 属性值 */
+39 struct property *next; /* 下一个属性 */
+40 unsigned long _flags;
+41 unsigned int unique_id;
+42 struct bin_attribute attr;
+43 };
+```
+
+Linux 内核也提供了提取属性值的 OF 函数，我们依次来看一下。
+#### 1、 of_find_property 函数
+of_find_property 函数用于查找指定的属性，函数原型如下：
+```
+property *of_find_property(const struct device_node *np,
+const char *name,
+int *lenp)
+```
+函数参数和返回值含义如下：
+- np：设备节点。
+- name： 属性名字。
+- lenp：属性值的字节数
+- 返回值： 找到的属性。
+ 
+#### 2、 of_property_count_elems_of_size 函数
+of_property_count_elems_of_size 函数用于获取属性中元素的数量，比如 reg 属性值是一个数组，那么使用此函数可以获取到这个数组的大小，此函数原型如下：
+```int of_property_count_elems_of_size(const struct device_node *np,const char *propname,int elem_size)```
+
+函数参数和返回值含义如下：
+- np：设备节点。
+- proname： 需要统计元素数量的属性名字。
+- elem_size：元素长度。
+- 返回值： 得到的属性元素数量。
+
+#### 3、 of_property_read_u32_index 函数
+of_property_read_u32_index 函数用于从属性中获取指定标号的 u32 类型数据值(无符号 32位)，比如某个属性有多个 u32 类型的值，那么就可以使用此函数来获取指定标号的数据值，此函数原型如下：
+```int of_property_read_u32_index(const struct device_node *np,const char *propname,u32 index,u32 *out_value)```
+
+函数参数和返回值含义如下：
+- np：设备节点。
+- proname： 要读取的属性名字。
+- index：要读取的值标号。
+- out_value：读取到的值
+- 返回值： 0 读取成功，负值，读取失败， -EINVAL 表示属性不存在， -ENODATA 表示没有要读取的数据， -EOVERFLOW 表示属性值列表太小。
+
+#### 4、 of_property_read_u8_array 函数
+of_property_read_u16_array 函数
+of_property_read_u32_array 函数
+of_property_read_u64_array 函数
+
+这 4 个函数分别是读取属性中 u8、 u16、 u32 和 u64 类型的数组数据，比如大多数的 reg 属性都是数组数据，可以使用这 4 个函数一次读取出 reg 属性中的所有数据。这四个函数的原型如下：
+```
+int of_property_read_u8_array(const struct device_node *np,
+const char *propname,
+u8 *out_values,
+size_t sz)
+int of_property_read_u16_array(const struct device_node *np,
+const char *propname,
+u16 *out_values,
+size_t sz)
+int of_property_read_u32_array(const struct device_node *np,
+const char *propname,
+u32 *out_values,
+size_t sz)
+int of_property_read_u64_array(const struct device_node *np,
+const char *propname,
+u64 *out_values,
+size_t sz)
+```
+函数参数和返回值含义如下：
+- np：设备节点。
+- proname： 要读取的属性名字。
+- out_value：读取到的数组值，分别为 u8、 u16、 u32 和 u64。
+- sz： 要读取的数组元素数量。
+- 返回值： 0，读取成功，负值，读取失败， -EINVAL 表示属性不存在， -ENODATA 表示没有要读取的数据， -EOVERFLOW 表示属性值列表太小。
+
+#### 5、 of_property_read_u8 函数
+of_property_read_u16 函数
+of_property_read_u32 函数
+of_property_read_u64 函数
+
+有些属性只有一个整形值，这四个函数就是用于读取这种只有一个整形值的属性，分别用于读取 u8、 u16、 u32 和 u64 类型属性值，函数原型如下：
+```
+int of_property_read_u8(const struct device_node *np,
+const char *propname,
+u8 *out_value)
+int of_property_read_u16(const struct device_node *np,
+const char *propname,
+u16 *out_value)
+int of_property_read_u32(const struct device_node *np,
+const char *propname,
+u32 *out_value)
+int of_property_read_u64(const struct device_node *np,
+const char *propname,
+u64 *out_value)
+```
+函数参数和返回值含义如下：
+- np：设备节点。
+- proname： 要读取的属性名字。
+- out_value：读取到的数组值。
+- 返回值： 0，读取成功，负值，读取失败， -EINVAL 表示属性不存在， -ENODATA 表示没有要读取的数据， -EOVERFLOW 表示属性值列表太小。
+
+#### 6、 of_property_read_string 函数
+of_property_read_string 函数用于读取属性中字符串值，函数原型如下：
+```
+int of_property_read_string(struct device_node *np,const char *propname,const char **out_string)
+```
+函数参数和返回值含义如下：
+- np：设备节点。
+- proname： 要读取的属性名字。
+- out_string：读取到的字符串值。
+- 返回值： 0，读取成功，负值，读取失败。
+
+#### 7、 of_n_addr_cells 函数
+of_n_addr_cells 函数用于获取#address-cells 属性值，函数原型如下：
+```int of_n_addr_cells(struct device_node *np)```
+函数参数和返回值含义如下：
+- np：设备节点。
+- 返回值： 获取到的#address-cells 属性值。
+
+#### 8、 of_n_size_cells 函数
+of_size_cells 函数用于获取#size-cells 属性值，函数原型如下：
+```int of_n_size_cells(struct device_node *np)```
+函数参数和返回值含义如下：
+- np：设备节点。
+- 返回值： 获取到的#size-cells 属性值。
+
+### 其他常用的 OF 函数
+
+#### 1、 of_device_is_compatible 函数
+of_device_is_compatible 函数用于查看节点的 compatible 属性是否有包含 compat 指定的字符串，也就是检查设备节点的兼容性，函数原型如下：
+```int of_device_is_compatible(const struct device_node *device,const char *compat)```
+函数参数和返回值含义如下：
+- device：设备节点。
+- compat：要查看的字符串。
+- 返回值： 0，节点的 compatible 属性中不包含 compat 指定的字符串； 正数，节点的 compatible属性中包含 compat 指定的字符串。
+
+#### 2、 of_get_address 函数
+of_get_address 函数用于获取地址相关属性，主要是“reg”或者“assigned-addresses”属性值，函数原型如下：
+```const __be32 *of_get_address(struct device_node *dev,int index,u64 *size,unsigned int *flags)```
+函数参数和返回值含义如下：
+- dev：设备节点。
+- index：要读取的地址标号。
+- size：地址长度。
+- flags：参数，比如 IORESOURCE_IO、 IORESOURCE_MEM 等
+- 返回值： 读取到的地址数据首地址，为 NULL 的话表示读取失败。
+#### 3、 of_translate_address 函数
+of_translate_address 函数负责将从设备树读取到的地址转换为物理地址，函数原型如下：
+```u64 of_translate_address(struct device_node *dev,const __be32 *in_addr)```
+函数参数和返回值含义如下：
+- dev：设备节点。
+- in_addr：要转换的地址。
+- 返回值： 得到的物理地址，如果为 OF_BAD_ADDR 的话表示转换失败。
+#### 4、 of_address_to_resource 函数
+IIC、 SPI、 GPIO 等这些外设都有对应的寄存器，这些寄存器其实就是一组内存空间， Linux内核使用 resource 结构体来描述一段内存空间，“resource”翻译出来就是“资源”，因此用 resource结构体描述的都是设备资源信息， resource 结构体定义在文件 include/linux/ioport.h 中，定义如下：
+```
+18 struct resource {
+19 resource_size_t start;
+20 resource_size_t end;
+21 const char *name;
+22 unsigned long flags;
+23 struct resource *parent, *sibling, *child;
+24 };
+```
+对于 32 位的 SOC 来说， resource_size_t 是 u32 类型的。其中 start 表示开始地址， end 表示结束地址， name 是这个资源的名字， flags 是资源标志位，一般表示资源类型，可选的资源标志定义在文件 include/linux/ioport.h 中，如下所示：
+```
+1 #define IORESOURCE_BITS 0x000000ff
+2 #define IORESOURCE_TYPE_BITS 0x00001f00
+3 #define IORESOURCE_IO 0x00000100
+4 #define IORESOURCE_MEM 0x00000200
+5 #define IORESOURCE_REG 0x00000300
+6 #define IORESOURCE_IRQ 0x00000400
+7 #define IORESOURCE_DMA 0x00000800
+8 #define IORESOURCE_BUS 0x00001000
+9 #define IORESOURCE_PREFETCH 0x00002000
+10 #define IORESOURCE_READONLY 0x00004000
+11 #define IORESOURCE_CACHEABLE 0x00008000
+12 #define IORESOURCE_RANGELENGTH 0x00010000
+13 #define IORESOURCE_SHADOWABLE 0x00020000
+14 #define IORESOURCE_SIZEALIGN 0x00040000
+15 #define IORESOURCE_STARTALIGN 0x00080000
+16 #define IORESOURCE_MEM_64 0x00100000
+17 #define IORESOURCE_WINDOW 0x00200000
+18 #define IORESOURCE_MUXED 0x00400000
+19 #define IORESOURCE_EXCLUSIVE 0x08000000
+20 #define IORESOURCE_DISABLED 0x10000000
+21 #define IORESOURCE_UNSET 0x20000000
+22 #define IORESOURCE_AUTO 0x40000000
+23 #define IORESOURCE_BUSY 0x80000000
+```
+大 家 一 般 最 常 见 的 资 源 标 志 就 是 IORESOURCE_MEM 、 IORESOURCE_REG 和IORESOURCE_IRQ 等。接下来我们回到 of_address_to_resource 函数，此函数看名字像是从设备树里面提取资源值，但是本质上就是将 reg 属性值，然后将其转换为 resource 结构体类型，函数原型如下所示
+```int of_address_to_resource(struct device_node *dev,int index,struct resource *r)```
+函数参数和返回值含义如下：
+- dev：设备节点。
+- index：地址资源标号。
+- r：得到的 resource 类型的资源值。
+- 返回值： 0，成功；负值，失败。
+
+#### 5、 of_iomap 函数
+of_iomap 函数用于直接内存映射，以前我们会通过 ioremap 函数来完成物理地址到虚拟地址的映射，采用设备树以后就可以直接通过 of_iomap 函数来获取内存地址所对应的虚拟地址，不需要使用 ioremap 函数了。当然了，你也可以使用 ioremap 函数来完成物理地址到虚拟地址的内存映射，只是在采用设备树以后，大部分的驱动都使用 of_iomap 函数了。 of_iomap 函数本质上也是将 reg 属性中地址信息转换为虚拟地址，如果 reg 属性有多段的话，可以通过 index 参数指定要完成内存映射的是哪一段， of_iomap 函数原型如下：
+```void __iomem *of_iomap(struct device_node *np,int index)```
+函数参数和返回值含义如下：
+- np：设备节点。
+- index： reg 属性中要完成内存映射的段，如果 reg 属性只有一段的话 index 就设置为 0。
+- 返回值： 经过内存映射后的虚拟内存首地址，如果为 NULL 的话表示内存映射失败。
+
+关于设备树常用的 OF 函数就先讲解到这里， Linux 内核中关于设备树的 OF 函数不仅仅只有前面讲的这几个，还有很多 OF 函数我们并没有讲解，这些没有讲解的 OF 函数要结合具体的驱动，比如获取中断号的 OF 函数、获取 GPIO 的 OF 函数等等，这些 OF 函数我们在后面的驱动实验中再详细的讲解。
+
+关于设备树就讲解到这里，关于设备树我们重点要了解一下几点内容：
+- ①、 DTS、 DTB 和 DTC 之间的区别，如何将.dts 文件编译为.dtb 文件。
+- ②、设备树语法，这个是重点，因为在实际工作中我们是需要修改设备树的。
+- ③、设备树的几个特殊子节点。
+- ④、关于设备树的 OF 操作函数，也是重点，因为设备树最终是被驱动文件所使用的，而驱动文件必须要读取设备树中的属性信息，比如内存信息、 GPIO 信息、中断信息等等。要想在驱动中读取设备树的属性值，那么就必须使用 Linux 内核提供的众多的 OF 函数。
+
+# 设备树下的 LED 驱动实验
+
+<!--more--
+>
