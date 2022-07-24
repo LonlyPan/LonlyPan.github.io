@@ -1378,83 +1378,67 @@ __attribute__((__section__(".arch.info.init"))) = { \
 	.name = _namestr,
 ```
 
-可以看出， DT_MACHINE_START 和 MACHINE_START 基本相同，只是.nr 的设置不同，
-在 DT_MACHINE_START 里面直接将.nr 设置为~0。说明引入设备树以后不会再根据 machine
-id 来检查 Linux 内核是否支持某个设备了。
+可以看出， DT_MACHINE_START 和 MACHINE_START 基本相同，只是.nr 的设置不同，在 DT_MACHINE_START 里面直接将.nr 设置为~0。说明引入设备树以后不会再根据 machine id 来检查 Linux 内核是否支持某个设备了。
 打开文件 arch/arm/mach-imx/mach-imx6ul.c，有如下所示内容：
 
 ```
 208 static const char *imx6ul_dt_compat[] __initconst = {
-209 "fsl,imx6ul",
-210 "fsl,imx6ull",
-211 NULL,
+209 	"fsl,imx6ul",
+210 	"fsl,imx6ull",
+211 	NULL,
 212 };
 213
 214 DT_MACHINE_START(IMX6UL, "Freescale i.MX6 Ultralite (Device Tree)")
-215 .map_io = imx6ul_map_io,
-216 .init_irq = imx6ul_init_irq,
-217 .init_machine = imx6ul_init_machine,
-218 .init_late = imx6ul_init_late,
-219 .dt_compat = imx6ul_dt_compat,
+215 	.map_io = imx6ul_map_io,
+216 	.init_irq = imx6ul_init_irq,
+217 	.init_machine = imx6ul_init_machine,
+218 	.init_late = imx6ul_init_late,
+219 	.dt_compat = imx6ul_dt_compat,
 220 MACHINE_END
 ```
 
-machine_desc 结构体中有个.dt_compat 成员变量，此成员变量保存着本设备兼容属性，示
-例代码 43.3.4.5 中设置.dt_compat = imx6ul_dt_compat， imx6ul_dt_compat 表里面有"fsl,imx6ul"
-和"fsl,imx6ull"这两个兼容值。只要某个设备(板子)根节点“ /”的 compatible 属性值与
-imx6ul_dt_compat 表中的任何一个值相等，那么就表示 Linux 内核支持此设备。 imx6ull-alientekemmc.dts 中根节点的 compatible 属性值如下：
-compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";
+machine_desc 结构体中有个.dt_compat 成员变量，此成员变量保存着本设备兼容属性，示例代码 43.3.4.5 中设置.dt_compat = imx6ul_dt_compat， imx6ul_dt_compat 表里面有"fsl,imx6ul"和"fsl,imx6ull"这两个兼容值。只要某个设备(板子)根节点“ /”的 compatible 属性值与imx6ul_dt_compat 表中的任何一个值相等，那么就表示 Linux 内核支持此设备。 imx6ull-alientekemmc.dts 中根节点的 compatible 属性值如下：
+```compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ull";```
 其中“fsl,imx6ull”与 imx6ul_dt_compat 中的“fsl,imx6ull”匹配，因此 I.MX6U-ALPHA 开
-发板可以正常启动 Linux 内核。如果将 imx6ull-alientek-emmc.dts 根节点的 compatible 属性改为
-其他的值，比如：
-compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ullll"
+发板可以正常启动 Linux 内核。如果将 imx6ull-alientek-emmc.dts 根节点的 compatible 属性改为其他的值，比如：
+```compatible = "fsl,imx6ull-14x14-evk", "fsl,imx6ullll"```
 重新编译 DTS，并用新的 DTS 启动 Linux 内核，结果如图 43.3.4.1 所示的错误提示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658632385165.png)
 
-当我们修改了根节点 compatible 属性内容以后，因为 Linux 内核找不到对应的设备，因此
-Linux 内核无法启动。在 uboot 输出 Starting kernel…以后就再也没有其他信息输出了。
-接下来我们简单看一下 Linux 内核是如何根据设备树根节点的 compatible 属性来匹配出对
-应的 machine_desc， Linux 内核调用 start_kernel 函数来启动内核， start_kernel 函数会调用
-setup_arch 函数来匹配 machine_desc， setup_arch 函数定义在文件 arch/arm/kernel/setup.c 中，函
-数内容如下(有缩减)：
+当我们修改了根节点 compatible 属性内容以后，因为 Linux 内核找不到对应的设备，因此Linux 内核无法启动。在 uboot 输出 Starting kernel…以后就再也没有其他信息输出了。
+接下来我们简单看一下 Linux 内核是如何根据设备树根节点的 compatible 属性来匹配出对应的 machine_desc， Linux 内核调用 start_kernel 函数来启动内核， start_kernel 函数会调用setup_arch 函数来匹配 machine_desc， setup_arch 函数定义在文件 arch/arm/kernel/setup.c 中，函数内容如下(有缩减)：
 ```
 913 void __init setup_arch(char **cmdline_p)
 914 {
-915 const struct machine_desc *mdesc;
+915 	const struct machine_desc *mdesc;
 916
-917 setup_processor();
-918 mdesc = setup_machine_fdt(__atags_pointer);
-919 if (!mdesc)
-920 mdesc = setup_machine_tags(__atags_pointer,
-__machine_arch_type);
-921 machine_desc = mdesc;
-922 machine_name = mdesc->name;
+917 	setup_processor();
+918 	mdesc = setup_machine_fdt(__atags_pointer);
+919	 	if (!mdesc)
+920 		mdesc = setup_machine_tags(__atags_pointer,
+										__machine_arch_type);
+921 	machine_desc = mdesc;
+922 	machine_name = mdesc->name;
 ......
 986 }
 ```
 
-第 918 行，调用 setup_machine_fdt 函数来获取匹配的 machine_desc，参数就是 atags 的首
-地址，也就是 uboot 传递给 Linux 内核的 dtb 文件首地址， setup_machine_fdt 函数的返回值就是
-找到的最匹配的 machine_desc。
-函数 setup_machine_fdt 定义在文件 arch/arm/kernel/devtree.c 中，内容如下(有缩减)：
+第 918 行，调用 setup_machine_fdt 函数来获取匹配的 machine_desc，参数就是 atags 的首地址，也就是 uboot 传递给 Linux 内核的 dtb 文件首地址， setup_machine_fdt 函数的返回值就是找到的最匹配的 machine_desc。函数 setup_machine_fdt 定义在文件 arch/arm/kernel/devtree.c 中，内容如下(有缩减)：
 ```
-容
-204 const struct machine_desc * __init setup_machine_fdt(unsigned int
-dt_phys)
+204 const struct machine_desc * __init setup_machine_fdt(unsigned int dt_phys)
 205 {
-206 const struct machine_desc *mdesc, *mdesc_best = NULL;
+206 	const struct machine_desc *mdesc, *mdesc_best = NULL;
 ......
 214
-215 if (!dt_phys || !early_init_dt_verify(phys_to_virt(dt_phys)))
-216 return NULL;
+215 	if (!dt_phys || !early_init_dt_verify(phys_to_virt(dt_phys)))
+216 		return NULL;
 217
-218 mdesc = of_flat_dt_match_machine(mdesc_best,
-arch_get_next_mach);
+218 	mdesc = of_flat_dt_match_machine(mdesc_best, arch_get_next_mach);
 219
 ......
-247 __machine_arch_type = mdesc->nr;
+247 	__machine_arch_type = mdesc->nr;
 248
-249 return mdesc;
+249 	return mdesc;
 250 }
 ```
 
