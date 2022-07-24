@@ -1314,6 +1314,7 @@ device_type 属性值为字符串， IEEE 1275 会用到此属性，用于描述
 ```
 
 上述代码就是定义了“ Freescale MX35PDK”这个设备，其中 MACHINE_START 和MACHINE_END 定义在文件 arch/arm/include/asm/mach/arch.h 中，内容如下：
+
 ```
 #define MACHINE_START(_type,_name) \
 static const struct machine_desc __mach_desc_##_type \
