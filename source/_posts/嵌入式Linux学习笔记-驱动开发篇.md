@@ -1108,17 +1108,33 @@ DTS 是设备树源码文件，DTB 是将 DTS 编译以后得到的二进制文�
 24 }
 ```
 
-第 1 行，“/”是根节点，每个设备树文件只有一个根节点。细心的同学应该会发现， imx6ull.dtsi
-和 imx6ull-alientek-emmc.dts 这两个文件都有一个“/”根节点，这样不会出错吗？不会的，因为
-这两个“/”根节点的内容会合并成一个根节点。
+第 1 行，“/”是根节点，每个设备树文件只有一个根节点。细心的同学应该会发现， imx6ull.dtsi 和 imx6ull-alientek-emmc.dts 这两个文件都有一个“/”根节点，这样不会出错吗？不会的，因为这两个“/”根节点的内容会合并成一个根节点。
 第 2、 6 和 17 行， aliases、 cpus 和 intc 是三个子节点，在设备树中节点命名格式如下：
-node-name@unit-address
-其中“node-name”是节点名字，为 ASCII 字符串，节点名字应该能够清晰的描述出节点的
-功能，比如“uart1”就表示这个节点是 UART1 外设。“unit-address”一般表示设备的地址或寄
-存器首地址，如果某个节点没有地址或者寄存器的话“unit-address”可以不要，比如“cpu@0”、
-“interrupt-controller@00a01000”。
+```node-name@unit-address```
+其中“node-name”是节点名字，为 ASCII 字符串，节点名字应该能够清晰的描述出节点的功能，比如“uart1”就表示这个节点是 UART1 外设。“unit-address”一般表示设备的地址或寄存器首地址，如果某个节点没有地址或者寄存器的话“unit-address”可以不要，比如“cpu@0”、“interrupt-controller@00a01000”。
+
 但是我们在示例代码 43.3.2.1 中我们看到的节点命名却如下所示：
-cpu0:cpu@0
-上述命令并不是“node-name@unit-address”这样的格式，而是用“：”隔开成了两部分，“：”
-前面的是节点标签(label)，“：”后面的才是节点名字，格式如下所示：
+```cpu0:cpu@0```
+用“：”隔开成了两部分，“：”前面的是节点标签(label)，“：”后面的才是节点名字，格式如下所示：
+
+label: node-name@unit-address
+引入 label 的目的就是为了方便访问节点，可以直接通过&label 来访问这个节点，比如通过
+&cpu0 就可以访问“cpu@0”这个节点，而不需要输入完整的节点名字。再比如节点 “intc:
+interrupt-controller@00a01000”，节点 label 是 intc，而节点名字就很长了，为“ interruptcontroller@00a01000”。很明显通过&intc 来访问“interrupt-controller@00a01000”这个节点要方
+便很多！
+第 10 行， cpu0 也是一个节点，只是 cpu0 是 cpus 的子节点。
+每个节点都有不同属性，不同的属性又有不同的内容，属性都是键值对，值可以为空或任
+意的字节流。设备树源码中常用的几种数据形式如下所示：
+①、字符串
+compatible = "arm,cortex-a7";
+上述代码设置 compatible 属性的值为字符串“arm,cortex-a7”。
+②、 32 位无符号整数
+reg = <0>;
+上述代码设置 reg 属性的值为 0， reg 的值也可以设置为一组值，比如：
+reg = <0 0x123456 100>;
+③、字符串列表
+属性值也可以为字符串列表，字符串和字符串之间采用“,”隔开，如下所示：
+compatible = "fsl,imx6ull-gpmi-nand", "fsl, imx6ul-gpmi-nand";
+上述代码设置属性 compatible 的值为“fsl,imx6ull-gpmi-nand”和“fsl, imx6ul-gpmi-nand”。
+
 <!--more-->
