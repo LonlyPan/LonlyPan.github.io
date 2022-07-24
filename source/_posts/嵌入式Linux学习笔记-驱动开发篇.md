@@ -1330,26 +1330,23 @@ __attribute__((__section__(".arch.info.init"))) = { \
 
 ```
 1 static const struct machine_desc __mach_desc_MX35_3DS \
-2 __used \
-3 __attribute__((__section__(".arch.info.init"))) = {
-4 .nr = MACH_TYPE_MX35_3DS,
-5 .name = "Freescale MX35PDK",
-6 /* Maintainer: Freescale Semiconductor, Inc */
-7 .atag_offset = 0x100,
-8 .map_io = mx35_map_io,
-9 .init_early = imx35_init_early,
-10 .init_irq = mx35_init_irq,
-11 .init_time = mx35pdk_timer_init,
-12 .init_machine = mx35_3ds_init,
-13 .reserve = mx35_3ds_reserve,
-14 .restart = mxc_restart,
+2 	__used \
+3 	__attribute__((__section__(".arch.info.init"))) = {
+4 	.nr = MACH_TYPE_MX35_3DS,
+5 	.name = "Freescale MX35PDK",
+6 	/* Maintainer: Freescale Semiconductor, Inc */
+7 	.atag_offset = 0x100,
+8 	.map_io = mx35_map_io,
+9 	.init_early = imx35_init_early,
+10 	.init_irq = mx35_init_irq,
+11 	.init_time = mx35pdk_timer_init,
+12 	.init_machine = mx35_3ds_init,
+13 	.reserve = mx35_3ds_reserve,
+14 	.restart = mxc_restart,
 15 };
 ```
 
-从示例代码 43.3.4.3 中可以看出，这里定义了一个 machine_desc 类型的结构体变量
-__mach_desc_MX35_3DS ， 这 个 变 量 存 储 在 “ .arch.info.init ” 段 中 。 第 4 行 的
-MACH_TYPE_MX35_3DS 就 是 “ Freescale MX35PDK ” 这 个 板 子 的 machine id 。
-MACH_TYPE_MX35_3DS 定义在文件 include/generated/mach-types.h 中，此文件定义了大量的
+从示例代码 43.3.4.3 中可以看出，这里定义了一个 machine_desc 类型的结构体变量__mach_desc_MX35_3DS ， 这 个 变 量 存 储 在 “ .arch.info.init ” 段 中 。 第 4 行 的MACH_TYPE_MX35_3DS 就 是 “ Freescale MX35PDK ” 这 个 板 子 的 machine id 。MACH_TYPE_MX35_3DS 定义在文件 include/generated/mach-types.h 中，此文件定义了大量的
 machine id，内容如下所示：
 ```
 15 #define MACH_TYPE_EBSA110 0
@@ -1365,23 +1362,20 @@ machine id，内容如下所示：
 ......
 1000 #define MACH_TYPE_PFLA03 4575
 ```
-第 287 行就是 MACH_TYPE_MX35_3DS 的值，为 1645。
-前面说了， uboot 会给 Linux 内核传递 machine id 这个参数， Linux 内核会检查这个 machine
-id，其实就是将 machine id 与示例代码 43.3.4.3 中的这些 MACH_TYPE_XXX 宏进行对比，看
-看有没有相等的，如果相等的话就表示 Linux 内核支持这个设备，如果不支持的话那么这个设
+第 287 行就是 MACH_TYPE_MX35_3DS 的值，为 1645。前面说了， uboot 会给 Linux 内核传递 machine id 这个参数， Linux 内核会检查这个 machineid，其实就是将 machine id 与示例代码 43.3.4.3 中的这些 MACH_TYPE_XXX 宏进行对比，看看有没有相等的，如果相等的话就表示 Linux 内核支持这个设备，如果不支持的话那么这个设
 备就没法启动 Linux 内核。
-2、使用设备树以后的设备匹配方法
-当 Linux 内 核 引 入 设 备 树 以 后 就 不 再 使 用 MACHINE_START 了 ， 而 是 换 为 了
-DT_MACHINE_START。 DT_MACHINE_START 也定义在文件 arch/arm/include/asm/mach/arch.h
-里面，定义如下：
+
+#### 2、使用设备树以后的设备匹配方法
+
+当 Linux 内 核 引 入 设 备 树 以 后 就 不 再 使 用 MACHINE_START 了 ， 而 是 换 为 了DT_MACHINE_START。 DT_MACHINE_START 也定义在文件 arch/arm/include/asm/mach/arch.h里面，定义如下：
 
 ```
 #define DT_MACHINE_START(_name, _namestr) \
 static const struct machine_desc __mach_desc_##_name \
 __used \
 __attribute__((__section__(".arch.info.init"))) = { \
-.nr = ~0, \
-.name = _namestr,
+	.nr = ~0, \
+	.name = _namestr,
 ```
 
 可以看出， DT_MACHINE_START 和 MACHINE_START 基本相同，只是.nr 的设置不同，
