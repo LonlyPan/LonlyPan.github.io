@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C&C++编码规范"
-index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C&C++编码规范/C_C++.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C%26C%2B%2B%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/C_C%2B%2B.png
 date: 2019-9-3 15:15
 updated: 2019-9-3 15:15
 hide: false
@@ -10,6 +10,8 @@ hide: false
 # comment: false
 categories: 01-专业
 ---
+
+
 
 ## 自己需要改正的地方
 
