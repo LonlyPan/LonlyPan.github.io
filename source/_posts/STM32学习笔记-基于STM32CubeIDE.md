@@ -600,14 +600,13 @@ u8 button_tick(void)
 #### 程序编写
 
 * 输出时： 
-    ```
+```
     GPIOx->BSRR ＝ 输出值;
-    ```
+```
 * 输入时： 先输出高电平(否则如果之前输出的是低电平，N-MOS则会导通，影响外部输入)，然后通过 GPIOx->IDR 读.
-   ```
+```
    LED_GPIO_Port->ODR=(LED_GPIO_Port->ODR | LED_Pin);  // 置1
-   LED_Pin_status = LED_GPIO_Port->IDR & LED_Pin;
-   ```
+```
 
 #### 参考链接
 * [STM32 MCU GPIO双向口使用的话题](http://www.360doc.com/content/17/1208/13/8706683_711243855.shtml)
@@ -2278,7 +2277,7 @@ SPI接收完成回调函数，DMA中断调用
 
 **主程序**
  在 **SPI** 的基础上，修改两个函数：SPI的读与写
- ```
+```
 //读取SPI FLASH
 //在指定地址开始读取指定长度的数据
 //pBuffer:数据存储区
@@ -2334,7 +2333,7 @@ void W25QXX_Write_Page(u8* pBuffer,u32 WriteAddr,u16 NumByteToWrite)
 	W25QXX_Wait_Busy();					   //等待写入结束
 }
 
- ```
+```
 
  这里的 SPI DMA操作实际还是阻塞模式，每次传输完成必须使用 while 检查 falsh状态，才能开启下一次传输，否则可能会导致只一次还未结束，有开始下一轮数据传输（DMA非阻塞，与主程序并行），所以主程序和DMA传输数据直接存在交叉现象，可以添加标志位知识DMA传输状态，但和此处的while效果一样，最终还是需要等待每一次数据传输完成才能开始下一次。
 
@@ -3704,7 +3703,7 @@ I have made some heavy modifications, as the typical Adafruit TFT libraries are 
 - 初始化函数改动，这里不再列出，直接看源码即可
 注意RGB格式：ILI默认是 BGR 格式，所以 ST7789_MADCTL_RGB 设为 0x08.而ST7789默认是 RGB，随意设为 0x00。
 - 数据写入时改为24位：
-    ```
+```
     //画点
     //x,y:坐标
     //POINT_COLOR:此点的颜色
@@ -3724,7 +3723,7 @@ I have made some heavy modifications, as the typical Adafruit TFT libraries are 
         LCD_WriteRAM_Prepare();	//开始写入GRAM
         LCD_WriteRAM(POINT_COLOR);
     }
-    ```
+```
 
 >虽然数据接口是24位的，但是在初始化写寄存器时，仍可使用16位，这也就是为什么其它函数未修改的原因。24位格式仅影响 FRAM 的数据输入（即屏幕内部数据缓存），不影响寄存器写入。
 
@@ -3934,12 +3933,13 @@ ASCII字符集（注意首位有个空格不要忘记复制）:
     {0x00,0x00,0x20,0x00,0xC0,0x00,0x20,0x00,0xC0,0x00,0x00,0x00},/*""",2*/
     ...
     };
-    ```
+```
     数字 95 是固定的，表示95个字符。数字 12 表示字符所占的字节数（也就是下面的行元素个数），计算公式和步骤2一样：
     大小 = (size/8+((size%8)?1:0))\*(size/2)
     12点阵就是12，23点阵就是36.
 
 #### 程序编写
+
 ```
 /**
  * @brief: 在指定位置显示一个字符
@@ -4136,7 +4136,7 @@ void setup()
         "测",0x44,0x20,0x22,0x40,0x7F,0x90,0x40,0x20,0x5F,0xC0,0x40,0x20,0x7F,0x90,0x00,0x00,0x3F,0x80,0x00,0x10,0xFF,0xF0,0x00,0x00,/*"测",4*/
         "试",0x88,0x00,0x4F,0xF0,0x00,0x20,0x00,0x00,0x24,0x20,0x27,0xE0,0x24,0x40,0x20,0x00,0xFF,0xC0,0x20,0x20,0xA0,0x70,0x00,0x00,/*"试",5*/
     };
-    ```
+```
 
 #### 程序编写
 
