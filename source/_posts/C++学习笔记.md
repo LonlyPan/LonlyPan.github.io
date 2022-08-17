@@ -1,7 +1,7 @@
 ---
 layout: post
 title: " C++学习笔记"
-index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C语言学习笔记/1654312650232.png
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_C++学习笔记/v2-cd417258dd040b15ee7f80446286f8cd_720w.jpg
 date: 2019-9-4 18:6
 updated: 2019-9-4 18:6
 hide: false
@@ -10,7 +10,6 @@ hide: false
 # comment: false
 categories: 01-专业
 ---
-
 
 # 一、C到C++
 
