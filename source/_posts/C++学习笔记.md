@@ -43,15 +43,13 @@ qtcreator的安装参考本网站其他文章。
 
 使用qtcreator开发纯C++项目、基于qmake
 
-1. 文件 -> Non-Qt Project -> Plain C++ Application
-2. 新建项目名，选择保存路径（不能有中文），建议自己再新建一个项目文件夹，保存项目文件夹、编译输出文件夹
-3. 选择 qmake 编译系统
-4. kits 选择 MinGW
-5. summary 默认不操作
+ 1. 文件 -> Non-Qt Project -> Plain C++ Application
+ 2. 新建项目名，选择保存路径（不能有中文），建议自己再新建一个项目文件夹，保存项目文件夹、编译输出文件夹
+ 3. 选择 qmake 编译系统
+ 4. kits 选择 MinGW
+ 5. summary 默认不操作
 
-
-
-## 1.3 C++基础编程体验
+## 1.3 C++基础编程
 ### 1.3.1.何为命名空间
 #### 1.3.1.1、命名空间的引入
 (1)命名空间namespace，是C++引入的一种解决全局变量和函数名冲突的机制
