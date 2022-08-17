@@ -19,63 +19,34 @@ categories: 01-专业
 
 开发环境：编辑器 + 编译器 MSVC MinGW GNU(gcc g++) Clang + 辅助（调试器、反编译、代码提示与补全等）
 
-#### 选择IDE的考量因素
-(2)是否可跨平台
 
-(3)是否需要版权和付费
+#### 1.2.2.3、市面主流可选Ｃ++开发IDE
 
-(4)目标项目是大项目还是小项目
+ - CodeBlocks                 小巧、开源免费、跨平台，初学可试试
+ - eclipse + CDT + MinGW    推荐本来就熟悉eclipse的人偶尔开发C++使用
+ - VisualStudio201X            庞大、好用、不跨平台，推荐Windows上做大项目使用
+ - QtCreator                中等、开源免费、跨平台，推荐嵌入式开发者首选
+ - VSCode                    扩展性强、漂亮好用、跨平台，推荐web开发者做C++    
 
-### 1.2.2 常用C++开发环境介绍
-#### 1.2.2.1、命令行CommandLine
-1. Linux命令行：GNU g++ + Makefile/CMake
-2. Windows命令行：MinGW
-
-#### 1.2.2.2、不建议使用的老旧IDE
-(1)VC++6.0
-
-(2)DevC++
-
-#### 1.2.2.3、市面主流可选C++开发IDE
-(1)CodeBlocks                 小巧、开源免费、跨平台，初学可试试
-
-(2)eclipse + CDT + MinGW    推荐本来就熟悉eclipse的人偶尔开发C++使用
-
-(3)VisualStudio201X            庞大、好用、不跨平台，推荐Windows上做大项目使用
-
-(4)QtCreator                中等、开源免费、跨平台，推荐嵌入式开发者首选
-
-(5)VSCode                    扩展性强、漂亮好用、跨平台，推荐web开发者做C++            
-
+       
 #### 1.2.2.4、对开发环境的正确心态
 (1)不要执着于新版本，也不要执迷于很多年前的老东西
-
 (2)没有最好，甚至没有最适合，工具而已，够用即可
-
 (3)不要产生过度依赖，实际开发中可能会需要切换
 
 #### 1.2.2.5、本课程开发环境选择
-(1)前期简单程序Linux命令行
 
-(2)后期复杂程序Windows qtcreator，
+Windows qtcreator，
 
-(3)需要开发板运行Linux qtcreator交叉编译
+qtcreator的安装参考本网站其他文章。
 
-### 1.2.5.Windows下qtcreator安装
-(1)qtcreator是专为qt开发而生的，但本身也是个独立的IDE
 
-(2)qtcreator可以开发qt gui项目，也可以开发非qt的纯C++项目
+使用qtcreator开发纯C++项目、基于qmake
 
-(1)下载：http://download.qt.io/official\_releases
-
-(2)安装，注意选择合适控件
-
-### 1.2.6.使用qtcreator开发纯C++项目
-#### 1.2.6.1、基于qmake
 1. 文件 -> Non-Qt Project -> Plain C++ Application
 2. 新建项目名，选择保存路径（不能有中文），建议自己再新建一个项目文件夹，保存项目文件夹、编译输出文件夹
 3. 选择 qmake 编译系统
-4. kits 选择任意，可以多选（不同编译器会输出不同编译文件夹，互不影响）
+4. kits 选择 MinGW
 
         注：MSVC 编译选择必须还要额外再安装微软的相应编译环境，仅在qt安装时选择了还不行。  
 
@@ -83,14 +54,7 @@ categories: 01-专业
 
    5. summary 默认不操作
 
-#### 1.2.6.3、基于cmake
-1. 文件 -> Non-Qt Project -> Plain C++ Application
-2. 新建项目名，选择保存路径（不能有中文），建议自己再新建一个项目文件夹，保存项目文件夹、编译输出文件夹
-3. 选择 qmake 编译系统
-4. kits 选择任意，可以多选（不同编译器会输出不同编译文件夹，互不影响）
-5. summary 默认不操作
-6. 下载并安装cmake：camke.org
-7. 使用时：项目 -> Manege Kits -> Kits -> Cmake，添加路径，选择刚安装的 cmake.exe
+
 
 ## 1.3 C++基础编程体验
 ### 1.3.1.何为命名空间
