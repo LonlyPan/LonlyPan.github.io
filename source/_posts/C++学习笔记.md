@@ -1,7 +1,7 @@
 ---
 layout: post
 title: " C++学习笔记"
-index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_C++学习笔记/v2-cd417258dd040b15ee7f80446286f8cd_720w.jpg
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/v2-cd417258dd040b15ee7f80446286f8cd_720w.jpg
 date: 2019-9-4 18:6
 updated: 2019-9-4 18:6
 hide: false
