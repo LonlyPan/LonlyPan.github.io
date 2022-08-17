@@ -1,3 +1,15 @@
+---
+layout: post
+title: "零基础入门C语言-网易云课堂-乐学偶的"
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C语言学习笔记/1654312650232.png
+date: 2019-9-4 18:6
+updated: 2019-9-4 18:6
+hide: false
+# sticky: 100 #置顶，数字越大越靠前
+# banner_img: #/img/post_banner.jpg
+# comment: false
+categories: 01-专业
+---
 # C++学习笔记
 # 一、C到C++
 ## 1.2 C++开发环境搭建
