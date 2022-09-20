@@ -1,0 +1,48 @@
+<table class='table table-celled table-component' border='1' style='border-collapse: collapse; width: 98.4142%;' id='tinymcetable' > <thead>
+<tr>
+<th style="width: 24.9357%;">本次动作的阀个数(n,1byte)</th>
+<th style="width: 25.9536%;">本次动作的阀状态设置(2*n bytes)</th>
+<th style="width: 10.8102%;">时间(2byte,秒)</th>
+<th style="width: 10.908%;">温度(1byte，℃)</th>
+<th style="width: 11.9983%;">升温速率(1byte，℃/分钟)</th>
+<th style="width: 13.8085%;">本行CRC(1byte)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 24.9357%;">&nbsp;第1步动作阀个数</td>
+<td style="width: 25.9536%;">&nbsp;阀编号,状态......</td>
+<td style="width: 10.8102%;">&nbsp;持续时间</td>
+<td style="width: 10.908%;">&nbsp;设定的温度值</td>
+<td style="width: 11.9983%;">&nbsp;升温速率</td>
+<td style="width: 13.8085%;">&nbsp;本行计算CRC</td>
+</tr>
+<tr>
+<td style="width: 24.9357%;">&nbsp;第2步动作阀个数</td>
+<td style="width: 25.9536%;">&nbsp;阀编号,状态......</td>
+<td style="width: 10.8102%;">&nbsp;持续时间</td>
+<td style="width: 10.908%;">&nbsp;设定的温度值</td>
+<td style="width: 11.9983%;">&nbsp;升温速率</td>
+<td style="width: 13.8085%;">&nbsp;&nbsp;本行计算CRC</td>
+</tr>
+<tr>
+<td style="width: 24.9357%; text-align: center;" colspan="6">......</td>
+</tr>
+<tr>
+<td style="width: 24.9357%;">最后一步动作阀个数</td>
+<td style="width: 25.9536%;">&nbsp;阀编号,状态......</td>
+<td style="width: 10.8102%;">&nbsp;持续时间</td>
+<td style="width: 10.908%;">设定的温度值</td>
+<td style="width: 11.9983%;">升温速率</td>
+<td style="width: 13.8085%;">本行计算CRC</td>
+</tr>
+<tr>
+<td style="width: 24.9357%; text-align: center;" colspan="6">设备编号(1byte)，该方法用于哪个设备</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="6">循环次数(1byte)</td>
+</tr>
+<tr>
+<td style="width: 24.9357%; text-align: center;" colspan="6">方法的编号，用于对每一个方法进行区分(1byte)。我们约定，编号大于100的为需要记录并保存ADC数据的方法，0-99为不保存ADC数据</td>
+</tr>
+</tbody> </table>
