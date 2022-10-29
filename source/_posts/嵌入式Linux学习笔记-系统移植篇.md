@@ -1925,15 +1925,13 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 ## 系统烧写
 使用 NXP 官方提供的 MfgTool 工具通过 USB OTG 口来烧写系统。直接将 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这四个文件烧写到板子上的 EMMC、 NAND 或 QSPI Flash 等其他存储设备上。
 
-### 1. MfgTool 工具
+###  MfgTool 工具烧写原理
 
-MfgTool 其实是先通过 USB OTG 先将 uboot、 kernel 和.dtb(设备树)
-这是三个文件下载到开发板的 DDR 中，注意不需要下载 rootfs。就相当于直接在开发板的 DDR
-上启动 Linux 系统，等 Linux 系统启动以后再向 EMMC 中烧写完整的系统，包括 uboot、 linux
-kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个阶段：
-①、将 firmware 目录中的 uboot、 linux kernel 和.dtb(设备树)，然后通过 USB OTG 将这个
+MfgTool 是先通过 USB OTG 先将 uboot、 kernel 和.dtb(设备树)这三个文件下载到开发板的 DDR 中，注意不需要下载 rootfs。就相当于直接在开发板的 DDR上启动 Linux 系统，等 Linux 系统启动以后，再向 EMMC 中烧写完整的系统包括 uboot、 linux kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个阶段：
+
+1. 将 firmware 目录中的 uboot、 linux kernel 和.dtb(设备树)，通过 USB OTG 将这个
 文件下载到开发板的 DDR 中，目的就是在 DDR 中启动 Linux 系统，为后面的烧写做准备。
-②、经过第①步的操作，此时 Linux 系统已经运行起来了，系统运行起来以后就可以很方
+2. 经过第1步的操作，此时 Linux 系统已经运行起来了，系统运行起来以后就可以很方
 便的完成对 EMMC 的格式化、分区等操作。 EMMC 分区建立好以后就可以从 files 中读取要烧
 写的 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这 4 个文件，然后将其烧写到 EMMC 中，这个
 就是 MfgTool 的大概工作流程。
