@@ -1927,14 +1927,39 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 
 ### 1. MfgTool 工具
 
+MfgTool 其实是先通过 USB OTG 先将 uboot、 kernel 和.dtb(设备树)
+这是三个文件下载到开发板的 DDR 中，注意不需要下载 rootfs。就相当于直接在开发板的 DDR
+上启动 Linux 系统，等 Linux 系统启动以后再向 EMMC 中烧写完整的系统，包括 uboot、 linux
+kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个阶段：
+①、将 firmware 目录中的 uboot、 linux kernel 和.dtb(设备树)，然后通过 USB OTG 将这个
+文件下载到开发板的 DDR 中，目的就是在 DDR 中启动 Linux 系统，为后面的烧写做准备。
+②、经过第①步的操作，此时 Linux 系统已经运行起来了，系统运行起来以后就可以很方
+便的完成对 EMMC 的格式化、分区等操作。 EMMC 分区建立好以后就可以从 files 中读取要烧
+写的 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这 4 个文件，然后将其烧写到 EMMC 中，这个
+就是 MfgTool 的大概工作流程。
+
+### 设备连接
+
 1. MfgTool 工具下载：是 NXP 提供的专门用于给 I.MX 系列 CPU 烧写系统的软件，可以在 NXP 官网下载到。开发板光盘中路径为： 5、开发工具->3、NXP官方原版MFG_TOOL烧写工具->L4.1.15_2.0.0-ga_mfg-tools.tar.gz
 2. 解压。选择 mfgtools-with-rootfs.tar.gz（带rootfs文件系统） 这个压缩包， 解压出一个名为 mfgtools-with-rootfs 的文件夹。
 3. 进入目录 mfgtools-with-rootfs\mfgtools 中，在此目录下有几个文件夹和很多的.vbs 文件，根据不同开发板选择不同的.vbs烧写脚本。其他的.vbs 烧写脚本用不到，因此可以删除掉
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667018103844.png)
 4. 连接USB。MfgTool 是通过 USB OTG 接口将系统烧写进 EMMC 中的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028512687.png)
-5、拨码开关拨到 USB 下载模式。如果插了 TF 卡，请弹出 TF 卡，否则电脑不能识别 USB！等识别出来以后再插上 TF 卡！
-将拨码开关拨到“USB”模式
+5、拨码开关拨到 USB 下载模式。
+> 如果插了 TF 卡，请弹出 TF 卡，否则电脑不能识别 USB！等识别出来以后再插上 TF 卡！==
+6. 按一下开发板的复位键，此时就会进入到 USB 模式，如果是第一次进入 USB 模式的话可能会久一点，这个是免驱的，因此不需要安装驱动
+
+### 3. 系统烧写
+1. 双击“ mfgtool2-yocto-mx-evk-emmc.vbs”，打开下载对话框，如图
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028740790.png)
+如果出现“符合 HID 标准的供应商定义设备”就说明连接正常，可以进行烧写
+2. 进入如下目录中：
+`L4.1.15_2.0.0-ga_mfg-tools/mfgtools-with-rootfs/mfgtools/Profiles/Linux/OS Firmware`
+
+点击“Start”按钮即可开始烧写，烧写什么东西呢？
+肯定是烧写 uboot、 Linux kernel、 .dtb 和 rootfs，那么这四个应该放到哪里 MfgTool 才能访问到
+呢？
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
