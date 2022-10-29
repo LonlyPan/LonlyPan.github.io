@@ -1927,6 +1927,9 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 
 ### 1. MfgTool 工具
 
+1. MfgTool 工具下载：是 NXP 提供的专门用于给 I.MX 系列 CPU 烧写系统的软件，可以在 NXP 官网下载到。开发板光盘中路径为： 5、开发工具->3、NXP官方原版MFG_TOOL烧写工具->L4.1.15_2.0.0-ga_mfg-tools.tar.gz
+2. 解压。选择 mfgtools-with-rootfs.tar.gz（待rootfs文件系统） 这个压缩包，继续对其解压， 解压出一个
+名为 mfgtools-with-rootfs 的文件夹，此文件夹就包含有我们需要的烧写工具。
 
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
