@@ -1959,7 +1959,7 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667032054203.png)
 点击“Start”按钮即可开始烧写
 
-# 网络设置
+### 网络开机自启动
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
