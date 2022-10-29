@@ -1938,7 +1938,7 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667018103844.png)
 4. 连接USB。MfgTool 是通过 USB OTG 接口将系统烧写进 EMMC 中的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028512687.png)
-5、拨码开关拨到 USB 下载模式。
+5、拨码开关拨到 USB 下载模式。（先不上电）
 > 如果插了 TF 卡，请弹出 TF 卡，否则电脑不能识别 USB！等识别出来以后再插上 TF 卡！==
 6. 按一下开发板的复位键，此时就会进入到 USB 模式，如果是第一次进入 USB 模式的话可能会久一点，这个是免驱的，因此不需要安装驱动
 
@@ -1950,7 +1950,8 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 `L4.1.15_2.0.0-ga_mfg-tools/mfgtools-with-rootfs/mfgtools/Profiles/Linux/OS Firmware`
 3.  进入firmeare 文件夹。使用我们自己的编译出来的 zImage、 u-boot.imx 和 imx6ull-alientekemmc.dtb 这三个文件替换掉表中这三个文件。名字要和表的一致，
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667031953301.png)
-
+4. 进入files文件夹。同样，用我们编译出来的 zImage、 u-boot.imx 和 imx6ull-alientek-emmc.dtb 和 rootfs 这四个文件替换掉表中四个文件。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667032054203.png)
 点击“Start”按钮即可开始烧写，烧写什么东西呢？
 肯定是烧写 uboot、 Linux kernel、 .dtb 和 rootfs，那么这四个应该放到哪里 MfgTool 才能访问到
 呢？
