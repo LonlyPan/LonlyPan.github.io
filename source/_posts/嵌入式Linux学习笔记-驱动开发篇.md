@@ -243,6 +243,11 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("zuozhongkai");
 
 ```
+
+编译生成.ko驱动文件
+
+“\_\_init”、“\_\_exit”修饰。实际上是汇编指示，编译器会把所有修饰过的放在一起，用在系统初始化，一旦内核启动后，就释放这些东西。只有在kernel初始化的时候会被调用，以后一定不会被使用，kernel可能会在以后的某个时候释放掉这个段所占用的内存，给别的地方使用
+
 ### 4、 APP编写
 
 ```
@@ -312,9 +317,10 @@ int main(int argc, char *argv[])
 }
 ```
 
+
 - 数组 usrdata 是测试 APP 要向 chrdevbase 设备写入的数据。
 - `if(argc != 3)`，判断运行测试 APP 的时候输入的参数是不是为 3 个，main 函数的 argc 参数表示参数数量，argv[]保存着具体的参数，如果参数不为 3 个的话就表示测试 APP 用法错误。
-比如，现在要从 chrdevbase 设备中读取数据，需要输入如下命令：./chrdevbaseApp /dev/chrdevbase 1上述命令一共有三个参数“./chrdevbaseApp”、“/dev/chrdevbase”和“1”，这三个参数分别对应 argv[0]、argv[1]和 argv[2]。
+比如，现在要从 chrdevbase 设备中读取数据，需要输入如下命令：`./chrdevbaseApp /dev/chrdevbase 1`上述命令一共有三个参数“./chrdevbaseApp”、“/dev/chrdevbase”和“1”，这三个参数分别对应 argv[0]、argv[1]和 argv[2]。
 	- 第一个参数表示运行 chrdevbaseAPP 这个软件，
 	- 第二个参数表示测试APP要打开/dev/chrdevbase这个设备。
 	- 第三个参数就是要执行的操作，1表示从chrdevbase中读取数据，2 表示向 chrdevbase 写数据。
