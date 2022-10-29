@@ -1927,8 +1927,6 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 
 ###  MfgTool 工具烧写原理
 
-MfgTool 是先通过 USB OTG 先将 uboot、 kernel 和.dtb(设备树)这三个文件下载到开发板的 DDR 中（注意不需要下载 rootfs）。就相当于直接在开发板的 DDR上启动 Linux 系统，等 Linux 系统启动以后，再向 EMMC 中烧写完整的系统包括 uboot、 linux kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个阶段：
-
 1. 将 firmware 目录中的 uboot、 linux kernel 和.dtb(设备树)，通过 USB OTG下载到开发板的 DDR 中，目的就是在 DDR 中启动 Linux 系统，为后面的烧写做准备。
 2. 经过第1步的操作，此时 Linux 系统已经运行起来了，系统运行起来以后完成对 EMMC 的格式化、分区等操作。 EMMC 分区建立好后，从 files 中读取要烧写的 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这 4 个文件，然后将其烧写到 EMMC 中，这个就是 MfgTool 的大概工作流程。
 
