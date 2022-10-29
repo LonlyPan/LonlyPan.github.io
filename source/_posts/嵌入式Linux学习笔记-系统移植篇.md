@@ -1925,6 +1925,8 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 ## 系统烧写
 使用 NXP 官方提供的 MfgTool 工具通过 USB OTG 口来烧写系统。直接将 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这四个文件烧写到板子上的 EMMC、 NAND 或 QSPI Flash 等其他存储设备上。
 
+### 1. MfgTool 工具简介
+
 
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
