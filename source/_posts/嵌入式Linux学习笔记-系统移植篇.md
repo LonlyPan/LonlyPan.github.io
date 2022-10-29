@@ -1938,7 +1938,7 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667018103844.png)
 4. 连接USB。MfgTool 是通过 USB OTG 接口将系统烧写进 EMMC 中的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028512687.png)
-5、拨码开关拨到 USB 下载模式。（先不上电）
+5、拨码开关拨到 USB 下载模式。
 > 如果插了 TF 卡，请弹出 TF 卡，否则电脑不能识别 USB！等识别出来以后再插上 TF 卡！==
 6. 按一下开发板的复位键，此时就会进入到 USB 模式，如果是第一次进入 USB 模式的话可能会久一点，这个是免驱的，因此不需要安装驱动
 
