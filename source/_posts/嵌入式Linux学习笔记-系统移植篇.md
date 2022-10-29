@@ -1929,8 +1929,13 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 
 1. MfgTool 工具下载：是 NXP 提供的专门用于给 I.MX 系列 CPU 烧写系统的软件，可以在 NXP 官网下载到。开发板光盘中路径为： 5、开发工具->3、NXP官方原版MFG_TOOL烧写工具->L4.1.15_2.0.0-ga_mfg-tools.tar.gz
 2. 解压。选择 mfgtools-with-rootfs.tar.gz（带rootfs文件系统） 这个压缩包， 解压出一个名为 mfgtools-with-rootfs 的文件夹。
-3. 进入目录 mfgtools-with-rootfs\mfgtools 中，在此目录下有几个文件夹和很多的.vbs 文件，根据不同开发板选择不同的.vbs烧写脚本 
+3. 进入目录 mfgtools-with-rootfs\mfgtools 中，在此目录下有几个文件夹和很多的.vbs 文件，根据不同开发板选择不同的.vbs烧写脚本。其他的.vbs 烧写脚本用不到，因此可以删除掉
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667018103844.png)
+4. 连接USB。MfgTool 是通过 USB OTG 接口将系统烧写进 EMMC 中的
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028512687.png)
+5、拨码开关拨到 USB 下载模式
+将拨码开关拨到“USB”模式，如图 39.2.1.3 所示：
+
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
 设备驱动程序和内核扩展运行于内核空间（在很多CPU架构中是ring 0），可以完全访问硬件，但也有运行于用户空间的一些例外，例如基于FUSE/CUSE的文件系统，和部分UIO[29][30]。多数人与Linux一起使用的图形系统不运行在内核中。与标准单体内核不同，Linux的设备驱动程序可以轻易的配置为内核模块，并在系统运行期间可直接装载或卸载。也不同于标准单体内核，设备驱动程序可以在特定条件下被抢占；增加这个特征用于正确处理硬件中断并更好的支持对称多处理[28]。出于自愿选择，Linux内核没有二进制内核接口[31]。
