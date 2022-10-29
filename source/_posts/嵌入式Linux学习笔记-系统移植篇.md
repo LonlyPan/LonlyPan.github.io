@@ -1934,7 +1934,7 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 4. 连接USB。MfgTool 是通过 USB OTG 接口将系统烧写进 EMMC 中的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028512687.png)
 5、拨码开关拨到 USB 下载模式
-将拨码开关拨到“USB”模式，如图 39.2.1.3 所示：
+将拨码开关拨到“USB”模式
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
