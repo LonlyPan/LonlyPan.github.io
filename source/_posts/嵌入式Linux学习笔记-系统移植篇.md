@@ -1938,7 +1938,7 @@ kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个
 写的 uboot、 linux kernel、 .dtb(设备树)和 rootfs 这 4 个文件，然后将其烧写到 EMMC 中，这个
 就是 MfgTool 的大概工作流程。
 
-### 设备连接
+### 1. 连接
 
 1. MfgTool 工具下载：是 NXP 提供的专门用于给 I.MX 系列 CPU 烧写系统的软件，可以在 NXP 官网下载到。开发板光盘中路径为： 5、开发工具->3、NXP官方原版MFG_TOOL烧写工具->L4.1.15_2.0.0-ga_mfg-tools.tar.gz
 2. 解压。选择 mfgtools-with-rootfs.tar.gz（带rootfs文件系统） 这个压缩包， 解压出一个名为 mfgtools-with-rootfs 的文件夹。
@@ -1950,7 +1950,7 @@ kernel、 .dtb(设备树)和 rootfs，因此 MfgTool 工作过程主要分两个
 > 如果插了 TF 卡，请弹出 TF 卡，否则电脑不能识别 USB！等识别出来以后再插上 TF 卡！==
 6. 按一下开发板的复位键，此时就会进入到 USB 模式，如果是第一次进入 USB 模式的话可能会久一点，这个是免驱的，因此不需要安装驱动
 
-### 3. 系统烧写
+### 2. 系统烧写
 1. 双击“ mfgtool2-yocto-mx-evk-emmc.vbs”，打开下载对话框，如图
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028740790.png)
 如果出现“符合 HID 标准的供应商定义设备”就说明连接正常，可以进行烧写
