@@ -1947,15 +1947,7 @@ Kernel panic - not syncing: No working init found.  Try passing init= option to 
 	1. 移植编译出来的 uboot 可执行文件： u-boot.imx。
 	2. 移植编译出来的 zImage 镜像文件
 	3. 开发板对应的.dtb(设备树)，对于 I.MX6UALPHA 开发板来说就是 imx6ull-alientek-emmc.dtb。
-	4. 构建的根文件系统 rootfs，这里我们需要对 rootfs 进行打包，进入到 Ubuntu 中的rootfs 目录中，然后使用 tar 命令对其进行打包，命令如下：
-```
-	cd rootfs/
-	tar -vcjf rootfs.tar.bz2 *
-```
-
-完成以后会在 rootfs 目录下生成一个名为 rootfs.tar.bz2 的压缩包，将 rootfs.tar.bz2 发送到
-windows 系统中。
-将上面提到的这 4 个“原材料”都发送到 Windows 系统中，如图 39.4.1 所示：
+	4. 构建的根文件系统 rootfs，这里我们需要对 rootfs 进行打包
 1. 双击“ mfgtool2-yocto-mx-evk-emmc.vbs”，打开下载对话框，如图
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667028740790.png)
 如果出现“符合 HID 标准的供应商定义设备”就说明连接正常，可以进行烧写
@@ -1965,9 +1957,9 @@ windows 系统中。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667031953301.png)
 4. 进入files文件夹。同样，用我们编译出来的 zImage、 u-boot.imx 和 imx6ull-alientek-emmc.dtb 和 rootfs 这四个文件替换掉表中四个文件。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-系统移植篇/1667032054203.png)
-点击“Start”按钮即可开始烧写，烧写什么东西呢？
-肯定是烧写 uboot、 Linux kernel、 .dtb 和 rootfs，那么这四个应该放到哪里 MfgTool 才能访问到
-呢？
+点击“Start”按钮即可开始烧写
+
+
 
 Linux是一个单体内核，支持真正的抢占式多任务处理（于用户态，和版本2.6系列之后的内核态[27][28]）、虚拟内存、共享库、请求分页、共享写时复制可执行体（通过内核同页合并）、内存管理、Internet协议族和线程等功能。
 
