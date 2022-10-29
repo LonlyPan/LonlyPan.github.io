@@ -77,6 +77,7 @@ cat /proc/devices
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-驱动开发篇/1658499365413.png)
 
 打开以后会自动在.vscode 目录下生成一个名为 c_cpp_properties.json 的文件，第 5 行的 includePath 表示头文件路径，需要将 Linux 源码里面的头文件路径添加进来，也就是我们前面移植的 Linux 源码中的头文件路径。添加头文件路径以后的 c_cpp_properties.json的文件内容如下所示：
+> 这里的头文件是我们移植到开发板的linux源码，不是ubuntu中的，因为软件最终是在板子上跑的
 
 ```
 1 {
