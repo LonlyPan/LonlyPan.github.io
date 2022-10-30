@@ -1020,7 +1020,7 @@ DTC是编译工具，相当于gcc编译器，将.dts编译成.dtb。DTC工具源
 如果要编译 DTS 文件的话只需要进入到 Linux 源码根目录下，然后执行如下命令：
 - `make all` 编译 Linux 源码中的所有东西，包括 zImage，.ko 驱动模块以及设备树。
 - 或者： `make dtbs` 只编译设备树。
-- 或者：`make xxx.dtb` 
+- 或者：`make xxx.dtb` 只编译指定的设备树
 
 
 基于 ARM 架构的 SOC 有很多种，一种 SOC 又可以制作出很多款板子，每个板子都有一个对应的 DTS 文件，那么如何确定编译哪一个 DTS 文件呢？我们就以 I.MX6ULL 这款芯片对应的板子为例来看一下，打开 arch/arm/boot/dts/Makefile，有如下内容：
@@ -1062,7 +1062,7 @@ DTC是编译工具，相当于gcc编译器，将.dts编译成.dtb。DTC工具源
 
 可以看出，当选中 I.MX6ULL 这个 SOC 以后(CONFIG_SOC_IMX6ULL=y)，所有使用到I.MX6ULL 这个 SOC 的板子对应的.dts 文件都会被编译为.dtb。如果我们使用 I.MX6ULL 新做了一个板子，只需要新建一个此板子对应的.dts 文件，然后将对应的.dtb 文件名添加到 dtb-$(CONFIG_SOC_IMX6ULL)下，这样在编译设备树的时候就会将对应的.dts 编译为二进制的.dtb文件。
 
-示例代码 43.2.2 中第 422 和 423 行就是我们在给正点原子的 I.MX6U-ALPHA 开发板移植Linux 系统的时候添加的设备树。
+示例代码第 417 和 421 行就是我们在给正点原子的 I.MX6U-ALPHA 开发板移植Linux 系统的时候添加的设备树。
 
 ## DTS 语法
 
