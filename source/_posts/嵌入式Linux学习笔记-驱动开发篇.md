@@ -1020,6 +1020,7 @@ DTC是编译工具，相当于gcc编译器，将.dts编译成.dtb。DTC工具源
 如果要编译 DTS 文件的话只需要进入到 Linux 源码根目录下，然后执行如下命令：
 - `make all` 编译 Linux 源码中的所有东西，包括 zImage，.ko 驱动模块以及设备树。
 - 或者： `make dtbs` 只编译设备树。
+- 或者：`make xxx.dtb` 
 
 
 基于 ARM 架构的 SOC 有很多种，一种 SOC 又可以制作出很多款板子，每个板子都有一个对应的 DTS 文件，那么如何确定编译哪一个 DTS 文件呢？我们就以 I.MX6ULL 这款芯片对应的板子为例来看一下，打开 arch/arm/boot/dts/Makefile，有如下内容：
