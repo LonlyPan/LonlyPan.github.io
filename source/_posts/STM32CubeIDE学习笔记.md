@@ -400,6 +400,10 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 # 使用问题合集
 
+## 连接多个st-link 调试Multiple debuggers
+
+当一台电脑同时连接多个st-link是，cubeide会提示仿真下载错误，这是需要在仿真设置里额外配置
+
 ## STM32CubeIDE 编译报错“no such file or directory”
 
 修改了项目名称（右键项目名 -> Rename）后，编译报错 “no such file or directory”，但实际报错的文件是存在的，且修改名称之前编译是正确的。  
