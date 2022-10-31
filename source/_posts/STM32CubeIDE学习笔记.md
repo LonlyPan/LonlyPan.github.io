@@ -405,6 +405,7 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 当一台电脑同时连接多个st-link是，cubeide会提示仿真下载错误，这是需要在仿真设置里额外配置
 > 同一个stm32cubeide软件只能同时一个功能在debug模式
 > 如果要同时调试两台设备，就需要打开两个cubeide软件且不在同一工作空间（Workspace）
+
 进入Debug Configurations
 1. 使能 Shared ST-Link 选项，否则后面的无法使用查找功能即找不到st-link
 2. 勾选 使用特定的ST-Link序列号，意味着我们当前工程会仅只用我们待会指定的仿真器（序列号唯一）
