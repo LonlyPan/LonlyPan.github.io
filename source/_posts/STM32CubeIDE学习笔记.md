@@ -408,10 +408,10 @@ stm32f1xx_it.h：中断服务函数声明，一般很少改动
 
 进入Debug Configurations
 1. 使能 Shared ST-Link 选项，否则后面的无法使用 `寻找` 功能即找不到st-link
-2. 勾选 使用特定的ST-Link序列号，意味着我们当前工程会仅只用我们待会指定的仿真器（序列号唯一）
-3. 点击 寻找，软件会自动列出当前已连接的st-link。建议在寻找之前，断点重连所有的st-link。
+2. 勾选 `使用特定的ST-Link序列号`，意味着我们当前工程会仅只用我们待会指定的仿真器（序列号唯一）
+3. 点击 `寻找`，软件会自动列出当前已连接的st-link。建议在寻找之前，断点重连所有的st-link。
 4. 选择想要的st-link序列号
-5. 端口号码默认61234，但是当我们同时多个仿真器运行时，则必须保证每一个这里的端口号码不一样，随便填。
+5. 端口号码默认61234，但是当我们同时有多个仿真器运行时，则必须保证每一个这里的端口号码不一样，随便填。
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE学习笔记/1667203070396.png)
  
 ## STM32CubeIDE 编译报错“no such file or directory”
