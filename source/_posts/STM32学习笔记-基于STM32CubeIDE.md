@@ -4643,7 +4643,98 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 ## CAN 通信
 
 ### F103
+官方HAL库中使用说明
 
+#####如何使用这个驱动程序#####
+
+1. 通过实现 HAL_CAN_MspInit() 来初始化 CAN 低级资源：
+	 - 	使用 __HAL_RCC_CANx_CLK_ENABLE() 启用 CAN 接口时钟
+	 - 	配置 CAN 引脚
+		- 启用 CAN GPIO 的时钟
+		- 将 CAN 引脚配置为备用功能开漏
+	- 在使用中断的情况下（例如 HAL_CAN_ActivateNotification()）
+		- 使用HAL_NVIC_SetPriority()配置 CAN 中断优先级
+		- 使用 HAL_NVIC_EnableIRQ() 启用 CAN IRQ 处理程序
+		-  在 CAN IRQ 处理程序中，调用 HAL_CAN_IRQHandler()
+
+2. 使用 HAL_CAN_Init() 函数初始化 CAN 外设。该函数使用 HAL_CAN_MspInit() 进行低级初始化。
+
+3. 使用以下配置函数配置接收过滤器：
+	-  HAL_CAN_ConfigFilter()
+
+4. 使用 HAL_CAN_Start() 函数启动 CAN 模块。在这个级别，节点在总线上处于活动状态：它接收消息，并且可以发送消息。
+
+5. 要管理消息传输，可以使用以下 Tx 控制函数：
+            (++) HAL_CAN_AddTxMessage() 请求传输新消息。
+            (++) HAL_CAN_AbortTxRequest() 中止传输未决消息。
+            (++) HAL_CAN_GetTxMailboxesFreeLevel() 获取空闲 Tx 邮箱的数量。
+            (++) HAL_CAN_IsTxMessagePending() 检查消息是否在 Tx 邮箱中挂起。
+            (++) HAL_CAN_GetTxTimestamp() 如果启用了时间触发通信模式，则获取发送的 Tx 消息的时间戳。
+
+      (#) 当 CAN Rx FIFO 接收到消息时，可以使用 HAL_CAN_GetRxMessage() 函数检索它。函数 HAL_CAN_GetRxFifoFillLevel() 允许知道有多少 Rx 消息存储在 Rx Fifo 中。
+
+      (#) 调用 HAL_CAN_Stop() 函数停止 CAN 模块。
+
+      (#) 使用 HAL_CAN_DeInit() 函数实现去初始化。
+
+
+      *** 轮询模式操作 ***
+      ===============================
+    [..]
+      （＃） 接待：
+            (++) 使用 HAL_CAN_GetRxFifoFillLevel() 监控消息的接收，直到至少收到一条消息。
+            (++) 然后使用 HAL_CAN_GetRxMessage() 获取消息。
+
+      （＃） 传播：
+            (++) 监控 Tx 邮箱的可用性，直到至少有一个 Tx
+ji 邮箱是免费的，使用 HAL_CAN_GetTxMailboxesFreeLevel()。
+            (++) 然后使用请求传输消息
+                 HAL_CAN_AddTxMessage()。
+
+
+      *** 中断模式操作 ***
+      =================================
+    [..]
+      (#) 使用 HAL_CAN_ActivateNotification() 激活通知
+          功能。然后，该过程可以通过控制
+          可用的用户回调：HAL_CAN_xxxCallback()，使用相同的 API
+          HAL_CAN_GetRxMessage() 和 HAL_CAN_AddTxMessage()。
+
+      (#) 可以使用禁用通知
+          HAL_CAN_DeactivateNotification() 函数。
+
+      (#) 应特别注意 CAN_IT_RX_FIFO0_MSG_PENDING 和
+          CAN_IT_RX_FIFO1_MSG_PENDING 通知。这些通知触发
+          回调 HAL_CAN_RxFIFO0MsgPendingCallback() 和
+          HAL_CAN_RxFIFO1MsgPendingCallback()。用户有两种可能的选择
+          这里。
+            (++) 直接在回调中获取 Rx 消息，使用
+                 HAL_CAN_GetRxMessage()。
+            (++) 或者在回调中不激活通知
+                 获取 Rx 消息。然后可以稍后获取 Rx 消息
+                 使用 HAL_CAN_GetRxMessage()。一旦收到 Rx 消息
+                 阅读，通知可以再次激活。
+
+
+      *** 睡眠模式 ***
+      ===================
+    [..]
+      (#) CAN 外设可以进入睡眠模式（低功耗），使用
+          HAL_CAN_RequestSleep()。将立即进入睡眠模式
+          当前的 CAN 活动（CAN 帧的发送或接收）将
+          完成。
+
+      (#) 进入睡眠模式时可以激活通知
+          将被输入。
+
+      (#) 可以使用以下命令检查是否进入睡眠模式
+          HAL_CAN_IsSleepActive()。
+          请注意 CAN 状态（可从 API HAL_CAN_GetState() 访问）
+          一旦睡眠模式请求是 HAL_CAN_STATE_SLEEP_PENDING
+          提交（尚未进入睡眠模式），并成为
+          睡眠模式有效时的 HAL_CAN_STATE_SLEEP_ACTIVE。
+
+      (#) 从睡眠模式唤醒可以由 t 触发
 
 ## LCD触摸
 
