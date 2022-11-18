@@ -4665,31 +4665,28 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 4. 使用 HAL_CAN_Start() 函数启动 CAN 模块。在这个级别，节点在总线上处于活动状态：它接收消息，并且可以发送消息。
 
 5. 要管理消息传输，可以使用以下 Tx 控制函数：
-            (++) HAL_CAN_AddTxMessage() 请求传输新消息。
-            (++) HAL_CAN_AbortTxRequest() 中止传输未决消息。
-            (++) HAL_CAN_GetTxMailboxesFreeLevel() 获取空闲 Tx 邮箱的数量。
-            (++) HAL_CAN_IsTxMessagePending() 检查消息是否在 Tx 邮箱中挂起。
-            (++) HAL_CAN_GetTxTimestamp() 如果启用了时间触发通信模式，则获取发送的 Tx 消息的时间戳。
+	HAL_CAN_AddTxMessage() 请求传输新消息。
+	HAL_CAN_AbortTxRequest() 中止传输未决消息。
+	HAL_CAN_GetTxMailboxesFreeLevel() 获取空闲 Tx 邮箱的数量。
+	HAL_CAN_IsTxMessagePending() 检查消息是否在 Tx 邮箱中挂起。
+	HAL_CAN_GetTxTimestamp() 如果启用了时间触发通信模式，则获取发送的 Tx 消息的时间戳。
 
-      (#) 当 CAN Rx FIFO 接收到消息时，可以使用 HAL_CAN_GetRxMessage() 函数检索它。函数 HAL_CAN_GetRxFifoFillLevel() 允许知道有多少 Rx 消息存储在 Rx Fifo 中。
+6. 当 CAN Rx FIFO 接收到消息时，可以使用 HAL_CAN_GetRxMessage() 函数检索它。函数 HAL_CAN_GetRxFifoFillLevel() 允许知道有多少 Rx 消息存储在 Rx Fifo 中。
 
-      (#) 调用 HAL_CAN_Stop() 函数停止 CAN 模块。
+7. 调用 HAL_CAN_Stop() 函数停止 CAN 模块。
 
-      (#) 使用 HAL_CAN_DeInit() 函数实现去初始化。
+8. 使用 HAL_CAN_DeInit() 函数实现去初始化。
 
+轮询模式操作
 
-      *** 轮询模式操作 ***
-      ===============================
-    [..]
-      （＃） 接待：
-            (++) 使用 HAL_CAN_GetRxFifoFillLevel() 监控消息的接收，直到至少收到一条消息。
-            (++) 然后使用 HAL_CAN_GetRxMessage() 获取消息。
+1. 接待：
+	- 使用 HAL_CAN_GetRxFifoFillLevel() 监控消息的接收，直到至少收到一条消息。
+	 - 然后使用 HAL_CAN_GetRxMessage() 获取消息。
 
-      （＃） 传播：
-            (++) 监控 Tx 邮箱的可用性，直到至少有一个 Tx
-ji 邮箱是免费的，使用 HAL_CAN_GetTxMailboxesFreeLevel()。
-            (++) 然后使用请求传输消息
-                 HAL_CAN_AddTxMessage()。
+2. 传播：
+	- 使用 HAL_CAN_GetTxMailboxesFreeLevel() 监控 Tx 邮箱的可用性，直到至少有一个 Tx 邮箱空闲。
+	- 然后使用HAL_CAN_AddTxMessage()。请求传输消息
+                 
 
 
       *** 中断模式操作 ***
