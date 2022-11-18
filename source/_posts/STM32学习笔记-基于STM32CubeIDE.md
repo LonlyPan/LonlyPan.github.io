@@ -4640,6 +4640,7 @@ void lcd_show_pic_flash_dma(u16 x,u16 y,u16 length,u16 width,const char* path)
 ```
 lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 ```
+## CAN 通信
 
 ## LCD触摸
 
