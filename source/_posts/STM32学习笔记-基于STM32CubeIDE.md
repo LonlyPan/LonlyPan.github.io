@@ -4689,16 +4689,10 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
                  
 
 
-      *** 中断模式操作 ***
-      =================================
-    [..]
-      (#) 使用 HAL_CAN_ActivateNotification() 激活通知
-          功能。然后，该过程可以通过控制
-          可用的用户回调：HAL_CAN_xxxCallback()，使用相同的 API
-          HAL_CAN_GetRxMessage() 和 HAL_CAN_AddTxMessage()。
+中断模式操作
+1. 使用 HAL_CAN_ActivateNotification() 函数激活通知。然后，可以通过可用的用户回调控制该过程：HAL_CAN_xxxCallback()，同时使用 APIs HAL_CAN_GetRxMessage() 和 HAL_CAN_AddTxMessage()。
 
-      (#) 可以使用禁用通知
-          HAL_CAN_DeactivateNotification() 函数。
+2. 可以使用HAL_CAN_DeactivateNotification() 函数。禁用通知 
 
       (#) 应特别注意 CAN_IT_RX_FIFO0_MSG_PENDING 和
           CAN_IT_RX_FIFO1_MSG_PENDING 通知。这些通知触发
