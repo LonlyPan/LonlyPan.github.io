@@ -3,7 +3,7 @@ layout: post
 title: "STM32学习笔记-基于STM32CubeIDE"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32学习笔记-基于STM32CubeIDE/index.png
 date: 2020-12-18
-updated: 2020-12-18
+updated: 2022-11-18
 hide: false
 # sticky: 100 #置顶，数字越大越靠前
 # banner_img: #/img/post_banner.jpg
