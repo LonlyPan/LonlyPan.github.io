@@ -4692,40 +4692,27 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 中断模式操作
 1. 使用 HAL_CAN_ActivateNotification() 函数激活通知。然后，可以通过可用的用户回调控制该过程：HAL_CAN_xxxCallback()，同时使用 APIs HAL_CAN_GetRxMessage() 和 HAL_CAN_AddTxMessage()。
 
-2. 可以使用HAL_CAN_DeactivateNotification() 函数。禁用通知 
+2. 可以使用HAL_CAN_DeactivateNotification() 函数禁用通知 
 
-      (#) 应特别注意 CAN_IT_RX_FIFO0_MSG_PENDING 和
-          CAN_IT_RX_FIFO1_MSG_PENDING 通知。这些通知触发
-          回调 HAL_CAN_RxFIFO0MsgPendingCallback() 和
-          HAL_CAN_RxFIFO1MsgPendingCallback()。用户有两种可能的选择
-          这里。
-            (++) 直接在回调中获取 Rx 消息，使用
-                 HAL_CAN_GetRxMessage()。
-            (++) 或者在回调中不激活通知
-                 获取 Rx 消息。然后可以稍后获取 Rx 消息
-                 使用 HAL_CAN_GetRxMessage()。一旦收到 Rx 消息
-                 阅读，通知可以再次激活。
+3. 应特别注意 CAN_IT_RX_FIFO0_MSG_PENDING 和CAN_IT_RX_FIFO1_MSG_PENDING 通知。这些通知触发回调 HAL_CAN_RxFIFO0MsgPendingCallback() 和 HAL_CAN_RxFIFO1MsgPendingCallback()。用户有两种可能的选择 这里。
+	- 直接在回调中获取 Rx 消息，使用 HAL_CAN_GetRxMessage()。
+	- 或者在没有收到 Rx 消息的情况下停用回调中的通知。然后可以稍后使用 HAL_CAN_GetRxMessage() 获取 Rx 消息。读取 Rx 消息后，可以再次激活通知。
 
+*** 睡眠模式 ***
 
-      *** 睡眠模式 ***
-      ===================
-    [..]
-      (#) CAN 外设可以进入睡眠模式（低功耗），使用
-          HAL_CAN_RequestSleep()。将立即进入睡眠模式
-          当前的 CAN 活动（CAN 帧的发送或接收）将
-          完成。
+1. CAN 外设可以使用 HAL_CAN_RequestSleep() 进入睡眠模式（低功耗）。一旦当前的 CAN 活动（CAN 帧的发送或接收）完成，就会进入睡眠模式。
 
-      (#) 进入睡眠模式时可以激活通知
-          将被输入。
+2. 可以激活通知，以便在进入睡眠模式时得到通知。
 
-      (#) 可以使用以下命令检查是否进入睡眠模式
-          HAL_CAN_IsSleepActive()。
-          请注意 CAN 状态（可从 API HAL_CAN_GetState() 访问）
-          一旦睡眠模式请求是 HAL_CAN_STATE_SLEEP_PENDING
-          提交（尚未进入睡眠模式），并成为
-          睡眠模式有效时的 HAL_CAN_STATE_SLEEP_ACTIVE。
+3. 可以使用 HAL_CAN_IsSleepActive() 检查是否进入睡眠模式。
+请注意，一旦提交睡眠模式请求（尚未进入睡眠模式），CAN 状态（可从 API HAL_CAN_GetState() 访问）为 HAL_CAN_STATE_SLEEP_PENDING，当睡眠模式有效时变为 HAL_CAN_STATE_SLEEP_ACTIVE。
 
-      (#) 从睡眠模式唤醒可以由 t 触发
+3. 从睡眠模式唤醒可以通过两种方式触发：
+	- 使用 HAL_CAN_WakeUp()。 从该函数返回时，退出睡眠模式（如果返回状态为 HAL_OK）。
+	- 当 CAN 外设检测到 Rx CAN 帧的开始时，如果启用了自动唤醒模式。
+
+### 使用
+初始化使用CubeIDE直接配置，系统自动完成，不需要关信
 
 ## LCD触摸
 
