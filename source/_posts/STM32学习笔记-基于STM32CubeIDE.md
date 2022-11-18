@@ -4718,12 +4718,9 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 ```
 (+) HAL_CAN_Start : 启动 CAN 模块
 (+) HAL_CAN_Stop : 停止 CAN 模块
-(+) HAL_CAN_RequestSleep ：请求进入睡眠模式。
-(+) HAL_CAN_WakeUp ：从睡眠模式唤醒。
-(+) HAL_CAN_IsSleepActive ：检查睡眠模式是否处于活动状态。
 (+) HAL_CAN_AddTxMessage : 向Tx邮箱添加消息并激活相应的传输请求
 (+) HAL_CAN_AbortTxRequest : 中止传输请求
-(+) HAL_CAN_GetTxMailboxesFreeLevel : 返回 Tx 邮箱免费级别
+(+) HAL_CAN_GetTxMailboxesFreeLevel : 返回 Tx 邮箱空闲级别
 (+) HAL_CAN_IsTxMessagePending : 检查传输请求是否在选定的 Tx 邮箱上挂起
 (+) HAL_CAN_GetRxMessage : 从 Rx FIFO 中获取 CAN 帧
 (+) HAL_CAN_GetRxFifoFillLevel : 返回 Rx FIFO 填充级别
