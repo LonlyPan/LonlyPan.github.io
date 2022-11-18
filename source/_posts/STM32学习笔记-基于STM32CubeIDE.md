@@ -4724,6 +4724,27 @@ lcd_show_pic_flash_dma(0,0,240,240,"img_test.bin");
 (+) HAL_CAN_IsTxMessagePending : 检查传输请求是否在选定的 Tx 邮箱上挂起
 (+) HAL_CAN_GetRxMessage : 从 Rx FIFO 中获取 CAN 帧
 (+) HAL_CAN_GetRxFifoFillLevel : 返回 Rx FIFO 填充级别
+
+[..] 本节提供的功能允许：
+       (+) HAL_CAN_ActivateNotification ：启用中断
+       (+) HAL_CAN_DeactivateNotification ：禁用中断
+       (+) HAL_CAN_IRQHandler : 处理 CAN 中断请求
+	   
+	  ================================================== ==============================
+提供以下回调函数：
+(+) HAL_CAN_TxMailbox0CompleteCallback
+(+) HAL_CAN_TxMailbox1CompleteCallback
+(+) HAL_CAN_TxMailbox2CompleteCallback
+(+) HAL_CAN_TxMailbox0AbortCallback
+(+) HAL_CAN_TxMailbox1AbortCallback
+(+) HAL_CAN_TxMailbox2AbortCallback
+(+) HAL_CAN_RxFifo0MsgPendingCallback
+(+) HAL_CAN_RxFifo0FullCallback
+(+) HAL_CAN_RxFifo1MsgPendingCallback
+(+) HAL_CAN_RxFifo1FullCallback
+(+) HAL_CAN_SleepCallback
+(+) HAL_CAN_WakeUpFromRxMsgCallback
+(+) HAL_CAN_ErrorCallback
 ```
 ## LCD触摸
 
