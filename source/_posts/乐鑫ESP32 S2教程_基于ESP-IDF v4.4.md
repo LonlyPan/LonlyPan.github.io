@@ -28,6 +28,7 @@ categories: 00-项目
 
 找到 Espressif-IDE Offline Installer，找到最新版，点击 mirror（国内镜像）下载，点击 download是从国外github下载，会很慢，不推荐。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/1676468621567.png)
+
 ## 02-教程介绍和资料获取
 
 - 资料查找
