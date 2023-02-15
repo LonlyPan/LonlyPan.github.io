@@ -21,7 +21,7 @@ categories: 00-项目
 N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串口
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/1676468214198.png)
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/1676468756039.png)
+![ESP32-S3-0702 _9_](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/ESP32-S3-0702_9_.PNG)
 
 ## 01-官方开发环境 Espressif IDE 一键安装
 
@@ -34,18 +34,25 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ## 02-教程介绍和资料获取
 
-- 资料查找
+ - [ESP32-S3-WROOM-1 模组资料](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
+ - 官方开发板资料：（产品开发参考，初学者不用看）
+	 - [ESP32-S3-DevKitC-1](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html)
+	 - [ESP32-S3-BOX](https://github.com/espressif/esp-box)
+	 - [ESP32-S3-EYE](https://github.com/espressif/esp-who/blob/master/docs/en/get-started/ESP32-S3-EYE_Getting_Started_Guide.md)
+	 - [ESP32-S3-Korvo-1](https://github.com/espressif/esp-skainet/blob/master/docs/en/hw-reference/esp32s3/user-guide-korvo-1.md)
+	 - [ESP32-S3-Korvo-2](https://docs.espressif.com/projects/esp-adf/zh_CN/latest/get-started/user-guide-esp32-s3-korvo-2.html)
+ - 资料查找
 	- 芯片资料
 	- 模组资料：模组和芯片关系
 	- 官方案例
-- ESP32芯片介绍
-   - 内核
-   - 资源
-   - 
+ - ESP32芯片介绍
+ - 内核
+ - 资源
+ - 
 ## 03-例程创建和项目文件结构介绍
 
 
-- 新建工程
+ - 新建工程
 	- 示例
 	- 默认
 	- 文件夹介绍（基本）
