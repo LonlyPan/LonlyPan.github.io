@@ -46,9 +46,7 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
   安装 Espressif-IDE 时已经自动安装，不需要在额外安装
 
  - ESP32芯片介绍
- - 内核
- - 资源
- - 
+
 ## 03-例程创建和项目文件结构介绍
 
 
