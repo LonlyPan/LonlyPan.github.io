@@ -42,7 +42,7 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 	 - [ESP32-S3-EYE](https://github.com/espressif/esp-who/blob/master/docs/en/get-started/ESP32-S3-EYE_Getting_Started_Guide.md)
 	 - [ESP32-S3-Korvo-1](https://github.com/espressif/esp-skainet/blob/master/docs/en/hw-reference/esp32s3/user-guide-korvo-1.md)
 	 - [ESP32-S3-Korvo-2](https://docs.espressif.com/projects/esp-adf/zh_CN/latest/get-started/user-guide-esp32-s3-korvo-2.html)
-- ESP IDF （类似标准库或者HAL库，官方的开发库）
+- ESP IDF （类似标准库或者HAL库，官方的开发库和例程）
  -  - 资料查找
 	- 芯片资料
 	- 
