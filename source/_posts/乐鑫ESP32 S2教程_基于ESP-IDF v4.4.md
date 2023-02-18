@@ -77,9 +77,8 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 ## EDP-IDF介绍
 ## 新建工程与工程结构讲解
 ## 调试与下载
-
 ## FreeRTOS操作系统
-## 
+#
 # 实战篇
 ## 1、LED
 ## 2、按键输入
