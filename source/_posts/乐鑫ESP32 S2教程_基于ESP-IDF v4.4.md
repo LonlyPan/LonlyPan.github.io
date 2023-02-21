@@ -42,7 +42,11 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 不使用 Eclipse 插件或VS Code等方式，直接使用 **Espressif-IDE 离线安装器**，集成了 OpenJDK、Python、CMake、Git、ESP-IDF、Eclipse IDE、IDF Eclipse 插件及相关构建工具，类似与Keil。
 
-下载：[Espressif-IDE 离线安装器](https://github.com/espressif/idf-installer#espressif-ide-offline-installer) 。
+下载：[Espressif-IDE 离线安装器](https://dl.espressif.cn/dl/esp-idf/?idf=4.4) 
+如果上述链接失效，可按下述方法找到：
+1. 进入[ESP-IDF 编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/index.html)
+2. 左侧栏，找到手动安装，单击右侧链接下载
+![3.](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676986539661.png)
 
 找到 Espressif-IDE Offline Installer，找到最新版，点击 mirror（国内镜像）下载，点击 download是从国外github下载，会很慢，不推荐。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/1676468621567.png)
