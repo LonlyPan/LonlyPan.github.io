@@ -38,18 +38,8 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ![ESP32-S3-0702 _9_](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/ESP32-S3-0702_9_.PNG)
 
-## 01-官方开发环境 Espressif IDE 一键安装
+## 开环开镜搭建
 
-不使用 Eclipse 插件或VS Code等方式，直接使用 **Espressif-IDE 离线安装器**，集成了 OpenJDK、Python、CMake、Git、ESP-IDF、Eclipse IDE、IDF Eclipse 插件及相关构建工具，类似与Keil。
-
-下载：[Espressif-IDE 离线安装器](https://dl.espressif.cn/dl/esp-idf/?idf=4.4) 
-如果上述链接失效，可按下述方法找到：
-1. 进入[ESP-IDF 编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/index.html)
-2. 左侧栏，找到手动安装，单击右侧链接下载
-![3.](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676986539661.png)
-
-找到 Espressif-IDE Offline Installer，找到最新版，点击 mirror（国内镜像）下载，点击 download是从国外github下载，会很慢，不推荐。
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/1676468621567.png)
 
 ## 02-教程介绍和资料获取
 模组资料：模组和芯片关系
@@ -78,6 +68,53 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 # 软件篇
 
 ## Espressif-IDE简介与安装
+
+### 简介
+
+Espressif IDE 是乐鑫基于 Eclipse CDT，专为乐鑫物联网开发框架 ESP-IDF 打造的独立集成开发环境 (Integrated Development Environment, IDE)，支持用户使用 ESP-IDF 实现端到端物联网应用开发。
+
+Espressif IDE 附带最新的 ESP-IDF Eclipse 插件、基本的 Eclipse CDT 插件、OpenOCD 插件以及其他来自 Eclipse 平台的第三方插件，以支持构建 ESP-IDF 应用程序。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676987553649.png)
+
+**Espressif IDE 的主要特性**
+ - 在 Eclipse CDT 环境下构建，易于使用
+ - 专为 ESP-IDF 应用程序开发而打造
+ - 集成编译所需的 ESP 工具链配置
+ - 可自动配置编译环境变量
+ - 提供新建项目向导以及 ESP-IDF 快速入门模板
+ - 具备领先的的编辑、编译以及语法着色功能
+ - 配有预建的函数头和函数定义导航
+ - 支持安装一个全新的 ESP-IDF 或是配置现有的 ESP-IDF
+ - 可直接从 IDE 中安装和配置 ESP-IDF 工具
+ - 配有用于项目设置的 SDK 配置编辑器
+ - 集成 CMake 编辑器，用于编辑 CMake 文件，如 CMakeLists.txt
+ - 支持基于 CMake 的编译系统
+ - 支持通过 UART 和 JTAG 烧录
+ - 支持自定义的 ESP-IDF OpenOCD 调试功能，包含预配置和设置
+ - 支持 GDB 硬件调试
+ - 集成 ESP-IDF 串行监视器，用于查看程序的串行输出
+ - 配备预置编译环境变量的 ESP-IDF 终端
+ - 配备应用程序大小分析编辑器，用于分析应用程序的静态内存使用情况
+ - 支持堆分析，用于进行内存分析并发现内存泄漏
+ - 支持 Panic 模式下 GDB Stub 调试
+ - 提供应用层跟踪，以便使用启动和停止命令，分析程序行为
+ - 支持 ESP32、ESP32-S2、ESP32-S3 和 ESP32-C3 系列芯片
+ - 支持中英文
+ - 具备可扩展性，适用于 Eclipse 生态体系中的其他第三方插件
+ - 支持 Windows、macOS 和 Linux 操作系统
+
+不使用 Eclipse 插件或VS Code等方式，直接使用 **Espressif-IDE 离线安装器**，集成了 OpenJDK、Python、CMake、Git、ESP-IDF、Eclipse IDE、IDF Eclipse 插件及相关构建工具，类似与Keil。
+
+下载：[Espressif-IDE 离线安装器](https://dl.espressif.cn/dl/esp-idf/?idf=4.4) 
+如果上述链接失效，可按下述方法找到：
+1. 进入[ESP-IDF 编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/index.html)
+2. 左侧栏，找到手动安装，单击右侧链接进入下载界面
+![3.](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676986539661.png)
+
+这里选择 **espressif-ide-setup-2.8.1-with-esp-idf-5.0** 离线安装包，自带IDE和IDF/第一个选项是在线安装，会很慢，不推荐
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image.png)
+
+
 ## EDP-IDF介绍
 ## 新建工程与工程结构讲解
 ## 调试与下载
