@@ -145,9 +145,16 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 
 第一个链接其实是 ESP-IDF Eclipse 插件的使用说明，但我们的Espressif-IDE就是基于Eclipse 的，所以也可以阅读参考学习IDE的使用
 第二个链接就是关于ESP-IDF的教程了，类似于标准库或HAL库，这是官方教程， 是最好的学习资料，当然本教程也是基于官方资料讲解，并且更加细、易懂，欢迎大家学习参考
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image_1_.png)
-
-
+关闭欢迎界面，来到主窗口，主要分为5个区域
+1. 菜单栏
+2. 项目浏览器，显示项目文件
+3. 编辑页面，编写代码的地方
+4. 信息栏，包含有信息窗口、查找、错误信息等关于工程和代码的信息
+5. 辅助栏，类似信息栏，也会显示部分信息，主要帮助理解代码结构的，必须显示一些类、函数名、全局变量等
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677074804627.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677074767312.png)
 ## 调试与下载
 ## FreeRTOS操作系统
 
