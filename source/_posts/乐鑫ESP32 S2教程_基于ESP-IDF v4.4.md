@@ -123,7 +123,8 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677066547246.png)
 3.同意协议，单击**下一步**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677070188632.png)
-
+4.等待软件完成系统检查（如果检查有问题则无法安装，需要根据提示解决相应问题），单击下一步
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677070216736.png)
 ## 新建工程与工程结构讲解
 ## 调试与下载
 ## FreeRTOS操作系统
