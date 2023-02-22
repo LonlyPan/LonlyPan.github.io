@@ -182,9 +182,10 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 7. 单击左上角锤子图标，编译程序
    编译就是将我们编写的程序变成可以在芯片上运行的文件，然后可以被我们下载到芯片中，芯片才能工作。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078273263.png)
-8. 我们可以在控制台窗口看到编译过程，同时在其右下角看到编译进度条
+8. 我们可以在控制台（Console）窗口看到编译过程，同时在其右下角看到编译进度条。
+   编译完成我们也可以在该串口看到
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078430451.png)
-串口号可以不选择，我们这里只编译
+9. 串口号可以不选择，我们这里只编译程序文件大小、占用内存大小等信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078097687.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078009152.png)
