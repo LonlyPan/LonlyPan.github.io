@@ -103,7 +103,9 @@ Espressif IDE 附带最新的 ESP-IDF Eclipse 插件、基本的 Eclipse CDT 插
  - 具备可扩展性，适用于 Eclipse 生态体系中的其他第三方插件
  - 支持 Windows、macOS 和 Linux 操作系统
 
-不使用 Eclipse 插件或VS Code等方式，直接使用 **Espressif-IDE 离线安装器**，集成了 OpenJDK、Python、CMake、Git、ESP-IDF、Eclipse IDE、IDF Eclipse 插件及相关构建工具，类似与Keil。
+Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-IDF、Eclipse IDE、IDF Eclipse 插件及相关构建工具，类似与Keil。
+
+### 下载
 
 下载：[Espressif-IDE 离线安装器](https://dl.espressif.cn/dl/esp-idf/?idf=4.4) 
 如果上述链接失效，可按下述方法找到：
@@ -111,9 +113,10 @@ Espressif IDE 附带最新的 ESP-IDF Eclipse 插件、基本的 Eclipse CDT 插
 2. 左侧栏，找到手动安装，单击右侧链接进入下载界面
 ![3.](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676986539661.png)
 
-这里选择 **espressif-ide-setup-2.8.1-with-esp-idf-5.0** 离线安装包，自带IDE和IDF/第一个选项是在线安装，会很慢，不推荐
+这里选择 **espressif-ide-setup-2.8.1-with-esp-idf-5.0** 离线安装包，包含IDE和IDF。上面第一个选项是在线安装，会很慢，不推荐
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image.png)
 
+### 安装
 
 ## EDP-IDF介绍
 ## 新建工程与工程结构讲解
