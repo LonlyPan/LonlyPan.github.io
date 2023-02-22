@@ -161,7 +161,8 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 大家可能也注意到，我们安装时，选择了中文，但这里的界面只有部分时中文，这个是官方还没汉化完全，所以只能这么使用了
 特别提醒大家，在菜单栏是有更改语言的选项的，但请**不要点击！不要点击！不要点击！** 否则软件会直接崩溃，彻底无法打开，只能重装软件。这是IDE软件已知有的bug了，至今还未修复。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677075285286.png)
-### 新建工程
+
+### 新建样例工程
 
 1. 有两种方式新建工程，如下图所示
 - 通过项目浏览器中的快捷链接
@@ -193,10 +194,17 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
     我们也可以在该窗口看到程序文件大小、占用内存大小等信息。
 	编译完成后，程序中一开始的那些警告、波浪线也会随之消失
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078731730.png)
-
-
-9. 串口号可以不选择，我们这里只编译
+10. 下载。点击芯片类型边的齿轮图标
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078898832.png)
+11. 在串口号选择开发板串口号。如果不确定是那个端口，可以插拔一下开发板，有变动的端口就是我们需要确定的端口号。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078097687.png)
+12. 单击开始图标，开始下载
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677079011588.png)
+13. 在控制台窗口，可以观看到下载进度。最后一行显示 **Done** 表示下载完成
+	  由于我们程序中什么都没有，因此下载后，开发板并没有任何反应。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677079075614.png)
+
+### 新建默认工程
 
 ## 调试与下载
 ## FreeRTOS操作系统
