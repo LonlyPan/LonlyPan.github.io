@@ -167,8 +167,9 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 - 通过项目浏览器中的快捷链接
 - 左上角 **File** - > **New** ->  **乐鑫IDF项目**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677074767312.png)
-2. 输入项目名，并选择项目存放位置，我们建议给项目新建一个文件夹，另外注意路径不要有中文、空格、括号等
+2. 输入项目名 `SampleProject`，并选择项目存放位置，我们建议给项目新建一个文件夹，另外**注意路径不要有中文、空格、括号等**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077335557.png)
+
 ## 调试与下载
 ## FreeRTOS操作系统
 
