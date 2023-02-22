@@ -173,7 +173,14 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
     在这里我们也可以看到，官方提供了很多模板例程，这是一个很好的学习资料，大家可以自行尝试不同模板例程。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077564989.png)
 4. 以下就是我们的工程了。此时 main.c 里只有一个主函数，还没有任何功能。
+   同时也可以发现，程序中会有波浪线，和其它错误警告，在下面的编译完成后，就会都消失的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077700612.png)
+5. 在编译前我们需要选择目标芯片。单击齿轮图标
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078067775.png)
+6. IDF目标选择芯片类型 `esp32s3`，串口号可以不选择，我们这里只编译
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078097687.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078009152.png)
 ## 调试与下载
 ## FreeRTOS操作系统
 
