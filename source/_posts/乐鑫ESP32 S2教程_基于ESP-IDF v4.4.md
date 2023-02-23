@@ -213,6 +213,10 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158681308.png)
 可以看到，默认工程中，main函数中是有一个打印函数的，打印函数的功能就是将其中的字符串通过串口发送给电脑，我们可以通过串口助手查看到开发板发送的信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158721461.png)
+如下所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158824071.png)
+
+
 ## 调试与下载
 ## FreeRTOS操作系统
 
