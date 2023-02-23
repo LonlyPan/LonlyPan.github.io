@@ -189,13 +189,15 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
    编译就是将我们编写的程序变成可以在芯片上运行的文件，然后可以被我们下载到芯片中，芯片才能工作。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078273263.png)
 8. 我们可以在控制台（Console）窗口看到编译过程，同时在其右下角看到编译进度条。
-   
-   
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078430451.png)
 9. 编译完成，我们可以看到0个错误、0个警告，说明我们的程序没有任何问题，可以下载了。如果这里有错误我们就需要根据提示修复错误，警告看情况修复。
     我们也可以在该窗口看到程序文件大小、占用内存大小等信息。
 	编译完成后，程序中一开始的那些警告、波浪线也会随之消失
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078731730.png)
+同时在工程名，右键，可以打开快捷菜单，打开 应用程序内存分析
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158442918.png)
+可以更加直观的观察到内存占用情况
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158536155.png)
 10. 下载。点击芯片类型边的齿轮图标
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078898832.png)
 11. 在串口号选择开发板串口号。如果不确定是那个端口，可以插拔一下开发板，有变动的端口就是我们需要确定的端口号。
@@ -207,6 +209,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677079075614.png)
 
 ### 新建默认工程
+
 
 ## 调试与下载
 ## FreeRTOS操作系统
