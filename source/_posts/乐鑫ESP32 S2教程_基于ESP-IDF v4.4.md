@@ -177,7 +177,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
    同时也可以发现，程序中会有波浪线，和其它错误警告，在下面的编译完成后，就会都消失的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077700612.png)
 
-这里我们可以发现，主程序并不是常见的 `main`，而是 `app_main`，这是因为esp32默认待 Free RTOS 系统。对于初学，只需要把它当成 `main` 函数就行了。
+这里我们可以发现，主程序并不是常见的 `main`，而是 `app_main`，这是因为esp32默认待 Free RTOS 系统，关于该操作系统后面涉及时在讲解；对于初学，只需要把它当成 `main` 函数就行了。
 
 ### 编译和下载
 
