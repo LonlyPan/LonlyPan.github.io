@@ -85,7 +85,7 @@ Espressif IDE 是乐鑫基于 Eclipse CDT，专为乐鑫物联网开发框架 ES
 Espressif IDE 附带最新的 ESP-IDF Eclipse 插件、基本的 Eclipse CDT 插件、OpenOCD 插件以及其他来自 Eclipse 平台的第三方插件，以支持构建 ESP-IDF 应用程序。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676987553649.png)
 
-ESP IDF 是乐鑫官方推出的物联网开发框架（类似标准库或者HAL库）
+ESP IDF 是乐鑫官方推出的物联网开发框架（类似标准库或HAL库）
 
 **Espressif IDE 的主要特性**
  - 在 Eclipse CDT 环境下构建，易于使用
