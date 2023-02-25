@@ -28,7 +28,7 @@ categories: 00-项目
 
 # 前言
 
-## 00-开发板
+## 01-开发板
 
 使用[源地ESP32-S3核心板](https://item.taobao.com/item.htm?spm=a230r.1.14.1.283f2d6cAjCT7l&id=669443108979&ns=1&abbucket=6#detail)
 也可以购买复刻版：[ESP32 S3核心板](https://item.taobao.com/item.htm?_u=fpkffgdda1e&id=695554257902)
@@ -38,13 +38,18 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ![ESP32-S3-0702 _9_](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v4.4/ESP32-S3-0702_9_.PNG)
 
-## 开环开镜搭建
+## 02-模组资料：模组和芯片关系
+
+简单来说，模组包含芯片，是一个最小系统，类似最小系统开发板。上电就能工作。
+如下图所示，单独的芯片时不能直接工作的，还需要晶振、Flash（基本所有的ESP32都是没有内存的，都需要外接flash工作）等才能正常工作
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677294268773.png)
+## 02-资料获取
 
 
-## 02-教程介绍和资料获取
-模组资料：模组和芯片关系
-- [ESP32 S3芯片资料](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf)
- - [ESP32-S3-WROOM-1 模组资料](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
+
+- [ESP32 S3芯片技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf)
+ - [ESP32-S3-WROOM-1 模组技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
+ - 
  - 官方开发板资料：（产品开发参考，初学者不用看）
 	 - [ESP32-S3-DevKitC-1](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html)
 	 - [ESP32-S3-BOX](https://github.com/espressif/esp-box)
@@ -218,6 +223,8 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 
 
 ## 调试与下载
+
+
 ## FreeRTOS操作系统
 
 # 实战篇
