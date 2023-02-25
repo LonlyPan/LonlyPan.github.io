@@ -40,26 +40,30 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ## 02-模组资料：模组和芯片关系
 
-简单来说，模组包含芯片，是一个最小系统，类似最小系统开发板。上电就能工作。
-如下图所示，单独的芯片时不能直接工作的，还需要晶振、Flash（基本所有的ESP32都是没有内存的，都需要外接flash工作）等才能正常工作
+简单来说，模组包含芯片，是一个最小系统，我们只需要模组供电，并引出引脚等，就构成了开发板。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image.jpg)
+
+如下图所示，单独的芯片时不能直接工作的，还需要外接晶振、Flash（基本所有的ESP32都是没有内存的，都需要外接flash工作）等才能正常工作
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677294268773.png)
+
 ## 02-资料获取
 
-
-
 - [ESP32 S3芯片技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf)
+- [ESP32-S3 芯片技术参考手册](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_cn.pdf)
  - [ESP32-S3-WROOM-1 模组技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
- - 
- - 官方开发板资料：（产品开发参考，初学者不用看）
-	 - [ESP32-S3-DevKitC-1](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html)
-	 - [ESP32-S3-BOX](https://github.com/espressif/esp-box)
-	 - [ESP32-S3-EYE](https://github.com/espressif/esp-who/blob/master/docs/en/get-started/ESP32-S3-EYE_Getting_Started_Guide.md)
-	 - [ESP32-S3-Korvo-1](https://github.com/espressif/esp-skainet/blob/master/docs/en/hw-reference/esp32s3/user-guide-korvo-1.md)
-	 - [ESP32-S3-Korvo-2](https://docs.espressif.com/projects/esp-adf/zh_CN/latest/get-started/user-guide-esp32-s3-korvo-2.html)
-- ESP IDF 是乐鑫官方推出的物联网开发框架（类似标准库或者HAL库）
-  安装 Espressif-IDE 时已经自动安装，不需要在额外安装
 
- - ESP32芯片介绍
+
+官方开发板资料：（产品开发参考，初学者不用看）
+- [ESP32-S3-DevKitC-1](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html)
+- [ESP32-S3-BOX](https://github.com/espressif/esp-box)
+- [ESP32-S3-EYE](https://github.com/espressif/esp-who/blob/master/docs/en/get-started/ESP32-S3-EYE_Getting_Started_Guide.md)
+- [ESP32-S3-Korvo-1](https://github.com/espressif/esp-skainet/blob/master/docs/en/hw-reference/esp32s3/user-guide-korvo-1.md)
+- [ESP32-S3-Korvo-2](https://docs.espressif.com/projects/esp-adf/zh_CN/latest/get-started/user-guide-esp32-s3-korvo-2.html)
+
+
+
+ESP32芯片介绍
 
 ## 03-例程创建和项目文件结构介绍
 
@@ -80,6 +84,8 @@ Espressif IDE 是乐鑫基于 Eclipse CDT，专为乐鑫物联网开发框架 ES
 
 Espressif IDE 附带最新的 ESP-IDF Eclipse 插件、基本的 Eclipse CDT 插件、OpenOCD 插件以及其他来自 Eclipse 平台的第三方插件，以支持构建 ESP-IDF 应用程序。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1676987553649.png)
+
+ESP IDF 是乐鑫官方推出的物联网开发框架（类似标准库或者HAL库）
 
 **Espressif IDE 的主要特性**
  - 在 Eclipse CDT 环境下构建，易于使用
