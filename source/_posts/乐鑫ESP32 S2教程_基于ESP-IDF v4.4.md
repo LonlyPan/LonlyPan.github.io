@@ -49,6 +49,9 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ## 02-资料获取
 
+- [官方技术文档下载中心](https://www.espressif.com.cn/zh-hans/support/documents/technical-documents)
+
+以下是从官网提取的关于S3芯片的几个重要文档，其它文档（如硬件设计指南等）请去上面文档中心下载
 - [ESP32 S3芯片技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf)
 - [ESP32-S3 芯片技术参考手册](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_cn.pdf)
  - [ESP32-S3-WROOM-1 模组技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
@@ -60,10 +63,6 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - [ESP32-S3-EYE](https://github.com/espressif/esp-who/blob/master/docs/en/get-started/ESP32-S3-EYE_Getting_Started_Guide.md)
 - [ESP32-S3-Korvo-1](https://github.com/espressif/esp-skainet/blob/master/docs/en/hw-reference/esp32s3/user-guide-korvo-1.md)
 - [ESP32-S3-Korvo-2](https://docs.espressif.com/projects/esp-adf/zh_CN/latest/get-started/user-guide-esp32-s3-korvo-2.html)
-
-
-
-ESP32芯片介绍
 
 ## 03-例程创建和项目文件结构介绍
 
