@@ -49,6 +49,8 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ## 02-资料获取
 
+牢记：官网是最佳的学习渠道
+
 - [官方技术文档下载中心](https://www.espressif.com.cn/zh-hans/support/documents/technical-documents)
 
 以下是从官网提取的关于S3芯片的几个重要文档，其它文档（如硬件设计指南等）请去上面文档中心下载
@@ -56,6 +58,10 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - [ESP32-S3 芯片技术参考手册](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_cn.pdf)
  - [ESP32-S3-WROOM-1 模组技术规格书](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf)
 
+另外还有一个最重要的在线文档：
+- [ESP-IDF 编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/index.html)
+
+pdf格式文档-英文：[下载](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/esp-idf-en-v5.1-dev-3619-g57b6be22a7-esp32s3.pdf)，推荐访问在线文档，该文档随时都会更新。另外轻易英文内容为准，中文的可能有翻译错误和更新延迟。
 
 官方开发板资料：（产品开发参考，初学者不用看）
 - [ESP32-S3-DevKitC-1](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html)
