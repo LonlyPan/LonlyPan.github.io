@@ -462,5 +462,11 @@ https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-
 • [Failure starting GDB server](https://www.youtube.com/watch?v=VVQr6nx7LBc)
 • [RT-Thread Studio调试错误 Failed to bind to port 61234, error code -1: No error](https://blog.csdn.net/qq_27508477/article/details/103705143)
 
-## 每行空格和结尾出现奇怪的符号
+## 每行空格和结尾出现点号和奇怪的符号
 
+如下图所示
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE学习笔记/1677467992474.png)
+
+在菜单栏，单击，即可取消显示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE学习笔记/1677468143113.png)
