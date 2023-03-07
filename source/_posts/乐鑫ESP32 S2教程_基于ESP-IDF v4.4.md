@@ -43,7 +43,7 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 简单来说，模组包含芯片，是一个最小系统，我们只需要模组供电，并引出引脚等，就构成了开发板。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image.jpg)
 
-如下图所示，单独的芯片时不能直接工作的，还需要外接晶振、Flash（基本所有的ESP32都是没有内存的，都需要外接flash工作）等才能正常工作
+如下图所示，单独的芯片时不能直接工作的，还需要外接晶振、Flash（基本所有的ESP32都是没有内部flash的，都需要外接flash工作）等才能正常工作
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677294268773.png)
 
@@ -233,6 +233,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 如下所示
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158824071.png)
 
+### 导入工程
 
 ## 调试与下载
 
