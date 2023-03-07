@@ -235,6 +235,9 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 
 ## 导入工程
 
+之所叫导入教程，是因为IDE的bug，无法正常打开工程
+1. 按照一般如Eclipse和STM32CubeIDE使用方式，我们直接点击
+
 ## 调试与下载
 
 
