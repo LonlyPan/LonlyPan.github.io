@@ -233,7 +233,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 如下所示
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158824071.png)
 
-### 导入工程
+## 导入工程
 
 ## 调试与下载
 
