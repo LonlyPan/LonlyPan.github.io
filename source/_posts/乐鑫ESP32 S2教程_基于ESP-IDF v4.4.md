@@ -157,7 +157,12 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 
 ## 新建工程与工程结构讲解
 
-打开并运行软件，首次运行会显示欢迎界面，这里有两个很重要的链接，不过如果你点击链接后，会直接在软件中打开，而不是浏览器打开，你也可以通过下方的链接访问
+打开并运行软件，会提示我们选择工作空间，工作空间相当于一个存档，保存了IDE的相关设置，如字体、排版、界面设置等自定义设置。如果下一次换了一个工作空间位置，软件就会恢复到默认设置。
+
+工作空间的目的在于协作，我们将工程文件和工作空间文件夹一同发给别人，另一个人打开软件时，在下面界面就可以选择我们发送的那个工作空间文件夹，这样别人就能保持和你一样的软件设置，放置不同人使用的软件不用，导致一些位置错误。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679194613824.png)
+
+首次运行会显示欢迎界面，这里有两个很重要的链接，不过如果你点击链接后，会直接在软件中打开，而不是浏览器打开，你也可以通过下方的链接访问
 - [Espressif-IDE Guide](https://github.com/espressif/idf-eclipse-plugin/blob/master/README_CN.md)
 - [ESP-IDF 编程指南-中文](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/index.html)
 
