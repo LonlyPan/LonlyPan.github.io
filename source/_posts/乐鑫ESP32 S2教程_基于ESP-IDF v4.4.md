@@ -255,6 +255,8 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 我们选择另一种可行方案，导入工程
 1. 按以下来个那种方式，都可以，单击导入 **import**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217587342.png)
+2. 选择乐鑫 -> 现有IDF项目
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217642183.png)
 ## 调试与下载
 
 
