@@ -245,7 +245,13 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 之所叫导入教程，是因为IDE的bug，无法正常打开工程
 1. 按照一般如Eclipse和STM32CubeIDE使用方式，我们直接点击 **从文件系统打开工程**
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217079133.jpg)
-
+2. 选择我们的工程文件夹，不要勾选main文件
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217142118.png)
+否则你的mian文件夹也会出现 .project 文件。如果你的已经有了，直接删除即可
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217195936.png)
+3. 你会发现，无论怎么编译，你的工程都会有这个波浪线，提示错误和警告。所以该方法导入项目并不可行
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217408699.png)   
+4. 
 ## 调试与下载
 
 
