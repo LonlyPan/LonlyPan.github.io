@@ -284,6 +284,8 @@ Yess
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679413448639.png)
 在工程名下拉，选择**New Launch Configuration**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414163305.png)
+单击 Debug，选择  ESP-IDF GDB OpenOCD Debugging
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414244524.png)
 ## FreeRTOS操作系统
 
 # 实战篇
