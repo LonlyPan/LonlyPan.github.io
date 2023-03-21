@@ -289,7 +289,7 @@ Yess
 Main 标签页保持默认，注意这里要有 .elf文件
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414393337.png)
 Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译为调试工具，选择芯片内部 USB-JTAG
->根据官方描述，ESP32 C3和S3都内置JTAG调试器，即我们只需要通过USB先连接到32的USB引脚，就能通过IDE直接调试，不需要额外的如ST-Link或Jtag调试硬件工具，
+>根据官方描述，ESP32 C3和S3都内置JTAG调试器，即我们只需要通过USB先连接到32的USB引脚，就能通过IDE直接调试，不需要额外的如ST-Link或Jtag调试硬件工具，非常方便，
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414453939.png)
 ## FreeRTOS操作系统
 
