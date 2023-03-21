@@ -286,7 +286,7 @@ Yess
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414163305.png)
 单击 **Debug**，选择  **ESP-IDF GDB OpenOCD Debugging** 这里是配置调试工具，**Next**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414244524.png)
-Main 标签页保持默认，注意这里要有elf文件
+Main 标签页保持默认，注意这里要有 .elf文件
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414393337.png)
 ## FreeRTOS操作系统
 
