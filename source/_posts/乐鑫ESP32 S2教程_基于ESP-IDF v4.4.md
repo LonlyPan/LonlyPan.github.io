@@ -266,7 +266,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ## 调试与下载
 
 要启用调试功能，需要先配置ESP-IDF工具
-> 至于为什么这样做，我也不知道，只知道按下面操作才能启动调试功能具体参考视频
+> 至于为什么这样做，我也不知道，只知道按下面操作才能启动调试功能。参考视频 [【乐鑫开发者大会-13】在 Espressif-IDE 中使用 ESP-IDF 开发应用】](https://www.bilibili.com/video/BV1D8411Y7Vz/?share_source=copy_web&vd_source=8ebff88ae6397c9ea01f30029bc60928)，3分35秒开始
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679412350559.png)
 然后选择使用文件系统现有ESP-IDF，选择软件安装目录下的文件夹，如果你的软件默认在C盘，路径应该和下图一致
