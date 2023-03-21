@@ -311,6 +311,9 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 在调试模式下，如果不想调试，只想下载，可以单击**运行**图标，选择**工程文件名**，即可下载。
 注意不要选错了，不要选第二个Configurantion（用于调试的）。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679415991099.png)
+
+### IDE自带终端，串口助手
+
 ## FreeRTOS操作系统
 
 # 实战篇
