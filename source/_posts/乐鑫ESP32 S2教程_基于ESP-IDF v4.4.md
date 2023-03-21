@@ -305,6 +305,8 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679415114430.png)
 软件会自动停留在程序开始位置，可以使用工具栏的调试工具进行调试运行。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679415345863.png)
+值得注意的是，当我们停止调试时，
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679415419829.png)
 ## FreeRTOS操作系统
 
 # 实战篇
