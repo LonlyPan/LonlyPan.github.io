@@ -275,7 +275,7 @@ Yess
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679412428834.png)
 保持默认，点击 **安装工具**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679412440813.png)
-等待系统下载安装完成，这个过程可能很慢或者失败，一般起步半小时左右
+等待系统下载安装完成，这个过程可能很慢或者失败，一般半小时左右
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679412992753.png)
 ## FreeRTOS操作系统
 
