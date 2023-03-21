@@ -279,7 +279,7 @@ Yess
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679413054380.png)
 显示如下，标志安装完成
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679413036536.png)
-
+安装完成，重启电脑。一定要重启电脑。
 
 ## FreeRTOS操作系统
 
