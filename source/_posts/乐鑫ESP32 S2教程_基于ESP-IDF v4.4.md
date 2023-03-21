@@ -265,7 +265,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
  
 ## 调试与下载
 
-
+要启用调试功能，需要先
 
 ## FreeRTOS操作系统
 
