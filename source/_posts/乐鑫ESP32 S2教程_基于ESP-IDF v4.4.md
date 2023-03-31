@@ -188,6 +188,9 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677075285286.png)
 
 ### 新建样例工程
+工程结构：
+https://xie.infoq.cn/article/ddb67ebf28bfe7fecce6a2368
+https://blog.csdn.net/qq_40500005/article/details/113840391
 
 1. 有两种方式新建工程，如下图所示
 - 通过项目浏览器中的快捷链接
@@ -197,18 +200,22 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077335557.png)
 3. 选择模板，这里我们选择官方提供的 `sample_project` 项目模板（至于为什么要使用模板，待会就会讲到），单击 **Finish** 完成工程创建
     在这里我们也可以看到，官方提供了很多模板例程，这是一个很好的学习资料，大家可以自行尝试不同模板例程。
+> 使用模板创建工程，有一个问题就是，IDE会自动修改项目名称。所以你需要在这里再次手动修改项目名
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077564989.png)
 4. 以下就是我们的工程了。此时 main.c 里只有一个主函数，还没有任何功能。
    同时也可以发现，程序中会有波浪线，和其它错误警告，在下面的编译完成后，就会都消失的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077700612.png)
 
 这里我们可以发现，主程序并不是常见的 `main`，而是 `app_main`，这是因为esp32默认待 Free RTOS 系统，关于该操作系统后面涉及时在讲解；对于初学，只需要把它当成 `main` 函数就行了。
-
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679929730389.png)
 ### 编译和下载
 
 5. 在编译前我们需要选择目标芯片。单击齿轮图标
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078067775.png)
 6. IDF目标选择芯片类型 `esp32s3`
+> 注意这里一定要先选择芯片型号，IDE有时会抽风，会自动变更这里的芯片型号，所以每次编译前最好都确认下。
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677078239625.png)
 7. 单击左上角锤子图标，编译程序
    编译就是将我们编写的程序变成可以在芯片上运行的文件，然后可以被我们下载到芯片中，芯片才能工作。
@@ -238,7 +245,7 @@ Espressif-IDE 离线安装器，集成了 OpenJDK、Python、CMake、Git、ESP-I
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158681308.png)
 可以看到，默认工程中，main函数中是有一个打印函数的，打印函数的功能就是将其中的字符串通过串口发送给电脑，我们可以通过串口助手查看到开发板发送的信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158721461.png)
-如下所示
+如下所示，串口波特率默认115200
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158824071.png)
 
 ## 导入工程
@@ -289,9 +296,14 @@ Yess
 Main 标签页保持默认，注意这里要有 .elf文件
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414393337.png)
 Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译为调试工具，选择芯片内部 USB-JTAG，点击 **Apply** 保存设置，单击 **Finish** 退出设置
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679824494192.png)
 >根据官方描述，ESP32 C3和S3都内置JTAG调试器，即我们只需要通过USB线连接到ESP32的USB引脚，就能通过IDE直接调试，不需要额外的如ST-Link或Jtag调试硬件工具，非常方便。
 
+> USB接口同时也支持虚拟串口，所以在接USB后，我们就不要再接串口RX和TX调试了，反而还省了两个口。否则像其它ESP32都需要使用串口下载程序的，因为S3和C3的USB自带虚拟串口，所以就不需要串口 引脚了。所以建议用S3和C3时，使用USB口调试、调试、虚拟串口打印。我们在使用USB连接ESP32时，电脑会自动生成一个串口，就跟普通的串口一样，使用即可。
+
 >同时注意，使用调试功能，USB引脚就不能用于其它功能了。除非后续不再使用调试功能，usb两个引脚才可以作为他用。
+
+> 后面教程都会只用USB接口和虚拟串口，虚拟串口默认和串口0相连
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414453939.png)
 此时我们的目标文件名，已经自动变成 **test Configuration**，同时还需要将左侧的**Run**改为**Debug**
@@ -312,14 +324,98 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 注意不要选错了，不要选第二个Configurantion（用于调试的）。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679415991099.png)
 
-### 自带终端，串口助手使用
+## 自带终端，串口助手使用
+打开终端，选择串口号，其它保持默认（串口监控）
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679578641429.png)
+界面底部栏，终端标签页会显示板子发送过来的串口信息
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679578830578.png)
+
+> 建议还是使用专门的串口调试软件，如正点原子的 XCOM 调试软件
+> 默认波特率115200
+
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679925520384.png)
 
 ## FreeRTOS操作系统
 
 # 实战篇
-## 1、LED
-## 2、按键输入
-## 3、串口通信
+
+## 1、printf
+新建样例工程（最简工程）。
+添加如下代码：
+```
+#include <stdio.h>
+
+void app_main(void)
+{
+	printf("Hello\n");
+}
+
+```
+编译下载程序，打开终端监视器
+可以发现串口成功输出
+> USB虚拟串口和串口0都可以输出，应该时映射的，所以此时接串口0和USB虚拟串口都会有输出
+
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679826810385.png)
+如果将后面换行符 `\n`去除，再下载
+```
+#include <stdio.h>
+
+void app_main(void)
+{
+	printf("Hello");
+}
+```
+会发现并没有输出。这是因为串口发送会有一个缓存机制，芯片再检测到缓存满后，才会发送一次数据。而我们现在发送的数据并不能填充满缓存区，所以就没有输出。
+有两种解决办法
+1. 和上面一样，再输出内容最后加上换行符，可以强制打印输出
+2. 加 `fflush(stdout)` ，也是强制刷新缓冲区，冲洗掉缓存区内容
+该方法仅适用于传统串口，不适用于USB虚拟串口
+```
+#include <stdio.h>
+
+void app_main(void)
+{
+	printf("Hello");
+	fflush(stdout);
+}
+```
+
+## 2、sleep 延时
+
+在上一节课基础上，添加延时函数，时间间隔定时输出
+需要包含头文件 `#include <unistd.h>`,完整程序如下
+```
+#include <stdio.h>
+#include <unistd.h>
+
+void app_main(void)
+{
+    while (1) {
+        printf("Hello from app_man!\n");
+        sleep(1);
+    }
+}
+
+```
+我们选中sleep单词，按F3或右键单击Open Declaration，可以其具体实现
+![右键单击去定义](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/右键单击去定义.gif)
+可以看到，`sleep`实际调用的`usleep`，`usleep`则调用的`vTaskDelay`
+而 `vTaskDelay` 实际和FreeRTOS有关，我们的EPS32 运行时离不开FreeRTOS的，相关的教程完成也有很多，这里不再讲解，大家可以参下网络教程学习，
+- [ESP32 FreeRTOS-任务的创建与删除 (1)](https://blog.csdn.net/believe666/article/details/127175049?spm=1001.2014.3001.5502)
+- [ESP32编程指南 —— Task API （任务）](https://blog.csdn.net/weixin_45652444/article/details/118867092?spm=1001.2014.3001.5502)
+- [ESP32_IDF学习4【ESP32上的FreeRTOS】](https://www.cnblogs.com/redlightASl/p/15539672.html)
+- [【深入浅出】FreeRTOS 学习笔记](https://www.cnblogs.com/liaozhelin/p/16290465.html) 
+- [006-ESP32学习开发(SDK)-关于操作系统-任务,任务堆栈空间,任务的挂起,恢复,删除](https://www.cnblogs.com/yangfengwu/p/15089797.html) 
+  
+## 2、GPIO 输出
+
+## 3、GPIO 输入
+
+## FreeRTOS
+
+参考：
+https://blog.csdn.net/believe666/article/details/127205502
+
 ## 4、外部中断
 
 ## 04-GPIO、LED
