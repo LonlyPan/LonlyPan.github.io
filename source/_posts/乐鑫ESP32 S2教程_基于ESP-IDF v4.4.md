@@ -397,7 +397,37 @@ void app_main(void)
 我们可以修改默认串口为用户自定义，这是后我们可以定义串口引脚（串口引脚需要查看芯片手册，按照引脚功能选择）和波特率。这里不推荐修改默认串口配置。
 
 同时我们这里也可以看到，串口的辅助功能输出默认是USB-JTAG，这就解释了为什么我们的USB虚拟串口会和默认串口是一样可以打印输出了。如果这里我们关闭辅助输出功能，USB虚拟串口将不会打印输出，但还会保留启动输出。
+
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532143489.png)
+
+帮助信息：
+配置esp_CONSOLE_uart
+控制台输出通道
+选择控制台输出的发送位置（通过stdout和stderr）。
+默认情况是在预定义的GPIO上使用UART0。
+如果选择“自定义”，则可以选择UART0或UART1，并且可以选择任何引脚。
+如果选择“None”（无），则除ROM引导加载程序的初始输出外，任何UART上都不会有控制台输出。此ROM输出可以通过GPIO捆扎或EFUSE抑制，详细信息请参阅芯片数据表。
+在带有USB OTG外围设备的芯片上，“USB CDC”选项将输出重定向到CDC端口。此选项使用芯片ROM中的CDC驱动程序。此选项与TinyUSB堆栈不兼容。
+在带有USB串行/JTAG调试控制器的芯片上，选择将输出重定向到该设备的CDC/ACM（串行端口仿真）组件的选项。
+可用选项：
+
+ - 默认值：UART0（ESP_CONSOLE_ART_Default）
+ - USB CDC（ESP_CONSOLE_USB_CDC）
+ - USB串行/JTAG控制器（ESP_CONSOLE_USB_Serial_JTAG）
+ - 自定义UART（ESP_CONSOLE_ART_Custom）
+ - 无（ESP_CONSOLE_None）
+
+配置sp_CONSOLE_SECONDARY
+控制台二次输出通道
+位于：组件配置>ESP系统设置
+当选择UART0端口作为主要端口但未连接时，此辅助选项支持通过其他特定端口（如USB_SERIAL_JTAG）输出。此辅助输出当前仅支持不使用REPL的非阻塞模式。如果您想用REPL以阻塞模式输出或通过该辅助端口输入，请在控制台输出菜单的通道中将主配置更改为该端口。
+可用选项：
+
+ - 无辅助控制台（ESP_console_CONDARY_NONE）
+ - USB_SERIAL_JTAG端口（ESP_CONSOLE_condary_USB_SERIAL_JTAG）
+
+当UART0端口未连接时，此选项支持通过USB_SERIAL_JTAG端口输出。输出当前仅支持非阻塞模式，而不使用控制台。如果您想使用REPL以阻塞模式输出或通过USB_SERIAL_JTAG端口输入，请将主配置更改为上面的ESP_CONSOLE_USB_SERIAL_JTAG。
 ## 2、sleep 延时
 
 在上一节课基础上，添加延时函数，时间间隔定时输出
