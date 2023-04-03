@@ -405,6 +405,7 @@ void app_main(void)
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532143489.png)
 
 #### 帮助信息：
+
 配置esp_CONSOLE_uart
 控制台输出通道
 选择控制台输出的发送位置（通过stdout和stderr）。
