@@ -390,8 +390,11 @@ void app_main(void)
 }
 ```
 
+### sdkconfig项目配置
+
 串口默认串口0，即GPIO43、44。默认波特率115200
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532028556.png)
+
 我们也可以修改默认串口。按下图打开sdkconfig项目配置工具，找到ESP System Setttings，找到console输出配置，这里有两个关于串口的配置，我们可以点击右侧问好查看帮助信息
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532051942.png)
 我们可以修改默认串口为用户自定义，这是后我们可以定义串口引脚（串口引脚需要查看芯片手册，按照引脚功能选择）和波特率。这里不推荐修改默认串口配置。
@@ -401,7 +404,7 @@ void app_main(void)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532143489.png)
 
-帮助信息：
+#### 帮助信息：
 配置esp_CONSOLE_uart
 控制台输出通道
 选择控制台输出的发送位置（通过stdout和stderr）。
@@ -427,7 +430,7 @@ void app_main(void)
  - 无辅助控制台（ESP_console_CONDARY_NONE）
  - USB_SERIAL_JTAG端口（ESP_CONSOLE_condary_USB_SERIAL_JTAG）
 
-当UART0端口未连接时，此选项支持通过USB_SERIAL_JTAG端口输出。输出当前仅支持非阻塞模式，而不使用控制台。如果您想使用REPL以阻塞模式输出或通过USB_SERIAL_JTAG端口输入，请将主配置更改为上面的ESP_CONSOLE_USB_SERIAL_JTAG。
+**当UART0端口未连接时，此选项支持通过USB_SERIAL_JTAG端口输出。**输出当前仅支持非阻塞模式，而不使用控制台。如果您想使用REPL以阻塞模式输出或通过USB_SERIAL_JTAG端口输入，请将主配置更改为上面的ESP_CONSOLE_USB_SERIAL_JTAG。
 ## 2、sleep 延时
 
 在上一节课基础上，添加延时函数，时间间隔定时输出
