@@ -273,6 +273,13 @@ https://blog.csdn.net/qq_40500005/article/details/113840391
 ## 调试与下载
 
 要启用调试功能，需要先配置ESP-IDF工具
+
+如果后续编译时遇到如下报错“
+```
+ninja: error: loading 'build.ninja': esp32
+```
+按下面教程重新安装ESP-IDF工具即可。一般都是因为windows自动更新导致的。
+
 > 至于为什么这样做，我也不知道，只知道按下面操作才能启动调试功能。参考视频 [【乐鑫开发者大会-13】在 Espressif-IDE 中使用 ESP-IDF 开发应用】](https://www.bilibili.com/video/BV1D8411Y7Vz/?share_source=copy_web&vd_source=8ebff88ae6397c9ea01f30029bc60928)，3分35秒开始
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679412350559.png)
@@ -337,6 +344,9 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ## FreeRTOS操作系统
 
+建议自行参考视频资料学习：
+- [什么是RTOS? - 孤独的二进制 - ESP32上的FREERTOS](https://www.bilibili.com/video/BV1q54y1Z7ca/?vd_source=03b483801bb82304e4324482b60bb93f)
+- [ESP32_freeRTOS教程一： 入门介绍](https://www.bilibili.com/video/BV1Nb4y1q7xz/?vd_source=03b483801bb82304e4324482b60bb93f)
 # 实战篇
 
 ## 1、printf
@@ -408,6 +418,8 @@ void app_main(void)
 - [006-ESP32学习开发(SDK)-关于操作系统-任务,任务堆栈空间,任务的挂起,恢复,删除](https://www.cnblogs.com/yangfengwu/p/15089797.html) 
   
 ## 2、GPIO 输出
+
+
 
 ## 3、GPIO 输入
 
