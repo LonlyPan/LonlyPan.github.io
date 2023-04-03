@@ -406,7 +406,7 @@ void app_main(void)
 
 #### 帮助信息：
 
-配置esp_CONSOLE_uart
+**配置esp_CONSOLE_uart**
 控制台输出通道
 选择控制台输出的发送位置（通过stdout和stderr）。
 默认情况是在预定义的GPIO上使用UART0。
@@ -422,16 +422,16 @@ void app_main(void)
  - 自定义UART（ESP_CONSOLE_ART_Custom）
  - 无（ESP_CONSOLE_None）
 
-配置sp_CONSOLE_SECONDARY
+**配置sp_CONSOLE_SECONDARY**
 控制台二次输出通道
 位于：组件配置>ESP系统设置
 当选择UART0端口作为主要端口但未连接时，此辅助选项支持通过其他特定端口（如USB_SERIAL_JTAG）输出。此辅助输出当前仅支持不使用REPL的非阻塞模式。如果您想用REPL以阻塞模式输出或通过该辅助端口输入，请在控制台输出菜单的通道中将主配置更改为该端口。
 可用选项：
+	 - 无辅助控制台（ESP_console_CONDARY_NONE）
+	 - USB_SERIAL_JTAG端口（ESP_CONSOLE_condary_USB_SERIAL_JTAG）
 
- - 无辅助控制台（ESP_console_CONDARY_NONE）
- - USB_SERIAL_JTAG端口（ESP_CONSOLE_condary_USB_SERIAL_JTAG）
+**当UART0端口未连接时，此选项支持通过USB_SERIAL_JTAG端口输出。** 输出当前仅支持非阻塞模式，而不使用控制台。如果您想使用REPL以阻塞模式输出或通过USB_SERIAL_JTAG端口输入，请将主配置更改为上面的ESP_CONSOLE_USB_SERIAL_JTAG。
 
-**当UART0端口未连接时，此选项支持通过USB_SERIAL_JTAG端口输出。**输出当前仅支持非阻塞模式，而不使用控制台。如果您想使用REPL以阻塞模式输出或通过USB_SERIAL_JTAG端口输入，请将主配置更改为上面的ESP_CONSOLE_USB_SERIAL_JTAG。
 ## 2、sleep 延时
 
 在上一节课基础上，添加延时函数，时间间隔定时输出
