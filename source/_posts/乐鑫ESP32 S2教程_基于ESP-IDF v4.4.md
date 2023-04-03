@@ -390,6 +390,14 @@ void app_main(void)
 }
 ```
 
+串口默认串口0，即GPIO43、44。默认波特率115200
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532028556.png)
+我们也可以修改默认串口。按下图打开sdkconfig项目配置工具，找到ESP System Setttings，找到console输出配置，这里有两个关于串口的配置，我们可以点击右侧问好查看帮助信息
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532051942.png)
+我们可以修改默认串口为用户自定义，这是后我们可以定义串口引脚（串口引脚需要查看芯片手册，按照引脚功能选择）和波特率。这里不推荐修改默认串口配置。
+
+同时我们这里也可以看到，串口的辅助功能输出，默认是USB-JTAG，这就解释了为什么我们的USB虚拟串口会和默认串口是一样的了。如果这里我们关闭辅助输出功能，USB虚拟串口功能也会被关闭，
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532143489.png)
 ## 2、sleep 延时
 
 在上一节课基础上，添加延时函数，时间间隔定时输出
