@@ -467,6 +467,10 @@ void app_main(void)
 
 源码：
 ```
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <esp_log.h>
 // 定义一个标签，方便批量换名字
 static const char* tagMyModule = "MyModule";
 
