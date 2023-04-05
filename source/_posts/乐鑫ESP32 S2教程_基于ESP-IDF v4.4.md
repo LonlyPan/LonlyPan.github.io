@@ -278,7 +278,7 @@ https://blog.csdn.net/qq_40500005/article/details/113840391
 ```
 ninja: error: loading 'build.ninja': esp32
 ```
-按下面教程重新安装ESP-IDF工具即可。一般都是因为windows系统自动更新导致的。
+按下面教程重新安装ESP-IDF工具即可。一般都是因为windows系统自动更新导致的，更换工作空间也会导致这个错误。
 
 > 至于为什么这样做，我也不知道，只知道按下面操作才能启动调试功能。参考视频 [【乐鑫开发者大会-13】在 Espressif-IDE 中使用 ESP-IDF 开发应用】](https://www.bilibili.com/video/BV1D8411Y7Vz/?share_source=copy_web&vd_source=8ebff88ae6397c9ea01f30029bc60928)，3分35秒开始
 
