@@ -459,6 +459,9 @@ void app_main(void)
 - [【深入浅出】FreeRTOS 学习笔记](https://www.cnblogs.com/liaozhelin/p/16290465.html) 
 - [006-ESP32学习开发(SDK)-关于操作系统-任务,任务堆栈空间,任务的挂起,恢复,删除](https://www.cnblogs.com/yangfengwu/p/15089797.html) 
   
+## 2、Log日志输出
+
+
 ## 2、GPIO 输出
 
 
