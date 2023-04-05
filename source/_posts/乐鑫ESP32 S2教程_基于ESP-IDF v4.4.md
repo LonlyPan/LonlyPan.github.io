@@ -529,7 +529,7 @@ void app_main(void)
 上面的等级修改是在编译时就固定好的，我们也可以使用函数在程序中实时修改等级。
 > 如果在程序修改等级，我们需要将sdkconfig中的最高等级改为最大（默认和默认等级一致），否则我们的等级也会被现在在最高等级
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680673522763.png)
-程序中修改，则sdkconfig的配置将失效，以程序中的设置为准
+程序中如果修改了等级，则sdkconfig中的配置将失效，以程序中的设置为准
 
 主要程序：
 ```
