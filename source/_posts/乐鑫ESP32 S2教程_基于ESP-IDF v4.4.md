@@ -509,7 +509,8 @@ Hello from app_main!
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680672831189.png)
 
-另外如果
+上面的等级修改是在编译时旧固定好的，我们也可以使用函数在程序中实时修改等级。
+
 ## 2、GPIO 输出
 
 
