@@ -531,10 +531,43 @@ Hello from app_main!
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680672831189.png)
 
-上面的等级修改是在编译时旧固定好的，我们也可以使用函数在程序中实时修改等级。
+上面的等级修改是在编译时就固定好的，我们也可以使用函数在程序中实时修改等级。
 > 如果在程序修改等级，我们需要将sdkconfig中的最高等级改为最大（默认和默认等级一致），否则我们的等级也会被现在在最高等级
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680673522763.png)
 
+主要程序：
+```
+void app_main(void)
+{
+
+	// 指定tagMyModule标签的等级
+	esp_log_level_set(tagMyModule, ESP_LOG_WARN);
+	// 设置全局的等级
+	// 与上面指定标签，分先后顺序
+	// 如果最后一步设置的是全局的，则指定等级失效，以全局为准，例如现在的程序，则tagMyModule等级就等于全局等级ESP_LOG_DEBUG
+	// 如果是先设置的全局，则指定标签等级=指定的等级，其它的=全局等级，可以将这两两行代码调换顺序尝试。
+	esp_log_level_set("*", ESP_LOG_DEBUG);
+
+
+    while (true) {
+
+    	printf("Hello from app_main!\n");
+    	// 错误
+    	ESP_LOGE(tagMyModule,"error");  // 最低级别
+    	// 警告
+    	ESP_LOGW(tagMyModule,"warning");
+    	// 信息
+    	ESP_LOGI(tagMyModule,"information");
+    	// 调试
+    	ESP_LOGD(tagMyModule,"debug");
+    	// 详细
+    	ESP_LOGV(tagMyModule,"verbose"); // 最高级别
+        sleep(1);
+    }
+}
+```
+打印输出内容：“
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680673797595.png)
 
 ## 2、GPIO 输出
 
