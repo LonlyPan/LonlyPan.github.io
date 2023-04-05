@@ -505,7 +505,11 @@ Hello from app_main!
 - 默认等级：info。即info级别以下的都可以打印输出。可以自己更改选项
 - 最高等级：如果这里设置的级别比上面默认等级低，那么打印等级就会被限制在最高等级。
 
+修改完成后，重新编译下载即可生效
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680672831189.png)
+
+另外如果
 ## 2、GPIO 输出
 
 
