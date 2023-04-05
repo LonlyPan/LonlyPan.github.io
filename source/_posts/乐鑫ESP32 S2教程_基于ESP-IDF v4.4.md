@@ -516,12 +516,7 @@ void app_main(void)
 }
 ```
 串口打印输出
-```
-Hello from app_main!
-[0;31mE (5310) MyModule: error[0m
-[0;33mW (5310) MyModule: warning[0m
-[0;32mI (5310) MyModule: information[0m
-```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680674347417.png)
 
 可以发现只打印三个，高级别的两个没有打印。这是因为Log打印输出是由等级控制的，在sdkconfig中设置，搜索log
 - 默认等级：info。即info级别以下的都可以打印输出。可以自己更改选项
@@ -534,6 +529,7 @@ Hello from app_main!
 上面的等级修改是在编译时就固定好的，我们也可以使用函数在程序中实时修改等级。
 > 如果在程序修改等级，我们需要将sdkconfig中的最高等级改为最大（默认和默认等级一致），否则我们的等级也会被现在在最高等级
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680673522763.png)
+程序中修改，则sdkconfig的配置将失效，以程序中的设置为准
 
 主要程序：
 ```
@@ -566,8 +562,8 @@ void app_main(void)
     }
 }
 ```
-打印输出内容：“
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680673797595.png)
+打印输出内容：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680674407523.png)
 
 ## 2、GPIO 输出
 
