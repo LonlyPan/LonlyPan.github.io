@@ -501,6 +501,8 @@ Hello from app_main!
 [0;32mI (5310) MyModule: information[0m
 ```
 
+可以发现只打印三个，高级别的两个没有打印。这是因为Log打印输出是由等级控制的，
+
 ## 2、GPIO 输出
 
 
