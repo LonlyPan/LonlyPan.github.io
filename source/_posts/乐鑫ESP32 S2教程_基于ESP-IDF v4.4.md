@@ -240,6 +240,26 @@ https://blog.csdn.net/qq_40500005/article/details/113840391
 	  由于我们程序中什么都没有，因此下载后，开发板并没有任何反应。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677079075614.png)
 
+
+如果下载时遇到如下错误提示：
+说明串口被其它软件（串口调试助手等）占用了，断开该软件的连接，重新下载即可
+```
+A fatal error occurred: Could not open COM9, the port doesn't exist
+
+CMake Error at run_serial_tool.cmake:55 (message):
+  
+  python;;C:/Espressif/frameworks/esp-idf-v5.0/components/esptool_py/esptool/esptool.py;--chip;esp32s3
+  failed
+
+
+FAILED: CMakeFiles/flash D:/00-learning/010-ESP32/S3/2_sources/05-Log/build/CMakeFiles/flash 
+
+cmd.exe /C "cd /D C:\Espressif\frameworks\esp-idf-v5.0\components\esptool_py && C:\Espressif\tools\cmake\3.24.0\bin\cmake.exe -D IDF_PATH=C:/Espressif/frameworks/esp-idf-v5.0 -D SERIAL_TOOL=python;;C:/Espressif/frameworks/esp-idf-v5.0/components/esptool_py/esptool/esptool.py;--chip;esp32s3 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D WORKING_DIRECTORY=D:/00-learning/010-ESP32/S3/2_sources/05-Log/build -P C:/Espressif/frameworks/esp-idf-v5.0/components/esptool_py/run_serial_tool.cmake"
+
+ninja: build stopped: subcommand failed.
+
+ninja failed with exit code 1, output of the command is in the d:\00-learning\010-esp32\s3\2_sources\05-log\build\log\idf_py_stderr_output_5680 and d:\00-learning\010-esp32\s3\2_sources\05-log\build\log\idf_py_stdout_output_5680
+```
 ### 新建默认工程
 步骤和上面类似。只是在模板选择界面，我们保持默认，不选择任何模板，直接点击 Finish 完成工程创建
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677158681308.png)
