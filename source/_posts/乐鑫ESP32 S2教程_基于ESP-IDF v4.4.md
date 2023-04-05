@@ -83,8 +83,29 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 ## 04-GPIO引脚介绍
 
-我们指导芯片模组是在芯片基础上添加外设得来的。所以其中的部分引脚是被外设芯片占用了，是无法使用的。
+参考资料：
+- ESP32­S3­WROOM 技术规格书
+- ESP32-S3 系列芯片 技术规格书
 
+我们已经知道芯片模组是在芯片基础上添加外设得来的。所以其中的部分引脚是被外设芯片占用了，是无法使用的。
+参考下列芯片和模组引脚对比，我们可以发现
+- 模组少了GPIO26-32，GPIO33-34引脚
+我们从芯片引脚介绍得知，GPIO26-32用于内部falsh/PSRAM通信
+另外我们在模组的最下面介绍也得知：在带有 OSPI PSRAM（即内置芯片为 ESP32-S3xxR8）的模组中，管脚 IO35、 IO36、 IO37 用于连接至模组内部集成的 OSPI PSRAM，不可用于其他功能
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680676644231.png)
+我们可以继续查看下面的关系表，可以发现
+- 对于八线SPI（内置R8 PSRAM），GPIO26-37都不可使用
+- 对于八线已下的，GPIO26-32都不可使用
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680677098426.png)
+那么GPIO22-34引脚去哪了呢，查看模组原理图，发现
+- GPIO22-34官方并没有被引出来
+所以如果我们使用的是八线以下的falsh/PSRAM，那么这两个引脚就被浪费了，所以我们自己设计模组时，是可以使用这两个引脚的，这样就相对于官方模组额外多了两个引脚（仅限八线以下的falsh/PSRAM）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680676995114.png)
+
+另外我们还要看另一组特殊的IO口。
+
+**总结：**
+- 
 
 # 软件篇
 
