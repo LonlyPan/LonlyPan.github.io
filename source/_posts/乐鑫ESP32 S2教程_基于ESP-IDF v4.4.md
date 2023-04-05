@@ -638,6 +638,47 @@ void app_main(void)
 
 参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
 
+要使用log打印，需包含库：esp_log.h
+
+
+初始化配置。有两种方式
+```
+/**
+ * @brief  led初始化，设置推挽输出，设置初始电平。
+ *
+ * @note 引脚会默认上拉
+ */
+void gpio_init()
+{
+	// 将 gpio 重置为默认状态（选择 gpio 功能，启用上拉并禁用输入和输出）。
+    gpio_reset_pin(BLINK_GPIO);
+    // 配置GPIO方向
+    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+
+}
+
+/**
+ * @brief  led初始化，设置推挽输出，设置初始电平。推荐使用该方式
+ *
+ * @note 这里和gpio_reset_pin底层实现很相似，但可以自定义修改配置
+ */
+void led_init()
+{
+    gpio_config_t io_conf;
+    //bit mask of the pins that you want to set,e.g.GPIO18/19 配置GPIO_OUT寄存器
+    io_conf.pin_bit_mask = BIT64(BLINK_GPIO) | BIT64(BLINK_GPIO2);  // 使用BIT64替代1ULL<<BLINK_GPIO2
+    //IO模式：输入输出
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    //下拉电阻：禁止
+    io_conf.pull_down_en = 0;
+    //上拉电阻：禁止
+    io_conf.pull_up_en = 0;
+    //IO中断类型：禁止中断
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    //使用给定设置配置GPIO
+    gpio_config(&io_conf);
+}
+```
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680701159744.jpg)
 
 ## 3、GPIO 输入
