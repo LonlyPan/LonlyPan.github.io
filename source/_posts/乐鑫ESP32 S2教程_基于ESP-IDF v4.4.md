@@ -120,7 +120,11 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680686239146.png)
 
 **总结：**
-- 
+- 对于八线SPI（内置R8 PSRAM），GPIO26-37都不可使用
+- 对于八线以下的，GPIO26-32都不可使用
+- Strapping 管脚上电保持默认值
+- GPIO22-34在官方模组中并没有被引出来
+- EN引脚，上拉，上电使能
 
 # 软件篇
 
