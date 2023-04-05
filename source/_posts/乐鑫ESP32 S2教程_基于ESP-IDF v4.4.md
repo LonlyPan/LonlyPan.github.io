@@ -127,6 +127,7 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - GPIO22-34在官方模组中并没有被引出来
 - EN引脚，上拉，上电使能芯片
 
+### ESP32 C3
 
 # 软件篇
 
