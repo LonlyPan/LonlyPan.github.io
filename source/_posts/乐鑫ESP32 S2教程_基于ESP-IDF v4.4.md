@@ -501,8 +501,10 @@ Hello from app_main!
 [0;32mI (5310) MyModule: information[0m
 ```
 
-可以发现只打印三个，高级别的两个没有打印。这是因为Log打印输出是由等级控制的，
-
+可以发现只打印三个，高级别的两个没有打印。这是因为Log打印输出是由等级控制的，在sdkconfig中设置，搜索log
+- 默认等级：info。即info级别以下的都可以打印输出。可以自己更改选项
+- 最高等级：如果这里设置的级别别默认等级低，那么打印等级就会被限制在最高等级。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680672831189.png)
 ## 2、GPIO 输出
 
 
