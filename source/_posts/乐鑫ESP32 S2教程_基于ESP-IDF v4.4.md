@@ -80,6 +80,10 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 	- 文件夹介绍（基本）
 	- ESP IDF介绍
 	- RTOS
+
+## 04-GPIO引脚介绍
+
+
 # 软件篇
 
 ## Espressif-IDE简介与安装
@@ -495,7 +499,7 @@ Log一共5个输出等级：
  - ESP_LOGD-调试
  - ESP_LOGV- 详细（最高）
 
-要使用log打印，需包含库：include/esp_log.h
+要使用log打印，需包含库：esp_log.h
 
 源码：
 ```
@@ -575,7 +579,9 @@ void app_main(void)
 打印输出内容：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680674407523.png)
 
-## 2、GPIO 输出
+## 4、GPIO 输出
+
+参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
 
 
 
