@@ -461,6 +461,7 @@ void app_main(void)
   
 ## 2、Log日志输出
 
+参考：ESP-IDF 编程指南：API参考» 系统接口» 日志库
 
 ## 2、GPIO 输出
 
