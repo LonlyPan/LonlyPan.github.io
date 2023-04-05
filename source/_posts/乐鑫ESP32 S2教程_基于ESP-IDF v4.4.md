@@ -463,6 +463,40 @@ void app_main(void)
 
 参考：ESP-IDF 编程指南：API参考» 系统接口» 日志库
 
+包含库：include/esp_log.h
+
+源码：
+```
+// 定义一个标签，方便批量换名字
+static const char* tagMyModule = "MyModule";
+
+void app_main(void)
+{
+    while (true) {
+
+    	printf("Hello from app_main!\n");
+    	// 错误
+    	ESP_LOGE(tagMyModule,"error");  // 最低级别
+    	// 警告
+    	ESP_LOGW(tagMyModule,"warning");
+    	// 信息
+    	ESP_LOGI(tagMyModule,"information");
+    	// 调试
+    	ESP_LOGD(tagMyModule,"debug");
+    	// 详细
+    	ESP_LOGV(tagMyModule,"verbose"); // 最高级别
+        sleep(1);
+    }
+}
+```
+串口打印输出
+```
+Hello from app_main!
+[0;31mE (5310) MyModule: error[0m
+[0;33mW (5310) MyModule: warning[0m
+[0;32mI (5310) MyModule: information[0m
+```
+
 ## 2、GPIO 输出
 
 
