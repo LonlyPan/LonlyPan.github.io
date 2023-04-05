@@ -135,7 +135,7 @@ GPIO11不可用
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697605040.png)
 GPIO2、8、9为 strapping 管脚，GPIO9 内部默认弱上拉
 - 实测GPIO2悬空也能用，但最好外部上拉
-- GPIO8必须外部上拉
+- GPIO8必须外部上拉，否则无法进入boot下载模式
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697215544.png)
 
 
