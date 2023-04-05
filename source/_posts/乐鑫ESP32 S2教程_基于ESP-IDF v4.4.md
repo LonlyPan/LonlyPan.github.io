@@ -638,7 +638,7 @@ void app_main(void)
 
 参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
 
-
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680701159744.jpg)
 
 ## 3、GPIO 输入
 
