@@ -116,15 +116,8 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 • VDD_SPI 电压 – GPIO45
 • ROM 代码日志打印 – GPIO46
 • JTAG 信号源 – GPIO3
-
-默认值
+总之请确保这些引脚在上电时，都能处于默认配置值。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680686239146.png)
-
-1. 芯片启动模式控制
-复位释放后， GPIO0 和 GPIO46 共同决定启动模式。SPI Boot就是从flash中启动，Download则是下载模式，将启动下载boot引导程序，将程序下载大flash中。
-所以在设计时，应避免对GPI0下拉，对GPIO46上拉。ying'ga
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680686272724.png)
-
 
 **总结：**
 - 
