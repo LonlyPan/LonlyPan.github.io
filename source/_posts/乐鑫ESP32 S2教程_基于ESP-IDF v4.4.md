@@ -424,7 +424,7 @@ void app_main(void)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680532143489.png)
 
-> 设置完成，ctrl+s保存配置，重新编译下载即可生效
+> 设置完成，ctrl+s保存配置，重新编译下载才能生效
 
 #### 帮助信息：
 
