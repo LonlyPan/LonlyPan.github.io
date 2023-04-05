@@ -131,10 +131,15 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 
 对于内置flash版本的，以下引脚不可用
 ![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697175691.png)
+GPIO11不可用
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697605040.png)
 GPIO2、8、9为 strapping 管脚，GPIO9 内部默认弱上拉
-- 实测GPIO2、8悬空
+- 实测GPIO2悬空也能用
+- GPIO8必须外部上拉
 - 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697215544.png)
+
+
 # 软件篇
 
 ## Espressif-IDE简介与安装
