@@ -270,7 +270,7 @@ https://blog.csdn.net/qq_40500005/article/details/113840391
 4. 此时编译就不会有任何错误了
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679217792777.png)
  
-## 调试与下载
+## 调试
 
 要启用调试功能，需要先配置ESP-IDF工具
 
