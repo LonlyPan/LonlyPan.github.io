@@ -679,7 +679,7 @@ void led_init()
     gpio_config(&io_conf);
 }
 ```
-控制输出使用 `gpio_set_level`,xi
+控制输出使用 `gpio_set_level`，下面是主程序
 ```
 void app_main(void)
 {
