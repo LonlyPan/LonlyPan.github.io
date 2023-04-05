@@ -92,6 +92,9 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - 模组少了GPIO26-32，GPIO33-34引脚
 我们从芯片引脚介绍得知，GPIO26-32用于内部falsh/PSRAM通信
 另外我们在模组的最下面介绍也得知：在带有 OSPI PSRAM（即内置芯片为 ESP32-S3xxR8）的模组中，管脚 IO35、 IO36、 IO37 用于连接至模组内部集成的 OSPI PSRAM，不可用于其他功能
+- 部分引脚只能作为单输入、输出的。GPIO39、41、42、44只能输入、无高阻态
+ GPIO26、29、30、40、43、47、48只能输出，其中43无高阻态
+- 当WIFI一致保持连接时，ADC2不可用
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680676644231.png)
 我们可以继续查看下面的关系表，可以发现
 - 对于八线SPI（内置R8 PSRAM），GPIO26-37都不可使用
@@ -102,7 +105,11 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 所以如果我们使用的是八线以下的falsh/PSRAM，那么这两个引脚就被浪费了，所以我们自己设计模组时，是可以使用这两个引脚的，这样就相对于官方模组额外多了两个引脚（仅限八线以下的falsh/PSRAM）
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680676995114.png)
 
-另外我们还要看另一组特殊的IO口。
+另外我们还要看另一组特殊的IO口，Strapping 管脚 。
+- GPIO0
+- GPIO45
+- GPIO46
+- GPIO3
 
 **总结：**
 - 
