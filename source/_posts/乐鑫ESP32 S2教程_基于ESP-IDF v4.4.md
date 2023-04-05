@@ -638,7 +638,7 @@ void app_main(void)
 
 参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
 
-要使用log打印，需包含库：esp_log.h
+要使用log打印，需包含库：#include "driver/gpio.h"
 
 
 初始化配置。有两种方式
@@ -677,6 +677,24 @@ void led_init()
     io_conf.intr_type = GPIO_INTR_DISABLE;
     //使用给定设置配置GPIO
     gpio_config(&io_conf);
+}
+```
+控制输出使用 `gpio_set_level`,xi
+```
+void app_main(void)
+{
+	gpio_init();
+	//led_init();
+    while (true) {
+        /* Blink off (output low) */
+        ESP_LOGI(tagInfo,"Turning off the LED\n");
+        gpio_set_level(BLINK_GPIO, 0);
+        sleep(1);
+        /* Blink on (output high) */
+        ESP_LOGI(tagInfo,"Turning on the LED\n");
+        gpio_set_level(BLINK_GPIO, 1);
+        sleep(1);
+    }
 }
 ```
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680701159744.jpg)
