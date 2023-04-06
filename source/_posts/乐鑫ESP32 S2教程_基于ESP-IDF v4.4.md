@@ -421,6 +421,9 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679925520384.png)
 
+## 新建组件
+
+
 ## FreeRTOS操作系统
 
 ### 基础知识
@@ -444,6 +447,43 @@ while(1)作为后台程序，如图所示：
 
 高优先级的任务可以打断低优先级任务的运行而取得 CPU 的使用权，这样就保证了那些紧急任务的运行。这样我们就可以为那些对实时性要求高的任务设置一个很高的优先级，比如自动驾驶中的障碍物检测任务等。高优先级的任务执行完成以后重新把 CPU 的使用权归还给低优先级的任务，这个就是抢占式多任务系统的基本原理。
 
+###  任务状态切换
+
+任务挂起函数
+vTaskSuspend() 
+
+挂起指定任务，被挂起的任务绝不会得到 CPU 的使用权
+vTaskSuspendAll() 
+
+将所有的任务都挂起  任务恢复函数
+
+复制
+vTaskResume() 
+vTaskResume() 
+xTaskResumeFromISR() 
+1.
+2.
+3.
+任务恢复就是让挂起的任务重新进入就绪状态，恢复的任务会保留挂起前的状态信息，在恢复的时候根据挂起时的状态继续运行。xTaskResumeFromISR() 专门用在中断服务程序中。无论通过调用一次或多次vTaskSuspend()函数而被挂起的任务，也只需调用一次恢复即可解挂 。
+
+ 任务删除函数 vTaskDelete()用于删除任务。当一个任务可以删除另外一个任务，形参为要删除任 务创建时返回的任务句柄，如果是删除自身， 则形参为 NULL。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680786241251.png)
+
+1. 函数 vTaskDelete()
+被删除了的任务不再存在，也就是说再也不会进入运行态。任务被删除以后就不能再使用此任务的句柄！如果此任务是使用动态方法创建的，也就是使用函数 xTaskCreate()创建的，那么在此任务被删除以后此任
+务之前申请的堆栈和控制块内存会在空闲任务中被释放掉，因此当调用函数 vTaskDelete()删除任务以后必须给空闲任务一定的运行时间。
+只有那些由内核分配给任务的内存才会在任务被删除以后自动的释放掉，用户分配给任务的内存需要用户自行释放掉，比如某个任务中用户调用函数 pvPortMalloc()分配了 500 字节的内存，那么在此任务被删除以后用户也必须调用函数 vPortFree()将这 500 字节的内存释放掉，否则会导致内存泄露。
+
+2. 函数 vTaskSuspend()
+此函数用于将某个任务设置为挂起态，进入挂起态的任务永远都不会进入运行态。退出挂起态的唯一方法就是调用任务恢复函数 vTaskResume()或 xTaskResumeFromISR()。，函数原型如
+注意！如果参数为 NULL 的话表示挂起任务自己。
+
+3. 函数 vTaskResume()
+将一个任务从挂起态恢复到就绪态，只有通过函数 vTaskSuspend()设置为挂起态的任务才可以使用 vTaskRexume()恢复！恢复的任务会保留挂起前的状态信息，在恢复的时候根据挂起时的状态继续运行。
+4. 函数 xTaskResumeFromISR()
+此函数是 vTaskResume()的中断版本，用于在中断服务函数中恢复一个任务。
+
 ### 任务创建
 
 ```
@@ -464,7 +504,7 @@ BaseType_t xTaskCreate( TaskFunction_t 			pxTaskCode,
 
 pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相当于身份证，可以通过句柄就能获取任务的所有信息。
 而pxTaskCode 任务函数，是任务的执行部分，就是任务要做什么。因此多个不同任务是可以有相同的任务函数的。如果我们的任务函数是唯一的，并且也不需要对任务做任何额外操作，只是作为一个任务运行。那么pxCreatedTask 可以为空。（但要注意变量共享问题）
-而pcName
+而pcName 只是一个名字，为了在调试时，可以打印这个名字，识别是什么任务，在程序中并无实际意义
 
 建议自行参考视频资料学习：
 - [手把手教你学FreeRTOS](http://www.openedv.com/docs/book-videos/zdyzshipin/4free/zdyz-freertos-book.html) 
