@@ -423,6 +423,12 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ## FreeRTOS操作系统
 
+### 基础知识
+
+### 任务创建
+
+
+
 建议自行参考视频资料学习：
 - [什么是RTOS? - 孤独的二进制 - ESP32上的FREERTOS](https://www.bilibili.com/video/BV1q54y1Z7ca/?vd_source=03b483801bb82304e4324482b60bb93f)
 - [ESP32_freeRTOS教程一： 入门介绍](https://www.bilibili.com/video/BV1Nb4y1q7xz/?vd_source=03b483801bb82304e4324482b60bb93f)
