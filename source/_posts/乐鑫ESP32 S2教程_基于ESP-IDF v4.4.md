@@ -425,11 +425,49 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ### 基础知识
 
+我们以前在使用 51、AVR、STM32 单片机裸机(未使用系统)的时候一般都是在
+main 函数里面用 while(1)做一个大循环来完成所有的处理，即应用程序是一个无限的循环，循
+环中调用相应的函数完成所需的处理。有时候我们也需要中断中完成一些处理。相对于多任务
+系统而言，这个就是单任务系统，也称作前后台系统，中断服务函数作为前台程序，大循环
+while(1)作为后台程序，如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680785317036.png)
+
+前后台系统的实时性差，前后台系统各个任务(应用程序)都是排队等着轮流执行，不管你
+这个程序现在有多紧急，没轮到你就只能等着！相当于所有任务(应用程序)的优先级都是一样
+的。但是前后台系统简单啊，资源消耗也少啊！在稍微大一点的嵌入式应用中前后台系统就明
+显力不从心了，此时就需要多任务系统出马了。
+
+多任务系统会把一个大问题(应用)“分而治之”，把大问题划分成很多个小问题，这些小问题可以单独的作为一个小任务来处理。这些小任务是并发处理的，注意，并不是说同一时刻一起执行很多个任务，而是由于每个任务执行的时间很短，导致看起来像是同一时刻执行了很多个任务一样。多个任务带来了一个新的问题，究竟哪个任务先运行，哪个任务后运行呢？
+
+完成这个功能的东西在 RTOS 系统中叫做任务调度器。不同的系统其任务调度器的实现方法也不同，比如 FreeRTOS 是一个抢占式的实时多任务系统，那么其任务调度器也是抢占式的，运行过程如图 5.1.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680785378299.png)
+
+高优先级的任务可以打断低优先级任务的运行而取得 CPU 的使用权，这样就保证了那些紧急任务的运行。这样我们就可以为那些对实时性要求高的任务设置一个很高的优先级，比如自动驾驶中的障碍物检测任务等。高优先级的任务执行完成以后重新把 CPU 的使用权归还给低优先级的任务，这个就是抢占式多任务系统的基本原理。
+
 ### 任务创建
 
+```
+BaseType_t xTaskCreate( TaskFunction_t 			pxTaskCode,
+						const char * const 		pcName,
+						const uint16_t 			usStackDepth,
+						void * const 			pvParameters,
+						UBaseType_t 			uxPriority,
+						TaskHandle_t * const 	pxCreatedTask )
+```
+参数：
+- pxTaskCode：任务函数。
+- pcName：任务名字，一般用于追踪和调试，任务名字长度不能超过。configMAX_TASK_NAME_LEN
+- usStackDepth：任务堆栈大小，注意实际申请到的堆栈是 usStackDepth 的 4 倍。其中空闲任务的任务堆栈大小为 configMINIMAL_STACK_SIZE。
+- pvParameters: 传递给任务函数的参数。
+- uxPriotiry: 任务优先级，范围 0~ configMAX_PRIORITIES-1。
+- pxCreatedTask: 任务句柄，任务创建成功以后会返回此任务的任务句柄，这个句柄其实就是任务的任务堆栈。此参数就用来保存这个任务句柄。其他 API 函数可能会使用到这个句柄
 
+pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相当于身份证，可以通过句柄就能获取任务的所有信息。
+而pxTaskCode 任务函数，是任务的执行部分，就是任务要做什么。因此多个不同任务是可以有相同的任务函数的。如果我们的任务函数是唯一的，并且也不需要对任务做任何额外操作，只是作为一个任务运行。那么pxCreatedTask 可以为空。（但要注意变量共享问题）
+而pcName
 
 建议自行参考视频资料学习：
+- [手把手教你学FreeRTOS](http://www.openedv.com/docs/book-videos/zdyzshipin/4free/zdyz-freertos-book.html) 
 - [什么是RTOS? - 孤独的二进制 - ESP32上的FREERTOS](https://www.bilibili.com/video/BV1q54y1Z7ca/?vd_source=03b483801bb82304e4324482b60bb93f)
 - [ESP32_freeRTOS教程一： 入门介绍](https://www.bilibili.com/video/BV1Nb4y1q7xz/?vd_source=03b483801bb82304e4324482b60bb93f)
 # 实战篇
