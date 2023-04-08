@@ -822,7 +822,6 @@ void app_main(void)
 
 ## 3、GPIO 输入
 
-## FreeRTOS
 
 ## 4、外部中断
 
