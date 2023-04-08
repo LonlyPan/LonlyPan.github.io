@@ -457,6 +457,11 @@ idf_component_register(SRCS "test.c"
 
 ## FreeRTOS操作系统
 
+
+参考：
+https://blog.csdn.net/believe666/article/details/127205502
+
+
 ### 基础知识
 
 我们以前在使用 51、AVR、STM32 单片机裸机(未使用系统)的时候一般都是在
@@ -818,9 +823,6 @@ void app_main(void)
 ## 3、GPIO 输入
 
 ## FreeRTOS
-
-参考：
-https://blog.csdn.net/believe666/article/details/127205502
 
 ## 4、外部中断
 
