@@ -426,8 +426,11 @@ espressif IDE如果导入外部文件夹是一件比较麻烦的事，涉及Cmak
 
 但Espressif IDE给了我们另一个选择，**组件**。组件其实就是具备一个单独功能的文件夹，包含一个 .c和.h文件，保存在指定文件夹 components 下。实现模块化编程。
 
+file -> New -> 乐鑫IDF组件
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680941021419.png)
 
+![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1680941065502]]]" )
 ## FreeRTOS操作系统
 
 ### 基础知识
