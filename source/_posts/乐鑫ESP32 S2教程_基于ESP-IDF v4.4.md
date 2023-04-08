@@ -453,6 +453,8 @@ idf_component_register(SRCS "test.c"
 意思就是告诉编译器我们的组件依赖driver组件（IDF目录下的components下）。这样我们再去头文件包含就不会又错了。。
 
 
+
+
 ## FreeRTOS操作系统
 
 ### 基础知识
