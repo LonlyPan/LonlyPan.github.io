@@ -822,7 +822,45 @@ void app_main(void)
 
 ## 3、GPIO 输入
 
+引脚内部是若上拉，很容易受到外部干扰，最好外部硬件上拉保证稳定性。
 
+```
+void key_init()
+{
+    gpio_config_t io_conf;
+    //bit mask of the pins that you want to set,e.g.GPIO18/19 配置GPIO_OUT寄存器
+    io_conf.pin_bit_mask = BIT64(KEY_GPIO);  // 使用BIT64替代1ULL<<BLINK_GPIO2
+    //IO模式：输入输出 如果不定义输入输出模式，将无法获取引脚电平
+    io_conf.mode = GPIO_MODE_INPUT;
+    //下拉电阻：禁止
+    io_conf.pull_down_en = 0;
+    //上拉电阻：禁止
+    io_conf.pull_up_en = 1;
+    //IO中断类型：禁止中断
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    //使用给定设置配置GPIO
+    gpio_config(&io_conf);
+
+}
+
+//按键处理函数
+//返回按键值
+//mode:0,不支持连续按;1,支持连续按;
+//0，没有任何按键按下
+//1，WKUP按下 WK_UP
+//注意此函数有响应优先级,KEY0>KEY1>KEY2>WK_UP!!
+uint8_t KEY_Scan(uint8_t mode)
+{
+    if(KEY==0)
+    {
+    	usleep(10000);
+        if(KEY==0)
+        	return KEY_PRES;
+    }
+
+    return 0;   //无按键按下
+}
+```
 ## 4、外部中断
 
 ## 04-GPIO、LED
