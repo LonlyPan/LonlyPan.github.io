@@ -429,8 +429,30 @@ espressif IDE如果导入外部文件夹是一件比较麻烦的事，涉及Cmak
 file -> New -> 乐鑫IDF组件
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680941021419.png)
+输入组件名称
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680942893052.png)
+确认OK
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680941065501.png)
+软件会自动在项目文件夹下创建 components文件和test组件文件夹。
+- components是系统目录，不可更改
+- test是我们自己的组件名
+- 这里的test组件实际和IDF目录下的components下的组件是一个意思，就类似于库
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680942978635.png)
+但这里有个小问题。就是组件依赖。比如我们要在test.h 文件中包含 `#include "driver/gpio.h"`是不行的，编译会显示错误。但这个问题再以前IDE版本中并没有。为了解决这个问题。
+我们需要打开test目录下的 CMakeLists.txt 文件。其中源码如下：
+```
+idf_component_register(SRCS "test.c"
+                    INCLUDE_DIRS "include")
+```
+我们需要修改源码。修改后如下
+```
+idf_component_register(SRCS "test.c"
+                    INCLUDE_DIRS "include"
+                    REQUIRES driver)
+```
+意思就是告诉编译器我们的组件依赖driver组件（IDF目录下的components下）。这样我们再去头文件包含就不会又错了。。
 
-![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1680941065502]]]" )
+
 ## FreeRTOS操作系统
 
 ### 基础知识
