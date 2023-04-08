@@ -422,6 +422,8 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 ![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679925520384.png)
 
 ## 新建组件
+
+内容参考：ESP-IDF编程指南 ：API 指南 » 构建系统
 espressif IDE如果导入外部文件夹是一件比较麻烦的事，涉及CmakeLists文件的编写，并且IDE的图形操作见面并没有添加源文件的设置选项（原Eclipse是有的），这就意味着不能和Eclipse一样自己新建文件夹，再将文件夹包含到头文件，实现文件的导入或新建
 
 但Espressif IDE给了我们另一个选择，**组件**。组件其实就是具备一个单独功能的文件夹，包含一个 .c和.h文件，保存在指定文件夹 components 下。实现模块化编程。
