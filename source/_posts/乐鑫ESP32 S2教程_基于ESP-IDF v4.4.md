@@ -886,7 +886,7 @@ uint8_t KEY_Scan(uint8_t mode)
 
 > 中断里面调用ESP_LOGX或printf都会导致系统重启。所以不要再中断里调用打印函数
 
-
+##
 
 ## 04-GPIO、LED
 
