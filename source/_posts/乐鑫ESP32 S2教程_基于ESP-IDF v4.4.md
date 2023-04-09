@@ -932,7 +932,7 @@ void IRAM_ATTR gpio_isr_handler()
 ```
 
 ### 主程序
-主程序只调用一个初始化程序，
+主程序只调用一个初始化程序。
 ```
 // 定义一个标签，方便批量换名字
 static const char* tagInfo = "tagInfo";
