@@ -127,6 +127,16 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - GPIO22-34在官方模组中并没有被引出来
 - EN引脚，上拉，上电使能芯片
 
+### ESP32 C3
+
+对于内置flash版本的，以下引脚不可用
+![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697175691.png)
+GPIO11不可用
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697605040.png)
+GPIO2、8、9为 strapping 管脚，GPIO9 内部默认弱上拉
+- 实测GPIO2悬空也能用，但最好外部上拉
+- GPIO8必须外部上拉，否则无法进入boot下载模式
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697215544.png)
 
 ## 05-IO MUX 和 GPIO 交换矩阵
 
@@ -158,17 +168,14 @@ ESP32-S3 芯片有 45 个物理通用输入输出管脚 (GPIO Pin)。每个管�
 • 将 22 个 RTC 输入输出信号引入 RTC 系统
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681051710765.png)
-### ESP32 C3
 
-对于内置flash版本的，以下引脚不可用
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697175691.png)
-GPIO11不可用
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697605040.png)
-GPIO2、8、9为 strapping 管脚，GPIO9 内部默认弱上拉
-- 实测GPIO2悬空也能用，但最好外部上拉
-- GPIO8必须外部上拉，否则无法进入boot下载模式
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697215544.png)
 
+### 总结
+- GPIO 交换矩阵就是说所有的外设都可以映射到设疑引脚，但有的速度可能会慢些
+- IO MUX 特指GPIO功能和部分外设直连。不经过GPIO交换矩阵，速度快，性能好，但只支持部分外设（目前只有SPI和UART）
+- RTC暂且不研究
+
+以下有两张表说明GPIO 交换矩阵和IO MUX
 
 # 软件篇
 
