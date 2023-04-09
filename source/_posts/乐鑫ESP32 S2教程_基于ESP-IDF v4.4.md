@@ -176,6 +176,8 @@ ESP32-S3 芯片有 45 个物理通用输入输出管脚 (GPIO Pin)。每个管�
 - RTC暂且不研究
 
 以下有两张表说明GPIO 交换矩阵和IO MUX
+IO MUX管教表格就说明引脚的一般功能，非常类似于一般STM32的引脚图，这里的功能0-4说的就是引脚的不能复用功能，不需要经过内部的GPIO矩阵，速度快，性能好
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681052328794.png)
 
 # 软件篇
 
