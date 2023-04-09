@@ -184,6 +184,7 @@ ESP32­S3 技术参考手册：
 外设管脚分配表，说明除了ADC、触摸、SPI0/1 外设，其它的外设都可以映射到任意引脚
 ESP32-S3 系列芯片 技术规格书
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681052787157.png)
+
 # 软件篇
 
 ## Espressif-IDE简介与安装
