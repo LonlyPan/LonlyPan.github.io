@@ -127,6 +127,37 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 - GPIO22-34在官方模组中并没有被引出来
 - EN引脚，上拉，上电使能芯片
 
+
+## 05-IO MUX 和 GPIO 交换矩阵
+
+ESP32-S3 芯片有 45 个物理通用输入输出管脚 (GPIO Pin)。每个管脚都可用作一个通用输入输出，或连接一个
+内部外设信号。利用 GPIO 交换矩阵、IO MUX 和 RTC IO MUX，可配置外设模块的输入信号来源于任何的 GPIO
+管脚，并且外设模块的输出信号也可连接到任意 GPIO 管脚。这些模块共同组成了芯片的输入输出控制。
+>注意：这 45 个物理 GPIO 管脚的编号为：0 ~ 21、26 ~ 48。这些管脚既可作为输入又可作为输出管脚。
+
+### GPIO 交换矩阵特性
+
+ - GPIO 交换矩阵是外设输入输出信号和 GPIO 管脚之间的全交换矩阵；
+ - 175 个数字外设输入信号可以选择任意一个 GPIO 管脚的输入信号；
+ - 每个 GPIO 管脚的输出信号可以来自 184 个数字外设输出信号的任意一个；
+ - 支持输入信号经 GPIO SYNC 模块同步至 APB 时钟总线；
+ - 支持输入信号滤波；
+ - 支持 Sigma Delta 调制输出 (SDM)；
+ - 支持 GPIO 简单输入输出。
+
+### IO MUX 特性
+
+• 为每个 GPIO 管脚提供一个寄存器 IO_MUX_GPIOn_REG，每个管脚可配置成：
+– GPIO 功能，连接 GPIO 交换矩阵；
+– 直连功能，旁路 GPIO 交换矩阵。
+• 支持快速信号如 SPI、JTAG、UART 等可以旁路 GPIO 交换矩阵以实现更好的高频数字特性。所以高速信号会直接通过 IO MUX 输入和输出
+
+### RTC IO MUX 特性
+• 控制 22 个 RTC GPIO 管脚的低功耗特性；
+• 控制 22 个 RTC GPIO 管脚的模拟功能；
+• 将 22 个 RTC 输入输出信号引入 RTC 系统
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681051710765.png)
 ### ESP32 C3
 
 对于内置flash版本的，以下引脚不可用
@@ -971,6 +1002,7 @@ void app_main(void)
 步骤 1 到 3 为配置阶段，步骤 4 为 UART 运行阶段，步骤 5 和 6 为可选步骤。
 
 UART 驱动程序函数通过 uart_port_t 识别不同的 UART 控制器。
+
 
 ## 串口DMA
 
