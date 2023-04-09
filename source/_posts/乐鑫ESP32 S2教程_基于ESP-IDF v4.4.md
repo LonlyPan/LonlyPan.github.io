@@ -923,8 +923,6 @@ void exti_init()
 ```
 中断函数
 ```
-
-
 // 定义 gpio isr 中断服务处理函数。
 // IRAM_ATTR 是将函数定义在iRAM区 提高中断程序加载速度
 void IRAM_ATTR gpio_isr_handler()
@@ -933,6 +931,26 @@ void IRAM_ATTR gpio_isr_handler()
 }
 ```
 
+### 主程序
+主程序只调用一个初始化程序，
+```
+// 定义一个标签，方便批量换名字
+static const char* tagInfo = "tagInfo";
+
+void app_main(void)
+{
+	uint8_t key;
+	led_init();
+	exti_init();
+    while (true) {
+    	key=KEY_Scan(0); 		    //得到键值
+    	if(key)
+    		ESP_LOGI(tagInfo,"keyValue = %d\r\n",key);
+    	//led_toggle(LED_GPIO, 0);
+        usleep(10000);
+    }
+}
+```
 ## 04-GPIO、LED
 
 ## 03-button
