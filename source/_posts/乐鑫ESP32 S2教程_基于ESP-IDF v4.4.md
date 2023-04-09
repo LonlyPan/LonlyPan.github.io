@@ -550,6 +550,7 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 ## IDE使用常见问题
 
 ### 1. has no explicit encoding set警告
+编译时报如下警告
 ```
  has no explicit encoding set
 ```
