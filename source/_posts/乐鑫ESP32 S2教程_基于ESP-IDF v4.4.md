@@ -886,7 +886,52 @@ uint8_t KEY_Scan(uint8_t mode)
 
 > 中断里面调用ESP_LOGX或printf都会导致系统重启。所以不要再中断里调用打印函数
 
-##
+### 初始化
+```
+#include "exti.h"
+#include "esp_attr.h" // IRAM_ATTR 库
+#include "driver/gpio.h"
+#include <led.h>
+/**
+ * @brief  GPIO配置为中断输入模式。下降沿触发
+ *
+ * @return
+ *     - none
+ */
+void exti_init()
+{
+    gpio_config_t io_conf;
+    //IO中断类型：下降沿
+    io_conf.intr_type = GPIO_INTR_NEGEDGE;
+    //IO模式：输入
+    io_conf.mode = GPIO_MODE_INPUT;
+    //bit mask of the pins that you want to set,e.g.GPIO18/19 配置GPIO_OUT寄存器
+    io_conf.pin_bit_mask = BIT64(GPIO_NUM_4);
+    //下拉电阻：禁止
+    io_conf.pull_down_en = 0;
+    //上拉电阻：禁止
+    io_conf.pull_up_en = 1;
+    //使用给定设置配置GPIO
+    gpio_config(&io_conf);
+
+    // 安装GPIO ISR处理程序服务。开启整个gpio的中断
+    // ESP_INTR_FLAG_LEVEL1 优先级最低
+    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
+    //添加中断回调处理函数
+    gpio_isr_handler_add(GPIO_NUM_4, gpio_isr_handler, NULL);//gpio_isr_handler
+}
+```
+中断函数
+```
+
+
+// 定义 gpio isr 中断服务处理函数。
+// IRAM_ATTR 是将函数定义在iRAM区 提高中断程序加载速度
+void IRAM_ATTR gpio_isr_handler()
+{
+	led_toggle();
+}
+```
 
 ## 04-GPIO、LED
 
