@@ -557,7 +557,14 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 解决办法
 - 在Problems视图中，选择警告，按Ctrl+1并应用提供的QuickFix（将项目编码显式设置为工作区编码）
 - 在“项目属性”中手动更改项目>：资源。Project > Properties: Resource
-- 
+
+如果您希望忽略所有项目的此警告，则可以更改首选项：
+- General -> Workspace -> Report missing project encoding as: Ignore
+常规->工作区->将缺少的项目编码报告为：忽略
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681009711482.png)
+
+参考资料：
+- [Eclipse: Project 'PROJECT_NAME' has no explicit encoding set](https://stackoverflow.com/questions/72692978/eclipse-project-project-name-has-no-explicit-encoding-set)
 # 实战篇
 
 ## 1、printf
