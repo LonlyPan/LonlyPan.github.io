@@ -884,7 +884,7 @@ uint8_t KEY_Scan(uint8_t mode)
 
 ## 4、外部中断
 
-
+> 中断里面调用ESP_LOGX会导致系统重启。
 
 ## 04-GPIO、LED
 
