@@ -951,6 +951,10 @@ void app_main(void)
     }
 }
 ```
+
+### 现象
+没触发一次中断，LED反转一次
+
 ## 04-GPIO、LED
 
 ## 03-button
