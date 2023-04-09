@@ -546,6 +546,10 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 - [手把手教你学FreeRTOS](http://www.openedv.com/docs/book-videos/zdyzshipin/4free/zdyz-freertos-book.html) 
 - [什么是RTOS? - 孤独的二进制 - ESP32上的FREERTOS](https://www.bilibili.com/video/BV1q54y1Z7ca/?vd_source=03b483801bb82304e4324482b60bb93f)
 - [ESP32_freeRTOS教程一： 入门介绍](https://www.bilibili.com/video/BV1Nb4y1q7xz/?vd_source=03b483801bb82304e4324482b60bb93f)
+
+## IDE使用常见问题
+
+
 # 实战篇
 
 ## 1、printf
@@ -861,6 +865,7 @@ uint8_t KEY_Scan(uint8_t mode)
     return 0;   //无按键按下
 }
 ```
+
 ## 4、外部中断
 
 ## 04-GPIO、LED
