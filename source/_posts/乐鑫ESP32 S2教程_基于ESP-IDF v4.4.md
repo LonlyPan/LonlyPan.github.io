@@ -1040,6 +1040,47 @@ void uart_init(void) {
     xTaskCreate(uart_tx_task, "uart_tx_task", 1024*4, NULL, configMAX_PRIORITIES-1, NULL);
 }
 ```
+```
+// 接受缓存大小
+static const int RX_BUF_SIZE = 1024;
+
+#define TXD_PIN (GPIO_NUM_17)
+#define RXD_PIN (GPIO_NUM_18)
+
+int uart_sendData(const char* logName, const char* data)
+{
+    const int len = strlen(data);
+    const int txBytes = uart_write_bytes(UART_NUM_1, data, len);
+    ESP_LOGI(logName, "Wrote %d bytes", txBytes);
+    return txBytes;
+}
+
+static void uart_tx_task(void *arg)
+{
+    static const char *TX_TASK_TAG = "TX_TASK";
+    while (1) {
+    	uart_sendData(TX_TASK_TAG, "Hello world");
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
+    }
+}
+
+static void uart_rx_task(void *arg)
+{
+    static const char *RX_TASK_TAG = "RX_TASK";
+    uint8_t* data = (uint8_t*) malloc(RX_BUF_SIZE+1);
+    while (1) {
+        const int rxBytes = uart_read_bytes(UART_NUM_1, data, RX_BUF_SIZE, 1000 / portTICK_PERIOD_MS);
+        if (rxBytes > 0) {
+            data[rxBytes] = 0;
+            ESP_LOGI(RX_TASK_TAG, "Read %d bytes: '%s'", rxBytes, data);
+            //以下语句会导致系统重启，原因未知
+            //ESP_LOG_BUFFER_HEXDUMP(RX_TASK_TAG, data, rxBytes, ESP_LOG_INFO);
+        }
+    }
+    free(data);
+}
+
+```
 
 ## 串口DMA
 
