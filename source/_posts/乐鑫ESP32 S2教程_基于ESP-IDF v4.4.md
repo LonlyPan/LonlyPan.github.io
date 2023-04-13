@@ -1005,7 +1005,7 @@ void app_main(void)
 ## 串口
 
 参考：ESP-IDF 编程指南：API参考»  外设 API » 通用异步接收器/发送器 (UART)
-
+参考例程：esp-idf-v5.0\examples\peripherals\uart\uart_async_rxtxtasks
 ### 功能概述
 
 下文介绍了如何使用 UART 驱动程序的函数和数据类型在 ESP32-S3 和其他 UART 设备之间建立通信。基本编程流程分为以下几个步骤：
@@ -1021,6 +1021,25 @@ void app_main(void)
 
 UART 驱动程序函数通过 uart_port_t 识别不同的 UART 控制器。
 
+```
+void uart_init(void) {
+    const uart_config_t uart_config = {
+        .baud_rate = 115200,  // 波特率
+        .data_bits = UART_DATA_8_BITS,  // 数据位
+        .parity = UART_PARITY_DISABLE, // 奇偶校验
+        .stop_bits = UART_STOP_BITS_1,  // 停止位
+        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE, // 流控
+        .source_clk = UART_SCLK_DEFAULT,   // 时钟源
+    };
+    // We won't use a buffer for sending data.
+    uart_driver_install(UART_NUM_1, RX_BUF_SIZE * 2, 0, 0, NULL, 0);
+    uart_param_config(UART_NUM_1, &uart_config);
+    uart_set_pin(UART_NUM_1, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+
+    xTaskCreate(uart_rx_task, "uart_rx_task", 1024*2, NULL, configMAX_PRIORITIES, NULL);
+    xTaskCreate(uart_tx_task, "uart_tx_task", 1024*4, NULL, configMAX_PRIORITIES-1, NULL);
+}
+```
 
 ## 串口DMA
 
