@@ -1118,7 +1118,7 @@ static void uart_rx_task(void *arg)
 
 ## 串口DMA
 
-##  外部中断
+目前并没有查询到DMA模式
 
 ## 看门狗
 
