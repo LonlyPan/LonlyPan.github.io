@@ -641,6 +641,9 @@ https://blog.csdn.net/kangweijian/article/details/121709265
 # 实战篇
 
 ## 1、printf
+
+参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\get-started\hello_world\main\hello_world_main.c
+
 新建样例工程（最简工程）。
 添加如下代码：
 ```
