@@ -468,9 +468,17 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679925520384.png)
 
-## 固件大小
+## 内存分析查看
+
+[ESP32 Programmers’ Memory Model](https://blog.espressif.com/esp32-programmers-memory-model-259444d89387)
 
 
+编译后，在信息里会输出内存大小，如下图所示，总内存
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681829080985.png)
+
+-  IRAM用于代码（指令），DRAM用于数据。这里有两个是因为S3是双核
+-   Iram是用于代码的，也就是函数，但只是那些需要在iram中快速执行的函数，而不是flash。 例如中断处理程序。 基于链接器脚本或手动标记具有iram属性的函数，将代码放置在iram中。 有许多menuconfig设置与iram函数放置相关。
+-   
 ## 新建组件
 
 内容参考：ESP-IDF编程指南 ：API 指南 » 构建系统
