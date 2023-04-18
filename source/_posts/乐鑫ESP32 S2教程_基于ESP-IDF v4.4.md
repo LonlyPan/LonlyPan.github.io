@@ -186,6 +186,8 @@ ESP32­S3 技术参考手册：
 ESP32-S3 系列芯片 技术规格书
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681052787157.png)
 
+# 环境篇
+
 # 软件篇
 
 ## Espressif-IDE简介与安装
