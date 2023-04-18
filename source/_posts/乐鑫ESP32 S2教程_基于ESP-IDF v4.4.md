@@ -849,7 +849,7 @@ void app_main(void)
 ## 4、GPIO 输出
 
 参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
-参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\gpio\generic_gpio\main\gpio_example_main.c
+参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\gpio\generic_gpio
 
 要使用log打印，需包含库：#include "driver/gpio.h"
 
