@@ -916,7 +916,7 @@ void app_main(void)
 ## 3、GPIO 输入
 
 参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
-参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\gpio\generic_gpio
+
 
 引脚内部是弱上拉，很容易受到外部干扰，最好外部硬件上拉保证稳定性。
 
@@ -960,6 +960,8 @@ uint8_t KEY_Scan(uint8_t mode)
 
 
 ## 4、外部中断
+
+参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\gpio\generic_gpio
 
 > 中断里面调用ESP_LOGX或printf都会导致系统重启。所以不要再中断里调用打印函数
 
