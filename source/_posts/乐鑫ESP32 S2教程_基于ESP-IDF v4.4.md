@@ -915,6 +915,9 @@ void app_main(void)
 
 ## 3、GPIO 输入
 
+参考：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
+参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\gpio\generic_gpio
+
 引脚内部是弱上拉，很容易受到外部干扰，最好外部硬件上拉保证稳定性。
 
 ```
