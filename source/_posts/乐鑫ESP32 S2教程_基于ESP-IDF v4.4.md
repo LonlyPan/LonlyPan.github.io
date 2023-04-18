@@ -188,8 +188,6 @@ ESP32-S3 系列芯片 技术规格书
 
 # 环境篇
 
-# 软件篇
-
 ## Espressif-IDE简介与安装
 
 ### 简介
@@ -614,6 +612,12 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 
 参考资料：
 - [Eclipse: Project 'PROJECT_NAME' has no explicit encoding set](https://stackoverflow.com/questions/72692978/eclipse-project-project-name-has-no-explicit-encoding-set)
+
+# 软件篇
+
+## Flash Download Tools 固件烧录工具的使用
+https://blog.csdn.net/kangweijian/article/details/121709265
+
 # 实战篇
 
 ## 1、printf
