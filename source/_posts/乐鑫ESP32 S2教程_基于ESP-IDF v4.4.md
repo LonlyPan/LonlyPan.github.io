@@ -485,6 +485,7 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681829825780.png)
 Details细节可以查看每个文件的内存占用
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681829981340.png)
+
 ## 新建组件
 
 内容参考：ESP-IDF编程指南 ：API 指南 » 构建系统
