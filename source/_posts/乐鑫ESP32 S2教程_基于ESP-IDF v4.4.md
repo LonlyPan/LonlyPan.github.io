@@ -1446,6 +1446,24 @@ void adc_loop()
 
 
 ```
+主程序
+```
+// 定义一个标签，方便批量换名字
+static const char* tagInfo = "tagInfo";
+
+void app_main(void)
+{
+
+	//uart_init();
+    ledc_init();
+    adc_init();
+    while (true) {
+    	adc_loop();
+    	ESP_LOGI(tagInfo,"running\r\n");
+        sleep(1);
+    }
+}
+```
 ### 实验现象：
 将引脚8连接到3.3V和GND，串口输出
 ```
