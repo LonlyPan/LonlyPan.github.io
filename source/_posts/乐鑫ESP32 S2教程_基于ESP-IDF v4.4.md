@@ -1364,6 +1364,9 @@ void ledc_init(void)
 - 软件和硬件修改PWM，那个最后一次使用，那个生效，同一时间两者只能有一个可用
 - 硬件PWM还可以配合中断，实现脉宽的连续递增递减，淡入淡出
 
+输出波形，占空比自动渐变
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681911098616.jpg)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681911106385.jpg)
 ## ADC
 
 - Wi-Fi也使用ADC2，即只要WIFI工作，ADC2就不能工作。因此建议只是用ADC1
