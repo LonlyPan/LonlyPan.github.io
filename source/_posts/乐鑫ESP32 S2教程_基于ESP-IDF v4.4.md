@@ -1402,6 +1402,25 @@ void ledc_init(void)
 
 ```
  
+ 
+实验现象：
+将引脚8连接到3.3V和GND，串口输出
+```
+I (8317) ADC_TEST: ADC1 Channel[7] Raw Data: 4095
+I (8317) tagInfo: running
+
+I (9317) ADC_TEST: ADC1 Channel[7] Raw Data: 4095
+I (9317) tagInfo: running
+
+I (10317) ADC_TEST: ADC1 Channel[7] Raw Data: 1097
+I (10317) tagInfo: running
+
+I (11317) ADC_TEST: ADC1 Channel[7] Raw Data: 0
+I (11317) tagInfo: running
+
+I (12317) ADC_TEST: ADC1 Channel[7] Raw Data: 0
+I (12317) tagInfo: running
+```
 ## 看门狗
 
 
