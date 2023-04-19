@@ -1321,6 +1321,54 @@ void app_main(void)
 
 硬件修改只能实现渐变，我们设置好参数后，硬件就会自动修改PWM，不需要软件再参与
 
+```
+
+void ledc_init(void)
+{
+    // Prepare and then apply the LEDC PWM timer configuration
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_MODE,
+        .timer_num        = LEDC_TIMER,
+        .duty_resolution  = LEDC_DUTY_RES,
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 5 kHz
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ledc_timer_config(&ledc_timer);
+
+    // Prepare and then apply the LEDC PWM channel configuration
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_CHANNEL,
+        .timer_sel      = LEDC_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+    ledc_channel_config(&ledc_channel);
+
+    // 设置占空比
+    ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, LEDC_DUTY);
+    // 更新，应用生效
+    ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+    // 初始化渐变fade服务
+    ledc_fade_func_install(0);
+
+    // 指定ledc通道，在设定的时间time内ms，从0渐变到 期望脉宽duty（0~定时器的满分辨率，需要手动计算）
+    // 渐变到的期望脉宽值（与定时器Bit有关，100%占空比对应满分辨率）
+    ledc_set_fade_with_time(LEDC_MODE,LEDC_CHANNEL, 8192, 10000);
+    ledc_fade_start(LEDC_MODE,LEDC_CHANNEL, LEDC_FADE_NO_WAIT);
+
+
+}
+
+```
+仅仅是初始化程序修改了，增加了三个函数。
+- 实际测试，按13bit频率算，8192才是100%占空比，8191不行（不是从0开始的吗，不解）
+- 软件和硬件修改PWM，那个最后一次使用，那个生效，同一时间两者只能有一个可用
+
+
+
 ## 输入捕获
 
 ## 电容触摸
