@@ -1120,12 +1120,7 @@ static void uart_rx_task(void *arg)
 
 目前并没有查询到DMA模式
 
-## 看门狗
 
-
-
-
-## 定时器中断
 
 ## LED PWM 控制器 (LEDC)
 
@@ -1370,6 +1365,11 @@ void ledc_init(void)
 - 硬件PWM还可以配合中断，实现脉宽的连续递增递减，淡入淡出
 
 ## ADC
+
+## 看门狗
+
+
+## 定时器中断
 
 ## 输入捕获
 
