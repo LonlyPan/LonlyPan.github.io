@@ -1368,7 +1368,7 @@ void ledc_init(void)
 
 - Wi-Fi也使用ADC2，即只要WIFI工作，ADC2就不能工作。因此建议只是用ADC1
 - ADC引脚是特定的引脚，不可使用IO MUX任意指定
-- 
+ 
 ## 看门狗
 
 
