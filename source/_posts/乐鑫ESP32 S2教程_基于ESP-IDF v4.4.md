@@ -1258,6 +1258,8 @@ E (196) ledc: requested frequency and duty resolution cannot be achieved, try in
 
 ### 程序编写
 
+#### 实验一
+
 ```
 #include <stdio.h>
 #include "driver/ledc.h"
@@ -1315,6 +1317,7 @@ void app_main(void)
 - ledc_update_duty
 改变PWM占空比
 
+### 实验二
 
 ## 输入捕获
 
