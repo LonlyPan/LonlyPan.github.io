@@ -1147,7 +1147,169 @@ LED PWM 控制器具有如下特性:
 >- 结合之前讲解的GPIO矩阵，这8个PWM可以配置到任意引脚
 >- 定时器决定了PWM的频率，因此可以只使用一个定时器，生成8路频率相同的PWM（占空比可不同）。如果要频率不同，就必须再使用一个定时器。
 
+### 功能概览
+
+设置 LEDC 通道分三步完成。注意，ESP32-S3 仅支持设置通道为**低速模式**。
+
+- 定时器配置 指定 PWM 信号的频率和占空比分辨率。
+- 通道配置 绑定定时器和输出 PWM 信号的 GPIO。
+- 改变 PWM 信号 输出 PWM 信号来驱动 LED。可通过软件控制或使用硬件渐变功能来改变 LED 的亮度。
+
+另一个可选步骤是可以在渐变终端设置一个中断。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681832958649.png)
+
+>首次 LEDC 配置时，建议先配置定时器（调用函数 ledc_timer_config()），再配置通道（调用函数 ledc_channel_config()）。这样可以确保 IO 脚上的 PWM 信号自有输出开始其频率就是正确的。
+
+### 定时器配置
+
+要设置定时器，可调用函数 ledc_timer_config()，并将包括如下配置参数的数据结构ledc_timer_config_t 传递给该函数：
+- 速度模式（值必须为 LEDC_LOW_SPEED_MODE）
+- 定时器索引 ledc_timer_t
+- PWM 信号频率
+- PWM 占空比分辨率
+- 时钟源 ledc_clk_cfg_t
+
+频率和占空比分辨率相互关联。PWM 频率越高，占空比分辨率越低，反之亦然。
+
+时钟源同样可以限制PWM频率。选择的时钟源频率越高，可以配置的PWM频率上限就越高。
+![ESP32-S3 LEDC 时钟源特性](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681833166126.png)
+
+>备注:
+>1. 如果 ESP32-S3 的定时器选用了RC_FAST_CLK作为其时钟源，驱动会通过内部校准来得知这个时钟源的实际频率。这样确保了输出PWM信号频率的精准性。
+>2. ESP32-S3 的所有定时器共用一个时钟源。因此 ESP32-S3 不支持给不同的定时器配置不同的时钟源。
+
+### 通道配置
+
+定时器设置好后，请配置所需的通道（ledc_channel_t 之一）。配置通道需调用函数 ledc_channel_config()。
+
+通道的配置与定时器设置类似，需向通道配置函数传递包括通道配置参数的结构体 ledc_channel_config_t 。
+
+此时，通道会按照 ledc_channel_config_t 的配置开始运作，并在选定的 GPIO 上生成由定时器设置指定的频率和占空比的 PWM 信号。在通道运作过程中，可以随时通过调用函数 ledc_stop() 将其暂停。
+
+### 改变 PWM 信号
+
+通道开始运行、生成具有恒定占空比和频率的 PWM 信号之后，有几种方式可以改变该信号。驱动 LED 时，主要通过改变占空比来变化光线亮度。
+
+以下两节介绍了如何使用软件和硬件改变占空比。如有需要，PWM 信号的频率也可更改，详见 **改变 PWM 频率** 一节。
+
+>备注
+>在 ESP32-S3 的 LED PWM 控制器中，所有的定时器和通道都只支持低速模式。对 PWM 设置的任何改变，都需要由软件显式地触发（见下文）。
+
+#### 使用软件改变 PWM 占空比
+
+调用函数 ledc_set_duty() 可以设置新的占空比。之后，调用函数 ledc_update_duty() 使新配置生效。要查看当前设置的占空比，可使用 _get_ 函数 ledc_get_duty()。
+
+另外一种设置占空比和其他通道参数的方式是调用 通道配置 一节提到的函数 ledc_channel_config()。
+
+传递给函数的占空比数值范围取决于选定的 duty_resolution，应为 0 至 (2 ** duty_resolution) - 1。例如，如选定的占空比分辨率为 10，则占空比的数值范围为 0 至 1023。此时分辨率为 ~0.1%。
+
+#### 使用硬件改变 PWM 占空比
+LED PWM 控制器硬件可逐渐改变占空比的数值。要使用此功能，需用函数 ledc_fade_func_install() 使能渐变，之后用下列可用渐变函数之一配置：
+
+- ledc_set_fade_with_time()
+- ledc_set_fade_with_step()
+- ledc_set_fade()
+
+最后需要调用 ledc_fade_start() 开启渐变。渐变可以在阻塞或非阻塞模式下运行，具体区别请查看 ledc_fade_mode_t。需要特别注意的是，不管在哪种模式下，下一次渐变或是单次占空比配置的指令生效都必须等到前一次渐变完成或被中止。中止一个正在运行中的渐变需要调用函数 ledc_fade_stop()。
+
+此外，在使能渐变后，每个通道都可以额外通过调用 ledc_cb_register() 注册一个回调函数用以获得渐变完成的事件通知。回调函数的原型被定义在 ledc_cb_t。每个回调函数都应当返回一个布尔值给驱动的中断处理函数，用以表示是否有高优先级任务被其唤醒。此外，值得注意的是，由于驱动的中断处理函数被放在了 IRAM 中， 回调函数和其调用的函数也需要被放在 IRAM 中。 ledc_cb_register() 会检查回调函数及函数上下文的指针地址是否在正确的存储区域。
+
+如不需要渐变和渐变中断，可用函数 ledc_fade_func_uninstall() 关闭。
+
+#### 改变 PWM 频率
+LED PWM 控制器 API 有多种方式即时改变 PWM 频率：
+
+- 通过调用函数 ledc_set_freq() 设置频率。可用函数 ledc_get_freq() 查看当前频率。
+- 通过调用函数 ledc_bind_channel_timer() 将其他定时器绑定到该通道来改变频率和占空比分辨率。
+- 通过调用函数 ledc_channel_config() 改变通道的定时器。
+
+#### 控制 PWM 的更多方式
+有一些较底层的定时器特定函数可用于更改 PWM 设置：
+
+- ledc_timer_set()
+- ledc_timer_rst()
+- ledc_timer_pause()
+- ledc_timer_resume()
+
+前两个功能可通过函数 ledc_channel_config() 在后台运行，在定时器配置后启动。
+
+#### 使用中断
+配置 LED PWM 控制器通道时，可在 ledc_channel_config_t 中选取参数 ledc_intr_type_t ，在渐变完成时触发中断。
+
+要注册处理程序来处理中断，可调用函数 ledc_isr_register()。
+
+### 频率和占空比分辨率支持范围
+
+LED PWM 控制器主要用于驱动 LED。该控制器 PWM 占空比设置的分辨率范围较广。比如，PWM 频率为 5 kHz 时，占空比分辨率最大可为 13 位。这意味着占空比可为 0 至 100% 之间的任意值，分辨率为 ~0.012%（2 ^ 13 = 8192 LED 亮度的离散电平）。然而，这些参数取决于为 LED PWM 控制器定时器计时的时钟信号，LED PWM 控制器为通道提供时钟（具体可参考 定时器配置 和 ESP32-S3 技术参考手册 > LED PWM 计时器 (LEDC) [PDF]）。
+
+LED PWM 控制器可用于生成频率较高的信号，足以为数码相机模组等其他设备提供时钟。此时，最大频率可为 40 MHz，占空比分辨率为 1 位。也就是说，占空比固定为 50%，无法调整。
+
+LED PWM 控制器 API 会在设定的频率和占空比分辨率超过 LED PWM 控制器硬件范围时报错。例如，试图将频率设置为 20 MHz、占空比分辨率设置为 3 位时，串行端口监视器上会报告如下错误：
+
+E (196) ledc: requested frequency and duty resolution cannot be achieved, try reducing freq_hz or duty_resolution. div_param=128
+此时，占空比分辨率或频率必须降低。比如，将占空比分辨率设置为 2 会解决这一问题，让占空比设置为 25% 的倍数，即 25%、50% 或 75%。
+
+如设置的频率和占空比分辨率低于所支持的最低值，LED PWM 驱动器也会反映并报告，如：
+
+E (196) ledc: requested frequency and duty resolution cannot be achieved, try increasing freq_hz or duty_resolution. div_param=128000000
+占空比分辨率通常用 ledc_timer_bit_t 设置，范围是 10 至 15 位。如需较低的占空比分辨率（上至 10，下至 1），可直接输入相应数值。
+
+
 ### 程序编写
+
+```
+#include <stdio.h>
+#include "driver/ledc.h"
+#include "esp_err.h"
+
+#define LEDC_TIMER             LEDC_TIMER_0
+#define LEDC_MODE              LEDC_LOW_SPEED_MODE
+#define LEDC_OUTPUT_IO          (5) // Define the output GPIO
+#define LEDC_CHANNEL            LEDC_CHANNEL_0
+#define LEDC_DUTY_RES           LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
+#define LEDC_DUTY               (4095) // Set duty to 50%. ((2 ** 13) - 1) * 50% = 4095
+#define LEDC_FREQUENCY          (5000) // Frequency in Hertz. Set frequency at 5 kHz
+
+static void example_ledc_init(void)
+{
+    // Prepare and then apply the LEDC PWM timer configuration
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_MODE,
+        .timer_num        = LEDC_TIMER,
+        .duty_resolution  = LEDC_DUTY_RES,
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 5 kHz
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
+
+    // Prepare and then apply the LEDC PWM channel configuration
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_CHANNEL,
+        .timer_sel      = LEDC_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
+}
+
+void app_main(void)
+{
+    // Set the LEDC peripheral configuration
+    example_ledc_init();
+    // Set duty to 50%
+    ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, LEDC_DUTY));
+    // Update duty to apply the new value
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));
+}
+
+```
+
+输出波形
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681907849053.jpg)
 
 
 ## 输入捕获
