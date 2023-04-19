@@ -1258,7 +1258,7 @@ E (196) ledc: requested frequency and duty resolution cannot be achieved, try in
 
 ### 程序编写
 
-#### 实验一
+#### 实验一，软件修改占空比
 
 ```
 #include <stdio.h>
@@ -1317,7 +1317,9 @@ void app_main(void)
 - ledc_update_duty
 改变PWM占空比
 
-### 实验二
+### 实验二，硬件修改占空比
+
+硬件修改只能实现渐变，我们设置好参数后，硬件就会自动修改PWM，不需要软件再参与
 
 ## 输入捕获
 
