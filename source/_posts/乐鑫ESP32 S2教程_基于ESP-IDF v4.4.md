@@ -1310,6 +1310,10 @@ void app_main(void)
 
 输出波形
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1681907849053.jpg)
+后期可以调用
+- ledc_set_duty
+- ledc_update_duty
+改变PWM占空比
 
 
 ## 输入捕获
