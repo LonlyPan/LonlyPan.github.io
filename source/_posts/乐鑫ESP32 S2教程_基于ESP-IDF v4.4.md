@@ -1492,7 +1492,7 @@ I (12317) tagInfo: running
 
 #### 程序编写
 
-参考例程：esp-idf-v5.0\examples\peripherals\uart\uart_async_rxtxtasks
+参考例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\adc\continuous_read
 
 - channel[3] 就是我们的转换序列，这里有三个
 ```
