@@ -1495,6 +1495,9 @@ I (12317) tagInfo: running
 参考例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\peripherals\adc\continuous_read
 
 - channel[3] 就是我们的转换序列，这里有三个
+- 例程里最多只能7个通道，有一个bug，以修改
+- 例程里使用了ADC2，但实际采集为0，已修改仅使用ADC1
+- 
 ```
 #include "adc.h"
 #include <stdio.h>
