@@ -1492,25 +1492,42 @@ I (12317) tagInfo: running
 
 #### 程序编写
 
+参考例程：esp-idf-v5.0\examples\peripherals\uart\uart_async_rxtxtasks
+
 - channel[3] 就是我们的转换序列，这里有三个
 ```
+#include "adc.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "sdkconfig.h"
+#include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/semphr.h"
+#include "esp_adc/adc_continuous.h"
+
 const static char *TAG = "ADC_TEST";
-
-
+static TaskHandle_t s_task_handle;
 
 #define EXAMPLE_READ_LEN   256
-#define GET_UNIT(x)        ((x>>3) & 0x1)
 
-#define ADC_CONV_MODE       ADC_CONV_BOTH_UNIT
-#define ADC_OUTPUT_TYPE     ADC_DIGI_OUTPUT_FORMAT_TYPE2
 
-static adc_channel_t channel[3] = {ADC_CHANNEL_2, ADC_CHANNEL_3, (ADC_CHANNEL_0 | 1 << 3)};
+static adc_channel_t channel[3] = {ADC_CHANNEL_2, ADC_CHANNEL_3, ADC_CHANNEL_8};
 
 //-------------ADC1 Init---------------//
 adc_continuous_handle_t handle = NULL;
 
-adc_cali_handle_t adc1_cali_handle = NULL;
-bool do_calibration;
+
+static bool IRAM_ATTR s_conv_done_cb(adc_continuous_handle_t handle, const adc_continuous_evt_data_t *edata, void *user_data)
+{
+    BaseType_t mustYield = pdFALSE;
+    //Notify that ADC continuous driver has done enough number of conversions
+    vTaskNotifyGiveFromISR(s_task_handle, &mustYield);
+
+    return (mustYield == pdTRUE);
+}
+
 void adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle_t *out_handle)
 {
 
@@ -1521,20 +1538,22 @@ void adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle
     ESP_ERROR_CHECK(adc_continuous_new_handle(&adc_config, &handle));
 
     adc_continuous_config_t dig_cfg = {
-        .sample_freq_hz = 20 * 1000,
-        .conv_mode = ADC_CONV_MODE,
-        .format = ADC_OUTPUT_TYPE,
+        .sample_freq_hz = 20 * 1000,  // 最大100kSPS
+        .conv_mode = ADC_CONV_SINGLE_UNIT_1,  // S3仅支持ADC1。不支持ADC2
+		// 参考adc_digi_output_data_t    C:\Espressif\frameworks\esp-idf-v5.0\components\hal\include\hal\adc_types.h
+		// 不同芯片会有不同的输出格式 每个转换结果是一个结构体，并不单单是一个adc数据
+		// s3就只有一个TYPE2
+        .format = ADC_DIGI_OUTPUT_FORMAT_TYPE2,
     };
 
     adc_digi_pattern_config_t adc_pattern[SOC_ADC_PATT_LEN_MAX] = {0};
     dig_cfg.pattern_num = channel_num;
     for (int i = 0; i < channel_num; i++) {
-        uint8_t unit = GET_UNIT(channel[i]);
-        uint8_t ch = channel[i] & 0x7;
-        adc_pattern[i].atten = ADC_ATTEN_DB_0;
+        uint8_t ch = channel[i];
+        adc_pattern[i].atten = ADC_ATTEN_DB_11;
         adc_pattern[i].channel = ch;
-        adc_pattern[i].unit = unit;
-        adc_pattern[i].bit_width = SOC_ADC_DIGI_MAX_BITWIDTH;
+        adc_pattern[i].unit = ADC_UNIT_1;
+        adc_pattern[i].bit_width = ADC_BITWIDTH_12;  // SOC_ADC_DIGI_MAX_BITWIDTH
 
         ESP_LOGI(TAG, "adc_pattern[%d].atten is :%x", i, adc_pattern[i].atten);
         ESP_LOGI(TAG, "adc_pattern[%d].channel is :%x", i, adc_pattern[i].channel);
@@ -1544,6 +1563,74 @@ void adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle
     ESP_ERROR_CHECK(adc_continuous_config(handle, &dig_cfg));
 
     *out_handle = handle;
+}
+
+static bool check_valid_data(const adc_digi_output_data_t *data)
+{
+    const unsigned int unit = data->type2.unit;
+    if (unit > 2) return false;
+    if (data->type2.channel >= SOC_ADC_CHANNEL_NUM(unit)) return false;
+
+    return true;
+}
+
+
+void adc_loop()
+{
+    esp_err_t ret;
+    uint32_t ret_num = 0;
+    uint8_t result[EXAMPLE_READ_LEN] = {0};
+    memset(result, 0xcc, EXAMPLE_READ_LEN);
+
+    s_task_handle = xTaskGetCurrentTaskHandle();
+
+    adc_continuous_handle_t handle = NULL;
+    adc_init(channel, sizeof(channel) / sizeof(adc_channel_t), &handle);
+
+    // 注册转换完成回调函数
+    adc_continuous_evt_cbs_t cbs = {
+        .on_conv_done = s_conv_done_cb,
+    };
+    ESP_ERROR_CHECK(adc_continuous_register_event_callbacks(handle, &cbs, NULL));
+    ESP_ERROR_CHECK(adc_continuous_start(handle));
+
+    while(1) {
+
+        /**
+         * This is to show you the way to use the ADC continuous mode driver event callback.
+         * This `ulTaskNotifyTake` will block when the data processing in the task is fast.
+         * However in this example, the data processing (print) is slow, so you barely block here.
+         *
+         * Without using this event callback (to notify this task), you can still just call
+         * `adc_continuous_read()` here in a loop, with/without a certain block timeout.
+         */
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+
+        while (1) {
+            ret = adc_continuous_read(handle, result, EXAMPLE_READ_LEN, &ret_num, 0);
+            if (ret == ESP_OK) {
+                ESP_LOGI("TASK", "ret is %x, ret_num is %"PRIu32, ret, ret_num);
+                for (int i = 0; i < ret_num; i += SOC_ADC_DIGI_RESULT_BYTES) {
+                    adc_digi_output_data_t *p = (void*)&result[i];
+
+					if (check_valid_data(p)) {
+						ESP_LOGI(TAG, "Unit: %d,_Channel: %d, Value: %x", p->type2.unit+1, p->type2.channel, p->type2.data);
+					} else {
+						ESP_LOGI(TAG, "Invalid data [%d_%d_%x]", p->type2.unit+1, p->type2.channel, p->type2.data);
+					}
+                }
+                /**
+                 * Because printing is slow, so every time you call `ulTaskNotifyTake`, it will immediately return.
+                 * To avoid a task watchdog timeout, add a delay here. When you replace the way you process the data,
+                 * usually you don't need this delay (as this task will block for a while).
+                 */
+                vTaskDelay(1);
+            } else if (ret == ESP_ERR_TIMEOUT) {
+                //We try to read `EXAMPLE_READ_LEN` until API returns timeout, which means there's no available data
+                break;
+            }
+        }
+    }
 }
 ```
 
