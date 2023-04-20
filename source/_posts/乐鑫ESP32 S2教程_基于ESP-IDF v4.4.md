@@ -1375,6 +1375,7 @@ void ledc_init(void)
 每个 ADC 单元支持两种工作模式，ADC 单次采样模式和ADC连续采样（DMA）模式。
 - ADC 单次采样模式适用于低频采样操作。
 - ADC 连续采样（DMA）模式适用于高频连续采样动作。
+- 12位
 
 配置顺序：
 - 设置通道引脚
@@ -1482,6 +1483,70 @@ I (11317) tagInfo: running
 I (12317) ADC_TEST: ADC1 Channel[7] Raw Data: 0
 I (12317) tagInfo: running
 ```
+
+## ADC连续转换模式
+
+连续转换模式实际使用的是DMA，我们将需要转换的通道序列传给DMA，它就会自动按顺序转换数据，并存储到我们指定的内存数组中。
+- 没完成一组序列转换，就是一帧
+- 连续转换支持开辟内存缓存多帧数据（通常转换回避读取快）
+
+#### 程序编写
+
+- channel[3] 就是我们的转换序列，这里有三个
+```
+const static char *TAG = "ADC_TEST";
+
+
+
+#define EXAMPLE_READ_LEN   256
+#define GET_UNIT(x)        ((x>>3) & 0x1)
+
+#define ADC_CONV_MODE       ADC_CONV_BOTH_UNIT
+#define ADC_OUTPUT_TYPE     ADC_DIGI_OUTPUT_FORMAT_TYPE2
+
+static adc_channel_t channel[3] = {ADC_CHANNEL_2, ADC_CHANNEL_3, (ADC_CHANNEL_0 | 1 << 3)};
+
+//-------------ADC1 Init---------------//
+adc_continuous_handle_t handle = NULL;
+
+adc_cali_handle_t adc1_cali_handle = NULL;
+bool do_calibration;
+void adc_init(adc_channel_t *channel, uint8_t channel_num, adc_continuous_handle_t *out_handle)
+{
+
+    adc_continuous_handle_cfg_t adc_config = {
+        .max_store_buf_size = 1024,  // 转换结果缓存，超出结果将丢失，字节
+        .conv_frame_size = EXAMPLE_READ_LEN,  // 一帧的大小，包含多个转换结果
+    };
+    ESP_ERROR_CHECK(adc_continuous_new_handle(&adc_config, &handle));
+
+    adc_continuous_config_t dig_cfg = {
+        .sample_freq_hz = 20 * 1000,
+        .conv_mode = ADC_CONV_MODE,
+        .format = ADC_OUTPUT_TYPE,
+    };
+
+    adc_digi_pattern_config_t adc_pattern[SOC_ADC_PATT_LEN_MAX] = {0};
+    dig_cfg.pattern_num = channel_num;
+    for (int i = 0; i < channel_num; i++) {
+        uint8_t unit = GET_UNIT(channel[i]);
+        uint8_t ch = channel[i] & 0x7;
+        adc_pattern[i].atten = ADC_ATTEN_DB_0;
+        adc_pattern[i].channel = ch;
+        adc_pattern[i].unit = unit;
+        adc_pattern[i].bit_width = SOC_ADC_DIGI_MAX_BITWIDTH;
+
+        ESP_LOGI(TAG, "adc_pattern[%d].atten is :%x", i, adc_pattern[i].atten);
+        ESP_LOGI(TAG, "adc_pattern[%d].channel is :%x", i, adc_pattern[i].channel);
+        ESP_LOGI(TAG, "adc_pattern[%d].unit is :%x", i, adc_pattern[i].unit);
+    }
+    dig_cfg.adc_pattern = adc_pattern;
+    ESP_ERROR_CHECK(adc_continuous_config(handle, &dig_cfg));
+
+    *out_handle = handle;
+}
+```
+
 ## 看门狗
 
 
