@@ -1498,7 +1498,6 @@ I (12317) tagInfo: running
 - 例程里最多只能7个通道，有一个bug，以修改
 - 例程里使用了ADC2，但实际采集为0，已修改仅使用ADC1
 - 例程中衰减倍数改为11，可以测量3.3V
-- 
 ```
 #include "adc.h"
 #include <stdio.h>
