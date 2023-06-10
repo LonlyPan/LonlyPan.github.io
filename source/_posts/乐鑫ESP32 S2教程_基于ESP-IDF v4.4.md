@@ -26,7 +26,7 @@ categories: 00-项目
 
 本手册不仅非常适合广大学生和电子爱好者学习  ESP32-S3-WROOM-1-N16R8模组，其大量的实验以及详细的解说，也是公司产品开发的不二参考
 
-# 前言
+# 前言 
 
 ## 01-开发板
 
@@ -1648,6 +1648,7 @@ ESP32-S3 具有以下 SPI 接口：
 • SPI2，通用 SPI 控制器，具有单独的 DMA 通道
 • SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道
 ![表 3-2](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/表_3-2._SPI_管脚配置.jpg)
+结合 前言-GPIO交换矩阵可知，在
 
 ## 看门狗
 
