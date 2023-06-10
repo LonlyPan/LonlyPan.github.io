@@ -1637,10 +1637,17 @@ void adc_loop()
 }
 ```
 
-## LCD显示
+## LCD-SPI接口
 
 参考资料：[ESP-IDF 编程指南：API 参考 » 外设 API » LCD](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/api-reference/peripherals/lcd.html)
 参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\get-started\blink\main\blink_example_main.c
+
+ESP32-S3 具有以下 SPI 接口：
+• SPI0，供 ESP32-S3 和加密 DMA (EDMA) 访问封装内或封装外 flash/PSRAM
+• SPI1，供 CPU 访问封装内或封装外 flash/PSRAM
+• SPI2，通用 SPI 控制器，具有单独的 DMA 通道
+• SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道
+![表 3-2](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/表_3-2._SPI_管脚配置.jpg)
 
 ## 看门狗
 
