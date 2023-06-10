@@ -1639,7 +1639,7 @@ void adc_loop()
 
 ## LCD显示
 
-参考资料：ESP-IDF 编程指南：API参考» 外设接口» GPIO & RTC GPIO
+参考资料：[ESP-IDF 编程指南：API 参考 » 外设 API » LCD](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/api-reference/peripherals/lcd.html)
 参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\get-started\blink\main\blink_example_main.c
 
 ## 看门狗
