@@ -1645,8 +1645,8 @@ void adc_loop()
 ESP32-S3 具有以下 SPI 接口：
 • SPI0，供 ESP32-S3 和加密 DMA (EDMA) 访问封装内或封装外 flash/PSRAM
 • SPI1，供 CPU 访问封装内或封装外 flash/PSRAM
-• SPI2，通用 SPI 控制器，具有单独的 DMA 通道
-• SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道
+• SPI2，通用 SPI 控制器，具有单独的 DMA 通道，主机80MHz，从机60MHz
+• SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道。
 ![表 3-2](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/表_3-2._SPI_管脚配置.jpg)
 结合 前言-GPIO交换矩阵可知
 - EPS32 S3芯片的SPI0/1用于外部flash和PSRAM.所以只有SP2/3可用
@@ -1654,7 +1654,9 @@ ESP32-S3 具有以下 SPI 接口：
 - ESP32 S3推荐使用SPI2作为LCD的接口
 
 EPS32 只有SPI2可用。SPI0/1用于flash和PSRAM
-
+可连接 GDMA 通道。
+- 在主机模式下，时钟频率最高为 80 MHz，支持 SPI 传输的四种时钟模式。
+- 在从机模式下，时钟频率最高为 60 MHz，也支持 SPI 传输的四种时钟模式。
 ## 看门狗
 
 
