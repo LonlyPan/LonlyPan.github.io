@@ -1660,6 +1660,8 @@ EPS32 只有SPI2可用。SPI0/1用于flash和PSRAM
 
 另外ESP32的普通GPIO最大只能30MHz，而IOMUX默认的SPI，CLK最大可以设置到80MHz。所以为了提高刷屏速度，尽量使用硬件的IOMUX端口。
 
+ESP32的SPI默认使用DMA，在传输长度较长的数据时可以明显提高效率
+
 ## 看门狗
 
 
