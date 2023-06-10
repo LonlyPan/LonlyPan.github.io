@@ -1641,6 +1641,9 @@ void adc_loop()
 
 参考资料：[ESP-IDF 编程指南：API 参考 » 外设 API » LCD](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32s3/api-reference/peripherals/lcd.html)
 参考IDF官方例程：C:\Espressif\frameworks\esp-idf-v5.0\examples\get-started\blink\main\blink_example_main.c
+### SPI接口与引脚
+
+#### SPI接口
 
 ESP32-S3 具有以下 SPI 接口：
 • SPI0，供 ESP32-S3 和加密 DMA (EDMA) 访问封装内或封装外 flash/PSRAM
@@ -1661,6 +1664,11 @@ EPS32 只有SPI2可用。SPI0/1用于flash和PSRAM
 另外ESP32的普通GPIO最大只能30MHz，而IOMUX默认的SPI，CLK最大可以设置到80MHz。所以为了提高刷屏速度，尽量使用硬件的IOMUX端口。
 
 ESP32的SPI默认使用DMA，在传输长度较长的数据时可以明显提高效率
+
+#### SPI引脚
+SPI2的IO MUX 管脚如下。SPI3可以可以映射到任意引脚 
+![FSPISPI3 总线信号功能描述](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/FSPISPI3_总线信号功能描述.jpg)
+
 
 ## 看门狗
 
