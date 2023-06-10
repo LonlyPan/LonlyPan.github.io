@@ -1652,7 +1652,8 @@ ESP32-S3 具有以下 SPI 接口：
 - EPS32 S3芯片的SPI0/1用于外部flash和PSRAM.所以只有SP2/3可用
 - ESP32 S3 中SPI3和部分外设公用DMA通道，因此速度受限
 - ESP32 S3推荐使用SPI2作为LCD的接口
-- ESP32 S3R2和
+
+EPS32 只有SPI2可用。SPI0/1用于flash和PSRAM
 
 ## 看门狗
 
