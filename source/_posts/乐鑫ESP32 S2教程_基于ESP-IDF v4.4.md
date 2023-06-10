@@ -1646,7 +1646,7 @@ ESP32-S3 具有以下 SPI 接口：
 • SPI0，供 ESP32-S3 和加密 DMA (EDMA) 访问封装内或封装外 flash/PSRAM
 • SPI1，供 CPU 访问封装内或封装外 flash/PSRAM
 • SPI2，通用 SPI 控制器，具有单独的 DMA 通道，主机80MHz，从机60MHz
-• SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道。
+• SPI3，通用 SPI 控制器，和部分外设共用一个 DMA 通道，主机80MHz，从机60MHz
 ![表 3-2](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/表_3-2._SPI_管脚配置.jpg)
 结合 前言-GPIO交换矩阵可知
 - EPS32 S3芯片的SPI0/1用于外部flash和PSRAM.所以只有SP2/3可用
