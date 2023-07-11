@@ -641,8 +641,10 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 首先你需要使用IDE个要下载的芯片下载程序，后在 Console 信息输出栏找到如下语句
 - 可以通过找到 COMx 口语句找到
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689081713829.png)
-后按提示信息将 .bin 文件和对应地址填到选项框中
-
+bin文件在项目文件夹下的build 文件夹下
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689081903621.png)
+后按提示信息将 .bin 文件和对应地址填到选项框中。文件前后顺序无要求，只要对应的地址是对的就行
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689082103845.png)
 
 ## ESP-IDF编译原理简述(CMakeLists/CMake)和构建自定义项目
 
