@@ -651,6 +651,8 @@ bin文件在项目文件夹下的build 文件夹下
 
 https://blog.csdn.net/kangweijian/article/details/123283714
 
+## 固件大小优化
+https://blog.csdn.net/kangweijian/article/details/127497916
 # 实战篇
 
 ## 1、printf
