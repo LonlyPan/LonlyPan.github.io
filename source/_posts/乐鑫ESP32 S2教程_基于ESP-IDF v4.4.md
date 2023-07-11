@@ -1684,6 +1684,9 @@ SPI2的IO MUX 管脚如下。SPI3可以可以映射到任意引脚
 
 ## LCD DMA
 
+## LCD LVGL
+
+
 ## RTC
 
 ## 待机唤醒
