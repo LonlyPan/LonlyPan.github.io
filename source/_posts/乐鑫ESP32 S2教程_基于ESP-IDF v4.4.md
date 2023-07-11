@@ -1694,7 +1694,7 @@ SPI2的IO MUX 管脚如下。SPI3可以可以映射到任意引脚
 一直过程中需要修改
 ![图像 1](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/图像_1.png)
 
-sdkconfig 打开颜色交换。部分LCD适用，如果你发向颜色不对的
+sdkconfig 打开颜色交换。部分LCD适用，如果你发向颜色不对
 ![图像 3](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/图像_3.png)
 
 ## RTC
