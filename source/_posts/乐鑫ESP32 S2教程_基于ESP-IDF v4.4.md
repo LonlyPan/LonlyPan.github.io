@@ -649,6 +649,8 @@ bin文件在项目文件夹下的build 文件夹下
 
 ## ESP-IDF编译原理简述(CMakeLists/CMake)和构建自定义项目
 
+https://blog.csdn.net/kangweijian/article/details/123283714
+
 # 实战篇
 
 ## 1、printf
