@@ -637,6 +637,10 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 软件下载地址：https://www.espressif.com.cn/zh-hans/support/download/other-tools
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689079998677.png)
 软件安装包里有教程，这里说明几个重点
+### 如何确认下载地址
+首先你需要使用IDE个要下载的芯片下载程序，后在 Console 信息输出栏找到如下语句
+- 可以通过找到 COMx 口语句找到
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689081713829.png)
 
 ## ESP-IDF编译原理简述(CMakeLists/CMake)和构建自定义项目
 
