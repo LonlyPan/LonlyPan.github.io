@@ -1687,6 +1687,7 @@ SPI2的IO MUX 管脚如下。SPI3可以可以映射到任意引脚
 ## LCD LVGL
 
 参考程序：https://github.com/espressif/esp-bsp
+其中LVGl接口程序：https://github.com/espressif/esp-bsp/tree/master/components/esp_lvgl_port
 
 ## RTC
 
