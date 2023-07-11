@@ -634,8 +634,8 @@ pxCreatedTask 任务句柄才是我们创建的任务，他是任务的ID，相�
 # 软件篇
 
 ## Flash Download Tools 固件烧录工具的使用
-https://blog.csdn.net/kangweijian/article/details/121709265
-
+软件下载地址：https://www.espressif.com.cn/zh-hans/support/download/other-tools
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689079998677.png)
 ## ESP-IDF编译原理简述(CMakeLists/CMake)和构建自定义项目
 
 # 实战篇
