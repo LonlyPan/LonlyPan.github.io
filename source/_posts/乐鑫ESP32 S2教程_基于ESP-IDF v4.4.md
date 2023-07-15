@@ -701,7 +701,7 @@ factory,  app,  factory, 0x10000,  1M,
 ota_0,    app,  ota_0,   0x110000, 1M,
 ota_1,    app,  ota_1,   0x210000, 1M,
 ```
-配置三主要用于OTA升级程序使用的
+配置三主要用于OTA升级程序使用的。可以看出来如果我们的Flash大小大于4M，那么这三个默认配置其实都没有用到Flash的全部内存位置，并不适合实际使用
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689418793406.png)
 - boot 的地址是固定的 0x1000 （ESP8266 的 boot 地址为固定的 0x0000），而且 boot 地址的加载早于分区表的加载，因此无需在分区表中表现，大小与 boot 配置项有关，可以在编译完成后查看build/bootloader/bootloader.bin 来确认当前配置项 boot 大小。
