@@ -705,7 +705,7 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 
 下面这张图可以帮助我们更好的理解分区
 - boot 的地址是固定的 0x1000 （ESP8266 的 boot 地址为固定的 0x0000），而且 boot 地址的加载早于分区表的加载，因此无需在分区表中表现，大小与 boot 配置项有关，可以在编译完成后查看build/bootloader/bootloader.bin 来确认当前配置项 boot 大小。
-- boot分区是不能自定义的，d
+- boot分区是不能自定义的，但我们可以修改这里的bootloader.bin文件
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689418793406.png)
 
 
