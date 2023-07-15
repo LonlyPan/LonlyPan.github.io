@@ -822,7 +822,7 @@ void app_main(void)
 
 ```
 我们选中sleep单词，按F3或右键单击Open Declaration，可以其具体实现
-![右键单击去定义](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/右键单击去定义.gif)
+![右键单击去定义](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/右键单击去定义.gif)
 可以看到，`sleep`实际调用的`usleep`，`usleep`则调用的`vTaskDelay`
 而 `vTaskDelay` 实际和FreeRTOS有关，我们的EPS32 运行时离不开FreeRTOS的，相关的教程完成也有很多，这里不再讲解，大家可以参下网络教程学习，
 - [ESP32 FreeRTOS-任务的创建与删除 (1)](https://blog.csdn.net/believe666/article/details/127175049?spm=1001.2014.3001.5502)
