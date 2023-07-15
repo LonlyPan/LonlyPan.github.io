@@ -130,7 +130,7 @@ N16R8（16M 外扩flash/8M PSRAM）/双Type-C USB口/W2812 rgb/高速USB转串�
 ### ESP32 C3
 
 对于内置flash版本的，以下引脚不可用
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697175691.png)
+![flash引脚](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/flash引脚.jpg)
 GPIO11不可用
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1680697605040.png)
 GPIO2、8、9为 strapping 管脚，GPIO9 内部默认弱上拉
@@ -313,8 +313,7 @@ https://blog.csdn.net/qq_40500005/article/details/113840391
    同时也可以发现，程序中会有波浪线，和其它错误警告，在下面的编译完成后，就会都消失的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1677077700612.png)
 
-这里我们可以发现，主程序并不是常见的 `main`，而是 `app_main`，这是因为esp32默认待 Free RTOS 系统，关于该操作系统后面涉及时在讲解；对于初学，只需要把它当成 `main` 函数就行了。
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679929730389.png)
+这里我们可以发现，主程序并不是常见的 `main`，而是 `app_main`，这是因为esp32默认待 Free RTOS 系统，关于该操作系统后面涉及时在讲解；对于初学，只需要把它当成 `main` 函数就行了。![项目目录](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/项目目录.jpg)
 ### 编译和下载
 
 5. 在编译前我们需要选择目标芯片。单击齿轮图标
@@ -428,8 +427,7 @@ Yess
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414244524.png)
 Main 标签页保持默认，注意这里要有 .elf文件
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679414393337.png)
-Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译为调试工具，选择芯片内部 USB-JTAG，点击 **Apply** 保存设置，单击 **Finish** 退出设置
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679824494192.png)
+Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译为调试工具，选择芯片内部 USB-JTAG，点击 **Apply** 保存设置，单击 **Finish** 退出设置![JTAG调试](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/JTAG调试.jpg)
 >根据官方描述，ESP32 C3和S3都内置JTAG调试器，即我们只需要通过USB线连接到ESP32的USB引脚，就能通过IDE直接调试，不需要额外的如ST-Link或Jtag调试硬件工具，非常方便。
 
 > USB接口同时也支持虚拟串口，所以在接USB后，我们就不要再接串口RX和TX调试了，反而还省了两个口。否则像其它ESP32都需要使用串口下载程序的，因为S3和C3的USB自带虚拟串口，所以就不需要串口 引脚了。所以建议用S3和C3时，使用USB口调试、调试、虚拟串口打印。我们在使用USB连接ESP32时，电脑会自动生成一个串口，就跟普通的串口一样，使用即可。
@@ -459,14 +457,13 @@ Debugger 标签页，目标选择问哦们的芯片 S3，开发板应该翻译�
 
 ## 自带终端，串口助手使用
 打开终端，选择串口号，其它保持默认（串口监控）
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679578641429.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689431232157.png)
 界面底部栏，终端标签页会显示板子发送过来的串口信息
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679578830578.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689431271222.png)
 
 > 建议还是使用专门的串口调试软件，如正点原子的 XCOM 调试软件
 > 默认波特率115200
-
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679925520384.png)
+![串口助手](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/串口助手.jpg)
 
 ## 内存分析查看
 
@@ -738,8 +735,7 @@ void app_main(void)
 编译下载程序，打开终端监视器
 可以发现串口成功输出
 > USB虚拟串口和串口0都可以输出，应该时映射的，所以此时接串口0和USB虚拟串口都会有输出
-
-![enter description here](./img/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1679826810385.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689431390706.png)
 如果将后面换行符 `\n`去除，再下载
 ```
 #include <stdio.h>
