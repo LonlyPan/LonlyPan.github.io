@@ -714,7 +714,7 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 
 结合之前flash下载工具的内存地址
 - boot在0x1000，分区表在0x8000，程序在0x10000
-- 0x8000-0x10000钟中间的是nvs和phy_init ，是存储信息的，因此不能下载文件
+- 0x8000-0x10000钟中间的是nvs和phy_init ，是运行时存储信息的，因此不能下载文件
 ![flash tools](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/flash_tools.jpg)
 # 实战篇
 
