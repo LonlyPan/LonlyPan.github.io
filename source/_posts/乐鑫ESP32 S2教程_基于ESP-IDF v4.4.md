@@ -662,6 +662,9 @@ https://blog.csdn.net/kangweijian/article/details/127497916
 
 分区表就是一张表格，是 .csv格式文件，下载时转换成bin文件存储在0x8000位置，并且占据占据了大小为0x1000（4KB）
 
+![image](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/image.jpg)
+
+
 # 实战篇
 
 ## 1、printf
