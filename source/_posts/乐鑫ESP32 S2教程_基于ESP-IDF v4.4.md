@@ -664,7 +664,11 @@ https://blog.csdn.net/kangweijian/article/details/127497916
 
 我们在项目名右键，找到Partition Table Editor就能打开分区表，这个是默认的
 ![Partition Tables分区表](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/Partition_Tables分区表.jpg)
+- NVS主要是给我们存储数据用的，类似EEPROM，比如wifi数据，用户信息、开机次数等等信息
+- PHY分区主要和射频通信配置相关，例如WIFI、RF蓝牙，存储一些校准数据（一般用不到）
 
+系统自带几个默认的分区表配置，可以直接在 sdconfig 文件中修改，不需要在这里需改分区表。
+![sdconfig Partition Table](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/sdconfig_Partition_Table.jpg)
 
 
 # 实战篇
