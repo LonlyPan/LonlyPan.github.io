@@ -1751,8 +1751,14 @@ RTC 定时器有以下时钟源：
  - 网络中存在多个SNTP服务器，SNTP客户端可以选择多个SNTP服务器作为外部时间源，当某个SNTP服务器故障断开连接时，可以及时切换到其他SNTP服务器。
  - ESP32的SNTP同步功能是基于lwIP SNTP库，功能实现很简单，请见下文。
 
-## 
+## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
+
+非易失性存储 (NVS) 库主要用于在 flash 中存储键值格式的数据。
+
+NVS 库通过调用 esp_partitionAPI 使用主 flash 的部分空间，即类型为 data 且子类型为 nvs 的所有分区。
+
+应用程序可调用 nvs_open()选择使用带有 nvs 标签的分区，也可以通过调用 nvs_open_from_partition()选择使用指定名称的任意分区。
 
 ## 待机唤醒
 
