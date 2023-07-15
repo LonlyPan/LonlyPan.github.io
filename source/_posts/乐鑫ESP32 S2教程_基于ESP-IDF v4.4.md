@@ -653,6 +653,11 @@ https://blog.csdn.net/kangweijian/article/details/123283714
 
 ## 固件大小优化
 https://blog.csdn.net/kangweijian/article/details/127497916
+
+## Partition Tables分区表
+
+一个ESP32的闪存（Flash存储芯片）可以包含多个应用程序，以及许多不同类型的数据（校准数据、文件系统、参数存储等）。因此，分区表在闪存中被刷新到（默认偏移量）0x8000。
+
 # 实战篇
 
 ## 1、printf
@@ -1751,7 +1756,7 @@ RTC 定时器有以下时钟源：
  - 网络中存在多个SNTP服务器，SNTP客户端可以选择多个SNTP服务器作为外部时间源，当某个SNTP服务器故障断开连接时，可以及时切换到其他SNTP服务器。
  - ESP32的SNTP同步功能是基于lwIP SNTP库，功能实现很简单，请见下文。
 
-## Partition Tables分区表
+
 
 ## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
