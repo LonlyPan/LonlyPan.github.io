@@ -657,7 +657,7 @@ https://blog.csdn.net/kangweijian/article/details/127497916
 ## Partition Tables分区表
 
 一个ESP32的闪存（Flash存储芯片）可以包含多个应用程序，以及许多不同类型的数据（校准数据、文件系统、参数存储等）。因此，分区表在闪存中被刷新到（默认偏移量）0x8000。
-
+y
 # 实战篇
 
 ## 1、printf
