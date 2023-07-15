@@ -667,7 +667,7 @@ https://blog.csdn.net/kangweijian/article/details/127497916
 - NVS主要是给我们存储数据用的，类似EEPROM，比如wifi数据，用户信息、开机次数等等信息
 - PHY分区主要和射频通信配置相关，例如WIFI、RF、蓝牙，存储一些校准数据（一般用不到），参考：[RF calibration射频校准](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/RF_calibration.html)、[什么是与ESP32相关的PHY？](https://www.esp32.com/viewtopic.php?t=1020)
 
-以上两个分区时可以任意配置的，也可以直接删除不要。但下面的factory谨慎修改，factory里面存的就是我们的应用程序，系统在初始化后会自动跳转到该地址（0x10000） 运行程序，所以最后修改这里的偏移位置（0x10000），但我们可以修改其大小（Size），可以看到默认只有1M-Byte大小
+以上两个分区时可以任意配置的，也可以直接删除不要。但下面的factory谨慎修改，factory里面存的就是我们的应用程序，系统在初始化后会自动跳转到该地址（0x10000） 运行程序，所以最后修改这里的偏移位置（0x10000），但我们可以修改其大小（Size），可以看到默认只有1M-Byte大小，如果我们de
 系统自带几个默认的分区表配置，可以直接在 sdconfig 文件中修改，不需要在这里需改分区表。
 ![sdconfig Partition Table](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/sdconfig_Partition_Table.jpg)
 
