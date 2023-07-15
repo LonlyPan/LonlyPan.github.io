@@ -674,13 +674,32 @@ https://blog.csdn.net/kangweijian/article/details/127497916
 ![sdconfig Partition Table](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/sdconfig_Partition_Table.jpg)
 有三种默认配置
 ```
-Factory app，two OTA definitions
+# 配置1：Factory app，two OTA definitions
 
 # ESP-IDF Partition Table
 # Name,   Type, SubType, Offset,  Size, Flags
 nvs,      data, nvs,     0x9000,  0x6000,
 phy_init, data, phy,     0xf000,  0x1000,
 factory,  app,  factory, 0x10000, 1M,
+
+# 配置2：Factory app，two OTA definitions
+
+# ESP-IDF Partition Table
+# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,     0x9000,  0x6000,
+phy_init, data, phy,     0xf000,  0x1000,
+factory,  app,  factory, 0x10000, 1.5M,
+
+# 配置2：Factory app，two OTA definitions
+
+# ESP-IDF Partition Table
+# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,     0x9000,  0x4000,
+otadata,  data, ota,     0xd000,  0x2000,
+phy_init, data, phy,     0xf000,  0x1000,
+factory,  app,  factory, 0x10000,  1M,
+ota_0,    app,  ota_0,   0x110000, 1M,
+ota_1,    app,  ota_1,   0x210000, 1M,
 ```
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689418793406.png)
