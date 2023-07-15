@@ -1817,7 +1817,7 @@ RTC 定时器有以下时钟源：
 ## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
 
-再说NVS前，我们需要先说一下Partition Tables分区表
+再说NVS前，请先阅读前面章节：**Partition Tables分区表**
 
 一个ESP32的闪存可以包含多个应用程序，以及许多不同类型的数据（校准数据、文件系统、参数存储等）。因此，分区表在闪存中被刷新到（默认偏移量）0x8000。
 
