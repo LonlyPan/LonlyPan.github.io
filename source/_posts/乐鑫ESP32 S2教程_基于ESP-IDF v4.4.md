@@ -1814,10 +1814,75 @@ RTC 定时器有以下时钟源：
  - 网络中存在多个SNTP服务器，SNTP客户端可以选择多个SNTP服务器作为外部时间源，当某个SNTP服务器故障断开连接时，可以及时切换到其他SNTP服务器。
  - ESP32的SNTP同步功能是基于lwIP SNTP库，功能实现很简单，请见下文。
 
-### 操作流程
+### 知识点
+
+3.1 时间同步状态
+```
+/// SNTP sync status
+typedef enum {
+    SNTP_SYNC_STATUS_RESET,         // Reset status.
+    SNTP_SYNC_STATUS_COMPLETED,     // Time is synchronized.
+    SNTP_SYNC_STATUS_IN_PROGRESS,   // Smooth time sync in progress.
+} sntp_sync_status_t;
+```
+
+3.2 时间同步模式
+```
+/// SNTP time update mode
+typedef enum {
+    SNTP_SYNC_MODE_IMMED,   /* 立即更新时间 */
+    SNTP_SYNC_MODE_SMOOTH,  /* 平滑更新，如果时间差别不大，软件会慢慢将时间调整到网络时间，而不是立即改变，这样用户就看不出来时间更改了，但如果时间差别太大（>35min），也会立即更新时间 */
+} sntp_sync_mode_t;
+```
+3.3 SNTP工作模式
+默认单播
+```
+/* SNTP operating modes: default is to poll using unicast.
+   The mode has to be set before calling sntp_init(). */
+#define SNTP_OPMODE_POLL            0
+#define SNTP_OPMODE_LISTENONLY      1
+```
+
+3.3 关键函数
+设置同步模式。
+`void sntp_set_sync_mode(sntp_sync_mode_t sync_mode)`
+
+获取同步模式。
+`sntp_sync_mode_t sntp_get_sync_mode(void)`
+
+设置时间同步状态。
+`void sntp_set_sync_status(sntp_sync_status_t sync_status)`
+
+获取时间同步状态。
+`sntp_sync_status_t sntp_get_sync_status(void)`
+
+设置时间同步通知回调函数
+`void sntp_set_time_sync_notification_cb(sntp_sync_time_cb_t callback)`
+
+设置 SNTP 操作的同步间隔。
+注意：SNTPv4 RFC 4330 强制最小同步间隔为 15 秒。此同步间隔将用于通过 SNT​​P 的下一次尝试更新时间。要应用新的同步间隔，请调用 sntp_restart() 函数，否则，它将在最后一个间隔到期后应用。
+`void sntp_set_sync_interval(uint32_t interval_ms)`
+
+获取 SNTP 操作的同步间隔。
+`uint32_t sntp_get_sync_interval(void)`
+
+设置SNTP工作模式，单播或者广播
+`void sntp_setoperatingmode(u8_t operating_mode)`
+
+设置SNTP服务器
+`void sntp_setservername(u8_t idx, const char *server)`
+
+SNTP初始化。
+`void sntp_init(void)`
+
+SNTP停止。
+`void sntp_stop(void)`
+
+重新启动 SNTP（先停止，再初始化）。
+`bool sntp_restart(void)`
 
 ### wifi配置
-
+![connect config](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/connect_config.jpg)
 ### 示例程序
 
 ## 非易失性存储 (NVS)
