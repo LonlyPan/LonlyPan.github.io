@@ -2317,6 +2317,12 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 
 ### 2、操作流程
 
+- IDE打开分区表
+- 编辑分区表
+- 编写nvs程序读取分区表数据
+- 下载
+
+
 
 ## 待机唤醒
 
