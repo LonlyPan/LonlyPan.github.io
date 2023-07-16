@@ -2334,7 +2334,7 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 随后我们可以在项目文件夹下看到生成的 .csv和.bin 文件。也可以使用excel编辑csv文件（不推荐）
 ![nvs csv](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/nvs_csv.jpg)
 
-
+然后需要接主 flash download 软件下载 .bin 分区文件
 
 ### 3、编辑分区表
 
