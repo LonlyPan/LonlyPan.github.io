@@ -2323,6 +2323,7 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 - 编写nvs程序读取分区表数据
 - 下载主程序
 
+### 3、编辑分区表
 
 打开分区表编辑器并编辑
 - 文件大小必须大于0x3000，否则无法将csv文件转换成bin文件
@@ -2339,8 +2340,7 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 如果点击 START 没有反应，没有下载，那说明 .bin 文件有问题。一般是 .csv 中 value一栏数据错误，上图第四行的 root.pem.key 文件并不存在，所以下载就会出现错误，删除重新生成 .bin 文件就能够下载了
 ![download nvs](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/download_nvs.jpg)
 
-### 3、编辑分区表
-
+###
 
 ## 待机唤醒
 
