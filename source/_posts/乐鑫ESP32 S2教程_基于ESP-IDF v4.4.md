@@ -2065,7 +2065,8 @@ void app_main(void)
 }
 ```
 运行结果
-mei
+每2s追加一个数据，并读取出来
+这一用到了擦除函数
 ```
  (0) cpu_start: Starting scheduler on APP CPU.
 Run time:
