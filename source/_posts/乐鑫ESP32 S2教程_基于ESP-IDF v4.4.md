@@ -2858,6 +2858,34 @@ I (3109) scan: Channel          6
  - esp_event_handler_instance_unregister，取消WIFI_EVENT事件监听
  - esp_event_handler_instance_unregister，取消IP_EVENT事件监听
 
+### 注册事件回调函数
+WIFI_EVENT_STA_START：station启动时，esp_wifi_connect连接
+WIFI_EVENT_STA_DISCONNECTED：从AP失去连接时，，连接次数小于最大连接次数时，esp_wifi_connect连接
+IP_EVENT_STA_GOT_IP：从连接的AP获得IP时，打印IP
+```
+static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
+            esp_wifi_connect();
+            s_retry_num++;
+            ESP_LOGI(TAG, "retry to connect to the AP");
+        } else {
+            xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
+        }
+        ESP_LOGI(TAG,"connect to the AP fail");
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
+        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        s_retry_num = 0;
+        xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+    }
+}
+```
+
+
 ### 示例代码
 新建项目，选择example，选择WiFi—>getting_started->station
 同时在sdconfig中设置wifi名和密码
