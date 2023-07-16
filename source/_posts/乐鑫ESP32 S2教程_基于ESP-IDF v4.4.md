@@ -2909,6 +2909,41 @@ esp_err_t esp_event_handler_instance_register(esp_event_base_t event_base, int32
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689514858699.png)
 
 ## WIFI AP
+### 程序流程
+
+ - nvs_flash_init，初始化默认 NVS 分区。
+ - esp_netif_init，初始化底层TCP/IP堆栈
+ - esp_event_loop_create_default，创建默认事件循环。
+ - esp_netif_create_default_wifi_ap，使用默认WiFi AP配置创建esp_netif对象，将netif连接到WiFi并注册默认WiFi处理程序。
+ - esp_wifi_init，为 WiFi 驱动初始化 WiFi 分配资源，如 WiFi 控制结构、RX/TX 缓冲区、WiFi NVS 结构等，这个 WiFi 也启动 WiFi 任务。必须先调用此API，然后才能调用所有其他WiFi API
+ - esp_event_handler_instance_register，监听WIFI_EVENTWiFi 任意事件，触发事件后，进入回调函数
+ - esp_wifi_set_mode，设置WiFi工作模式为station、soft-AP或station+soft-AP，默认模式为soft-AP模式。本程序设置为AP
+ - esp_wifi_set_config，设置 ESP32 STA 或 AP 的配置
+ - esp_wifi_start，根据配置，启动WiFi
+
+### 注册事件回调函数
+
+WIFI_EVENT_AP_STACONNECTED：一个station连接到AP时
+WIFI_EVENT_AP_STADISCONNECTED：一个station断开连接时
+
+```
+static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
+{
+    if (event_id == WIFI_EVENT_AP_STACONNECTED) {
+        wifi_event_ap_staconnected_t* event = (wifi_event_ap_staconnected_t*) event_data;
+        ESP_LOGI(TAG, "station "MACSTR" join, AID=%d", MAC2STR(event->mac), event->aid);
+    } else if (event_id == WIFI_EVENT_AP_STADISCONNECTED) {
+        wifi_event_ap_stadisconnected_t* event = (wifi_event_ap_stadisconnected_t*) event_data;
+        ESP_LOGI(TAG, "station "MACSTR" leave, AID=%d", MAC2STR(event->mac), event->aid);
+    }
+}
+```
+
+### 示例代码
+新建项目，选择example，选择WiFi—>getting_started->station
+同时在sdconfig中设置wifi名和密码
+下载运行
+
 
 ## 待机唤醒
 
