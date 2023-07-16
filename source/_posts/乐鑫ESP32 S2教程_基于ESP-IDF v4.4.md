@@ -1833,11 +1833,13 @@ NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的
 - 以 0 结尾的字符串，字符串长度上限4000字节；
 - 可变长度的二进制数据 (BLOB)，上限为 508,000 字节或分区大小的 97.6% 减去 4000 字节，以较低值为准。；
 
-### 操作流程
+### 2、操作流程
 读操作流程：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689432933040.png)
 写操作流程
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689432957921.png)
+
+### 3、关键函数
 
 - 初始化默认的 NVS 分区。
 - 此 API 初始化默认 NVS 分区。默认 NVS 分区是分区表中标记为“nvs”的分区。
@@ -1868,7 +1870,7 @@ NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的
 - 关闭句柄可能不会自动将更改写入非易失性存储。这必须使用 nvs_commit 函数显式完成。
 `void nvs_close(nvs_handle_t handle)`
 
-### 关键函数
+
 
 ## 待机唤醒
 
