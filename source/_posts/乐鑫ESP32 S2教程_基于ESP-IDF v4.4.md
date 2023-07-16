@@ -2629,6 +2629,9 @@ E (346054) tagInfo: rootCaLen = 9
 E (346064) tagInfo: get_value name (ESP_ERR_NVS_NOT_FOUND)
 ```
 
+## WIFI Scan
+
+
 ## 待机唤醒
 
 
