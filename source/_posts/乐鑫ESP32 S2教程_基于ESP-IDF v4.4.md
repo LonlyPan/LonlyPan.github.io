@@ -3202,8 +3202,52 @@ static void smartconfig_example_task(void * parm)
  - 注意：ESP32只支持2.4GHz WiFi，还不支持5GHz WiFi
 
 或直接扫描下面二维码
+官方给的工具网址为：https://iot.espressif.cn/configWXDeviceWiFi.html
+可以利用网址链接转二维码工具生成二维码，像我生成的二维码：
+![5e4c1a97-6c05-4222-ae70-0ae6ef4ac87d](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/5e4c1a97-6c05-4222-ae70-0ae6ef4ac87d.png)
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689520072550.png)
 
+```
+I (611) wifi:mode : sta (34:85:18:98:06:dc)
+I (611) wifi:enable tsf
+I (661) smartconfig: SC version: V3.0.1
+I (5471) wifi:ic_enable_sniffer
+I (5471) smartconfig: Start to find channel...
+I (5471) smartconfig_example: Scan done
+I (25221) smartconfig: TYPE: AIRKISS
+I (25221) smartconfig: T|AP MAC: 58:41:20:1e:06:19
+I (25231) smartconfig: Found channel on 6-0. Start to get ssid and password...
+I (25231) smartconfig_example: Found channel
+I (28451) smartconfig: T|pswd: 15996264842
+I (28451) smartconfig: T|ssid: 15-501
+I (28451) wifi:ic_disable_sniffer
+I (28451) smartconfig_example: Got SSID and password
+I (28451) smartconfig_example: SSID:15-501
+I (28461) smartconfig_example: PASSWORD:15996264842
+I (28561) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (29541) wifi:state: init -> auth (b0)
+I (29571) wifi:state: auth -> assoc (0)
+I (29591) wifi:state: assoc -> run (10)
+I (32701) wifi:state: run -> init (fc0)
+I (32701) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (32701) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (35121) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (35121) wifi:state: init -> auth (b0)
+I (35131) wifi:state: auth -> assoc (0)
+I (35231) wifi:state: assoc -> run (10)
+I (35331) wifi:connected with 15-501, aid = 8, channel 6, BW20, bssid = 58:41:20:1e:06:19
+I (35331) wifi:security: WPA2-PSK, phy: bgn, rssi: -52
+I (35341) wifi:pm start, type: 1
+
+I (35341) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 0, mt_pti: 25000, mt_time: 10000
+I (35341) wifi:BcnInt:102400, DTIM:1
+I (36441) esp_netif_handlers: sta ip: 192.168.0.108, mask: 255.255.255.0, gw: 192.168.0.1
+I (36441) smartconfig_example: WiFi Connected to ap
+W (37211) wifi:<ba-add>idx:0 (ifx:0, 58:41:20:1e:06:19), tid:5, ssn:3, winSize:64
+W (37231) wifi:<ba-add>idx:1 (ifx:0, 58:41:20:1e:06:19), tid:6, ssn:1, winSize:64
+I (39631) smartconfig_example: smartconfig over
+```
 ## 待机唤醒
 
 
