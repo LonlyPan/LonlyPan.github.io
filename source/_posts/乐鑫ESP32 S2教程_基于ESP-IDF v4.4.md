@@ -2171,6 +2171,15 @@ void app_main(void)
     }
 }
 ```
+
+```
+Run time:
+test str is: this is my test str,boom!
+size is 26
+Run time:
+test str is: this is my test str,boom!
+size is 26
+```
 ### 命名空间和键值对
 - 类比于文件夹，我们如果想要存储一个文件，esp是强制要有一个文件夹的，然后你可以在这个文件夹中存放自己的数据，这就是命名空间
 - 命名空间（handle, ）类似于文件夹名字，我们只有先找到文件夹，打开文件夹，才能读取里面的各个文件数据
