@@ -1884,6 +1884,99 @@ SNTP停止。
 ### wifi配置
 ![connect config](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/connect_config.jpg)
 ### 示例程序
+```
+#include <stdbool.h>
+#include <unistd.h>
+#include <esp_log.h>
+#include "global.h"
+#include "lwip/err.h"
+#include "lwip/apps/sntp.h"
+#include "protocol_examples_common.h"
+#include "esp_sntp.h"
+#include "freertos/event_groups.h"
+#include <time.h>
+#include <sys/time.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include <string.h>
+#include "esp_system.h"
+#include "esp_event.h"
+#include "esp_log.h"
+#include "esp_attr.h"
+#include "esp_sleep.h"
+#include "nvs_flash.h"
+
+// 定义一个标签，方便批量换名字
+static const char* tagInfo = "tagInfo";
+static const char* TAG = "SNTP";
+
+void get_time(void)
+{
+    time_t second;
+    struct tm *datetime;
+
+    time(&second);
+    datetime = localtime(&second);
+    ESP_LOGI(TAG, "The current time is: %04d/%02d/%02d %02d:%02d:%02d. by Lonly", datetime->tm_year+1900, datetime->tm_mon+1, datetime->tm_mday, datetime->tm_hour, datetime->tm_min, datetime->tm_sec);
+}
+char* get_sntp_status(void)
+{
+    int status = sntp_get_sync_status();
+    switch(status){
+        case SNTP_SYNC_STATUS_RESET:
+        return "RESET";
+        break;
+        case SNTP_SYNC_STATUS_COMPLETED:
+        sntp_stop();
+        return "COMPLETED";
+        break;
+        case SNTP_SYNC_STATUS_IN_PROGRESS:
+        return "PROGRESS";
+        break;
+    }
+    return "";
+}
+
+static void initialize_sntp(void)
+{
+    ESP_LOGI(TAG, "Initializing SNTP");
+#ifdef LWIP_DHCP_GET_NTP_SRV
+    sntp_servermode_dhcp(1);
+#endif
+
+    sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    // sntp_setservername(0, "pool.ntp.org");
+    // sntp_setservername(0, "210.72.145.44");  // 国家授时中心服务器 IP 地址
+    sntp_setservername(0, "ntp1.aliyun.com");
+
+    // sntp_set_time_sync_notification_cb(time_sync_notification_cb);
+    sntp_set_sync_mode(SNTP_SYNC_MODE_IMMED);
+    // sntp_set_sync_interval(15*1000);
+    sntp_init();
+    // sntp_restart();
+    // ESP_LOGI(TAG, "SNTP interval: %d", sntp_get_sync_interval());
+}
+
+void app_main(void)
+{
+	nvs_flash_init();
+    esp_netif_init();
+    esp_event_loop_create_default();
+    example_connect();
+
+    initialize_sntp();
+	//uart_init();
+    //ledc_init();
+    int i=0;
+    while (true) {
+    	ESP_LOGI(tagInfo,"running\r\n");
+        sleep(1);
+        ESP_LOGI(TAG, "sntp sync status: %s |%d", get_sntp_status(), i++);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+		get_time();
+    }
+}
+```
 
 ## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
