@@ -2307,6 +2307,8 @@ E (6374) tagInfo: get_value {a=1, b=1, c=3, x=705, y=108}
 
 ## 量产烧写设备配置和序列号, NVS partition分区确认, NVS 分区生成程序, csv转bin
 
+参考：[NVS 分区生成程序](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_partition_gen.html)
+
 ### 1、介绍
 设备量产的时候，每个设备都有不同的序列号、配置参数等。
 这就需要提供不同的固件给不同的设备，出厂前直接烧写到设备Flash中。
@@ -2339,6 +2341,9 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 - 地址0x9000
 如果点击 START 没有反应，没有下载，那说明 .bin 文件有问题。一般是 .csv 中 value一栏数据错误，上图第四行的 root.pem.key 文件并不存在，所以下载就会出现错误，删除重新生成 .bin 文件就能够下载了
 ![download nvs](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/download_nvs.jpg)
+
+同样的你可以编辑多个命名空间
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689498664075.png)
 
 ### 4、示例程序
 ```
