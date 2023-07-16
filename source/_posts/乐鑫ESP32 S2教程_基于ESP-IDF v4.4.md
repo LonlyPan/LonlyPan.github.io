@@ -2188,6 +2188,10 @@ size is 26
 - 目前不支持浮点数存储，可以考虑将浮点数扩到整数倍（1000倍）转换成整数存储
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689479127153.png)
 
+参考资料：
+- [ESP32-C3入门教程 基础篇（八、NVS — 非易失性存储库的使用）](https://zhuanlan.zhihu.com/p/536174984)
+- [ESP32_学习笔记（一）NVS的操作（存储和读取大数组）（为什么存入数据成功，读取却为零的原因）](https://blog.csdn.net/jasper_JA/article/details/102915660)
+- [ESP32-C3入门教程 基础篇⑪——Non-Volatile Storage (NVS) 非易失性存储参数的读写](https://blog.csdn.net/kangweijian/article/details/125489688)
 ## 待机唤醒
 
 
