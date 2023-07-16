@@ -707,9 +707,13 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 我们可以自定义分区表：
 - 分区表选择 Custom
 - flash大小设置成我们芯片模组的真实大小，默认是2M，我的是16M的
+
 ![partition table config](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/partition_table_config.jpg)
 
-- 
+- 项目右键、打开分区表编辑器
+- 将app内存大小增大，保存退出
+- 工程目录下会多出一个 partition 文件
+- 我们不需要单独下载，在程序下载时，IDE会自动编译下载这个分区表，ti'u
 ![partition table edit](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/partition_table_edit.jpg)
 下面这张图可以帮助我们更好的理解分区
 - boot 的地址是固定的 0x1000 （ESP8266 的 boot 地址为固定的 0x0000），而且 boot 地址的加载早于分区表的加载，因此无需在分区表中表现，大小与 boot 配置项有关，可以在编译完成后查看build/bootloader/bootloader.bin 来确认当前配置项 boot 大小。
