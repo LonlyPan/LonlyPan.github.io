@@ -1871,9 +1871,220 @@ NVS 库通过调用 esp_partitionAPI 使用主 flash 的部分空间，即类型
 `esp_err_t nvs_erase_all(nvs_handle_t handle);`
 
 ### 示例1：随机整数读取
+```
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_log.h"
 
+#include "nvs_flash.h"
+#include "nvs.h"
+
+static const char *TAG = "nvs_kv";
+static const char *KEY = "nvs_demo_key";
+
+void delay_ms(uint32_t millisecond)
+{
+    vTaskDelay(millisecond / portTICK_RATE_MS);
+}
+
+int get_value()
+{
+    esp_err_t err;
+    nvs_handle_t handle;   
+    int value=0;
+ 
+    err = nvs_open("nvs", NVS_READWRITE, &handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+    }
+    else
+    {
+        err = nvs_get_i32(handle, KEY, &value);
+        if(err!=ESP_OK)
+            ESP_LOGE(TAG, "get_value (%s)", esp_err_to_name(err));  
+    }
+    nvs_close(handle);
+    return value;
+}
+
+void set_value(int value)
+{
+    esp_err_t err;
+    nvs_handle_t handle;  
+    
+    err = nvs_open("nvs", NVS_READWRITE, &handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+    } 
+    else 
+    {
+        ESP_LOGI(TAG, "set_value %d", value);
+        
+        err = nvs_set_i32(handle, KEY, value);
+        if(err!=ESP_OK)
+            ESP_LOGE(TAG, "set_value (%s)", esp_err_to_name(err)); 
+
+        err = nvs_commit(handle);
+        if(err!=ESP_OK)
+            ESP_LOGE(TAG, "nvs_commit (%s)", esp_err_to_name(err));
+    }
+    nvs_close(handle);
+}
+
+void app_main(void)
+{
+    // Initialize NVS
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+
+    while(1)
+    {
+        delay_ms(3000);
+        ESP_LOGE(TAG, "get_value = %d", get_value());
+        set_value(rand()%1000);
+    }
+}
+```
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689479627063.png)
 ### 示例2：数组读取
+```
+static const char *NVS_KEY = "nvs_demo_key3";
 
+esp_err_t getValue()
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+    // Open
+    // Open
+    err = nvs_open(NVS_KEY, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    // Read the size of memory space required for blob
+    size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_blob(my_handle, "run_time", NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+    printf("Run time:\n");
+    // Read previously saved blob if available
+    if (required_size == 0) {
+        printf("Nothing saved yet!\n");
+    } else {
+        uint32_t* run_time = malloc(required_size);
+        err = nvs_get_blob(my_handle, "run_time", run_time, &required_size);
+        if (err != ESP_OK) {
+            free(run_time);
+            return err;
+        }
+        for (int i = 0; i < required_size / sizeof(uint32_t); i++) {
+            printf("%d: %ld\n", i + 1, run_time[i]);
+        }
+        free(run_time);
+    }
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+esp_err_t setValue(int value)
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+	static uint32_t s_countTest =0 ;
+	err = nvs_open(NVS_KEY, NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) return err;
+
+	// Write
+	//ESP_LOGI(tagInfo, "set_value %d", value);
+	// Read the size of memory space required for blob
+	/*先使用一次nvs_get_blob函数，但是第三个参数输出地址使用的是NULL，
+		表示读出的数据不保存，因为这里使用只是为了看一下 "run_time" 处是否
+		有数据，只是先读一下数据，看一下读完以后 required_size 还是不是0
+		*/
+	size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+	err = nvs_get_blob(my_handle, "run_time", NULL, &required_size);
+	if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+
+	// Write value including previously saved blob if available
+	//
+
+	uint32_t* run_time = malloc(required_size + sizeof(uint32_t));
+    if (required_size > 0) {
+        err = nvs_get_blob(my_handle, "run_time", run_time, &required_size);
+        if (err != ESP_OK) {
+            free(run_time);
+            return err;
+        }
+    }
+
+	required_size += sizeof(uint32_t);
+	run_time[required_size / sizeof(uint32_t) - 1] = s_countTest++;
+	err = nvs_set_blob(my_handle, "run_time", run_time, required_size);
+	free(run_time);
+
+	if (err != ESP_OK) return err;
+
+	// Commit
+	err = nvs_commit(my_handle);
+	if (err != ESP_OK) return err;
+
+	// Close
+	nvs_close(my_handle);
+	return ESP_OK;
+}
+void app_main(void)
+{
+	nvs_handle_t my_handle;
+    // Initialize NVS
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+    // Open
+    nvs_open(NVS_KEY, NVS_READWRITE, &my_handle);
+
+    nvs_erase_key(my_handle,"run_time");
+
+
+    while (true) {
+    	vTaskDelay(2000 / portTICK_PERIOD_MS);
+        getValue();
+        setValue(rand()%1000);
+    }
+}
+```
+运行结果
+mei
+```
+ (0) cpu_start: Starting scheduler on APP CPU.
+Run time:
+Nothing saved yet!
+Run time:
+1: 0
+Run time:
+1: 0
+2: 1
+Run time:
+1: 0
+2: 1
+3: 2
+Run time:
+1: 0
+2: 1
+3: 2
+4: 3
+```
 ### 示例3：字符串数组读取
 
 ### 命名空间和键值对
