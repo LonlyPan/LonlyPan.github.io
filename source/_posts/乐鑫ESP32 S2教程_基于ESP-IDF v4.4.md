@@ -3193,6 +3193,17 @@ static void smartconfig_example_task(void * parm)
     }
 }
 ```
+
+### 配网
+
+ - 微信搜索：乐鑫信息科技
+ - 菜单商铺 —> Airkiss设备
+ - 输入WiFi密码，点击连接
+ - 注意：ESP32只支持2.4GHz WiFi，还不支持5GHz WiFi
+
+或直接扫描下面二维码
+
+
 ## 待机唤醒
 
 
