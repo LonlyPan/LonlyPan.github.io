@@ -2340,7 +2340,110 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 如果点击 START 没有反应，没有下载，那说明 .bin 文件有问题。一般是 .csv 中 value一栏数据错误，上图第四行的 root.pem.key 文件并不存在，所以下载就会出现错误，删除重新生成 .bin 文件就能够下载了
 ![download nvs](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/download_nvs.jpg)
 
-###
+### 4、示例程序
+```
+// 定义一个标签，方便批量换名字
+static const char* TAG = "tagInfo";
+
+static const char *NVS_HANDLE = "myHandle";
+
+esp_err_t getValue()
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+
+    // Open
+    err = nvs_open(NVS_HANDLE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    char *name, *rootCa;
+    uint8_t age;
+    uint32_t baudrate;
+    unsigned int nameLen, rootCaLen;
+
+    err = nvs_get_u8(my_handle, "age", &age);
+    if(err!=ESP_OK)
+        ESP_LOGE(TAG, "get_value age (%s)", esp_err_to_name(err));
+    else
+        ESP_LOGI(TAG, "get_value age = %d", age);
+
+    err = nvs_get_u32(my_handle, "baudrate", &baudrate);
+    if(err!=ESP_OK)
+        ESP_LOGE(TAG, "get_value uartBaudrate (%s)", esp_err_to_name(err));
+    else
+        ESP_LOGI(TAG, "get_value uartBaudrate = %ld", baudrate);
+
+    err = nvs_get_str(my_handle,"name", NULL, &nameLen);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+    // Read previously saved blob if available
+    if (nameLen == 0) {
+        printf("Nothing saved yet!\n");
+    } else {
+    	name = malloc(nameLen);
+    	ESP_LOGE(TAG, "nameLen = %d", nameLen);
+
+        err = nvs_get_str(my_handle, "name", name, &nameLen);
+        if(err!=ESP_OK)
+            ESP_LOGE(TAG, "get_value name (%s)", esp_err_to_name(err));
+        else
+            ESP_LOGI(TAG, "get_value name = %s", name);
+        free(name);
+    }
+
+
+    err = nvs_get_str(my_handle,"root", NULL, &rootCaLen);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+    // Read previously saved blob if available
+    if (rootCaLen == 0) {
+        printf("Nothing saved yet!\n");
+    } else {
+    	rootCa = malloc(rootCaLen);
+    	ESP_LOGE(TAG, "rootCaLen = %d", nameLen);
+
+        err = nvs_get_str(my_handle, "root", rootCa, &rootCaLen);
+        if(err!=ESP_OK)
+            ESP_LOGE(TAG, "get_value name (%s)", esp_err_to_name(err));
+        else
+            ESP_LOGI(TAG, "get_value rootCa = %s", rootCa);
+        free(rootCa);
+    }
+
+
+
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+void app_main(void)
+{
+    // Initialize NVS
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+    // Open
+
+    while (true) {
+    	getValue();
+
+    	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+    }
+}
+```
+输出：
+```
+I (346054) tagInfo: get_value age = 28
+I (346054) tagInfo: get_value uartBaudrate = 9600
+E (346054) tagInfo: nameLen = 9
+I (346054) tagInfo: get_value name = LonlyPan
+E (346054) tagInfo: rootCaLen = 9
+E (346064) tagInfo: get_value name (ESP_ERR_NVS_NOT_FOUND)
+```
 
 ## 待机唤醒
 
