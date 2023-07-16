@@ -2976,6 +2976,17 @@ W (31574) wifi:<ba-del>idx
 I (31584) wifi softAP: station f2:bf:ee:fa:2c:4c leave, AID=1
 ```
 
+
+## WIFI 配网-基于EspTouchForAndroid
+
+### WiFi配网方式
+WiFi配网即：用户通过App/小程序/网页等途径将WiFi的SSID和密码等信息发送给ESP32，方式有很多种：
+
+ - SoftAP，ESP32开启热点，App连接到该热点AP，并将WiFi的信息发送给ESP32
+ - SmartConfig，App将WiFi信息通过UDP广播组播出去，ESP32监听网络中所有报文，得到App广播出来的WiFi信息
+	 - SmartConfig有很多种，EspTouch（APP）、AirKiss(微信)、EspTouchV2（APP）等
+ - BluFi，App通过蓝牙的方式将WiFi信息发送给ESP32
+
 ## 待机唤醒
 
 
