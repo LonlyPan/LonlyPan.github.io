@@ -1870,7 +1870,8 @@ NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的
 - 关闭句柄可能不会自动将更改写入非易失性存储。这必须使用 nvs_commit 函数显式完成。
 `void nvs_close(nvs_handle_t handle)`
 
-
+`esp_err_t nvs_erase_key(nvs_handle_t handle, const char *key)`
+`esp_err_t nvs_erase_all(nvs_handle_t handle);`
 
 ## 待机唤醒
 
