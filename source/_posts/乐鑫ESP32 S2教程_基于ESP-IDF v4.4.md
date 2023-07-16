@@ -2322,7 +2322,18 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 - 编写nvs程序读取分区表数据
 - 下载
 
-### 3、
+打开分区表编辑器并编辑
+- 文件大小必须大于0x3000，否则无法将csv文件转换成bin文件
+- add row添加行
+- save 保存 csv文件
+- geberate 生成bin文件
+![nvs table](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/nvs_table.jpg)
+
+
+![nvs csv](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/nvs_csv.jpg)
+
+### 3、编辑分区表
+
 
 ## 待机唤醒
 
