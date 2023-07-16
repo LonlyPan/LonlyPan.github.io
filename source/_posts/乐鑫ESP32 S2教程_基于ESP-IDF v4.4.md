@@ -2958,6 +2958,23 @@ esp_err_t esp_event_handler_instance_register(esp_event_base_t event_base, int32
 同时在sdconfig中设置wifi名和密码
 下载运行
 
+```
+I (564) phy_init: phy_version 503,13653eb,Jun  1 2022,17:47:08
+I (604) wifi:mode : softAP (34:85:18:98:06:dd)
+I (604) wifi:Total power save buffer number: 16
+I (614) wifi:Init max length of beacon: 752/752
+I (614) wifi:Init max length of beacon: 752/752
+I (614) wifi softAP: wifi_init_softap finished. SSID:lonly password:mypassword channel:1
+I (16004) wifi:new:<1,1>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1
+I (16004) wifi:station: f2:bf:ee:fa:2c:4c join, AID=1, bgn, 40U
+I (16034) wifi softAP: station f2:bf:ee:fa:2c:4c join, AID=1
+I (16224) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2
+W (17534) wifi:<ba-add>idx:2 (ifx:1, f2:bf:ee:fa:2c:4c), tid:0, ssn:15, winSize:64
+I (31574) wifi:station: f2:bf:ee:fa:2c:4c leave, AID = 1, bss_flags is 134259, bss:0x3fcf2d54
+I (31574) wifi:new:<1,0>, old:<1,1>, ap:<1,1>, sta:<255,255>, prof:1
+W (31574) wifi:<ba-del>idx
+I (31584) wifi softAP: station f2:bf:ee:fa:2c:4c leave, AID=1
+```
 
 ## 待机唤醒
 
