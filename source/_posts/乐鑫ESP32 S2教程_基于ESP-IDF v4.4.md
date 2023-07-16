@@ -1833,6 +1833,8 @@ NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的
 - 以 0 结尾的字符串，字符串长度上限4000字节；
 - 可变长度的二进制数据 (BLOB)，上限为 508,000 字节或分区大小的 97.6% 减去 4000 字节，以较低值为准。；
 
+#### 明明空间和键值对
+
 ### 2、操作流程
 读操作流程：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689432933040.png)
