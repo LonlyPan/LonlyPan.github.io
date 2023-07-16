@@ -1803,6 +1803,7 @@ RTC 定时器有以下时钟源：
 
 ## SNTP
 
+参考资料：[SNTP 时间同步](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/system/system_time.html#sntp-time-synchronization)
 ### 介绍
 
  - SNTP 简单网络时间协议（Simple Network Time Protocol），由 NTP 改编而来。
