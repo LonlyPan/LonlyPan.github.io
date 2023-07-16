@@ -2181,6 +2181,118 @@ test str is: this is my test str,boom!
 size is 26
 ```
 
+### 示例4：结构体
+```
+// 定义一个标签，方便批量换名字
+static const char* tagInfo = "tagInfo";
+
+static const char *NVS_HANDLE = "nvs_demo_handle";
+static const char *NVS_KEY = "nvs_demo_key";
+typedef struct {
+    uint8_t a, b, c;
+    uint32_t x, y;
+} test_struct;
+
+esp_err_t getValue()
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+	test_struct value;
+    //test_struct value;
+    size_t length = sizeof(value);
+    // Open
+    // Open
+    err = nvs_open(NVS_HANDLE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    // Read the size of memory space required for blob
+    size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_blob(my_handle, NVS_KEY, NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+    // Read previously saved blob if available
+    if (required_size == 0) {
+        printf("Nothing saved yet!\n");
+    } else {
+        err = nvs_get_blob(my_handle, NVS_KEY, &value, &length);
+        if (err != ESP_OK) {
+            return err;
+        }
+        ESP_LOGE(tagInfo, "get_value {a=%d, b=%d, c=%d, x=%ld, y=%ld}", value.a, value.b, value.c, value.x, value.y);
+    }
+
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+esp_err_t setValue(test_struct  value)
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+	size_t length = sizeof(value);
+
+
+	err = nvs_open(NVS_HANDLE, NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) return err;
+
+    ESP_LOGI(tagInfo, "set_value {a=%d, b=%d, c=%d, x=%ld, y=%ld}, length=%d", value.a, value.b, value.c, value.x, value.y, length);
+
+	err = nvs_set_blob(my_handle, NVS_KEY, &value,length);
+
+	if (err != ESP_OK) return err;
+	// Commit
+	err = nvs_commit(my_handle);
+	if (err != ESP_OK) return err;
+
+	// Close
+	nvs_close(my_handle);
+	return ESP_OK;
+}
+void app_main(void)
+{
+	nvs_handle_t my_handle;
+    // Initialize NVS
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+    // Open
+    nvs_open(NVS_KEY, NVS_READWRITE, &my_handle);
+
+    nvs_erase_key(my_handle,"run_time");
+
+
+    test_struct value;
+    while (true) {
+    	getValue();
+
+
+    	vTaskDelay(2000 / portTICK_PERIOD_MS);
+        value.a = rand()%10;
+         value.b = rand()%10;
+         value.c = rand()%10;
+         value.x = rand()%1000;
+         value.y = rand()%1000;
+        setValue(value);
+    }
+}
+```
+
+```
+E (344) tagInfo: get_value {a=8, b=2, c=6, x=256, y=119}
+I (2344) tagInfo: set_value {a=3, b=3, c=2, x=529, y=700}, length=12
+E (2354) tagInfo: get_value {a=3, b=3, c=2, x=529, y=700}
+I (4354) tagInfo: set_value {a=8, b=2, c=6, x=256, y=119}, length=12
+E (4364) tagInfo: get_value {a=8, b=2, c=6, x=256, y=119}
+I (6364) tagInfo: set_value {a=1, b=1, c=3, x=705, y=108}, length=12
+E (6374) tagInfo: get_value {a=1, b=1, c=3, x=705, y=108}
+```
+
 ### 命名空间和键值对
 - 类比于文件夹，我们如果想要存储一个文件，esp是强制要有一个文件夹的，然后你可以在这个文件夹中存放自己的数据，这就是命名空间
 - 命名空间（handle, ）类似于文件夹名字，我们只有先找到文件夹，打开文件夹，才能读取里面的各个文件数据
