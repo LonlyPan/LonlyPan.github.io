@@ -2939,6 +2939,20 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 }
 ```
 
+### 关键函数
+关键函数
+6.1 将事件回调函数注册到特定循环
+
+ - [in] event_base：要为其注册事件的基本 ID
+ - [in] event_id：要为其注册事件的 ID
+ - [in] event_handler：事件被调度时的回调函数
+ - [in] event_handler_arg：事件被调度时的回调函数的参数
+ - [out] instance：事件被调度时的回调函数的实例，取消该注册所必须的参数。如果不取消，则可以不保存
+
+```
+esp_err_t esp_event_handler_instance_register(esp_event_base_t event_base, int32_t  event_id, esp_event_handler_t event_handler, void *event_handler_arg, esp_event_handler_instance_t *instance)
+```
+
 ### 示例代码
 新建项目，选择example，选择WiFi—>getting_started->station
 同时在sdconfig中设置wifi名和密码
