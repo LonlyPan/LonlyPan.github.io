@@ -2987,6 +2987,8 @@ WiFi配网即：用户通过App/小程序/网页等途径将WiFi的SSID和密码
 	 - SmartConfig有很多种，EspTouch（APP）、AirKiss(微信)、EspTouchV2（APP）等
  - BluFi，App通过蓝牙的方式将WiFi信息发送给ESP32
 
+
+
 ## 待机唤醒
 
 
