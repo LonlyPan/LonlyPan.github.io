@@ -1803,6 +1803,8 @@ RTC 定时器有以下时钟源：
 
 ## SNTP
 
+### 介绍
+
  - SNTP 简单网络时间协议（Simple Network Time Protocol），由 NTP 改编而来。
  - SNTP 主要用来同步因特网中的计算机时钟。在 RFC2030 中定义。
  - SNTP 基于UDP协议，存在SNTP服务器和SNTP客户端
@@ -1812,7 +1814,11 @@ RTC 定时器有以下时钟源：
  - 网络中存在多个SNTP服务器，SNTP客户端可以选择多个SNTP服务器作为外部时间源，当某个SNTP服务器故障断开连接时，可以及时切换到其他SNTP服务器。
  - ESP32的SNTP同步功能是基于lwIP SNTP库，功能实现很简单，请见下文。
 
+### 操作流程
 
+### wifi配置
+
+### 示例程序
 
 ## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
