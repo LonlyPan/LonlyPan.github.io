@@ -2307,6 +2307,14 @@ E (6374) tagInfo: get_value {a=1, b=1, c=3, x=705, y=108}
 
 ## 量产烧写设备配置和序列号, NVS partition分区确认, NVS 分区生成程序, csv转bin
 
+设备量产的时候，每个设备都有不同的序列号、配置参数等。
+这就需要提供不同的固件给不同的设备，出厂前直接烧写到设备Flash中。
+
+这一操作需要用到NVS（非易失性存储）和NVS 分区生成程序。
+
+NVS（非易失性存储）的相关操作请查阅：ESP32-C3入门教程 基础篇⑪——Non-Volatile Storage (NVS) 非易失性存储参数的读写
+NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 根据 CSV 文件中的键值对生成二进制文件。该二进制文件与 非易失性存储器 (NVS) 中定义的 NVS 结构兼容。
+
 ## 待机唤醒
 
 
