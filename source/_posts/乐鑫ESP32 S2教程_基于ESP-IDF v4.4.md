@@ -1977,7 +1977,21 @@ void app_main(void)
     }
 }
 ```
+```
+I (16603) example_connect: Wi-Fi disconnected, trying to reconnect...
+I (19013) example_connect: Wi-Fi disconnected, trying to reconnect...
+I (21413) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (21413) wifi:state: init -> auth (b0)
+I (22413) wifi:state: auth -> init (200)
+I (22423) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (22423) example_connect: WiFi Connect failed 7 times, stop reconnect.
+I (22423) SNTP: Initializing SNTP
+I (22433) tagInfo: running
 
+I (23433) SNTP: sntp sync status: RESET |0
+I (24433) SNTP: The current time is: 2023/07/16 11:06:42. by Lonly
+I (24433) tagInfo: running
+```
 ## 非易失性存储 (NVS)
 参考资料：[非易失性存储库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/storage/nvs_flash.html)
 ESP-IDF storage 目录下提供了数个代码示例：
