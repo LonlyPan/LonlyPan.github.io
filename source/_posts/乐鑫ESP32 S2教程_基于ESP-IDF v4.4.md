@@ -1826,14 +1826,6 @@ ESP-IDF storage 目录下提供了数个代码示例：
 
 NVS 库通过调用 esp_partitionAPI 使用主 flash 的部分空间，即类型为 data 且子类型为 nvs 的所有分区。
 
-应用程序可调用 nvs_open()选择使用带有 nvs 标签的分区，也可以通过调用 nvs_open_from_partition()选择使用指定名称的任意分区。
-
-NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的最大键长为 15 个字符。值可以为以下几种类型：
-- 整数型：uint8_t、int8_t、uint16_t、int16_t、uint32_t、int32_t、uint64_t和int64_t；
-- 以 0 结尾的字符串，字符串长度上限4000字节；
-- 可变长度的二进制数据 (BLOB)，上限为 508,000 字节或分区大小的 97.6% 减去 4000 字节，以较低值为准。；
-
-#### 明明空间和键值对
 
 ### 2、操作流程
 读操作流程：
@@ -1874,6 +1866,13 @@ NVS 的操作对象为键值对，其中键是 ASCII 字符串，当前支持的
 
 `esp_err_t nvs_erase_key(nvs_handle_t handle, const char *key)`
 `esp_err_t nvs_erase_all(nvs_handle_t handle);`
+
+
+### 命名空间和键值对
+- 类比于文件夹，我们如果想要存储一个文件，esp是强制要有一个文件夹的，然后你可以在这个文件夹中存放自己的数据，这就是命名空间
+- 命名空间（handle, ）类似于文件夹名字，我们只有先找到文件夹，打开文件夹，才能读取里面的各个文件数据
+- 键值对（key）类似于我们的文件名，也就是我们的
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689479127153.png)
 
 ## 待机唤醒
 
