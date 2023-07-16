@@ -2631,6 +2631,19 @@ E (346064) tagInfo: get_value name (ESP_ERR_NVS_NOT_FOUND)
 
 ## WIFI Scan
 
+参考资料：[Wi-Fi 库](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-reference/network/esp_wifi.html)
+应用示例：ESP-IDF 仓库的 [wifi ](https://github.com/espressif/esp-idf/tree/4fc2e5cb95/examples/wifi)
+### 概述
+
+Wi-Fi 库支持配置及监控 ESP32-C3 Wi-Fi 连网功能。支持配置：
+
+- station 模式（即 STA 模式或 Wi-Fi 客户端模式），此时 ESP32-C3 连接到接入点 (AP)。
+- AP 模式（即 Soft-AP 模式或接入点模式），此时基站连接到 ESP32-C3。
+- station/AP 共存模式（ESP32-C3 既是接入点，同时又作为基站连接到另外一个接入点）。
+- 上述模式的各种安全模式（WPA、WPA2、WPA3 等）。
+- 扫描接入点（包括主动扫描及被动扫描）。
+- 使用混杂模式监控 IEEE802.11 Wi-Fi 数据包。
+
 
 ## 待机唤醒
 
