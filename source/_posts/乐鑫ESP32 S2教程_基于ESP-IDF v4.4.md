@@ -2305,6 +2305,7 @@ E (6374) tagInfo: get_value {a=1, b=1, c=3, x=705, y=108}
 - [ESP32_学习笔记（一）NVS的操作（存储和读取大数组）（为什么存入数据成功，读取却为零的原因）](https://blog.csdn.net/jasper_JA/article/details/102915660)
 - [ESP32-C3入门教程 基础篇⑪——Non-Volatile Storage (NVS) 非易失性存储参数的读写](https://blog.csdn.net/kangweijian/article/details/125489688)
 
+## 量产烧写设备配置和序列号, NVS partition分区确认, NVS 分区生成程序, csv转bin
 
 ## 待机唤醒
 
