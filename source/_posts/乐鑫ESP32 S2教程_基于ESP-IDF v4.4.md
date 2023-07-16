@@ -2837,6 +2837,9 @@ I (3099) scan: Group Cipher     WIFI_CIPHER_TYPE_CCMP
 I (3109) scan: Channel          6
 
 ```
+
+## WIFI Station模式
+
 ## 待机唤醒
 
 
