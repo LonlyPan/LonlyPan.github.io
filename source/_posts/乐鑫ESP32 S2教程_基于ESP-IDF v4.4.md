@@ -2895,6 +2895,7 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
  - [in] event_handler：事件被调度时的回调函数
  - [in] event_handler_arg：事件被调度时的回调函数的参数
  - [out] instance：事件被调度时的回调函数的实例，取消该注册所必须的参数。如果不取消，则可以不保存
+  
 ```
 esp_err_t esp_event_handler_instance_register(esp_event_base_t event_base, int32_t  event_id, esp_event_handler_t event_handler, void *event_handler_arg, esp_event_handler_instance_t *instance)
 ```
