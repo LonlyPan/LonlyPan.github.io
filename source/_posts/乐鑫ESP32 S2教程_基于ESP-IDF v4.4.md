@@ -2322,7 +2322,7 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 - 编写nvs程序读取分区表数据
 - 下载
 
-
+### 3、
 
 ## 待机唤醒
 
