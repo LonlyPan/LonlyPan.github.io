@@ -3083,6 +3083,40 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
 }
 ```
 
+### SmartConfig线程
+
+ - esp_smartconfig_set_type设置SmartConfig的协议类型为SC_TYPE_ESPTOUCH。协议类型有：SC_TYPE_ESPTOUCH、SC_TYPE_AIRKISS、SC_TYPE_ESPTOUCH_AIRKISS、SC_TYPE_ESPTOUCH_V2等
+ - esp_smartconfig_start启动SmartConfig
+ - 等待ESPTOUCH_DONE_BIT标志位
+	 - esp_smartconfig_stop停止SmartConfig
+```
+static void smartconfig_example_task(void * parm)
+{
+    EventBits_t uxBits;
+    ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH) );
+    smartconfig_start_config_t cfg = SMARTCONFIG_START_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK( esp_smartconfig_start(&cfg) );
+    while (1) {
+        uxBits = xEventGroupWaitBits(s_wifi_event_group, CONNECTED_BIT | ESPTOUCH_DONE_BIT, true, false, portMAX_DELAY);
+        if(uxBits & CONNECTED_BIT) {
+            ESP_LOGI(TAG, "WiFi Connected to ap");
+        }
+        if(uxBits & ESPTOUCH_DONE_BIT) {
+            ESP_LOGI(TAG, "smartconfig over");
+            esp_smartconfig_stop();
+            vTaskDelete(NULL);
+        }
+    }
+}
+```
+
+### 流程图
+
+ - 回调函数和SmartConfig线程是通过xEventGroupWaitBits、xEventGroupSetBits、xEventGroupClearBits等函数进行通信
+	 - 回调函数设置或清楚Bits,xEventGroupSetBits、xEventGroupClearBits
+	 - SmartConfig线程通过循环等待xEventGroupWaitBits
+
+![smart liucheng ](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/smart_liucheng_.jpg)
 ### 示例代码
 新建项目，选择example，选择WiFi—>smart_config
 下载运行
@@ -3126,6 +3160,37 @@ I (65440) esp_netif_handlers: sta ip: 192.168.0.108, mask: 255.255.255.0, gw: 19
 I (65440) smartconfig_example: WiFi Connected to ap
 W (65830) wifi:<ba-add>idx:1 (ifx:0, 58:41:20:1e:06:19), tid:6, ssn:2, winSize:64
 I (68460) smartconfig_example: smartconfig over
+```
+
+## WIFI 配网-基于AirKiss
+
+本文主要是基于Airkiss的SmartConfig智能配网，流程原理与EspTouch基本相同，都是通过udp广播的方式将WiFi AP的SSID和密码发送出去，只是通信协议和数据格式不同而已。
+
+EspTouch是乐鑫的提供的WiFi配网协议，提供了Android/IOS源码
+Airkiss是微信提供的WiFi配网协议，如果是基于微信生态开发的应用，如小程序、公众号等，则优先选择它
+
+### 代码修改
+smartconfig_main.c中函数smartconfig_example_task中的esp_smartconfig_set_type设置SmartConfig通信协议修改掉，如下
+```
+static void smartconfig_example_task(void * parm)
+{
+    EventBits_t uxBits;
+    // ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH) );
+    ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH_AIRKISS) );
+    smartconfig_start_config_t cfg = SMARTCONFIG_START_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK( esp_smartconfig_start(&cfg) );
+    while (1) {
+        uxBits = xEventGroupWaitBits(s_wifi_event_group, CONNECTED_BIT | ESPTOUCH_DONE_BIT, true, false, portMAX_DELAY);
+        if(uxBits & CONNECTED_BIT) {
+            ESP_LOGI(TAG, "WiFi Connected to ap");
+        }
+        if(uxBits & ESPTOUCH_DONE_BIT) {
+            ESP_LOGI(TAG, "smartconfig over");
+            esp_smartconfig_stop();
+            vTaskDelete(NULL);
+        }
+    }
+}
 ```
 ## 待机唤醒
 
