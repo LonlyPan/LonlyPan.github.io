@@ -2840,6 +2840,31 @@ I (3109) scan: Channel          6
 
 ## WIFI Station模式
 
+本博文描述ESP32-C3作为Station基站模式接入到WiFi AP热点。
+
+### 操作流程
+
+ - nvs_flash_init，初始化默认 NVS 分区。
+ - esp_netif_init，初始化底层TCP/IP堆栈。
+ - esp_event_loop_create_default，创建默认事件循环。
+ - esp_netif_create_default_wifi_sta，使用默认WiFi Station配置创建esp_netif对象，将netif连接到WiFi并注册默认WiFi处理程序。
+ - esp_wifi_init，为 WiFi 驱动初始化 WiFi 分配资源，如 WiFi 控制结构、RX/TX 缓冲区、WiFi NVS 结构等，这个 WiFi 也启动 WiFi 任务。必须先调用此API，然后才能调用所有其他WiFi API
+ - esp_event_handler_instance_register，监听WIFI_EVENTWiFi 任意事件，触发事件后，进入回调函数
+ - esp_event_handler_instance_register，监听IP_EVENT从连接的AP获得IP的事件，触发事件后，进入回调函数
+ - esp_wifi_set_mode，设置WiFi工作模式为station、soft-AP或station+soft-AP，默认模式为soft-AP模式。本程序设置为station
+ - esp_wifi_set_config，设置 ESP32 STA 或 AP 的配置。本程序设置为STA，并包含WiFi SSID和密码等信息
+ - esp_wifi_start，根据配置，启动WiFi
+ - xEventGroupWaitBits，等待事件，打印连接成功信息
+ - esp_event_handler_instance_unregister，取消WIFI_EVENT事件监听
+ - esp_event_handler_instance_unregister，取消IP_EVENT事件监听
+
+### 示例代码
+新建项目，选择example，选择WiFi—>getting_started->station
+同时在sdconfig中设置wifi名和密码
+下载运行
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689514430198.png)
+
 ## 待机唤醒
 
 
