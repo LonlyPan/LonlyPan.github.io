@@ -2192,6 +2192,8 @@ size is 26
 - [ESP32-C3入门教程 基础篇（八、NVS — 非易失性存储库的使用）](https://zhuanlan.zhihu.com/p/536174984)
 - [ESP32_学习笔记（一）NVS的操作（存储和读取大数组）（为什么存入数据成功，读取却为零的原因）](https://blog.csdn.net/jasper_JA/article/details/102915660)
 - [ESP32-C3入门教程 基础篇⑪——Non-Volatile Storage (NVS) 非易失性存储参数的读写](https://blog.csdn.net/kangweijian/article/details/125489688)
+
+
 ## 待机唤醒
 
 
