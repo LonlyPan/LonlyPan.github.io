@@ -2089,7 +2089,88 @@ Run time:
 
 
 ### 示例3：字符串数组读取
+```
+static const char *NVS_HANDLE = "nvs_demo_handle";
+static const char *NVS_KEY = "nvs_demo_key";
 
+esp_err_t getValue()
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+    // Open
+    // Open
+    err = nvs_open(NVS_HANDLE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    // Read the size of memory space required for blob
+    size_t required_size = 0;  // value will default to 0, if not set yet in NVS
+    err = nvs_get_str(my_handle, NVS_KEY, NULL, &required_size);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+    printf("Run time:\n");
+    // Read previously saved blob if available
+    if (required_size == 0) {
+        printf("Nothing saved yet!\n");
+    } else {
+    	char* get_char = malloc(required_size);
+        err = nvs_get_str(my_handle, NVS_KEY, get_char, &required_size);
+        if (err != ESP_OK) {
+            free(get_char);
+            return err;
+        }
+        printf("test str is: %s \nsize is %d \n",get_char,required_size);
+
+        free(get_char);
+    }
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+esp_err_t setValue(int value)
+{
+	esp_err_t err;
+	nvs_handle_t my_handle;
+	char test_str[]="this is my test str,boom!";
+
+	err = nvs_open(NVS_HANDLE, NVS_READWRITE, &my_handle);
+	if (err != ESP_OK) return err;
+
+	err = nvs_set_str(my_handle, NVS_KEY, test_str);
+	if (err != ESP_OK) return err;
+	// Commit
+	err = nvs_commit(my_handle);
+	if (err != ESP_OK) return err;
+
+	// Close
+	nvs_close(my_handle);
+	return ESP_OK;
+}
+void app_main(void)
+{
+	nvs_handle_t my_handle;
+    // Initialize NVS
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        // NVS partition was truncated and needs to be erased
+        // Retry nvs_flash_init
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        err = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( err );
+    // Open
+    nvs_open(NVS_KEY, NVS_READWRITE, &my_handle);
+
+    nvs_erase_key(my_handle,"run_time");
+
+
+    while (true) {
+    	vTaskDelay(2000 / portTICK_PERIOD_MS);
+        getValue();
+        setValue(rand()%1000);
+    }
+}
+```
 ### 命名空间和键值对
 - 类比于文件夹，我们如果想要存储一个文件，esp是强制要有一个文件夹的，然后你可以在这个文件夹中存放自己的数据，这就是命名空间
 - 命名空间（handle, ）类似于文件夹名字，我们只有先找到文件夹，打开文件夹，才能读取里面的各个文件数据
