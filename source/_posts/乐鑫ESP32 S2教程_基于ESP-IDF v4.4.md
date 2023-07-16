@@ -2329,7 +2329,7 @@ NVS 分区生成程序 (nvs_flash/nvs_partition_generator/nvs_partition_gen.py) 
 - geberate 生成bin文件
 ![nvs table](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/nvs_table.jpg)
 
-
+随后我们可以在项目文件夹下看到生成的 .csv和.bin 文件
 ![nvs csv](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/nvs_csv.jpg)
 
 ### 3、编辑分区表
