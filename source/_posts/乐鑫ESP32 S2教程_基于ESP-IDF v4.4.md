@@ -1864,7 +1864,10 @@ NVS 库通过调用 esp_partitionAPI 使用主 flash 的部分空间，即类型
 - 关闭句柄可能不会自动将更改写入非易失性存储。这必须使用 nvs_commit 函数显式完成。
 `void nvs_close(nvs_handle_t handle)`
 
+- 擦除具有给定键名的键值对。
 `esp_err_t nvs_erase_key(nvs_handle_t handle, const char *key)`
+
+- 擦除命名空间中的所有键值对。
 `esp_err_t nvs_erase_all(nvs_handle_t handle);`
 
 
