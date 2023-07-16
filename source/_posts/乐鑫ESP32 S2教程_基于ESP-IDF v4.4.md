@@ -714,7 +714,9 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 - 将app内存大小增大，保存退出
 - 工程目录下会多出一个 partition 文件
 - 我们不需要单独下载，在程序下载时，IDE会自动编译下载这个分区表，替换掉默认的分区表
+
 ![partition table edit](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/partition_table_edit.jpg)
+
 下面这张图可以帮助我们更好的理解分区
 - boot 的地址是固定的 0x1000 （ESP8266 的 boot 地址为固定的 0x0000），而且 boot 地址的加载早于分区表的加载，因此无需在分区表中表现，大小与 boot 配置项有关，可以在编译完成后查看build/bootloader/bootloader.bin 来确认当前配置项 boot 大小。
 - boot分区位置和大小是不能自定义的，但我们可以修改这里的bootloader.bin文件
@@ -2998,8 +3000,133 @@ WiFi配网即：用户通过App/小程序/网页等途径将WiFi的SSID和密码
 	 - SmartConfig有很多种，EspTouch（APP）、AirKiss(微信)、EspTouchV2（APP）等
  - BluFi，App通过蓝牙的方式将WiFi信息发送给ESP32
 
+###  主程序
 
+ - nvs_flash_init，初始化默认 NVS 分区
+ - esp_netif_init，初始化底层TCP/IP堆栈
+ - esp_event_loop_create_default，创建默认事件循环
+ - esp_netif_create_default_wifi_sta，使用默认WiFi Station配置创建esp_netif对象，将netif连接到WiFi并注册默认WiFi处理程序
+ - esp_wifi_init，为 WiFi 驱动初始化 WiFi 分配资源，如 WiFi 控制结构、RX/TX 缓冲区、WiFi NVS 结构等，这个 WiFi 也启动 WiFi 任务。必须先调用此API，然后才能调用所有其他WiFi API
+ - esp_event_handler_instance_register，监听WIFI_EVENTWiFi 任意事件，触发事件后，进入回调函数
+ - esp_event_handler_instance_register，监听IP_EVENT从连接的AP获得IP的事件，触发事件后，进入回调函数
+ - esp_event_handler_instance_register，监听SC_EVENT从SmartConfig任意事件，触发事件后，进入回调函数
+ - esp_wifi_set_mode，设置WiFi工作模式为station、soft-AP或station+soft-AP，默认模式为soft-AP模式。本程序设置为station
+ - esp_wifi_start，根据配置，启动WiFi
 
+### 回调函数
+
+ - WIFI_EVENT_STA_START，WiFi station 模式启动时：
+ - 创建smartconfig_example_task线程，开始SmartConfig
+ - WIFI_EVENT_STA_DISCONNECTED，WiFi station 模式失去连接
+ - 清除CONNECTED_BIT标志位
+ - IP_EVENT_STA_GOT_IP，WiFi station 模式从连接的AP那获得IP
+ - 设置CONNECTED_BIT标志位
+ - SC_EVENT_SCAN_DONE，SmartConfig 扫描AP列表结束
+ - SC_EVENT_FOUND_CHANNEL，SmartConfig 从目标AP找到频道
+ - SC_EVENT_GOT_SSID_PSWD，SmartConfig 获得WiFi信息（SSID和密码）时：
+ - 解析出WiFi的SSID和密码
+ - esp_wifi_disconnect断开当前WiFi连接
+ - esp_wifi_set_configWiFI配置，设置WIFI_IF_STA模式，设置WiFi的SSID和密码
+ - esp_wifi_connectWiFi连接
+ - SC_EVENT_SEND_ACK_DONE，SmartConfig 给App发送完成ACK
+ - 设置ESPTOUCH_DONE_BIT标志位
+
+```
+static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        xTaskCreate(smartconfig_example_task, "smartconfig_example_task", 4096, NULL, 3, NULL);
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        esp_wifi_connect();
+        xEventGroupClearBits(s_wifi_event_group, CONNECTED_BIT);
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        xEventGroupSetBits(s_wifi_event_group, CONNECTED_BIT);
+    } else if (event_base == SC_EVENT && event_id == SC_EVENT_SCAN_DONE) {
+        ESP_LOGI(TAG, "Scan done");
+    } else if (event_base == SC_EVENT && event_id == SC_EVENT_FOUND_CHANNEL) {
+        ESP_LOGI(TAG, "Found channel");
+    } else if (event_base == SC_EVENT && event_id == SC_EVENT_GOT_SSID_PSWD) {
+        ESP_LOGI(TAG, "Got SSID and password");
+
+        smartconfig_event_got_ssid_pswd_t *evt = (smartconfig_event_got_ssid_pswd_t *)event_data;
+        wifi_config_t wifi_config;
+        uint8_t ssid[33] = { 0 };
+        uint8_t password[65] = { 0 };
+        uint8_t rvd_data[33] = { 0 };
+
+        bzero(&wifi_config, sizeof(wifi_config_t));
+        memcpy(wifi_config.sta.ssid, evt->ssid, sizeof(wifi_config.sta.ssid));
+        memcpy(wifi_config.sta.password, evt->password, sizeof(wifi_config.sta.password));
+        wifi_config.sta.bssid_set = evt->bssid_set;
+        if (wifi_config.sta.bssid_set == true) {
+            memcpy(wifi_config.sta.bssid, evt->bssid, sizeof(wifi_config.sta.bssid));
+        }
+
+        memcpy(ssid, evt->ssid, sizeof(evt->ssid));
+        memcpy(password, evt->password, sizeof(evt->password));
+        ESP_LOGI(TAG, "SSID:%s", ssid);
+        ESP_LOGI(TAG, "PASSWORD:%s", password);
+        if (evt->type == SC_TYPE_ESPTOUCH_V2) {
+            ESP_ERROR_CHECK( esp_smartconfig_get_rvd_data(rvd_data, sizeof(rvd_data)) );
+            ESP_LOGI(TAG, "RVD_DATA:");
+            for (int i=0; i<33; i++) {
+                printf("%02x ", rvd_data[i]);
+            }
+            printf("\n");
+        }
+        ESP_ERROR_CHECK( esp_wifi_disconnect() );
+        ESP_ERROR_CHECK( esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
+        esp_wifi_connect();
+    } else if (event_base == SC_EVENT && event_id == SC_EVENT_SEND_ACK_DONE) {
+        xEventGroupSetBits(s_wifi_event_group, ESPTOUCH_DONE_BIT);
+    }
+}
+```
+
+### 示例代码
+新建项目，选择example，选择WiFi—>smart_config
+下载运行
+
+ - 下载、安装、打开EspTouchForAndroid App
+ - 输入WiFi密码，确认即可
+ - 注意：ESP32只支持2.4GHz WiFi，还不支持5GHz WiF
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689519238551.png)
+
+```
+I (600) wifi:mode : sta (34:85:18:98:06:dc)
+I (600) wifi:enable tsf
+I (660) smartconfig: SC version: V3.0.1
+I (5470) wifi:ic_enable_sniffer
+I (5470) smartconfig: Start to find channel...
+I (5470) smartconfig_example: Scan done
+I (57790) smartconfig: TYPE: ESPTOUCH
+I (57800) smartconfig: T|AP MAC: 58:41:20:1e:06:19
+I (57800) smartconfig: Found channel on 6-0. Start to get ssid and password...
+I (57800) smartconfig_example: Found channel
+I (63120) smartconfig: T|pswd: 15996264842
+I (63120) smartconfig: T|ssid: 15-501
+I (63120) smartconfig: T|bssid: 58:41:20:1e:06:19
+I (63120) wifi:ic_disable_sniffer
+I (63120) smartconfig_example: Got SSID and password
+I (63120) smartconfig_example: SSID:15-501
+I (63130) smartconfig_example: PASSWORD:15996264842
+I (63180) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1
+I (64160) wifi:state: init -> auth (b0)
+I (64160) wifi:state: auth -> assoc (0)
+I (64220) wifi:state: assoc -> run (10)
+W (64240) wifi:<ba-add>idx:0 (ifx:0, 58:41:20:1e:06:19), tid:5, ssn:0, winSize:64
+I (64360) wifi:connected with 15-501, aid = 8, channel 6, BW20, bssid = 58:41:20:1e:06:19
+I (64360) wifi:security: WPA2-PSK, phy: bgn, rssi: -52
+I (64370) wifi:pm start, type: 1
+
+I (64370) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 0, mt_pti: 25000, mt_time: 10000
+I (64440) wifi:BcnInt:102400, DTIM:1
+I (65440) esp_netif_handlers: sta ip: 192.168.0.108, mask: 255.255.255.0, gw: 192.168.0.1
+I (65440) smartconfig_example: WiFi Connected to ap
+W (65830) wifi:<ba-add>idx:1 (ifx:0, 58:41:20:1e:06:19), tid:6, ssn:2, winSize:64
+I (68460) smartconfig_example: smartconfig over
+```
 ## 待机唤醒
 
 
