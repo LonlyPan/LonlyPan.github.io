@@ -2810,6 +2810,33 @@ void app_main(void)
     wifi_scan();
 }
 ```
+
+```
+I (539) wifi:mode : sta (34:85:18:98:06:dc)
+I (539) wifi:enable tsf
+I (3039) scan: Total APs scanned = 3
+I (3039) scan: SSID             hannto-printer-honey1s_mibtDE14
+I (3039) scan: RSSI             -39
+I (3039) scan: Authmode         WIFI_AUTH_WPA2_PSK
+I (3039) scan: Pairwise Cipher  WIFI_CIPHER_TYPE_CCMP
+I (3049) scan: Group Cipher     WIFI_CIPHER_TYPE_CCMP
+I (3049) scan: Channel          6
+
+I (3059) scan: SSID             DIRECT-9C-EPSON-A511AF
+I (3059) scan: RSSI             -50
+I (3069) scan: Authmode         WIFI_AUTH_WPA2_PSK
+I (3069) scan: Pairwise Cipher  WIFI_CIPHER_TYPE_CCMP
+I (3079) scan: Group Cipher     WIFI_CIPHER_TYPE_CCMP
+I (3079) scan: Channel          6
+
+I (3089) scan: SSID             15-501
+I (3089) scan: RSSI             -55
+I (3089) scan: Authmode         WIFI_AUTH_WPA_WPA2_PSK
+I (3099) scan: Pairwise Cipher  WIFI_CIPHER_TYPE_CCMP
+I (3099) scan: Group Cipher     WIFI_CIPHER_TYPE_CCMP
+I (3109) scan: Channel          6
+
+```
 ## 待机唤醒
 
 
