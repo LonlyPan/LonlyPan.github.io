@@ -2906,7 +2906,9 @@ esp_err_t esp_event_handler_instance_register(esp_event_base_t event_base, int32
 同时在sdconfig中设置wifi名和密码
 下载运行
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689514430198.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689514858699.png)
+
+## WIFI AP
 
 ## 待机唤醒
 
