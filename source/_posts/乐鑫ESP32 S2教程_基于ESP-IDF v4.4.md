@@ -729,6 +729,8 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 
 ## 静态库
 
+参考资料：[基于 ESP-IDF 将自定义的静态库制作成组件](https://blog.csdn.net/Marchtwentytwo/article/details/117924506)
+[使用 ESP-IDF 生成第三方的 .a 静态库并使用的流程](https://blog.csdn.net/Marchtwentytwo/article/details/121560498)
 # 实战篇
 
 ## 1、printf
@@ -3251,6 +3253,53 @@ W (37211) wifi:<ba-add>idx:0 (ifx:0, 58:41:20:1e:06:19), tid:5, ssn:3, winSize:6
 W (37231) wifi:<ba-add>idx:1 (ifx:0, 58:41:20:1e:06:19), tid:6, ssn:1, winSize:64
 I (39631) smartconfig_example: smartconfig over
 ```
+## http request client
+
+
+### 介绍
+ESP HTTP clien
+Contains:
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS
+Enable https启用https
+
+Found in: Component config > ESP HTTP client
+位于：组件配置ESP HTTP客户端
+
+This option will enable https protocol by linking esp-tls library and initializing SSL transport
+此选项将通过链接esp-tls库并初始化SSL传输来启用https协议
+
+Default value:
+Yes (enabled)
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH
+Enable HTTP Basic Authentication
+
+Found in: Component config > ESP HTTP client
+位于：组件配置ESP HTTP客户端
+
+This option will enable HTTP Basic Authentication. It is disabled by default as Basic auth uses unencrypted encoding, so it introduces a vulnerability when not using TLS
+
+Default value:
+No (disabled)
+
+CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH
+Enable HTTP Digest Authentication
+
+Found in: Component config > ESP HTTP client
+位于：组件配置ESP HTTP客户端
+
+This option will enable HTTP Digest Authentication. It is enabled by default, but use of this configuration is not recommended as the password can be derived from the exchange, so it introduces a vulnerability when not using TLS
+此选项将启用HTTP摘要身份验证。默认情况下，它是启用的，但使用 不建议配置，因为密码可以从exchange中派生，因此它引入了 不使用TLS时的漏洞
+
+Default value:默认值：
+No (disabled)否（禁用
 ## 待机唤醒
 
 
