@@ -727,6 +727,7 @@ ota_1,    app,  ota_1,   0x210000, 1M,
 - 0x8000-0x10000钟中间的是nvs和phy_init ，是运行时使用，存储信息的，因此不下载文件
 ![flash tools](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/flash_tools.jpg)
 
+## 静态库
 
 # 实战篇
 
@@ -2995,10 +2996,12 @@ I (31584) wifi softAP: station f2:bf:ee:fa:2c:4c leave, AID=1
 ### WiFi配网方式
 WiFi配网即：用户通过App/小程序/网页等途径将WiFi的SSID和密码等信息发送给ESP32，方式有很多种：
 
- - SoftAP，ESP32开启热点，App连接到该热点AP，并将WiFi的信息发送给ESP32
- - SmartConfig，App将WiFi信息通过UDP广播组播出去，ESP32监听网络中所有报文，得到App广播出来的WiFi信息
-	 - SmartConfig有很多种，EspTouch（APP）、AirKiss(微信)、EspTouchV2（APP）等
- - BluFi，App通过蓝牙的方式将WiFi信息发送给ESP32
+
+- SoftAP 配网：ESP32 会建立一个 Wi-Fi 热点，用户将手机连接到这个热点后将要连接的 Wi-Fi 信息发送给 ESP32。这种配网模式需要用户手动连接到 ESP32 的热点网络，这会让用户感到奇怪和不友好，不过这种方式很可靠，设备端的代码也简单。
+- Bluetooth Low Energy 配网：ESP32 会进行 Bluetooth Low Energy 广播，附近的手机收到该广播后会询问用户是否进行 Bluetooth Low Energy 连接，如选择连接，则手机即可将信息发送给 ESP32。在这个的过程中用户无需切换 Wi-Fi 网络，但是需要打开蓝牙，用户体验相对 SoftAP 配网好一些。但是，需要在设备端加入蓝牙相关代码，这会增加固件的大小，并在配网完成前占用一定内存。
+- Smartconfig 配网：这种方式不需要建立任何通信链路，手机端通过发送不同长度的 UDP 广播包来表示 Wi-Fi 信息，ESP32 在混杂模式监听信号覆盖范围内的所有数据帧，通过一定算法得到 Wi-Fi 信息。缺点是配网成功率受环境的影响较大。
+	- SmartConfig有很多种，EspTouch（APP）、AirKiss(微信)、EspTouchV2（APP）等
+- WEB 配网：在 ESP32 上建立热点，使用手机连接上后在浏览器打开配置网页，在网页中完成配网，这种方式很可靠，而且允许在电脑端完成配网，缺点是需要在设备端占用空间来嵌入网页。
 
 ###  主程序
 
@@ -3203,7 +3206,7 @@ static void smartconfig_example_task(void * parm)
 
 或直接扫描下面二维码
 官方给的工具网址为：https://iot.espressif.cn/configWXDeviceWiFi.html
-可以利用网址链接转二维码工具生成二维码，像我生成的二维码：
+可以利用[网址二维码生成器](https://www.hlcode.cn/url)将链接转二维码，像我生成的二维码：
 ![5e4c1a97-6c05-4222-ae70-0ae6ef4ac87d](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/5e4c1a97-6c05-4222-ae70-0ae6ef4ac87d.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689520072550.png)
