@@ -3282,9 +3282,72 @@ I (39631) smartconfig_example: smartconfig over
 `CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH`
 
 
+## HTTP简介
+HTTP协议是Hyper Text Transfer Protocol超文本传输协议的缩写，基于TCP传输层协议进行通信，采用客户端-服务器模型（C/S架构），属于应用层协议
+HTTP数据传输是透明的，明文传输涉及到通信安全时，传输层上可套接TLS/SSL协议进行加密，也就是HTTPS
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S3教程_基于ESP-IDF_v5.0/1689772272405.png)
 
+**特点**
 
+ - HTTP默认使用80端口，HTTPS默认使用443端口
+ - 无状态，协议对于事务处理没有记忆能力，每次都是一个新的连接，服务端不会记录前后的请求信息（针对这个问题，引入Cookie将记录加密存储到客户端中）
+ - 无连接，限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接；（HTTP1.1版本支持持久连接的方法）
+ - 媒体独立，允许传输任意类型的数据对象，传输类型由Content-Type定义
 
+## 操作步骤
+
+ - 通过 esp_http_client_config_t 结构体定义http的参数
+ - 通过esp_http_client_init()进行初始化
+ - 通过 esp_http_client_set_method()设置发送get请求
+ - 通过esp_http_client_open()与目标主机建立连接，发送请求
+ - 通过esp_http_client_fetch_headers()获取目标主机的response报文的头信息，判断是否成功获取数据
+ - 通过esp_http_client_read_response()获取报文的返回数据内容
+ -  esp_http_client_init()，创建一个 esp_http_client_handle_t 实例，即基于给定的 esp_http_client_config_t 配置创建 HTTP 客户端句柄。此函数必须第一个被调用。若用户未明确定义参数的配置值，则使用默认值。
+
+```
+    esp_http_client_config_t config = {
+        .url = "https://www.howsmyssl.com", // url
+        .cert_pem = howsmyssl_com_root_cert_pem_start,//证书
+    };
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+```
+传递配置形参，url成员必填，如果跳过证书可将元素skip_cert_common_name_check改为TRUE
+- url：常见的链接
+```
+/**
+ * @brief HTTP configuration
+ */
+typedef struct {
+    const char                  *url; //url请求接口必须配置               /*!< HTTP URL, the information on the URL is most important, it overrides the other fields below, if any */
+    const char                  *host; //服务器域名或ip地址              /*!< Domain or IP as string */
+    int                             port; //端口 http默认80 https 默认443                /*!< Port to connect, default depend on esp_http_client_transport_t (80 or 443) */
+    const char                  *username;  //用户名，认证使用         /*!< Using for Http authentication */
+    const char                  *password;  //用户密码，认证使用         /*!< Using for Http authentication */
+    esp_http_client_auth_type_t auth_type; //认证方式          /*!< Http authentication type, see `esp_http_client_auth_type_t` */
+    const char                  *path;  //路径             /*!< HTTP Path, if not set, default is `/` */
+    const char                  *query;  //请求参数            /*!< HTTP query */
+    const char                  *cert_pem;    //证书       /*!< SSL server certification, PEM format as string, if the client requires to verify server */
+    const char                  *client_cert_pem;    /*!< SSL client certification, PEM format as string, if the server requires to verify client */
+    const char                  *client_key_pem;     /*!< SSL client key, PEM format as string, if the server requires to verify client */
+    esp_http_client_method_t    method;  //请求方式 post get                 /*!< HTTP Method */
+    int                         timeout_ms;  //请求超时             /*!< Network timeout in milliseconds */
+    bool                        disable_auto_redirect;    /*!< Disable HTTP automatic redirects */
+    int                         max_redirection_count;    /*!< Max number of redirections on receiving HTTP redirect status code, using default value if zero*/
+    int                         max_authorization_retries;    /*!< Max connection retries on receiving HTTP unauthorized status code, using default value if zero. Disables authorization retry if -1*/
+    http_event_handle_cb        event_handler;  //可注册回调           /*!< HTTP Event Handle */
+    esp_http_client_transport_t transport_type;  // 传输方式 tcp ssl        /*!< HTTP transport type, see `esp_http_client_transport_t` */
+    int                         buffer_size; //接收缓存大小             /*!< HTTP receive buffer size */
+    int                         buffer_size_tx; //发送缓存大小          /*!< HTTP transmit buffer size */
+    void                        *user_data;  //http用户数据             /*!< HTTP user_data context */
+    bool                        is_async;  //同步模式               /*!< Set asynchronous mode, only supported with HTTPS for now */
+    bool                        use_global_ca_store;       /*!< Use a global ca_store for all the connections in which this bool is set. */
+    bool                        skip_cert_common_name_check; //跳过证书   /*!< Skip any validation of server certificate CN field */
+} esp_http_client_config_t;
+```
+
+其次调用 esp_http_client_perform()，执行 esp_http_client 的所有操作，包括打开连接、交换数据、关闭连接（如需要），同时在当前任务完成前阻塞该任务。所有相关的事件（在 esp_http_client_config_t 中指定）将通过事件处理程序被调用。
+
+最后调用 esp_http_client_cleanup() 来关闭连接（如有），并释放所有分配给 HTTP 客户端实例的内存。此函数必须在操作完成后最后一个被调用。
 ## 待机唤醒
 
 
