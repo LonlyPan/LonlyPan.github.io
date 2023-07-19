@@ -3278,7 +3278,8 @@ I (39631) smartconfig_example: smartconfig over
 - Found in: Component config > ESP HTTP client
 - 此选项将启用HTTP摘要身份验证。默认情况下，它是启用的，但使用 不建议配置，因为密码可以从exchange中派生，因此它引入了 不使用TLS时的漏洞
 - Default value:默认值：No (disabled)否（禁用
-CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH
+
+`CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH`
 
 
 
