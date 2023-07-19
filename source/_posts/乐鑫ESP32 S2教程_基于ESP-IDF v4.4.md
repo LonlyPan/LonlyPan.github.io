@@ -3256,50 +3256,34 @@ I (39631) smartconfig_example: smartconfig over
 ## http request client
 
 
-### 介绍
-ESP HTTP clien
-Contains:
+### ESP HTTP client介绍
 
-CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH
+包含:
 
+- 启用https
+- 位于： Component config > ESP HTTP client
+- 此选项将通过链接esp-tls库并初始化SSL传输来启用https协议
+- Default value: Yes (enabled)
+
+`CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS`
+
+- 启用HTTP基本身份验证
+- 位于：Component config > ESP HTTP client
+- 此选项将启用HTTP基本身份验证。它在默认情况下被禁用，因为基本身份验证使用未加密的编码，因此在不使用TLS时会引入漏洞
+- Default value: Yes (enabled)
+`CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH`
+
+
+- 启用HTTP摘要式身份验证
+- Found in: Component config > ESP HTTP client
+- 此选项将启用HTTP摘要身份验证。默认情况下，它是启用的，但使用 不建议配置，因为密码可以从exchange中派生，因此它引入了 不使用TLS时的漏洞
+- Default value:默认值：No (disabled)否（禁用
 CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH
 
-CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS
 
-CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS
-Enable https启用https
 
-Found in: Component config > ESP HTTP client
-位于：组件配置ESP HTTP客户端
 
-This option will enable https protocol by linking esp-tls library and initializing SSL transport
-此选项将通过链接esp-tls库并初始化SSL传输来启用https协议
 
-Default value:
-Yes (enabled)
-
-CONFIG_ESP_HTTP_CLIENT_ENABLE_BASIC_AUTH
-Enable HTTP Basic Authentication
-
-Found in: Component config > ESP HTTP client
-位于：组件配置ESP HTTP客户端
-
-This option will enable HTTP Basic Authentication. It is disabled by default as Basic auth uses unencrypted encoding, so it introduces a vulnerability when not using TLS
-
-Default value:
-No (disabled)
-
-CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH
-Enable HTTP Digest Authentication
-
-Found in: Component config > ESP HTTP client
-位于：组件配置ESP HTTP客户端
-
-This option will enable HTTP Digest Authentication. It is enabled by default, but use of this configuration is not recommended as the password can be derived from the exchange, so it introduces a vulnerability when not using TLS
-此选项将启用HTTP摘要身份验证。默认情况下，它是启用的，但使用 不建议配置，因为密码可以从exchange中派生，因此它引入了 不使用TLS时的漏洞
-
-Default value:默认值：
-No (disabled)否（禁用
 ## 待机唤醒
 
 
