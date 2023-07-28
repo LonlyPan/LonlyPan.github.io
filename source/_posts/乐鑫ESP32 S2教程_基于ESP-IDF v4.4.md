@@ -3296,14 +3296,25 @@ HTTP数据传输是透明的，明文传输涉及到通信安全时，传输层�
 
 ## 操作步骤
 
- - 通过 esp_http_client_config_t 结构体定义http的参数
- - 通过esp_http_client_init()进行初始化
- - 通过 esp_http_client_set_method()设置发送get请求
- - 通过esp_http_client_open()与目标主机建立连接，发送请求
- - 通过esp_http_client_fetch_headers()获取目标主机的response报文的头信息，判断是否成功获取数据
- - 通过esp_http_client_read_response()获取报文的返回数据内容
  -  esp_http_client_init()，创建一个 esp_http_client_handle_t 实例，即基于给定的 esp_http_client_config_t 配置创建 HTTP 客户端句柄。此函数必须第一个被调用。若用户未明确定义参数的配置值，则使用默认值。
+ -  其次调用 esp_http_client_perform()，执行 esp_http_client 的所有操作，包括打开连接、交换数据、关闭连接（如需要），同时在当前任务完成前阻塞该任务。所有相关的事件（在 esp_http_client_config_t 中指定）将通过事件处理程序被调用。
+- 最后调用 esp_http_client_cleanup() 来关闭连接（如有），并释放所有分配给 HTTP 客户端实例的内存。此函数必须在操作完成后最后一个被调用。
 
+### 持久连接
+持久连接是 HTTP 客户端在多次交换中重复使用同一连接的方法。如果服务器没有使用 Connection: close 头来请求关闭连接，连接就会一直保持开放，用于其他新请求。
+
+为了使 ESP HTTP 客户端充分利用持久连接的优势，建议尽可能多地使用同一个句柄实例来发起请求，可参考应用示例中的函数 http_rest_with_url 和 http_rest_with_hostname_path。示例中，一旦创建连接，即会在连接关闭前发出多个请求（如 GET、 POST、 PUT 等）。
+
+### HTTPS 请求
+ESP HTTP 客户端支持使用 mbedTLS 的 SSL 连接，需将 url 配置为以 https 开头，或将 transport_type 设置为 HTTP_TRANSPORT_OVER_SSL。可以通过 CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS 来配置 HTTPS 支持（默认启用）。
+
+备注
+
+在发起 HTTPS 请求时，如需服务器验证，首先需要向 esp_http_client_config_t 配置中的 cert_pem 成员提供额外的根证书（PEM 格式）。用户还可以通过 esp_http_client_config_t 配置中的 crt_bundle_attach 成员，使用 ESP x509 Certificate Bundle 进行服务器验证。
+
+如需了解上文备注中的实现细节，请参考应用示例中的函数 https_with_url 和 https_with_hostname_path。
+
+HTTP 流
 ```
     esp_http_client_config_t config = {
         .url = "https://www.howsmyssl.com", // url
@@ -3312,7 +3323,7 @@ HTTP数据传输是透明的，明文传输涉及到通信安全时，传输层�
     esp_http_client_handle_t client = esp_http_client_init(&config);
 ```
 传递配置形参，url成员必填，如果跳过证书可将元素skip_cert_common_name_check改为TRUE
-- url：常见的链接
+- url：常见的链接，传输协议（https）+域名或IP（host）+ 端口号（port） +路径（path）+查询字符串(query)+锚点`https://www.baidu.com/swd=hello&rsv_spt=1#5`
 ```
 /**
  * @brief HTTP configuration
