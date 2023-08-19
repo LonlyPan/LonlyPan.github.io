@@ -3282,6 +3282,7 @@ I (39631) smartconfig_example: smartconfig over
 `CONFIG_ESP_HTTP_CLIENT_ENABLE_DIGEST_AUTH`
 
 
+
 ## HTTP简介
 HTTP协议是Hyper Text Transfer Protocol超文本传输协议的缩写，基于TCP传输层协议进行通信，采用客户端-服务器模型（C/S架构），属于应用层协议
 HTTP数据传输是透明的，明文传输涉及到通信安全时，传输层上可套接TLS/SSL协议进行加密，也就是HTTPS
@@ -3359,6 +3360,10 @@ typedef struct {
 其次调用 esp_http_client_perform()，执行 esp_http_client 的所有操作，包括打开连接、交换数据、关闭连接（如需要），同时在当前任务完成前阻塞该任务。所有相关的事件（在 esp_http_client_config_t 中指定）将通过事件处理程序被调用。
 
 最后调用 esp_http_client_cleanup() 来关闭连接（如有），并释放所有分配给 HTTP 客户端实例的内存。此函数必须在操作完成后最后一个被调用。
+
+https://www.cnblogs.com/weibanggang/p/9454581.html
+https://juejin.cn/post/7106310756580196388
+https://cloud.tencent.com/developer/article/2097221
 ## 待机唤醒
 
 
