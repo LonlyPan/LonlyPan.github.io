@@ -301,7 +301,9 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
  - https://segmentfault.com/a/1190000022468063
  - https://www.codeleading.com/article/61115145053/
 
-## 四、shell命令
+## Ubuntu系统入门
+
+### shell命令
 
 这里的命令一定**多多动手尝试，多多动手尝试，多多动手尝试**。不要死记硬背，光看是无法学会且领会不到真谛的。
  - 命令都是带参数的，自己多上网查查其它用法
@@ -325,7 +327,7 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
 **参考链接**
 - [Linux系统下Shell重复执行上条命令的几种方法](https://www.nenew.net/linux-shell-rerun-command.html)
  
-### cd 切换目录
+#### cd 切换目录
 
 `changeDirectorym`，这是一个非常基本、经常需要使用的命令，它用于切换当前目录，它的参数是要切换到的目录的路径，可以是绝对路径，也可以是相对路径。如：
 
