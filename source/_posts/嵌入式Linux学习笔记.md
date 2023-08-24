@@ -782,18 +782,18 @@ gcc -o test test.c -lm -std=c99  # 把源文件test.c按照c99标准编译成可
 gcc -S test.c  # 把源文件test.c转换为相应的汇编程序源文件test.s
 ```
 
-## 四、Ubuntu 软件安装
+### Ubuntu 软件安装
 
-### 1、软件商店安装
+#### 1、软件商店安装
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/software.png)
 
-### 2、 sudo apt-get
+#### 2、 sudo apt-get
 
 直接使用该命令在线下载并自动安装软件。  
 `sudo apt-get install git  # 安装 get 工具 `
 
-### 3. deb 软件包
+#### 3. deb 软件包
 
 类似windows下的 `.exe` 安装包。要先去官网下载软件的 .deb 安装包。
 ```
@@ -801,7 +801,7 @@ sudo dpkg -i|netease.xxx.deb  # 安装网易云，得先进入到 .deb 所在文
 安装好的图标文件再 /usr/share/applications 下
 ```
 
-### 4、源码编译
+#### 4、源码编译
 
 一般下下载好软件的源码并解压，进入到源码根目录下，执行 
 ```
@@ -811,7 +811,7 @@ make install
 ```
 >  安装命令各软件不尽相同，这里仅举一般例子说明
 
-## 六、Ubuntu 文件系统结构
+### Ubuntu 文件系统结构
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/目录结构.png)
 
@@ -888,7 +888,7 @@ var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着�
 #### /run：
 是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。
 
-## 七、磁盘管理
+### 磁盘管理
 
 Linux下，不像Windows可以有C,D,E,多个目录，Linux只有一个根目录/。在装系统时，我们分配给linux的所有区都在/下的某个位置，比如/home等等。
 
@@ -1137,9 +1137,9 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 /dev/sdc1        15G  3.8G   11G  27% /media/lonly/sdc1
 /dev/sdc2        12G  8.0K   12G   1% /media/lonly/sdc2
 ```
-### 主分区、扩展分区和逻辑分区
+#### 主分区、扩展分区和逻辑分区
 
-#### 概念
+##### 概念
 
 硬盘分区有三种，主磁盘分区、扩展磁盘分区、逻辑分区。这三个术语是针对操作系统而言，主要是从**功能上**划分的概念。
 
@@ -1158,7 +1158,7 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 
 
 
-#### 补充
+##### 补充
 
 给新硬盘上建立分区时都要遵循以下的顺序：`建立主分区→建立扩展分区→建立逻辑分区→激活主分区→格式化所有分区。`
 
@@ -1173,13 +1173,13 @@ tmpfs           797M   32K  797M   1% /run/user/1000
 
 MBR（主引导记录）的分区表（主分区表）只能存放4个分区，如果要分更多的分区的话就要 一个扩展分区表（EBR），扩展分区表放在一个系统ID为0x05的主分区上，这个主分区就是扩展分区， 扩展分区能可以分若干个分区，每个分区都是个逻辑分区
 
-#### 参考链接
+##### 参考链接
 
 - [Linux 磁盘和分区](https://gtcsq.readthedocs.io/en/latest/linux_tools/disk_note.html)
 - [主分区、扩展分区和逻辑分区的区别，系统分区、引导分区和启动分区的区别](https://blog.csdn.net/buzaikoulan/article/details/44405915)
 - [磁盘分区——主分区、扩展分区、逻辑分区](https://www.cnblogs.com/jiechn/p/4494958.html)
 
-### 磁盘格式化
+#### 磁盘格式化
 
 磁盘分割完毕后自然就是要进行文件系统的格式化，格式化的命令非常的简单，使用 mkfs（make filesystem） 命令。
 
@@ -1205,7 +1205,7 @@ lonly@lonly-VirtualBox:$ mkfs.vfat /dev/sdc1
 mkfs.fat 4.1 (2017-01-24)
 ```
 
-### 磁盘挂载与卸除
+#### 磁盘挂载与卸除
 1. 提一句Windows下，mount挂载，就是给磁盘分区提供一个盘符（C,D,E,...）。比如插入U盘后系统自动分配给了它I:盘符其实就是挂载，退优盘的时候进行安全弹出，其实就是卸载unmount。
 2.  插入了新硬盘，分了新磁盘区sdb1。它现在还不属于/。我们虽然可以在一些图形桌面系统里找到他的位置，浏览管理里面的文件，但在命令行却不知怎么访问它的目录，比如无法使用cd或者ls。也无法在编程时指定一个目录对它操作。
 3. 这时使用了 mount /dev/sdb1 ~/Share/ ，把新硬盘的区sdb1挂载到工作目录的~/Share/文件夹下，之后访问这个~/Share/文件夹就相当于访问这个硬盘2的sdb1分区了。对/Share/的任何操作，都相当于对sdb1里文件的操作。
@@ -1249,7 +1249,7 @@ Filesystem           1K-blocks      Used Available Use% Mounted on
 
  linux  (gz ，bzip，zip)
  
- ## 打包与压缩
+ ### 打包与压缩
 
  **打包：** 将多个文件打包成一个文件，没有层级目录之分。文件大小不变。类似多个购物袋放进一个袋子，方便好拿。
 **压缩：** 把打包后的那个文件压缩，文件大小减小。先将多个购物袋放进一个袋子，再抽真空压缩，减小尺寸。
