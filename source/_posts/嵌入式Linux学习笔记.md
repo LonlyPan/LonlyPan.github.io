@@ -14,21 +14,6 @@ categories: 01-专业
 <!--more-->
 # Ubuntu系统入门篇
 
-其他学习视频：
-
- - https://www.bilibili.com/video/BV1yD4y1m7Q9?from=search&seid=17466272019916726328
- - https://www.bilibili.com/video/BV1sJ41117Jd?from=search&seid=1145502530072362755
- - https://www.bilibili.com/video/BV12E411h71h?from=search&seid=5718148630492275519
- - https://www.bilibili.com/video/BV15W411m7AQ/?spm_id_from=333.788.recommend_more_video.1
- - https://www.bilibili.com/video/BV1qb4y127xc/?spm_id_from=333.788.recommend_more_video.0
- - https://www.cnblogs.com/lialong1st/p/11351095.html
- - https://0uyangsheng.github.io/2018/04/20/Build-Ubuntu-for-ARM-Platform-From-Scratch/
- - https://www.icode9.com/content-3-924261.html
- - https://wiki.t-firefly.com/zh_CN/ROC-RK3328-CC/flash_emmc.html
- - https://www.t-firefly.com/doc/download/page/id/34.html
- - https://www.t-firefly.com/doc/product/info/id/360.html
- - https://www.bilibili.com/video/BV19v411H7d3?p=13
-
 ## 一、 基础概念
 
 ### 嵌入式和单片机的区别
