@@ -358,11 +358,13 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693062258069.png)
 
 此时，Vivado 会编译 RTL 源文件并进行全面的语法检查，并在 Messages 窗口中给出相应的“Error” 和“Warning”。打 开分析后（Elaborated）的设计，Vivado 会生成顶层原理图视图，并在默认 view layout 中显示设计，如下 图所示：
-
+可以看到，此时窗口布局已经发生了变化，新增了 Schematic（原理图）、Netlist（网表）等窗口。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_47_.jpg)
-
+此时，底部的 Messages 窗口会显示分析阶段产生的消息，我们点亮 LED 实验的代码并没有产生错误提示，图中的一个警告信息是因为我们为了方便工 程管理，没有使用 Vivado 软件新建源文件自带的路径导致的警告，该警告不造成影响。 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_48_.jpg)
 ### 4、I/O约束
+
+在右上角的窗口布局（Layout）选择器中选择“I/O Planing”，如 下图所示：
 
 与综合
 
