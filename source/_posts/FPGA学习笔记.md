@@ -332,7 +332,7 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 1. Project manager：工程管理，新建文档等
 2. IP INTEGRATOR：IP核设计，类似与设计好的库，这个一般在后期用到，可选
 3. Simulation：仿真，可选。正在原子的设计流程视在Modelsim中仿真，所以Vivado中就不需要这一步了。这里的仿真其实就是使用的Modelsim，是厂家集成到Vivado的，当然功能后速度都会相对差一些
-4. RTL analysis：RTL分析，会将我们编写的代码转换成RTL原理图（理论上的，和FPGA硬件无关的）
+4. RTL analysis：RTL分析，会将我们编写的代码转换成RTL原理图（理论上的原理图，和FPGA硬件无关的）
    ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693060912071.png)
 5. I/O约束：对RTL中的信号映射到实际引脚中
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
@@ -341,6 +341,7 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 这里是一定要学的，不然后面的综合会看不懂，也就无法找到错误等
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693061127971.png)
 7. Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。
+8. 
 ### 2、设计输入
 
 双击 Sources→Design Sources 下的点亮 LED 灯文件，在 Vivado 软件中显示的界面如下图所示。
