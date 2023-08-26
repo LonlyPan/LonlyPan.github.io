@@ -388,9 +388,52 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 领航者开发板提供了 IO 引脚总表，在如下图所示位置
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_50_.jpg)
 
+这里更具开发板原理图、引脚电压等设计管教约束如下：
+  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
 
-与综合
+### 5、综合
 
-4、设计实现
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693064461762.png)
+综合完成后，弹出如下窗口
+- “Run lmplementation”选项直接进行**设计实现**步骤
+- “Open Synthesized Design”选项打开综合设计。即查看综合后的原理图
+- 查看报告
 
+这里选中“Open Synthesized Design”后点击“OK”
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_52_.jpg)
+
+点击“OK”之后会出现一个弹框，这个弹框中选择“YES”就会打开综合后的原理图，如下图所示：
+可以清晰地看到代码和电路图的对应关系，IBUF 是输入缓存，一般 VIVADO 会自动给输入信号 加上，作用是将输入管脚输入到 FPGA 内部；OBUF 是输出缓存，一般 VIVADO 会自动给输出信号加上， 作用是将输出信号送出 FPGA。代码中的取反是通过一个 LUT1 实现的。 
+
+打开综合后设计除了自动弹出的原理图界面外，还有一些其它选项，如下图所示
+- Constraints Wizard：约束向导。 
+- Edit Timing Constraints：编辑时间约束。 
+- Set Up Debug：引导创建在线调试。
+- Report Timing Summary：报告时序摘要并运行时序分析。 
+- Report Clock Networks：时钟网络报告。 
+- Report Clock Interaction：时钟交互报告。 
+- Report Methodology：检查符合 UltraFast 设计方法的设计。 
+- Report DRC：设计规则检查。 
+- Report Noise：噪声分析报告。 
+- Report Utilization：资源利用率报告。 
+- Report Power：电源报告。 
+- Schematic：打开综合后的原理图设计。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_53_.jpg)
+
+### 6、设计实现
+
+约束、综合完毕之后，就可以开始实现设计了。我们点击“Flow Navigator”窗口中的“Run Implementation”按钮，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693064855050.png)
+
+实现完成后会弹出如下提示窗口：
+和前面的类似，该窗口有三个选项，从上到下分别是
+- 打开实现设计
+- 生成下载文件
+- 查看报告。
+ 
+这里我们打开实现设计
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_54_.jpg)
+
+进入实现设计界 面，如下图所示：左边的“Netlist”窗口中有“Nets”与“Leaf Cells”，点击“Nets”与“Leaf Cells”下面的选项， 右边的器件图会高亮对应模块，所以实现设计将代码映射到了 FPGA 底层资源上。 这时我们再次查看“Design Runs”窗口中的实现结果，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_55_.jpg)
 ### 5、下载
