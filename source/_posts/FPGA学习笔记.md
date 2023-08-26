@@ -43,6 +43,7 @@ categories: 01-专业
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_5_.jpg)
 
 ## RTL代码-Modelsim仿真代码
+
 建议直接在Modelsim编写代码，可以实时编译检测错误
 - 一般RTL文件名：工程名.v
 - 仿真文件名：vtf_工程名_test.v
