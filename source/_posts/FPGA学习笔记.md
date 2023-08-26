@@ -20,7 +20,7 @@ categories: 01-专业
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693036157272.png)
 
-# LED前线体验
+# LED工程抢先体验
 ## 工程管理
 
 参考正点原子
