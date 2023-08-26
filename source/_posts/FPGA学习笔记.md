@@ -340,7 +340,7 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 可以看出实际和理论还是不一样的。I/O输出输出都有BUF，而逻辑部分则是有LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐**FPGA原理和结构**，日本**天野英晴**编写
 这里是一定要学的，不然后面的综合会看不懂，也就无法找到错误等
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693061127971.png)
-7. Implementation：设计实现
+7. Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。
 ### 2、设计输入
 
 双击 Sources→Design Sources 下的点亮 LED 灯文件，在 Vivado 软件中显示的界面如下图所示。
