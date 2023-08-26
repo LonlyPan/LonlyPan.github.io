@@ -1,7 +1,7 @@
 ---
 layout: post
 title: FPGA学习笔记
-index_img: ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg)
+index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg
 date: 2023-08-25
 updated: 2023-08-25
 hide: false
