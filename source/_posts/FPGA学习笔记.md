@@ -441,3 +441,46 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065880313.png)
 
 ### 5、下载
+
+在下载程序之前，首先要先生成用于下载到器件中的比特流文件，该文件的后缀为“.bit”。我们点击 “Flow Navigator”窗口中的“Generate Bitstream”按钮，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065950884.png)
+此时我们可以看到在“Design Runs”窗口中显示正在生成比特流，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065962491.png)
+比特流生成完毕之后，Vivado 会弹出提示窗口，如下图所示：
+图中有四个选项，分别是
+- 打开实现设计
+- 查看报告
+- 打开硬件管理
+- 生成固化文件。
+ 
+我们可以直接选 择上图的“Open Hardware Manager”进入硬件管理界面，
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065989636.png)
+也可以如上图所示，选择“Cancel”关闭该页面， 按照下面的描述进入硬件管理页面。 接下来我们开始下载比特流，点击“Flow Navigator”窗口中的“Open Hardware Manager”按钮，如 下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066029064.png)
+接着 Vivado 就会打开 Hardware Manager，同时窗口布局也跟着发生了变化，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066061542.png)
+
+接下来我们就要用到开发板和 Xilinx 下载器了。首先将 Xilinx 下载器一端连接电脑，另一端与开发板 上的 JTAG 接口相连接；然后连接开发板电源线，并打开电源开关。下图为领航者开发板的实物连接图
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066083718.png)
+
+开发板连接完成并打开电源开关后，点击“Hardware”子窗口中的“Auto Connect”按钮，如下图所 示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066094117.png)
+在“Hardware”子窗口中出现如下界面就表示 Vivado 就已经和下载器连接成功了，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066108345.png)
+我们点击上图中的“Program Device”，弹出的界面如下图所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066118701.png)
+
+此时 Bitstream File 一栏会自动识别到工程的比特流文件，我们直接点击“Program”按钮下载程序。 
+“Enable end of startup check”勾选就是使用下载完成校验，如果下载失败就会返回一个错误提示，一 般这里我们都是默认勾选的。
+
+程序下载完成后，我们可以看到位于底板上的 PL_LED0 灯是常灭状态，此时按下 PL_KEY0 按键，PL_LED0 灯会被点亮，松开按键，LED 灯被熄灭，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693066170758.png)
+
+> 需要说明的是，下载完比特流后，如果开发板断电，程序会丢失。如果想要程序断电不丢失的话，需要将程序固化至开发板中，这个需要在嵌入式 Vitis 软件中完成，ZYNQ 芯片无法单独固化比特流文件 （PL 的配置文件）。**这是由于 ZYNQ 非易失性存储器的引脚（如 SD 卡、QSPI Flash）是 ZYNQ PS 部分 的专用引脚，这些非易失性存储器由 PS 的 ARM 处理器进行驱动，需要将 bit 流文件和 elf 文件（软件程 序的下载文件）合成一个 BOOT.BIN，才能进行固化，因此需要学习 ZYNQ 嵌入式 VITIS 的开发流程。** 在 《领航者 ZYNQ 之嵌入式开发指南.pdf》文档中“第七章 程序固化实验”，会有一个单独的章节向大家介 绍程序固化的方法。 
+
+> 本章内容有限，Vivado 工具还有更多的使用规则本章没有进行介绍，用户可以查找 Xilinx 官方的使用 手册进行学习。 
+> 1．Vivado Design Suite User Guide:System-Level Design Entry (UG895)。
+> 2．Vivado Design Suite User Guide: DesignAnalysis and Closure Techniques(UG906
+
+# Verilog语法
