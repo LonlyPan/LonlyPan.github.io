@@ -36,4 +36,8 @@ categories: 01-专业
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_1_.jpg)
 
-## 
+## 需求分析-系统设计-模块设计-波形图-RTL代码-Modelsim仿真代码
+
+建议直接在Modelsim编写代码，可以实时编译检测错误
+
+## Modelsim仿真
