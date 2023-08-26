@@ -338,6 +338,7 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
 6. Systhesis：综合，其实就是将RTL的原理图转成FPGA芯片的对应原理图，这个是跟FPGA实体挂钩的。也就是我们使用FPGA的可用资源实现RTL的理论设计功能。所以就存在实现综合失败的问题，也就是RTL设计所需要的资源FPGA没有（比如不可综合的Verilog代码）
 可以看出实际和理论还是不一样的。I/O输出输出都有BUF，而逻辑部分则是有LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐**FPGA原理和结构**，日本**天野英晴**编写
+这里是一定要学的，不然后面的综合会看不懂，也就无法找到错误等
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693061127971.png)
 7. Implementation：设计实现
 ### 2、设计输入
