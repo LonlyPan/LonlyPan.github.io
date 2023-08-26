@@ -36,6 +36,6 @@ categories: 01-专业
 
 工程路径除了英文、数字以及下划线等，不要出现中文或者其它特殊字符，否则 FPGA 开发工具无法识别工程路径
 
-> 正点原子开发时先在 编写RTL代码，再modelsim中仿真，最终Vivado新建工程
+> 正点原子开发方式是先在 编写RTL代码，再modelsim中仿真，最终Vivado新建工程
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_1_.jpg)
