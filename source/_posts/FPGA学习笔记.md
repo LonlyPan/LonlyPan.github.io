@@ -90,11 +90,11 @@ led uut(
 endmodule
 ```
 
-
-
 ## Modelsim仿真
 
-在 modelsim 中建立 project，选择 File->New->Project，如下图所示：
-在“Project Name”栏中填写工程名，建议和仿真的文件一样
-这里我们把工程命名为“tb_led”，也就是在点亮 LED 灯模块名“led”前面添加“tb_”。 “Project Location”是工程路径，可以根据需要把工程保存到不同的位置，我们这里统一路径为工程下的 sim 文件夹，即选择的路径 C:/Desktop/led/sim。下面这两部分是用来设置仿真库名称和路径的，这里我们使用默 认即可。设置好工程名、工程位置，我们点击【OK】按钮，弹出如下图所示界面：
+在 modelsim 中建立 project，选择 File->New->Project
+- 在“Project Name”栏中填写工程名，建议和仿真的文件一样
+-  “Project Location”是Modelsim仿真工程路径，这里统一路径为工程下的 sim 文件夹
+-  下面两部分是用来设置仿真库名称和路径的，这里我们使用默认
+- 我们点击【OK】按钮，弹出如下图所示界面：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_7_.jpg)
