@@ -92,10 +92,41 @@ endmodule
 
 ## Modelsim仿真
 
+### 1、新建工程
 在 modelsim 中建立 project，选择 File->New->Project
-- 在“Project Name”栏中填写工程名，建议和仿真的文件一样
--  “Project Location”是Modelsim仿真工程路径，这里统一路径为工程下的 sim 文件夹
-- 下面两部分是用来设置仿真库名称和路径的，这里我们使用默认
-- 点击【OK】
+1. 在“Project Name”栏中填写工程名，建议和仿真的文件一样
+2. “Project Location”是Modelsim仿真工程路径，这里统一路径为工程下的 sim 文件夹
+3. 下面两部分是用来设置仿真库名称和路径的，这里我们使用默认
+4. 点击【OK】
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_7_.jpg)
+
+### 2、导入文件
+选择窗口中共有四种操作：
+- Create New File（创建新文件）
+- Add Existing File（添加已有文件）
+- Create Simulation（创建仿真）
+- Create New Folder（创建新文件夹）
+ 
+1. 这里我们先选择“Add Existing File”（添加已有文件）
+2. 点击“Browse”按钮选择“led.v”文件，选择 Reference from current location 来引用设计文件，其他的保持默认设置，最后点击【OK】按钮。
+3. 接下来以同样的方法添加仿真文件
+4. 点击“Close”关闭文件创建/添加框。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_8_.jpg)
+
+### 3、 编译
+
+我们可以在菜单栏 【Compile】中找到编译相关命令，也可以在快捷工具栏或者在工作区中的右键弹出的菜单中找到编译相关命令。
+
+- Compile Selected（编译所选）
+- Compile All（编译全部）
+- Compile Order：文件编译顺序，可以调整编译的.v 文件的编译顺序。
+-  Compile Report：编译报告，内容为当次编译的详细报告。 
+-  Compile Summary：编译摘要，执行过的编译操作都在编译摘要有记录。
+-  Compile out-of-data：
+ 我们单击 Compile All（编译全部）
+  编译完成后，结果如下图所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_11_.jpg)
+
