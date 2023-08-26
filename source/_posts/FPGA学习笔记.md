@@ -92,6 +92,8 @@ endmodule
 
 ## Modelsim仿真
 
+我们在仿真一些复杂的工程的时候往往需要对工程里的 IP 核进行仿真，当我们需要对 IP 核进行仿真时一定要事先将 IP 核的库文件加载到Modelsim 库中去。
+
 ### 1、新建工程
 在 modelsim 中建立 project，选择 File->New->Project
 1. 在“Project Name”栏中填写工程名，建议和仿真的文件一样
@@ -139,4 +141,50 @@ endmodule
 
 ### 4、仿真
 
+在 ModelSim 菜单栏中找到【Simulate】→【Start Simulation...】菜单并点击，弹出如下右图所示页面
 
+ - Design Optimization：优化设计设置页面。
+ - Runtime Options：运行选项配置，例如波形格式配置、仿真时间设置等。
+ - Restart：重启仿真。
+ - Break/End Simulation：终止仿真运行。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_13_.jpg)
+
+配置仿真功能页面包含 6 个标签，分别是：Design、VHDL、Verilog、Libraries、SDF 和 Others。我们用的最多的是 Design、Libraries 和 SDF 这三个标签了
+- Design 标签，该标签内居中的部分是 Modelsim 中当前包含的全部库，这些库和单元是为仿真服务的。可以使用 Ctrl 和 Shift 键来选择多个文件。右侧是 Resolution 选项，可以选择仿真的时间精度。这个选项一般都是设置在默认状态，这时 Modelsim 依照仿真设计文件中指定的最小时间刻度来进行仿真，如果设计文件中没有指定，则按 1ns 来进行仿真。最下方的区域是 Optimization 区域，可以在仿真开始的时候使能优化。
+- Libraries 标签，我们可以设置搜索库。Search Libraries 和 Search Libraries First 的功能基本一致，唯一不同的是 Search Libraries First 中指定的库会在指定的用户库之前被搜索。
+-  SDF 标签，SDF 是 Standard Delay Format（标准延迟格式）的缩写，内部包含了各种延迟信息，也是用于时序仿真的重要文件。SDF Files 区域用来添加 SDF 文件，可以选择 Add 按钮进行添加，选择 Modify 按钮进行修改，选择 Delete 按钮删除添加的文件。
+SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Disable SDF warning”是禁用 SDF 警告，第二个“Reduce SDF errors to warnings”是把所有的 SDF 错误信息变成警告信息。区域 Multi-Sourcedelay 中可以控制多个目标对同一端口的驱动，如果有多个控制信号同时控制同一个端口或互连，且每个信号的延迟值不同，可以使用此选项统一延迟。下拉列表中可供选择的有三个选项：latest、min 和 max。latest选项选择最后的延迟作为统一值，max 选项选择所有信号中延迟最大的值作为统一值，min 选项选择所有信号中延迟最小的值作为统一值。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_14_.jpg)
+
+接下来我们在 Design 标签页面中选择 work 库中的 tb_led 模块，在Optimization 一栏中勾选“Enable optimization”。
+> 注意：如果不进行上面的优化选项配置，Modelsim SE-64 2020.4 仿真会报如下截图所示错误：![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693040774865.png)
+
+然后点击上图的右下角的“Optimization Options”对优化选项进行如下图设置，设置完成后点击“OK”退出优化选项设置页面
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_15_.jpg)
+
+弹出下图所示界面：
+鼠标右键单击“u_led”，选择“Add Wave”选项，如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_16_.jpg)
+
+仿真软件的几个仿真按钮，如下图所示：
+- Restart：复位仿真，点击该按钮会有一个弹框如下图。勾选不同的选项会复位对应的设置；我们修改代码编译成功后，不需要重新打开仿真界 面，直接使用仿真复位按键，上图弹窗全部勾选后点击“OK”，就可以重新开始运行仿真。
+- Run Length：设置仿真时间，配合运行仿真按钮使用； 
+- Run：运行仿真，配合设置仿真时间一起使用，会按照设置仿真时长进行仿真；
+- ContinueRun：继续仿真，在停止仿真后需要继续运行仿真，可以使用继续仿真按钮
+- Run-All：一直仿真，点击仿真复位后，再点击一直仿真，仿真会一直运行，直到点击 Stop 停止仿真；
+- Break：中断当前编译或者仿真； 
+- Stop：在下一步或者下一时间之前停止仿真。 
+ 
+注意：使用“Run -All”与“ContinueRun”时，如果仿真工程是只有组合电路，没有使用时钟，就只能跑到仿真文件的激励的节点，不能一直运行仿真。此时如果在仿真文件添加持续的时钟输入，点击“Run -All”与“ContinueRun”时就会一直仿真。 
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693040965836.png)
+
+本例程我们选择仿真时间为 10us，如下图所示，单击右边的运行按钮。
+运行后的结果如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_17_.jpg)
+
+这里将会对 ModelSim 软件中几个常用小工具进行简单的讲解。
+- 上图红框中的几个放大镜模样的工具分别是放大、缩小和全局显示功能，鼠标放到图标上会显示出它们的快捷键。
+- 上图红框中黄色图标是用来在波形图上添加用来标志的黄色竖线，紧跟着的是将添加的黄色竖线对齐到信号的下降沿和上升沿。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693041130450.png)
