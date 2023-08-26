@@ -95,6 +95,7 @@ endmodule
 在 modelsim 中建立 project，选择 File->New->Project
 - 在“Project Name”栏中填写工程名，建议和仿真的文件一样
 -  “Project Location”是Modelsim仿真工程路径，这里统一路径为工程下的 sim 文件夹
--  下面两部分是用来设置仿真库名称和路径的，这里我们使用默认
-- 我们点击【OK】按钮，弹出如下图所示界面：
+- 下面两部分是用来设置仿真库名称和路径的，这里我们使用默认
+- 点击【OK】
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_7_.jpg)
