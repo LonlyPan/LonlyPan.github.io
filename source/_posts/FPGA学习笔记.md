@@ -42,6 +42,49 @@ categories: 01-专业
 - 一般RTL文件名：工程名.v
 - 仿真文件名：vtf_工程名_test.v
 
+led.v RTL代码
+```
+module led(
+    input key,
+    output led
+);
+
+assign led = ~key;
+
+endmodule
+```
+
+vtf_led_test.v 仿真代码
+```
+`timescale 1ns/1ns
+
+module vtf_led_test();
+
+reg key;
+wire led;
+
+initial begin 
+    key <= 1'b1;
+
+    #200
+    key  <= 1'b1;
+    #1000
+    key  <= 1'b0;
+    #600
+    key  <= 1'b1;
+    #1000
+    key  <= 1'b0;
+end
+
+led uut(
+    .key(key),
+    .led(led)
+);
+
+endmodule
+```
+
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_4_.jpg)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_5_.jpg)
