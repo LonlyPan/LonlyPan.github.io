@@ -13,6 +13,79 @@ categories: 01-专业
 
 <!--more-->
 
+# 软件下载与安装
+
+## Vivado软件
+
+热知识：XILINX 被 AMD 收购了 ~如果你对该事件比较感兴趣，不妨看看： https://www.amd.com/en/corporate/xilinx-acquisition
+Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设计环境。 
+其包括高度集成的设计环境和新一代从系统到 IC 级的工具，赛灵思构建的 Vivado 工具把各
+
+### 下载
+
+进入官网下载：[Vivado ML 开发者工具](https://china.xilinx.com/support/download/index.html/content/xilinx/zh/downloadNav/vivado-design-tools.html)
+最新版不稳定，推荐下载旧版本，这里选择正点原子用的最新版。进入历史版本中下载旧版本。选择2020.2版本下载，Windows在线安装包
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_20_.jpg)
+
+下载需要登录Xilinx。如果已有Xilinx账户，直接填写账号和密码登录；如果没有账户，则点击“创建账号”即可免费创建一个新账号。如图B.4所示。
+
+ 1. 点击创建密码：随后会转到登陆界面，直接点击 "创建密码" 进入注册页面
+ 2. 账户创建：填写姓名以及邮箱，这里填的邮箱是用来接收验证信息的，所以一定要填一个能用的邮箱。然后选择语言首选项和位置，上面的信息其实除了邮箱都可以随便填。最后进行完谷人机身份验证后，点击 Submit 提交即可。 
+ 3. 激活账户：访问令牌在你的邮箱中，如果你没有收到邮件，可以点击黑色按钮 "重新发送电子邮件"。 设置密码这块比较烦，长度必须包含10且需要包含 1个大写字母，1个小写字母，1个数字，1个特殊字符。这里不得不吐槽一下，是真的很麻烦。
+ 4. 登陆账号：激活账户后，会跳转到登录页面。此时输入刚才的邮箱和密码即可登陆。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_21_.jpg)
+认证个人信息：下载之前还需要再次填写个人信息，简单地填一下，然后点击 Download 按钮就可以下载了。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_22_.jpg)
+
+### 安装
+
+1. 打开安装包：下完完毕后我们打开安装包进行安装：
+2. 如果弹出 Windows 安全中心警报，点击 允许访问 即可：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_23_.jpg)
+3. 点击 Next >  
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_24_.jpg)
+4. 再次输入账号密码：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_25_.jpg)
+5. 选择要安装的软件：这里选择Viavad
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_26_.jpg)
+6. 选择版本：这里选择Design Edition版本即可
+  a. System Edition是面向大型系统设计的版本，具有高级功能，如高速原理图布局和高速系统级设计。System Edition包含有system generator for dsp with matlab工具。
+  b. Design Edition是面向常规设计的版本，提供了大多数设计所需的功能。
+  c. HL WebPACK Edition是免费版本，限制了一些高级功能。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_27_.jpg)
+7. 选择工具组件和器件库。为了节省存储空间，我们将用不到的工具组件和器件库去掉，如下图所示： 
+最下面的“Disk Space Required”表示在当前选项下 Vivado 在安装完成后所占用的磁盘空间大小， Vivado 对硬盘存储空间的占用相对来说还是挺大的。
+点击 Next，进入安装目录设置页面，如下图所示： 
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_28_.jpg)
+8. 同意许可
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_29_.jpg)
+9. 图中红色方框内是对安装目录的设置，可以点击后面的三个点来修改安装目录（注意，安装路径只能够包含字母、数字、下划线，否则安装程序有可能出问题）。其他的设置保持默认即可。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_30_.jpg)
+10. 进入 Summary 界面，该界面总结了前面所有安装的配置信息，供用户浏览确认。确认无误后，点击“Install”开始安装 Vivado 设计套件，如下图所示。（由于 Vivado 在安装期间会占用大量的电脑CPU 资源和内存资源，所以笔者建议在开始安装之前，尽量关闭电脑中其他的不必要的应用软件）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_31_.jpg)
+11. 等待软件安装完成
+这可能会是一个漫长的等待，长到令人窒息，就像是安装核弹发射系统一样。
+期间可能会弹出下载失败，重试后依旧提示下载失败，此时可以点击 Cancel取消安装，重新安装即可。软件会保留已下载的文件，所以不会重头开始。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_32_.jpg)
+12. 在这期间可能会弹出 Windows 安全中心：信任安装即可。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_33_.jpg)
+
+### License注册
+
+下载License文件，并解压
+
+运行Vivado 软件，进入License管理
+点击copy license，选择下载的文件
+在View License Status 中查看是否成功，有效期至2037
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_34_.jpg)
+
+### 参考资料：[（一） vivado2018.3安装注册指南](https://blog.csdn.net/weixin_42668358/article/details/125512721)
+
+
+## Modelsim软件
+
 # FPGA 开发流程
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1692973462775.png)
@@ -193,11 +266,64 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 
 ### 1、新建工程
 - 名称要能反应出工程所实现的功能，本次工程实现了点亮 LED 的功 能，因此项目名称命名为“led”。
-- 工程路径是我们在 7.2 小结中新建的 led/prj 文件夹，
-- 取消默认勾选了 “Create project subdirectory”选项。如果勾选，就会使用工程名自动创建一个工程文件夹，我们自己有工程管理文件夹，所以不需要创建新的
+- 工程路径是我们在 7.2 小结中新建的 led/prj 文件夹，工程路径不能包含中文、空格或者其它一些特殊的符 号，尽量使用英文、数字和下划线，否则工程会创建失败。
+- 取消默认勾选了 “Create project subdirectory”选项。如果勾选，Vivado 会在所选工程目录下自动创建一个与工程名同名的文件夹，用于存放工程内的各种文件。我们在前面已经做了统一的工程管理，所以我们取消该选项的勾选状态。
 
-需要说明的是，工程路径不能包含中文、空格或者其它一些特殊的符 号，尽量使用英文、数字和下划线，否则工程会创建失败。工程名和路径的设置如下图所示
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_18_.jpg)
+
+1. “RTL Project”是指按照正常设计流程所选择的类型，这也是常用的一种类型。
+  a. “Do not specify sources at this time”：用于设置是否在创建工程向导的过程中添加设计文件，如果勾选后，则不创建或者添加设计文件，我们后续需要添加设计文件，所以不勾选该选项。该选项勾选则结果就是直接跳过下一步：添加源文件。
+  b. “Project is an extensible Vitis platform”：创建的工程是否需要扩展 Vitis 开发平台，点亮 LED等实验不需要 Vitis 开发平台。所以这个选项我们也不需要勾选。
+2. “Post-synthesis Project”在导入第三方工具所产生的综合后网表时才选择；
+3. “I/O Planning Project”一般用于在开始 RTL 设计之前，创建一个用于早期 IO 规划和器件开发的空工程；
+4. “Imported Project” 用于从 ISE、 XST 或 Synopsys Synplify 导入现有的工程源文件；
+5. “Example Project”是指创建一个 Vivado 提供的工程模板。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_19_.jpg)
+
+
+选择了“RTL Project”后，我们点击“Next”，进入添加源文件页面。注意，如果勾选中图 7.3.53 中“RTL Project”下的“Do not specify sources at this time”，则不会出现添加源文件的界面。
+1. 源文件编程语言有“ VHDL”与“Verilog”两种，我们所有工程的编程语言都选择“Verilog”语言。
+2. 仿真文件的编程语言选择有“VHDL”、“Verilog”与“Mixed”三种选择。这里选择默认的混合编程语言“Mixed”。
+3. 点击上图中“ +”后会下拉三个选项，分别是添加源文件（Add Source Files）、添加源文件夹（Add Source Directories）以及新建源文件（Create Source File），与④处三个选项的功能是一样的。
+>添加源文件的作用：有的设计可能是先使用Modesim，进行设计和仿真，然后再使用Vivado进行完整工程开发。这样我们就可以直接添加设计文件，不需要再重新编写了。
+源文件的添加时链接方式，不是复制，所以最好将文件复制到工程目录下
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_35_.jpg)
+ 
+
+
+添加约束文件，与添加源文件一样。一般是创建完工程后再创建/添加约束文件
+ 
+AC7010C 核心板采用的是 Xilinx 的 Zynq7000 系列 XC7Z010-1CLG400C 作为核心处理器
+xc7z010clg400-1
+
+下面介绍 Vivado 工程主界面中的几个主要子窗口：
+1. Flow Navigator。 Flow Navigator 提供对命令和工具的访问，其包含从设计输入到生成比特流的整个过程。 在点击了相应的命令时，整个 Vivado 工程主界面的各个子窗口可能会作出相应的更改。功能窗口。
+2. 数据窗口区域。默认情况下， Vivado IDE 的这个区域显示的是设计源文件和数据相关的信息。类似与工程目录
+  a. Sources 窗口： 显示层次结构（Hierarchy）、 IP 源文件（IP Sources）、库（Libraries）和编译顺序（Compile Order）的视图。
+  b. Netlist 窗口： 提供分析后的（elaborated）或综合后的（synthesized）逻辑设计的分层视图。
+3. Properties 窗口： 显示有关所选逻辑对象或器件资源的特性信息。
+4. 工作空间（Workspace）： 工作区显示了具有图形界面的窗口和需要更多屏幕空间的窗口，包括：
+● Project Summary。提供了当前工程的摘要信息，它在运行设计命令时动态地更新。
+● 用于显示和编辑基于文本的文件和报告的 Text Editor。
+● 原理图（Schematic）窗口。
+● 器件（Device）窗口。
+● 封装（Package）窗口。
+5. 结果窗口区域：在 Vivado IDE 中所运行的命令的状态和结果，显示在结果窗口区域中，这是一组子窗口的集合。在运行命令、生成消息、创建日志文件和报告文件时，相关信息将显示在此区域。默认情况下，此区域包括以下窗口：
+● Tcl Console： 允许您输入 Tcl 命令，并查看以前的命令和输出的历史记录。
+● Messages： 显示当前设计的所有消息，按进程和严重性分类，包括“Error”、“CriticalWarning”、“Warning”等等
+● Log： 显示由综合、实现和仿真 run 创建的日志文件。
+● Reports： 提供对整个设计流程中的活动 run 所生成的报告的快速访问。
+● Designs Runs： 管理当前工程的 runs。
+6. 主工具栏： 主工具栏提供了对 Vivado IDE 中最常用命令的单击访问。
+7. 主菜单： 主菜单栏提供对 Vivado IDE 命令的访问。
+8. 窗口布局（Layout）选择器： Vivado IDE 提供预定义的窗口布局，以方便调用设计过程中的各种窗口。布局选择器使您能够轻松地更改窗口布局。或者，可以使用菜单栏中的“Layout”菜单来更改窗口布局。
+
+该弹窗有三个选择，从上到下分别是添加
+● 管脚约束文件
+● 添加源文件（ RTL 代码文件）
+● 添加仿真文件
 
 ### 2、设计输入
 
