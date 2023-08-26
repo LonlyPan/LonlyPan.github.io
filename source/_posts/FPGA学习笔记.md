@@ -1,12 +1,15 @@
 ---
 layout: post
-show_title: "FPGA学习笔记"
-title: "FPGA学习笔记"
+title: FPGA学习笔记
+index_img: ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg)
 date: 2023-08-25
-last_modified_at: 2023-08-25
-categories: c&Verilog
+updated: 2023-08-25
+hide: false
+## sticky: 100 #置顶，数字越大越靠前
+## banner_img: #/img/post_banner.jpg
+## comment: false
+categories: 01-专业
 ---
-
 
 <!--more-->
 
