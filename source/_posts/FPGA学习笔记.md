@@ -337,9 +337,8 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 5. I/O约束：对RTL中的信号映射到实际引脚中。可以在综合后
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
 6. Systhesis：综合，其实就是将RTL的原理图转成FPGA芯片的对应原理图，这个是跟FPGA实体挂钩的。也就是我们使用FPGA的可用资源实现RTL的理论设计功能。所以就存在实现综合失败的问题，也就是RTL设计所需要的资源FPGA没有（比如不可综合的Verilog代码）
-可以看出实际和理论还是不一样的。I/O输出输出都有BUF，而逻辑部分则是有LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐**FPGA原理和结构**，日本**天野英晴**编写
-这里是一定要学的，不然后面的综合会看不懂，也就无法找到错误等
-综合过后还要进行时序约束，即添加时钟
+可以看出实际和理论还是不一样的。I/O输出输出都有BUF，而逻辑部分则是有LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐**FPGA原理和结构**，日本**天野英晴**编写，这里是一定要学的，不然后面的综合会看不懂，也就无法找到错误等
+**综合过后还要进行时序约束，即添加时钟**
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693061127971.png)
 7. Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_46_.jpg)
