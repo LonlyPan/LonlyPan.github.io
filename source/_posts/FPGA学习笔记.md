@@ -329,8 +329,8 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 
 这里着重讲解以下Flow Navigator。其包含从设计输入到生成比特流的整个过程。也就意味着这是一般的设计流程
 
-1. Project manager：工程管理，新建文档等
-2. IP INTEGRATOR：IP核设计，类似与设计好的库，这个一般在后期用到，可选
+1. Project manager：工程管理，新建文档等，也就是源码
+2. IP INTEGRATOR：IP核设计，类似与设计好的库，这个一般在后期用到，可选。这个本质上也是Verilog源码
 3. Simulation：仿真，可选。正在原子的设计流程视在Modelsim中仿真，所以Vivado中就不需要这一步了。这里的仿真其实就是使用的Modelsim，是厂家集成到Vivado的，当然功能后速度都会相对差一些
 4. RTL analysis：RTL分析，会将我们编写的代码转换成RTL原理图（理论上的原理图，和FPGA硬件无关的）
    ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693060912071.png)
