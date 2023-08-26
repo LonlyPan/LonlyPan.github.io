@@ -291,18 +291,22 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_35_.jpg)
  
-
+因为我们已经编写好了源文件，所以这里我们直接选择“Add Files”按钮添加，
+如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_40_.jpg)
 
 添加约束文件，与添加源文件一样。一般是创建完工程后再创建/添加约束文件
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_41_.jpg)
  
-AC7010C 核心板采用的是 Xilinx 的 Zynq7000 系列 XC7Z010-1CLG400C 作为核心处理器
-xc7z010clg400-1
+ 
+接下来选择开发板的芯片型号，我们可以直接在搜索框中输入完整的芯片型号，大家根据自己所使用 的 ZYNQ 核心板型号进行选择，这里我们输入“xc7z020clg400-2”，也可以根据芯片本身的所在系列、封装、速度等级以及工/商业级等信息进行选择。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_42_.jpg)
 
 下面介绍 Vivado 工程主界面中的几个主要子窗口：
 1. Flow Navigator。 Flow Navigator 提供对命令和工具的访问，其包含从设计输入到生成比特流的整个过程。 在点击了相应的命令时，整个 Vivado 工程主界面的各个子窗口可能会作出相应的更改。功能窗口。
 2. 数据窗口区域。默认情况下， Vivado IDE 的这个区域显示的是设计源文件和数据相关的信息。类似与工程目录
-  a. Sources 窗口： 显示层次结构（Hierarchy）、 IP 源文件（IP Sources）、库（Libraries）和编译顺序（Compile Order）的视图。
-  b. Netlist 窗口： 提供分析后的（elaborated）或综合后的（synthesized）逻辑设计的分层视图。
+	1. Sources 窗口： 显示层次结构（Hierarchy）、 IP 源文件（IP Sources）、库（Libraries）和编译顺序（Compile Order）的视图
+	2. Netlist 窗口： 提供分析后的（elaborated）或综合后的（synthesized）逻辑设计的分层视图。
 3. Properties 窗口： 显示有关所选逻辑对象或器件资源的特性信息。
 4. 工作空间（Workspace）： 工作区显示了具有图形界面的窗口和需要更多屏幕空间的窗口，包括：
 ● Project Summary。提供了当前工程的摘要信息，它在运行设计命令时动态地更新。
@@ -320,14 +324,22 @@ xc7z010clg400-1
 7. 主菜单： 主菜单栏提供对 Vivado IDE 命令的访问。
 8. 窗口布局（Layout）选择器： Vivado IDE 提供预定义的窗口布局，以方便调用设计过程中的各种窗口。布局选择器使您能够轻松地更改窗口布局。或者，可以使用菜单栏中的“Layout”菜单来更改窗口布局。
 
-该弹窗有三个选择，从上到下分别是添加
-● 管脚约束文件
-● 添加源文件（ RTL 代码文件）
-● 添加仿真文件
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_43_.jpg)
 
+
+这里着重讲解以下Flow Navigator。其包含从设计输入到生成比特流的整个过程。也就意味着这是一般的设计流程
+
+1. Project manager：工程管理，新建文档等
+2. IP INTEGRATOR：IP核设计，类似与设计好的库，这个一般在后期用到，可选
+3. Simulation：仿真，可选。正在原子的设计流程视在Modelsim中仿真，所以Vivado中就不需要这一步了。这里的仿真其实就是使用的Modelsim，是厂家集成到Vivado的，当然功能后速度都会相对差一些，所以选择直接使用
 ### 2、设计输入
 
-### 3、分析综合
+双击 Sources→Design Sources 下的点亮 LED 灯文件，在 Vivado 软件中显示的界面如下图所示。
+
+每次保存后，Vivado 都会对源文件进行部分语法的检查，如果有语法的错误，Vivado 会给出提示。另外，在大多数情况下，Vivado IDE 会自动识别设计的顶层模块，当然，用户也可以手动指定顶层模块。从 “Sources”窗口的右击菜单中选择“Set as Top”来手动定义顶级模块。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_44_.jpg)
+
+### 3、分析与综合
 
 ### 4、设计实现
 
