@@ -20,7 +20,7 @@ categories: 01-专业
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693036157272.png)
 
-# LED
+# LED前线体验
 ## 工程管理
 
 参考正点原子
@@ -35,3 +35,5 @@ categories: 01-专业
 > 正点原子开发方式是先编写RTL代码，再modelsim中仿真，最终Vivado新建工程
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_1_.jpg)
+
+## 
