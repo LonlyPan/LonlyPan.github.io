@@ -124,9 +124,19 @@ endmodule
 - Compile Order：文件编译顺序，可以调整编译的.v 文件的编译顺序。
 -  Compile Report：编译报告，内容为当次编译的详细报告。 
 -  Compile Summary：编译摘要，执行过的编译操作都在编译摘要有记录。
--  Compile out-of-data：
- 我们单击 Compile All（编译全部）
-  编译完成后，结果如下图所示：
+-  Compile out-of-data：只重新compile有修改過的檔案 (比較節省時間，故也較常用)
+ 
+我们单击 Compile All（编译全部）
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_11_.jpg)
+
+文件编译后“Status”列可能会有三个不同状态。除了上图的用“√”表示的通过状态外，还有两个在 设计中不希望出现的状态：编译错误（显示红色的“×”）和包含警告的编译通过（对号的后面会出现一个 黄色的三角符号）。
+
+- 编译错误即 Modelsim 无法完成文件的编译工作。通常这种情况是因为被编译文件中包 含明显的语法错误
+- 编译结果中包含警告信息是一种比较特殊的状态，表示被编译的文件没有明显的语法错误，但可能包含一些影响最终输出结果的因素。这种状态在实际使用中较少出现，这类信息一般在功能仿真的时候不会带来明显的影响，不过可能会在后续的综合和时序仿真中造成无法估计的错误
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_12_.jpg)
+
+### 4、仿真
+
 
