@@ -24,7 +24,7 @@ categories: c&Verilog
 # LED
 ## 工程管理
 
-参考整点原子
+参考正点原子
 
  1. doc：开发过程中使用的辅助文档文件（如绘图软件绘制的波形图文件等）
  2. prj：新建工程及产生的文件（Vivado工程）
@@ -33,6 +33,6 @@ categories: c&Verilog
 
 工程路径除了英文、数字以及下划线等，不要出现中文或者其它特殊字符，否则 FPGA 开发工具无法识别工程路径
 
-整点原子开发时先在 编写RTL代码，再modelsim中仿真，最终Vivado新建工程
+==正点原子开发时先在 编写RTL代码，再modelsim中仿真，最终Vivado新建工程 #F44336==
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_1_.jpg)
