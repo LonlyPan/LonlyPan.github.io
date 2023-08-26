@@ -190,3 +190,19 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693041130450.png)
 
 ## Vivado工程
+
+### 1、新建工程
+- 名称要能反应出工程所实现的功能，本次工程实现了点亮 LED 的功 能，因此项目名称命名为“led”。
+- 工程路径是我们在 7.2 小结中新建的 led/prj 文件夹，
+- 取消默认勾选了 “Create project subdirectory”选项。如果勾选，就会使用工程名自动创建一个工程文件夹，我们自己有工程管理文件夹，所以不需要创建新的
+
+需要说明的是，工程路径不能包含中文、空格或者其它一些特殊的符 号，尽量使用英文、数字和下划线，否则工程会创建失败。工程名和路径的设置如下图所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_18_.jpg)
+
+### 2、设计输入
+
+### 3、分析综合
+
+### 4、设计实现
+
+### 5、下载
