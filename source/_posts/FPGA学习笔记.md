@@ -434,6 +434,10 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 这里我们打开实现设计
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_54_.jpg)
 
-进入实现设计界 面，如下图所示：左边的“Netlist”窗口中有“Nets”与“Leaf Cells”，点击“Nets”与“Leaf Cells”下面的选项， 右边的器件图会高亮对应模块，所以实现设计将代码映射到了 FPGA 底层资源上。 这时我们再次查看“Design Runs”窗口中的实现结果，如下图所示：
+进入实现设计界 面，如下图所示：左边的“Netlist”窗口中有“Nets”与“Leaf Cells”，点击“Nets”与“Leaf Cells”下面的选项， 右边的器件图会高亮对应模块，所以实现设计将代码映射到了 FPGA 底层资源上。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_55_.jpg)
+
+ 这时我们再次查看“Design Runs”窗口中的实现结果，如下图所示：已经全部实现完成，没有错误
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065880313.png)
+
 ### 5、下载
