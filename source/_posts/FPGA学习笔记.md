@@ -15,11 +15,7 @@ categories: 01-专业
 
 # FPGA 开发流程
 
-## 正点原子
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1692973462775.png)
-
-## 实际工作
-
 
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693036157272.png)
