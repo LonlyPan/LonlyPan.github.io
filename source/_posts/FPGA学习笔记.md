@@ -9,3 +9,7 @@ categories: c&Verilog
 
 
 <!--more-->
+
+# FPGA 开发流程
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1692973462775.png)
+
