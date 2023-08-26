@@ -39,5 +39,16 @@ categories: 01-专业
 ## 需求分析-系统设计-模块设计-波形图-RTL代码-Modelsim仿真代码
 
 建议直接在Modelsim编写代码，可以实时编译检测错误
+- 一般RTL文件名：工程名.v
+- 仿真文件名：vtf_工程名_test.v
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_4_.jpg)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_5_.jpg)
 
 ## Modelsim仿真
+
+在 modelsim 中建立 project，选择 File->New->Project，如下图所示：
+在“Project Name”栏中填写工程名，建议和仿真的文件一样
+这里我们把工程命名为“tb_led”，也就是在点亮 LED 灯模块名“led”前面添加“tb_”。 “Project Location”是工程路径，可以根据需要把工程保存到不同的位置，我们这里统一路径为工程下的 sim 文件夹，即选择的路径 C:/Desktop/led/sim。下面这两部分是用来设置仿真库名称和路径的，这里我们使用默 认即可。设置好工程名、工程位置，我们点击【OK】按钮，弹出如下图所示界面：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_7_.jpg)
