@@ -338,7 +338,7 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
 6. Systhesis：综合，其实就是将RTL的原理图转成FPGA芯片已有资源的对应原理图，这个是跟FPGA实体挂钩的。所以就存在实现综合失败的问题，也就是RTL设计所需要的资源FPGA没有（比如不可综合的Verilog代码）
 可以看出RTL和综合后是不一样的。I/O输出输出都有BUF，而逻辑部分则是由LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐**FPGA原理和结构**，日本**天野英晴**编写，这里是一定要学的，不然后面的综合会看不懂
-**综合过后还要进行时序约束，即添加时钟**
+**综合过后还要进行时序约束，即添加时钟，纯组合电路不需要添加**
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693061127971.png)
 7. Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_46_.jpg)
@@ -365,6 +365,29 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 ### 4、I/O约束
 
 在右上角的窗口布局（Layout）选择器中选择“I/O Planing”，如 下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_49_.jpg)
+
+此时，窗口布局会打开 IO 相关的子窗口，在其中的“I/O Ports”窗口中，就可以进行 IO 的分配了。
+- Name：工程中顶层端口的名称。 
+- Direction：说明管脚是输入还是输出。 
+- Neg Diff Pair：负差分对，差分信号在 I/O Ports 窗口中只显示在一行里中（只会显示 P 端信号，N 端 信号显示在 Neg Diff Pair 属性栏中）。 
+- Package Pin：配置管脚封装。
+-  Fixed：每一个端口都有 Fixed 属性，表明该逻辑端口是由用户赋值的。端口必须保持锁定状态，才能 避免生成比特流时不会发生错误。 
+-  Bank，I/O Std，Vcco，Slew Type，Drive Strength：显示 I/O 端口的参数值。 
+-  Bank：显示管脚所在的 Bank。 
+-  I/O Std：配置管脚的电平标准，常用电平标准有 LVTTL 和 LVCMOS、SSTL、LVDS 与 HSTL 等。
+-  Vcco：选择的管脚的电压值。
+-  Vref：在我们的设计中，硬件上 VREF 引脚悬空。 
+-  Drive Strength：驱动强度，默认 12mA。 
+-  Slew Type：指上升下降沿的快慢，设置快功耗会高一点，默认设置慢（slow）。 
+-  Pull Type：管脚上下拉设置，有上拉、下拉、保持与不设置。 
+-  Off-Chip Termination：终端阻抗，默认 50Ω。 
+-  IN-TERM：是用于 input 的串联电阻。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693062578219.png)
+
+领航者开发板提供了 IO 引脚总表，在如下图所示位置
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_50_.jpg)
+
 
 与综合
 
