@@ -343,6 +343,8 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 7. Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_46_.jpg)
 8. Program and Debug：程序下载与调试
+
+
 ### 2、设计输入
 
 双击 Sources→Design Sources 下的点亮 LED 灯文件，在 Vivado 软件中显示的界面如下图所示。
@@ -350,8 +352,20 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 每次保存后，Vivado 都会对源文件进行部分语法的检查，如果有语法的错误，Vivado 会给出提示。另外，在大多数情况下，Vivado IDE 会自动识别设计的顶层模块，当然，用户也可以手动指定顶层模块。从 “Sources”窗口的右击菜单中选择“Set as Top”来手动定义顶级模块。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_44_.jpg)
 
-### 3、分析与综合
+### 3、RTL分析
 
-### 4、设计实现
+代码输入完毕之后，就可以对设计进行分析（Elaborated）了。点击“Flow Navigator”窗口中的 “Open Elaborated Design”按钮，如下图所示。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693062258069.png)
+
+此时，Vivado 会编译 RTL 源文件并进行全面的语法检查，并在 Messages 窗口中给出相应的“Error” 和“Warning”。打 开分析后（Elaborated）的设计，Vivado 会生成顶层原理图视图，并在默认 view layout 中显示设计，如下 图所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_47_.jpg)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_48_.jpg)
+### 4、I/O约束
+
+与综合
+
+4、设计实现
 
 ### 5、下载
