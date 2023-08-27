@@ -90,6 +90,11 @@ Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设�
 
 ## Modelsim软件
 
+### Tab缩进修改
+
+Tools->edit preferences->by name->source->tabs
+双击 tabs，软件默认为8，我改成了4
+
 # FPGA 开发流程
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1692973462775.png)
