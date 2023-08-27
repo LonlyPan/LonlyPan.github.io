@@ -572,11 +572,21 @@ parameter DATA_WIDTH = 8; //数据位宽为8位
 ### 逻辑运算符
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_59_.jpg)
 ### 条件运算符
-
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_60_.jpg)
 ### 位运算符
-
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_61_.jpg)
 ### 移位运算符
-
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_62_.jpg)
 ### 拼接运算符
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_63_.jpg)
+
+``` Verilog
+A = 4'b1010 ;
+B = 1'b1 ;
+Y1 = {B, A[3:2], A[0], 4'h3 };  //结果为Y1='b1100_0011
+Y2 = {4{B}, 3'd4};  //结果为 Y2=7'b111_1100
+Y3 = {32{1'b0}};  //结果为 Y3=32h0，常用作寄存器初始化时匹配位宽的赋初值
+```
 
 ### 运算符的优先级
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_64_.jpg)
