@@ -94,6 +94,7 @@ Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设�
 
 Tools->edit preferences->by name->source->tabs
 双击 tabs，软件默认为8，我改成了4
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693140353582.png)
 
 # FPGA 开发流程
 
@@ -919,6 +920,13 @@ FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功�
 # 实战
 
 ## 流水灯
+
+系统时钟 sys_clk 的时钟周期为 20ns（对应开发板板载的晶振频率为 50Mhz），计数器计时 0.5s 需要 0.5s/20ns=500000000ns/20ns = 25000000 个时钟周期，由于计数器是从 0 开始计数，所以计数器最大计数到 25000000-1，刚好是 0.5s。
+由此绘制出 flow_led 模块的波形图如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693140534588.png)
+
+### 编写代码 
+计数器 cnt 实现计时的功能，其赋值在时序逻辑 always 语句中完成。对 led 的赋值同样在时序逻辑 always 语句中完成，由于流水灯的效果是依次按顺序点亮其中一个 LED 灯，所以可以通过移位的方式实 现。当 cnt 计数到最大值时，对 led 端口实现一次移位的操作。流水灯（flow_led.v）代码编写如下：
 
 ## 按键LED
 
