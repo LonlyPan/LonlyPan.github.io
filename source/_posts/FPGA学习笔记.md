@@ -25,7 +25,8 @@ Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设�
 
 进入官网下载：[Vivado ML 开发者工具](https://china.xilinx.com/support/download/index.html/content/xilinx/zh/downloadNav/vivado-design-tools.html)
 最新版不稳定，推荐下载旧版本，这里选择正点原子用的最新版。进入历史版本中下载旧版本。选择2020.2版本下载，Windows在线安装包
-
+链接：https://pan.baidu.com/s/1KEUWDPlV64QAQfiWLWoA4A?pwd=6666 
+提取码：6666
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_20_.jpg)
 
 下载需要登录Xilinx。如果已有Xilinx账户，直接填写账号和密码登录；如果没有账户，则点击“创建账号”即可免费创建一个新账号。如图B.4所示。
@@ -75,6 +76,9 @@ Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设�
 ### License注册
 
 下载License文件，并解压
+
+链接：https://pan.baidu.com/s/1TZAkoJbpQlLIIuMnWuXdCg?pwd=6666 
+提取码：6666
 
 运行Vivado 软件，进入License管理
 点击copy license，选择下载的文件
@@ -484,3 +488,54 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 > 2．Vivado Design Suite User Guide: DesignAnalysis and Closure Techniques(UG906
 
 # Verilog语法
+
+## Verilog 和 C 的区别 
+Verilog 是硬件描述语言，在编译下载到 FPGA 之后，会生成电路，所以 Verilog 全部是**并行处理与运行**的；C 语言是软件语言，编译下载到单片机/CPU 之后，还是**软件指令**，而不会根据你的代码生成相应的硬件电路，而**单片机/CPU 处理软件指令需要取址、译码、执行，是串行执行的**。 Verilog 和 C 的区别也是 FPGA 和单片机/CPU 的区别，由于 FPGA 全部并行处理，所以处理速度非常快，这个是 FPGA 的最大优势，这一点是单片机/CPU 替代不了的。
+
+## Verilog 基础知识
+
+### Verilog 的逻辑值
+逻辑 0：表示低电平，也就是对应我们电路的 GND； 逻辑 1：表示高电平，也就是对应我们电路的 VCC； 逻辑 X：表示未知，有可能是高电平，也有可能是低电平； 逻辑 Z：表示高阻态，外部没有激励信号是一个悬空状态。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_56_.jpg)
+
+### Verilog 的标识符 
+- 定义 
+标识符(identifier）用于定义模块名、端口名和信号名等。Verilog 的标识符可以是任意一组字母、数 字、$和_(下划线)符号的组合，但标识符的第一个字符必须是字母或者下划线。另外，标识符是区分大小 写的。以下是标识符的几个例子： 
+Count 
+COUNT //与 Count 不同。 
+R56_68 
+FIVE$ 
+- 推荐写法如下： 
+  count fifo_wr 不建议大小写混合使用，普通内部信号建议全部小写，参数定义建议大写，另外信号命名最好体现信 号的含义。 规范建议 以下是一些书写规范的要求： 
+	- 1、用有意义的有效的名字如 sum、cpu_addr 等。 
+	- 用下划线区分词语组合，如 cpu_addr。 
+	- 采用一些前缀或后缀，比如：时钟采用 clk 前缀：clk_50m，clk_cpu；低电平采用_n 后缀： enable_n； 
+	- 统一缩写，如全局复位信号 rst。 
+	- 同一信号在不同层次保持一致性，如同一时钟信号必须在各模块保持一致。 
+	- 自定义的标识符不能与保留字（关键词）同名。 
+	- 参数统一采用大写，如定义参数使用 SIZE。
+
+### Verilog 的数字进制格式 
+Verilog 数字进制格式包括二进制、八进制、十进制和十六进制，一般常用的为二进制、十进制和十六 进制。 
+- 二进制表示如下：4’b0101 表示 4 位二进制数字 0101； 
+- 十进制表示如下：4’d2 表示 4 位十进制数字 2（二进制 0010）； 
+- 十六进制表示如下：4’ha 表示 4 位十六进制数字 a（二进制 1010），十六进制的计数方式为 0，1， 2…9，a，b，c，d，e，f，最大计数为 f（f：十进制表示为 15）。 
+
+当代码中没有指定数字的位宽与进制时，**默认为 32 位的十进制**，比如 100，实际上表示的值为 32’d100。
+
+### Verilog 的数据类型
+在 Verilog 语法中，主要有三大类数据类型，即寄存器类型、线网类型和参数类型。从名称中，我们可以看出，真正在数字电路中起作用的数据类型应该是寄存器类型和线网类型。
+
+1. 寄存器类型
+- 寄存器类型表示一个抽象的**数据存储单元**，它**只能在 always 语句和 initial 语句中被赋值**。
+- 如果语句描述的是**时序逻辑**，即 always 语句带有时钟信号，则该**寄存器变量对应为寄存器**
+- 如果语句描述的是组合逻辑，即 always 语句不带有时钟信 号，则该**寄存器变量对应为硬件连线**
+- 寄存器类型的**缺省值是 x**（未知状态）。
+- 寄存器数据类型有很多种，如 reg、integer、real 等，其中最常用的就是 reg 类型，它的使用方法如 下
+
+``` verilog
+//reg define
+reg [31:0] delay_cnt; //延时计数器 32位的
+reg key_flag ; //按键标志
+```
