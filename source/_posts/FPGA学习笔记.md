@@ -811,4 +811,96 @@ Verilog 是硬件描述语言，硬件电路是并行执行的，当需要按照
 摩尔状态机的模型如下图所示，对比米勒状态机的模型可以发现，其区别在于米勒状态机的输出由当 前状态和输入条件决定的，而摩尔状态机的输出只取决于当前状态。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_66_.jpg)
 
+## 模块化设计
+
+FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功能子模块，Verilog 通过模块调用或称为**模块实例化**的方式来实现这些子模块与高层模 块的连接，有利于简化每一个模块的代码，易于维护和修改。 下面以一个实例(静态数码管显示实验)来说明模块和模块之间的例化方法。
+在静态数码管显示实验中，我们根据功能将 FPGA 顶层例化了以下两个模块：计时模块 （time_count）和数码管静态显示模块（seg_led_static），如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693108804140.png)
+
+计时模块部分代码如下所示：
+
+``` verilog
+1 module time_count(
+2 	input clk , // 时钟信号
+3 	input rst_n , // 复位信号
+4
+5 	output reg flag // 一个时钟周期的脉冲信号
+6 );
+7
+8 //parameter define
+9 parameter MAX_NUM = 25000_000; // 计数器最大计数值
+……
+34 endmodule
+```
+
+数码管静态显示模块部分代码如下所示：
+
+``` verilog
+1 module seg_led_static (
+2 input clk , // 时钟信号
+3 input rst_n , // 复位信号（低有效）
+4
+5 input add_flag, // 数码管变化的通知信号
+6 	output reg [5:0] sel , // 数码管位选
+7 	output reg [7:0] seg_led // 数码管段选
+8 );
+……
+66 endmodule
+```
+
+顶层模块代码如下所示：
+
+``` basic
+1 module seg_led_static_top (
+2 	input sys_clk , // 系统时钟
+3 	input sys_rst_n, // 系统复位信号（低有效）
+4
+5 	output [5:0] sel , // 数码管位选
+6 	output [7:0] seg_led // 数码管段选
+7
+8 );
+9
+10 //parameter define
+11 parameter TIME_SHOW = 25'd25000_000; // 数码管变化的时间间隔0.5s
+12
+13 //wire define
+14 wire add_flag; // 数码管变化的通知信号
+15
+16 //*****************************************************
+17 //** main code
+18 //*****************************************************
+19
+20 //例化计时模块
+21 time_count #(
+22 	.MAX_NUM (TIME_SHOW)
+23 ) u_time_count(
+24 	.clk (sys_clk ),
+25 	.rst_n (sys_rst_n),
+26
+27 	.flag (add_flag )
+28 );
+29
+30 //例化数码管静态显示模块
+31 seg_led_static u_seg_led_static (
+32 	.clk (sys_clk ),
+33 	.rst_n (sys_rst_n),
+34
+35 	.add_flag (add_flag ),
+36 	.sel (sel ),
+37 	.seg_led (seg_led )
+38 );
+39
+40 endmodule
+```
+上面贴出了顶层模块的完整代码，子模块只贴出了模块的端口和参数定义的代码。这是因为顶层模块对子模块做例化时，只需要知道子模块的端口信号名，而不用关心子模块内部具体是如何实现的。如果子模块内部使用 parameter 定义了一些参数，Verilog 也支持对参数的例化（也叫参数的传递），即顶层模块可以通过例化参数来修改子模块内定义的参数。 我们先来看一下顶层模块是如何例化子模块的，例化方法如下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_67_.jpg)
+上图右侧是例化的数码管静态显示模块，子模块名是指被例化模块的模块名，而例化模块名相当于标识，当例化多个相同模块时，可以通过例化名来识别哪一个例化，我们一般命名为“u_”+“子模块名”。信号 列表中“.”之后的信号是数码管静态显示模块定义的端口信号，括号内的信号则是顶层模块声明的信号，这 样就将顶层模块的信号与子模块的信号一一对应起来，同时需要注意信号的位宽要保持一致。 
+
+接下来再来介绍一下参数的例化，参数的例化是在模块例化的基础上，增加了对参数的信号定义，如 下图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_68_.jpg)
+在对参数进行例化时，在模块名的后面加上“#”，表示后面跟着的是参数列表。计时模块定义的 MAX_NUM 和顶层模块的 TIME_SHOW 都是等于 25000_000，当在顶层模块定义 TIME_SHOW=12500_000 时，那么子模块的 MAX_NUM 的值实际上是也等于 12500_000。当然即使子模 块包含参数，在做模块的例化时也可以不添加对参数的例化，这样的话，子模块的参数值等于该模块内部实际定义的值。
+
+值得一提的是，Verilog 语法中的 localparam 代表的意思同样是参数定义，用法和 parameter 基本一 致，区别在于 parameter 定义的参数可以做例化，而 localparam 定义的参数是指本地参数，上层模块不可 以对 localparam 定义的参数做例化。
+
+
 
