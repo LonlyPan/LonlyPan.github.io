@@ -786,3 +786,7 @@ latch 的主要危害是会产生毛刺（glitch），这种毛刺对下一级�
 只有不带时钟的 always 语句 if 或者 case 语句不完整才会产生 latch，带时钟的if语句或者 case 语句不完整描述不会产生 latch。
 下面为缺少 else 分支的带时钟的 always 语句和不带时钟的 always 语句，通过实际产生的电路图可以看到第二个是有一个 latch 的，第一个仍然是普通的带有时钟的寄存器。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693108087767.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693108239893.png)
+
+## 状态机
