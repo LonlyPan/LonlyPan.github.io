@@ -302,7 +302,8 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 添加约束文件，与添加源文件一样。一般是创建完工程后再创建/添加约束文件
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_41_.jpg)
  
- 
+> 源文件的添加时链接方式，不是复制，所以最好将文件复制到工程目录下
+> 
 接下来选择开发板的芯片型号，我们可以直接在搜索框中输入完整的芯片型号，大家根据自己所使用 的 ZYNQ 核心板型号进行选择，这里我们输入“xc7z020clg400-2”，也可以根据芯片本身的所在系列、封装、速度等级以及工/商业级等信息进行选择。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_42_.jpg)
 
