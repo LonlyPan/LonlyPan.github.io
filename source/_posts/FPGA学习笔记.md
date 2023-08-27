@@ -596,3 +596,64 @@ Y3 = {32{1'b0}};  //结果为 Y3=32h0，常用作寄存器初始化时匹配位
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693106957428.png)
 
 ##  程序框架
+
+``` verilog
+1 module led(
+2   input sys_clk , //系统时钟
+3   input sys_rst_n, //系统复位，低电平有效
+4   output reg [3:0] led //4位LED灯
+5 );
+6
+7 //parameter define
+8 parameter WIDTH = 25 ;
+9 parameter COUNT_MAX = 25_000_000; //板载50M时钟=20ns，0.5s/20ns=25000000，需要25bit
+10 //位宽
+11
+12 //reg define
+13 reg [WIDTH-1:0] counter ;
+14 reg [1:0] led_ctrl_cnt;
+15
+16 //wire define
+17 wire counter_en ;
+18
+19 
+20 //** main code
+21 
+22
+23 //计数到最大值时产生高电平使能信号
+24 assign counter_en = (counter == (COUNT_MAX - 1'b1)) ? 1'b1 : 1'b0;
+25
+26 //用于产生0.5秒使能信号的计数器
+27 always @(posedge sys_clk or negedge sys_rst_n) begin
+28   if (sys_rst_n == 1'b0)
+29     counter <= 1'b0;
+30   else if (counter_en)
+31     counter <= 1'b0;
+32   else
+33     counter <= counter + 1'b1;
+34   end
+35
+36 //led流水控制计数器
+37 always @(posedge sys_clk or negedge sys_rst_n) begin
+38   if (sys_rst_n == 1'b0)
+39     led_ctrl_cnt <= 2'b0;
+40   else if (counter_en)
+41     led_ctrl_cnt <= led_ctrl_cnt + 2'b1;
+42   end
+43
+44 //通过控制IO口的高低电平实现发光二极管的亮灭
+45 always @(posedge sys_clk or negedge sys_rst_n) begin
+46   if (sys_rst_n == 1'b0)
+47     led <= 4'b0;
+48   else begin
+49     case (led_ctrl_cnt)
+50       2'd0 : led <= 4'b0001;
+51       2'd1 : led <= 4'b0010;
+52       2'd2 : led <= 4'b0100;
+53       2'd3 : led <= 4'b1000;
+54     default: ;
+56   end 
+57 end 
+58 
+59 endmodule
+```
