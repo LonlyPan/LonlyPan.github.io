@@ -764,8 +764,7 @@ always 语句可以带时钟，也可以不带时钟。在 always 不带时钟�
 55 endcase
 57 end
 ```
-在 always 带时钟信号时，这个逻辑语句才能产生真正的寄存器，如下示例 counter 就是真正的寄存
-器。
+在 always 带时钟信号时，这个逻辑语句才能产生真正的寄存器，如下示例 counter 就是真正的寄存器。
 ``` verilog
 26 //用于产生 0.5 秒使能信号的计数器
 27 always @(posedge sys_clk or negedge sys_rst_n) begin
@@ -777,3 +776,5 @@ always 语句可以带时钟，也可以不带时钟。在 always 不带时钟�
 33 counter <= counter + 1'b1;
 34 end
 ```
+
+## latch锁存器
