@@ -567,6 +567,7 @@ parameter DATA_WIDTH = 8; //数据位宽为8位
 
 ### 算术运算符
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_57_.jpg)
+
 ### 关系运算符
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_58_.jpg)
 ### 逻辑运算符
@@ -590,3 +591,8 @@ Y3 = {32{1'b0}};  //结果为 Y3=32h0，常用作寄存器初始化时匹配位
 
 ### 运算符的优先级
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_64_.jpg)
+
+### 关键字
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693106957428.png)
+
+##  程序框架
