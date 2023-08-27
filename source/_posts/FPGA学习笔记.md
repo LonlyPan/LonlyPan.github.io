@@ -537,5 +537,5 @@ Verilog 数字进制格式包括二进制、八进制、十进制和十六进制
 ``` verilog
 //reg define
 reg [31:0] delay_cnt; //延时计数器 32位的
-reg key_flag ; //按键标志
+reg key_flag ; //按键标志 默认1bit
 ```
