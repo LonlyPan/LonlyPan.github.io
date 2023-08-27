@@ -906,5 +906,9 @@ FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功�
 
 值得一提的是，Verilog 语法中的 localparam 代表的意思同样是参数定义，用法和 parameter 基本一 致，区别在于 parameter 定义的参数可以做例化，而 localparam 定义的参数是指本地参数，上层模块不可 以对 localparam 定义的参数做例化。
 
+## 数字电路基础
+
+
+
 
 
