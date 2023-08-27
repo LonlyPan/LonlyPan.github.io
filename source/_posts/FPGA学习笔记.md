@@ -778,3 +778,11 @@ always 语句可以带时钟，也可以不带时钟。在 always 不带时钟�
 ```
 
 ## latch锁存器
+
+锁存器，是一种对**脉冲电平敏感**的存储单元电路。锁存器和寄存器都是基本存储单元，**锁存器是电平触发的存储器，寄存器是边沿触发的存储器**。两者的基本功能是一样的，都可以存储数据。**锁存器是组合逻辑产生的，而寄存器是在时序电路中使用**，由时钟触发产生的。
+latch 的主要危害是会产生毛刺（glitch），这种毛刺对下一级电路是很危险的。并且其隐蔽性很强， 不易查出。因此在设计中，**应尽量避免 latch 的使用**。 
+代码里面出现 latch 的两个原因：在组合逻辑中，if 或者 case 语句不完整的描述，比如 if 缺少 else 分 支，case 缺少 default 分支，导致代码在综合过程中出现了 latch。解决办法就是 if 必须带 else 分支，case 必须带 default 分支。
+
+只有不带时钟的 always 语句 if 或者 case 语句不完整才会产生 latch，带时钟的if语句或者 case 语句不完整描述不会产生 latch。
+下面为缺少 else 分支的带时钟的 always 语句和不带时钟的 always 语句，通过实际产生的电路图可以看到第二个是有一个 latch 的，第一个仍然是普通的带有时钟的寄存器。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693108087767.png)
