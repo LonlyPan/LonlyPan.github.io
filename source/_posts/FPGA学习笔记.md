@@ -564,3 +564,18 @@ parameter DATA_WIDTH = 8; //数据位宽为8位
 ```
 
 ## Verilog 的运算符
+### 算术运算符
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_57_.jpg)
+### 关系运算符
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_58_.jpg)
+### 逻辑运算符
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_59_.jpg)
+### 条件运算符
+
+### 位运算符
+
+### 移位运算符
+
+### 拼接运算符
+
+### 运算符的优先级
