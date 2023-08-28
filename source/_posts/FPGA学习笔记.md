@@ -921,7 +921,7 @@ FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功�
 
 ## Modelsim联合仿真
 
-
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_1_.jpg)
 
 ## 流水灯
 
