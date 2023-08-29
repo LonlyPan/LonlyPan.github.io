@@ -528,6 +528,7 @@ I/O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬�
 > 1．Vivado Design Suite User Guide:System-Level Design Entry (UG895)。
 > 2．Vivado Design Suite User Guide: DesignAnalysis and Closure Techniques(UG906
 
+### 程序固话
 # Verilog语法
 
 ## Verilog 和 C 的区别 
