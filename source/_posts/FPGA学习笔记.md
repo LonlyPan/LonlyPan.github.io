@@ -460,13 +460,12 @@ I/O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬�
 - 时钟是在**综合后的**
 - 组合逻辑电路可以不要时钟约束
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_4_.jpg)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/20230829-1.jpg)
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_5_.jpg)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/20230829-2.jpg)
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_6_.jpg)
-
-### 6、设计实现
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/20230829-3.jpg)
+### 7、设计实现
 
 约束、综合完毕之后，就可以开始实现设计了。我们点击“Flow Navigator”窗口中的“Run Implementation”按钮，如下图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693064855050.png)
@@ -486,7 +485,7 @@ I/O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬�
  这时我们再次查看“Design Runs”窗口中的实现结果，如下图所示：已经全部实现完成，没有错误
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065880313.png)
 
-### 5、下载
+### 8、下载
 
 在下载程序之前，首先要先生成用于下载到器件中的比特流文件，该文件的后缀为“.bit”。我们点击 “Flow Navigator”窗口中的“Generate Bitstream”按钮，如下图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693065950884.png)
@@ -973,6 +972,8 @@ https://blog.csdn.net/weixin_42837669/article/details/107829499
 ### 
 
 ## 按键LED
+
+
 
 ## 按键蜂鸣器
 
