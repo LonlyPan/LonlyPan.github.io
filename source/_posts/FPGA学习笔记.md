@@ -286,8 +286,14 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 
 #### Wave窗口独立
 
-wave右上角点击 dock/undock 图标，就可以将Wave独立出来，更加方便查看b
+wave右上角点击 dock/undock 图标，就可以将Wave独立出来，更加方便查看波形
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_2_.jpg)
+
+### Wave窗口变量名路径隐藏
+
+先将Wave窗口独立出来，然后在菜单栏的 Format 菜单中修改
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg)
 
 ## Vivado工程
 
