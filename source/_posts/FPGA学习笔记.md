@@ -453,6 +453,8 @@ wave右上角点击 dock/undock 图标，就可以将Wave独立出来，更加�
 - Report Power：电源报告。 
 - Schematic：打开综合后的原理图设计。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_53_.jpg)
+### 6、时钟约束
+
 
 ### 6、设计实现
 
@@ -957,6 +959,8 @@ https://blog.csdn.net/weixin_42837669/article/details/107829499
 
 ### 编写代码 
 计数器 cnt 实现计时的功能，其赋值在时序逻辑 always 语句中完成。对 led 的赋值同样在时序逻辑 always 语句中完成，由于流水灯的效果是依次按顺序点亮其中一个 LED 灯，所以可以通过移位的方式实 现。当 cnt 计数到最大值时，对 led 端口实现一次移位的操作。流水灯（flow_led.v）代码编写如下：
+
+### 
 
 ## 按键LED
 
