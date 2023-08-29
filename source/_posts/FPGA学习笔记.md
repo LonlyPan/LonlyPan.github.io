@@ -457,9 +457,14 @@ I/O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_53_.jpg)
 ### 6、时钟约束
 
-始终约束是在综合后的
+- 时钟是在**综合后的**
+- 组合逻辑电路可以不要时钟约束
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_4_.jpg)
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_5_.jpg)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_6_.jpg)
 
 ### 6、设计实现
 
