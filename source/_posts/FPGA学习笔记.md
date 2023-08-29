@@ -282,6 +282,13 @@ SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Di
 - 上图红框中黄色图标是用来在波形图上添加用来标志的黄色竖线，紧跟着的是将添加的黄色竖线对齐到信号的下降沿和上升沿。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693041130450.png)
 
+### 软件技巧
+
+#### Wave窗口独立
+
+wave右上角点击 dock/undock 图标，就可以将Wave独立出来，更加方便查看b
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_2_.jpg)
+
 ## Vivado工程
 
 ### 1、新建工程
