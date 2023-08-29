@@ -90,11 +90,15 @@ Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设�
 
 ## Modelsim软件
 
-### 安装包：
+### 下载：
 
 一定要下载2020.4版本的，和Vivado2020.2配套，后面会联合仿真。如果版本不对应，可能会联合仿真失败
 链接：https://pan.baidu.com/s/1v4AMXQhexjFzHtdmdWaOkQ?pwd=6666 
 提取码：6666
+
+### 安装
+
+https://zhuanlan.zhihu.com/p/646172508
 
 ### Tab缩进修改
 
