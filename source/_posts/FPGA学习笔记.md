@@ -986,6 +986,8 @@ https://blog.csdn.net/weixin_42837669/article/details/107829499
 
 ## 按键蜂鸣器与分层设计
 
+vivado  自动识别顶层文件
+
 ## 触摸按键LED
 
 ## 呼吸灯
