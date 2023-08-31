@@ -1006,7 +1006,7 @@ vivado  自动识别顶层文件
 
 General Options（常规选项）主要有如下三部分： 
 1. Monitor Type：ILA 探针接口类型设置。Native 通常是用来测量电平或一定位宽信号，AXI 直接测量 AXI 总线的信号。
-	1. Number of Probes：探针数量设置，在 GUI 界面最大可设置 64 个，可以通过 TCL 脚本去生成 IP Core 超过 64 个，或者可以通过生成多个 ILA IP Core 去调试更多信号。**每个探针不是指一个信号，而是一个组**。比如AD的14位数据，就只需要一个探针，每个探针还可以设置位宽，从而测量多个同类信号。
+	1. Number of Probes：探针数量设置，在 GUI 界面最大可设置 64 个，可以通过 TCL 脚本去生成 IP Core 超过 64 个，或者可以通过生成多个 ILA IP Core 去调试更多信号。**每个探针不是指一个信号，而是一个组**。比如AD的14位数据，就只需要一个探针，每个探针还可以设置位宽，从而测量多个信号。
 	2. Sample Data Depth：采样数据深度，设置的数值越大，采样的数据越多，看到的波形数据越多，但 是最终占用的资源也会越多，并不是设置的越大越好。如图 22.6.16 所示，从下拉框也能看出最大只能设置 为 131072，这个根据实际需求进行合适的设置即可，我们这里选择设置 4096。
 	
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_6_23345.jpg)
