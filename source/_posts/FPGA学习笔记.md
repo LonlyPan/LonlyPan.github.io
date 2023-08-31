@@ -1006,12 +1006,17 @@ vivado  自动识别顶层文件
 
 General Options（常规选项）主要有如下三部分： 
 1. Monitor Type：ILA 探针接口类型设置。Native 通常是用来测量电平或一定位宽信号，AXI 直接测量 AXI 总线的信号。
-	1. Number of Probes：探针数量设置，在 GUI 界面最大可设置 64 个，可以通过 TCL 脚本去生成 IP Core 超过 64 个，或者可以通过生成多个 ILA IP Core 去调试更多信号。**每个探针不是指一个信号，而是一个组**。比如AD的14位数据，就只需要一个探针，每个探针还可以设置位宽，从而测量多个信号。
+	1. Number of Probes：探针数量设置，在 GUI 界面最大可设置 64 个，可以通过 TCL 脚本去生成 IP Core 超过 64 个，或者可以通过生成多个 ILA IP Core 去调试更多信号。每个探针还可以设置位宽，你可以测量一个多位的信号，也可以测量硬件的多个位，比如AD的14位数据。
 	2. Sample Data Depth：采样数据深度，设置的数值越大，采样的数据越多，看到的波形数据越多，但最终占用的资源也会越多，并不是设置的越大越好。
 
 探针无法探测时钟信号。
 	
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_6_23345.jpg)
+
+图中 Synthesis Options（综合选项）我们选择的是 Out of context per IP，简称 OOC。
+对于顶层设计，Vivado使用自顶向下的全局（Global）综合方式，将顶层之下的所有逻辑模块都进行 综合，但是设置为 OOC 方式的模块除外，它们独立于顶层设计而单独综合。通常在整个设计周期中，顶层设计会被多次修改并综合，但有些子模块在创建完毕之后不会因为顶层设计的修改而被修改，如 IP，它们被设置为 OOC 综合方式。OOC 模块只会在综合顶层之前被综合一次，这样在顶层的设计迭代过程中， OOC 模块就不必跟随顶层模块而一次次产生相同结果的多余综合了，所以 OOC 流程减少了设计的周期， 并消除了设计迭代，使您可以保存和重用综合结果。 
+在对顶层进行综合时，OOC 模块会被视为 黑盒子，并且不会参与到顶层的综合中来。在综合之后的编译过程中，OOC 模块的黑盒子才会被打开，这 时其网表才是可见的，并参与到全局设计的实现过程中来。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693491185010.png)
 
 
 
