@@ -1024,7 +1024,7 @@ General Options（常规选项）主要有如下三部分：
 
 ## IP核PLL
 
-> IP核在仿真时，只需要例化，并不需要
+> 
 
 Xilinx7 系列器件中的时钟资源包含了时钟管理单元 CMT（全称 Clock Management Tile，即时钟管理单 元），每个 CMT 由一个 MMCM（全称 Mixed-Mode Clock Manager，即混合模式时钟管理）和一个 PLL（全 称 Phase Locked Loop，即锁相环）组成，xc7z020 芯片内部有 4 个 CMT，xc7z010 芯片内部有 2 个 CMT。
 - PLL：为锁相回路或锁相环，用来统一整合时钟信号，使高频器件正常工作，如内存的存取数据 等。PLL 用于振荡器中的反馈技术。 
