@@ -426,6 +426,9 @@ I/O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬�
 
 这里更具开发板原理图、引脚电压等设计管教约束如下：
   ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_45_.jpg)
+  
+IO引脚列表很多时候，信号变量是被覆盖了，看不到，需要手动调整表格，让信号显示出来
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/信号查看.gif)
 
 ### 5、综合
 
@@ -1029,5 +1032,18 @@ Xilinx7 系列器件中的时钟资源包含了时钟管理单元 CMT（全称 C
 MMCM 相对 PLL 的优势就是相位可以动态调整，但 PLL 占用的面积更小，而在大部分的设计当中 大家使用 MMCM 或者 PLL 来对系统时钟进行分频、倍频和相位偏移都是完全可以的。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693493429693.png)
+
+## IP-单端RAM
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693576991979.png)
+
+Vivado 软件自带的 Block Memory Generator IP 核（缩写为 BMG，中文名为块 RAM 生成器），可以用 来配置生成 RAM 或者 ROM。
+- RAM 是一种随机存取存储器，不仅可以读出存储的数据，同时还支持对存储 的数据进行修改，
+- 而 ROM 是一种只读存储器，也就是说，在工作时只能读出数据，而不能写入数据。
+
+需要 注意的是，配置生成的 RAM 或者 ROM 使用的都是 FPGA 内部的 BRAM 资源（Block RAM，即块随机存 储器，是 FPGA 厂商在逻辑资源之外，给 FPGA 加入的专用 RAM 块资源），只不过配置成 ROM 时只用到了嵌入式 BRAM 的读数据端口。本章我们主要介绍如何将 BMG IP 核配置成 RAM。 
+这里有个地方需要大家注意一下，Xilinx 7 系列器件内部的 BRAM 全部是真双端口 RAM，但是通过 BMG IP 核，我们还可以将其配置为伪双端口 RAM 或者单端口 RAM。 
+
+
 
 
