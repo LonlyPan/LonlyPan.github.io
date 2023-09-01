@@ -1021,4 +1021,13 @@ General Options（常规选项）主要有如下三部分：
 
 ## IP核PLL
 
+Xilinx7 系列器件中的时钟资源包含了时钟管理单元 CMT（全称 Clock Management Tile，即时钟管理单 元），每个 CMT 由一个 MMCM（全称 Mixed-Mode Clock Manager，即混合模式时钟管理）和一个 PLL（全 称 Phase Locked Loop，即锁相环）组成，xc7z020 芯片内部有 4 个 CMT，xc7z010 芯片内部有 2 个 CMT。
+- PLL：为锁相回路或锁相环，用来统一整合时钟信号，使高频器件正常工作，如内存的存取数据 等。PLL 用于振荡器中的反馈技术。 
+- MMCM（混合模式时钟管理）：是基于 PLL 的新型混合模式时钟管理器，实现了最低的抖动和抖 动滤波，为高性能的 FPGA 设计提供更高性能的时钟管理功能。
+   MMCM 是一个 PLL 上加入 DCM 的一部分以进行精细的相移，也就是说 MMCM 在 PLL 的基础 上加上了相位动态调整功能，又因为 PLL 是模拟电路，而动态调相是数字电路，所以 MMCM 被称为混合 模式。
+
+MMCM 相对 PLL 的优势就是相位可以动态调整，但 PLL 占用的面积更小，而在大部分的设计当中 大家使用 MMCM 或者 PLL 来对系统时钟进行分频、倍频和相位偏移都是完全可以的。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693493429693.png)
+
 
