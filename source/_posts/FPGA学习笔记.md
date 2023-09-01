@@ -1044,6 +1044,9 @@ Vivado 软件自带的 Block Memory Generator IP 核（缩写为 BMG，中文名
 需要 注意的是，配置生成的 RAM 或者 ROM 使用的都是 FPGA 内部的 BRAM 资源（Block RAM，即块随机存 储器，是 FPGA 厂商在逻辑资源之外，给 FPGA 加入的专用 RAM 块资源），只不过配置成 ROM 时只用到了嵌入式 BRAM 的读数据端口。本章我们主要介绍如何将 BMG IP 核配置成 RAM。 
 这里有个地方需要大家注意一下，Xilinx 7 系列器件内部的 BRAM 全部是真双端口 RAM，但是通过 BMG IP 核，我们还可以将其配置为伪双端口 RAM 或者单端口 RAM。 
 
-
+BMG IP 核配置成单端口 RAM 的框图如下图所示。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693577173868.png)
+各个端口的功能描述如下：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693577189907.png)
 
 
