@@ -1068,6 +1068,10 @@ BMG IP 核配置成单端口 RAM 的框图如下图所示。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/图像-20230902-110846.png)
 
+## IP-伪双端RAM
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693628761097.png)
+
 
 
 
