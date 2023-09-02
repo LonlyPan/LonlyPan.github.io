@@ -974,7 +974,7 @@ FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693627378355.png)
 
 这时我们点击仿真工具栏中的“Run For”按钮，默认仿真时长是 10us，如下图所
-> 这里的仿真时长和上面的不同，上面1000ns是我们打开仿真界面软件自动执行的时长，这里的10us是我们在这个界面后续操作默认的时长。
+> 这里的仿真时长和上面的不同，上面1000ns是我们打开仿真界面软件自动执行一次仿真的时长，之后就失效了，只有下次再重新打开仿真，软件继续执行这个时长的仿真。而这里的10us是我们在这个界面后续操作默认的时长，也就是后面所有手动操作都是这个时长。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693627401555.png)
 ## Modelsim联合仿真
