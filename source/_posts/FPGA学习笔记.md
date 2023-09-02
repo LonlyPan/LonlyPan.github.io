@@ -1072,6 +1072,12 @@ BMG IP 核配置成单端口 RAM 的框图如下图所示。
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693628761097.png)
 
+## IP-FIFO
+
+在使用 Vivado 的 FIFO Generato IP 核时，输入的读写时钟频率不能超过 500MHz
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693662806668.png)
+
 
 
 
