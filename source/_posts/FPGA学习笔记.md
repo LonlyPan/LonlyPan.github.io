@@ -1033,6 +1033,11 @@ MMCM 相对 PLL 的优势就是相位可以动态调整，但 PLL 占用的面�
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693493429693.png)
 
+### 编写代码
+
+例化IP核，使用提供的模板
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693624799421.png)
+
 ## IP-单端RAM
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693576991979.png)
