@@ -1141,6 +1141,14 @@ UART 是一种采用异步串行通信方式的通用异步收发传输器（uni
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693725887446.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693736278214.png)
+
+```verilog
+//捕获接收端口下降沿(起始位)，得到一个时钟周期的脉冲信号
+// uart_rxd_d2 & (~uart_rxd_d1) 下降沿检测
+// & (~rx_flag) 保证不是在非接收数据过程中
+// 也就是start_en只有在下检验并且空闲时，才可以使能
+assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
+```
 # Vitis-SDK开发
 
 Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
