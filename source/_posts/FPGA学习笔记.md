@@ -1090,6 +1090,12 @@ BMG IP 核配置成单端口 RAM 的框图如下图所示。
 4. FIFO Implementation Options（FIFO 实现方案）：此处表格将 FIFO 的七种方案都列出了，粗体是我们正在配置的实现方案。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/图像-20230903-104821.png)
 
+1. Read Mode（读取模式）：
+	- “Standard FIFO（标准 FIFO）”，数据输出会比读使能 延迟一拍
+	- “First Word Fall Through （首字直通，简称 FWFT 模式，即预读模式）”，数据与读使能同时输出
+2. Data Port Parameters（数据端口参数）：用于设置 FIFO 的读写数据位宽和读写深度，深度这里设置为 256，但实际深度只有 255；在实际应用中，FIFO 的读写数据位宽和深度在满足设计需求的情况下要尽量设置的小一点，因为 FIFO 使用的是片上 BRAM 资源，而 FPGA 内部的片上 BRAM 资源是有限的。 
+3. ECC，Output Register and Power Gating Options（ECC、输出寄存器和电源选通选项），
+	- 第一行有四个信号，当我们勾选 ECC（纠错码）后，可以选择 Hard ECC（硬 ECC）或 Soft ECC （软 ECC），并可以勾选 Single Bit Error Injection（注入单 bit 错误）和 Double Bit Error Injection（注入双 bit 错误），这里我们保持默认的不启用 ECC 即可。 • 第二行有两个信号，“ECC Pipeline Reg（ECC 管道寄存器）”和“Dynamic Power Gating（动态功 率选通）”都是仅限 UltraScale 系列芯片使用 Builtin FIFO 资源实现 FIFO 时才可进行配置。 • 第三行用于配置输出寄存器，勾选“Output Registers（输出寄存器）”后，可以选择添加 “Embedded Registers（嵌入式寄存器）”和“Fabric Registers（结构寄存器）”。其作用是可以改善 FIFO 的时序，为此付出的代价是每添加一个输出寄存器，输出就会延后一拍。这里我们保持默认，不做勾选。 （4）、“Initialization（初始化）”，也就是设置复位相关的参数，详情如下： • Reset Pin（复位脚）：选择是否引入复位信号，高电平有效。实际设计中，在 FPGA 配置完成后， 读写操作开始前，FIFO 必须要进行复位操作，需要注意的是，在进行复位操作时，读写时钟必须是有效 的。这里我们保持默认的勾选状态，即启用复位信号。 • Enable Reset Synchronization（启用复位同步）：用于设置异步 FIFO 时是否启用同步复位，需要注意 的是官方文档中建议复位信号至少要保持三个时钟周期（以慢时钟为准）的有效，且在复位后至少要经过 三十个时钟周期（以慢时钟为准）后，才能对 FIFO 进行写数据操作。这里我们保持默认的勾选状态，即 启用同步复位。 • Enable Safety Circuit（启用安全电路）：用于设置 FIFO 是否向外输出 wr_rst_busy（写复位忙信号） 和 rd_rst_busy（读复位忙信号），这两个信号皆是高电平表示处于复位状态，低电平表示空闲，我们可以 通过这两个信号来判断 FIFO 是否复位完成，防止我们在复位完成前对 FIFO 进行读写操作而导致读写错 误，所以我们保持默认的勾选状态，即启用安全电路。需要注意的是官方文档中建议当启用安全电路时， 复位信号至少要保持八个时钟周期（以慢时钟为准）的有效，且在复位后至少要经过六十个时钟周期（以 慢时钟为准）后，才能对 FIFO 进行写数据操作。 • Reset Type（复位类型）：当选择使用非 Builtin FIFO 资源来实现同步 FIFO 时，可以选择复位类型为 Asynchronous Reset（异步复位）或 Synchronous Reset（同步复位），使用异步 FIFO 模式时不需要考虑该 配置。 • Full Flags Reset Value（满信号的重置值）：用于设置复位时三个满信号（满信号，将满信号，设置 满信号）的状态是高电平还是低电平。这里我们保持默认设置 1 即可。 • Dout Reset Value（输出的数据重置值）：设置复位期间 FIFO 输出总线上的数据值，若未启用，则复 位期间输出总线上的值时未知的。切记设置时此值的位宽不可超过读数据的位宽，这里我们保持默认的 0 即可。 （5）、“Read Latency（读延迟）”，可以在此处看出经过以上设置后，输出被延迟了几拍。因为我 原子哥在线教学：www.yuanzige.com 论坛:www.openedv.com/forum.php 585 领航者 ZYNQ 之 FPGA 开发指南 们选择的读取模式是标准模式，且没有启用任何输出寄存器，所以输出延迟了一拍。
 # Vitis-SDK开发
 
 Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
