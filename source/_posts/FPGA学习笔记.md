@@ -1082,7 +1082,9 @@ BMG IP 核配置成单端口 RAM 的框图如下图所示。
 	1. AXI Memory Mapped 接口一般用于与 PS 端进行数据交互；
 	2. AXI Stream 接口一般应用于高速信号处理场景中，例如光口通信；
 	3. Native 常规模式，FPGA端数据交互
-2. “Fifo Implementation（FIFO 实现）”：用于设置用什么资源来实现什么样的 FIFO。可配置 用于实现 FIFO 的资源有四种，分别为 Block RAM（块 RAM）、Distributed RAM（分布式 RAM）、Shift Register（移位寄存器）和 Builtin FIFO（内置 FIFO），其中移位寄存器仅可用于实现同步 FIFO。可配置 的 FIFO 类型有两类，分别为 Common Clocks（公共时钟，即同步 FIFO）和 Independent Clocks（独立时 钟，即异步 FIFO）。资源与种类两两组合之下便有了七种不同的选择。需要说明的是 BRAM 和分布式 RAM 是创建 FIFO 时最常选用的存储资源类型，一般来说，FIFO 容量超过 1024 个字节就需要考虑使用 BRAM 了，没超过 1024 字节选择分布式 RAM。当然，如果芯片 BRAM 资源很富余的话，全部采用 BRAM 也是可以的，后两种基本用不到。本次实验我们选择“Independent Clocks Block RAM”，即使用 BRAM 资源来实现一个异步 FIFO。 （3）、“synchronization Stages（同步阶段）”：定义跨交叉时钟域逻辑的同步器级数，即设置读写 状态信号的输出延迟。保持默认设置 2 即可。 （4）、“FIFO Implementation Options（FIFO 实现方案）”：此处的表格将实现 FIFO 的七种方案的 特征都一一列出了，当我们不清楚自己的 FIFO 设计该使用哪种方案实现时，可以看下此处的表格。 接下来我们对“Native Ports”选项卡进行配置，如下图所示：
+2. Fifo Implementation（FIFO 实现)：Block RAM（块 RAM）、Distributed RAM（分布式 RAM）、Shift Register（移位寄存器）和 Builtin FIFO（内置 FIFO），其中移位寄存器仅可用于实现同步 FIFO。可配置 的 FIFO 类型有两类，分别为 Common Clocks（公共时钟，即同步 FIFO）和 Independent Clocks（独立时 钟，即异步 FIFO）。资源与种类两两组合之下便有了七种不同的选择。
+    BRAM 和分布式 RAM 是创建 FIFO 时最常选用的存储资源类型，一般来说，FIFO 容量超过 1024 个字节就需要考虑使用 BRAM 了，没超过 1024 字节选择分布式 RAM。当然，如果芯片 BRAM 资源很富余的话，全部采用 BRAM 也是可以的，后两种基本用不到。本次实验我们选择“Independent Clocks Block RAM”，即使用 BRAM 资源来实现一个异步 FIFO。 
+3. synchronization Stages（同步阶段）：定义跨交叉时钟域逻辑的同步器级数，即设置读写 状态信号的输出延迟。保持默认设置 2 即可。 （4）、“FIFO Implementation Options（FIFO 实现方案）”：此处的表格将实现 FIFO 的七种方案的 特征都一一列出了，当我们不清楚自己的 FIFO 设计该使用哪种方案实现时，可以看下此处的表格。 接下来我们对“Native Ports”选项卡进行配置，如下图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693708679079.png)
 
 # Vitis-SDK开发
