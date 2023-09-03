@@ -12,6 +12,8 @@ categories: 01-专业
 ---
 
 <!--more-->
+# FPGA开发经验总结
+
 
 # 软件下载与安装
 
@@ -1116,7 +1118,7 @@ BMG IP 核配置成单端口 RAM 的框图如下图所示。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693711708363.png)
 
 
-![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1693712207892]]]" )
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693712207891.png)
 # Vitis-SDK开发
 
 Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
