@@ -1158,6 +1158,10 @@ assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
 这里有一点需要说明，理论上为了避免数据沿带来的毛刺，**ILA 采样时钟（也可以称为处理 ADC 数据的时钟）要与 ADC 驱动时钟的频率相同，相位相反（即相位偏移 180 度），但是实际测试发现偏移 120 度的话 ILA 显示的效果会更好**， 所以当大家发现采集的 ADC 波形有些许毛刺的话，在排除了硬件问题后，可以通过调整 ILA 采样时钟的相 位来消除毛刺。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693746515432.png)
 
+本次实验中我们的 ila 采样时钟频率为 25MHz，而 JTAG 下载器默认的时钟频率为 15MHz（也可能是其它频率，不同下载器的默认时钟频率可能存在差异），因为不满足 ILA 采样时钟频率不得低于 JTAG 下载器时钟频率的 2.5 倍的要求，所以我们需要将 JTAG 下载器的时钟频率降下来 （至少降到 10MHz），否则的话 ila 会采集不到数据。
+
+另外如果采集到的波形时平定波，说明DA的输出电压太高了，可以调节变阻器将电压调到合适范围
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693751643325.png)
 # Vitis-SDK开发
 
 Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
