@@ -1149,6 +1149,15 @@ UART 是一种采用异步串行通信方式的通用异步收发传输器（uni
 // 也就是start_en只有在下检验并且空闲时，才可以使能
 assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
 ```
+
+## AD/DA
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693745853767.png)
+
+最后，为了避免时钟抖动带来的波形毛刺，我们最好将本次实验中需要用到时钟都通过 PLL IP 核来进 行输出，即我们需要使用 PLL 来输出三路时钟，分别为 50MHz 的 DAC 驱动时钟，该时钟也作为 ROM 的 读时钟；25MHz 的 ADC 驱动时钟；25MHz 相位偏移 120 度的 ILA 采样时钟。
+这里有一点需要说明，理论上为了避免数据沿带来的毛刺，**ILA 采样时钟（也可以称为处理 ADC 数据的时钟）要与 ADC 驱动时钟的频率相同，相位相反（即相位偏移 180 度），但是实际测试发现偏移 120 度的话 ILA 显示的效果会更好**， 所以当大家发现采集的 ADC 波形有些许毛刺的话，在排除了硬件问题后，可以通过调整 ILA 采样时钟的相 位来消除毛刺。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693746515432.png)
+
 # Vitis-SDK开发
 
 Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
