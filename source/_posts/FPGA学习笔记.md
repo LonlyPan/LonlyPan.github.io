@@ -1150,6 +1150,9 @@ UART 是一种采用异步串行通信方式的通用异步收发传输器（uni
 assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
 ```
 
+## UART_数据包
+
+
 ## AD/DA
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693745853767.png)
