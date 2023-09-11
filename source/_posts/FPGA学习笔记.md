@@ -1147,10 +1147,9 @@ UART 是一种采用异步串行通信方式的通用异步收发传输器（uni
 // uart_rxd_d2 & (~uart_rxd_d1) 下降沿检测
 // & (~rx_flag) 保证不是在非接收数据过程中
 // 也就是start_en只有在下检验并且空闲时，才可以使能
-assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
-```
+assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);```
 
-## UART_数据包
+## UART_数据包与状态机
 
 
 ## AD/DA
