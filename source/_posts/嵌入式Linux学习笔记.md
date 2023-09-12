@@ -3548,7 +3548,9 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 | $-	| 显示Shell使用的当前选项，与set命令功能相同。 |
 | $?	| 显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。|
 
-## 五、开发环境搭建
+# 裸机开发篇
+
+## 一、开发环境搭建
 
 
 #### VIM编辑器
@@ -4006,7 +4008,7 @@ https://mobaxterm.mobatek.net
 串口设置
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1652347512693.png)
 
-# 裸机开发篇
+
 
 ## Cortex-A7 MPCore架构
 
