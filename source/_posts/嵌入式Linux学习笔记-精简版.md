@@ -127,8 +127,6 @@ int main(int argc, char *argv[])
 
 
 
-
-
 ## 二、Ubuntu系统安装与使用
 
 Ubuntu系统是基础linux内核的操作系统。就像开发电脑软件需要在win10系统上一样，我们之后的linux软件开发也需要在 Linux 系统上（即Ubuntu系统）
