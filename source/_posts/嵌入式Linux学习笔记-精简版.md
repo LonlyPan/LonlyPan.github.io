@@ -304,14 +304,11 @@ Ubuntu默认5分钟自动锁屏，我们希望永不锁屏，打开设置界面�
 
 ### shell命令
 
-这里的命令一定**多多动手尝试，多多动手尝试，多多动手尝试**。不要死记硬背，光看是无法学会且领会不到真谛的。
- - 命令都是带参数的，自己多上网查查其它用法
  - 命令区分大小写
  - 查询一个命令：man xx 或者 xx --help
  - `q` 键退出当前操作
-- 参数可以组合使用
-- * 为通配符
-- 上下
+- \* 为通配符
+ 
 - [Linux命令大全(手册)](https://www.linuxcool.com/)
 - [Linux 命令大全](https://www.runoob.com/linux/linux-command-manual.html)
 
@@ -498,45 +495,7 @@ up	启动指定的网络设备
 reload 重启网络设备
 IP地址	指定网络设备的IP地址
 ```
-**实例**
-```
-lonly@lonly-VirtualBox:~$ ifconfig
 
-命令行显示：
-Command 'ifconfig' not found, but can be installed with:
-sudo apt install net-tools
-
-此时输入上述语句，安装网络工具
-lonly@lonly-VirtualBox:~$ sudo apt install net-tools
-再输入指令：
-lonly@lonly-VirtualBox:~$ ifconfig
-enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
-        inet6 fe80::a397:12be:107d:4a2d  prefixlen 64  scopeid 0x20<link>
-        ether 08:00:27:fc:78:e4  txqueuelen 1000  (Ethernet)
-        RX packets 91301  bytes 131638308 (131.6 MB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 12415  bytes 869131 (869.1 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-        inet 127.0.0.1  netmask 255.0.0.0
-        inet6 ::1  prefixlen 128  scopeid 0x10<host>
-        loop  txqueuelen 1000  (Local Loopback)
-        RX packets 683  bytes 64537 (64.5 KB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 683  bytes 64537 (64.5 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-```
-ifconfig enp0s3 down  # 启动指定网卡
-ifconfig enp0s3 up  # 关闭指定网卡
-ifconfig enp0s3 add 33ffe:3240:800:1005::2/ 64 # 为网卡设置IPv6地址
-ifconfig enp0s3 del 33ffe:3240:800:1005::2/ 64 # 为网卡删除IPv6地址
-ifconfig enp0s3 192.168.1.56 # 给enp0s3网卡配置IP地址
-ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 # 给enp0s3网卡配置IP地址,并加上子掩码
-ifconfig enp0s3 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255 # 给enp0s3网卡配置IP地址,加上子掩码,加上个广播地址
-```
 
 #### reboot 重启
 
@@ -4406,51 +4365,33 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 
 ### I.MX6U GPIO详解
 
-在学习I.MX6U的GPIO之前，我们先来回顾一下STM32的GPIO初始化步骤：
+STM32的GPIO初始化步骤：
 
  1. 使能指定GPIO的时钟。
  2. 初始化GPIO，比如输出功能、上拉、速度等等。
  3. STM32有的IO可以作为其它外设引脚，也就是IO复用，如果要将IO作为其它外设引脚使用的话就需要设置IO的复用功能。
  4. 最后设置GPIO输出高电平或者低电平。
 
-STM32的GPIO初始化就是以上四步，那么会不会也适用于I.MX6U的呢？我们只有去看I.MX6U的  
-- 参考手册，I.MX6U有I.MX6UL和I.MX6ULL两种，这两种型号基本是一样的，**我们以I.MX6UL为例来讲解**。
-- 数据手册，I.MX6UL的数据手册有三种，分别对应：车规级、工业级和商用级。从我们写代码的角度看，这三份数据手册一模一样的，做硬件的在选型的时候才需要注意一下，**我们就用商用级的手册**。
- 
-[NXP开发文档](https://www.nxp.com.cn/design/documentation:DOCUMENTATION#/)
-[i.MX 6UltraLite ApplicationsProcessor Reference Manua 参考手册-英文-需登录l](https://www.nxp.com.cn/webapp/Download?colCode=IMX6ULRM&location=null)
-[i.MX 6UltraLite Applications Processors for Consumer Products 数据手册英文版](https:www.nxp.com/docs/en/data-sheet/IMX6ULCEC.pdf )
-[i.MX 6UltraLite Applications Processors for Consumer Products 数据手册中文版-较旧](https://www.nxp.com.cn/docs/zh/data-sheet/IMX6ULCEC.pdf)
+要将I.MX6U的IO作为GPIO使用，我们需要一下几步：
 
+ 1. 使能GPIO对应的时钟。
+ 2. 设置寄存器IOMUXC_SW_MUX_CTL_PAD_XX_XX，设置IO的复用功能，使其复用为GPIO功能。
+ 3. 设置寄存器IOMUXC_SW_PAD_CTL_PAD_XX_XX，设置IO的上下拉、速度等等。
+ 4. 配置GPIO，设置输入/输出、是否使用中断、默认输出电平等。
+
+ 
 #### I.MX6U IO命名
 
-STM32中的IO都是PA0\~15、PB0\~15这样命名的，I.MX6U的IO是怎么命名的呢？打开I.MX6UL参考手册的第30章“Chapter30: IOMUX Controller(IOMUXC)”
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6U_GPIO命名.png)
-
-图中：命名形式就是“IOMUXC_SW_MUC_CTL_PAD_XX_XX”，后面的“XX_XX”就是GPIO命名，比如：GPIO1_IO01、UART1_TX_DATA、JTAG_MOD、SNVS_TAMPER1等等。  
-> 该章节中一共有两中命名方式：SW_MUX_CTL_PAD_* 和SW_PAD_CTL_PAD_\*。这其实就是 IO配置的两种寄存器。用来设置 IO 的复用功能和 IO 属性配置。
- - SW_MUX_CTL_PAD_\*负责设置管脚使用什么复用功能，
- - SW_PAD_CTL_PAD_\*用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。
-第30章节其实就是 IO 的配置寄存器讲解。详解请看下文的 **I.MX6U IO配置**
-
-I.MX6U的GPIO是根据某个IO所拥有的功能来命名的。比如我们一看到GPIO1_IO01就知道这个肯定能做GPIO，看到UART1_TX_DATA肯定就知道这个IO肯定能做为UART1的发送引脚。
+打开I.MX6UL参考手册的第30章“Chapter32: IOMUX Controller(IOMUXC)”
 
 根据 IO 功能命名，GPIO只有GPIO1_IO00~GPIO_IO09，其他为复用IO。
 I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其中 GPIO1 有 32 个 IO，GPIO2 有 22 个 IO，GPIO3 有 29 个 IO、GPIO4 有 29 个 IO，GPIO5最少，只有 12 个 IO，这样一共有 124 个 GPIO。
 
 #### I.MX6U IO复用
 
-以IO“IOMUXC_SW_MUX_CTL_PAD_GPIO1_IO00”为例，打开参考手册的1329页，如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO1_IO00复用.png)
-从图可以看到有个名为：IOMUXC_SW_MUX_CTL_PAD_GPIO1_IO00的寄存器，寄存器地址为0X020E005C，这个寄存器是32位的，但是只用到了最低5位，其中bit0\~bit3(MUX_MODE)就是设置GPIO1_IO00的复用功能的。GPIO1_IO00一共可以复用为9种功能IO，分别对应ALT0~ALT8，其中ALT5就是作为GPIO1_IO00。GPIO1_IO00还可以作为I2C2_SCL、GPT1_CAPTURE1、ANATOP_OTG1_ID等。这个就是I.MX6U的IO复用。
 
-再来看一个“IOMUXC_SW_MUX_CTL_PAD_UART1_TX_DATA”这个IO，这个IO对应的复用如图8.1.3.2所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/UART1_TX_DATA_IO复用.png)
-
-同样的，从图可以看出，UART1_TX_DATA可以复用为8种不同功能的IO，分为ALT0~ALT5和ALT8、ATL9，其中ALT5表示UART1_TX_DATA可以复用为GPIO1_IO16。
-
-如果只想看每个IO能复用什么外设的话可以直接查阅《IMX6UL参考手册》的第4章“Chapter4ExternalSignalsandPinMultiplexing”。如果我们要编写代码，设置某个IO的复用功能的话就需要查阅第30章“Chapter30: IOMUX Controller(IOMUXC)”,第30章详细的列出了所有IO对应的复用配置寄存器。
+看每个IO能复用什么外设的话可以直接查阅《IMX6UL参考手册》的第4章“Chapter4ExternalSignalsandPinMultiplexing”。
+如果我们要编写代码，设置某个IO的复用功能的话就需要查阅第30章“Chapter32: IOMUX Controller(IOMUXC)”。
 
 #### I.MX6U IO配置
 
@@ -4459,15 +4400,7 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
  - SW_MUX_CTL_PAD_\*负责设置管脚使用什么复用功能，
  - SW_PAD_CTL_PAD_\*用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。
 
-##### SW_MUX_CTL_PAD_\*
-
-该寄存器用来配置 IO 的复用功能，上面已经举了2个例子讲解，这里不再描述。
-
-##### SW_PAD_CTL_PAD_\*
-
-用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。以 `IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00`举例讲解：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO00寄存器.png)
-图中可以看出，寄存器地址为0X020E02E8。这也是个32位寄存器，但是只用到了其中的低17位，在看这写位的具体含义之前，先来看一下下图所示的GPIO功能图
+GPIO功能图
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
 
 我们对照着图来详细看一下寄存器各个位的含义：
@@ -4484,91 +4417,63 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/驱动能力设置.png)
 - SRE(bit0)：对应图中的SRE，设置压摆率，当此位为0的时候是低压摆率，当为1的时候是高压摆率。这里的压摆率就是IO电平跳变所需要的时间，比如从0到1需要多少时间，时间越小波形就越陡，说明压摆率越高；反之，时间越多波形就越缓，压摆率就越低。如果你的产品要过EMC的话那就可以使用小的压摆率，因为波形缓和，如果你当前所使用的IO做高速通信的话就可以使用高压摆率。
   
- 通过上面的介绍，我们解决了 IO 的复用配置、属性配置。但是我们没有看到如何设置IO的功能（如：GPIOP、UART等）？所以我们接着继续看。
  
  ### I.MX6U GPIO配置
  
 `IOMUXC_SW_MUX_CTL_PAD_XX_XX`和`IOMUXC_SW_PAD_CTL_PAD_XX_XX`这两种寄存器都是配置IO的，注意是IO！不是GPIO，GPIO是一个IO众多复用功能中的一种。
 
-比如GPIO1_IO00这个IO可以复用为9个功能，GPIO1_IO00是其中的一种。如果我们要用GPIO1_IO00来点个灯、作为按键输入啥的就是使用其GPIO(通用输入输出)的功能。将其复用为GPIO以后还需要对其GPIO的功能进行配置，关于I.MX6U的GPIO请参考《IMX6UL参考手册》的第26章“Chapter 26 General Purpose Input/Ouput(GPIO)”，GPIO结构如图所示：
+关于I.MX6U的GPIO请参考《IMX6UL参考手册》的第28章“Chapter 28 General Purpose Input/Ouput(GPIO)”，GPIO结构如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO结构图.png)
 
-在图中的 左下角 的IOMUXC框 图 里 面 就 有SW_MUX_CTL_PAD_\*和SW_PAD_CTL_PAD_\*两种寄存器。这两种寄存器前面说了用来设置IO的复用功能和IO属性配置。左上角部分的GPIO框图就是，当IO用作GPIO的时候需要设置的寄存器，一共有八个：DR、GDIR、PSR、ICR1、ICR2、EDGE_SEL、IMR和ISR。前面我们说了I.MX6U一共有GPIO1~GPIO5共五组GPIO，每组GPIO都有这8个寄存器。我们来看一下这8个寄存器都是什么含义。
+左下角 的IOMUXC框图里SW_MUX_CTL_PAD_\*和SW_PAD_CTL_PAD_\*两种寄存器，用来设置IO的复用功能和IO属性配置。左上角部分的GPIO框图就是当IO用作GPIO的时候需要设置的寄存器，一共有八个：DR、GDIR、PSR、ICR1、ICR2、EDGE_SEL、IMR和ISR。
 
-首先来看一下DR寄存器，此寄存器是数据寄存器，结构图如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/DR寄存器结构图.png)
+- DR数据寄存器
+	- 此寄存器是32位的，每个位都对应一个GPIO。
+	- 当GPIO被配置为输出功能以后，此寄存器设置相应的IO输出高低电平
+	- 当GPIO被配置为输入模式以后，此寄存器就保存着对应IO的电平值。
+- DR方向寄存器
+	- GDIR寄存器也是32位的，同样的，每个IO对应一个位，
+	- 此寄存器用来设置某个IO的工作方向，是输入还是输出。
+	- 输入为0，输出为1。
 
-此寄存器是32位的，一个GPIO组最大只有32个IO，因此
-- DR寄存器中的每个位都对应一个GPIO。
-- 当GPIO被配置为输出功能以后，向指定的位写入数据那么相应的IO就会输出相应的高低电平，要设置GPIO1_IO00输出高电平，那么就应该设置GPIO1.DR=1。
-- 当GPIO被配置为输入模式以后，此寄存器就保存着对应IO的电平值。例如，当GPIO1_IO00这个引脚接地的话，那么GPIO1.DR的bit0就是0。
+- PSR状态寄存器
+	- 同样的PSR寄存器也是一个GPIO对应一个位，
+	- 读取相应的位即可获取对应的GPIO的状态，也就是GPIO的高低电平值。
+	- 功能和输入状态下的DR寄存器一样。
 
-看完DR寄存器，接着看GDIR寄存器，这是方向寄存器，用来设置某个GPIO的工作方向的，即输入/输出，GDIR寄存器结构如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GDIR寄存器.png)
-GDIR寄存器也是32位的，同样的，每个IO对应一个位，
-- 此寄存器用来设置某个IO的工作方向，是输入还是输出。
-- 要设置GPIO为输入的话就设置相应的位为0
-- 如果要设置为输出的话就设置为1。
-
-接下来看PSR寄存器，这是GPIO状态寄存器，如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/PSR状态寄存器.png)
-
-同样的PSR寄存器也是一个GPIO对应一个位，
-- 读取相应的位即可获取对应的GPIO的状态，也就是GPIO的高低电平值。
-- 功能和输入状态下的DR寄存器一样。
-
-接下来看ICR1和ICR2这两个寄存器，都是中断控制寄存器，ICR1用于配置低16个GPIO，ICR2用于配置高16个GPIO，ICR1寄存器如图所示：
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ICR1寄存器.png)
-ICR1用于IO0~15的配置，ICR2用于IO16~31的配置。ICR1寄存器中一个GPIO用两个位，这两个位用来配置中断的触发方式，和STM32的中断很类似，可配置的选线如表所示：
+- ICR1和ICR2中断控制寄存器
+	- ICR1用于IO0\~15的配置，ICR2用于IO16\~31的配置。
+	- ICR寄存器中一个GPIO用两个位，这两个位用来配置中断的触发方式，如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/中断触发配置.png)
 
-接下来看IMR寄存器，这是中断屏蔽寄存器，如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IMR寄存器.png)
-IMR寄存器也是一个GPIO对应一个位，
-- IMR寄存器用来控制GPIO的中断禁止和使能，如果使能某个GPIO的中断，那么设置相应的位为1即可，反之，如果要禁止中断，那么就设置相应的位为0即可。
+- IMR中断屏蔽寄存器
+	- 一个GPIO对应一个位，
+	- 控制GPIO的中断禁止和使能，使能设为1；禁止中断，就设为0。
 
-例如，要使能GPIO1_IO00的中断，那么就可以设置GPIO1.MIR=1即可。
+- ISR中断状态寄存器
+	- 一个GPIO对应一个位
+	- 只要某个GPIO的中断发生，那么ISR中相应的位就会被置1。
+	- 处理完中断以后，必须清除中断标志位，清除方法就是向ISR中相应的位写1，也就是写1清零。
 
-接下来看寄存器ISR，ISR是中断状态寄存器，寄存器如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ISR寄存器.png)
-
-ISR寄存器也是32位寄存器，一个GPIO对应一个位，只要某个GPIO的中断发生，那么ISR中相应的位就会被置1。所以，我们可以通过读取ISR寄存器来判断GPIO中断是否发生，相当于ISR中的这些位就是中断标志位。当我们处理完中断以后，必须清除中断标志位，清除方法就是向ISR中相应的位写1，也就是写1清零。
-
-最后来看一下EDGE_SEL寄存器，这是边沿选择寄存器，寄存器如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/EDGE_SEL寄存器.png)
-
-EDGE_SEL寄存器用来设置边沿中断，这个寄存器会覆盖ICR1和ICR2的设置，同样是一个GPIO对应一个位。如果相应的位被置1，那么就相当与设置了对应的GPIO是上升沿和下降沿(双边沿)触发。例如，我们设置GPIO1.EDGE_SEL=1，那么就表示GPIO1_IO01是双边沿触发中断，无论GFPIO1_CR1的设置为多少，都是双边沿触发。
-
-关于GPIO的寄存器就讲解到这里，因为GPIO是最常用的功能，我们详细的讲解了GPIO的8个寄存器。
+- EDGE_SEL边沿选择寄存器
+	- E设置边沿中断，这个寄存器会覆盖ICR1和ICR2的设置，同样是一个GPIO对应一个位。
+	- 如果相应的位被置1，那么就相当与设置了对应的GPIO是上升沿和下降沿(双边沿)触发
 
 #### I.MX6U GPIO时钟使能
 
-I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”，这一章主要讲解I.MX6U的时钟系统，很复杂。我们先不研究I.MX6U的时钟系统，我们只看一下CCM里面的外设时钟使能寄存器。
-CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关
+I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”
+我们只看一下CCM里面的外设时钟使能寄存器。CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关
 以CCM_CCGR0为例：
+- CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，比如 bit31:30 控制着-GPIO2 的外设时钟，两个位就有 4 种操作方式。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设时钟控制.png)
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/CCM_CCGR0寄存器.png)
-CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，比如 bit31:30 控制着GPIO2 的外设时钟，两个位就有 4 种操作方式。
-- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设时钟控制.png)
-
-如果我们要打开GPIO2的外设时钟，那么只需要设置CCM_CCGR0的bit31和bit30都为1即可，也就是
-```
-打开 GPIO2 的外设时钟： CCM_CCGR0=3 << 30；@0x03左移30位
-关闭GPIO2 的外设时钟，bit31 和 bit30 都 为 0。
-```
-总结一下，要将I.MX6U的IO作为GPIO使用，我们需要一下几步：
-
- 1. 使能GPIO对应的时钟。
- 2. 设置寄存器IOMUXC_SW_MUX_CTL_PAD_XX_XX，设置IO的复用功能，使其复用为GPIO功能。
- 3. 设置寄存器IOMUXC_SW_PAD_CTL_PAD_XX_XX，设置IO的上下拉、速度等等。
- 4. 配置GPIO，设置输入/输出、是否使用中断、默认输出电平等。
+为了方便开发，本教程后面所有的例程将 I.MX6U 的所有外设时钟都打开了
 
 ### 硬件原理图
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/LED原理图.png)
 
-从图可以看出，LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
+LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
 ### 实验程序编写
 
