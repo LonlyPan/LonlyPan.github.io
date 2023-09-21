@@ -284,7 +284,6 @@ printf("%u\n",i);
 
 参看：C语言再学习 -- 关键字typedef
 
- 
 
 #### 4）sizeof
 
@@ -303,13 +302,10 @@ printf("%u\n",i);
 
 参看：C语言再学习 -- 存储类型关键字
 
- 
-
 #### 2）const
 
 参看：C语言再学习 -- 关键字const
 
- 
 
 #### 3）volatile
 
@@ -318,7 +314,7 @@ printf("%u\n",i);
  
 ### 流程控制关键字
  
- #### A）跳转结构（4个）
+#### A）跳转结构（4个）
  return
  continue
  break
@@ -334,7 +330,7 @@ printf("%u\n",i);
 参看：C语言再学习 -- 分支与跳转语句
 
 
- #### B）分支结构（5个）
+#### B）分支结构（5个）
  if
  else
  switch
