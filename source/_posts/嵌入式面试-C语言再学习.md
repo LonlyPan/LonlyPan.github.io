@@ -1767,37 +1767,57 @@ void read (void);  //等价于 extern void read (void);
 num = 12
 ```
 注意：
-（1） extern int num = 10;  没有这种形式，不是定义。如果在 read.h中如此写的话会出现：
- 
+- extern int num = 10;  没有这种形式，不是定义。如果在 read.h中如此写的话会出现：
 read.h:3:12: 警告： ‘num’已初始化，却又被声明为‘extern’ [默认启用] In file included from read.c:2:0: read.h:3:12: 警告： ‘num’已初始化，却又被声明为‘extern’ [默认启用] /tmp/ccQ3Jzzm.o:(.data+0x0): multiple definition of `num' /tmp/cceLUBvB.o:(.data+0x0): first defined here collect2: ld 返回 1
-（2）再有，在使用 extern 时候要严格对应声明时的格式，例如:
+- 再有，在使用 extern 时候要严格对应声明时的格式，例如:
 声明的函数为： extern void read (void);
 定义的时候 返回值、形参类型、函数名 需要一致，为 void read (void) {...}
 C 程序中，不允许出现类型不同的同名变量。
-（3）定义数组，修饰指针
+- 定义数组，修饰指针
 在一个源文件里定义了一个数组：char a[100];
-在另外一个文件里用下列语句进行了声明：extern char *a；
-这样是不可以的，程序运行时会告诉你非法访问。原因在于，指向类型T的指针并不等价于类型T的数组。extern char *a声明的是一个指针变量而不是字符数组，因此与实际的定义不同，从而造成运行时非法访问。应该将声明改为extern char a[ ]。
+在另外一个文件里用下列语句进行了声明：extern char \*a；
+这样是不可以的，程序运行时会告诉你非法访问。原因在于，指向类型T的指针并不等价于类型T的数组。extern char \*a声明的是一个指针变量而不是字符数组，因此与实际的定义不同，从而造成运行时非法访问。应该将声明改为extern char a[ ]。
 但是，extern char a[]与 extern char a[100]等价。
 因为这只是声明，不分配空间，所以编译器无需知道这个数组有多少个元素。
  
- 
-3）extern "C"
+
+### 3) extern "C"
 
 上面讲到了，C 程序中，不允许出现类型不同的同名变量。例如：
- 
-#include <stdio.h> void foo(void); int foo (int ,int); int main (void) { return 0; } 输出结果： test.c:5:5: 错误： 与‘foo’类型冲突 test.c:3:6: 附注： ‘foo’的上一个声明在此 
-而C++程序中 却允许出现重载。重载的定义：同一个作用域，函数名相同，参数表不同的函数构成重载关系，例如：
+``` 
+#include <stdio.h> 
+void foo(void); 
+int foo (int ,int); 
+int main (void) { 
+	return 0; 
+} 
+输出结果： 
+test.c:5:5: 错误： 与‘foo’类型冲突 test.c:3:6: 附注： ‘foo’的上一个声明在此 
+```
 
- 
+而C\++程序中 却允许出现重载。重载的定义：同一个作用域，函数名相同，参数表不同的函数构成重载关系，例如：
 
- 
- 
+```
+//renam.cpp 
+#include <iostream> 
+using namespace std; 
+void foo (int i) { 
+	cout << i << endl; 
+} 
+void foo (int i, double d) { 
+	cout << i << ' ' << d << endl; 
+} 
+int main (void) { 
+	foo (1); //_Z3fooi (1); 
+	foo (1,2);//_Z3fooid (1, 2.); 
+	return 0; 
+}
+```
 
-//renam.cpp #include <iostream> using namespace std; void foo (int i) { cout << i << endl; } void foo (int i, double d) { cout << i << ' ' << d << endl; } int main (void) { foo (1); //_Z3fooi (1); foo (1,2);//_Z3fooid (1, 2.); return 0; }
 gcc -c rename.cpp  //生成 rename.o 
  
 nm rename.o //查看
+```
 =============================
 000000f3 t _GLOBAL__I__Z3fooi
 00000000 T _Z3fooi
@@ -1816,24 +1836,38 @@ nm rename.o //查看
          U __dso_handle
          U __gxx_personality_v0
 00000081 T main
+```
 
-可以看到：函数被 C++编译后在库中的名字与 C 语言的不同。
-函数void foo (int i); 的库名为 _Z3fooi
-函数void foo (int i, double d);  的库名为 _Z3fooid
+可以看到：函数被 C\++编译后在库中的名字与 C 语言的不同。
+函数void foo (int i); 的库名为\_Z3fooi
+函数void foo (int i, double d);  的库名为 \_Z3fooid
 
-通过库名，可以看出来包含了函数名、函数参数数量及类型信息，C++就是靠这种机制来实现函数重载的。而 C 语言则不会，因此会造成链接时找不到对应函数的情况，此时C函数就需要用extern “C”进行链接指定，来解决名字匹配问题，这告诉编译器，请保持我的名称，不要给我生成用于链接的中间函数名。
-未加 extern "C" 声明的，在C++中因为重载，库名是 _Z3fooid，加上 extern "C" 会采用 C语言的方式 编译生成 foo。extern “C”这个声明的真实目的是为了实现C++与C及其它语言的混合编程。
- 
- 
+通过库名，可以看出来包含了函数名、函数参数数量及类型信息，C\++就是靠这种机制来实现函数重载的。而 C 语言则不会，因此会造成链接时找不到对应函数的情况，此时C函数就需要用extern “C”进行链接指定，来解决名字匹配问题，这告诉编译器，请保持我的名称，不要给我生成用于链接的中间函数名。
+未加 extern "C" 声明的，在C\++中因为重载，库名是 \_Z3fooid，加上 extern "C" 会采用 C语言的方式 编译生成 foo。extern “C”这个声明的真实目的是为了实现C\++与C及其它语言的混合编程。
  
 参看：c/c++ 混合编程的 extern “C” 参看：extern "c"用法之一
 参看：extern "c"用法解析
 参看：extern ”C"的使用
-C++中 extern "C" 的两种用法：
+
+#### C++中 extern "C" 的两种用法：
  
-1）用C++语言写的一个函数，如果想让这个函数可以被其他C语言程序所用，则用extern "C" 来告诉C++编译器，请用C语言习惯来编译此函数。如：
- 
-//add.h #ifndef _ADD_H #define _ADD_H #ifdef __cplusplus extern "C" { #endif int add (int ,int ); #ifdef __cplusplus } #endif #endif 
+1）用C\++语言写的一个函数，如果想让这个函数可以被其他C语言程序所用，则用extern "C" 来告诉C\++编译器，请用C语言习惯来编译此函数。如：
+```
+//add.h 
+#ifndef _ADD_H 
+#define _ADD_H 
+#ifdef __cplusplus 
+extern "C" { 
+#endif 
+
+int add (int ,int ); 
+
+#ifdef __cplusplus 
+} 
+#endif 
+#endif 
+```
+```
 //add.cpp
 #include "add.h"
 int add (int x, int y) {
@@ -1847,27 +1881,32 @@ int main (void) {
 	printf("%d+%d=%d\n",x,y,add(x,y));
 	return 0;
 }
-编译：
-gcc add.cpp main.c -o add -lstdc++
+
 输出结果：
 13+6=19
-__cplusplus是cpp中自定义的一个宏，告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的。
-源文件为*.c，__cplusplus没有被定义，extern "C" {}这时没有生效对于C他看到只是 extern int add(int, int); 
+```
+
+\_\_cplusplus是cpp中自定义的一个宏，告诉编译器，这部分代码按C语言的格式进行编译，而不是C\++的。
+源文件为*.c，\_\_cplusplus没有被定义，extern "C" {}这时没有生效对于C他看到只是 extern int add(int, int); 
 add 函数编译符号成 add
 gcc -c main.c nm main.o U add 00000000 T main U printf
-源文件为*.cpp(或*.cc,*.C,*.cpp,*.cxx,*.c++), __cplusplus被定义 ,对于C++他看到的是 extern "C"  { extern  int add( int ,int);}编译器就会知道 add(13, 6);调用的C风格的函数，就会知道去找add符号而不是_Z3addii ；因此编译正常通过。
+源文件为*.cpp(或*.cc,*.C,*.cpp,*.cxx,*.c\++), \_\_cplusplus被定义 ,对于C\++他看到的是 extern "C"  { extern  int add( int ,int);}编译器就会知道 add(13, 6);调用的C风格的函数，就会知道去找add符号而不是_Z3addii ；因此编译正常通过。
 
-注：-lstdc++ 申明用c++库
+注：-lstdc++ 申明用c\+\+库
 如果将，add.h 如下改写，不使用 extern "C"：
-
-#ifndef _ADD_H #define _ADD_H /* #ifdef __cplusplus extern "C" { #endif int add (int ,int ); #ifdef __cplusplus } #endif */ extern int add (int, int); #endif
+```
+#ifndef _ADD_H 
+#define _ADD_H /* #ifdef __cplusplus extern "C" { #endif int add (int ,int ); #ifdef __cplusplus } #endif */ 
+extern int add (int, int); 
+#endif
 编译：gcc add.cpp main.c -o add -lstdc++  出现错误
 /tmp/ccBSzdDa.o: In function `main': main.c:(.text+0x29): undefined reference to `add' collect2: ld 返回 1 
 但是，编译：g++ add.cpp main.c -o add 是OK的
+```
+因为g\+\+会自动将c的模块中的符号表转换为 _Z3addii 这也是GNU compiler的强大之处，可是别的编译器也许就不这么智能了。所以在c/c\++混合编程时还是最好加上extern “C”。
 
-因为g++会自动将c的模块中的符号表转换为 _Z3addii 这也是GNU compiler的强大之处，可是别的编译器也许就不这么智能了。所以在c/c++混合编程时还是最好加上extern “C”。
-2）如果要在C++程序中调用C语言写的函数， 在C++程序里边用 extern "C" 修饰要被调用的这个C程序，告诉C++编译器此函数是C语言写的，是C语言编译器生成的，调用他的时候请按照C语言习惯传递参数等。
-
+2）如果要在C\++程序中调用C语言写的函数， 在C\++程序里边用 **extern "C" 修饰要被调用的这个C程序**，告诉C\++编译器此函数是C语言写的，是C语言编译器生成的，调用他的时候请按照C语言习惯传递参数等。
+```
 //sub.h #ifndef _SUB_H #define _SUB_H int sub(int ,int); #endif
 //sub.c
 #include "sub.h"
@@ -1889,9 +1928,7 @@ int main (void) {
 编译：
 gcc sub.c main.cpp -o sub -lstdc++
 5+6=11
-————————————————
-版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/53895693
+```
 
 # 存储类、链接
 
