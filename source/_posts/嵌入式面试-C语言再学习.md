@@ -1326,7 +1326,7 @@ auto 修饰局部变量，表示这个局部变量是自动局部变量，自动
 平时定义局部变量时就是定义的auto的，只是省略了auto关键字而已。可见，auto的局部变量其实就是默认定义的普通的局部变量。 即 int a = 10; 等价于 auto int a = 10;
 
 auto 修饰局部变量，若省去数据类型，变量默认为 int 类型
-
+```
 #include <stdio.h>
 //auto int d;   修饰全局变量 错误： 文件作用域声明‘d’指定了‘auto’
 int main (void)
@@ -1342,10 +1342,10 @@ int main (void)
 输出结果：
 sizeof (b) = 4
 c = -1217310732
-
+```
  
 
-2、register关键字
+## 2、register关键字
 
 在 C 语言中的 register 修饰的变量表示将此变量存储在CPU的寄存器中，由于CPU访问寄存器比访问内存快很多，可以大大提高运算速度。但在使用register时有几点需要注意。
 
