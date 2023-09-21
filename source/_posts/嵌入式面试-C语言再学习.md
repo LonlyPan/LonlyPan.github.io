@@ -1498,13 +1498,14 @@ static 修饰的局部变量也叫静态局部变量，和没有初始化的全�
 ```
 file.h
 
-//头文件卫士
+//头文件
 #ifndef __FILE_H__
 #define __FILE_H__
 void foo ();
 #endif
-file1.c
 
+
+file1.c
 
 #include <stdio.h>
 #include "file.h"
