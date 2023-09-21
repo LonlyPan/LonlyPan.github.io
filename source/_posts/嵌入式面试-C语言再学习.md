@@ -1293,6 +1293,7 @@ int main()
 输出结果：
 hello world
 ```
+# 关键字typedef
 
 # 存储类型关键字
 
