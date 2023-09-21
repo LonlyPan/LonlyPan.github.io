@@ -1295,6 +1295,8 @@ hello world
 ```
 # 关键字typedef
 
+# 声明与定义
+
 # 内存管理
 
 # 存储类型关键字
@@ -1545,88 +1547,28 @@ int main (void)
 }
 
 输出结果：
-
-编译：
-gcc file1.c file2.c -o file
-输出结果：
 n = 5, m = 10
 n = 5, m = 11
 n = 5, m = 12
 n = 5, m = 13
 x = -1216741388, y = 0
 ```
-3）static 修饰函数
+
+### 3）static 修饰函数
 
 外部函数可被其他文件中的函数调用，而静态函数只可以在定义它的文件中使用。例如，考虑一个包含如下函数声明的文件:
-
+```
 double gamma (); //默认为外部的  
 static double beta (); //静态函数  
 extern double delta ();  
+```
+
 函数gamma ()和delta ()可被程序的其他文件中的函数使用，而beta ()则不可以，因为beta ()被限定在一个文件内，故可在其他文件中使用相同名称的不同函数。使用 static 存储类的原因之一就是创建为一个特定模块所私有的函数，从而避免可能的名字冲突。
 
 通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。
 
-示例：
 
-file.h
-
-//头文件卫士
-#ifndef __FILE_H__
-#define __FILE_H__
-void call (void);
-static void foo (void);
-#endif
- 
-
-file1.c
-
-#include <stdio.h>
-#include "file.h"
- 
-//静态函数，不能被其他文件使用
-static void foo (void)
-{
-	printf ("foo\n");
-}
- 
-void call (void)
-{
-	foo ();
-}
- 
-
-file2.c
-
-#include <stdio.h>
-#include "file.h"
- 
-//使用相同名字的不同函数
-void foo (void)
-{
-    printf ("hello world\n");
-}
-int main (void)
-{
-	call ();
-//	foo (); 错误： file2.c:(.text+0xc): undefined reference to `foo'
-        foo ();
-	return 0;
-}
-
-输出结果：
-
-编译：
-gcc file1.c file2.c -o file
-输出结果：
-foo
-hello world
- 
-
-4、extern 关键字
-
- 
-
-整理了好久， extern 算是最让我纠结的了。看了好多篇文章，都没有讲出个所以然来，搞得我好郁闷。这也体现出很有必要详细讲解下的它的用法了。
+## 4、extern 关键字
 
 首先，再讲解之前先要了解下，声明和定义的区别。
 
