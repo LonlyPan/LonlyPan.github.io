@@ -1627,21 +1627,57 @@ void next (void) { ... }
 ```
 
 下列 3 个例子展示了外部变量和自动变量的 4 种可能组合：
- 
-/*例1*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { extern int H; /*与上面的H是同一变量*/ } /*例2*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { ... /*未声明H，但知道该变量*/ } /*例3*/ int H; /*对main()和magic()不可见，但是对文件中其他不单独拥有局部H的函数可见*/ int magic (); int main (void) { int H; /*声明H， 默认为自动变量，main（）的局部变量*/ ... } int P；/*对magic()可见，对main()不可见，因为P声明子啊main()之后*/ int magic () { auto int H; /*把局部变量H显式地声明为自动变量*/ } 
+
+/*例1*/ 
+```
+int H; 
+int magic (); 
+int main (void) { 
+	extern int H; /*声明H为外部变量*/ ... 
+} 
+int magic () { 
+	extern int H; /*与上面的H是同一变量*/ 
+} 
+```
+/*例2*/ 
+
+```
+int H; 
+int magic (); 
+int main (void) { 
+	extern int H; /*声明H为外部变量*/ ... 
+} 
+int magic () { ... /*未声明H，但知道该变量*/ 
+}
+```
+/*例3*/ 
+```
+int H; /*对main()和magic()不可见，但是对文件中其他不单独拥有局部H的函数可见*/
+int magic ();
+int main (void) { 
+	int H; /*声明H， 默认为自动变量，main（）的局部变量*/ ... 
+} 
+
+int P；/*对magic()可见，对main()不可见，因为P声明在main()之后*/ 
+int magic () { 
+	auto int H; /*把局部变量H显式地声明为自动变量*/ 
+}
+```
 这些例子说明了外部变量的作用域：从声明的位置开始到文件结尾为止。它们也说明了外部变量的生存期。
 外部变量H和P存在的时间与程序运行时间一样，并且它们不局限于任一函数，在一个特定函数返回时并不消失。
 
 多文件的程序中声明外部变量，使用 extern 来声明该变量就是必须的。注意能够被其他模块以extern修饰符引用到的变量通常是全局变量,可以放在file2.c文件的任何位置
-
+```
 //file1.c
 int n = 10, m = 5; //n, m 为全局变量，只能定义在一处
+```
+```
 //file2.c
 #include <stdio.h>
 //extern int n, m;  //声明 全局变量
 //int n= 2, m = 3;  
 /*
-若果再次定义n,m。会出现错误
+如果再次定义n,m。会出现错误
 /tmp/cc4R2MbY.o:(.data+0x0): multiple definition of `n'
 /tmp/ccwV9hWd.o:(.data+0x0): first defined here
 /tmp/cc4R2MbY.o:(.data+0x4): multiple definition of `m'
@@ -1664,27 +1700,30 @@ void max (void)
 	printf ("n = %d, m = %d\n", n, m);
 }
 
-编译：
-gcc file1.c file2.c -o file
 输出结果：
 n = 10, m = 5
- 
+```
 
-2）extern 修饰函数的声明
+### 2）extern 修饰函数的声明
 
 外部函数可被其他文件中的函数调用，而静态函数只可以在定义它的文件中使用。例如，考虑一个包含如下函数声明的文件:
 
+```
 double gamma (); //默认为外部的  
 static double beta (); //静态函数  
 extern double delta ();  
+```
 函数gamma ()和delta ()可被程序的其他文件中的函数使用，而beta ()则不可以，因为beta ()被限定在一个文件内，故可在其他文件中使用相同名称的不同函数。使用 static 存储类的原因之一就是创建为一个特定模块所私有的函数，从而避免可能的名字冲突。
 
-通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。换句话说，在定义（函数）的时候，这个extern居然可以被省略。
+通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。换句话说，在定义（函数）的时候，这个extern可以被省略。
 
 如果函数的声明中带有关键字 extern，仅仅是暗示这个函数可能再别的源文件里定义，没有其它作用。即下述这两个函数声明没有明显的区别：extern int foo (); 和 int foo (); 函数定义和声明时 extern 可有可无。
 
- 
-//file.c #include <stdio.h> void foo (void) { printf ("hello world!\n"); }
+``` 
+//file.c 
+#include <stdio.h> void foo (void) { printf ("hello world!\n"); }
+```
+```
 //file2.c
 #include <stdio.h>
  
@@ -1695,14 +1734,16 @@ int main (void)
 	foo ();
 	return 0;
 }
-编译：
-gcc file1.c file2.c -o file
 输出结果：
 hello world!
- 
+```
+
 一般把所有的全局变量和全局函数都放在一个 *.c 文件中，然后用一个同名的 *.h 文件包含所有的函数和变量的声明.
- 
-//main.c #include <stdio.h> #include "read.h" int main (void) { read (); printf ("num = %d\n", num); return 0; } 
+```
+//main.c 
+#include <stdio.h> #include "read.h" int main (void) { read (); printf ("num = %d\n", num); return 0; } 
+```
+```
 //read.c
 #include <stdio.h>
 #include "read.h"
@@ -1720,11 +1761,11 @@ void read (void)
 extern int num;
 void read (void);  //等价于 extern void read (void);
 #endif
-编译：
-gcc main.c read.c -o read
+
 输出结果：
 请输入一个数字：12
 num = 12
+```
 注意：
 （1） extern int num = 10;  没有这种形式，不是定义。如果在 read.h中如此写的话会出现：
  
