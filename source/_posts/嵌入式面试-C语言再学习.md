@@ -1537,7 +1537,7 @@ int main (void)
 //      file2.c:(.text+0x1f): undefined reference to `n'
 //      file2.c:(.text+0x36): undefined reference to `m'
  
-        int x;  //未初始化，局部变量，初始化为随机数
+        int x;  //未初始化，局部变量，初始化为随机数  https://blog.csdn.net/wz947324/article/details/79867250
         static int y; //未初始化，静态局部变量，自动初始化为 0
         printf ("x = %d, y = %d\n", x, y);
  
