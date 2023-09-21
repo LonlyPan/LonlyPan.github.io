@@ -1280,7 +1280,7 @@ p[]数组为函数内的局部自动变量,在函数返回后,内存已经被释
 char* fa(char* p_str)//指针做形参可以使用调用函数的存储区
 {
 	char* p=p_str;
-	p="hello world";
+	p="hello world";  // p指向形参p_str地址，返回的而是p_str地址
 	return p;
 }
  
@@ -1290,6 +1290,8 @@ int main()
 	printf("%s\n",fa(str));
 	return 0;
 }
+输出结果：
+hello world
 ```
 
 # 存储类、链接
