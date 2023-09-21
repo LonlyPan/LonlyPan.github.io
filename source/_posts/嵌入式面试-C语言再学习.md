@@ -136,6 +136,244 @@ C语言一共有32个关键字，如下表所示：
 
 ## C语言32个关键字详解
 
+1数据类型关键字
+ A）基本数据类型（5个）
+ void：声明函数无返回值或无参数，声明无类型指针，显式丢弃运算结果
+ char：字符型类型数据，属于整型数据的一种
+ int：整型数据，通常为编译器指定的机器字长
+ float：单精度浮点型数据，属于浮点数据的一种
+ double：双精度浮点型数据，属于浮点数据的一种
+ B）类型修饰关键字（4个）
+ short：修饰int，短整型数据，可省略被修饰的int。
+ long：修饰int，长整形数据，可省略被修饰的int。
+ signed：修饰整型数据，有符号数据类型
+ unsigned：修饰整型数据，无符号数据类型
+ C）复杂类型关键字（5个）
+ struct：结构体声明
+ union：共用体声明
+ enum：枚举声明
+ typedef：声明类型别名
+ sizeof：得到特定类型或特定类型变量的大小
+ D）存储级别关键字（6个）
+ auto：指定为自动变量，由编译器自动分配及释放。通常在栈上分配
+ static：指定为静态变量，分配在静态变量区，修饰函数时，指定函数作用域为文件内部
+ register：指定为寄存器变量，建议编译器将变量存储到寄存器中使用，也可以修饰函数形参，建议编译器通过寄存器而不是堆栈传递参数
+ extern：指定对应变量为外部变量，即在另外的目标文件中定义，可以认为是约定由另外文件声明的对象的一个“引用“
+ const：与volatile合称“cv特性”，指定变量不可被当前线程/进程改变（但有可能被系统或其他线程/进程改变）
+ volatile：与const合称“cv特性”，指定变量的值有可能会被系统或其他进程/线程改变，强制编译器每次从内存中取得该变量的值
+
+
+ 2流程控制关键字
+ A）跳转结构（4个）
+ return：用在函数体中，返回特定值（或者是void值，即不返回值）
+ continue：结束当前循环，开始下一轮循环
+ break：跳出当前循环或switch结构
+ goto：无条件跳转语句
+ B）分支结构（5个）
+ if：条件语句
+ else：条件语句否定分支（与if连用）
+ switch：开关语句（多重分支语句）
+ case：开关语句中的分支标记
+ default：开关语句中的“其他”分治，可选。
+ C）循环结构（3个）
+ for：for循环结构，for(1;2;3)4;的执行顺序为1->2->4->3->2...循环，其中2为循环条件
+ do：do循环结构，do 1 while(2);的执行顺序是1->2->1...循环，2为循环条件
+ while：while循环结构，while(1) 2;的执行顺序是1->2->1...循环，1为循环条件
+ 以上循环语句，当循环条件表达式为真则继续循环，为假则跳出循环。
+
+ 
+
+下面来详细介绍各个关键字：
+
+（简单的就一笔带过，有必要的会另起一篇文章，详细讲述。）
+
+基本数据类型（5个）
+ void
+ char
+ int
+ float
+ double
+类型修饰关键字（4个）
+ short
+ long
+ signed
+ unsigned
+
+ 
+
+1）在windows，32位系统中
+char         1个字节
+short        2个字节
+int            4个字节
+long         4个字节
+double    8个字节
+float         4个字节
+
+2）数据类型和占位符之间的对应关系
+char和unsingned char     %c
+short                                  %hd
+unsigned short                 %hu
+long                                   %ld
+unsigned long                  %lu
+int                                      %d
+unsigned int                     %u
+float                                   %f/%g
+double                               %lf/%lg
+
+%f和%lf会保留小数点后面多余的0   如 3.1400000   .2%f得 3.14
+%g和%lg不会保留   如 3.14
+
+ 
+
+规定整型值相互之间大小的规则：
+
+长整型至少应该和整型一样长，而整型至少应该和短整型一样长。
+
+ 
+
+扩展：C语言再学习 5--浮点数
+
+扩展：C语言再学习 19 -- 负数
+
+ 
+
+3）signed、unsigned关键字
+
+signed char取值范围是 -2^7 到 2^7-1
+unsigned char取值范围是 0 到 2^8
+
+ 
+
+signed int取值范围是 -2^31 到 2^31-1
+unsigned int取值范围是 0 到 2^32
+
+ 
+
+留两个问题思考：
+1）， int i = -20;
+unsigned j = 10;
+i+j 的值为多少？为什么？
+
+-10   应该是按照有符号的来计算的
+
+2）， 下面的代码有什么问题？
+unsigned i ;
+for (i=9;i>=0;i--)
+{
+printf("%u\n",i);
+}
+
+一直打印无法停止，到了0 后，变成-1。因为-1是有符号的了，再变成 4294967295一直又减下去了
+
+ 
+
+4）void关键字:
+
+参看：C语言再学习 19 -- void
+
+复杂类型关键字（5个）
+ struct
+ union
+ enum
+ typedef
+ sizeof
+
+1）struct
+
+参看：C语言再学习 -- 关键字struct（转）
+
+ 
+
+2）union、enum
+
+参看：C语言再学习 -- 结构和其他数据形式
+
+ 
+
+3）typedef
+
+参看：C语言再学习 -- 关键字typedef
+
+ 
+
+4）sizeof
+
+参看：C语言再学习 -- sizeof与strlen
+
+存储级别关键字（6个）
+ auto
+ static
+ register
+ extern
+ const
+ volatile
+
+1）auto、static、register、extern
+
+参看：C语言再学习 -- 存储类型关键字
+
+ 
+
+2）const
+
+参看：C语言再学习 -- 关键字const
+
+ 
+
+3）volatile
+
+参看：C语言再学习 -- 关键字volatile
+
+ 
+
+2、流程控制关键字
+ A）跳转结构（4个）
+ return
+ continue
+ break
+ goto
+
+ 
+
+1）return
+
+参看：C语言再学习 -- 关键字return和exit
+
+ 
+
+2）continue、break、goto
+
+参看：C语言再学习 -- 分支与跳转语句
+
+
+ B）分支结构（5个）
+ if
+ else
+ switch
+ case
+ default
+
+ 
+
+1）if、else、switch、case、default
+
+参看：C语言再学习 -- 分支与跳转语句
+
+
+ C）循环结构（3个）
+ for
+ do
+ while
+
+ 
+
+1）for、do、while
+
+参看：C语言再学习 -- 循环语句
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53021879
+
 # 字符串和字符串函数
 
 ## 一、字符串
