@@ -1241,7 +1241,7 @@ char* fa(char* p)  //主要还是指针的问题
 int main()  
 {  
     char* str=NULL;//这块没问题的  
-    str = fa(str);  // 函数返回了地址
+    str = fa(str);  // 函数返回了指针地址
     strcpy(str,"hello");  
     printf("%s\n",str);  
     free(str);  
