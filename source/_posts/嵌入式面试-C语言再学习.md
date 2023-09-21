@@ -1294,6 +1294,613 @@ int main()
 hello world
 ```
 
+# 存储类型关键字
+
+定义： 是对声明的实现或者实例化。连接器(linker)需要它（定义）来引用内存实体。与上面的声明相应的定义如下：参看：C语言再学习 -- 存储类、链接
+
+C语言中有 5 个作为存储类说明符的关键字，分别是 auto、register、static、extern 以及 typedef。关键字typedef 与内存存储无关，由于语法原因被归入此类。
+
+现在简单了解一下这五个存储类说明符的关键字：
+
+说明符 auto  表明一个变量具有自动存储时期。该说明符只能用于在具有代码块作用域的变量声明中，而这样的变量已经拥有自动存储时期，因此它主要用来明确指出意图，使程序更易读。
+
+说明符 register  也只能用于具有代码块作用域的变量。它将一个变量归入寄存器存储类，这相当于请求将该变量存储在一个寄存器内，以更快地存取。它的使用也使得不能获得变量的地址。
+
+说明符 static  在用于具有代码块的作用域的变量的声明时，使该变量具有静态存储时期，从而得以在程序运行期间（即使在包含该变量的代码块没有运行时）存在并保留其值。变量仍具有代码块作用域和空链接。static 用于具有文件作用域的变量的声明时，表明该变量具有内部链接。
+
+说明符 extern  表明在声明一个已经在别处定义了的变量。如果包含 extern 的声明具有文件作用域，所指向的变量必须具有外部链接。如果包含 extern 的声明具有代码块作用域，所指向的变量可能具有外部链接也可能具有内部链接，这取决于该变量的定义声明。
+
+关键字 typedef 参看：C语言再学习 -- 关键字typedef
+
+注意，这 5 个作为存储类说明符的关键字，不可以同时出现的。
+
+例如：  typedef static int int32  是错误的。
+
+下面来一一详细介绍：
+
+1、auto关键字
+
+auto 关键字在C语言中只有一个作用，那就是修饰局部变量。 
+auto 修饰局部变量，表示这个局部变量是自动局部变量，自动局部变量分配在栈上。（既然在栈上，说明它如果不初始化那么值就是随机的） 
+平时定义局部变量时就是定义的auto的，只是省略了auto关键字而已。可见，auto的局部变量其实就是默认定义的普通的局部变量。 即 int a = 10; 等价于 auto int a = 10;
+
+auto 修饰局部变量，若省去数据类型，变量默认为 int 类型
+
+#include <stdio.h>
+//auto int d;   修饰全局变量 错误： 文件作用域声明‘d’指定了‘auto’
+int main (void)
+{
+	auto int a = 10;  //等价于 int a = 10;
+	auto b = 9;       //默认数据类型 为 int
+	auto c;           //不初始化，值为随机的
+ 
+	printf ("sizeof (b) = %d\n", sizeof (b));
+	printf ("c = %d\n", c);
+	return 0;
+}
+输出结果：
+sizeof (b) = 4
+c = -1217310732
+
+ 
+
+2、register关键字
+
+在 C 语言中的 register 修饰的变量表示将此变量存储在CPU的寄存器中，由于CPU访问寄存器比访问内存快很多，可以大大提高运算速度。但在使用register时有几点需要注意。
+
+1）用register修饰的变量只能是局部变量，不能是全局变量。CPU的寄存器资源有限，因此不可能让一个变量一直占着CPU寄存器。
+
+2）register变量一定要是CPU可以接受的值。
+
+3）不可以用&运算符对register变量进行取址。比如 int i；(自动为auto)int *p=&i;是对的， 但register int j; int *p = &j; 是错的，因为无法对寄存器的定址。
+
+4）register只是请求寄存器变量，不一定能够成功。
+
+5）随着编译程序设计技术的进步，在决定那些变量应该被存到寄存器中时，现在的C编译环境能比程序员做出更好的决定。实际上，许多编译程序都会忽略register修饰符，因为尽管它完全合法，但它仅仅是暗示而不是命令。
+
+#include <stdio.h>
+//register int n; 修饰全局变量 错误： ‘n’的寄存器名无效
+ 
+int main (void)
+{
+	register int i;
+	//int *p = &i;  对i取地址 错误： 要求寄存器变量‘i’的地址。
+	int tmp = 0;
+	for (i = 1; i < 100; i++)
+		tmp += i;
+	printf ("tmp = %d\n", tmp);
+	return 0;
+}
+输出结果：
+tmp = 4950
+
+ 
+
+寄存器变量(register): 寄存器变量会尽量把变量放到寄存器(而不是栈或堆), 从而加快存取速度。下面的例子可以很好的看出：
+
+#include <stdio.h>
+#include <sys/timeb.h>
+long long getSystemTime() {
+    struct timeb t;
+    ftime(&t);
+    return 1000 * t.time + t.millitm;
+}
+ 
+#define TIME 1000000000
+ 
+int m, n = TIME; /* 全局变量 */
+int main(void)
+{   
+    
+    register int a, b = TIME; /* 寄存器变量 */
+    int x, y = TIME;          /* 一般变量   */
+    long long start = 0, end = 0;
+    
+    start=getSystemTime();
+    for (a = 0; a < b; a++);
+    end=getSystemTime();
+    printf("寄存器变量用时: %lld ms\n", end - start);
+    
+    start=getSystemTime();
+    for (x = 0; x < y; x++);
+    end=getSystemTime();
+    printf("一般变量用时: %lld ms\n", end - start);
+    
+    start=getSystemTime();
+    for (m = 0; m < n; m++);
+    end=getSystemTime();
+    printf("全局变量用时: %lld ms\n", end - start);
+ 
+    return 0;
+}
+输出结果：
+寄存器变量用时: 533 ms
+一般变量用时: 3513 ms
+全局变量用时: 3587 ms
+
+ 
+
+3、static关键字
+
+ 
+
+参看：C语言再学习 -- 内存管理
+
+参看：C语言再学习 -- 存储类、链接
+
+首先了解下，进程中的内存区域划分
+（1）代码区 存放程序的功能代码的区域，比如：函数名
+（2）只读常量区 主要存放字符串常量和const修饰的全局变量
+（3）全局区 主要存放 已经初始化的全局变量 和 static修饰的全局变量
+（4）BSS段 主要存放 没有初始化的全局变量 和 static修饰的局部变量，BSS段会在main函数执行之前自动清零
+（5）堆区 主要表示使用malloc/calloc/realloc等手动申请的动态内存空间，内存由程序员手动申请和手动释放
+（6）栈区 主要存放局部变量（包括函数的形参），const修饰的局部变量，以及块变量，该内存区域由操作系统自动管理
+
+下面详细介绍 static 关键字，主要有三类用法：
+
+1）static 修饰全局变量
+
+static 修饰的全局变量也叫静态全局变量，和已经初始化的全局变量同 在全局区。
+
+该类具有静态存储时期、文件作用域和内部链接，仅在编译时初始化一次。如未明确初始化，它的字节都被设定为0。static全局变量只初使化一次，是为了防止在其他文件单元中被引用；利用这一特性可以在不同的文件中定义同名函数和同名变量，而不必担心命名冲突。
+
+示例说明：
+
+file.h
+
+//头文件卫士
+#ifndef __FILE_H__
+#define __FILE_H__
+void foo ();
+#endif
+file1.c
+
+#include <stdio.h>
+#include "file.h"
+ 
+int n = 5;  //已初始化的全局变量
+static int m = 10;  //已初始化的静态全局变量
+ 
+int x;  //未初始化的全局变量，自动初始化为 0
+static int y;  //未初始化的静态全局变量， 自动初始化为 0
+ 
+void foo ()  //静态全局变量，具有文件作用于，静态定义，内部链接
+{
+	printf ("x = %d, y = %d\n", x, y);
+	printf ("n = %d, m = %d\n", n, m);
+}
+file2.c
+
+#include <stdio.h>
+#include "file.h"
+int main (void)
+{
+	extern int n;    
+	extern int m;  
+	foo ();
+        printf ("n = %d\n", n);  //全局变量，可被其他文件使用
+        //printf ("m = %d\n", m);  //静态全局变量， 不可被其他文件使用
+        //出现错误 file2.c:(.text+0x27): undefined reference to `m'
+ return 0;
+}
+输出结果：
+
+编译：
+gcc file1.c file2.c -o file
+输出结果：
+x = 0, y = 0
+n = 5, m = 10
+n = 5
+ 
+
+2）static 修饰局部变量
+
+ 
+
+static 修饰的局部变量也叫静态局部变量，和没有初始化的全局变量同 在BBS段。而非静态局部变量是被分配在栈上面的。非静态局部变量，函数调用结束后存储空间释放；静态局部变量，具有静态存储时期。只在程序开始时执行一次，函数调用结束后存储区空间并不释放，保留其当前值。
+
+该类具有静态存储时期、代码作用域和空链接，仅在编译时初始化一次。如未明确初始化，它的字节都被设定为0。
+
+file.h
+
+//头文件卫士
+#ifndef __FILE_H__
+#define __FILE_H__
+void foo ();
+#endif
+file1.c
+
+ 
+
+#include <stdio.h>
+#include "file.h"
+void foo ()
+{
+	int n = 5;     //已初始化，局部变量
+	static m = 10; //已初始化，静态局部变量
+ 
+	printf ("n = %d, m = %d\n", n, m);	
+ 
+	n++;
+	m++;
+}
+file2.c
+
+#include <stdio.h>
+#include "file.h"
+int main (void)
+{
+	foo ();
+	foo ();
+	foo ();  //自动局部变量，函数调用结束后存储空间释放
+	foo ();  //静态局部变量，具有静态存储时期。只在程序开始时执行一次，函数调用结束后存储区空间并不释放，保留其当前值。
+ 
+	extern int n;
+	extern int m;
+//	printf ("n = %d\n", n);  
+//	printf ("n = %d\n", m);  //静态局部变量，为空链接，不可以被其他文件使用,出现错误
+//      file2.c:(.text+0x1f): undefined reference to `n'
+//      file2.c:(.text+0x36): undefined reference to `m'
+ 
+        int x;  //未初始化，局部变量，初始化为随机数
+        static int y; //未初始化，静态局部变量，自动初始化为 0
+        printf ("x = %d, y = %d\n", x, y);
+ 
+        return 0;
+}
+
+输出结果：
+
+编译：
+gcc file1.c file2.c -o file
+输出结果：
+n = 5, m = 10
+n = 5, m = 11
+n = 5, m = 12
+n = 5, m = 13
+x = -1216741388, y = 0
+ 
+
+3）static 修饰函数
+
+外部函数可被其他文件中的函数调用，而静态函数只可以在定义它的文件中使用。例如，考虑一个包含如下函数声明的文件:
+
+double gamma (); //默认为外部的  
+static double beta (); //静态函数  
+extern double delta ();  
+函数gamma ()和delta ()可被程序的其他文件中的函数使用，而beta ()则不可以，因为beta ()被限定在一个文件内，故可在其他文件中使用相同名称的不同函数。使用 static 存储类的原因之一就是创建为一个特定模块所私有的函数，从而避免可能的名字冲突。
+
+通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。
+
+示例：
+
+file.h
+
+//头文件卫士
+#ifndef __FILE_H__
+#define __FILE_H__
+void call (void);
+static void foo (void);
+#endif
+ 
+
+file1.c
+
+#include <stdio.h>
+#include "file.h"
+ 
+//静态函数，不能被其他文件使用
+static void foo (void)
+{
+	printf ("foo\n");
+}
+ 
+void call (void)
+{
+	foo ();
+}
+ 
+
+file2.c
+
+#include <stdio.h>
+#include "file.h"
+ 
+//使用相同名字的不同函数
+void foo (void)
+{
+    printf ("hello world\n");
+}
+int main (void)
+{
+	call ();
+//	foo (); 错误： file2.c:(.text+0xc): undefined reference to `foo'
+        foo ();
+	return 0;
+}
+
+输出结果：
+
+编译：
+gcc file1.c file2.c -o file
+输出结果：
+foo
+hello world
+ 
+
+4、extern 关键字
+
+ 
+
+整理了好久， extern 算是最让我纠结的了。看了好多篇文章，都没有讲出个所以然来，搞得我好郁闷。这也体现出很有必要详细讲解下的它的用法了。
+
+首先，再讲解之前先要了解下，声明和定义的区别。
+
+参看：C语言再学习 -- 声明与定义
+
+
+举个例子： A)int i； B)extern int i； 
+哪个是定义？哪个是声明？或者都是定义或者都是声明？
+
+什么是定义：所谓的定义就是(编译器)创建一个对象，为这个对象分配一块内存并给它取上一个名字，这个名字就是我们经常所说的变量名或对象名。但注意，这个名字一旦和这块内存匹配起来，它们就同生共死，终生不离不弃。并且这块内存的位置也不能被改变。一个变量或对象在一定的区域内（比如函数内，全局等）只能被定义一次，如果定义多次，编译器会提示你重复定义同一个变量或对象。
+
+什么是声明：有两重含义，如下：
+第一重含义：告诉编译器，这个名字已经匹配到一块内存上了，下面的代码用到变量或对象是在别的地方定义的。声明可以出现多次。
+第二重含义：告诉编译器，我这个名字我先预定了，别的地方再也不能用它来作为变量名或对象名。比如你在图书馆自习室的某个座位上放了一本书，表明这个座位已经有人预订，别人再也不允许使用这个座位。其实这个时候你本人并没有坐在这个座位上。这种声明最典型的例子就是函数参数的声明，例如：
+void fun(int i, char c);
+好，这样一解释，我们可以很清楚的判断: A)是定义； B)是声明。
+记住， 定义声明最重要的区别：定义创建了对象并为这个对象分配了内存，声明没有分配内存。
+
+声明： 指定了一个变量的标识符，用来描述变量的类型，是类型还是对象，或者函数等。声明，用于编译器(compiler)识别变量名所引用的实体。以下这些就是声明：
+
+extern int bar;
+extern int g(int, int);
+double f(int, double); // 对于函数声明，extern关键字是可以省略的。
+class foo; // 类的声明，前面是不能加class的。
+定义： 是对声明的实现或者实例化。连接器(linker)需要它（定义）来引用内存实体。与上面的声明相应的定义如下：
+
+int bar;
+int g(int lhs, int rhs) {return lhs*rhs;} 
+double f(int i, double d) {return i+d;} 
+class foo {};// foo 这里已经拥有自己的内存了，对照上面两个函数，你就应该明白{}的用处了吧？
+无论如何，定义 操作是只能做一次的。如果你忘了定义一些你已经声明过的变量，或者在某些地方被引用到的变量，那么，连接器linker是不知道这些引用该连接到那块内存上的。然后就会报missing symbols 这样的错误。如果你定义变量超过一次，连接器是不知道把引用和哪块内存连接，然后就会报 duplicated symbols这样的错误了。以上的symbols其实就是指定义后的变量名，也就是其标识的内存块。
+ 
+总结：
+如果只是为了给编译器提供引用标识，让编译器能够知道有这个引用，能用这个引用来引用某个实体（但没有为实体分配具体内存块的过程）是为声明。如果该操作能够为引用指定一块特定的内存，使得该引用能够在link阶段唯一正确地对应一块内存，这样的操作是为定义。
+声明是为了让编译器正确处理对声明变量和函数的引用。定义是一个给变量分配内存的过程，或者是说明一个函数具体干什么用。
+通过上述对声明和定义的解释可以看出，在C语言中，修饰符 extern 用在变量或者函数的声明前，用来说明“此变量/函数是在别处定义的，要在此处引用”。extern 是 C/C++ 语言中表明函数和全局变量作用范围（可见性）的关键字，该关键字告诉编译器，其声明的函数和变量可以在本模块或其它模块中使用。
+ 
+1）extern 修饰变量的声明
+具有外部链接的静态变量具有文件作用域，外部链接和静态存储时期。这一类型有时被称为外部存储类，这一类型的变量被称为外部变量。把变量的定义声明放在所有函数之外，即创建了一个外部变量。为了使程序更加清晰，可以在使用外部变量的函数中通过使用 extern 关键字来再次声明它。如果变量是在别的文件中定义，使用 extern 来声明该变量就是必须的。
+ 
+int n; /*外部定义的变量*/ double Up[100]; /*外部定义的数组*/ extern char Coal; /*必须的声明，因为Coal在其他文件中定义*/ void next (void); int main (void) { extern double Up[]; /*可选的声明，此处不必指明数组大小*/ extern int n; /*可选的声明，如果将extern漏掉，就会建立一个独立的自动变量*/ } void next (void) { ... } 
+ 
+下列 3 个例子展示了外部变量和自动变量的 4 种可能组合：
+ 
+/*例1*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { extern int H; /*与上面的H是同一变量*/ } /*例2*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { ... /*未声明H，但知道该变量*/ } /*例3*/ int H; /*对main()和magic()不可见，但是对文件中其他不单独拥有局部H的函数可见*/ int magic (); int main (void) { int H; /*声明H， 默认为自动变量，main（）的局部变量*/ ... } int P；/*对magic()可见，对main()不可见，因为P声明子啊main()之后*/ int magic () { auto int H; /*把局部变量H显式地声明为自动变量*/ } 
+这些例子说明了外部变量的作用域：从声明的位置开始到文件结尾为止。它们也说明了外部变量的生存期。
+外部变量H和P存在的时间与程序运行时间一样，并且它们不局限于任一函数，在一个特定函数返回时并不消失。
+
+多文件的程序中声明外部变量，使用 extern 来声明该变量就是必须的。注意能够被其他模块以extern修饰符引用到的变量通常是全局变量,可以放在file2.c文件的任何位置
+
+//file1.c
+int n = 10, m = 5; //n, m 为全局变量，只能定义在一处
+//file2.c
+#include <stdio.h>
+//extern int n, m;  //声明 全局变量
+//int n= 2, m = 3;  
+/*
+若果再次定义n,m。会出现错误
+/tmp/cc4R2MbY.o:(.data+0x0): multiple definition of `n'
+/tmp/ccwV9hWd.o:(.data+0x0): first defined here
+/tmp/cc4R2MbY.o:(.data+0x4): multiple definition of `m'
+/tmp/ccwV9hWd.o:(.data+0x4): first defined here
+collect2: ld 返回 1
+*/
+ 
+void max (void);
+ 
+int main (void)
+{
+	//printf ("n = %d, m = %d\n", n, m);
+	max ();
+	return 0;
+}
+ 
+void max (void)
+{
+	extern int n, m; //n, m为全局变量
+	printf ("n = %d, m = %d\n", n, m);
+}
+
+编译：
+gcc file1.c file2.c -o file
+输出结果：
+n = 10, m = 5
+ 
+
+2）extern 修饰函数的声明
+
+外部函数可被其他文件中的函数调用，而静态函数只可以在定义它的文件中使用。例如，考虑一个包含如下函数声明的文件:
+
+double gamma (); //默认为外部的  
+static double beta (); //静态函数  
+extern double delta ();  
+函数gamma ()和delta ()可被程序的其他文件中的函数使用，而beta ()则不可以，因为beta ()被限定在一个文件内，故可在其他文件中使用相同名称的不同函数。使用 static 存储类的原因之一就是创建为一个特定模块所私有的函数，从而避免可能的名字冲突。
+
+通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。换句话说，在定义（函数）的时候，这个extern居然可以被省略。
+
+如果函数的声明中带有关键字 extern，仅仅是暗示这个函数可能再别的源文件里定义，没有其它作用。即下述这两个函数声明没有明显的区别：extern int foo (); 和 int foo (); 函数定义和声明时 extern 可有可无。
+
+ 
+//file.c #include <stdio.h> void foo (void) { printf ("hello world!\n"); }
+//file2.c
+#include <stdio.h>
+ 
+extern void foo ( );  //该函数声明可以放在 file2.c的任何位置
+//等同于 void foo ();
+int main (void)
+{
+	foo ();
+	return 0;
+}
+编译：
+gcc file1.c file2.c -o file
+输出结果：
+hello world!
+ 
+一般把所有的全局变量和全局函数都放在一个 *.c 文件中，然后用一个同名的 *.h 文件包含所有的函数和变量的声明.
+ 
+//main.c #include <stdio.h> #include "read.h" int main (void) { read (); printf ("num = %d\n", num); return 0; } 
+//read.c
+#include <stdio.h>
+#include "read.h"
+int num; //全局变量  定义
+ 
+void read (void)
+{
+	printf ("请输入一个数字：");
+	scanf ("%d", &num);
+}
+//read.h
+//头文件卫士，防止头文件被重复定义
+#ifndef __READ_H__
+#define __READ_H__
+extern int num;
+void read (void);  //等价于 extern void read (void);
+#endif
+编译：
+gcc main.c read.c -o read
+输出结果：
+请输入一个数字：12
+num = 12
+注意：
+（1） extern int num = 10;  没有这种形式，不是定义。如果在 read.h中如此写的话会出现：
+ 
+read.h:3:12: 警告： ‘num’已初始化，却又被声明为‘extern’ [默认启用] In file included from read.c:2:0: read.h:3:12: 警告： ‘num’已初始化，却又被声明为‘extern’ [默认启用] /tmp/ccQ3Jzzm.o:(.data+0x0): multiple definition of `num' /tmp/cceLUBvB.o:(.data+0x0): first defined here collect2: ld 返回 1
+（2）再有，在使用 extern 时候要严格对应声明时的格式，例如:
+声明的函数为： extern void read (void);
+定义的时候 返回值、形参类型、函数名 需要一致，为 void read (void) {...}
+C 程序中，不允许出现类型不同的同名变量。
+（3）定义数组，修饰指针
+在一个源文件里定义了一个数组：char a[100];
+在另外一个文件里用下列语句进行了声明：extern char *a；
+这样是不可以的，程序运行时会告诉你非法访问。原因在于，指向类型T的指针并不等价于类型T的数组。extern char *a声明的是一个指针变量而不是字符数组，因此与实际的定义不同，从而造成运行时非法访问。应该将声明改为extern char a[ ]。
+但是，extern char a[]与 extern char a[100]等价。
+因为这只是声明，不分配空间，所以编译器无需知道这个数组有多少个元素。
+ 
+ 
+3）extern "C"
+
+上面讲到了，C 程序中，不允许出现类型不同的同名变量。例如：
+ 
+#include <stdio.h> void foo(void); int foo (int ,int); int main (void) { return 0; } 输出结果： test.c:5:5: 错误： 与‘foo’类型冲突 test.c:3:6: 附注： ‘foo’的上一个声明在此 
+而C++程序中 却允许出现重载。重载的定义：同一个作用域，函数名相同，参数表不同的函数构成重载关系，例如：
+
+ 
+
+ 
+ 
+
+//renam.cpp #include <iostream> using namespace std; void foo (int i) { cout << i << endl; } void foo (int i, double d) { cout << i << ' ' << d << endl; } int main (void) { foo (1); //_Z3fooi (1); foo (1,2);//_Z3fooid (1, 2.); return 0; }
+gcc -c rename.cpp  //生成 rename.o 
+ 
+nm rename.o //查看
+=============================
+000000f3 t _GLOBAL__I__Z3fooi
+00000000 T _Z3fooi
+0000002b T _Z3fooid
+000000b3 t _Z41__static_initialization_and_destruction_0ii
+         U _ZNSolsEPFRSoS_E
+         U _ZNSolsEd
+         U _ZNSolsEi
+         U _ZNSt8ios_base4InitC1Ev
+         U _ZNSt8ios_base4InitD1Ev
+         U _ZSt4cout
+         U _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_
+00000000 b _ZStL8__ioinit
+         U _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+00000081 T main
+
+可以看到：函数被 C++编译后在库中的名字与 C 语言的不同。
+函数void foo (int i); 的库名为 _Z3fooi
+函数void foo (int i, double d);  的库名为 _Z3fooid
+
+通过库名，可以看出来包含了函数名、函数参数数量及类型信息，C++就是靠这种机制来实现函数重载的。而 C 语言则不会，因此会造成链接时找不到对应函数的情况，此时C函数就需要用extern “C”进行链接指定，来解决名字匹配问题，这告诉编译器，请保持我的名称，不要给我生成用于链接的中间函数名。
+未加 extern "C" 声明的，在C++中因为重载，库名是 _Z3fooid，加上 extern "C" 会采用 C语言的方式 编译生成 foo。extern “C”这个声明的真实目的是为了实现C++与C及其它语言的混合编程。
+ 
+ 
+ 
+参看：c/c++ 混合编程的 extern “C” 参看：extern "c"用法之一
+参看：extern "c"用法解析
+参看：extern ”C"的使用
+C++中 extern "C" 的两种用法：
+ 
+1）用C++语言写的一个函数，如果想让这个函数可以被其他C语言程序所用，则用extern "C" 来告诉C++编译器，请用C语言习惯来编译此函数。如：
+ 
+//add.h #ifndef _ADD_H #define _ADD_H #ifdef __cplusplus extern "C" { #endif int add (int ,int ); #ifdef __cplusplus } #endif #endif 
+//add.cpp
+#include "add.h"
+int add (int x, int y) {
+	return x + y;
+}
+//main.c
+#include <stdio.h>
+#include "add.h"
+int main (void) {
+	int x=13,y=6;
+	printf("%d+%d=%d\n",x,y,add(x,y));
+	return 0;
+}
+编译：
+gcc add.cpp main.c -o add -lstdc++
+输出结果：
+13+6=19
+__cplusplus是cpp中自定义的一个宏，告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的。
+源文件为*.c，__cplusplus没有被定义，extern "C" {}这时没有生效对于C他看到只是 extern int add(int, int); 
+add 函数编译符号成 add
+gcc -c main.c nm main.o U add 00000000 T main U printf
+源文件为*.cpp(或*.cc,*.C,*.cpp,*.cxx,*.c++), __cplusplus被定义 ,对于C++他看到的是 extern "C"  { extern  int add( int ,int);}编译器就会知道 add(13, 6);调用的C风格的函数，就会知道去找add符号而不是_Z3addii ；因此编译正常通过。
+
+注：-lstdc++ 申明用c++库
+如果将，add.h 如下改写，不使用 extern "C"：
+
+#ifndef _ADD_H #define _ADD_H /* #ifdef __cplusplus extern "C" { #endif int add (int ,int ); #ifdef __cplusplus } #endif */ extern int add (int, int); #endif
+编译：gcc add.cpp main.c -o add -lstdc++  出现错误
+/tmp/ccBSzdDa.o: In function `main': main.c:(.text+0x29): undefined reference to `add' collect2: ld 返回 1 
+但是，编译：g++ add.cpp main.c -o add 是OK的
+
+因为g++会自动将c的模块中的符号表转换为 _Z3addii 这也是GNU compiler的强大之处，可是别的编译器也许就不这么智能了。所以在c/c++混合编程时还是最好加上extern “C”。
+2）如果要在C++程序中调用C语言写的函数， 在C++程序里边用 extern "C" 修饰要被调用的这个C程序，告诉C++编译器此函数是C语言写的，是C语言编译器生成的，调用他的时候请按照C语言习惯传递参数等。
+
+//sub.h #ifndef _SUB_H #define _SUB_H int sub(int ,int); #endif
+//sub.c
+#include "sub.h"
+int sub(int x,int y) {
+	return x + y;
+}
+//main.cpp
+#include <iostream>
+using namespace std;
+extern "C" {
+#include "sub.h"
+}
+int main (void) {
+	int x=5,y=6;
+	cout << x << "+" << y << "="
+		<< sub(x, y) << endl;
+	return 0;
+}
+编译：
+gcc sub.c main.cpp -o sub -lstdc++
+5+6=11
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53895693
+
 # 存储类、链接
 # 输入/输出
 
