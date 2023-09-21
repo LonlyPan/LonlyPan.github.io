@@ -10,6 +10,333 @@ hide: false
 categories: 00-项目
 ---
 
+# GCC编译过程
+
+一、GCC简介：
+
+gcc的原名叫做GNU C语言 编译器（GNU C Compile），只能编译C语言程序，后来很快就做了扩展，支持了更多的编程语言，比如C+ Object-c ...，改名为GNC 编译器 套件（GNU Compile Collection） 支持很多的硬件和操作系统。
+
+二、编译过程
+
+C语言的编译过程可分为四个阶段：预处理->>编译->>汇编->>链接
+
+下面以hello.c为示例详细介绍各个编译过程：
+
+
+//示例hello.c
+#include <stdio.h>
+int main (void)
+{
+	printf ("hello world!\n");
+	return 0;
+}
+1、预处理
+
+预编译过程主要处理那些源代码中以#开始的预编译指令，主要处理规则如下：
+1）将所有的#define删除，并且展开所有的宏定义；
+2）处理所有条件编译指令，如#if，#ifdef等；
+3）处理#include预编译指令，将被包含的文件插入到该预编译指令的位置。该过程递归进行，及被包含的文件可能还包含其他文件。
+4）删除所有的注释//和 /**/；
+5）添加行号和文件标识，如#2 “hello.c” 2,以便于编译时编译器产生调试用的行号信息及用于编译时产生编译错误或警告时能够显示行号信息；
+6）保留所有的#pragma编译器指令，因为编译器须要使用它们；
+
+gcc -E hello.c -o hello.i   得到一个.i为后缀的预处理之后的文件，该文件叫做预处理文件，以下为预处理后的输出文件hello.i的内容：
+
+
+# 1 "hello.c"
+# 1 "<built-in>"
+# 1 "<命令行>"
+# 1 "hello.c"
+# 1 "/usr/include/stdio.h" 1 3 4
+# 28 "/usr/include/stdio.h" 3 4
+ 
+/***** 省略了部分内容,包括stdio.h中的一些声明及定义  *****/
+ 
+# 2 "hello.c" 2
+int main (void)
+{
+ printf ("hello world!\n");
+ return 0;
+}
+
+2、编译
+
+编译过程就是把预处理完的文件进行一系列词法分析，语法分析，语义分析及优化后生成相应的汇编代码文件。
+
+gcc -S hello.i -o hello.s   得到一个.s为后缀的汇编文件，以下为编译后的输出文件hello.s的内容：
+
+
+	.file	"hello.c"
+	.section	.rodata
+.LC0:
+	.string	"hello world!"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB0:
+	.cfi_startproc
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	.cfi_offset 5, -8
+	movl	%esp, %ebp
+	.cfi_def_cfa_register 5
+	andl	$-16, %esp
+	subl	$16, %esp
+	movl	$.LC0, (%esp)
+	call	puts
+	movl	$0, %eax
+	leave
+	.cfi_restore 5
+	.cfi_def_cfa 4, 4
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3"
+	.section	.note.GNU-stack,"",@progbits
+
+3、汇编
+汇编器是将汇编代码转变成机器可以执行的命令，每一个汇编语句几乎都对应一条机器指令。汇编相对于编译过程比较简单，根据汇编指令和机器指令的对照表一一翻译即可。
+
+gcc –c hello.s –o hello.o，得到一个.o为后缀的目标文件，由于hello.o的内容为机器码，不能以文本形式方便的呈现。可用命令hexdump hello.o 打开。
+
+4、链接
+
+目标代码不能直接执行，要想将目标代码变成可执行程序，还需要进行链接操作。才会生成真正可以执行的可执行程序。链接操作最重要的步骤就是将函数库中相应的代码组合到目标文件中。
+
+gcc hello.o -o hello，实现链接的处理，默认生成可执行文件 a.out，可以通过 -o来指定输出文件名。
+
+
+
+使用ld指令
+ld -static crt1.o crti.o crtbeginT.o hello.o -start -group -lgcc -lgcc_eh -lc -end-group crtend.o crtn.o 
+
+（目标文件，未指定具体目录）
+连接的过程包括按序叠加、相似段合并、符号地址的确定、符号解析与重定位、指令修正、全局构造与解析等等
+
+tarena@ubuntu:~/project/c_test$ gcc -v
+使用内建 specs。
+COLLECT_GCC=gcc.real
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/4.6/lto-wrapper
+目标：i686-linux-gnu
+配置为：../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --enable-targets=all --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu
+线程模型：posix
+gcc 版本 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+ 
+tarena@ubuntu:/$ find /usr -name crt*
+/usr/lib/i386-linux-gnu/crti.o
+/usr/lib/i386-linux-gnu/crt1.o
+/usr/lib/i386-linux-gnu/crtn.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtbeginT.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtfastmath.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtend.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtprec80.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtprec32.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtbeginS.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtbegin.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtendS.o
+/usr/lib/gcc/i686-linux-gnu/4.6/crtprec64.o
+
+tarena@ubuntu:~/project/c_test$ ld -static -verbose /usr/lib/i386-linux-gnu/crt1.o /usr/lib/i386-linux-gnu/crti.o /usr/lib/gcc/i686-linux-gnu/4.6/crtbeginT.o -L/usr/lib/gcc/i686-linux-gnu/4.6 -L/usr/lib/i386-linux-gnu hello.o -start -group -lgcc -lgcc_eh -lc -end-group /usr/lib/gcc/i686-linux-gnu/4.6/crtend.o /usr/lib/i386-linux-gnu/crtn.o 
+GNU ld (GNU Binutils for Ubuntu) 2.22
+  Supported emulations:
+   elf_i386
+   i386linux
+   elf32_x86_64
+   elf_x86_64
+   elf_l1om
+   elf_k1om
+ld: bad -rpath option 
+
+
+gcc版本不对，支持的是 i386linux，如果想深入研究，安装gcc 4.1.2：
+参看：ld script初探
+
+可以直接通过 gcc hello.c -o hello来生成可执行文件，这只是把中步操作隐藏起来了
+
+
+
+注意：gcc -c hello.o -o hello 是错误的
+
+
+tarena@ubuntu:~/project/c_test$ gcc -c hello.o -o hello
+gcc.real: 警告： hello.o：未使用链接器输入文件，因为链接尚未完成
+
+
+注意：目标文件和可执行文件的不同
+
+
+# gcc -c hello.c 
+生成 hello.o  /*目标文件*/
+# file hello.o
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+ 
+# readelf -h hello.o 
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          288 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           40 (bytes)
+  Number of section headers:         13
+  Section header string table index: 10
+
+# gcc hello.o -o hello
+生成 hello  /*可执行文件*/
+# file hello
+hello: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0x25c438a7052180bb74c1b9d78b498e6777586c92, not stripped
+ 
+# readelf -h hello
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x8048320
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          4412 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         9
+  Size of section headers:           40 (bytes)
+  Number of section headers:         30
+
+================================================
+
+# arm-linux-gcc -c hello.c  
+生成 hello.o  /*二进制目标文件*/
+# file hello.o
+hello.o: ELF 32-bit LSB relocatable, ARM, version 1 (SYSV), not stripped
+ 
+# readelf -h hello.o
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          288 (bytes into file)
+  Flags:                             0x5000000, Version5 EABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           40 (bytes)
+  Number of section headers:         12
+  Section header string table index: 9
+
+# arm-linux-gcc hello.o -o hello  
+生成 hello  /*二进制可执行文件*/
+# file hello
+hello: ELF 32-bit LSB executable, ARM, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, not stripped
+# readelf -h hello
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           ARM
+  Version:                           0x1
+  Entry point address:               0x8304
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          4464 (bytes into file)
+  Flags:                             0x5000002, has entry point, Version5 EABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         10
+  Size of section headers:           40 (bytes)
+  Number of section headers:         29
+  Section header string table index: 26
+
+
+readelf -h 选项，读取ELF文件的文件头信息，注意其中的三项值：Type、Machine、Entry point address。
+
+Type  信息就是file中的文件类型
+Machine  是在ARM执行还是在inter执行的
+Entry point address  表示文件的执行入口点，只有可执行文件该项才有值，而目标文件是可重定向文件，还不可以直接执行，因此该项值为0.
+
+
+
+如果在ARM上执行目标文件而不是可执行文件会出现如下错误：
+line 1: syntax error: unexpected word (expecting ")")
+
+总之一句话，你要明白你编译出来的是什么
+
+
+
+三、文件名后缀
+
+
+tarena@ubuntu:~/project/c_test$ ls
+hello  hello.c  hello.i  hello.o  hello.s
+文件名后缀 
+
+文件类型
+
+.c
+
+C源文件
+
+.C .cpp .cc .c++ .cxx               
+
+C++源文件
+
+.h
+
+头文件
+
+.i
+
+预处理后的C源文件                           
+
+.s
+
+汇编程序文件
+
+.o
+
+目标文件
+
+.a
+
+静态链接库
+
+.so
+
+动态链接库
+
+
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53339861
+
 # 字符串和字符串函数
 
 ## 一、字符串
@@ -1873,6 +2200,8 @@ int add (int ,int );
 int add (int x, int y) {
 	return x + y;
 }
+```
+```
 //main.c
 #include <stdio.h>
 #include "add.h"
@@ -1901,7 +2230,8 @@ extern int add (int, int);
 #endif
 编译：gcc add.cpp main.c -o add -lstdc++  出现错误
 /tmp/ccBSzdDa.o: In function `main': main.c:(.text+0x29): undefined reference to `add' collect2: ld 返回 1 
-但是，编译：g++ add.cpp main.c -o add 是OK的
+但是，
+编译：g++ add.cpp main.c -o add 是OK的
 ```
 因为g\+\+会自动将c的模块中的符号表转换为 _Z3addii 这也是GNU compiler的强大之处，可是别的编译器也许就不这么智能了。所以在c/c\++混合编程时还是最好加上extern “C”。
 
@@ -1932,7 +2262,6 @@ gcc sub.c main.cpp -o sub -lstdc++
 
 # 存储类、链接
 
-这一章是我看的时间最长的一章了，表面上是有很多关键字和几个函数需要学习，其实我知道是自己最近不在状态了，做项目没进展，看书看不下去，两头都放不下，最后两头都没有做好。不由的想起一句话，你不快乐是因为：你可以像只猪一样懒，却无法像只猪一样，懒得心安理得。好了，言归正传，进入正题：
 
 一、存储类
 
