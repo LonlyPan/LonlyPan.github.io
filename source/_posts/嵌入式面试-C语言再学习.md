@@ -1614,9 +1614,18 @@ class foo {};// foo 这里已经拥有自己的内存了，对照上面两个函
 ### 1）extern 修饰变量的声明
 
 具有外部链接的静态变量具有文件作用域，外部链接和静态存储时期。这一类型有时被称为外部存储类，这一类型的变量被称为外部变量。把变量的定义声明放在所有函数之外，即创建了一个外部变量。为了使程序更加清晰，可以在使用外部变量的函数中通过使用 extern 关键字来再次声明它。如果变量是在别的文件中定义，使用 extern 来声明该变量就是必须的。
- 
-int n; /*外部定义的变量*/ double Up[100]; /*外部定义的数组*/ extern char Coal; /*必须的声明，因为Coal在其他文件中定义*/ void next (void); int main (void) { extern double Up[]; /*可选的声明，此处不必指明数组大小*/ extern int n; /*可选的声明，如果将extern漏掉，就会建立一个独立的自动变量*/ } void next (void) { ... } 
- 
+```
+int n; /*外部定义的变量*/ 
+double Up[100]; /*外部定义的数组*/ 
+extern char Coal; /*必须的声明，因为Coal在其他文件中定义*/ 
+void next (void); 
+int main (void) { 
+	extern double Up[]; /*可选的声明，此处不必指明数组大小*/ 
+	extern int n; /*可选的声明，如果将extern漏掉，就会建立一个独立的自动变量*/ 
+} 
+void next (void) { ... } 
+```
+
 下列 3 个例子展示了外部变量和自动变量的 4 种可能组合：
  
 /*例1*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { extern int H; /*与上面的H是同一变量*/ } /*例2*/ int H; int magic (); int main (void) { extern int H; /*声明H为外部变量*/ ... } int magic () { ... /*未声明H，但知道该变量*/ } /*例3*/ int H; /*对main()和magic()不可见，但是对文件中其他不单独拥有局部H的函数可见*/ int magic (); int main (void) { int H; /*声明H， 默认为自动变量，main（）的局部变量*/ ... } int P；/*对magic()可见，对main()不可见，因为P声明子啊main()之后*/ int magic () { auto int H; /*把局部变量H显式地声明为自动变量*/ } 
