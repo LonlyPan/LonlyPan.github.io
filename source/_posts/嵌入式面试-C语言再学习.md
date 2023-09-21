@@ -700,7 +700,7 @@ int main ()
 输出结果：
 1 2 3 4 5 6 7 8 9 
 ```
-### strcpy 和 memcpy 的区别：
+#### strcpy 和 memcpy 的区别：
 
 （1）strcpy 和 memcpy 都是标准 C 库函数
 
@@ -1000,6 +1000,299 @@ void StrToHex(char *pbDest, char *pbSrc, int nLen)
 	}
 }
 ```
+# 值传递，址传递，引用传递
+
+## 一、值传递
+
+当函数被调用的时候，形参被创建，调用时带的参数被拷贝到刚创建好的形参，函数结束时，形参被摧毁。由于是参数的一个副本被传递到被调用的函数。所以，原始的参数不会被函数修改。
+
+值传递的优点： 通过值来传递的参数可以是数字，变量，表达式。参数的值不会被“被调用的函数”修改。
+
+值传递的缺点： 当函数被多次调用，值传递结构体和类会带来性能上的损害（耗时），给调用者返回值只能通过被调用函数的返回值。
+
+事实上，关于 C 函数的参数传递规则可以表述如下：
+> **所有传递给函数的参数都是按值传递的。**
+```
+#include <stdio.h>
+ 
+void swap (int x, int y)
+{
+	int temp;
+	temp = x;
+	x = y;
+	y = temp;
+	printf ("x = %d, y = %d\n", x, y);
+}
+ 
+int main (void)
+{
+	int a = 4, b = 9;
+	swap (a, b);
+	printf ("a = %d, b = %d\n", a, b);
+	return 0;
+}
+输出结果：
+x = 9, y = 4
+a = 4, b = 9
+```
+看调用swap函数的代码：
+
+swap (a, b) 时所完成的操作代码如下所示：
+```
+int x=a;  //←
+int y=b;  //←注意这里，头两行是调用函数时的隐含操作
+int tmp;
+tmp=x;
+x=y;
+y=tmp;
+```
+请注意在调用执行 swap 函数的操作中我人为地加上了头两句：
+```
+int x=a;
+int y=b;
+```
+这是调用函数时的两个隐含动作。它确实存在，现在我只不过把它显式地写了出来而已。问题一下就清晰起来啦（看到这里，现在你认为函数里面交换操作的是a,b变量或者只是x,y变量呢？）
+
+原来 ，其实函数在调用时是隐含地把实参a,b 的值分别赋值给了x,y，之后在你写的 swap 函数体内再也没有对a,b进行任何的操作了。交换的只是x,y变量。并不是a,b。当然a,b的值没有改变啦！函数只是把a,b的值通过赋值传递给了x,y，函数里头操作的只是x,y的值并不是a,b的值。这就是所谓的参数的值传递了。
+
+哈哈，终于明白了，正是因为它隐含了那两个的赋值操作，才让我们产生了前述的迷惑（以为a,b已经代替了x,y，对x,y的操作就是对a,b的操作了，这是一个错误的观点啊！）。
+
+参看：存储类、链接
+
+上面的解释虽然便于理解，但是不对。按照值传递的特点，我们可以很清楚的看到，虽然在 swap 函数中暂时使得运行结果显示了交换后的数据，即达到了交换的目的，但实际情况却是随着 swap 函数的结束，被作为局部参数的形参  x，y 以及 swap 函数本身的局部参数 temp 都将结束期生存期，在内存中的存储空间释放，因此实参 a , b 并未受到影响，依然保持原值。
+
+
+
+## 二、址传递
+
+址传递又可以理解为指针传递，可以改变指针指向内容的值，但是不能改变指针本身，无需复制开销。如果需要改变指针本身，可以使用二重指针或者指针引用。
+
+```
+#include <stdio.h>
+void swap (int *px, int *py)
+{
+	int temp=*px;
+	*px=*py;
+	*py=temp;
+	printf("*px = %d, *py = %d\n", *px, *py);
+}
+ 
+int main(void)
+{
+	int a=4;
+	int b=6;
+	swap (&a,&b);
+	printf("a = %d,b = %d\n", a, b);
+	return 0;
+}
+输出结果：
+*px = 6, *py = 4
+a = 6,b = 4
+```
+看函数的接口部分：swap (int *px, int *py)，请注意参数px，py都是指针
+
+再看调用处：swap (&a, &b); 它将 a 的地址 &a 代入到 px，b 的地址 &b 代入到 py。同上面的值传递一样，函数调用时做了两个隐含的操作，将 &a ，&b 的值赋给了px，py。
+整个 swap 函数调用执行如下：
+```
+px=&a;   
+py=&b;  //请注意这两行，它是调用 swap 的隐含动作。
+int temp=*px;
+*px=*py;
+*py=temp;
+printf("*px=%d,*py=%d\n",*px, *py);
+```
+这样，有了头两行的隐含赋值操作，我们现在已经可以看出，指针 px，py 的值已经分别是 a，b 变量的地址值了。接下来，对 *px，*py 的操作当然也就是对 a，b 变量本身的操作了。所以函数里头的交换就是对 a，b 值的交换了，这就是所谓的址传递（传递 a，b 的地址给 px，py）
+
+总结：
+
+在这个程序中用指针变量作参数，虽然传送的是变量的地址，但实参和形参之间的数据传递依然是单向的“值传递”，即调用函数不可能改变实参指针变量的值。但它不同于一般值传递的是，它可以通过指针间接访问的特点来改变指针变量所指变量的值，即最终达到了改变实参的目的。
+
+
+
+问题：如何实现C语言返回多个值？？
+
+数组的地址作为函数的形参，以址传递方式传递数组参数
+
+```
+#include <stdio.h>
+void foo (int arr[])
+{
+	int i = 0;
+	for (i = 0; i < 6; i++)
+	{
+		arr[i] = i + 1;
+	}
+}
+ 
+int main (void)
+{
+	int arr[5] = {0};
+	int i = 0;
+	foo (arr);
+	for (i = 0; i < 5; i++)
+	{
+		printf ("%d ", arr[i]);
+	}
+	printf ("\n");
+	return 0;
+}
+输出结果：
+1 2 3 4 5
+```
+## 三、引用传递
+
+为了通过引用来传递一个变量，把函数的参数声明为引用，当函数被调用时，所声明的引用形参，就会为其的引用。
+
+引用传递的优点：改不改变 argument 的值是可以控制的，传递结构体、类时速度快，因为不用做一系列copy的工作；使用引用传递可以返回多个值；引用必须被初始化。
+
+引用传递的缺点：使用引用传递时，北调函数会改变argument的值，向“调用者”保证，argument不会被“被调用函数”改变。
+```
+
+#include <stdio.h>
+void swap (int &x, int &y)
+{
+	int temp = x;
+	x = y;
+	y = temp;
+	printf ("x = %d, y = %d\n", x, y);
+}
+ 
+int main (void)
+{
+	int a = 4;
+	int b = 6;
+	swap (a, b);
+	printf ("a = %d, b = %d\n", a, b);
+	return 0;
+}
+ 
+g++ swap.cpp 
+输出结果：
+x = 6, y = 4
+a = 6, b = 4
+```
+看函数的 接口部分：swap (int &x, int &y) ，参数 x，y 是int的变量，调用时我们可以像值传递一样调用函数，但是 x，y 前都有一个取地址符号 &。有了这个，调用 swap 时函数会将 a，b 分别代替了 x，y。我们称 x，y 分别引用了 a，b 变量。这样函数里头操作的其实就是实参 a，b 本身了，也就是说函数里可以直接修改到 a，b 的值了。
+
+
+## 面试题：动态分配内存问题
+
+### 问题一：
+
+```
+void GetMemory( char *p )
+{
+ p = (char *) malloc( 100 );
+}
+void Test( void )
+{
+ char *str = NULL;
+ GetMemory( str );
+ strcpy( str, "hello world" );
+ printf( str );
+}
+```
+请问运行 Test 函数会有什么样的结果？ 
+答：程序崩溃。
+因为 GetMemory 并不能传递动态内存，Test 函数中的 str 一直都是 NULL。strcpy(str, "hello world");将使程序崩溃。
+在函数内部修改形参并不能真正的改变传入形参的值,执行完
+char *str = NULL;
+GetMemory( str );
+后的str仍然为NULL;
+
+
+二级指针作为函数的形式参数可以让被调用函数使用其他函数的指针类型存储区
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void fa(char** p)  //主要还是指针的问题
+{
+	*p=(char* )malloc(100);
+	if(*p)
+	{
+		return;	
+	}
+}
+int main()
+{
+	char* str=NULL;//这块没问题的
+	fa(&str);  // 传递的时指针的地址
+	strcpy(str,"hello");
+	printf("%s\n",str);
+	free(str);
+	str=NULL;
+	return 0;
+}
+输出结果：
+hello
+```
+
+第二种方法：使用返回值
+
+```
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <string.h>  
+char* fa(char* p)  //主要还是指针的问题  
+{  
+    p=(char* )malloc(100);  
+   	return p;
+}  
+int main()  
+{  
+    char* str=NULL;//这块没问题的  
+    str = fa(str);  
+    strcpy(str,"hello");  
+    printf("%s\n",str);  
+    free(str);  
+    str=NULL;  
+    return 0;  
+}  
+输出结果：
+hello
+```
+
+### 问题二：
+
+```
+char *GetMemory( void )
+{
+ char p[] = "hello world";
+ return p;
+}
+void Test( void )
+{
+ char *str = NULL;
+ str = GetMemory();
+ printf( str );
+}
+```
+请问运行 Test 函数会有什么样的结果？ 
+答：可能是乱码。
+
+因为 GetMemory 返回的是指向“栈内存”的指针，该指针的地址不是 NULL，但其原现的内容已经被清除，新内容不可知。
+char p[] = "hello world";
+return p;
+p[]数组为函数内的局部自动变量,在函数返回后,内存已经被释放。这是许多程序员常犯的错误,其根源在于不理解变量的生存期。
+
+```
+#include <stdio.h>
+char* fa(char* p_str)//指针做形参可以使用调用函数的存储区
+{
+	char* p=p_str;
+	p="hello world";
+	return p;
+}
+ 
+int main()
+{
+	char* str=NULL;
+	printf("%s\n",fa(str));
+	return 0;
+}
+```
+
+# 存储类、链接
 # 输入/输出
 
 https://blog.csdn.net/qq_29350001/article/details/52316708
