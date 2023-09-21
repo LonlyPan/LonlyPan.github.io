@@ -1296,7 +1296,7 @@ hello world
 
 # 存储类型关键字
 
-定义： 是对声明的实现或者实例化。连接器(linker)需要它（定义）来引用内存实体。与上面的声明相应的定义如下：参看：C语言再学习 -- 存储类、链接
+定义： 是对声明的实现或者实例化。连接器(linker)需要定义来引用内存实体。与上面的声明相应的定义如下：参看：C语言再学习 -- 存储类、链接
 
 C语言中有 5 个作为存储类说明符的关键字，分别是 auto、register、static、extern 以及 typedef。关键字typedef 与内存存储无关，由于语法原因被归入此类。
 
@@ -1902,6 +1902,667 @@ gcc sub.c main.cpp -o sub -lstdc++
 原文链接：https://blog.csdn.net/qq_29350001/article/details/53895693
 
 # 存储类、链接
+
+这一章是我看的时间最长的一章了，表面上是有很多关键字和几个函数需要学习，其实我知道是自己最近不在状态了，做项目没进展，看书看不下去，两头都放不下，最后两头都没有做好。不由的想起一句话，你不快乐是因为：你可以像只猪一样懒，却无法像只猪一样，懒得心安理得。好了，言归正传，进入正题：
+
+一、存储类
+
+C为变量提供了5种不同的存储类型，或称存储类。
+
+下面是C的5种存储类：
+
+自动 —— 在一个代码块内（或在一个函数头部作为参量）声明的变量，无论有没有存储类修饰符 auto，都属于自动存储类。该类具有自动存储时期、代码块作用域和空链接。如未经初始化，它的值是不定的。
+
+寄存器 —— 在一个代码块内（或在一个函数头部作为变量）使用存储类修饰符 register 声明的变量属于寄存器存储类。该类具有自动存储时期、代码块作用域和空链接，并且您无法获得其地址。把一个变量声明为寄存器变量可以指示编译器提供可用的最快访问。如未经初始化，它的值是不定的。
+
+静态、空链接 —— 在一个代码块内使用存储类修饰符 static 声明的变量属于静态空链接存储类。该类具有静态存储时期、代码作用域和空链接，仅在编译时初始化一次。如未明确初始化，它的字节都被设定为0。
+
+静态、外部链接 —— 在所有函数外部定义、未使用存储类修饰符 static 的变量属于静态、外部链接存储类。该类具有静态存储时期、文件作用域和外部链接，仅在编译时初始化一次。如未明确初始化，它的字节都被设定为0。
+
+静态、内部链接 —— 在所有函数外部定义、使用存储类修饰符 static 的变量属于静态、内部链接存储类。该类具有静态存储时期、文件作用域和内部链接，仅在编译时初始化一次。如未明确初始化，它的字节都被设定为0。
+
+
+
+这5种存储类有一个共同之处：在决定了使用哪一个存储类之后，就自动决定了作用域和存储时期。
+
+其实还有一种选择就是使用 malloc() 函数来分配和管理内存，该函数返回一个指向具有所请求字节数的内存块的指针。将这一内存的地址作为参数来条用函数free()，可以使该内存块重新可用。
+
+
+
+存储类
+
+时期
+
+作用域
+
+链接    
+
+声明方式
+
+自动       
+
+自动         
+
+代码块
+
+空
+
+代码块内
+
+寄存器
+
+自动
+
+代码块    
+
+空
+
+代码块内，使用关键字register       
+
+具有外部链接的静态    
+
+静态
+
+文件
+
+外部
+
+所有函数之外
+
+具有内部链接的静态
+
+静态
+
+文件
+
+内部
+
+所有函数之外，使用关键字static
+
+空链接的静态
+
+静态
+
+代码块
+
+空
+
+代码块内，使用关键字static
+
+
+上面提到的一些术语如：作用域、链接和存储时期。我们来做一下了解。
+
+1、作用域
+
+作用域描述了程序中可以访问一个标识符的一个或多个区域。一个C变量的作用域可以是代码块作用域、函数原型作用域，或者文件作用域。
+
+
+
+代码块作用域：
+
+
+double blocky (double cleo)
+{
+	double patcrick = 0.0;
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		double q = cleo * i;   /*q作用域的开始*/
+		...
+		patrick * = q;         
+	}                        /*q作用域的结束*/
+	return patrick;
+}
+上面代码中的变量 cleo 和 patrick 都有直到结束花括号的代码块作用域，q的作用域被限制在内部代码块内，只有该代码块内的代码可以访问q。
+
+由上可知，代码块中定义的变量，从该变量被定义的地方到包含该定义的代码块的末尾该变量可见。另外，函数的形式参量尽管在函数的开始花括号前进行定义，同样也具有代码块作用域，隶属于包含函数体的代码块。
+
+
+
+函数原型作用域：
+
+适用于函数原型中使用的变量名，如下所示：
+
+
+int mighty (int mouse, double large);
+int mighty (int , double );  （同上）
+函数原型作用域从变量定义处一直到原型声明的末尾，这意味着编译器在处理一个函数原型的参数是，它所关心的只是该参数的类型。
+
+
+
+文件作用域：
+
+一个在所有函数之外定义的变量具有文件作用域，具有文件作用域的变量从它定义处到包含该定义的文件结尾都是可见的。
+
+
+#include <stdio.h>
+int unite = 0;
+void critic (void);
+int main (void)
+{
+	...
+	return 0;
+}
+ 
+void critic (void)
+{
+	...
+}
+
+这里，变量 units 具有文件作用域，在 main () 和 critic () 中都可以使用它。因为它们可以在不止一个函数中使用，文件作用域变量也被称为全局变量。
+
+
+2、链接
+
+一个C变量具有下列链接之一：外部链接、内部链接、空链接。
+
+
+
+外部链接：
+
+一个具有外部链接的变量可以在一个多文件程序的任何地方使用。
+
+
+int n = 5;  /*文件作用域，外部链接，未使用 static */
+int main (void)
+{
+    ...
+    return 0;
+}
+
+内部链接：
+
+一个具有内部链接的变量可以在一个文件的任何地方使用。
+
+
+static int dodgers = 3; /*文件作用域，内部链接，使用了 static ，该文件所私有*/
+int main (void)
+{
+	...
+	return 0;
+}
+
+
+空链接：
+具有代码块作用域或者函数原型作用域的变量有空链接，意味着它们是由其定义所在的代码块或函数原型所私有的。
+
+
+double blocky (double cleo)  
+{
+	double patcrick = 0.0;    /*代码块作用域，空链接，该代码块所私有*/
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		double q = cleo * i;   /*q作用域的开始*/
+		...
+		patrick * = q;         
+	}                        /*q作用域的结束*/
+	return patrick;
+}
+
+3、存储时期
+
+一个C变量有以下两种存储时期之一：静态存储时期和自动存储时期。
+
+
+
+静态存储时期：
+
+如果一个变量具有静态存储时期，它在程序执行期间将一直存在。具有文件作用域的变量具有静态存储时期。
+
+注意对于具有文件作用域的变量，关键字 static 表明链接类型，并非存储时期。一个使用 static 声明了的文件作用域变量具有内部链接，而所有的文件作用域变量，无论它具有内部链接，还是具有外部链接，都具有静态存储时期。
+
+总结上面这句话就是, static 修饰的静态全局变量，具有内部链接，不能被其他文件使用。
+
+
+
+自动存储时期：
+
+具有代码块作用域的变量，一般情况下具有自动存储时期。
+
+在程序进入定义这些变量的代码块时，将为这些变量分配内存；当退出这个代码块时，分配的内存将被释放。
+
+
+
+4、自动变量
+
+属于自动存储类的变量具有自动存储时期、代码块作用域和空链接。默认情况下，在代码块或函数的头部定义的任意变量都属于自动存储类。
+
+
+
+关键字auto：
+
+关键字auto称为存储类说明符。
+
+int main (void)
+{
+    auto int p;
+}
+为了表明有意覆盖一个外部函数定义时，或者为了表明不能把变量改变为其他存储类这一点很重要时，可以这样做。
+
+
+代码块作用域和空链接意味着只有变量定义所在的代码块才可以通过名字访问变量（当然，可以用参数想其他函数传送该变量的值和地址，但那是以间接的方式知道的）。另一个函数可以使用具有同样名字的变量，但那将是存储在不同内存位置中的一个独立变量。
+
+
+int loop (int n)
+{
+	int m;  // m的作用域
+	scanf ("%d, &m");
+	{
+		int i; //m 和 i 的作用域
+		for (i = m; i < n; i++)  
+			put ("i is local to a sub-block\n");
+	}
+	return m;  //m的作用域， i 已经消失 
+}
+
+如上嵌套代码块中，只有定义变量的代码块及其内部的任何代码块可以访问的变量，变量 i 仅在内层花括号中是可见的。如果试图在内层代码块之前或之后使用该变量，将得到一个编译错误。
+
+
+如果在内层代码块定义了一个具有和外层代码块变量同一个名字的变量，我们称之为内层定义覆盖了外部定义，但当运行离开内层代码块时，外部变量重新恢复作用。
+
+
+#include <stdio.h>
+int main (void)
+{
+	int x = 30;
+	printf ("x in outer block : %d\n", x);
+	{
+		int x = 77; 
+		printf ("x int inner block : %d\n", x);
+	}
+	printf ("x in outer block : %d\n", x);
+	while (x++ < 33)
+	{
+		int x = 100;
+		x++;
+		printf ("x in while loop : %d\n", x);
+	}
+	printf ("x in outer block : %d\n", x);
+	return 0;
+}
+输出结果：
+x in outer block : 30
+x int inner block : 77
+x in outer block : 30
+x in while loop : 101
+x in while loop : 101
+x in while loop : 101
+x in outer block : 34
+
+
+1）不带 {} 的代码块
+
+语句若为循环或者 if 语句的一部分，即使没有使用 { }，也认为是一个代码块。更完整地说，整个循环是该循环所在代码块的子代码块，而循环体是整个循环代码块的子代码块。
+
+
+#include <stdio.h>
+int main (void)
+{
+	int n = 10;
+	printf ("Initially, n = %d\n", n);
+	for (int n = 1; n < 3; n++)
+		printf ("loop 1: n = %d\n", n);
+	printf ("After loop 1, n = %d\n", n);
+	for (int n = 1; n < 3; n++)
+	{
+		printf ("loop 2 index n = %d\n", n);
+		int n = 30;
+		printf ("loop 2 n = %d\n", n);
+		n++;
+	}
+	printf ("After loop 2, n = %d\n", n);
+	return 0;
+}
+输出结果：
+Initially, n = 10
+loop 1: n = 1
+loop 1: n = 2
+After loop 1, n = 10
+loop 2 index n = 1
+loop 2 n = 30
+loop 2 index n = 2
+loop 2 n = 30
+After loop 2, n = 10
+
+
+注意，有些编译器可能不支持这些新的C99作用域规则，需要使用 -std=c99选项来激活这些规则：
+
+例如： gcc -std=c99 forc99.c
+
+
+
+2）自动变量的初始化
+
+除非显式的初始化自动变量，否则它不会被自动初始化。
+
+int main (void)
+{
+    int n;
+    int m = 5;
+}
+变量 m 的初始化为5，而变量 n 的初值则是先前占用分配给它的空间任意值。不要指望这个值是 0 。除非你对自动变量进行显示的初始化，否则当自动变量创建时，它们的值总是垃圾值。
+
+
+#include <stdio.h>
+int main (void)
+{
+	int a;
+	int b = a + 3;
+	printf ("a = %d, b = %d\n", a, b);
+	return 0;
+}
+ 
+输出结果：
+a = 134513705, b = 134513708
+倘若一个非常量表达式中所用到的变量先前定义过的话，可将自动变量初始化为该表达式：
+
+int main (void)
+{
+    int n = 1;
+    int m = 5 * n; //使用先前定义过的变量
+}
+
+5、寄存器变量
+
+寄存器变量多是存放在一个寄存器而非内存中，所以无法获得寄存器变量的地址。具有代码块作用域、空链接以及自动存储时期。通过使用存储类说明符 register 可以声明寄存器变量：
+
+
+int main (void)
+{
+    register int n;
+}
+可以把一个形式参量请求为寄存器变量，只需在函数头部使用 register 关键字：
+void macho (register int n)
+可以使用 register 声明的类型是有限的。例如，处理器可能没有足够大的寄存器来容纳 double 类型。
+
+
+6、具有代码块作用域的静态变量
+
+“静态”是指变量的位置固定不动，而非变量不可变。具有文件作用域的变量自动(也是必须的)具有静态存储时期。也可以创建具有代码块作用域，兼具静态存储的局部变量。这些变量和自动变量具有相同的作用域，但当包含这些变量的函数完成工作时，它们并不消失。也就是说，这些变量具有代码块作用域、空链接，却有静态存储时期。从一次函数调用到下一次调用，计算机都记录着它们的值。这样的变量通过使用存储类说明符 static （这提供了静态存储时期）在代码块内声明（这提供了代码块作用域和空链接）创建。
+
+
+#include <stdio.h>
+void trystat (void);
+int main (void)
+{
+	int count;
+	for (count = 1; count <= 3; count++)
+	{
+		printf ("Hello World %d\n", count);
+		trystat ();
+	}
+	return 0;
+}
+ 
+void trystat (void)
+{
+	int fade = 1;
+	static int stay = 1;
+	printf ("fade = %d and stay = %d\n", fade++, stay++);
+}
+输出结果：
+Hello World 1
+fade = 1 and stay = 1
+Hello World 2
+fade = 1 and stay = 2
+Hello World 3
+fade = 1 and stay = 3
+
+
+
+在每次调用trystat（）时fade都被初始化，而stay只在编译trystat（）时被初始化一次。如果不显式地对静态变量进行初始化，它们将被初始化为0.
+
+
+7、具有外部链接的静态变量
+具有外部链接的静态变量具有文件作用域，外部链接和静态存储时期。这一类型有时被称为外部存储类，这一类型的变量被称为外部变量。把变量的定义声明放在所有函数之外，即创建了一个外部变量。为了使程序更加清晰，可以在使用外部变量的函数中通过使用 extern 关键字来再次声明它。如果变量是在别的文件中定义，使用 extern 来声明该变量就是必须的。
+
+
+int n;   /*外部定义的变量*/
+double Up[100];  /*外部定义的数组*/
+extern char Coal;  /*必须的声明，因为Coal在其他文件中定义*/
+ 
+void next (void); 
+ 
+int main (void)
+{
+	extern double Up[]; /*可选的声明，此处不必指明数组大小*/
+	extern int n;  /*可选的声明，如果将extern漏掉，就会建立一个独立的自动变量*/
+}
+ 
+void next (void)
+{
+	...
+}
+
+
+下列 3 个例子展示了外部变量和自动变量的 4 种可能组合：
+
+/*例1*/
+int H;
+int magic ();
+int main (void)
+{
+	extern int H;  /*声明H为外部变量*/
+	...
+}
+ 
+int magic ()
+{
+	extern int H;  /*与上面的H是同一变量*/
+}
+ 
+/*例2*/
+int H;
+int magic ();
+int main (void)
+{
+	extern int H;  /*声明H为外部变量*/
+	...
+}
+ 
+int magic ()
+{
+	...            /*未声明H，但知道该变量*/
+}
+ 
+ 
+/*例3*/
+int H; /*对main()和magic()不可见，但是对文件中其他不单独拥有局部H的函数可见*/
+int magic ();
+int main (void)
+{
+	int H;          /*声明H， 默认为自动变量，main（）的局部变量*/
+	...
+}
+ 
+int P；/*对magic()可见，对main()不可见，因为P声明子啊main()之后*/
+int magic ()
+{
+	auto int H;     /*把局部变量H显式地声明为自动变量*/
+}
+
+
+
+这些例子说明了外部变量的作用域：从声明的位置开始到文件结尾为止。它们也说明了外部变量的生存期。
+
+外部变量H和P存在的时间与程序运行时间一样，并且它们不局限于任一函数，在一个特定函数返回时并不消失。
+
+
+
+1）外部变量初始化
+
+外部变量可以被显式地初始化，如果不对外部变量初始化，则它们将自动被赋初值 0. 这一原则也适用于外部定义的数组元素。不同于自动变量，只可以用常量表达式来初始化文件作用域变量。
+
+
+int x = 10; //可以， 10是常量
+int y = 3 + 20;  //可以，一个常量表达式
+size_t = sizeof (int);  //可以，一个常量表达式
+int x2 = 2 * x;  //不可以， x是一个变量
+（只要类型不是一个变长数组，sizeof表达式就被认为是常量表达式）
+
+
+2）外部变量的使用
+
+#include <stdio.h>
+int units = 0;   //一个外部变量
+void critic (void);
+int main (void)
+{
+	extern int units;  //可选的二次声明
+	printf ("How many pounds to a firkin of butter?\n");
+	scanf ("%d", &units);
+	while (units != 56)
+		critic ();
+	printf ("You must have looked it up!\n");
+	return 0;
+}
+ 
+void critic (void)
+{       //这里省略了可选的二次声明
+	printf ("No luck, chummy. Try again\n");
+	scanf ("%d", &units);
+}
+输出结果：
+How many pounds to a firkin of butter?
+23
+No luck, chummy. Try again
+56
+You must have looked it up!
+
+
+
+两个函数main() 和 critic() 都是标识符 units 来访问同一个变量。在 C 的术语中，称 units 具有文件作用域、外部链接以及静态存储时期。
+在上述例子中，声明主要是使程序的可读性更好。存储类说明符 extern 告诉编译器在该函数中用到的 units 都是指同一个在函数外部（甚至在文件之外）定义的变量。再次，main（）和 critic （）都使用了外部定义的 units。
+
+
+
+3）定义和声明
+
+可参看：C语言再学习 2--声明与定义
+
+这里需要注意的是，关键字 extern 用于声明，而非定义。
+
+
+
+8、具有内部链接的静态变量
+
+具有内部链接的静态变量，具有静态存储时期、文件作用域以及内部链接。通过使用存储类说明符 static 在所有函数外部进行定义（正如定义外部变量那样）来创建一个这样的变量。
+
+
+int n = 1;     //外部链接
+static int m = 1； //具有内部链接的静态变量
+int main （void）
+{
+    extern int n； //使用全局变量 n
+    extern int m;  //使用全局变量 m
+}
+
+
+可以在函数中使用存储类说明符 extern 来再次声明任何具有文件作用域的变量。这样的声明并不改变链接。
+
+
+
+9、存储类说明符
+
+C语言中有 5 个作为存储类说明符的关键字，分别是 auto、register、static、extern 以及 typedef。关键字typedef 与内存存储无关，由于语法原因被归入此类。
+
+在文章：C语言再学习 18--关键字    里面我们将详细介绍各个关键字。
+
+
+
+现在简单了解一下这五个存储类说明符的关键字：
+
+说明符 auto 表明一个变量具有自动存储时期。该说明符只能用于在具有代码块作用域的变量声明中，而这样的变量已经拥有自动存储时期，因此它主要用来明确指出意图，使程序更易读。
+
+说明符 register也只能用于具有代码块作用域的变量。它将一个变量归入寄存器存储类，这相当于请求将该变量存储在一个寄存器内，以更快地存取。它的使用也使得不能获得变量的地址。
+
+说明符 static在用于具有代码块的作用域的变量的声明时，使该变量具有静态存储时期，从而得以在程序运行期间（即使在包含该变量的代码块没有运行时）存在并保留其值。变量仍具有代码块作用域和空链接。static 用于具有文件作用域的变量的声明时，表明该变量具有内部链接。
+
+说明符 extern表明在声明一个已经在别处定义了的变量。如果包含 extern 的声明具有文件作用域，所指向的变量必须具有外部链接。如果包含 extern 的声明具有代码块作用域，所指向的变量可能具有外部链接也可能具有内部链接，这取决于该变量的定义声明。
+
+
+//parta.c
+#include <stdio.h>
+void report_count ();
+void accumulate (int k);
+int count = 0;  //文件作用域，外部链接
+int main (void)
+{
+	int value; //自动变量
+	register int i;  //寄存器变量
+ 
+	printf ("Enter a positive integer (0 to quit): ");
+	while (scanf ("%d", &value) == 1 && value > 0)
+	{
+		++count;  //使用文件作用域变量
+		for (i = value; i >= 0; i--)
+			accumulate (i);
+		printf ("Enter a posotove integer (0 to quit):");
+	}
+	report_count ();
+	return 0;
+}
+ 
+void report_count ()
+{
+	printf ("Loop executed %d times\n", count);
+}
+ 
+ 
+
+//partb.c
+#include <stdio.h>
+extern int count;  //引用声明，外部链接
+static int total = 0;  //文件作用域、静态定义，内部链接
+void accumulate (int k); //原型
+void accumulate (int k) //k 具有代码块作用域，空链接
+{
+	static int subtotal = 0;  //静态、空链接
+	if (k <= 0)
+	{
+		printf ("Loop cycle: %d\n", count);
+		printf ("subtotal: %d; total: %d\n", subtotal, total);
+		subtotal = 0;
+	}
+	else
+	{
+		subtotal += k;
+		total += k;
+	}
+}
+ 
+
+gcc parta.c partb.c -o part
+输出结果：
+Enter a positive integer (0 to quit): 5
+Loop cycle: 1
+subtotal: 15; total: 15
+Enter a posotove integer (0 to quit):10
+Loop cycle: 2
+subtotal: 55; total: 70
+Enter a posotove integer (0 to quit):2
+Loop cycle: 3
+subtotal: 3; total: 73
+Enter a posotove integer (0 to quit):0
+Loop executed 3 times
+
+10、存储类和函数
+
+外部函数可被其他文件中的函数调用，而静态函数只可以在定义它的文件中使用。例如，考虑一个包含如下函数声明的文件:
+
+
+double gamma (); //默认为外部的
+static double beta (); //静态函数
+extern double delta ();
+函数gamma ()和delta ()可被程序的其他文件中的函数使用，而beta ()则不可以，因为beta ()被限定在一个文件内，故可在其他文件中使用相同名称的不同函数。使用 static 存储类的原因之一就是创建为一个特定模块所私有的函数，从而避免可能的名字冲突。
+通常使用关键字 extern 来声明在其他文件中定义的函数。这一习惯做法主要是为了程序更清晰，因为除非函数声明使用了关键字 static ，否则认为就是extern 的。
+
+
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/52923334
+
 # 输入/输出
 
 https://blog.csdn.net/qq_29350001/article/details/52316708
