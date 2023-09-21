@@ -66,9 +66,11 @@ int main (void)
 
 编译过程就是把预处理完的文件进行一系列词法分析，语法分析，语义分析及优化后生成相应的汇编代码文件。
 
-gcc -S hello.i -o hello.s   得到一个.s为后缀的汇编文件，以下为编译后的输出文件hello.s的内容：
+命令：
+gcc -S hello.i -o hello.s   
+得到一个.s为后缀的汇编文件，以下为编译后的输出文件hello.s的内容：
 
-
+```
 	.file	"hello.c"
 	.section	.rodata
 .LC0:
@@ -98,26 +100,30 @@ main:
 	.size	main, .-main
 	.ident	"GCC: (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3"
 	.section	.note.GNU-stack,"",@progbits
+```
+### 3、汇编
 
-3、汇编
 汇编器是将汇编代码转变成机器可以执行的命令，每一个汇编语句几乎都对应一条机器指令。汇编相对于编译过程比较简单，根据汇编指令和机器指令的对照表一一翻译即可。
 
-gcc –c hello.s –o hello.o，得到一个.o为后缀的目标文件，由于hello.o的内容为机器码，不能以文本形式方便的呈现。可用命令hexdump hello.o 打开。
+命令：
+gcc –c hello.s –o hello.o
 
-4、链接
+得到一个.o为后缀的目标文件，由于hello.o的内容为机器码，不能以文本形式方便的呈现。可用命令hexdump hello.o 打开。
+
+### 4、链接
 
 目标代码不能直接执行，要想将目标代码变成可执行程序，还需要进行链接操作。才会生成真正可以执行的可执行程序。链接操作最重要的步骤就是将函数库中相应的代码组合到目标文件中。
 
-gcc hello.o -o hello，实现链接的处理，默认生成可执行文件 a.out，可以通过 -o来指定输出文件名。
-
+命令：
+gcc hello.o -o hello
+实现链接的处理，默认生成可执行文件 a.out，可以通过 -o来指定输出文件名。
 
 
 使用ld指令
-ld -static crt1.o crti.o crtbeginT.o hello.o -start -group -lgcc -lgcc_eh -lc -end-group crtend.o crtn.o 
-
-（目标文件，未指定具体目录）
+ld -static crt1.o crti.o crtbeginT.o hello.o -start -group -lgcc -lgcc_eh -lc -end-group crtend.o crtn.o （省略了文件的路径名）
 连接的过程包括按序叠加、相似段合并、符号地址的确定、符号解析与重定位、指令修正、全局构造与解析等等
 
+```
 tarena@ubuntu:~/project/c_test$ gcc -v
 使用内建 specs。
 COLLECT_GCC=gcc.real
@@ -140,7 +146,8 @@ tarena@ubuntu:/$ find /usr -name crt*
 /usr/lib/gcc/i686-linux-gnu/4.6/crtbegin.o
 /usr/lib/gcc/i686-linux-gnu/4.6/crtendS.o
 /usr/lib/gcc/i686-linux-gnu/4.6/crtprec64.o
-
+```
+```
 tarena@ubuntu:~/project/c_test$ ld -static -verbose /usr/lib/i386-linux-gnu/crt1.o /usr/lib/i386-linux-gnu/crti.o /usr/lib/gcc/i686-linux-gnu/4.6/crtbeginT.o -L/usr/lib/gcc/i686-linux-gnu/4.6 -L/usr/lib/i386-linux-gnu hello.o -start -group -lgcc -lgcc_eh -lc -end-group /usr/lib/gcc/i686-linux-gnu/4.6/crtend.o /usr/lib/i386-linux-gnu/crtn.o 
 GNU ld (GNU Binutils for Ubuntu) 2.22
   Supported emulations:
@@ -151,7 +158,7 @@ GNU ld (GNU Binutils for Ubuntu) 2.22
    elf_l1om
    elf_k1om
 ld: bad -rpath option 
-
+```
 
 gcc版本不对，支持的是 i386linux，如果想深入研究，安装gcc 4.1.2：
 参看：ld script初探
