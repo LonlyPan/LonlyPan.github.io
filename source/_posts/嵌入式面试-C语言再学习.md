@@ -1257,7 +1257,7 @@ hello
 ```
 char *GetMemory( void )
 {
- char p[] = "hello world"; // 局部变量，调用结束后小时
+ char p[] = "hello world"; // 局部变量，调用结束后消失
  return p;
 }
 void Test( void )
