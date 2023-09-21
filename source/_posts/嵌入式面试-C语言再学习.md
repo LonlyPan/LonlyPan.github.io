@@ -130,7 +130,9 @@ ld -static crt1.o crti.o crtbeginT.o hello.o -start -group -lgcc -lgcc_eh -lc -e
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695306570161.png)
 
 # 关键字
+C语言一共有32个关键字，如下表所示：
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695306707541.png)
 
 # 字符串和字符串函数
 
