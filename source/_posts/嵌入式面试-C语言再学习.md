@@ -292,36 +292,461 @@ if ((x >= - EPSINON) && (x <= EPSINON)
 if ( fabs(x) <=EPSINON) // fabs(x)取x的绝对值，其中EPSINON是允许的误差（即精度）。
 ``` 
 
-复习浮点数的二进制转换
-我们先来看下浮点数二进制表达的三个组成部分。
+# 关键字sizeof与strlen
 
-三个主要成分是：
+## sizeof 
 
-Sign（1bit）：表示浮点数是正数还是负数。0表示正数，1表示负数
-Exponent（8bits）：指数部分。类似于科学技术法中的M*10^N中的N，只不过这里是以2为底数而不是10。需要注意的是，这部分中是以2^7-1即127，也即01111111代表2^0，转换时需要根据127作偏移调整。
-Mantissa（23bits）：基数部分。浮点数具体数值的实际表示。
-下面我们来看个实际例子来解释下转换过程。
-Step 1 改写整数部分
-以数值5.2为例。先不考虑指数部分，我们先单纯的将十进制数改写成二进制。
-整数部分很简单，5.即101.。
+### 一、简单介绍
 
-Step 2 改写小数部分
-小数部分我们相当于拆成是2^-1一直到2^-N的和。例如：
-0.2 = 0.125+0.0625+0.007825+0.00390625即2^-3+2^-4+2^-7+2^-8….，也即.00110011001100110011
+sizeof 是 C 语言的一种单目操作符，如 C 语言的其他操作符\++、--等。它并不是函数。C 规定 sizeof 返回 sieze_t 类型的值。这是一个无符号整数类型。C99更进一步，把%zd 作为用来显示 size_t 类型值的 printf() 说明符。如果你的系统没有实现 %zd，你可以试着使用 %u 或者 %lu 代替它。
 
-Step 3 规格化
-现在我们已经有了这么一串二进制101.00110011001100110011。然后我们要将它规格化，也叫Normalize。其实原理很简单就是保证小数点前只有一个bit。于是我们就得到了以下表示：1.0100110011001100110011 * 2^2。到此为止我们已经把改写工作完成，接下来就是要把bit填充到三个组成部分中去了。
-
-Step 4 填充
-指数部分（Exponent）：之前说过需要以127作为偏移量调整。因此2的2次方，指数部分偏移成2+127即129，表示成10000001填入。
-整数部分（Mantissa）：除了简单的填入外，需要特别解释的地方是1.010011中的整数部分1在填充时被舍去了。因为规格化后的数值整部部分总是为1。那大家可能有疑问了，省略整数部分后岂不是1.010011和0.010011就混淆了么？其实并不会，如果你仔细看下后者：会发现他并不是一个规格化的二进制，可以改写成1.0011 * 2^-2。所以省略小数点前的一个bit不会造成任何两个浮点数的混淆。
-具体填充后的结果见下图
+sizeof 操作符以字节形式给出了其操作数的存储大小。操作数可以是一个表达式或括在括号内的类型名。操作数的存储大小由操作数的类型决定。
 
 
-练习：如果想考验自己是否充分理解这节内容的话，可以随便写一个浮点数尝试转换。通过 浮点二进制转换工具可以验证答案。
+### 二、使用方法
+
+1、用于数据类型
+
+sizeof 使用形式： sizeof (type)
+数据类型必须用圆括号括住。如：sizeof (int)
+
+2、用于变量
+sizeof 使用形式：sizeof (var_name) 或 sizeof var_name
+变量名可以不用圆括号括住。如：sizeof (6.08) 或 sizeof 6.08 等都是正确的形式。带括号的用法更普遍，大多数程序员采用这种形式。
+
+注意：sizeof 操作符不能用于函数类型，不完全类型和位字段。不完全类型指具有未知存储大小的数据类型，如未知存储大小的数组类型、未知内容的结构或联合类型、void类型等。如：
+
+sizeof (max) 若此时变量 max 定义为 int max ( )，
+sizeof (char_v) 若此时 char_v 定义为 char char_v [MAX] 且 MAX 未知
+sizeof (void)
+
+上述例子，都是不正确的形式。
+
+
+3、sizeof 的结果
+
+sizeof 操作符的结果类型是 size_t，它在头文件中 typedef 为 unsigned int 类型。该类型保证能容纳实现所建立的最大对象的字节大小。
+1. 在windows，32位系统中
+char         1个字节
+short        2个字节
+int            4个字节
+long         4个字节
+double    8个字节
+float         4个字节
+
+	看看这三个分别是什么?
+1，‘ 1‘，“ 1”。
+	第一个是整形常数， 32 位系统下占 4 个 byte；
+	第二个是字符常量，占 1 个 byte；
+	第三个是字符串常量，占 2 个 byte。
+
+三者表示的意义完全不一样，所占的内存大小也不一样，初学者往往弄错。
+
+
+2. 当操作数为指针时，sizeof 依赖于编译器。一般unix的指针为 4个字节
+```
+#include <stdio.h>
+ 
+int main (void)
+{
+	char ptr[] = "hello";
+	char *str = ptr;
+	printf ("sizeof (str) = %d\n", sizeof (str));
+	return 0;
+}
+```
+输出结果：
+`sizeof (str) = 4`
+在 32 位系统下，不管什么样的指针类型，其大小都为 4 byte。可以测试一下 sizeof（ void *）。
+
+3. 当操作数具有数组类型时，其结果是数组的总字节数
+```
+#include <stdio.h>
+ 
+int main (void)
+{
+	int ptr[20] = {1,2,3,4,5};
+	printf ("sizeof (ptr) = %d\n", sizeof (ptr));
+	return 0;
+}
+```
+输出结果：
+`sizeof (ptr) = 80`
+
+
+4. 联合类型操作数的 sizeof 是其最大字节成员的字节数，结构体类型操作数的sizeof，需要考虑内存对齐补齐。
+
+```
+view plain  copy    
+#include <stdio.h>  
+  
+typedef union {  
+    char ch;  
+    int num;  
+}UN;  
+  
+int main (void)  
+{  
+    printf ("sizeof (UN) is %d\n", sizeof (UN));  
+    return 0;  
+}  
+```
+输出结果：  
+`sizeof (UN) is 4  `
+
+结构体内存对齐与补齐
+- 一个存储区的地址一定是它自身大小的整数倍（双精度浮点类型的地址只需要4的整数倍就行了)，这个规则也叫数据对齐，结构体内部的每个存储区通常也需要遵守这个规则。数据对齐可能造成结构体内部存储区之间有浪费的字节。
+结构体的大小一定是内部最大基本类型存储区大小的整数倍，这个规则叫数据补齐。
+```
+#include <stdio.h>  
+typedef struct  
+{  
+    char ch;  
+    int num;  
+    char ch1;  
+}str;  
+  
+int main (void)  
+{  
+    printf ("sizeof (str) is %d\n", sizeof (str));  
+    return 0;  
+}  
+输出结果：  
+sizeof (str) is 12  
+```
+
+5. 如果操作数是函数中的数组形参或函数类型的形参，sizeof给出其指针的大小
+```
+#include <stdio.h>
+ 
+char ca[10];
+ 
+void foo (char ca[100])
+{
+	printf ("sizeof (ca) = %d\n", sizeof (ca));
+}
+int main (void)
+{
+	char ca [25];
+	foo (ca);
+	return 0;
+}
+输出结果：
+sizeof (ca) = 4
+```
+
+### 三、主要用途
+
+1、sizeof操作符的一个主要用途是与存储分配和I/O系统那样的例程进行通信。例如：
+void *malloc（size_t size）, size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)　 
+
+2、sizeof的另一个的主要用途是计算数组中元素的个数。例如：void　*memset（void *s,int c,sizeof(s)）
+
+3.在动态分配一对象时,可以让系统知道要分配多少内存。如：int *p=(int *)malloc(sizeof(int)*10);
+
+4.由于操作数的字节数在实现时可能出现变化，建议在涉及到操作数字节大小时用sizeof来代替常量计算。
+
+5.如果操作数是函数中的数组形参或函数类型的形参，sizeof给出其指针的大小。
+
+
+
+### 四、注意的地方
+
+1、在混合类型的算术运算的情况下，较小的类型被转换成较大的类型。反之，可能会丢失数据。
+```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+ 
+int main (void)
+{
+	int a = 10;
+	printf ("sizeof ((a > 5) ? 4 : 8.0) = %d\n", sizeof ((a > 5) ? 4 : 8.0));
+	return 0;
+}
+输出结果：
+sizeof ((a > 5) ? 4 : 8.0) = 8  // 4被转成double，在编译中，小数默认时double型
+```
+2、判断表达式的长度并不需要对表达式进行求值
+```
+#include <stdio.h>
+int main (void)
+{
+	int a = 10;
+	int b = 0;
+	int c = sizeof (b = a + 12);
+	printf ("a = %d, b = %d, c = %d\n", a, b, c);
+	return 0;
+}
+输出结果：
+a = 10, b = 0, c = 4
+```
+所以sizeof (b = a + 12)并没有向 a 赋任何值。
+
+
+## strlen
+
+strlen首先是一个函数，只能以char * 做参数，返回的是字符的实际长度，不是类型占内存的大小。其结果是运行的时候才计算出来的。
+```
+#include <string.h>
+size_t strlen(const char *s);
+```
+函数功能：用来统计字符串中有效字符的个数
+
+功能实现函数：
+```
+size_t strlen (const char *s)  
+{  
+    const char *sc;  
+    for (sc = s; *sc != '\0'; ++sc)  
+    /"nothing"/  
+    return sc - s;  
+}  
+```
+strlen()函数被用作改变字符串长度，例如：
+
+```
+#include <stdio.h>  
+#include <string.h>  
+void fit (char *, unsigned int);  
+int main (void)  
+{  
+    char str[] = "hello world";  
+    fit (str, 7);  
+    puts (str);  
+    puts (str + 8);  
+    return 0;  
+}  
+  
+void fit (char *string, unsigned int size)  
+{  
+    if (strlen (string) > size)  
+        *(string + size) = '\0';  
+}  
+输出结果：  
+hello w  
+rld  
+```
+可以看出：fit()函数在数组的第8个元素中放置了一个'\0'字符来代替原有的o字符。puts()函数输出停在o字符处，忽略了数组的其他元素。然而，数组的其他元素仍然存在。
+
+## sizeof 与 strlen 的区别
+
+参看：C语言再学习 -- 字符串和字符串函数
+
+谈两者的区别之前，先要讲一下什么是字符串，字符串就是一串零个或多个字符，并且以一个位模式为全 0 的 '\0' 字节结尾。如在代码中写 "abc"，那么编译器帮你存储的是 "abc\0"。
+
+siezeof运算符提供给你的数目比strlen大1，这是因为它把用来标志字符串结束的不可见的空字符（'\0'）也计算在内。
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+ 
+int main (void)
+{
+	char *str1 = "abcde";
+	char str2[] = "abcde";
+	char str3[8] = "abcde";
+	char str4[] = {'a', 'b', 'c', 'd', 'e'};
+	char *p1 = malloc (20);
+    
+	printf ("sizeof (str1) = %d, strlen (str1) = %d\n", sizeof (str1), strlen (str1));
+	printf ("sizeof (*str1) = %d, strlen (str1) = %d\n", sizeof (*str1), strlen (str1));
+	printf ("sizeof (str2) = %d, strlen (str2) = %d\n", sizeof (str2), strlen (str2));
+	printf ("sizeof (str3) = %d, strlen (str3) = %d\n", sizeof (str3), strlen (str3));
+	printf ("sizeof (str4) = %d, strlen (str4) = %d\n", sizeof (str4), strlen (str4));
+	printf ("sizeof (p1) = %d, sizeof (*p1) = %d\n", sizeof (p1), sizeof (*p1));
+	printf ("sizeof (malloc(20)) = %d\n", sizeof (malloc (20)));
+	return 0;
+}
+输出结果：
+sizeof (str1) = 4, strlen (str1) = 5
+sizeof (*str1) = 1, strlen (str1) = 5
+sizeof (str2) = 6, strlen (str2) = 5
+sizeof (str3) = 8, strlen (str3) = 5
+sizeof (str4) = 5, strlen (str4) = 5
+sizeof (p1) = 4, sizeof (*p1) = 1
+sizeof (malloc(20)) = 4
+
+
+总结：
+
+1. sizeof 操作符的结果类型是 size_t，它在头文件中typedef为 unsigned int 类型。该类型保证能容纳实现所建立的最大对象的字节大小。
+
+2. sizeof 是算符，strlen 是函数。
+
+3. sizeof可以用类型做参数，strlen只能用char*做参数，且必须是以''\0''结尾的。sizeof 还可以用函数做参数，比如：
+
+short f();
+printf("%d\n",sizeof(f()));
+输出的结果是sizeof(short)，即2。
+
+4.数组做 sizeof 的参数不退化，传递给 strlen 就退化为指针了。
+
+5.大部分编译程序 在编译的时候就把 sizeof 计算过了 是类型或是变量的长度这就是 sizeof(x) 可以用来定义数组维数的原因
+charstr[20]="0123456789";
+int a=strlen(str);//a=10;
+int b=sizeof(str);//而b=20;
+
+6. strlen 的结果要在运行的时候才能计算出来，是用来计算字符串的长度，不是类型占内存的大小。
+
+7. sizeof 后如果是类型必须加括弧，如果是变量名可以不加括弧。这是因为sizeof是个操作符不是个函数。
+
+8. 当适用了于一个结构类型时或变量， sizeof 返回实际的大小，当适用一静态地空间数组， sizeof 归还全部数组的尺寸。sizeof 操作符不能返回动态地被分派了的数组或外部的数组的尺寸。
+
+9. 数组作为参数传给函数时传的是指针而不是数组，传递的是数组的首地址，如：
+fun(char [8])
+fun(char [])
+都等价于 fun(char *)
+在C++里参数传递数组永远都是传递指向数组首元素的指针，编译器不知道数组的大小如果想在函数内知道数组的大小， 需要这样做：进入函数后用memcpy拷贝出来，长度由另一个形参传进去
+fun(unsiged char*p1, int len)
+{
+    unsigned char* buf= new unsigned char[len+1]
+    memcpy(buf, p1,len);
+}
+
+
+我们能常在用到 sizeof 和 strlen 的时候，通常是计算字符串数组的长度看了上面的详细解释，发现两者的使用还是有区别的，从这个例子可以看得很清楚：
+
+charstr[20]="0123456789";
+int a=strlen(str);//a=10; >>>> strlen 计算字符串的长度，以结束符 0x00 为字符串结束。
+int b=sizeof(str);//而b=20; >>>> sizeof 计算的则是分配的数组 str[20] 所占的内存空间的大小，不受里面存储的内容改变。
+上面是对静态数组处理的结果，如果是对指针，结果就不一样了
+
+char* ss ="0123456789";
+sizeof(ss) 结果4 ＝＝＝》ss是指向字符串常量的字符指针，sizeof 获得的是一个指针的之所占的空间,应该是 长整型的，所以是4
+sizeof(*ss) 结果1 ＝＝＝》*ss是第一个字符 其实就是获得了字符串的第一位'0' 所占的内存空间，是char类 型的，占了 1 位
+strlen(ss)= 10 >>>> strlen 计算字符串的长度，以结束符 0x00 为字符串结束。
+
+
+
+面试题：
+
+1、sizeof（ int） *p 表示什么意思？
+
+需要明白 sizeof 后跟数据类型，必须要用圆括号括住的，强制类型转换也应该是 (int*) p，所以这句话所表达的意思是 sizeof (int) 乘以 p
+
+
+#include <stdio.h>
+ 
+int main (void)
+{
+	int p = 1;
+	printf ("%d\n", sizeof (int)*p); 
+	return 0;
+}
+输出结果：
+4
+#include <stdio.h>
+ 
+int main (void)
+{
+	int p = 1;
+	printf ("%d\n", sizeof ((int *)p));  //强制类型转换
+	return 0;
+}
+输出结果：
+4
+2、在 32 位系统下：
+int *p = NULL;
+sizeof(p)的值是多少？
+sizeof(*p)呢？
+
+sizeof (p) = 4;  因为 p为指针，32位系统 指针所占字节为 4个字节
+
+sizeof (*p) = 4;  因为 *p 为 指针所指向的变量为int类型，整型为 4个字节
+
+#include <stdio.h>
+ 
+int main (void)
+{
+	short *p = NULL;
+	int i = sizeof (p);
+	int j = sizeof (*p);
+	printf ("i = %d, j = %d\n", i, j);
+	return 0;
+}
+输出结果：
+i = 4, j = 2
+3、int a[100];
+sizeof (a) 的值是多少？
+sizeof(a[100])呢？ //请尤其注意本例。
+sizeof(&a)呢？
+sizeof(&a[0])呢？
+
+sizeof (a) = 400;  因为 a是类型为整型、有100个元素的数组，所占内存为400个字节
+
+sizeof (a[100]) = 4;  因为 a[100] 为数组的第100元素的值该值为 int 类型，所占内存为4个字节。
+
+sizeof (&a) = 4;  因为 &a 为数组的地址即指针，32位系统 指针所占字节为 4个字节
+
+sizeof (&a[0]) = 4; 因为&a[0] 为数组的首元素的地址即指针，32位系统 指针所占字节为 4个字节
+
+
+#include <stdio.h>
+ 
+int main (void)
+{
+	int a[100];
+	printf ("sizeof (a) = %d\n", sizeof (a));
+	printf ("sizeof (a[100] = %d\n", sizeof (a[100]));
+	printf ("sizoef (&a) = %d\n", sizeof (&a));
+	printf ("sizeof (&a[0] = %d\n)", sizeof (&a[0]));
+	return 0;
+}
+输出结果：
+sizeof (a) = 400
+sizeof (a[100] = 4
+sizoef (&a) = 4
+sizeof (&a[0] = 4
+
+4、int b[100];
+void fun(int b[100])
+{
+sizeof(b);// sizeof (b) 的值是多少？
+}
+
+sizeof (b) = 4;  因为函数中的数组形参或函数类型的形参，sizeof给出其指针的大小。参数传递数组永远都是传递指向数组首元素的指针。
+
+
+#include <stdio.h>
+ 
+void fun (int b[100]) //指针做形参
+{
+	printf ("sizeof (b) = %d\n", sizeof (b));
+}
+ 
+int main (void)
+{
+	int a[10];
+	fun (a);
+	return 0;
+}
+输出结果：
+sizeof (b) = 4
+
+#include <stdio.h>
+void foo (void)
+{
+	printf ("111\n");
+}
+ 
+void fun (foo) //函数做形参
+{
+	printf ("sizeof (foo) = %d\n", sizeof (foo));
+}
+int main (void)
+{
+	fun ();
+	return 0;
+}
+输出结果：
+sizeof (foo) = 4
 ————————————————
 版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/52276370
+原文链接：https://blog.csdn.net/qq_29350001/article/details/52277578
+<!--more-->
+
+
 
 ## C语言32个关键字详解
 
@@ -3275,456 +3700,3 @@ extern double delta ();
 
 https://blog.csdn.net/qq_29350001/article/details/52316708
 
-# 关键字sizeof与strlen
-
-## sizeof 
-
-### 一、简单介绍
-
-sizeof 是 C 语言的一种单目操作符，如 C 语言的其他操作符\++、--等。它并不是函数。C 规定 sizeof 返回 sieze_t 类型的值。这是一个无符号整数类型。C99更进一步，把%zd 作为用来显示 size_t 类型值的 printf() 说明符。如果你的系统没有实现 %zd，你可以试着使用 %u 或者 %lu 代替它。
-
-sizeof 操作符以字节形式给出了其操作数的存储大小。操作数可以是一个表达式或括在括号内的类型名。操作数的存储大小由操作数的类型决定。
-
-
-### 二、使用方法
-
-1、用于数据类型
-
-sizeof 使用形式： sizeof (type)
-数据类型必须用圆括号括住。如：sizeof (int)
-
-2、用于变量
-sizeof 使用形式：sizeof (var_name) 或 sizeof var_name
-变量名可以不用圆括号括住。如：sizeof (6.08) 或 sizeof 6.08 等都是正确的形式。带括号的用法更普遍，大多数程序员采用这种形式。
-
-注意：sizeof 操作符不能用于函数类型，不完全类型和位字段。不完全类型指具有未知存储大小的数据类型，如未知存储大小的数组类型、未知内容的结构或联合类型、void类型等。如：
-
-sizeof (max) 若此时变量 max 定义为 int max ( )，
-sizeof (char_v) 若此时 char_v 定义为 char char_v [MAX] 且 MAX 未知
-sizeof (void)
-
-上述例子，都是不正确的形式。
-
-
-3、sizeof 的结果
-
-sizeof 操作符的结果类型是 size_t，它在头文件中 typedef 为 unsigned int 类型。该类型保证能容纳实现所建立的最大对象的字节大小。
-1. 在windows，32位系统中
-char         1个字节
-short        2个字节
-int            4个字节
-long         4个字节
-double    8个字节
-float         4个字节
-
-	看看这三个分别是什么?
-1，‘ 1‘，“ 1”。
-	第一个是整形常数， 32 位系统下占 4 个 byte；
-	第二个是字符常量，占 1 个 byte；
-	第三个是字符串常量，占 2 个 byte。
-
-三者表示的意义完全不一样，所占的内存大小也不一样，初学者往往弄错。
-
-
-2. 当操作数为指针时，sizeof 依赖于编译器。一般unix的指针为 4个字节
-```
-#include <stdio.h>
- 
-int main (void)
-{
-	char ptr[] = "hello";
-	char *str = ptr;
-	printf ("sizeof (str) = %d\n", sizeof (str));
-	return 0;
-}
-```
-输出结果：
-`sizeof (str) = 4`
-在 32 位系统下，不管什么样的指针类型，其大小都为 4 byte。可以测试一下 sizeof（ void *）。
-
-3. 当操作数具有数组类型时，其结果是数组的总字节数
-```
-#include <stdio.h>
- 
-int main (void)
-{
-	int ptr[20] = {1,2,3,4,5};
-	printf ("sizeof (ptr) = %d\n", sizeof (ptr));
-	return 0;
-}
-```
-输出结果：
-`sizeof (ptr) = 80`
-
-
-4. 联合类型操作数的 sizeof 是其最大字节成员的字节数，结构体类型操作数的sizeof，需要考虑内存对齐补齐。
-
-```
-view plain  copy    
-#include <stdio.h>  
-  
-typedef union {  
-    char ch;  
-    int num;  
-}UN;  
-  
-int main (void)  
-{  
-    printf ("sizeof (UN) is %d\n", sizeof (UN));  
-    return 0;  
-}  
-```
-输出结果：  
-`sizeof (UN) is 4  `
-
-结构体内存对齐与补齐
-- 一个存储区的地址一定是它自身大小的整数倍（双精度浮点类型的地址只需要4的整数倍就行了)，这个规则也叫数据对齐，结构体内部的每个存储区通常也需要遵守这个规则。数据对齐可能造成结构体内部存储区之间有浪费的字节。
-结构体的大小一定是内部最大基本类型存储区大小的整数倍，这个规则叫数据补齐。
-```
-#include <stdio.h>  
-typedef struct  
-{  
-    char ch;  
-    int num;  
-    char ch1;  
-}str;  
-  
-int main (void)  
-{  
-    printf ("sizeof (str) is %d\n", sizeof (str));  
-    return 0;  
-}  
-输出结果：  
-sizeof (str) is 12  
-```
-
-5. 如果操作数是函数中的数组形参或函数类型的形参，sizeof给出其指针的大小
-```
-#include <stdio.h>
- 
-char ca[10];
- 
-void foo (char ca[100])
-{
-	printf ("sizeof (ca) = %d\n", sizeof (ca));
-}
-int main (void)
-{
-	char ca [25];
-	foo (ca);
-	return 0;
-}
-输出结果：
-sizeof (ca) = 4
-```
-
-### 三、主要用途
-
-1、sizeof操作符的一个主要用途是与存储分配和I/O系统那样的例程进行通信。例如：
-void *malloc（size_t size）, size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)　 
-
-2、sizeof的另一个的主要用途是计算数组中元素的个数。例如：void　*memset（void *s,int c,sizeof(s)）
-
-3.在动态分配一对象时,可以让系统知道要分配多少内存。如：int *p=(int *)malloc(sizeof(int)*10);
-
-4.由于操作数的字节数在实现时可能出现变化，建议在涉及到操作数字节大小时用sizeof来代替常量计算。
-
-5.如果操作数是函数中的数组形参或函数类型的形参，sizeof给出其指针的大小。
-
-
-
-### 四、注意的地方
-
-1、在混合类型的算术运算的情况下，较小的类型被转换成较大的类型。反之，可能会丢失数据。
-```
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
- 
-int main (void)
-{
-	int a = 10;
-	printf ("sizeof ((a > 5) ? 4 : 8.0) = %d\n", sizeof ((a > 5) ? 4 : 8.0));
-	return 0;
-}
-输出结果：
-sizeof ((a > 5) ? 4 : 8.0) = 8  // 4被转成double，在编译中，小数默认时double型
-```
-2、判断表达式的长度并不需要对表达式进行求值
-```
-#include <stdio.h>
-int main (void)
-{
-	int a = 10;
-	int b = 0;
-	int c = sizeof (b = a + 12);
-	printf ("a = %d, b = %d, c = %d\n", a, b, c);
-	return 0;
-}
-输出结果：
-a = 10, b = 0, c = 4
-```
-所以sizeof (b = a + 12)并没有向 a 赋任何值。
-
-
-## strlen
-
-strlen首先是一个函数，只能以char * 做参数，返回的是字符的实际长度，不是类型占内存的大小。其结果是运行的时候才计算出来的。
-```
-#include <string.h>
-size_t strlen(const char *s);
-```
-函数功能：用来统计字符串中有效字符的个数
-
-功能实现函数：
-```
-size_t strlen (const char *s)  
-{  
-    const char *sc;  
-    for (sc = s; *sc != '\0'; ++sc)  
-    /"nothing"/  
-    return sc - s;  
-}  
-```
-strlen()函数被用作改变字符串长度，例如：
-
-```
-#include <stdio.h>  
-#include <string.h>  
-void fit (char *, unsigned int);  
-int main (void)  
-{  
-    char str[] = "hello world";  
-    fit (str, 7);  
-    puts (str);  
-    puts (str + 8);  
-    return 0;  
-}  
-  
-void fit (char *string, unsigned int size)  
-{  
-    if (strlen (string) > size)  
-        *(string + size) = '\0';  
-}  
-输出结果：  
-hello w  
-rld  
-```
-可以看出：fit()函数在数组的第8个元素中放置了一个'\0'字符来代替原有的o字符。puts()函数输出停在o字符处，忽略了数组的其他元素。然而，数组的其他元素仍然存在。
-
-## sizeof 与 strlen 的区别
-
-参看：C语言再学习 -- 字符串和字符串函数
-
-谈两者的区别之前，先要讲一下什么是字符串，字符串就是一串零个或多个字符，并且以一个位模式为全 0 的 '\0' 字节结尾。如在代码中写 "abc"，那么编译器帮你存储的是 "abc\0"。
-
-siezeof运算符提供给你的数目比strlen大1，这是因为它把用来标志字符串结束的不可见的空字符（'\0'）也计算在内。
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
- 
-int main (void)
-{
-	char *str1 = "abcde";
-	char str2[] = "abcde";
-	char str3[8] = "abcde";
-	char str4[] = {'a', 'b', 'c', 'd', 'e'};
-	char *p1 = malloc (20);
-    
-	printf ("sizeof (str1) = %d, strlen (str1) = %d\n", sizeof (str1), strlen (str1));
-	printf ("sizeof (*str1) = %d, strlen (str1) = %d\n", sizeof (*str1), strlen (str1));
-	printf ("sizeof (str2) = %d, strlen (str2) = %d\n", sizeof (str2), strlen (str2));
-	printf ("sizeof (str3) = %d, strlen (str3) = %d\n", sizeof (str3), strlen (str3));
-	printf ("sizeof (str4) = %d, strlen (str4) = %d\n", sizeof (str4), strlen (str4));
-	printf ("sizeof (p1) = %d, sizeof (*p1) = %d\n", sizeof (p1), sizeof (*p1));
-	printf ("sizeof (malloc(20)) = %d\n", sizeof (malloc (20)));
-	return 0;
-}
-输出结果：
-sizeof (str1) = 4, strlen (str1) = 5
-sizeof (*str1) = 1, strlen (str1) = 5
-sizeof (str2) = 6, strlen (str2) = 5
-sizeof (str3) = 8, strlen (str3) = 5
-sizeof (str4) = 5, strlen (str4) = 5
-sizeof (p1) = 4, sizeof (*p1) = 1
-sizeof (malloc(20)) = 4
-
-
-总结：
-
-1. sizeof 操作符的结果类型是 size_t，它在头文件中typedef为 unsigned int 类型。该类型保证能容纳实现所建立的最大对象的字节大小。
-
-2. sizeof 是算符，strlen 是函数。
-
-3. sizeof可以用类型做参数，strlen只能用char*做参数，且必须是以''\0''结尾的。sizeof 还可以用函数做参数，比如：
-
-short f();
-printf("%d\n",sizeof(f()));
-输出的结果是sizeof(short)，即2。
-
-4.数组做 sizeof 的参数不退化，传递给 strlen 就退化为指针了。
-
-5.大部分编译程序 在编译的时候就把 sizeof 计算过了 是类型或是变量的长度这就是 sizeof(x) 可以用来定义数组维数的原因
-charstr[20]="0123456789";
-int a=strlen(str);//a=10;
-int b=sizeof(str);//而b=20;
-
-6. strlen 的结果要在运行的时候才能计算出来，是用来计算字符串的长度，不是类型占内存的大小。
-
-7. sizeof 后如果是类型必须加括弧，如果是变量名可以不加括弧。这是因为sizeof是个操作符不是个函数。
-
-8. 当适用了于一个结构类型时或变量， sizeof 返回实际的大小，当适用一静态地空间数组， sizeof 归还全部数组的尺寸。sizeof 操作符不能返回动态地被分派了的数组或外部的数组的尺寸。
-
-9. 数组作为参数传给函数时传的是指针而不是数组，传递的是数组的首地址，如：
-fun(char [8])
-fun(char [])
-都等价于 fun(char *)
-在C++里参数传递数组永远都是传递指向数组首元素的指针，编译器不知道数组的大小如果想在函数内知道数组的大小， 需要这样做：进入函数后用memcpy拷贝出来，长度由另一个形参传进去
-fun(unsiged char*p1, int len)
-{
-    unsigned char* buf= new unsigned char[len+1]
-    memcpy(buf, p1,len);
-}
-
-
-我们能常在用到 sizeof 和 strlen 的时候，通常是计算字符串数组的长度看了上面的详细解释，发现两者的使用还是有区别的，从这个例子可以看得很清楚：
-
-charstr[20]="0123456789";
-int a=strlen(str);//a=10; >>>> strlen 计算字符串的长度，以结束符 0x00 为字符串结束。
-int b=sizeof(str);//而b=20; >>>> sizeof 计算的则是分配的数组 str[20] 所占的内存空间的大小，不受里面存储的内容改变。
-上面是对静态数组处理的结果，如果是对指针，结果就不一样了
-
-char* ss ="0123456789";
-sizeof(ss) 结果4 ＝＝＝》ss是指向字符串常量的字符指针，sizeof 获得的是一个指针的之所占的空间,应该是 长整型的，所以是4
-sizeof(*ss) 结果1 ＝＝＝》*ss是第一个字符 其实就是获得了字符串的第一位'0' 所占的内存空间，是char类 型的，占了 1 位
-strlen(ss)= 10 >>>> strlen 计算字符串的长度，以结束符 0x00 为字符串结束。
-
-
-
-面试题：
-
-1、sizeof（ int） *p 表示什么意思？
-
-需要明白 sizeof 后跟数据类型，必须要用圆括号括住的，强制类型转换也应该是 (int*) p，所以这句话所表达的意思是 sizeof (int) 乘以 p
-
-
-#include <stdio.h>
- 
-int main (void)
-{
-	int p = 1;
-	printf ("%d\n", sizeof (int)*p); 
-	return 0;
-}
-输出结果：
-4
-#include <stdio.h>
- 
-int main (void)
-{
-	int p = 1;
-	printf ("%d\n", sizeof ((int *)p));  //强制类型转换
-	return 0;
-}
-输出结果：
-4
-2、在 32 位系统下：
-int *p = NULL;
-sizeof(p)的值是多少？
-sizeof(*p)呢？
-
-sizeof (p) = 4;  因为 p为指针，32位系统 指针所占字节为 4个字节
-
-sizeof (*p) = 4;  因为 *p 为 指针所指向的变量为int类型，整型为 4个字节
-
-#include <stdio.h>
- 
-int main (void)
-{
-	short *p = NULL;
-	int i = sizeof (p);
-	int j = sizeof (*p);
-	printf ("i = %d, j = %d\n", i, j);
-	return 0;
-}
-输出结果：
-i = 4, j = 2
-3、int a[100];
-sizeof (a) 的值是多少？
-sizeof(a[100])呢？ //请尤其注意本例。
-sizeof(&a)呢？
-sizeof(&a[0])呢？
-
-sizeof (a) = 400;  因为 a是类型为整型、有100个元素的数组，所占内存为400个字节
-
-sizeof (a[100]) = 4;  因为 a[100] 为数组的第100元素的值该值为 int 类型，所占内存为4个字节。
-
-sizeof (&a) = 4;  因为 &a 为数组的地址即指针，32位系统 指针所占字节为 4个字节
-
-sizeof (&a[0]) = 4; 因为&a[0] 为数组的首元素的地址即指针，32位系统 指针所占字节为 4个字节
-
-
-#include <stdio.h>
- 
-int main (void)
-{
-	int a[100];
-	printf ("sizeof (a) = %d\n", sizeof (a));
-	printf ("sizeof (a[100] = %d\n", sizeof (a[100]));
-	printf ("sizoef (&a) = %d\n", sizeof (&a));
-	printf ("sizeof (&a[0] = %d\n)", sizeof (&a[0]));
-	return 0;
-}
-输出结果：
-sizeof (a) = 400
-sizeof (a[100] = 4
-sizoef (&a) = 4
-sizeof (&a[0] = 4
-
-4、int b[100];
-void fun(int b[100])
-{
-sizeof(b);// sizeof (b) 的值是多少？
-}
-
-sizeof (b) = 4;  因为函数中的数组形参或函数类型的形参，sizeof给出其指针的大小。参数传递数组永远都是传递指向数组首元素的指针。
-
-
-#include <stdio.h>
- 
-void fun (int b[100]) //指针做形参
-{
-	printf ("sizeof (b) = %d\n", sizeof (b));
-}
- 
-int main (void)
-{
-	int a[10];
-	fun (a);
-	return 0;
-}
-输出结果：
-sizeof (b) = 4
-
-#include <stdio.h>
-void foo (void)
-{
-	printf ("111\n");
-}
- 
-void fun (foo) //函数做形参
-{
-	printf ("sizeof (foo) = %d\n", sizeof (foo));
-}
-int main (void)
-{
-	fun ();
-	return 0;
-}
-输出结果：
-sizeof (foo) = 4
-————————————————
-版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/52277578
-<!--more-->
