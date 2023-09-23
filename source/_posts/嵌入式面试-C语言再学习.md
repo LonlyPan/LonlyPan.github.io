@@ -565,8 +565,7 @@ sizeof (p1) = 4, sizeof (*p1) = 1
 sizeof (malloc(20)) = 4
 
 
-总结：
-
+**总结：**
 1. sizeof 操作符的结果类型是 size_t，它在头文件中typedef为 unsigned int 类型。该类型保证能容纳实现所建立的最大对象的字节大小。
 
 2. sizeof 是算符，strlen 是函数。
