@@ -159,6 +159,8 @@ int main (void)
 	printf("%s\n",s);
 	return 0;
 }
+程序输出：
+abcd  //efg
 ```
 前三条注释都是对的，有没有想到
 
