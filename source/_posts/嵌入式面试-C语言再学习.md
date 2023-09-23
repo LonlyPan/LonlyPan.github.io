@@ -208,10 +208,7 @@ class foo {};// foo 这里已经拥有自己的内存了，对照上面两个函
 
 声明是为了让编译器正确处理对声明变量和函数的引用。定义是一个给变量分配内存的过程，或者是说明一个函数具体干什么用。
 
-# 关键字
-C语言一共有32个关键字，如下表所示：
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695306707541.png)
 
 # 四、标识符
 
@@ -292,7 +289,7 @@ if ((x >= - EPSINON) && (x <= EPSINON)
 if ( fabs(x) <=EPSINON) // fabs(x)取x的绝对值，其中EPSINON是允许的误差（即精度）。
 ``` 
 
-# 关键字sizeof与strlen
+# 七、关键字sizeof与strlen
 
 ## sizeof 
 
@@ -746,7 +743,10 @@ sizeof (foo) = 4
 原文链接：https://blog.csdn.net/qq_29350001/article/details/52277578
 <!--more-->
 
+# 关键字
+C语言一共有32个关键字，如下表所示：
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695306707541.png)
 
 ## C语言32个关键字详解
 
