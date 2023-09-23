@@ -10,7 +10,7 @@ hide: false
 categories: 00-项目
 ---
 
-# GCC编译过程
+# 一、GCC编译过程
 
 此章节内容需要一定ubuntu和Linux知识
 
@@ -133,6 +133,9 @@ ld -static crt1.o crti.o crtbeginT.o hello.o -start -group -lgcc -lgcc_eh -lc -e
 C语言一共有32个关键字，如下表所示：
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695306707541.png)
+
+# 注释
+
 
 ## C语言32个关键字详解
 
