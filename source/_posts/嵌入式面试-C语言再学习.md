@@ -156,6 +156,7 @@ int main (void)
 	//hello \
 	world!
 	//in/*...*/t i;
+	printf("%s\n",s);
 	return 0;
 }
 ```
