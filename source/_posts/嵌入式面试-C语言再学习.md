@@ -6126,6 +6126,500 @@ message 参数： message 参数是我最喜欢的一个参数，它能够在编
 该指令用来将 user32.lib 库文件加入到本工程中。linker:将一个链接选项放入目标文件中,你可以使用这个指令来代替由命令行传入的或者在开发环境中设置的链接选项,你可以指定/include 选项来强制包含某个对象,例如:
 #pragma comment(linker, "/include:__mySymbol")
 
+# 结构和其他数据形式
+
+一、结构体
+
+结构体可以用来创建新的数据类型，这种数据类型可以把多个其他类型合并成一个整体，采用结构体声明的变量叫做结构变量，结构体需要先声明然后才能使用，声明结构体需要使用struct关键字，结构体声明语句不会分配内存，它可以写在很多地方，使用结构体声明变量的时候需要把struct关键字和结构体名称合并起来作为数据类型使用，结构体变量才真正占有内容，才真正能记录数字。
+
+结构声明：是描述结构如何组合的主要方法。声明就像下面这样
+
+
+struct book {
+	char title[MAXTITL];
+	char author[MAXAUTL];
+	float value;
+};
+首先使用关键字 struct，它表示接下来是一个结构。后面是一个可选的标记（book），它是用来引用该结构的快速标记。因此，以后我们就可以这样声明：
+
+struct book library;
+它把 library 声明为一个使用book结构设计的结构变量。
+在结构声明中，接下来使用一对花括号括起来的结构成员列表。每个成员变量都用它自己的声明来描述，用一个分号来结束描述。
+
+//定义结构体
+struct book {
+	char title[MAXTITL];
+	char author[MAXAUTL];
+	float value;
+}library;
+//初始化结构体
+struct book library = {
+	"The Pirate and the Devious Damsel";
+	"Renee Vivotte";
+	1.95;
+};
+C语言中结构体内部不可以包含函数，初始化结构体变量的时候需要为每一个存储区单独提供初始化数据，这些数，应该写在一对大括号里，如果提供了过多的数据多余的丢掉，数据不够的话补 0，结构体通常不能作为整体使用，一次只能使用其中某一个存储区，可以在结构体变量名称后加  （.） ，然后再加某一部分名称用来表示结构体变量中的某一存储区。例如，library.value 就是指 library 的 value 部分。
+
+结构数组：
+
+声明一个结构数组和声明其他任何类型的数组一样。
+
+
+struct book library[MAXBKS];
+library本身不是结构名，它是元素类型为 struct book 结构的数组名。
+标识结构数组的成员：
+
+library[0].value
+library[1].title
+总结：
+library							//book 结构数组
+library[2]					//数组元素，因此是一个 book 结构
+library[2].title		//char 数组 (library[2]的title 成员)
+library[2].title[4] //title 成员数组中的一个字符
+//嵌套结构
+#include <stdio.h>
+#define LEN 20
+const char * msgs[5] = {
+	"    Thank you for the wonderful evening, ",
+	"You certainly prove that a ",
+	"is a special kind of guy, We must get togeter",
+	"over a delicious ",
+	"grilled salmon and have a few laughs"
+};
+ 
+struct names {
+	char first[LEN];
+	char last[LEN];
+};
+ 
+struct guy {
+	struct names handle;
+	char favfood[LEN];
+	char job[LEN];
+	float income;
+};
+ 
+int main (void)
+{
+	struct guy fellow = {
+		{"Ewen", "Villard"},
+		"grilled salmon",
+		"personlity coach",
+		58112.00
+	};
+	printf ("Dear %s, \n\n", fellow.handle.first);
+	printf ("%s%s. \n", msgs[0], fellow.handle.first);
+	printf ("%s%s\n", msgs[1], fellow.job);
+	printf ("%s\n", msgs[2]);
+	printf ("%s%s%s", msgs[3], fellow.favfood, msgs[4]);
+	if (fellow.income > 150000.0)
+		puts ("!!");
+	else if (fellow.income > 7500.0)
+		puts ("!");
+	else 
+		puts (".");
+	printf ("\n%40s%s\n", " ", "See you soon");
+	printf ("%40s%s\n", " ", "Shalala");
+	return 0;
+}
+输出结果：
+Dear Ewen, 
+ 
+    Thank you for the wonderful evening, Ewen. 
+You certainly prove that a personlity coach
+is a special kind of guy, We must get togeter
+over a delicious grilled salmongrilled salmon and have a few laughs!
+ 
+                                        See you soon
+                                        Shalala
+
+指向结构的指针
+指针就是用来表示变量地址，结构体指针可以用来记录结构体变量的地址，当一个结构体指针和一个结构体变量捆绑后可以在这个指针后面加 （->），然后再加上某一部分的名称来表示结构体变量内部的某个存储区，同类型的结构体变量之间是可以直接赋值。
+
+声明结构指针： 
+
+struct guy {
+    char favfood[20];
+    char job[20];
+    float income;
+};
+struct guy * him；
+//向函数传递结构信息
+#include <stdio.h>
+#define FUNDLEN 50
+struct funds {
+	char bank[FUNDLEN];
+	double bankfund;
+	char save[FUNDLEN];
+	double savefund;
+};
+double sum (double, double ); //传递结构成员
+double sum1 (const struct funds *);  //使用结构地址
+double sum2 (struct funds moolah);  //把结构作为参数传递
+ 
+int main (void)
+{
+	struct funds stan = {
+		"Garlic-Melon Bank",
+		3024.72,
+		"Lucky`s Saving and Loan",
+		9237.11
+	};
+	printf ("Stan has a total of $%.2f.\n", 
+			sum (stan.bankfund, stan.savefund));
+ 
+	printf ("Stan has a total of $%.2f.\n", sum1 (&stan));
+ 
+	printf ("Stan has a total of $%.2f.\n", sum2 (stan));
+	return 0;
+}
+ 
+double sum (double x, double y)
+{
+	return (x + y);
+}
+ 
+double sum1 (const struct funds * money)
+{
+	return (money->bankfund + money->savefund);
+}
+ 
+double sum2 (struct funds moolah)
+{
+	return (moolah.bankfund + moolah.savefund);
+}
+输出结果：
+Stan has a total of $12261.83.
+Stan has a total of $12261.83.
+Stan has a total of $12261.83.
+
+typedf关键字
+
+typedef工具是一种高级数据特性，它使你能够为某一类型创建你自己的名字。
+
+参看：typedef和#define的不同之处
+
+
+typedef unsigned char BYTE;
+typedef unsigned char byte; //小写字母
+使用BYTE 来定义变量BYTE x, y[10], *z;
+该定义的作用域取决于 typedef 语句所在的位置。如果定义是在一个函数内部，它的作用域是局部的，限定在那个函数里。如果定义是在函数外部，它将具有全局作用域。
+通常，这些定义使用大写字母，以提醒用户这个类型名称实际上是一个符号缩写。不过，您也可以使用下写字母。
+typedef关键字可以用来数据类型起别名，这些别名可以当作数据类型使用，可以把结构体声明语句和起别名语句合并，这时候可以省略结构体名称。
+/*
+ 	结构体演示
+ */
+#include <stdio.h>
+typedef struct 	//结构体不分配内存
+{
+	int age;
+	float height;
+	char name[20];
+}PE;
+//typedef struct person person;
+int main()
+{
+	PE person2={23,1.73f,"abcdef"};
+	PE person3={};
+	PE *p_person=NULL;
+	printf("年龄是%d\n",person2.age);	//加.  表示结构体中的某一变量
+	printf("身高是%g\n",person2.height);	//	单精度浮点占位符%g
+	printf("姓名是%s\n",person2.name);	//字符串占位符  %s
+	p_person=&person2;		//指针表示结构体变量地址
+	printf("年龄是%d\n",p_person->age);
+	printf("身高是%g\n",p_person->height);
+	printf("姓名是%s\n",p_person->name);
+	person3=person2;
+	printf("年龄是%d\n",person3.age);	//加.  表示结构体中的某一变量
+	printf("身高是%g\n",person3.height);	//	单精度浮点占位符%g
+	printf("姓名是%s\n",person3.name);	//字符串占位符  %s
+	return 0;
+}
+输出结果：
+年龄是23
+身高是1.73
+姓名是abcdef
+年龄是23
+身高是1.73
+姓名是abcdef
+年龄是23
+身高是1.73
+姓名是abcdef
+
+#include <stdio.h>
+typedef struct
+{
+	int row,col;
+}pt;
+pt *midpt(const pt *p_pt1,const pt *p_pt2,pt *p_mid)	//用指针作形参
+{
+	p_mid->row=((p_pt1->row)+(p_pt2->row))/2;
+	p_mid->col=((p_pt1->col)+(p_pt2->col))/2;
+	return p_mid;	//用指针作返回值
+}
+int main()
+{
+	pt pt1={},pt2={},mid={},*p_pt=NULL;
+	printf("请输入一个点的位置：\n");
+	scanf("%d%d",&(pt1.row),&(pt1.col));
+	printf("请再次输入一个点的位置：\n");
+	scanf("%d%d",&(pt2.row),&(pt2.col));
+	p_pt=midpt(&pt1,&pt2,&mid);		//指针
+	printf("中间点的位置是(%d,%d)\n",p_pt->row,p_pt->col);	
+	printf("中间点的位置是(%d,%d)\n",mid.row,mid.col);
+	return 0;
+}
+输出结果：
+请输入一个点的位置：
+12 4
+请再次输入一个点的位置：
+1 9
+中间点的位置是(6,6)
+中间点的位置是(6,6)
+
+#include <stdio.h>
+#include <string.h>
+ 
+typedef struct 
+{
+	int n;
+	float m;
+	char name[20];
+}Ptr;
+ 
+int main (void)
+{
+	Ptr p;
+        //Ptr p = {11, 12.9, "hello"}; 
+	strcpy (p.name, "hello");  //注意字符串不能直接赋值
+	p.n = 11;
+	p.m = 12.9;
+	printf ("n = %d, name = %s, m = %g\n", p.n, p.name, p.m);
+	printf ("%d\n", sizeof (Ptr));
+	return 0;
+}
+输出结果：
+n = 11, name = hello, m = 12.9
+28
+
+
+二、联合（union）
+联合是一个在同一个存储空间里存储不同类型数据的数据类型。这些存储区的地址都是一样的，联合里不同存储区的内存是重叠的，修改了任何一个其他的会受影响，联合的大小是其中最大部分存储区的大小。
+#include <stdio.h>
+ 
+typedef union {
+	char ch;
+	int num;
+}UN;
+ 
+int main (void)
+{
+	printf ("sizeof (UN) is %d\n", sizeof (UN));
+	return 0;
+}
+输出结果：
+sizeof (UN) is 4
+
+
+参看：百度百科--union
+
+1. 共用体声明和共用体变量定义
+共用体(参考“共用体”百科词条)是一种特殊形式的变量，使用关键字union来定义
+共用体(有些人也叫"联合")声明和共用体变量定义与结构体十分相似。其形式为:
+union 共用体名{
+数据类型 成员名;
+数据类型 成员名;
+...
+} 变量名;
+
+
+
+共用体表示几个变量共用一个内存位置，在不同的时间保存不同的数据类型和不同长度的变量。在union中，所有的共用体成员共用一个空间，并且同一时间只能储存其中一个成员变量的值。
+
+下例表示声明一个共用体foo:
+
+
+union foo{/*“共用”类型“FOO”*/
+    int i;    /*“整数”类型“i”*/
+    char c;   /*“字符”类型“C”*/
+    double k;  /*“双”精度类型“K”*/
+ 
+};
+再用已声明的共用体可定义共用体变量。例如，用上面说明的共用体定义一个名为bar的共用体变量, 可写成:
+union foo bar;
+在共用体变量bar中, 整型变量 i 和字符变量 c 共用同一内存位置。
+当一个共用体被声明时, 编译程序自动地产生一个变量, 其长度为联合中最大的变量长度的整数倍。以上例而言，最大长度是double数据类型，所以foo的内存空间就是double型的长度。
+
+
+union foo/*“共用”类型“FOO”*/
+{
+    char s[10];    /*“字符”类型的数组“S”下面有“10”个元素*/
+    int i;        /*“整数”类型i*/
+};
+在这个union中，foo的内存空间的长度为12，是int型的3倍，而并不是数组的长度10。若把int改为double，则foo的内存空间为16，是double型的两倍。
+
+2. 共用体和结构体的区别
+1）共用体和结构体都是由多个不同的数据类型成员组成, 但在任何同一时刻, 共用体只存放了一个被选中的成员, 而结构体的所有成员都存在。
+2.）对于共用体的不同成员赋值, 将会对其它成员重写, 原来成员的值就不存在了, 而对于结构体的不同成员赋值是互不影响的。
+
+
+三、枚举（enum）
+
+可以使用枚举类型声明代表整数常量的符号名称。通过使用关键字 enum，可创建一个新“类型”并指定它可以具有的值（实际上，enum 常量是 int 类型的，因此在使用 int 类型的任何地方都可以使用它）。枚举类型的目的是提高程序的可读性。
+计算机用整数0代表枚举类型中第一个名称，后面的名称一次递增，可以在声明枚举类型的时候指定某个名字用某个整数表示（这个时候后面的名字也会随之改变），使用宏可以实现和枚举类似的效果  ，不关心整数就用枚举  关心就用宏。
+#include <stdio.h>
+typedef enum   
+{
+	CHUN,
+	XIA = 5,
+	QIU,
+	DONG
+}season;  //类型名
+ 
+int main (void)
+{
+	printf ("CHUN is %d\n", CHUN);
+	printf ("QIU is %d\n", QIU);
+	return 0;
+}
+输出结果：
+CHUN is 0
+QIU is 6
+
+
+
+扩展：
+
+关于 typedef 使用可，参看：C语言再学习 -- 关键字struct（转）
+
+这里主要介绍下，枚举与 #define宏的区别
+
+1、#define 宏常量是在预编译阶段进行简单替换。枚举常量则是在编译的时候确定其值。
+
+2、一般在编译器里，可以调试枚举常量，但是不能调试宏常量。
+
+3、枚举可以一次定义大量相关的常量，而 #define 宏一次只能定义一次。
+
+
+
+思考两个问题：
+
+1）枚举能做到的事，#define 宏能不能做到？如果能，那为什还需要枚举？
+
+枚举可以自增 1，这样不用每一个值都定义，而宏必须每个值都定义。而且枚举是一个集合，代表一类值，像上面例子的春夏秋冬四季，方便使用，而宏不能形成集合。
+
+2）sizeof (sea) 的值是多少？为什么？
+
+
+#include <stdio.h>
+typedef enum   
+{
+	CHUN,
+	XIA = 5,
+	QIU,
+	DONG
+}Season;  //类型名
+ 
+int main (void)
+{
+	Season sea;
+	printf ("sizeof (sea) = %d\n", sizeof (sea));	
+	printf ("sizeof (Season) = %d\n", sizeof (Season));	
+ 
+	return 0;
+}
+输出结果：
+sizeof (sea) = 4
+sizeof (Season) = 4
+
+因为枚举类型声明代表整数常量，整型是 4 个字节的。再有需要区分 Season 为枚举类型，sea 为枚举变量
+
+
+四、结构体内存对齐与补齐
+
+一个存储区的地址一定是它自身大小的整数倍（双精度浮点类型的地址只需要4的整数倍就行了)，这个规则也叫数据对齐，结构体内部的每个存储区通常也需要遵守这个规则。数据对齐可能造成结构体内部存储区之间有浪费的字节。
+
+结构体的大小一定是内部最大基本类型存储区大小的整数倍，这个规则叫数据补齐。
+
+
+
+这里考虑一个问题，为什么会有内存对齐？
+
+字，双字，和四字在自然边界上不需要在内存中对齐。（对字，双字，和四字来说，自然边界分别是偶数地址，可以被 4 整除的地址，和可以被 8 整除的地址。）无论如何，为了提高程序的性能，数据结构（尤其是栈）应该尽可能地在自然边界上对齐。原因在于，为了访问未对齐的内存，处理器需要作两次内存访问；然而，对齐的内存访问仅需要一次访问。
+一个字或双字操作数跨越了 4 字节边界，或者一个四字操作数跨越了 8 字节边界，被认为是未对齐的，从而需要两次总线周期来访问内存。一个字起始地址是奇数但却没有跨越字边界被认为是对齐的，能够在一个总线周期中被访问。某些操作双四字的指令需要内存操作数在自然边界上对齐。如果操作数没有对齐，这些指令将会产生一个通用保护异常。双四字的自然边界是能够被 16 整除的地址。其他的操作双四字的指令允许未对齐的访问（不会产生通用保护异常），然而，需要额外的内存总线周期来访问内存中未对齐的数据。缺省情况下，编译器默认将结构、栈中的成员数据进行内存对齐。编译器将未对齐的成员向后移，将每一个都成员对齐到自然边界上，从而也导致了整个结构的尺寸变大。尽管会牺牲一点空间（成员之间有部分内存空闲），但提高了性能。
+
+#include <stdio.h>
+typedef struct
+{
+	char ch;
+	int num;
+	char ch1;
+}str;
+ 
+int main (void)
+{
+	printf ("sizeof (str) is %d\n", sizeof (str));
+	return 0;
+}
+输出结果：
+sizeof (str) is 12
+
+
+
+再有、如何避免内存对齐的影响？
+
+写结构体的时候按照从小到大的顺序写，既达到提高性能的目的，又能节约一点空间
+
+#include <stdio.h>
+typedef struct
+{
+	char ch;	//1个字节
+	char ch1;
+	int num;	//4个字节
+}stru1;
+ 
+int main (void)
+{
+	printf ("sizeof (stru1) = %d\n", sizeof (stru1));
+	return 0;
+}
+输出结果：
+sizeof (stru1) = 8
+
+
+
+参看：C语言的字节对齐及#pragma pack的使用
+
+#pragma pack (整数n)，表示按照整数n倍进行补齐和对齐
+
+使用伪指令#pragma pack (n)，编译器将按照n 个字节对齐；
+使用伪指令#pragma pack ()，取消自定义字节对齐方式。
+注意：如果#pragma pack (n)中指定的n 大于结构体中最大成员的size，则其不起作用，结构体仍然按照size 最大的成员进行对界。
+
+[cpp]  view plain  copy    
+//设置结构体的对齐和补齐方式  
+#include <stdio.h>  
+  
+//设置结构体按照2的整数倍进行对齐补齐  
+#pragma pack(2) //8  
+//#pragma pack(1) //6   
+//#pragma pack(3) //error   
+//char short int long int  long long  
+  
+int main(void)  
+{  
+    struct S  
+    {  
+        char c1;  
+        int i;  
+        char c2;  
+    };  
+    printf("sizeof(struct S) = %d\n",sizeof(struct S));//12  
+    return 0;  
+}  
+输出结果：  
+sizeof(struct S) = 8 
+
 
 # 存储类型关键字
 
