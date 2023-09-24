@@ -1,0 +1,1037 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="开发环境：  win10 IDE：STM32CubeIDE  STM32CubeIDE简介 产品链接。建议多看看官网的资料，很多问题都能在这些文档里找到答案。STM32CubeIDE官网STM32CubeIDE user guide   1. 特性 集成STM32CubeMX，提供以下服务：  STM32微控制器选择  引脚分配，时钟，IP和中间件配置  项目创建和初始化代码的生成   基于E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32CubeIDE学习笔记">
+<meta property="og:url" content="http://lonlypan.com/2020/12/18/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="开发环境：  win10 IDE：STM32CubeIDE  STM32CubeIDE简介 产品链接。建议多看看官网的资料，很多问题都能在这些文档里找到答案。STM32CubeIDE官网STM32CubeIDE user guide   1. 特性 集成STM32CubeMX，提供以下服务：  STM32微控制器选择  引脚分配，时钟，IP和中间件配置  项目创建和初始化代码的生成   基于E">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE学习笔记/stm32-cube-ide.png">
+<meta property="article:published_time" content="2020-12-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-17T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE学习笔记/stm32-cube-ide.png">
+  
+  
+  <title>STM32CubeIDE学习笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="STM32CubeIDE学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-18 00:00" pubdate>
+          2020年12月18日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          80 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">STM32CubeIDE学习笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年12月18日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <span id="more"></span>
+
+<p><strong>开发环境：</strong></p>
+<ul>
+<li>win10</li>
+<li>IDE：STM32CubeIDE</li>
+</ul>
+<h1 id="STM32CubeIDE简介"><a href="#STM32CubeIDE简介" class="headerlink" title="STM32CubeIDE简介"></a>STM32CubeIDE简介</h1><blockquote>
+<p>产品链接。建议多看看官网的资料，很多问题都能在这些文档里找到答案。<br><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE官网</a><br><a target="_blank" rel="noopener" href="https://www.st.com/content/ccc/resource/technical/document/user_manual/group1/f8/a2/48/77/68/e6/4b/74/DM00629856/files/DM00629856.pdf/jcr:content/translations/en.DM00629856.pdf">STM32CubeIDE user guide</a></p>
+</blockquote>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Stm32CubeIDE_show.png" srcset="/img/loading.gif" lazyload alt="Stm32CubeIDE_show"></p>
+<h2 id="1-特性"><a href="#1-特性" class="headerlink" title="1. 特性"></a>1. 特性</h2><ul>
+<li><p>集成STM32CubeMX，提供以下服务：</p>
+<ul>
+<li>STM32微控制器选择 </li>
+<li>引脚分配，时钟，IP和中间件配置 </li>
+<li>项目创建和初始化代码的生成</li>
+</ul>
+</li>
+<li><p>基于Eclipse?&#x2F; CDT，支撑ECLIPSE的?插件，GNU C &#x2F; C ++中ARM ?工具链和GDB调试器。</p>
+</li>
+<li><p>其他高级调试功能包括：**</p>
+<ul>
+<li>CPU内核，IP寄存器和内存视图</li>
+<li>实时变量观看视图</li>
+<li>系统分析和实时跟踪（SWV）</li>
+<li>CPU故障分析工具</li>
+</ul>
+</li>
+<li><p>支持ST-LINK（STMicroelectronics）和J-Link（SEGGER）调试探针</p>
+</li>
+<li><p>从Atollic导入项目? TrueSTUDIO ?和AC6系统工作台的STM32</p>
+</li>
+<li><p>多支持操作系统：Windows ?，Linux的?和MacOS ?</p>
+</li>
+</ul>
+<h2 id="2-概述"><a href="#2-概述" class="headerlink" title="2. 概述"></a>2. 概述</h2><p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>是一款多功能的多操作系统开发工具，集成了TrueSTUDIO和STM32CubeMX，它是<a target="_blank" rel="noopener" href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a>软件生态系统的一部分。  </p>
+<p>简单来说就是：<strong>STM32cubeIDE &#x3D; true studio for stm32 + STM32cubeMX</strong></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/STM32CubeIDE.png" srcset="/img/loading.gif" lazyload alt="Stm32CubeIDE"></p>
+<p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>是一个高级C &#x2F; C ++开发平台，具有用于STM32微控制器和微处理器的外设配置，代码生成，代码编译和调试功能。它基于ECLIPSE?&#x2F; CDT框架和GCCtoolchain用于开发，而GDB用于调试。它允许集成数百个现有插件，这些插件完成ECLIPSE?IDE的功能</p>
+<p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>集成了所有<a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX</a>功能，以提供多合一的工具体验，并节省安装和开发时间。从板上选择空的STM32 MCU、MPU或预配置的微控制器或微处理器后，将创建项目并生成初始化代码。在开发期间的任何时候，用户都可以返回外围设备或中间件的初始化和配置，并重新生成初始化代码，而不会影响用户代码。</p>
+<p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>包括构建和堆栈分析器，可为用户提供有关项目状态和内存要求的有用信息。</p>
+<p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>还包括标准和高级调试功能，包括CPU内核寄存器，存储器和外设寄存器的视图，以及实时变量监视，串行线查看器（Serial Wire Viewer）接口或故障分析器。</p>
+<p><a target="_blank" rel="noopener" href="https://www.stmicroelectronics.com.cn/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>支持基于Arm?Cortex?处理器的STM32产品</p>
+<h2 id="3-STM32Cube介绍"><a href="#3-STM32Cube介绍" class="headerlink" title="3. STM32Cube介绍"></a>3. STM32Cube介绍</h2><p><a target="_blank" rel="noopener" href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a>是意法半导体的一项原始计划，旨在通过减少开发工作量，时间和成本来显着提高设计师的生产率。 <a target="_blank" rel="noopener" href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a>涵盖了整个STM32产品组合。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a>是软件工具和嵌入式软件库的结合</strong>：</p>
+<ul>
+<li>一套完整的PC软件工具，可满足一个完整项目开发周期的所有需求<br>&#x3D; 在STM32微控制器和微处理器上运行的嵌入式软件模块，可带来各种功能（从MCU组件驱动程序到更高级的面向应用的特性)</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://www.st.com/content/st_com/en/stm32cube-ecosystem.html">STM32Cube</a>生态系统包括</strong><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/overview-zh.jpg" srcset="/img/loading.gif" lazyload alt="overview-zh"></p>
+<ul>
+<li><p><strong>一套易于使用的软件开发工具，涵盖从概念到实现的项目开发，其中</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubemx.html">STM32CubeMX</a>, 面向任意STM32设备的配置工具。这款简单易用的图形用户界面为Cortex-M内核生成初始化C代码，并为Cortex-A内核生成Linux设备树源码。</li>
+<li><a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE</a>, 一种集成开发环境。该IDE基于Eclipse或GNU C&#x2F;C++工具链等开源解决方案，包括编译报告功能和高级调试功能。它还集成了其他工具，如STM32CubeMX（本身包含在STM32CubeIDE中）。</li>
+<li>STM32CubeProgrammer（<a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubeprog.html">STM32CubeProg</a></li>
+</ul>
+</li>
+</ul>
+<p>）, 一种编程工具。它通过多种多样可用的通信媒介（JTAG、SWD、UART、USB DFU、I2C、SPI、CAN等）为读取、写入和验证设备和外部存储器等操作提供简单易用且高效的环境。</p>
+<ul>
+<li><p>STM32CubeMonitor-Power（<a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubemonpwr.html">STM32CubeMonPwr</a><br>）。功能强大的监控工具，可帮助开发人员实时微调其应用程序的行为和性能。</p>
+</li>
+<li><p><strong><a target="_blank" rel="noopener" href="https://www.st.com/en/embedded-software/stm32cube-mcu-mpu-packages.html">M32Cube MCU和MPU软件包</a>，特定于每个微控制器和微处理器系列的全面嵌入式软件平台（例如STM32F4系列的STM32CubeF4），其中包括</strong></p>
+<ul>
+<li>STM32Cube硬件抽象层（HAL），确保在STM32产品组合上实现最大的可移植性</li>
+<li>STM32Cube低层API，通过对HW的高度用户控制来确保最佳性能和占用空间</li>
+<li>一套一致的中间件组件，例如RTOS，USB，TCP &#x2F; IP和图形</li>
+<li>所有嵌入式软件实用程序以及全套外围设备和应用示例</li>
+</ul>
+</li>
+<li><p><strong><a target="_blank" rel="noopener" href="https://www.st.com/en/embedded-software/stm32cube-expansion-packages.html">STM32Cube扩展包</a>，包含嵌入式软件组件，这些组件通过以下功能补充STM32Cube MCU和MPU包的功能：</strong></p>
+<ul>
+<li>中间件扩展和应用层</li>
+<li>在某些特定的STMicroelectronics开发板上运行的示例</li>
+</ul>
+</li>
+</ul>
+<h1 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h1><h2 id="1-下载"><a href="#1-下载" class="headerlink" title="1. 下载"></a>1. 下载</h2><p>可以从<a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubeide.html">STM32CubeIDE</a> 网站上下载最新版本的安装程序。</p>
+<p>在页面底部找到下图，根据自己电脑操作系统下载即可，这里以Windows版为例。  右边下拉菜单还可以选择其他版本，推荐下载最新版。<br>软件是免费的， 但下载时需要填写信息或注册登录。  </p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/download.png" srcset="/img/loading.gif" lazyload alt="download"></p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h2><p>前面几步较简单，这里跳过。</p>
+<p><strong>选择安装位置</strong></p>
+<ul>
+<li>安装路径中不要包含中文字符，不要包含中文字符，不要包含中文字符</li>
+<li>建议选择短路径以避免工作区路径过长而面临Windows?限制。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Installer_location_dialog.png" srcset="/img/loading.gif" lazyload alt="Installer_location_dialog"></p>
+<p><strong>“选择组件”对话框</strong><br>选择要与STM32CubeIDE一起安装的GDB服务器组件。用于STM32CubeIDE安装调试的每种JTAG探针类型都需要一个服务</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Selection_of_components_dialog_.png" srcset="/img/loading.gif" lazyload alt="Selection_of_components_dialog_"></p>
+<h2 id="3-可选配置"><a href="#3-可选配置" class="headerlink" title="3. 可选配置"></a>3. 可选配置</h2><h3 id="1-汉化"><a href="#1-汉化" class="headerlink" title="1. 汉化"></a>1. 汉化</h3><p>如下图打开安装软件界面：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96.gif" srcset="/img/loading.gif" lazyload alt="汉化"></p>
+<p>进入以下网址：<br><a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/">http://mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/</a></p>
+<p>选择 <code>R0.18.2</code>，并单击进入<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/eclipse%E6%B1%89%E5%8C%96%E4%B8%8B%E8%BD%BD1.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>选择如选择:<code>2020-12</code>，并单击进入<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/eclipse%E6%B1%89%E5%8C%96%E4%B8%8B%E8%BD%BD2.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>复制此时网址链接<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/eclipse%E6%B1%89%E5%8C%96%E4%B8%8B%E8%BD%BD3.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>将以下内容填入 <code>Add Repository</code> 对话框。其中的位置就是上面得到的链接。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">language<br><br>http:<span class="hljs-comment">//mirrors.ustc.edu.cn/eclipse/technology/babel/update-site/R0.18.2/2020-12/</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Add_Repository_12.png" srcset="/img/loading.gif" lazyload alt="Add_Repository_12"></p>
+<p>单击 <code>添加</code> 按钮。之后会弹出下面对话框，下拉找到图中红框选项，<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A9_56.png" srcset="/img/loading.gif" lazyload alt="汉化选择_56"></p>
+<p>单击其最左侧的多选 <code>&gt;</code> 按钮，在下拉框中选中打勾下图红框部分，之后单击 <code>下一步</code>。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A92_135.png" srcset="/img/loading.gif" lazyload alt="汉化选择2_135"></p>
+<blockquote>
+<p>注：<br>上图红框选项指软件的界面汉化，其中后面的（85.21%）表示汉化程度，可见还并未完全汉化。<br>其他选项也是汉化选项，是关于库，编程等的，安装会导致程序BUG，故不推荐安装。这里只对界面进行汉化。</p>
+</blockquote>
+<p>单击 <code>下一步</code> </p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A93_220.png" srcset="/img/loading.gif" lazyload alt="汉化选择3_220"></p>
+<p>勾选接受许可协议，点击 <code>完成</code></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A94_281.png" srcset="/img/loading.gif" lazyload alt="汉化选择4_281"></p>
+<p>之后会弹出下面的对话框，单击 install anyway</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A95_336.png" srcset="/img/loading.gif" lazyload alt="汉化选择5_336"></p>
+<p>单击现在重启，汉化完成</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B1%89%E5%8C%96%E9%80%89%E6%8B%A96_396.png" srcset="/img/loading.gif" lazyload alt="汉化选择6_396"></p>
+<h3 id="2-更换主题"><a href="#2-更换主题" class="headerlink" title="2. 更换主题"></a>2. 更换主题</h3><p>软件自带了几个主题，具体可以点击菜单栏 <code>Windows</code>-&gt; <code>preference</code>，搜索 <code>theme</code>并尝试。但官方主题不太好用，所以下面讲解如何使用外部主题。<br>菜单栏 <code>Help</code>，在下拉栏中双击 <code>Eclipse Marketplace</code>打开。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/install_theme.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>之后按照软件提示，一路默认安装即可。最后重启软件，选择主题。<br>如果后面还想更改，点击菜单栏 <code>Windows</code>-&gt; <code>preference</code>，搜索 <code>theme</code>并尝试。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/change_theme.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="3-中文注释字体显示问题解决"><a href="#3-中文注释字体显示问题解决" class="headerlink" title="3. 中文注释字体显示问题解决"></a>3. 中文注释字体显示问题解决</h3><p>当我们尝试中文注释和英文注释混编的时候，会出现中文注释突然变小的问题<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1616038037498.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><strong>解决办法：</strong> 菜单栏 <code>Windows</code>-&gt; <code>preference</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/test-font.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><strong>参考链接</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.openedv.com/thread-300647-1-1.html">STM32CubeIDE注释字体问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39754256/article/details/104304634">STM32的开发环境cubeIDE注释混乱问题解决方法</a></li>
+</ul>
+<h1 id="新建工程模板"><a href="#新建工程模板" class="headerlink" title="新建工程模板"></a>新建工程模板</h1><p>这里以控制 GPIO 输出&#x2F;输出为例说明</p>
+<h2 id="1-1-新建工程"><a href="#1-1-新建工程" class="headerlink" title="1.1 新建工程"></a>1.1 新建工程</h2><p>新建工程有两种途径。如下图示：</p>
+<ol>
+<li><p>第一种：界面左上角 <code>file</code> -&gt; <code>New</code> -&gt; STM32 Project&#96;<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/file%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="file新建工程"></p>
+</li>
+<li><p>第二种：默认启动界面，在这里直接单击开始新工程。如果看不到下图界面，单击上图中 <code>红色五角星</code> 上方的 “感叹号” 图标，就会出现了。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%90%AF%E5%8A%A8%E7%95%8C%E9%9D%A2%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+</li>
+</ol>
+<p>之后会弹出如下的 芯片选择界面。<br>这里有很多种查找芯片的方法，我们这里直接在搜索框 （<strong>1</strong> 处）里搜索，在右下结果框里（<strong>2</strong>处）选中我们要查找的芯片即可。注意其最左边的五角星 <i class="far fa-star"></i>，单击收藏，则会变成蓝色。下次我们可以直接单击左上角搜索框上方的大五角星（ <strong>3</strong> 处），就能够快速查看已收藏的芯片，方便快速。<br>选好后，我们单击 <code>下一步</code>。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%8A%AF%E7%89%87%E9%80%89%E6%8B%A92.png" srcset="/img/loading.gif" lazyload alt="芯片选择2"></p>
+<p><strong>1</strong> 处输入工程名称<br><strong>2</strong>处 是工程存储地址，可以自定义 ，但要注意你需要为工程文件再单独新建一个文件夹，不然所有文件都会平铺在当前文件夹中。<br><strong>3</strong> 处是编程语言，这里选择使用C++。之后单击 <code>下一步</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B3.png" srcset="/img/loading.gif" lazyload alt="新建工程3"></p>
+<p>这里是关于库文件的选项，第一个是将库文件链接到安装目录下，这样工程目录下其实是没有库文件了，如果换电脑目录改变，则需要重新链接，不推荐。第二个是复制库文件到工程目录下。建议选择第二个。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B4.png" srcset="/img/loading.gif" lazyload alt="新建工程4"></p>
+<p>接下来就是熟悉的 CubeMX 初始化配置界面了，操作方法也没有什么难的，就是将我们之前用代码写的初始化变成了图形化操作，按照我们初始化的思路一步步勾选即可了。下面具体操作。</p>
+<h2 id="1-2-引脚与配置-Pinout-and-Configuration"><a href="#1-2-引脚与配置-Pinout-and-Configuration" class="headerlink" title="1.2 引脚与配置(Pinout  and Configuration)"></a>1.2 引脚与配置(Pinout  and Configuration)</h2><ol>
+<li><p>系统配置。这里是调试工具选择和基准时钟源选择。我们用的是ST-Link的SWD（Serial Wire Debug）调试模式，所以选择 <strong>Serial Wire</strong> 串行线。时钟基准源默认系统滴答时钟 <strong>SysTick</strong>。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/SYS.png" srcset="/img/loading.gif" lazyload alt="SYS"></p>
+</li>
+<li><p>时钟源配置。一共有以下选项。</p>
+</li>
+</ol>
+<ul>
+<li><p>外部晶体&#x2F;陶瓷晶振(Crystal&#x2F;Ceramic Resonator)：由外部无源晶体与MCU内部时钟驱动电路共同配合形成，有一定的启动时间，精度较高。外部晶振没有时，自动切换为自带的内部晶振。</p>
+</li>
+<li><p>旁路时钟源(Crystal&#x2F;Ceramic Resonator)：直接从外界导入时钟信号。犹如芯片内部的驱动组件被旁路了</p>
+</li>
+<li><p>Disable：无时钟，相关功能不工作。</p>
+<p>这里HSE配置为外部晶振，LSE选Disable(低速时钟是给看门狗和RTC的，目前未用)。时钟输出关闭。</p>
+</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/RCC.png" srcset="/img/loading.gif" lazyload alt="RCC"></p>
+<ol start="3">
+<li><p>引脚配置。<br>在图左图形界面单击我们用到的引脚。这里我们使用的LED引脚有 PD2 和 PC8，都是低电平点亮，具体可查看开发板原理图。两个引脚我们都配置为输出模式。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%95%E8%84%9A%E9%80%89%E6%8B%A93.png" srcset="/img/loading.gif" lazyload alt="引脚选择3"></p>
+<p> 然后我们到左边的引脚具体配置。配置如图示，两个引脚相同。</p>
+</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%95%E8%84%9A%E9%85%8D%E7%BD%AE2.png" srcset="/img/loading.gif" lazyload alt="引脚配置2"></p>
+<h2 id="1-3-时钟配置-Clock-Configuration"><a href="#1-3-时钟配置-Clock-Configuration" class="headerlink" title="1.3 时钟配置(Clock Configuration)"></a>1.3 时钟配置(Clock Configuration)</h2><p>选择外部8MHz晶振，配置系统时钟为72MHz。注意APB1总线时钟式36MHz，需二分频。<br>这里和后面的配置都不需要保存的，也没有保存按钮<i class="fas fa-smile"></i><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%B6%E9%92%9F%E9%80%89%E6%8B%A9.png" srcset="/img/loading.gif" lazyload alt="时钟选择"></p>
+<h2 id="1-4-项目管理-Project-Manager"><a href="#1-4-项目管理-Project-Manager" class="headerlink" title="1.4 项目管理(Project Manager)"></a>1.4 项目管理(Project Manager)</h2><p>这里我们注意勾选上图中红框部分。这样生成的代码每个外设一个文件夹，就不会全堆在main.c文件里了。其他的默认。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="项目管理"></p>
+<h2 id="1-5-工具-Tools"><a href="#1-5-工具-Tools" class="headerlink" title="1.5 工具(Tools)"></a>1.5 工具(Tools)</h2><p>保持默认即可</p>
+<h2 id="1-6-编译生成初始化文件"><a href="#1-6-编译生成初始化文件" class="headerlink" title="1.6 编译生成初始化文件"></a>1.6 编译生成初始化文件</h2><p>单击上方工具栏的  <code>设备配置工具代码生成</code> ，完成工程建立。观察左侧的项目资源管理器，会发现多出了gpio.c文件等等。现在就可以正式编写程序了。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%88%9D%E5%A7%8B%E5%8C%96%E7%94%9F%E6%88%90.png" srcset="/img/loading.gif" lazyload alt="初始化生成"></p>
+<p>我们可以单击其左边的锤子 ? 编译 按钮，编译应该是没有错误的。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91.png" srcset="/img/loading.gif" lazyload alt="编译"></p>
+<h2 id="1-7-工程复制"><a href="#1-7-工程复制" class="headerlink" title="1.7 工程复制"></a>1.7 工程复制</h2><p>开发过程中有时候需要复制一个已有的项目，在该项目之上进行开发，STM32CubeIDE不允许同一个工作空间中出现同名项目，这时候就需要修改项目名称了，方法如下：</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>直接在 IDE 左侧的文件浏览框中，右键项目名复制。</p>
+<ol>
+<li>右键项目名，选择 <code>Copy</code> 复制</li>
+<li>右键空白处，选择 <code>Paste</code> 粘贴工程，重命名项目名，并选择存放位置</li>
+<li>右键新项目的 .ioc 文件，重命名，和新项目名一样。</li>
+<li>删除新项目下原来项目命名的 .launch和.cfg 文件。</li>
+<li><strong>在资源管理器中，删除新工程下的 .mxproject 文件!删除新工程下的 .mxproject 文件!删除新工程下的 .mxproject 文件!</strong></li>
+<li>现在可以自由编辑新工程了</li>
+</ol>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>在资源管理器中复制粘贴项目</p>
+<ol>
+<li>复制已有工程，并重命名</li>
+<li><strong>在资源管理器中，删除新工程下的 .mxproject 文件!删除新工程下的 .mxproject 文件!删除新工程下的 .mxproject 文件!</strong></li>
+<li>双击新项目名并重新打开，在IDE中，右键项目名，选择 <code>Rename</code> 重命名</li>
+<li>删除新项目下原来项目命名的 .launch和.cfg 文件。</li>
+<li>现在可以自由编辑新工程了</li>
+</ol>
+<h2 id="1-8-新建文件夹和文件"><a href="#1-8-新建文件夹和文件" class="headerlink" title="1.8 新建文件夹和文件"></a>1.8 新建文件夹和文件</h2><p>由于使用 Stm32CubeIDE 会自动生成配置初始化文件。为了将配置文件和自己的工程文件区分、避免相互影响，我们需要单独建立一个文件夹，存放我们自己的代码。 </p>
+<blockquote>
+<p>之后所有的参考程序都会存放在我们新建的 <code>BSP</code> 文件夹下。</p>
+</blockquote>
+<p>这里有两种方法，一个是使用 STM32CubeIDE 重新建立文件和文件夹（适用从零开始的工程）。另一种是从外部导入文件和文件夹（适用工程迁移）。</p>
+<h3 id="新建文件和文件夹"><a href="#新建文件和文件夹" class="headerlink" title="新建文件和文件夹"></a>新建文件和文件夹</h3><p>右键工程名，鼠标移至 <code>NEW</code>上，在右侧弹窗中单击 <code>Sorce Folder</code>新建文件夹。在这上面还有类似的 <code>Folder</code>选项，至于两者不同点，还请自行尝试。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>随后新建源文件或头文件，和上图类似，不过这次是在刚刚新建的<code>文件夹名</code>上右键，选择<code>NEW</code>，并在右侧弹窗中单击 <code>Sorce Files</code>或者<code>Header File</code> 新建源文件和头文件。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>头文件包含，新建文件夹后，需要在编译器中另外包含文件夹地址，否则编译会提示找不到文件。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%B4%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB1.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="导入外部文件-文件夹"><a href="#导入外部文件-文件夹" class="headerlink" title="导入外部文件-文件夹"></a>导入外部文件-文件夹</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36300069/article/details/103226568">stm32CubeIDE 在自己工程中添加.c 和.h文件</a></li>
+</ul>
+<h1 id="使用-C-编程"><a href="#使用-C-编程" class="headerlink" title="使用 C++ 编程"></a>使用 C++ 编程</h1><ol>
+<li>新建 C++ 工程<br>如下图所示，只需要改动一处即可。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%96%B0%E5%BB%BAC++%E5%B7%A5%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>添加个人文件夹（参考上文的<code>工程中添加文件</code>）<br>为了避免软件生成的配置文件和我们自定义文件混淆，建议将自己的文件单独放在一个文件夹中。<br>另外还需要在G++中包含头文件夹，<code>Properties</code>-&gt;<code>C/C++ Build</code>-&gt;<code>Tool Settings</code>：</li>
+</ol>
+<ul>
+<li>-&gt; <code>MCU G++ Compiler</code> -&gt; <code>include paths</code> 和 </li>
+<li>-&gt; <code>MCU GCC Compiler</code> -&gt; <code>include paths</code></li>
+</ul>
+<ol start="3">
+<li>编写程序，注意.cpp中函数有被.c中函数调用时，需要在.cpp函数的头文中添加 （源文件.cpp中不需要添加）<code>extern &quot;C&quot; </code>。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> MY_MAIN_H_</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MY_MAIN_H_</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span></span>;  <span class="hljs-comment">// 被main.c调用</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span></span>;   <span class="hljs-comment">// 被main.c调用</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* CPP_TEST_H_ */</span></span><br>  <br></code></pre></td></tr></table></figure></li>
+<li>之后就可以自由使用 C++ 了。</li>
+</ol>
+<p><strong>参考链接</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.st.com/zh/development-tools/stm32cubeide.html#resource">STM32CubeIDE资源</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ybhuangfugui/article/details/89702356">STM32CubeIDE属于一站式工具，本文带你体验它的强大</a>    </li>
+<li><a target="_blank" rel="noopener" href="https://www.strongerhuang.com/STM32Cube/STM32CubeMX/STM32CubeMX%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B03_%E5%88%9B%E5%BB%BA%E5%B9%B6%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E5%B7%A5%E7%A8%8B.html">STM32CubeMX系列教程03_创建并生成代码工程</a> </li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Naisu_kun/article/details/95935283">STM32CubeIDE使用笔记（01）：基础说明与开发流程</a></li>
+</ol>
+<h1 id="工程模板文件解读"><a href="#工程模板文件解读" class="headerlink" title="工程模板文件解读"></a>工程模板文件解读</h1><h2 id="1-1-7-文件夹结构"><a href="#1-1-7-文件夹结构" class="headerlink" title="1.1.7 文件夹结构"></a>1.1.7 文件夹结构</h2><p>CMSIS</p>
+<p>存放STM32F1xx芯片硬件与代码桥接的相关定义。</p>
+<p>1）include</p>
+<p>包含位于CMSIS标准的核内设备函数曾层的Cortex-M核通用的头文件，作用是为那些采用Cortex-M核设计SOC的芯片商设计的芯片外设提供一个进入内核的接口，定义了一些内核相关的寄存器。这些文件在其他公司的Cortex-M系列芯片也是相同的。写STM32F1xx的程序时，必须用到其中的四个文件：core_cm3.h、core_cmFunc.h、corecmlnstr.h、cmsis_armcc.h，其他的文件是属于其他内核的，还有几个文件时DSP函数库使用的头文件。</p>
+<p>2）Device</p>
+<p>时具体芯片直接相关的文件，将举办韩启动文件、芯片外设 寄存器定义、系统时钟初始化功能的一些文件，有ST公司提供<br>gpio：外设初始化配置函数</p>
+<ul>
+<li>stm32f103xe.h  头文件 （Device\ST\STM32F1xx\include\stm32f103xe.h）</li>
+</ul>
+<p>是stm32f103xe系列新片片底层相关的文件，包含了STM32中所有的外设寄存器地址和结构体类型定义，比如熟悉的宏定义GPIOA，结构体类型 GPIO_TyoeDef都在该文件定义。</p>
+<ul>
+<li>systen_stm32f1xx.c文件（Device\ST\STM32F1xx\Source、Templates\systen_stm32f1xx.c）</li>
+</ul>
+<p>定义了几个函数：系统初始化函数：SystemInit()、系统内核始终更新函数：SystemCoreClockUpdate()、外部SRAM启动控制函数：SystemInit_ExtMemCtl()。SystemInit函数是在芯片复位后执行的一个函数，用于预初始化内核时钟</p>
+<ul>
+<li>startup_stm32f103xe.s 启动文件 (文件路径：\Device\ST\STM32F1xx\Source\Templates\arm\startup_stm32f103xe.s)</li>
+</ul>
+<p>是一个汇编文件，不同开发环境平台该文件内容不同(虽然文件名称相同，所以使用时注意区分)。该文件内容才真正是芯片上电后运行的内容，在运行了这文件内容后程序才跳转至 main.c 文件中的 main 函数。后面我们会单独分析该文件内容。</p>
+<p>STM32F1xx_HAL_Driver 文件夹：有 Inc 跟 Src 两个文件夹，这里的文件属于CMSIS 之外的、芯片片上外设部分。</p>
+<p>Src 里面是每个设备外设的驱动源程序，Inc 则是相对应的外设头文件。Src 及 Inc 文件夹是 HAL 库的主要内容。在 Src<br>和 Inc 文件夹里的就是 HAL 库针对每个外设而编写的库函数文件，每个外设对应一个 stm32f1xx_hal_ppp.c 和 stm32f1xx_hal_ppp.h 文件，部分外设有特殊功能还有一个 stm32f1xx_hal_ppp_ex.c 文件，其中 ppp 为外设名称，比如<br>gpio、adc、i2c 等等，见下面表格。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_5.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>main.c：存放main函数和SystemClock_Config函数</p>
+<p>stm32f1xx_assert.c：</p>
+<p>stm32f1xx_hal_msp.c：其中的 <code>HAL_MspInit()</code> 是芯片系统级初始化，一般实现系统的中断配置，比如硬件错误、微处理器故障、总线错误等。其在 HAL_Msplnit函数中被调配，而main函数起始就调用 HAL_Init 函数。</p>
+<p>stm32f1xx_it.c：存放中断服务函数</p>
+<p>stm32f1xx_hal_conf.h：见上面表格</p>
+<p>stm32f1xx_it.h：中断服务函数声明，一般很少改动</p>
+<h1 id="使用问题合集"><a href="#使用问题合集" class="headerlink" title="使用问题合集"></a>使用问题合集</h1><h2 id="连接多个st-link-调试Multiple-debuggers"><a href="#连接多个st-link-调试Multiple-debuggers" class="headerlink" title="连接多个st-link 调试Multiple debuggers"></a>连接多个st-link 调试Multiple debuggers</h2><p>当一台电脑同时连接多个st-link是，cubeide会提示仿真下载错误，这是需要在仿真设置里额外配置</p>
+<blockquote>
+<p>一个stm32cubeide软件只能一个工程在debug模式<br>如果要同时调试两台设备，就需要打开两个cubeide软件且不在同一工作空间（Workspace）</p>
+</blockquote>
+<p>进入Debug Configurations</p>
+<ol>
+<li>使能 Shared ST-Link 选项，否则后面的无法使用 <code>寻找</code> 功能即找不到st-link</li>
+<li>勾选 <code>使用特定的ST-Link序列号</code>，意味着我们当前工程会仅只用我们待会指定的仿真器（序列号唯一）</li>
+<li>点击 <code>寻找</code>，软件会自动列出当前已连接的st-link。建议在寻找之前，断点重连所有的st-link。</li>
+<li>选择想要的st-link序列号</li>
+<li>端口号码默认61234，但是当我们同时有多个仿真器运行时，则必须保证每一个这里的端口号码不一样，随便填。<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1667203070396.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ol>
+<h2 id="STM32CubeIDE-编译报错“no-such-file-or-directory”"><a href="#STM32CubeIDE-编译报错“no-such-file-or-directory”" class="headerlink" title="STM32CubeIDE 编译报错“no such file or directory”"></a>STM32CubeIDE 编译报错“no such file or directory”</h2><p>修改了项目名称（右键项目名 -&gt; Rename）后，编译报错 “no such file or directory”，但实际报错的文件是存在的，且修改名称之前编译是正确的。<br>原因：修改项目名后，软件会自动修改所有相关依赖项和地址路径，但不会修改用户自己添加的文件夹及文件的路径，所以还需要自己再手动修改。<br>解决：修改路径包含中的项目名即可，将下图中的项目名改为<code>detector_A1.1</code>（原名称为 <code>detector_A1.0</code> ）   ，保持和工程的项目名一致。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BF%AE%E6%94%B9%E8%B7%AF%E5%BE%84%E5%8C%85%E5%90%AB.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="STM32CubeIDE-文件夹及文件灰色且有一条斜杠"><a href="#STM32CubeIDE-文件夹及文件灰色且有一条斜杠" class="headerlink" title="STM32CubeIDE 文件夹及文件灰色且有一条斜杠"></a>STM32CubeIDE 文件夹及文件灰色且有一条斜杠</h2><p>如下图所示，DELAY 文件夹灰色并且文件及文件夹上面都有个斜杠。另外编译时，也提示未定义 <code>delay_ms</code> 函数（实际已经在delay.c 文件种 ）<br>检查了 Inlcude paths  ，DELAY 文件夹已经包含，说明是其它问题导致<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/STM32cubeide%20%E6%96%87%E4%BB%B6%E5%A4%B9%E6%96%9C%E6%9D%A0.png" srcset="/img/loading.gif" lazyload alt="图 2">  </p>
+<p><strong>解决方法：</strong><br>右键项目名，进入 Properties 配置界面<br>依次选择 <code>c/c++ general</code> -&gt; <code>paths and symbols</code> -&gt; <code>source location</code>；找到并选中 DELAY 文件夹的上一级文件夹 BSP。单价 <code>edit filter</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/STM32cubeide%20%E6%96%87%E4%BB%B6%E5%A4%B9%E6%96%9C%E6%9D%A02.png" srcset="/img/loading.gif" lazyload alt="图 3"><br>在弹窗种选中 DELAY 文件夹名，单击 <code>Remove</code> 从目录中删除。<code>OK</code> 确认返回刚才界面，单击 <code>Apply and Close</code> 保存退出。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/STM32cubeide%20%E6%96%87%E4%BB%B6%E5%A4%B9%E6%96%9C%E6%9D%A03.png" srcset="/img/loading.gif" lazyload alt="图 4">  </p>
+<p>这里还可以看到 spi1 文件夹也被屏蔽了，这是之前遇到一样的情况，我干脆把这个文件夹删了，并未深究。这里算是搞明白了。</p>
+<p>从弹窗的标题 <code>Source Folder Exclusion Patterns</code> （源文件夹排除格式）。这里面添加的就是从每个文件夹种被排除的文件夹或文件，其实就是屏蔽文件来加入到工程，这也就是为什么是灰色且有斜杆且编译提示未定义了。</p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/390858204">eclipse cdt中.c文件而且灰色有个斜杠是什么意思</a></li>
+</ul>
+<h2 id="STLINK-下载仿真问题-Failure-starting-GDB-server-TCP-port-61234-not-available"><a href="#STLINK-下载仿真问题-Failure-starting-GDB-server-TCP-port-61234-not-available" class="headerlink" title="STLINK 下载仿真问题-Failure starting GDB server: TCP port 61234 not available."></a>STLINK 下载仿真问题-Failure starting GDB server: TCP port 61234 not available.</h2><p>下载或Debug时，报如下错误<br>Failed to bind to port 61235, error code -1: No error<br>Failure starting SWV server on TCP port: 61235<br>Failed to bind to port 61234, error code -1: No error<br>Failure starting GDB server: TCP port 61234 not available.<br>Exit.<br>使用 STlink Utililty软件下载，可正常连接并下载程序。<br>查询资料：<br><a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-i-entering-into-debug-mode-getting-this-error-please-help-me-to-crack-thisfailed-to-bind-to-port-61234-error-code-1-no-errorfailure-starting-gdb-server-tcp-port-61234-not-available">https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-i-entering-into-debug-mode-getting-this-error-please-help-me-to-crack-thisfailed-to-bind-to-port-61234-error-code-1-no-errorfailure-starting-gdb-server-tcp-port-61234-not-available</a><br>猜测是端口占用问题。有两种解决方案：</p>
+<ol>
+<li>可通过重启电脑解决问题，但后续仍会失败</li>
+<li>（推荐）在调试配置中将 GDB 服务器的端口号从 61234 更改为 41234（其它任意值均可），并且无需重新启动计算机即可正常工作。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1652411465211.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>参考资料：<br>• <a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X0000C8d0oXSQQ/hii-am-using-stm32ide-if-i-entering-into-debug-mode-getting-this-error-please-help-me-to-crack-thisfailed-to-bind-to-port-61234-error-code-1-no-errorfailure-starting-gdb-server-tcp-port-61234-not-available">i am using stm32IDE if i entering into debug mode getting this error please help me to crack this.</a><br>• <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=SVIacozy9j8">Fix Failure starting GDB server - ST LINK V2 Failed to bind to port 61234</a><br>• <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VVQr6nx7LBc">Failure starting GDB server</a><br>• <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27508477/article/details/103705143">RT-Thread Studio调试错误 Failed to bind to port 61234, error code -1: No error</a></li>
+</ol>
+<h2 id="每行空格和结尾出现点号和奇怪的符号"><a href="#每行空格和结尾出现点号和奇怪的符号" class="headerlink" title="每行空格和结尾出现点号和奇怪的符号"></a>每行空格和结尾出现点号和奇怪的符号</h2><p>如下图所示</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1677467992474.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>在菜单栏，单击，即可取消显示<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1677468143113.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>STM32CubeIDE学习笔记</div>
+      <div>http://lonlypan.com/2020/12/18/STM32CubeIDE学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/27/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/" title="华为流程变革">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">华为流程变革</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/18/STM32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%9F%BA%E4%BA%8ESTM32CubeIDE/" title="STM32学习笔记-基于STM32CubeIDE">
+                        <span class="hidden-mobile">STM32学习笔记-基于STM32CubeIDE</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

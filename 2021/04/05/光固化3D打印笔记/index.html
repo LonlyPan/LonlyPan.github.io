@@ -1,0 +1,950 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="测试机型：Photon Mono切片软件：CHITUBOX（V1.8.1）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="光固化3D打印笔记">
+<meta property="og:url" content="http://lonlypan.com/2021/04/05/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="测试机型：Photon Mono切片软件：CHITUBOX（V1.8.1）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/光固化3D打印笔记/1913445121-0.png">
+<meta property="article:published_time" content="2021-04-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-04T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/光固化3D打印笔记/1913445121-0.png">
+  
+  
+  <title>光固化3D打印笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="光固化3D打印笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-05 00:00" pubdate>
+          2021年4月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">光固化3D打印笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2021年4月5日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>测试机型：Photon Mono<br>切片软件：CHITUBOX（V1.8.1）</p>
+<span id="more"></span>
+
+<h1 id="如何优化模型摆放位置以提升表面质量"><a href="#如何优化模型摆放位置以提升表面质量" class="headerlink" title="如何优化模型摆放位置以提升表面质量"></a>如何优化模型摆放位置以提升表面质量</h1><p>以下实验方法参考赤兔官网文章：<a target="_blank" rel="noopener" href="https://www.chitubox.com/zh-Hant/article/support/howto/chitubox-free/editing/25">如何优化模型摆放提升表面品质？</a> ，增加更多对照组，控制部分测试变量，更公正、规范。实际改进、测试。</p>
+<p>测试使用耗材 <code>Photon Mono</code> 购机附赠 500ml 刚性绿色树脂，使用 <code>CHITUBOX</code> 切片及添加支撑，参数设置保持和Photon官方切片软件参数基本一致，（官方切片软件难用，且赤兔以后时主流，遂未使用官方切片软件，但尽力保持参数一致）。</p>
+<p>LCD光固化3D打印的表面质量受<strong>层厚，打印速度，模型摆放</strong>等因素的影响，会有很大的不同。 本文主要讨论如何优化模型摆放位置以提升表面质量。</p>
+<p>为了消除支撑带来的质量影响，这里支撑密度和角度都有调整，目的是增加更多的支撑，以防打印失败。（赤兔官方的测试中部分模型因为支持和平面问题导致打印失败，但仍旧用来对比，个人认为并不合理）。这里只比对角度影响，所以支撑越多越好，排除支撑这一变量影响。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E5%88%87%E7%89%87%E5%8F%82%E6%95%B0%E6%AF%94%E5%AF%B9.png" srcset="/img/loading.gif" lazyload alt="图 3">  </p>
+<h2 id="模型摆放"><a href="#模型摆放" class="headerlink" title="模型摆放"></a>模型摆放</h2><p>下图为赤兔官方测试摆放样式<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E6%91%86%E6%94%BE.png" srcset="/img/loading.gif" lazyload alt="图 2"><br>注意上图中赤兔官方的所有模型Z轴都提升了5mm再加支撑。下图为自己添加的摆放样式，唯一不同就是所有模型触底摆放，Z轴未提升。</p>
+<p>这里用同一个模型做演示，分别与垂直面摆放成0°，30°，45°，90°。 除了90°以外，其他角度分别再摆放成方形和菱形两种形状，因为这两种形状在打印过程中的横截面不同。</p>
+<p>我们总共有14个模型，把他们编为1-7号（0°方形摆放，0°菱形摆放，30°方形摆放，30°菱形摆放，45°方形摆放， 45°菱形摆放， 90°摆放），8-14号（0°方形触底，0°菱形触底，30°方形触底，30°菱形触底，45°方形触底， 45°菱形触底， 90°触底）。</p>
+<p><strong>后面的对比会分三次</strong></p>
+<ol>
+<li>1-7 号对比</li>
+<li>8-14 号比对</li>
+<li>1和8，2和9…7和14 号两两比对（触底与不触底之间比较）</li>
+</ol>
+<h2 id="模型完整度"><a href="#模型完整度" class="headerlink" title="模型完整度"></a>模型完整度</h2><p>模型结构从较小的横截面积突增成较大的横截面会导致层面间剧烈的体积变化，而层面之间树脂体积的剧变又会导致固化层面的收缩。 层面之间树脂的不均匀以及加增的剥离力导致剧烈的收缩，这就是缺肉（实际没有打印出来、类似翘边）和模型凹凸不平的主要成因。</p>
+<p>7号（90°摆放）是整个倒平放在支撑结构上，它的横截面变化最大，受到的剥离力也是最大。 这就导致剥离力直接把模型从支撑上扯断，一部分连接支撑，一部分悬空，使得模型缺肉严重</p>
+<p>1号（0°方形摆放）是垂直放在支撑结构上，与其他摆放形式相比，它的横截面变化也相对较大。 但与7号相比，它的横截面变化就小得多了，因此1号并没有缺肉，只是与支撑连接的那一边出现了波浪状的凹凸不平。</p>
+<p>实际自己测试打印了两次，1号和7号均出现悬空，其它都正常，证明这两种效果最差。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/IMG_20210415_224232.jpg" srcset="/img/loading.gif" lazyload alt="图 20">  </p>
+<p>赤兔模型完整度排名 ：<br>3 &gt; 6 &gt; 2 &gt; 4 &gt; 5 &gt; 1 &gt; 7</p>
+<h3 id="1-7-号对比"><a href="#1-7-号对比" class="headerlink" title="1-7 号对比"></a>1-7 号对比</h3><p>我的模型完整度排名 ：<br>2 &gt; 4 &gt; 3 &gt; 5 &gt; 6 &gt; 1 &gt; 7</p>
+<h3 id="8-14-号比对"><a href="#8-14-号比对" class="headerlink" title="8-14 号比对"></a>8-14 号比对</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/IMG_20210415_230659.jpg" srcset="/img/loading.gif" lazyload alt="图 22"><br>我的模型完整度排名 ：<br> 8 &gt; 9 &gt; 10 &gt; 14 &gt; 11 &gt; 12 &gt; 13</p>
+<h3 id="两两比对"><a href="#两两比对" class="headerlink" title="两两比对"></a>两两比对</h3><p>所有贴底打印都有如下图问题：</p>
+<ul>
+<li>与平台接触部分与底阀融于一体，导致后期处理很麻烦</li>
+<li>由于与底阀融于一体，导致拆除很容易造成缺角</li>
+<li>接触部分变大</li>
+</ul>
+<p>排除底部缺陷，贴底打印质量均显著好于悬空支撑打印<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/IMG_20210408_225726.jpg" srcset="/img/loading.gif" lazyload alt="图 21">  </p>
+<h2 id="模型变形情况"><a href="#模型变形情况" class="headerlink" title="模型变形情况"></a>模型变形情况</h2><p>按理来说，这么小的模型（20<em>5</em>20mm）打印过程中不会出现变形情况。 因为缺肉，7号肯定或多或少会有些变形。 我们发现2号和4号的底筏从成型平台上翘了起来，这应该是由于成型平台右侧和屏幕之间的距离过大。 这个可能就解释了为什么2号和4号同样变形了。</p>
+<p>模型变形情况排名：</p>
+<p>3 &lt; 6 &lt; 5 &lt; 1 &lt; 4 &lt; 2 &lt; 7</p>
+<h3 id="1-7-号对比-1"><a href="#1-7-号对比-1" class="headerlink" title="1-7 号对比"></a>1-7 号对比</h3><p>5 &lt; 6 &lt; 4 &lt; 3 &lt; 2 &lt; 1 &lt; 7</p>
+<h3 id="8-14-号比对-1"><a href="#8-14-号比对-1" class="headerlink" title="8-14 号比对"></a>8-14 号比对</h3><p> 8 &lt; 14 &lt; 10 &lt; 9 &lt; 11 &lt; 12 &lt; 13</p>
+<h2 id="表面质量"><a href="#表面质量" class="headerlink" title="表面质量"></a>表面质量</h2><p>模型表面出现层纹。 此外，因为打印过程中Z轴的抬升，模型摆放不同也会直接影响表面品质。 出乎我们意料的是，在45°摆放可以看到明显的层纹。 但也有个惊喜是，1号（0°方形摆放）的表面质量居然最好。 毫无疑问的是，7号依旧是最差的。</p>
+<p>表面品質排名：</p>
+<p>1 &gt; 3 &gt; 4 &gt; 2 &gt; 6 &gt; 5 &gt; 7  </p>
+<h3 id="1-7-号对比-2"><a href="#1-7-号对比-2" class="headerlink" title="1-7 号对比"></a>1-7 号对比</h3><p>2 &gt; 6 &gt; 5 &gt; 4 &gt; 3 &gt; 7 &gt; 1</p>
+<h3 id="8-14-号比对-2"><a href="#8-14-号比对-2" class="headerlink" title="8-14 号比对"></a>8-14 号比对</h3><p>14 &gt; 8 &gt; 9 &gt; 13 &gt; 12 &gt; 11 &gt; 10</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从上面的测试可以看出，通过优化模型的摆放角度，很显然对打印质量产生不同的影响。 如果我们将排名评分为1-7分。 最好的7分，以此类推。 我们排除掉模型变形情况，因为这一项有太多的不确定因素。 于是，我们得到整体排名是：3号（13分），6号（9分），2号（9分），4号（9分），1号（9分），5号（5分），7号（2分）。</p>
+<p>如果我们按角度来分组，那么排名就是：30°（22分）， 0°（18分）， 45°（14分），90°（2分）。 以摆放形状来分组，方形和菱形平分秋色，分数一样。 因为摆放形状对模型的表面质量有很大影响，所以我们单独摘出这一项排名。 那么菱形组（15分）就比方形组（12分）要更好些。</p>
+<p>按触底与不触地分组，排名：</p>
+<p>结论就是：此次实验最好的摆放角度是将模型呈30°摆放。 同时要确保横截面是逐步增加变化的，而不是突变，可以如菱形这样摆放模型。 另外，根据打印材料以及模型实际情况不同，最佳摆放位置可能会有所不同。</p>
+<p>个人总结：</p>
+<p>支撑：5(16分) &gt; 4(15分) &#x3D; 6(15分) &gt; 2(13分) &gt; 3(12分) &gt; 1(5分) &gt; 7(4分)<br>贴底：8(20分) &gt; 14(17分) &gt; 9(15分) &gt; 10(11分) &gt; 11(8分) &gt; 12(7分) &gt; 13(6分)</p>
+<p>支撑：30°（31分），  45°（27分），0°（18分），90°（4分）<br>贴底：0°（35分），90°（17分）， 45°（19分），30°（13分），90°只有一项，但得分接近45°两项和，所以90°排名靠前</p>
+<p>可以看出，排除底面接触影响，0° 和 90° 贴底是最好的，而如果考虑底面接触，则 30° 和 45° 是最好的。不要平放模型，应改保证支撑数量足够多，否则打印会拉不起来模型导致模型缺肉变形。</p>
+<h1 id="详解CHITUBOX的抗锯齿、灰度级别及图像模糊"><a href="#详解CHITUBOX的抗锯齿、灰度级别及图像模糊" class="headerlink" title="详解CHITUBOX的抗锯齿、灰度级别及图像模糊"></a>详解CHITUBOX的抗锯齿、灰度级别及图像模糊</h1><p>以下内容基本参考赤兔官网文章 <a target="_blank" rel="noopener" href="https://www.chitubox.com/zh-Hant/article/support/indepth/technology/52">详解CHITUBOX抗锯齿、灰度级别及图像模糊组合功能</a>。这里将内容重新编排；同时对部分内容解释、总结。使文章更加通俗易懂。</p>
+<p>测试机型分辨率为2K（1440*2680），成型面积82.62x130.56mm，则每个像素尺寸 57.4x48.7um </p>
+<p>因此当我们的实际尺寸不是像素尺寸的整数倍时，模型的边缘就会失真。如下图左边是理想中的圆，而实际屏幕显示的时候，则是以一个个像素点为最小单位显示的，因此并不是实际的圆，最终表面就会有锯齿状，不光滑。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E5%9E%8B%E5%A4%B1%E7%9C%9F.png" srcset="/img/loading.gif" lazyload alt="图 4">  </p>
+<h2 id="抗锯齿"><a href="#抗锯齿" class="headerlink" title="抗锯齿"></a>抗锯齿</h2><p>为了解决这个问题，就要用到抗锯齿。理论依据则是Ember团队分享过一个研究：一个体素是怎样生成的。 结论就是可以通过控制单个像素点的亮度，可以生成小于一个像素点的固化反应。所以当我们打开切片软件的抗锯齿切片后，效果如下：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E6%8A%97%E9%94%AF%E9%BD%BF.png" srcset="/img/loading.gif" lazyload alt="图 5">  </p>
+<p>可以看到开启抗锯齿后，模型的边缘被具有一定灰度的方框填充或替代，总之目的是为了更接近一个圆。<br>抗锯齿越高，边缘的不同灰度值种类越多，理论越接近圆。比如上图 2级的会的值只有 127一种，4级 127和191两种，8级有127和223两种。</p>
+<p>从赤兔的文章来看，并未给出抗锯齿级别之间得到差异，经过自己实际测试也并未发现明显差异，但是无抗锯齿和有抗锯齿之间差异较大，赤兔文章中也有描述。所以建议大家还是开启抗锯齿功能。</p>
+<h2 id="灰度值"><a href="#灰度值" class="headerlink" title="灰度值"></a>灰度值</h2><p>灰度级别就是灰度值，是亮度的概念，0<del>为黑色，255</del>白色，依据颜色深浅范围为0~255。 （一定介于0-255之间）。 CHITUBOX将这个颜色深浅范围分为从0-8九个等级，0位黑色，8为白色，1-7为中间的灰色。</p>
+<p>其实抗锯齿开启后，模型边缘的像素点就是通过控制灰度值实现的圆滑效果，这里来的灰度值设置作用：<br>控制整个图像的灰度值，灰度值越高，整体像素的亮度就越高。灰度值不改变像素的多少，而抗锯齿是通过改变像素多少+灰度值控制边缘光滑度的。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E7%81%B0%E5%BA%A6%E7%AD%89%E7%BA%A7png.png" srcset="/img/loading.gif" lazyload alt="图 6">  </p>
+<p>可以看到随着灰度等级提高，边缘原来较暗的像素点的亮度也逐渐提高。（这里左上角在灰度等级为0时是看不见的，但其实是灰度值很低，这也就是为什么后面灰度值提高后，这里会多出来一个，实际并没有改变像素数量）。<br>同样可以得出结论，灰度等级越高有可能导致模型失真，改变原来的形状。一般我们选择等级0或2.</p>
+<h2 id="模糊"><a href="#模糊" class="headerlink" title="模糊"></a>模糊</h2><p>图像模糊类似PS里面的羽化功能（令选区内外衔接部分虚化，起到渐变的作用从而达到自然衔接的效果）。 简单来理解就是，用手或者橡皮擦去轻轻的擦拭铅笔线条，会导致线条变模糊并且进行渲染，图像模糊就是进行类似的操作，级别越高，模糊程度越高。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E6%A8%A1%E7%B3%8A.png" srcset="/img/loading.gif" lazyload alt="图 7">  </p>
+<p>要注意的是，当图片模糊等级较高时，灰度同时开始向内渲染，导致中心区域原本纯白的像素点也开始变灰，很可能会导致中心光源不足，出现固化问题。 当在选择图片模糊等级时，在选择较高等级时需谨慎。</p>
+<p>一般不建议使用的。</p>
+<p>CHITUBOX算法中，进行计算的依次优先级是，图像模糊——灰度级别——抗锯齿。 图像模糊控制的是羽化的程度（即边缘过渡像素个数），灰度级别控制像素亮度，抗锯齿控制的过渡的灰度值数量，三者组合使用，来补偿像素纹。<br>　<br>最后看一下三者组合的效果，总结就是：</p>
+<ul>
+<li>抗锯齿会弱化台阶的突变，弱化边缘。不同抗锯齿等级间差距几乎没有</li>
+<li>灰度会加强锯齿边缘光强，这个有助解决因抗锯齿带来的边缘弱化导致光照减弱从而无法成型的缺点。但过高甚至改变原本尺寸（锯齿效果和没开抗锯齿一样，只不过锯齿位置偏移了）</li>
+<li>模糊会使边缘的内外层之间过渡平滑，但过高甚至改变模型尺寸。这个一般不建议使用，玄学。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/%E6%8A%97%E9%94%AF%E9%BD%BF%E8%AE%BE%E7%BD%AE%E5%AF%B9%E6%AF%94.png" srcset="/img/loading.gif" lazyload alt="图 16"></li>
+</ul>
+<h1 id="光固化DLP-x2F-LCD-3D列印精度失真是什麼原因？"><a href="#光固化DLP-x2F-LCD-3D列印精度失真是什麼原因？" class="headerlink" title="光固化DLP&#x2F;LCD 3D列印精度失真是什麼原因？"></a>光固化DLP&#x2F;LCD 3D列印精度失真是什麼原因？</h1><h2 id="XY校准错误"><a href="#XY校准错误" class="headerlink" title="XY校准错误"></a>XY校准错误</h2><p>XY的分辨率填写错误，一般来说，厂家会提供这些出厂资料，以Elegoo Mars Pro为例，我们可以查到，规格表里的成型尺寸（Build Volume）是120 x 68 x 155 mm，此外还有一组68.04x120.96mm的显示面积（Display Area）。 虽说两组资料差别不大，但我们都知道差之毫厘谬以千里，即使零点零几的差距，也会造成XY方向的精度失真。</p>
+<p>这两个面积很容易造成新手的困惑，实际上Elegoo Mars Pro屏幕面积是68.04x120.96mm，但由于装配方式的问题，LCD打印机安装时钢化玻璃为避免漏光，会遮挡屏幕边缘（一般情况下，DLP打印机不会出现此情况），导致能打印的成型区域只有68 x120mm，但是分辨率需要与打印尺寸匹配（不匹配会导致图像缩放）， 因此填写68.04x120.96mm参数才是正确。</p>
+<h2 id="支撑添加不够"><a href="#支撑添加不够" class="headerlink" title="支撑添加不够"></a>支撑添加不够</h2><p>大部分模型需要合适的支撑，如果支撑添加的不够、太细、位置不对，可能造成模型的歪斜甚至变形，从而影响到精度。 可以通过调整CHITUBOX中支撑参数，并且优化摆放角度，来优化支撑结构。</p>
+<h2 id="曝光不足或过曝"><a href="#曝光不足或过曝" class="headerlink" title="曝光不足或过曝"></a>曝光不足或过曝</h2><p>曝光对于模型的精度同样有影响，一般来说，<strong>曝光不足会导致模型相对于实际尺寸偏小，而过曝会导致模型相对于实际尺寸偏大</strong>。</p>
+<h2 id="酒精浸泡过久"><a href="#酒精浸泡过久" class="headerlink" title="酒精浸泡过久"></a>酒精浸泡过久</h2><p><strong>树脂可以吸收酒精，导致膨胀或卷曲</strong>。 尤其是是有薄壁， 细柱类的精细部位，更是不能酒精里长期浸泡。 建议用<strong>超声波机震动清洗不超过2分钟，在酒精里浸泡不超过10分钟</strong>。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.chitubox.com/zh-Hant/article/support/indepth/technology/33">光固化DLP&#x2F;LCD 3D列印精度失真是什麼原因？</a></li>
+</ul>
+<h1 id="拉拔产生的Z轴纹路如何消除"><a href="#拉拔产生的Z轴纹路如何消除" class="headerlink" title="拉拔产生的Z轴纹路如何消除"></a>拉拔产生的Z轴纹路如何消除</h1><p> 首先要知道的是，拉拔力&#x2F;离型力是不可能消失的，所以可以通过以下两个方式来消除Z轴纹路：</p>
+<ol>
+<li>降低拉拔力&#x2F;离型力</li>
+<li>稳固模型</li>
+</ol>
+<p>第一个方法比较有效的是更换黏度更低的树脂，缩小模型或调整摆放角度以缩小半径，还有就是降低抬升速度。 当然也要定期检查离型膜的磨损情况和脱膜情况，及时更换良好的离型膜。</p>
+<p>第二种可以通过稳固模型的方式。 在横截面突变的位置（半径较大的地方），多添加几根支撑，以达到稳固模型的作用。 如下图所示，在稳固模型后，Z轴纹路基本消除。</p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.chitubox.com/zh-Hant/article/support/howto/chitubox-free/editing/39">CHITUBOX实验室（2） | 拉拔产生的Z轴纹路如何消除</a></li>
+</ul>
+<h1 id="掌握光敏树脂参数-测试树脂曝光值"><a href="#掌握光敏树脂参数-测试树脂曝光值" class="headerlink" title="掌握光敏树脂参数 | 测试树脂曝光值"></a>掌握光敏树脂参数 | 测试树脂曝光值</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.chitubox.com/zh-Hant/article/support/indepth/technology/30">掌握光敏树脂参数 | 测试树脂曝光值</a></li>
+</ul>
+<h1 id="Anycubic-RERF-曝光测试文件研究-20210727修订"><a href="#Anycubic-RERF-曝光测试文件研究-20210727修订" class="headerlink" title="Anycubic RERF 曝光测试文件研究-20210727修订"></a>Anycubic RERF 曝光测试文件研究-20210727修订</h1><p>以下研究只适用于 Anycubic 家的光固化机型</p>
+<p>入手 Anycubic 家的 Photon Mono 光固化机器后，附赠U盘中的 REEF 文件一直很感兴趣，官方说明书对该文件解释如下：</p>
+<pre><code class="hljs">(11) R_E_R_F功能
+
+&quot;R_E_R_F”是 MResin Exposure Range Finder&quot;的缩写，此功能是 用来测试不同厂家树脂的最佳曝光参数。
+
+在切片软件（要用ac家的官方切片软件）中导入U盘附带的“R_E_R_F.pwm。”文件，“R_E_R_F” 功能会按下图的顺序将屏幕等分为8个部分，模型编号为“1”的模型曝光时间等于切片设置中“正常曝光时间（ s） ”（底部的层数除外），其他编号的模型 将按顺序以“0.4s”为梯度递增。例如：切片中将“正常曝光时间（ s） ”设置为0.8s时，则编号为1的模型将曝光0.8s,编号为2的曝光1.2s,以此类推， 编号为8的曝光时间为3.6s。
+
+修改“正常曝光时间⑸”参数，即修改了起始模型（编号为1的模型）的曝光时间（正常打印时也有效），其他编号的模型的曝光时间将按顺序以 “0.4s”为梯度递增。
+
+注：U盘内附带的&quot;R_E_R_F.pwmo&quot;文件设置的正常曝光参数为0.8, 用户可直接打印该文件进行测试。
+</code></pre>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/REEF_PWMO.png" srcset="/img/loading.gif" lazyload alt="1">  </p>
+<pre><code class="hljs">打印结束后，取下并清洗模型，然后观察模型，打印效果最高的模型的曝光参数即为该厂家树脂的最佳曝光参数。
+
+注意：“R_F_R_F”为关键性的文件名，机器会单独识别，请勿修改。也请不要将正常打印的模型命名为“R_F_R_F”。
+</code></pre>
+<p>总之这个模型文件的功能就是可以实现同一批次打印中，有八种不同的曝光值，之间差值为 0.4 s，这样我们就可以通过一次打印测量八种曝光值，从而快速找到新树脂的最佳曝光时间。</p>
+<p>另外说明书未提到一点，我们其实可以不用在软件中编辑“正常曝光时间（ s）”，搞得每次测试曝光值都得使用软件调整，太麻烦。我们其实可以直接选择该模型文件打印，然后直接在机器上调整平台曝光时间，这样就能直接修改编号1的曝光时间，其余的七个模型曝光值依旧会按 0.4s 递增。</p>
+<p>下面看一下实际打印的时候，是怎么实现不同的曝光的。八个区域光逐次熄灭。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/FERF%E5%AE%9E%E9%99%85%E6%95%88%E6%9E%9C.gif" srcset="/img/loading.gif" lazyload alt="1">  </p>
+<p>实际打印出来是这个样子的（八个模型仅有细微差别，图上不大看出来）<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/RFRF%E5%AE%9E%E9%99%85%E6%89%93%E5%8D%B0.png" srcset="/img/loading.gif" lazyload alt="图 11">  </p>
+<h2 id="原理解释"><a href="#原理解释" class="headerlink" title="原理解释"></a>原理解释</h2><p>当然自己并不会止步于此，心中有两个疑问：</p>
+<ol>
+<li>这是怎么实现的？</li>
+<li>官方的这个测试用太多树脂了，而且测试时间较长，能不能自己定义一个测试模型，实现相同的曝光递增效果？</li>
+</ol>
+<p>首先回答第二个问题：是可以的。理由吗，还得回到第一个问题来，这是怎么实现的？<br>在 <a target="_blank" rel="noopener" href="https://www.thingiverse.com/">thingiverse</a> 网站上搜索 <code>RERF</code>，会出现好几个相关的模型：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/rerf%E6%90%9C%E7%B4%A2.png" srcset="/img/loading.gif" lazyload alt="图 12"><br>在其中一个模型的介绍下面，看到这一段话：</p>
+<blockquote>
+<p>How RERF works<br>R_E_R_F (Resin Exposure Range Finder) is a feature provided by Anycubic to allow users of Photon S printers to find the correct exposure time for any given resin.</p>
+<p>When any sliced file with the name “R_E_R_F.pws” is printed on a Photon S, it divides the platform into 8 equally sized sections and exposes each section for a progressively longer time, with section #1 being exposed at the given Normal Exposure Time. (eg- for normal xp of 4s; Section 1- 4s, section 2- 5s, section 3- 6s and so on). so if you place 8 copies of the same model in those sections, you can compare it with the different exposure times, and thereby decide which time gives the best results.</p>
+</blockquote>
+<p><strong>翻译过来意思就是：</strong></p>
+<blockquote>
+<p>R_E_R_F（树脂曝光范围查找器）是由Anycubic提供的功能，以允许 Photon S 打印机的用户找到任何给定树脂的正确曝光时间。</p>
+<p>当在Photon S上打印具有名称“R_E_R_F.PWS”的切片文件时，它将平台划分为8个等大小的部分，并会给予 1号 模型正常的曝光时间，然后其他模型依次递增曝光时长。因此，如果您将8个相同模型的副本分别放置在这8各区域内，就可以实现每个模型的曝光值不同，从而决定哪个时间提供最佳结果。</p>
+</blockquote>
+<p>其实和说明书的基本一致，不过我们可以得出的结论是，只要将切片文件命名为“R_E_R_F”后，机器就会自动将打印区域分成8等分，并给与每个区域不同的曝光值。</p>
+<p>这就允许我们自己制作曝光测试文件，如果我们要自己制作 RERF 文件，就可以随便找一个模型，复制8份，然后摆放在这8个区域。然后保存为“R_E_R_F”即可。</p>
+<p>那么怎么知道这8个区域在呢。其实就是平台的物理8等分，见下图，注意平台的方向。</p>
+<p>这是 Photon 官方切片软件的分区：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/photon%E5%88%86%E5%8C%BA.png" srcset="/img/loading.gif" lazyload alt="图 13">  </p>
+<p>注意区块边缘及区块交界处不要放置模型，从一开始的动画里也能看出来，区块之间还存在一定的间隙，尽量靠每个区块中间放置模型。</p>
+<h2 id="实际测试"><a href="#实际测试" class="headerlink" title="实际测试"></a>实际测试</h2><p>经过实际测试，切片时将抗锯齿等级设置为1（其他值会造成曝光值和延时改变，赤兔切片中直接关闭抗锯齿即可）。灭灯时间保持默认即可（灭灯时间指每层曝光之间的延时，不是层中每个区块之间的延时，注意区分）</p>
+<blockquote>
+<p>经过不精确计算，官方一层曝光时间为3.55s，抗锯齿为1时一层曝光总时长为3.5s（曝光时间2），抗锯齿2为4.6s，抗锯齿4为7.2s，抗锯齿8为6s。所以抗锯齿一定要设为最小值和关闭。</p>
+</blockquote>
+<p>photon workshop 切片需要将抗锯齿设为1，其它值出错<br>赤兔切片软件需关闭抗锯齿<br>荔枝切片软件需关闭抗锯齿，其他值未测试，推断不能用</p>
+<p>只要文件名称有 R_E_R_F 就可以被识别，所有可以增加在前面或后面增加其它描述，区分不同的测试文件，<br>并且这些可以同时存在u盘中</p>
+<p>曝光测试对比实验时，必须使用相同的模型。</p>
+<p>一开始使用其它模型制作RERF文件的，发现单层曝光时间最小都是3.5s，而官方的是2.8s，有差异，<br>以为自己制作RERF不可行。但在换了官方模型文件后，单层曝光时间则变为了2.8s，说明制作RERF是可行的。</p>
+<p>那么问题肯定出在模型本身，仔细发现是每个色块光照消失的时间不同，官方模型实际一个色块光消失时间约为0.5s。<br>而自定义的模型实际一个色块光消失时间约为0.7s。单层曝光时间有差异。</p>
+<p>所以曝光测试对比实验时，必须使用相同的模型。同时也可以得知使用测试模型测试的最佳曝光时间并不能代表其它<br>模型的最佳曝光时间，在实际使用时，可能需要在测试的最佳曝光时间左右浮动，才能找到每个模型的最佳曝光时间。<br>浮动值建议为0.2s</p>
+<p>至于下方在软件导入官方文件后，每层的抬升高度和速度都是变化的，而我们自己的文件则始终是固定值。暂且不清楚什么原因。</p>
+<p><del>经过实际测试，我们并不能自己制作 RERF 文件，原因是官方的 RERF 文件其实抬升高度和速度都会遂层变化，是个变化的值。而我们自己切片出来的每层的抬升高度和速度是不变的。下面是官方文件导入后查看每一层的效果：</del><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%85%89%E5%9B%BA%E5%8C%963D%E6%89%93%E5%8D%B0%E7%AC%94%E8%AE%B0/FERF%E5%AE%9E%E9%99%85%E6%95%88%E6%9E%9C2.gif" srcset="/img/loading.gif" lazyload alt="1">  </p>
+<p><del>经过多方测试，多方软件使用，资料查找。至今并未找到那个软件有这种切片功能，所以看来这种文件只能使用官方的，并不能使用自己的。<br>你可以自己切片测试看看，会发现前几层差值0.4s没错，但是到了模型中间阶段，差值就减慢了，大约有1s<br>这也是为什么老外的教程很多都说可以自制，但其实并不行，他们只看了前几层，整个过程并没有观察。实际自己切片的不能用，应为我们的速度是定制，而官方的是变化的</del></p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=1XAtW2NHdW4">How To: Resin Exposure Settings!</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Photonsters/Resin-exposure-finder-v2/releases/tag/BETA_2.1">Multiprinter - Resin Exposure Test V2
+</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=GL-9Ia0SibQ">Get Perfect 3D Prints With the Resin Exposure Finder!</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thingiverse.com/thing:4656467/files">RERF R_E_R_F for Anycubic MonoX</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thingiverse.com/thing:4790693">Anycubic Mono X Resin Exposure Range Finder (R_E_R_F)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thingiverse.com/thing:3973475">Photon S resin exposure finder</a></li>
+</ul>
+<h1 id="树脂应用说明"><a href="#树脂应用说明" class="headerlink" title="树脂应用说明"></a>树脂应用说明</h1><p>通用刚性树脂和高硬度树脂适合打印一些简单人物、动物等模型，通常韧 性要求不高，不受外力的。</p>
+<p>类ABS树脂和类尼龙树脂适合打印一些对韧性要 求高，受外力影响的模型。</p>
+<p>另外，类尼龙树脂由于韧性非常好，在模型壁厚小于2.5毫米时，强度低，显得模型偏软，而且壁厚越小，强度越低，<br>显得越软。  但是二次固化后，它的表面硬度仍然可以达到83D以上。  </p>
+<p>类红蜡树脂，硬度较高接近高硬度树脂，韧性介于通用刚性树脂和类ABS树脂之间，打印精度高，收缩率低，适合打印<br>一些高精度，高细节要求的模型</p>
+<h2 id="打印参数："><a href="#打印参数：" class="headerlink" title="打印参数："></a>打印参数：</h2><p>0.05毫米层厚</p>
+<p>|  彩屏机  |  通用刚性和高硬度树脂  |  类ABS树脂 | 类尼龙树脂 | 类红蜡树脂 |<br>|–|–|–|–|–|–|–|<br>|  底层曝光s | 30-60  | 20-50 | 10-40 | 30-60 |<br>|  普通层曝光s | 8-12  | 8-12 | 8-12 | 8-12 |</p>
+<p>|  黑白屏(请勿打印透明色的树脂)  |  通用刚性和高硬度树脂  |  类ABS树脂 | 类尼龙树脂 | 类红蜡树脂 |<br>|–|–|–|–|–|–|–|<br>|  底层曝光s | 10-16  | 8-14 | 6-14 | 10-16 |<br>|  普通层曝光s | 1.8-3.0  | 1.8-3.0 | 1.8-3.0| 1.8-3.0|</p>
+<h2 id="怎么样确定树脂在您机器上的合适曝光时间"><a href="#怎么样确定树脂在您机器上的合适曝光时间" class="headerlink" title="怎么样确定树脂在您机器上的合适曝光时间"></a>怎么样确定树脂在您机器上的合适曝光时间</h2><p>以0.05毫米层厚为例：  一般我们打印4个5.0<em>5.0</em>10.0毫米的柱子（长方体），放在机器四个角上，通过调整普通层的曝光时间来使4个柱子长宽尺寸大约在5.0-5.0毫米之间，此时的单层曝光时间基本可以满足一般打印要求(多换几个位置测量，避免有的机器光强度不均匀造成误差)。另外柱子Z轴尺寸大约在9.8-10.20之间较合适，如果平台压得太死，或者平台没调平，或平台间隙过大，以及轴本身精度不够，都有可能造成10.0毫米这个尺寸过大或过小。</p>
+<h2 id="类尼龙树脂使用要点"><a href="#类尼龙树脂使用要点" class="headerlink" title="类尼龙树脂使用要点"></a>类尼龙树脂使用要点</h2><ol>
+<li>树脂附着力大，建议加支撑打印模型，从平台上取模型要小心一些。</li>
+<li>树脂粘度大，降低机器回程速度(部分机器是加长间隔时间)保证树脂有足够回流时间，保证每层都有足够的树脂用于成型。</li>
+<li>模型的排版不易过于密集。</li>
+<li>模型清洗时间不易过长，控制在3分钟以内。可以用筷子夹着模型在酒精中快速搅动，或是配合毛刷清洗，有超声波清洗也可。模型长时间泡在酒精里，强度会降低，显得很软，类尼龙树脂表现更明显。(其他树脂也一样，壁厚越小酒精影响越大)</li>
+</ol>
+<h2 id="固化时间测试-可以考察机器精度"><a href="#固化时间测试-可以考察机器精度" class="headerlink" title="固化时间测试(可以考察机器精度)"></a>固化时间测试(可以考察机器精度)</h2><p>0.05mm<br>底层抬升距离：6mm<br>底部层数6<br>曝光时间 9s<br>底层抬升速度   60 mm&#x2F;min<br>底层曝光时间 30s<br>抬升速度   60 mm&#x2F;min<br>灯灭延迟：0s<br>回程速度 40 mm&#x2F;min<br>底层灯灭延迟  0</p>
+<h2 id="类尼龙树脂抬升距离、回程速度设置-或是间隔时间设置-的参考"><a href="#类尼龙树脂抬升距离、回程速度设置-或是间隔时间设置-的参考" class="headerlink" title="类尼龙树脂抬升距离、回程速度设置(或是间隔时间设置)的参考"></a>类尼龙树脂抬升距离、回程速度设置(或是间隔时间设置)的参考</h2><p>曝光时间 9s<br>间隔时间16s<br>底层曝光时间 30s<br>底部层数6</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>光固化3D打印笔记</div>
+      <div>http://lonlypan.com/2021/04/05/光固化3D打印笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/15/GuiLite%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="GuiLite 学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GuiLite 学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/04/%E9%BA%A6%E8%82%AF%E9%94%A1%E7%B2%BE%E8%8B%B1%E9%AB%98%E6%95%88%E9%98%85%E8%AF%BB%E6%B3%95/" title="麦肯锡精英高效阅读法">
+                        <span class="hidden-mobile">麦肯锡精英高效阅读法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,865 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="胡伟 郑超 韩茹">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="更多从理论层面讲述流程管理，并未具体到实施阶段。使用大量案例举证从而引出流程的变革，讲述每次变革的好处。也从流程建立、流程实施、流程维护等一个闭环过程分别讲述，从顶层概念上有了一个大体认知">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为流程变革">
+<meta property="og:url" content="http://lonlypan.com/2020/12/27/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="更多从理论层面讲述流程管理，并未具体到实施阶段。使用大量案例举证从而引出流程的变革，讲述每次变革的好处。也从流程建立、流程实施、流程维护等一个闭环过程分别讲述，从顶层概念上有了一个大体认知">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/华为流程变革/华为流程变革.jpg">
+<meta property="article:published_time" content="2020-12-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-26T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/华为流程变革/华为流程变革.jpg">
+  
+  
+  <title>华为流程变革 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="华为流程变革"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-27 00:00" pubdate>
+          2020年12月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">华为流程变革</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年12月27日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>更多从理论层面讲述流程管理，并未具体到实施阶段。使用大量案例举证从而引出流程的变革，讲述每次变革的好处。也从流程建立、流程实施、流程维护等一个闭环过程分别讲述，从顶层概念上有了一个大体认知</p>
+<span id="more"></span>
+
+<h2 id="感悟收获"><a href="#感悟收获" class="headerlink" title="感悟收获"></a>感悟收获</h2><h3 id="先决条件："><a href="#先决条件：" class="headerlink" title="先决条件："></a>先决条件：</h3><ol>
+<li>确定改革是否能落实、是否有足够权力执行，即是否获得创始人和CEO无条件支持。必须重顶层确立改革可行性、持久性，同时这也为改革提供最基本、最强大的力量支撑。</li>
+<li>创始人及CEO必须自我改革，将积累的时间、信任优势发挥出来（这是最宝贵的资源、只有你们才对公司充分了解认识），参与改革之中，先解决人的历史、根本问题，之后才能推进到下一步全公司推广。同时创始人也是改革的执行与推广人。其深刻理解企业愿景、价值观、发展战略。必须基于充分得到信任才能执行改革、公司需要所有人共同推进，而不是几个人。永远避免独裁专制。</li>
+</ol>
+<h3 id="合伙人制度与管理层"><a href="#合伙人制度与管理层" class="headerlink" title="合伙人制度与管理层"></a>合伙人制度与管理层</h3><ol>
+<li><p>重新启用合伙人投票制度（委员会），共同决策。同时削弱CEO权力、决策性，逐步下放、稀释到委员会中。前提是合伙人必须参与体制改革、着实从战略、顶层设计角度为公司出谋划策（该部分可以先强制所有初始创始人参与，之后根据个人意愿与实际数据表现再做决定）。最后重组的委员会即是决策层，也是流程制定、监督、维护层。直到出现新的专门的流程委员会，在转移该部分职能。创始人和CEO应该更多思考公司未来、战略目标上。这部分必须建立在时间、信任之上，关系到公司长久发展。</p>
+<blockquote>
+<p><strong>给与合伙人充分、进步空间，个人成长。</strong></p>
+</blockquote>
+</li>
+<li><p>需要重新定义公司类型（技术型、服务型……）。目前完全进入直播带货领域而摒弃实体不符合当前发展战略（还未跨过生存阶段），直播业务应服务实体业务（小马良），或者重新评估、考虑放弃该业务。<br> 现有业务优化、节省成本、国产化、技术积累。产品迭代更新、技术复用。淘汰多余业务、重新指定公司战略目标、资料合理分配。优先满足于生存。以销售额或利润为衡量标准，指定公司短期、长期、远景业务目标。</p>
+</li>
+<li><p>对于新的制度：僵化-优化-固化。先有并已经执行，再谈改进符合公司自身，再固化制度。</p>
+</li>
+</ol>
+<h3 id="流程建立与具体实施"><a href="#流程建立与具体实施" class="headerlink" title="流程建立与具体实施"></a>流程建立与具体实施</h3><p>所有业务已客户为中心，从 <strong>客户与一线人员</strong> 中确立具体需求，从而拉动研发、内部资源服务与该需求。一线人员拥有更多资源调配权力（调配指可以直接向高层提出要提出需求，经审核后，直接派遣所需资源，一切服务于一线）<br>公司战略业务则应从内部出发，与上相反。<br>流程分等级<br>IT部门</p>
+<ol>
+<li>软件使用（开源、免费、逐渐替代盗版软件使用)。全员学习，建立软件使用技巧知识库、共享使用，加快适应与转变。</li>
+<li>所以基本业务流程（入职、内部资料查找，在线共享、网盘操作（设计权限、个人资料产出归档）、审批报销、各种申请、实习转正标准、）不以个人意志（负责人）转移，基本业务流程化、规范化、文本话，负责人更多是协同服务与流程，监督流程和从顶层看待问题。同时提出更好的管理办法、解决现有制度问题。</li>
+<li>所有操作、业务、工作内容必须要求实物产出，最直接的就是文档（同时包含但不限于视频、音频、软件、工具等），也包括规范的建立（先已人为意志试点运行、后逐渐也要成为文档规范）。总之要有文档输出</li>
+<li>业务流程标准化、文档化（项目从立项到结束）</li>
+<li>个人工作标准化、文档化（个人工作内容规范（代码规范、文档规范、目录存档规范、输出文件规范、项目对接规范）、价值观、道德）</li>
+<li>严格规范的奖惩制度：员工自计算、不依赖于具体负责人。从一开始制定奖惩制度，内部自评审分配。</li>
+<li>对于主动承担责任、沟通协调，视个人意愿和实际能力调配到流程管理岗位，给与精神和物质双奖励。我们需要更多人从顶层角度思考问题（但此类人才往往稀缺）</li>
+<li>管理制度互联网化，通过网络透明化、便捷化、无地域隔离。</li>
+</ol>
+<p>以上所有内容 一切以用户为中心，在此基础上，可以提出任何对现有制度的质疑与改进，不僵化。</p>
+<ul>
+<li>IPD：开发产品 -&gt; OBP</li>
+<li>LTC：实施交付</li>
+<li>ITR：售后服务</li>
+<li>ISC：集成供应链</li>
+<li>APQC：流程分类</li>
+<li>PDCA：计划、执行、检查、总结纠正。质量环</li>
+</ul>
+<h2 id="书中好文"><a href="#书中好文" class="headerlink" title="书中好文"></a>书中好文</h2><h2 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a>推荐书籍</h2><p><a target="_blank" rel="noopener" href="https://discourse-production.oss-cn-shanghai.aliyuncs.com/original/1X/4a0e2e0dcaab9fc462f46dbe198b8f5cc41578c4.pdf">《华为基本法》全文</a></p>
+<p><strong>流程管理</strong></p>
+<ul>
+<li>跟我们学建流程体系 陈立云</li>
+<li>埃森哲顾问教你做流程管理 彼得·弗朗茨</li>
+<li>流程圣经 让流程自动管理绩效管理 吉尔里 </li>
+<li>流程管理第5版 王玉荣</li>
+<li>跟我们做流程管理 陈立云</li>
+<li>业务流程再造（第五版）</li>
+</ul>
+<p> <strong>内训教材、管理三部曲</strong></p>
+<ul>
+<li>以客户为中心-华为公司业务管理纲要</li>
+<li>以奋斗者为本</li>
+<li>价值为纲</li>
+</ul>
+<p> <strong>研发</strong></p>
+<ul>
+<li>华为研发之道(华为核心竞争力）</li>
+<li>从偶然到必然：华为研发投资与管理实践</li>
+<li>华为研发第3版 张利华</li>
+</ul>
+<p> <strong>其他</strong></p>
+<ul>
+<li>华为没有秘密</li>
+<li>华为能你也能(IPD重构产品研发)</li>
+<li>华为灰度管理法</li>
+</ul>
+<h2 id="本书目的"><a href="#本书目的" class="headerlink" title="本书目的"></a>本书目的</h2><h2 id="摘抄"><a href="#摘抄" class="headerlink" title="摘抄"></a>摘抄</h2><p>1章  华为的流程文化</p>
+<p>为客户服务是华为存在的唯一理由<br>以需求确定目的，以目的驱使保证，一切为前线着想，、就会共同努力地控制有效流程点的设置。–任正非<br>流程管理强调倾听客户的声音，以客户为导向是流程管理的起点，也是基础，能够帮助客户实现价值增值的流程才是把握了正确的流程管理的大方向。<br>任正非曾经强调，华为的所有目标都要以客户需求为导向<br>以客户需求、为客户提供服务为目标建立起来的流程化组织，根据需要保留组织和人员设置的资源，删除多余环节，以高效率、低成本拉动整个流程运行。<br>华为的产品发展思路是以客户需求为导向，管理目标是流程化组织建设</p>
+<p>前端拉动后端，使组织灵活适应市场变化<br>管理学家约翰·西里·布朗和约翰·哈格尔三世的“拉动力”理论强调，在复杂而不可预测的市场环境中，更好的经营模式应该是发挥自主管理的力量，即由前端拉动后端的更开放、协作性更强的经营模式，通过拉动力促进企业的成长。<br>通常企业流程可以分为业务流程、管理流程两类，公司级流程、部门级流程、岗位级流程三个流程级。其中。其中，端到端流程主要是指业务流程，端到端流程一经确定并非是一成不变的，通过前端拉动后端的本质是根  譬据业务特点和需求对流程进行改进与调整。由于j</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E5%8D%8E%E4%B8%BA%E9%9B%86%E6%88%90%E4%BA%A7%E5%93%81%E5%BC%80%E5%8F%91%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%81%E7%A8%8B%E7%9A%84%E4%B8%A4%E6%9D%A1%E4%B8%BB%E7%BA%BF%E7%B4%A2.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E5%85%B3%E7%B3%BB.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>视奉献关系为组织关系的基础<br>在工作中没有完全绝对或穷尽的职责划分<br>需要在企业内形成一种奉献型的组织关系，尤其是管理者应该站在全流程发展的视角，主动让自己的部门承担组织边界或岗位边界比较模糊的工作。<br>通过强化内部服务、内部供应链的组织关系，将上下游相关流程环节作为内部客户，为其提供完善的服务，从而避  髦免节点衔接不迅速所造成的浪费。<br>仁为更好地保持组织中的奉献关系，需要给这些主动参与协调分工之外环节的奉献者提供更广阔的平台，设置相应的流程管理岗位，让他们负责全流程的推动实施，保证流程方向的正确性，确保流程各环节执行到位。在跨部门流程管理上授予他们更多的权力，<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E6%B5%81%E7%A8%8B%E4%B8%8E%E8%81%8C%E8%83%BD%E9%83%A8%E9%97%A8%E7%9A%84%E5%8C%B9%E9%85%8D.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>但不是每个奉献者都适合寄其安排在更广阔的流程管理平台。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E5%8F%82%E4%B8%8E%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9A%84%E5%A5%89%E7%8C%AE%E8%80%85%E7%89%B9%E5%BE%81.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>待遇和机会向奋斗者倾斜，让“火车头”加满油<br>任正非强调华为的文化是“以客户为为中心，以奋斗者为本，长期艰苦奋斗”，而支撑奋斗者文化要落实在绩效考核体系、激励机制与流程运作上的价值导向。<br>中一方面引入了灰度管理这一概念，另一方面，华为结合人力资源管理变革，建立了完善的基于流程的绩效考：核体系，强调员工待遇要与绩效考核、贡献绑定在一起，将奋斗者的贡献在绩效考核中充分体现。<br>，完善的绩效考核体系是在流程架构的基础上去设计的，在流程架构内能够实现统一的考核语境和管理思路，同时有利于落实流程的绩效目标和責任。，将短期奖金激励和员工个人的业绩承诺；诺结合起来进行考核，保证绩效差距有据可循，使员工的奖金可以自己进行计算和管理，实现了奖金激励的透明化。<br>，始终坚持“不达目标零奖金”和“以贡献大小判断奖金多少”的利益分配原则。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E5%9F%BA%E4%BA%8E%E5%88%86%E7%BA%A7%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E7%9A%84%E7%BB%A9%E6%95%88%E4%BD%93%E7%B3%BB%E4%B8%8E%E6%8C%87%E6%A0%87%E5%88%86%E8%A7%A3.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>以通过充分肯定和评估他们在流程作业上的贡献，以及在收益增加、成本降低、满足客户需求方面创造的价值，满足他们的成就感，从而充分发挥精神激励的作用。为奋斗者提供更多样的晋升渠道，适当分配其难度较大、流程更复杂的工作，当然也不能忽视物质激励的作用，通过完善的流程绩效考核体系将物质激励充分体现在奖金上。，将精神和物质激励及流程绩效考核体系相结合，为奋斗者提供令其满意的待遇和机会，让火车头加满油。</p>
+<p>许犯创新性错误，不允许犯流程性错误<br>，企业内部90%是例行过程，流程管理就是针对这90%的例行过程进行总结和梳理，因此过程管理的重心就落到了流程管理上。<br>良好的流程管理会将重复发生的例外过程演变为例行过程，将需要管理层才能处理的例外过程逐渐转化为流程化的管理模式。<br>在奋斗中传承和创新流程文化<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86%E7%9A%84%E6%84%8F%E4%B9%89.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>把握流程管理的重点，避免犯流程性错误<br>。流程管理团队把握流程本质的关键在于梳理出流程对客户的价值和对企业的价值，通过客户需求分析，找到业务流程的核心节点，而企业价值来源于对战略目标的分解。图1-7阐述了流程的本质。<br>，在识别流程本质的过程中，要将客户需求分析和战略目标分解相结合，平衡多目标实现的优先级次序，实现流程与客户需求、企业战略的对接，形成整个组织的流程价值取向。流程()<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/%E6%B5%81%E7%A8%8B%E7%9A%84%E6%9C%AC%E8%B4%A8.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>在奋斗中传承和创新流程文化<br>流程文化的主要内容<br>关注客户需求<br>将客户需求作为流程体系的开端，根据客户及业务需求设计流程，体系，|将客户需求转化为流程运作中的标准，通过推动流程体系满足客户需求■———，<br>以流程目标为导向    l各从流程目标出发设计、优化流程，逐步改善和解决流程中的问题，保证  ]I各环节流程顺畅进行，从而实坝、，从而实现流程目标<br>公司导向<br>即流程导向，强调整体最优而非局部最优，需要不断引导团队成员■}歹爿L…1，—1成员树立  恤I全局意识，从而实现跨部门流程的优化<br>一同—I  相互理解、积极配合、协作能力强的流程团队有利团队有利于流程变革的顺利推  1罐1行<br>共享精神共享文化的形成从长远看有利于流程管理的整体进二整体进步<br>文化创新与进取二l  拥有创新活力的组织才能在流程优化中不断耳优化中不断取得突破性改善，保持追求    hI卓越的动力</p>
+<p>第2章  华为的流程组织<br>华为的流程组织，从长远来看，就是由功能型的组织结构转化为流程型气s  -的组织结构。并由1T支持这个组织的运作；从目前来看，就是使目前功能型  ．的组织结构贴近流程、贴近客户需求，适应市场的变化，也就是让组织更稱嘞I¨弹性洳囂靈活恋氛繈黔，夢匀瀹、。龝III—妁鍪酵、更有活 j’3-.—隐-。。笺贏嚣翠蠶、、翠彌氐冴襟；：一生、更有活力。<br>建立一个推动流程建设的综合组织<br>；根据流程分配权力、资源及责任的组织就是流程化组织。<br>。以客户为中心，按照IPD流程开发产品，按照LTC流程实施交付，通过健全的ITR售后服务流程体系实现对客户服-务，的高效闭环。<br>确立人人对事负责的流程责任制<br>强化上下游客户关系，维护生态圈<br>组建跨部门的动态化精兵组织<br>人才是驱动组织成功的关键要素<br>让听得见炮声的人呼唤炮火<br>机关单位向支持和服务中心转变</p>
+<p>第3章  华为的流程规划</p>
+<p>以业务为导向，力出一孔<br>围绕最大价值流设计主干流程和枝节流程<br>流程的层级、分类和收敛口要清晰<br>以客户体验牵引流程体系的建设<br>构建信息共享平台，汇集“云”和“雨”<br>以产业链思维整合流程资源和要素</p>
+<p>第4章  华为的流程梳理</p>
+<p>流程的是提高效率、赚到钱、没有腐败<br>贯通从容户中来，到客户中去的端到端流程<br>流程梳理要倒过来做，以设置有效的流程点<br>从实践中总结出的成功经验就是流程<br>流程工作要直指客户的“痛点”<br>流程运作均衡化，就是抓短的一块木板<br>“欧美砖”建一座IT“万里长城”</p>
+<p>第5章  华为的流程规范</p>
+<p>主干流程要简单，次要流程要灵活开放<br>新流程要先僵化，后优化，再固化<br>清晰的、重复运行的流程和工作要标准化<br>将流程制度化、文本化，保证权威性<br>树立遵从流程化管理的规则意识<br>建立不依赖人才、技术、资源的管理体系<br>将例外管理转化为例行管理</p>
+<p>第6章  华为的流程执行</p>
+<p>将权力授予最明白流程和最有责任心的人<br>对已有的流程要快速通过，不必事事请示<br>用严谨细致的计划实现精确执行<br>找到执行任务的最佳方法和路径<br>实实按照已有的计划把事情做到位<br>工作中快速调整和适配，保障项目进度<br>以事事闭环的态度投入到流程循环中</p>
+<p>第7章  华为的流程检查</p>
+<p>适时委派流程督查小组深入业务单元检查<br>主管是流程管理的第一责任人<br>建立流程响应机制，以及时预警和介入<br>对违反既定流程的相关方要及时追责<br>控制住节点，就能控制好工作流程<br>因事、因时妥善处理，防止问题再发生<br>归集检查信息，为流程评估和决策提供依据</p>
+<p>第8章  华为的流程优化<br>不产粮食、不增加肥力的流程都要砍掉<br>利用ECRS分析法简化工作流程，提高工作效率<br>1T应用及文档文件要有“日落法”<br>主动寻求作业行为和工作方法的改进<br>小改进，大奖励；大改进，不奖励<br>遵循PDCA原则，形成阶梯式上升的持续改进</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p><a target="_blank" rel="noopener" href="https://my.oschina.net/u/4525799/blog/4315565">体系切换，华为IPD的研发管理之道（上）</a><br><a target="_blank" rel="noopener" href="http://www.iheima.com/article-164178.html">在世界级公司面前，华为只是一个小学生</a></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>华为流程变革</div>
+      <div>http://lonlypan.com/2020/12/27/华为流程变革/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>胡伟 郑超 韩茹</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/17/%E5%9F%BA%E4%BA%8E%20OpenOCD%20%E7%9A%84%20STM32CubeIDE%20%E5%BC%80%E5%8F%91%E7%83%A7%E5%BD%95%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-DAPLINK/" title="基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/18/STM32CubeIDE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="STM32CubeIDE学习笔记">
+                        <span class="hidden-mobile">STM32CubeIDE学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

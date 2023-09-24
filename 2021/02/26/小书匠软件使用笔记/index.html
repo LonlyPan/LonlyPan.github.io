@@ -1,0 +1,872 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="小书匠软件使用笔记合集，含使用技巧、语法等。请配合Hello World &amp; Fluid 配置指南 阅读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小书匠软件使用笔记">
+<meta property="og:url" content="http://lonlypan.com/2021/02/26/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="小书匠软件使用笔记合集，含使用技巧、语法等。请配合Hello World &amp; Fluid 配置指南 阅读">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/小书匠软件使用笔记/unnamed.png">
+<meta property="article:published_time" content="2021-02-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-15T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/小书匠软件使用笔记/unnamed.png">
+  
+  
+  <title>小书匠软件使用笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="小书匠软件使用笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-02-26 00:00" pubdate>
+          2021年2月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">小书匠软件使用笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年6月16日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>小书匠软件使用笔记合集，含使用技巧、语法等。<br>请配合<a href="http://lonlypan.com/2021/06/12/hello_world-Fluid%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">Hello World &amp; Fluid 配置指南 </a>阅读</p>
+<span id="more"></span>
+
+<h1 id="小书匠绑定第三方数据库"><a href="#小书匠绑定第三方数据库" class="headerlink" title="小书匠绑定第三方数据库"></a>小书匠绑定第三方数据库</h1><p>绑定第三方数据库的意思就是你可以将第三方的文件夹链接到小书匠软件里，这样你在本地操作时，点击同步，数据就会实时上传到第三方数据库并更改，当然需要网络。而小书匠有个实时保存的功能，所以你可以离线编辑，再同步。</p>
+<p>这个功能的好处就是你在使用小书匠软件修改、添加了文档后，不需要再使用第二个软件单独去上传同步，直接软件内保存就可以了，实时同步。</p>
+<p>下面以GitHub为例，因为我的博客是基于GitHub的。</p>
+<h2 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h2><p>数据绑定的是文档保存的位置，单纯保存文本文档。至于图片则需要后面的图床绑定。</p>
+<p>1、首先在软件上点击 <code>小书匠</code> 图标，点击 <code>绑定</code>选项进入操作界面，选择 <code>数据存储-&gt; github</code> 进入设置界面。这里可以看到，还可以绑定其他第三方，有的直接输入账号密码登录就可以，操作简单，自己选择吧。这里只谈GitHub。</p>
+<p>图片右半部分就是我们的设置界面，需要配置前两个参数，第三个为默认参数不用修改。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>2、登录自己的Github，并新建一个仓库，也可以直接使用已经有的。完成后，点击上图底部箭头所指的<strong>跳转链接</strong>直接跳转到<strong>token</strong>申请界面或者点击自己的Github账户头像 <code>Settings -&gt; Developer settings -&gt; Personal access tokens -&gt; Generate new token </code>。这个<strong>tokens</strong>相当于一个授权码，授权别人更改你指定仓库下的内容，这里我们待会授权给小书匠软件。</p>
+<p>按下图设置好，名字随意起，然后下拉网页至最底，点击绿色的<code>Generate token </code>按钮。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E7%94%B3%E8%AF%B7token%E7%95%8C%E9%9D%A2.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>3、设置成功会显示下面界面，记得保存tokens值，后面还会用到。这个tokens是单次随机的，只能再生成的时候看到一次，之后再回到github是就再也看不到的了。如果你不小心删除了小书匠软件上的绑定信息，且token值不记得，就需要重新生成tokens值，重新绑定。所以记得保存。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/token%E5%80%BC.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>4、然后就是你的仓库名了，直接复制就好了。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E4%BB%93%E5%BA%93%E5%90%8D2.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>5、最后按照第一步的设置界面对应位置填写就可以了。</p>
+<h2 id="图床绑定"><a href="#图床绑定" class="headerlink" title="图床绑定"></a>图床绑定</h2><h3 id="Jekyll-博客"><a href="#Jekyll-博客" class="headerlink" title="Jekyll 博客"></a>Jekyll 博客</h3><p>图床最常见的是保存图片，也可以是 gif 文件。</p>
+<p>步骤和上面类似</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E4%BB%93%E5%BA%93%E5%90%8D.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>按照默认方法，你的图片会被存储在<br><code>https://raw.githubusercontent.com/LonlyPan/LonlyPan.github.io/master/小书匠/图片名.png</code></p>
+<h4 id="文件名生成规则"><a href="#文件名生成规则" class="headerlink" title="文件名生成规则"></a>文件名生成规则</h4><p>该规则规定了在博客文章新添加一张图片其存放位置，从 <code>根目录（你的github库目录）</code> 开始。</p>
+<p>这里我修改为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">images/Posts/&#123;&#123;title&#125;&#125;/&#123;&#123;filename&#125;&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>images</code>：是在当前库下新建的一个文件夹，专门用来存放图片</li>
+<li><code>Posts</code>：是<code>images</code>的子文件夹，专门用来存放博客图片</li>
+<li><code>titile</code>：是我的每篇博客文章标题（头数据），是变量，这样就会为每篇博文新建一个文件夹，用来存放这篇博文里的所有图片</li>
+<li><code>filename</code>：图片名，是变量</li>
+</ul>
+<p>通过以上设置，就可以将图片按博文标题分类存放，而不是全部放在一个文件夹下。</p>
+<p>例如本篇博文里的图片都会存放在<br><code>LonlyPan.github.io（库名）/images/Posts/小书匠绑定第三方数据库（博文标题）/图片名.png</code> 路径下</p>
+<h4 id="请输入一个url前缀"><a href="#请输入一个url前缀" class="headerlink" title="请输入一个url前缀"></a>请输入一个url前缀</h4><p>上面只是解决了存储问题，我们还需要解决访问问题，也就是怎么在文章中显示这张图片的问题。  因此我们需要获取图片的图片地址（链接）  </p>
+<p>这里的 <code>url前缀</code> + 上面的<code>文件名路径</code> &#x3D;  每张图片的 <code>图片地址</code>。</p>
+<p>这里提供了一个默认的前缀，但如果使用默认地址的话，会导致图片在国内访问时无法加载（不显示）。原因是 <code>https://raw.githubusercontent.com</code> 这个网址被 DNS 污染了，导致国内无法访问，必须搭梯子才行。</p>
+<p>所以我们需要填入新的 url 前缀，规则为  <code>https://库名/</code><br>例如我的是   <code>https://LonlyPan.github.io/</code></p>
+<h3 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h3><p>hexo图片保存位置必须指定目录，保存在  <code>source</code>文件夹下。小书匠目前并不能指定图片的保存位置，只能保存在软件指定的位置。所以只能通过小书匠连接到github图片存储，并用   <a target="_blank" rel="noopener" href="https://www.jsdelivr.com/?docs=gh">jsDelivr CDN官网</a> 加速访问。</p>
+<p>在上面的 jekyll 基础上只需要修改文件名生成规则</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">hexo_images/</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">title</span>&#125;&#125;</span><span class="language-xml">/</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">filename</span>&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+<p>和url前缀即可，</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/<br></code></pre></td></tr></table></figure>
+<p><code>https://cdn.jsdelivr.net/gh/</code> 就是 <code>jsDelivr CDN</code> 加速链接前缀。用来替代 <code>https://raw.githubusercontent.com/</code>。上面Jekyll的绑定也可以改成这个前缀。</p>
+<p><code>LonlyPan/LonlyPan.github.io</code>是 存储图片的 <code>hexo_images</code> 文件夹地址，<code>@hexo_source</code>  必须要加。</p>
+<p><strong>参考资料：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/138582151">使用 jsDelivr CDN 对 Github 图床进行加速，带给你如丝滑般的图片体验</a></li>
+<li><a target="_blank" rel="noopener" href="https://ld246.com/article/1583894928771">GitHub 图床的正确用法，通过 jsDelivr CDN 全球加速</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/104996801">hexo博客插入图片与视频方法</a></li>
+</ul>
+<h4 id="阿里云oos图床"><a href="#阿里云oos图床" class="headerlink" title="阿里云oos图床"></a>阿里云oos图床</h4><p>上述使用 <code>github+jsDelivr CDN</code> 实测并不好用，原因是：jsDelivr 备案被取消，国内访问不再稳定。所有转用 阿里云oss 作为图床。其他的又拍云、七牛云什么的类似，但价格都比阿里云的贵，阿里云一年才9元（40G容量，只存图片完全够用了），可以一次性买五年才45元，很划算。</p>
+<ol>
+<li>阿里云首页，产品 -&gt; 存储 -&gt;对象存储OSS，点击进入<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_18_(1).jpg" srcset="/img/loading.gif" lazyload alt="图像 18 _1_"></li>
+<li>点击 <code>立即开通</code>（开通就是启动这个功能，无任何费用）。然后单击 <code>折扣套餐</code>，进入套餐购买界面<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_20.jpg" srcset="/img/loading.gif" lazyload alt="图像 20"></li>
+<li>按下图选择，地域国内的随意选，其实差别不大。时长自己选，购买后还可以续费；其它的保持和图中一致。单击 <code>立即购买</code> 付款购买。我这里了已经购买过了，所以无法再购买。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_21.jpg" srcset="/img/loading.gif" lazyload alt="图像 21"></li>
+<li>购买成功界面，单击<code>管理控制台</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_17.jpg" srcset="/img/loading.gif" lazyload alt="图像 17"></li>
+<li>左侧面选择 <code>Bucket列表</code> -&gt; <code>创建 Buket</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_2.jpg" srcset="/img/loading.gif" lazyload alt="图像 2"></li>
+<li>按下图设置，Bucket 名称自定义，地域自选。单击确定完成创建<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_3.jpg" srcset="/img/loading.gif" lazyload alt="图像 3"></li>
+<li>进入创建的 Bucket ，在概览访问域名一栏，找到外网访问，复制 <code>Bucket 域名</code>（不是地域节点），保存好。至此OSS存储已开通设置好，下面获取访问密钥。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_10.jpg" srcset="/img/loading.gif" lazyload alt="图像 10"></li>
+<li>右上角单击个人头像，选择 <code>AccessKey</code> 管理<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_11.jpg" srcset="/img/loading.gif" lazyload alt="图像 11"></li>
+<li>选择 <code>开始使用子用户AccessKey</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_12.jpg" srcset="/img/loading.gif" lazyload alt="图像 12"></li>
+<li>单击<code>创建用户</code><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/1654308645652.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>登录名称和显示名称自定义（可以和前面的不同），一定要勾选 <code>Open API调用访问</code>。单击确定，完成创建。我这里多次创建，图片中名称可能不一样，无碍。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_6.jpg" srcset="/img/loading.gif" lazyload alt="图像 6"></li>
+<li>复制保存好 <code>AccessKey ID</code>和<code>AccessKey Secret</code>，否则后面就看不到了<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_7.jpg" srcset="/img/loading.gif" lazyload alt="图像 7"></li>
+<li>密钥创建好了，还需要授权，否则就是空钥匙，什么也访问不了。回到用户界面，在刚创建的用户栏，单击 <code>添加权限</code>，<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_8.jpg" srcset="/img/loading.gif" lazyload alt="图像 8"></li>
+<li>授权范围：整个云账号；授权主体默认填好了；选择权限：系统策略；在搜索栏输入 <code>OSS</code> 搜索，单击两个 OSS 权限项，加入到右侧已选择栏中。单击<code>确定</code>完成授权。<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_9.jpg" srcset="/img/loading.gif" lazyload alt="图像 9"></li>
+<li>进入小书匠图床绑定，选择阿里OSS云存储，名称自定义，api入口就是之前保存的 <code>Bucket 域名</code>，不过要加上 <code>https://</code> 前缀，AccessKey就是保存的<code>AccessKey ID</code>,SecretKey就是<code>AccessKey Secret</code>；文件名生成规则这个自己研究，可以和我这个一样，图片会保存在 <code>hexo_image目录 -&gt; 博客文章名目录 -&gt; 图片名</code>，保存时阿里云OSS会自动创建文件夹。图片URL和api入口一致。<code>确定</code>完成绑定。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_22.jpg" srcset="/img/loading.gif" lazyload alt="图像 22"></li>
+<li>使用时直接将图片粘贴到文章中，小书匠会自动将图片存储到阿里云OSS中，并自动生成链接。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_15.jpg" srcset="/img/loading.gif" lazyload alt="图像 15"></li>
+<li>进入博客，验证，没问题。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F_16.jpg" srcset="/img/loading.gif" lazyload alt="图像 16"></li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/posts/coding-imagehost/">Coding 免费图床方案 _</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000039300638">Hexo一键部署到阿里云OSS并设置浏览器缓存</a></li>
+<li><a target="_blank" rel="noopener" href="https://johnzhang.fun/2019/08/26/%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91oss%E6%90%AD%E5%BB%BA%E5%9B%BE%E5%BA%8A/">使用阿里云oss搭建图床</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.xieguangda.top/2021/11/08/%E9%98%BF%E9%87%8C%E4%BA%91+hexo+oss+md%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">阿里云+hexo+oss+md个人博客搭建</a><h1 id="小书匠与Markdown语法使用手册-适配本博客"><a href="#小书匠与Markdown语法使用手册-适配本博客" class="headerlink" title="小书匠与Markdown语法使用手册-适配本博客"></a>小书匠与Markdown语法使用手册-适配本博客</h1></li>
+</ul>
+<h2 id="html表格转excl"><a href="#html表格转excl" class="headerlink" title="html表格转excl"></a>html表格转excl</h2><p>需要先使用导出功能：导出为zip文件，将文档和媒体文件全部导出。然后使用浏览器打开 table.html 表格文件，右键另存为，保存到电脑中，然后使用在线转换，打开刚保存的文件，转换。</p>
+<blockquote>
+<p>不能直接使用在线转换打开导出的 html 表格文件，会转换失败。原因未知。</p>
+</blockquote>
+<p>在线转换：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://products.aspose.app/words/zh/conversion/html-to-excel">https://products.aspose.app/words/zh/conversion/html-to-excel</a></li>
+<li><a target="_blank" rel="noopener" href="https://convertio.co/zh/">https://convertio.co/zh/</a></li>
+</ul>
+<h2 id="Markdown文件转换word"><a href="#Markdown文件转换word" class="headerlink" title="Markdown文件转换word"></a>Markdown文件转换word</h2><p>又是后需要将markdown 文档复制到word中，但word并不支持markdown格式，需要转换。<br>使用在线转换：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://md.openwrite.cn/">https://md.openwrite.cn/</a></li>
+<li><h2 id="文章内部链接"><a href="#文章内部链接" class="headerlink" title="文章内部链接"></a>文章内部链接</h2></li>
+</ul>
+<ol>
+<li>如果用户开启了 grammar_decorate 语法功能，可以通过 &#96;&lt;!–</li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/03-%E7%9E%8E%E6%8A%98%E8%85%BE/" class="category-chain-item">03-瞎折腾</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>小书匠软件使用笔记</div>
+      <div>http://lonlypan.com/2021/02/26/小书匠软件使用笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年2月26日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/04/%E9%BA%A6%E8%82%AF%E9%94%A1%E7%B2%BE%E8%8B%B1%E9%AB%98%E6%95%88%E9%98%85%E8%AF%BB%E6%B3%95/" title="麦肯锡精英高效阅读法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">麦肯锡精英高效阅读法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/22/%E6%B7%B1%E9%98%85%E8%AF%BB/" title="深阅读">
+                        <span class="hidden-mobile">深阅读</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

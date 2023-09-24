@@ -1,0 +1,2016 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="LonlyPan个人站，STM32，嵌入式，Linux，读书笔记，博客网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LonlyPan个人站">
+<meta property="og:url" content="http://lonlypan.com/books/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="LonlyPan个人站，STM32，嵌入式，Linux，读书笔记，博客网站">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/book_banner.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="但是 还有书籍"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2019/12/14/HTML&amp;CSS_%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%BD%91%E7%AB%99/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/HTML&amp;CSS_设计与构建网站/HTML&amp;CSS_设计与构建网站.jpg" srcset="/img/loading.gif" lazyload alt="HTML&amp;CSS_设计与构建网站">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2019/12/14/HTML&amp;CSS_%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%BD%91%E7%AB%99/" target="_blank">
+                        HTML&amp;CSS_设计与构建网站
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美]Jon Duckett
+                        /
+                        刘涛、陈学敏
+                        -译 /
+                        清华大学出版社
+                        /
+                        2017-8
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2019-12
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2019/12/14/HTML&amp;CSS_%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%BD%91%E7%AB%99/" target="_blank">
+                    <div>
+                        
+                        系统讲述到了关于HTML和CSS的相关基础知识，运用大量图片代替枯燥的语言，加上精美的排版，不仅很好的讲述了这门设计语言，还能够激发初学者的阅读兴趣，同时配有大量实例进行练习，是一本对于初学者很友好的工具类丛书。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2019-12-14 00:00" pubdate>
+                                2019-12-14
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2021/01/24/%E4%B8%8A%E5%B8%9D%E6%8E%B7%E9%AA%B0%E5%AD%90%E5%90%97-%E9%87%8F%E5%AD%90%E7%89%A9%E7%90%86%E5%8F%B2%E8%AF%9D/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/上帝掷骰子吗-量子物理史话/1653834442422.png" srcset="/img/loading.gif" lazyload alt="上帝掷骰子吗-量子物理史话">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2021/01/24/%E4%B8%8A%E5%B8%9D%E6%8E%B7%E9%AA%B0%E5%AD%90%E5%90%97-%E9%87%8F%E5%AD%90%E7%89%A9%E7%90%86%E5%8F%B2%E8%AF%9D/" target="_blank">
+                        上帝掷骰子吗-量子物理史话
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        曹天元
+                        /
+                        
+                        -译 /
+                        江⻄人⺠出版社
+                        /
+                        2017-8
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        20190716-0727
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2021/01/24/%E4%B8%8A%E5%B8%9D%E6%8E%B7%E9%AA%B0%E5%AD%90%E5%90%97-%E9%87%8F%E5%AD%90%E7%89%A9%E7%90%86%E5%8F%B2%E8%AF%9D/" target="_blank">
+                    <div>
+                        
+                        书评待更新
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2021-01-24 00:00" pubdate>
+                                2021-01-24
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%20/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/与神对话_/1656830471201.png" srcset="/img/loading.gif" lazyload alt="与神对话 ">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%20/" target="_blank">
+                        与神对话 
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美国] 尼尔·唐纳德·沃尔什 
+                        /
+                        李继宏 
+                        -译 /
+                        江西人民出版社 
+                        /
+                        2015-5
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2022-06-23
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%20/" target="_blank">
+                    <div>
+                        
+                        感悟收获如作者所说：读该书不要纠结于其中的神学部分，专注于其表达的思想就好。 主要的一点其实就是每个人自己就是神或是神的一部分。宇宙间没有“好”或“坏”的状况。一切都是现实。所以请停止做出价值判断。 其次，要明白所有的状况都是暂时的。没有不变的东西，没有静止的状态。事物以何种方式改变取决于你。你只需要做好你自己、做最真实的自己。你无法依靠任何人，只有自己才可以，你自己就是上帝。 你的现在其实都是自
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 14:38" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E4%B8%96%E7%95%8C%E5%8D%81%E5%A4%A7%E6%80%9D%E6%83%B3%E5%AE%B6%20/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/世界十大思想家_/1656836383389.png" srcset="/img/loading.gif" lazyload alt="世界十大思想家 ">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E4%B8%96%E7%95%8C%E5%8D%81%E5%A4%A7%E6%80%9D%E6%83%B3%E5%AE%B6%20/" target="_blank">
+                        世界十大思想家 
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        王德峰 / 吴晓明 
+                        /
+                         
+                        -译 /
+                        上海古籍出版社 
+                        /
+                        1996-10
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        20220701
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E4%B8%96%E7%95%8C%E5%8D%81%E5%A4%A7%E6%80%9D%E6%83%B3%E5%AE%B6%20/" target="_blank">
+                    <div>
+                        
+                        感悟收获冲着王德峰买的，很久以前的书，现在只能买到盗版的。书按时间顺序介绍十位思想家的历史、故事、思想。准确来说是哲学家，是一部哲学的发展史。可以看出王德峰此时就已经形成了独到的见解，感兴趣可以搜搜其视频看看。书的内容算是入门、科普性的，有些也涉及较深，较难读懂。 如果想要深入系统的了解，还是单独购买各位思想家的书看看，再回过头，对比本书作者的讲解，应该会有更好的认识。这里自己也是浅尝即止，当了解
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 16:19" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E4%B8%BA%E4%BB%80%E4%B9%88-%E5%85%B3%E4%BA%8E%E5%9B%A0%E6%9E%9C%E5%85%B3%E7%B3%BB%E7%9A%84%E6%96%B0%E7%A7%91%E5%AD%A6%20/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_/1656837546368.png" srcset="/img/loading.gif" lazyload alt="为什么-关于因果关系的新科学 ">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E4%B8%BA%E4%BB%80%E4%B9%88-%E5%85%B3%E4%BA%8E%E5%9B%A0%E6%9E%9C%E5%85%B3%E7%B3%BB%E7%9A%84%E6%96%B0%E7%A7%91%E5%AD%A6%20/" target="_blank">
+                        为什么-关于因果关系的新科学 
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美] 朱迪亚·珀尔 / [美] 达纳·麦肯齐 
+                        /
+                        江生 / 于华 
+                        -译 /
+                        中信出版集团股份有限公司 
+                        /
+                        2019-7
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2020
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E4%B8%BA%E4%BB%80%E4%B9%88-%E5%85%B3%E4%BA%8E%E5%9B%A0%E6%9E%9C%E5%85%B3%E7%B3%BB%E7%9A%84%E6%96%B0%E7%A7%91%E5%AD%A6%20/" target="_blank">
+                    <div>
+                        
+                        感悟收获去年读的书，已经忘记大部分内容了，只能看标记折痕回忆部分内容，也侧面说明书对自己的影响不大，不感兴趣。买的时候以为是哲学书，其中是科学理论书籍、觉得如果搞人工智能的可以看看，从另一个角度思考什么才是真正的人工智能，如何做到智能，像人一样思考。 另外书中的科学可以说是一门统计学，计算概率时间，即很多的输入条件，最终判断各种结果的可能性，从而做出一个判断选择。也是大数据吧。 另一个感悟就是：原
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 16:38" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/06/05/%E4%BA%BA%E9%97%B4%E4%BF%AE%E7%82%BC%E6%8C%87%E5%8D%97%20/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/人间修炼指南_/1654424878762.png" srcset="/img/loading.gif" lazyload alt="人间修炼指南 ">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/06/05/%E4%BA%BA%E9%97%B4%E4%BF%AE%E7%82%BC%E6%8C%87%E5%8D%97%20/" target="_blank">
+                        人间修炼指南 
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        半佛仙人 
+                        /
+                         
+                        -译 /
+                        北京联合出版公司 
+                        /
+                        2022-4
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2022-06-05
+                         / 评分: 
+                        ★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/06/05/%E4%BA%BA%E9%97%B4%E4%BF%AE%E7%82%BC%E6%8C%87%E5%8D%97%20/" target="_blank">
+                    <div>
+                        
+                        这本书是B站UP主半佛仙人的视频文字版（内容一致），不想买书可以看视频。书中内容虽然浅薄，但对于设涉世未深的新人还是有积极作用的。内容涉及多个领域，但书的核心思想一直是：理性思考、三思而后行。另外作者观点不可全信，要有一套适合自己的价值观。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-06-05 17:03" pubdate>
+                                2022-06-05
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E4%BD%A0%E4%BB%A5%E4%B8%BA%E7%9A%84%E4%BA%BA%E7%94%9F%E6%84%8F%E4%B9%89%E5%B0%B1%E6%98%AF%E4%BA%BA%E7%94%9F%E7%9A%84%E6%84%8F%E4%B9%89%E5%90%97%EF%BC%9F%20/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_/1656836861665.png" srcset="/img/loading.gif" lazyload alt="你以为的人生意义就是人生的意义吗？">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E4%BD%A0%E4%BB%A5%E4%B8%BA%E7%9A%84%E4%BA%BA%E7%94%9F%E6%84%8F%E4%B9%89%E5%B0%B1%E6%98%AF%E4%BA%BA%E7%94%9F%E7%9A%84%E6%84%8F%E4%B9%89%E5%90%97%EF%BC%9F%20/" target="_blank">
+                        你以为的人生意义就是人生的意义吗？
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                         [英]朱利安·巴吉尼 
+                        /
+                        吴奕俊 
+                        -译 /
+                        中信出版社 
+                        /
+                         2022-1
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                         2022-6
+                         / 评分: 
+                        ★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E4%BD%A0%E4%BB%A5%E4%B8%BA%E7%9A%84%E4%BA%BA%E7%94%9F%E6%84%8F%E4%B9%89%E5%B0%B1%E6%98%AF%E4%BA%BA%E7%94%9F%E7%9A%84%E6%84%8F%E4%B9%89%E5%90%97%EF%BC%9F%20/" target="_blank">
+                    <div>
+                        
+                        感悟收获填写阅读后的感悟或书中好文，三五百字
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 16:27" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2020/12/27/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/华为流程变革/华为流程变革.jpg" srcset="/img/loading.gif" lazyload alt="华为流程变革">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2020/12/27/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/" target="_blank">
+                        华为流程变革
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        胡伟 郑超 韩茹
+                        /
+                        
+                        -译 /
+                        电子工业出版社
+                        /
+                        2019-9
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2020-12-27
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2020/12/27/%E5%8D%8E%E4%B8%BA%E6%B5%81%E7%A8%8B%E5%8F%98%E9%9D%A9/" target="_blank">
+                    <div>
+                        
+                        更多从理论层面讲述流程管理，并未具体到实施阶段。使用大量案例举证从而引出流程的变革，讲述每次变革的好处。也从流程建立、流程实施、流程维护等一个闭环过程分别讲述，从顶层概念上有了一个大体认知
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2020-12-27 00:00" pubdate>
+                                2020-12-27
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2019/12/14/%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/如何有效阅读一本书/s28705474.jpg" srcset="/img/loading.gif" lazyload alt="如何有效阅读一本书">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2019/12/14/%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/" target="_blank">
+                        如何有效阅读一本书
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [日]奥野宣之
+                        /
+                        张晶晶
+                        -译 /
+                        江⻄人⺠出版社
+                        /
+                        2017-8
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2019-12
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2019/12/14/%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E9%98%85%E8%AF%BB%E4%B8%80%E6%9C%AC%E4%B9%A6/" target="_blank">
+                    <div>
+                        
+                        本书教你仅使用一个笔记本来完成从找书、购书、读书、写笔记一整套流程，解决读完即忘、知识转化等问题。重点介绍笔记本在读书过程中如何使用、如何正确的读书并做好标记、如何写读书笔记。对于想要扎实读书的人，这本书是个很好的入⻔手册。书中有些方法难免过时，但作者提出的读书五阶段、读书技巧、笔记形式等还是有很大参考价值，值得我们借鉴并找到最符合自己最佳读书方法体系。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2019-12-14 00:00" pubdate>
+                                2019-12-14
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E5%BD%93%E4%B8%8B%E7%9A%84%E5%8A%9B%E9%87%8F/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_/1656828165741.png" srcset="/img/loading.gif" lazyload alt="当下的力量">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E5%BD%93%E4%B8%8B%E7%9A%84%E5%8A%9B%E9%87%8F/" target="_blank">
+                        当下的力量
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [德]埃克哈特•托利
+                        /
+                        曹植 
+                        -译 /
+                        中信出版社 
+                        /
+                        2016-6
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2022-06-03
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E5%BD%93%E4%B8%8B%E7%9A%84%E5%8A%9B%E9%87%8F/" target="_blank">
+                    <div>
+                        
+                        感悟收获全书的重点总结就是：不要想的太多，好好过好并专注当下的每一天。过去已成过去，未来也还未到来，你唯一能把握住和改变的只有现在（当下）。不要一直纠结在过去的回忆中，后悔中，过去已经发生，该有的和不该有的都已存在，你接受就好，然后变成自己的经验和经历，用来指导好现在的生活，便是对过去最好的回应。也不要一直幻想着未来，将希望寄托于未来，你的现在就是未来的雏形，即未来的过去，只有做好现在，未来才会改
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 14:02" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2020/01/01/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/把时间当作朋友/把时间当作朋友.jpg" srcset="/img/loading.gif" lazyload alt="把时间当作朋友">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2020/01/01/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/" target="_blank">
+                        把时间当作朋友
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        李笑来
+                        /
+                         
+                        -译 /
+                        电⼦⼯业出版社
+                        /
+                        2013-10
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2020-01
+                         / 评分: 
+                        ★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2020/01/01/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/" target="_blank">
+                    <div>
+                        
+                        书中⼤量内容重复，说教语⽓，⾼⾼在上的姿态，评判者的⽴场，知识搬运者。内容松散，⽆中⼼主⼲，⽆逻辑。书中使⽤⼤量论证，却没有严谨的数据证明及深⼊阐述。⽂中给了很多观点、结论，会让你读着很爽，但你不会获得什么，因为每个观点都是不联系的，因为这些观点是别⼈⽤⼀本书来阐述的。作者只是搬运过来结论，变成了说教。另外⽂中提到很多书，不妨读读，毕竟作者观点来⾃它们。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2020-01-01 00:00" pubdate>
+                                2020-01-01
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2020/02/14/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89-%E9%A3%8E%E9%9D%A1%E6%AC%A7%E7%BE%8E%E7%9A%84%E5%B7%A5%E4%BD%9C%E4%B8%8E%E7%94%9F%E6%B4%BB%E7%90%86%E5%BF%B5/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/极简主义-风靡欧美的工作与生活理念/极简主义.jpg" srcset="/img/loading.gif" lazyload alt="极简主义-风靡欧美的工作与生活理念">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2020/02/14/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89-%E9%A3%8E%E9%9D%A1%E6%AC%A7%E7%BE%8E%E7%9A%84%E5%B7%A5%E4%BD%9C%E4%B8%8E%E7%94%9F%E6%B4%BB%E7%90%86%E5%BF%B5/" target="_blank">
+                        极简主义-风靡欧美的工作与生活理念
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [英] 弗格斯•奥康奈尔
+                        /
+                        廉凯
+                        -译 /
+                        人⺠邮电出版社
+                        /
+                        2015-1
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2019-01-2020-02-13
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2020/02/14/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89-%E9%A3%8E%E9%9D%A1%E6%AC%A7%E7%BE%8E%E7%9A%84%E5%B7%A5%E4%BD%9C%E4%B8%8E%E7%94%9F%E6%B4%BB%E7%90%86%E5%BF%B5/" target="_blank">
+                    <div>
+                        
+                        看书名以为是极简生活，但其实说的是个人管理及项目管理，且更偏向后者。书中的七个理念很简单也是常识，但实践起来并不会简单，且往往被我们忽略。涉及的内容也很多，需要慢慢消化并运用，每个理念都值得细细品味，对生活和工作上都有帮助，再次强调，忘记书名。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2020-02-14 00:00" pubdate>
+                                2020-02-14
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/07/03/%E6%A0%BC%E8%B0%83-%E7%A4%BE%E4%BC%9A%E7%AD%89%E7%BA%A7%E4%B8%8E%E7%94%9F%E6%B4%BB%E5%93%81%E5%91%B3/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_/1656836971169.png" srcset="/img/loading.gif" lazyload alt="格调-社会等级与生活品味">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/07/03/%E6%A0%BC%E8%B0%83-%E7%A4%BE%E4%BC%9A%E7%AD%89%E7%BA%A7%E4%B8%8E%E7%94%9F%E6%B4%BB%E5%93%81%E5%91%B3/" target="_blank">
+                        格调-社会等级与生活品味
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美] 保罗·福塞尔（Paul Fussell） 
+                        /
+                        梁丽真 / 乐涛 / 石涛 
+                        -译 /
+                        北京联合出版公司 
+                        /
+                        2017-2
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2022-07-01
+                         / 评分: 
+                        ★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/07/03/%E6%A0%BC%E8%B0%83-%E7%A4%BE%E4%BC%9A%E7%AD%89%E7%BA%A7%E4%B8%8E%E7%94%9F%E6%B4%BB%E5%93%81%E5%91%B3/" target="_blank">
+                    <div>
+                        
+                        书名其实是『阶级』 书里面的道理，其实只用两句话就可以概括。  经济能力决定品味。 每个人都不想扮演自己。  第二句话书里面已经说的很明白，底层试图装扮为中层，中层试图装扮为上层，上层试图装扮成顶层，顶层希望别人不要注意自己，最大的梦想，就是扮作底层。 当你的经济能力达到某一个层次的时候，你的品味也就会相应的提升，不过品味提升的速度很慢很慢，中国有句古话，叫做“为官三代，始知吃饭穿衣。”可见某些不
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-07-03 16:29" pubdate>
+                                2022-07-03
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2021/02/22/%E6%B7%B1%E9%98%85%E8%AF%BB/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/深阅读/s28964826.jpg" srcset="/img/loading.gif" lazyload alt="深阅读">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2021/02/22/%E6%B7%B1%E9%98%85%E8%AF%BB/" target="_blank">
+                        深阅读
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [日]斋藤孝
+                        /
+                        程亮
+                        -译 /
+                        江⻄人⺠出版社
+                        /
+                        2018-6
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2019-11-2020-01-13
+                         / 评分: 
+                        ★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2021/02/22/%E6%B7%B1%E9%98%85%E8%AF%BB/" target="_blank">
+                    <div>
+                        
+                        本书先说明读书的意义与好处，再告诉读者如何从零开始阅读，该阅读什么样的书，阅读的同时我们应该做什么，阅读之后我们又应该怎么做。带领读者深阅读。基本一半内容在说读书的好处，同时对于如何进行深入阅读条理并不清楚，还不如看目录直接明了（是的，目录就基本囊括了全书主旨），建议阅读《如何有效阅读一本书》更具实操性。我从这本书得到的唯一结论就是：读书好，应该多读书，认真读书
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2021-02-22 00:00" pubdate>
+                                2021-02-22
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2020/02/13/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E5%9B%BE%E8%A7%A3/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/番茄工作法图解/番茄工作法图解.jpg" srcset="/img/loading.gif" lazyload alt="番茄工作法图解">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2020/02/13/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E5%9B%BE%E8%A7%A3/" target="_blank">
+                        番茄工作法图解
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [瑞典] Staffan Nöteberg
+                        /
+                        大胖
+                        -译 /
+                        人⺠邮电出版社
+                        /
+                        2011-2
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2020-02
+                         / 评分: 
+                        ★★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2020/02/13/%E7%95%AA%E8%8C%84%E5%B7%A5%E4%BD%9C%E6%B3%95%E5%9B%BE%E8%A7%A3/" target="_blank">
+                    <div>
+                        
+                        我的问题重点不在于时间安排而是专注力，类似做计划的时间管理方法尝试很多次也都失败。番茄工作法以25分钟为时间片段，使得自己在该段时间可以很好的专注于一件事，对时间量化，且实施也很简单。书中也提到了列清单，做计划，但自己并未采用，主要是自己的工作内容简单并无太多杂事。书中还加入人脑思维研究成果来揭示该方法原理及其影响，以及该方法的调节与扩充。另外推荐App-番茄todo。用了好几年了。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2020-02-13 00:00" pubdate>
+                                2020-02-13
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2020/02/12/%E7%AE%A1%E9%81%93%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/管道的故事/管道的故事.jpg" srcset="/img/loading.gif" lazyload alt="管道的故事">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2020/02/12/%E7%AE%A1%E9%81%93%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                        管道的故事
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美] ⻉克·哈吉斯
+                        /
+                        赖伟雄
+                        -译 /
+                        四川人⺠出版社
+                        /
+                        2014-3-1
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2020-02
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2020/02/12/%E7%AE%A1%E9%81%93%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                    <div>
+                        
+                        算不上一本书，很单薄。阐述了一种新的观点，但在具体实现上没有叙述，算是改变思维方式。主要内容：没有工作就没有收入，我们应该创建一个管道，加上时间和金钱杠杆，利用复利和倍增的力量，搭上互联网的快⻋道，实现财务自由。管道可以是股票，投资，理财，网站，真实的管道等等。特别是后面关于电子商务的叙述简直是现在网红带货的原型。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2020-02-12 00:00" pubdate>
+                                2020-02-12
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2022/06/04/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/未命名文件/1654332846921.png" srcset="/img/loading.gif" lazyload alt="认知天性">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2022/06/04/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7/" target="_blank">
+                        认知天性
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [美] Peter C. Brown / Henry L. Roediger III /  Mark A. McDaniel
+                        /
+                        邓峰
+                        -译 /
+                        中信出版社
+                        /
+                        2018-9
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2022-06
+                         / 评分: 
+                        ★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2022/06/04/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7/" target="_blank">
+                    <div>
+                        
+                        本书描述较为繁琐，反复用案例论证同样的观点，知识点散落，但抓住几个重要观点就能很好的理解。本书阐述了一个核心观点：间隔练习。学习不是一味的画重点、记笔记，应该每隔一段时间练习，实践和测验才能暴露学习漏洞。常温故知新，让自己的大脑参与思考。学习是要花心思的，没有轻松就能学会的东西。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2022-06-04 16:58" pubdate>
+                                2022-06-04
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2019/10/12/%E9%99%8D%E4%B8%B4-%E4%BD%A0%E2%BC%80%E2%BD%A3%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/降临-你⼀⽣的故事/降临.jpg" srcset="/img/loading.gif" lazyload alt="降临-你一生的故事">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                        <i class="book-pin iconfont icon-top" title="Pin on top"></i>
+                    
+                    <a href="/2019/10/12/%E9%99%8D%E4%B8%B4-%E4%BD%A0%E2%BC%80%E2%BD%A3%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                        降临-你一生的故事
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                         [美] 特德·姜
+                        /
+                         李克勤 
+                        -译 /
+                        译林出版社
+                        /
+                        2017-3
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2019-10
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2019/10/12/%E9%99%8D%E4%B8%B4-%E4%BD%A0%E2%BC%80%E2%BD%A3%E7%9A%84%E6%95%85%E4%BA%8B/" target="_blank">
+                    <div>
+                        
+                        本书是⼀本科幻⼩说集，共8个故事，降临为第⼀篇。每个故事都是作者开始有了⼀个点⼦，继⽽扩展发散形成⼀篇⼩说。应该每篇故事都有寓意和现实思考，但读了⼀遍有些没读懂，光看故事了。⽂笔不是太好，仅是作者在探索、发散思维过程中，写成的⽂章。至于理解上，我是理科⽣没啥问题。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2019-10-12 00:00" pubdate>
+                                2019-10-12
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+    
+
+    
+        <div class="row mx-auto book-card">
+            
+            
+                <div class="col-12 col-md-4 m-auto book-img">
+                    <a href="/2021/03/04/%E9%BA%A6%E8%82%AF%E9%94%A1%E7%B2%BE%E8%8B%B1%E9%AB%98%E6%95%88%E9%98%85%E8%AF%BB%E6%B3%95/" target="_blank">
+                        <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/麦肯锡精英高效阅读法/麦肯锡精英高效阅读法.jpg" srcset="/img/loading.gif" lazyload alt="麦肯锡精英高效阅读法">
+                    </a>
+                </div>
+            
+            <article class="col-12 col-md-8 mx-auto book-info">
+                <h1 class="book-header">
+                    
+                    <a href="/2021/03/04/%E9%BA%A6%E8%82%AF%E9%94%A1%E7%B2%BE%E8%8B%B1%E9%AB%98%E6%95%88%E9%98%85%E8%AF%BB%E6%B3%95/" target="_blank">
+                        麦肯锡精英高效阅读法
+                    </a>
+                </h1>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        [日]赤羽雄二
+                        /
+                        程亮
+                        -译 /
+                        民主与建设出版社
+                        /
+                        2019-5
+                    </div>
+                </div>
+                <div class="book-btm post-metas">
+                    <div class="post-meta mr-3">
+                        已阅: 
+                        2021-02
+                         / 评分: 
+                        ★★★★
+                    </div>
+                </div>
+                <a class="book-excerpt" href="/2021/03/04/%E9%BA%A6%E8%82%AF%E9%94%A1%E7%B2%BE%E8%8B%B1%E9%AB%98%E6%95%88%E9%98%85%E8%AF%BB%E6%B3%95/" target="_blank">
+                    <div>
+                        
+                        这本书针对无法读书的五个问题展开讨论，告诉读者读书的好处，如何有效利用时间读书、如何阅读一本书以及读书之后应该做什么。具有理论与实操性结合。总体来说：介于《如何阅读一本书》和《深阅读》之间。
+                    </div>
+                </a>
+        
+                <div class="book-btm post-metas">
+                    
+                        <div class="post-meta mr-3">
+                            <i class="iconfont icon-date"></i>
+                            <time datetime="2021-03-04 00:00" pubdate>
+                                2021-03-04
+                            </time>
+                        </div>
+                    
+                    
+                        <div class="post-meta mr-3 d-flex align-items-center">
+                            <i class="iconfont icon-category"></i>
+                            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/02-%E6%96%87%E5%AD%A6/" class="category-chain-item">02-文学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+                        </div>
+                    
+                    
+                </div>
+            </article>
+        </div>
+    
+
+    
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

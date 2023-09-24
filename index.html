@@ -1,0 +1,1112 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="LonlyPan个人站，STM32，嵌入式，Linux，读书笔记，博客网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LonlyPan个人站">
+<meta property="og:url" content="http://lonlypan.com/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="LonlyPan个人站，STM32，嵌入式，Linux，读书笔记，博客网站">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default_banner1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="坐而论道，起而行之"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/03/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-Github/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Hexo博客搭建-Github/662949ef-1d9a-4b56-bc56-5e26c9936cf1.png" srcset="/img/loading.gif" lazyload alt="Hexo博客搭建-Github">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+          <i class="index-pin iconfont icon-top" title="Pin on top"></i>
+        
+        <a href="/2022/05/03/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-Github/" target="_blank">
+          Hexo博客搭建-Github
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/03/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-Github/" target="_blank">
+        <div>
+          
+          如何使用github和hexo搭建个人博客  Hexo 博客框架。使用 Markdown解析文章，利用主题生成静态网页。 Github 一个托管网站 小书匠拥有 文章试试在线编写  安装Hexo这是 Hexo 的官方中文教程网站：Hexo官方教程中文教程内容是根据自己个人情况书写的安装教程，包含一些官方未提及到的错误。  安装环境：Win10 第一次安装Hexo
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-03 10:27" pubdate>
+              2022-05-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/03-%E7%9E%8E%E6%8A%98%E8%85%BE/" class="category-chain-item">03-瞎折腾</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/09/01/%E5%9B%BD%E4%BA%A7%E8%8A%AF%E7%89%87%E6%9B%BF%E6%8D%A2/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/国产芯片替换/1693623255711.png" srcset="/img/loading.gif" lazyload alt="国产芯片替换">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/01/%E5%9B%BD%E4%BA%A7%E8%8A%AF%E7%89%87%E6%9B%BF%E6%8D%A2/" target="_blank">
+          国产芯片替换
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/09/01/%E5%9B%BD%E4%BA%A7%E8%8A%AF%E7%89%87%E6%9B%BF%E6%8D%A2/" target="_blank">
+        <div>
+          
+          AD92803PD9280https:&#x2F;&#x2F;www.3peakic.com.cn&#x2F;about AD97083PA9708
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-01 19:23" pubdate>
+              2023-09-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/00-%E4%B8%93%E4%B8%9A/" class="category-chain-item">00-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/08/25/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg" srcset="/img/loading.gif" lazyload alt="FPGA学习笔记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/08/25/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+          FPGA学习笔记
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/08/25/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+        <div>
+          
+          FPGA开发经验总结打两拍在学习按键、触摸按键以及FIFO实验中，都涉及到打两拍。实际上都是异步信号处理，可以看作这三个实验的按键按下信号的时钟核FPGA的时钟是不同步，按键的时钟是人，触摸按键的时钟的触摸芯片本身，FIFO中是两个不同频率时钟。所以这本质还是异步信号处理问题。也是信号的亚稳态处理问题，即一个信号的跳变不是瞬间的，是有一个亚稳态状态。  虽然第一级触发器（badt1）在采样异步信
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-25 00:00" pubdate>
+              2023-08-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/21/%E7%94%B5%E5%AD%90%E5%85%83%E5%99%A8%E4%BB%B6%E4%B8%8E%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/电子元器件与电路基础/1661051732904.png" srcset="/img/loading.gif" lazyload alt="电子元器件与电路基础">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/21/%E7%94%B5%E5%AD%90%E5%85%83%E5%99%A8%E4%BB%B6%E4%B8%8E%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80/" target="_blank">
+          电子元器件与电路基础
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/08/21/%E7%94%B5%E5%AD%90%E5%85%83%E5%99%A8%E4%BB%B6%E4%B8%8E%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80/" target="_blank">
+        <div>
+          
+          导线规格表格中的数据包括各种导线的阻抗和允许电流大小（安培）。表中的直径数值适用于实心电线。双绞线应当根据铜线横截面面积进行计算。下面的表格适用于直流情况，或者频率小于等于60赫兹的情况，也没有考虑集肤效应。 　 多芯线校正比例 ( x 安培)  2-5芯： 0.8 6-15芯： 0.7 16-30芯： 0.5
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-21 11:11" pubdate>
+              2022-08-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%AF%87/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png" srcset="/img/loading.gif" lazyload alt="嵌入式Linux学习笔记-系统移植篇">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%AF%87/" target="_blank">
+          嵌入式Linux学习笔记-系统移植篇
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%A7%BB%E6%A4%8D%E7%AF%87/" target="_blank">
+        <div>
+          
+          系统移植篇LInux系统移植概念操作系统向下管理硬件（I&#x2F;O，设备接口），向上提供接口（进程管理+文件IO+网络协议+数据库等，被APP软件调用 bootloader（U-Boot） -&gt; Linux内核 -&gt; 根文件系统(rootfs) 。这三者一起构成了一个完整的Linux系统，一个可以正常使用、功能完善的Linux系统。 开发板上电后首先运行 SOC 内部 iROM 中
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-10 22:35" pubdate>
+              2022-07-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E7%AF%87/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png" srcset="/img/loading.gif" lazyload alt="嵌入式Linux学习笔记-驱动开发篇">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E7%AF%87/" target="_blank">
+          嵌入式Linux学习笔记-驱动开发篇
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/07/10/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E7%AF%87/" target="_blank">
+        <div>
+          
+          Linux 中的三大类驱动：字符设备驱动、块设备驱动和网络  字符设备驱动是占用篇幅最大的一类驱动，因为字符设备最多，从最简单的点灯到 I2C、SPI、音频等都属于字符设备驱动的类型。 块设备驱动就是存储器设备的驱动，比如 EMMC、NAND、SD 卡和 U 盘等存储设备，因为这些存储设备的特点是以存储块为基础，因此叫做块设备。 网络设备驱动就更好理解了，就是网络驱动，不管是有线的还是无线的，都属
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-10 22:35" pubdate>
+              2022-07-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/06/26/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/模拟电路学习笔记/1656236903734.png" srcset="/img/loading.gif" lazyload alt="模拟电路学习笔记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/06/26/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+          模拟电路学习笔记
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/06/26/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank">
+        <div>
+          
+          分贝dB增益（dB）简介1.分贝就是放大器增益的单位 — dB ，放大器输出与输入的比值为放大倍数，单位“倍”，如10倍放大器，100倍放大器。当改用“分贝”做单位时，放大倍数就称之为增益，这是一个概念的两种称呼。 2.电学中的分贝定义的是信号放大倍数的对数。在对电压（电流）与功率放大倍数的定义是不同的； dB的两个定义方式1.电压（电流）放大倍数分贝数定义：K&#x3D;20lg(Vo&amp;#
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-26 17:30" pubdate>
+              2022-06-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/08/%E4%B9%90%E9%91%ABESP32%20S2%E6%95%99%E7%A8%8B_%E5%9F%BA%E4%BA%8EESP-IDF%20v4.4/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S2教程_基于ESP-IDF_v4.4/ESP32_S2教程封面-合集.png" srcset="/img/loading.gif" lazyload alt="乐鑫ESP32 S3教程_基于ESP-IDF v5.0">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/08/%E4%B9%90%E9%91%ABESP32%20S2%E6%95%99%E7%A8%8B_%E5%9F%BA%E4%BA%8EESP-IDF%20v4.4/" target="_blank">
+          乐鑫ESP32 S3教程_基于ESP-IDF v5.0
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/08/%E4%B9%90%E9%91%ABESP32%20S2%E6%95%99%E7%A8%8B_%E5%9F%BA%E4%BA%8EESP-IDF%20v4.4/" target="_blank">
+        <div>
+          
+          个人教程，第一次制作，有配套视频教程，bilibili个人空间：合集和列表，文章章节顺序和列表一致。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-08 19:23" pubdate>
+              2022-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/00-%E9%A1%B9%E7%9B%AE/" class="category-chain-item">00-项目</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-C%E8%AF%AD%E8%A8%80%E5%86%8D%E5%AD%A6%E4%B9%A0/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-知识点复习/1694780455921.png" srcset="/img/loading.gif" lazyload alt="嵌入式面试-C语言再学习">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-C%E8%AF%AD%E8%A8%80%E5%86%8D%E5%AD%A6%E4%B9%A0/" target="_blank">
+          嵌入式面试-C语言再学习
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-C%E8%AF%AD%E8%A8%80%E5%86%8D%E5%AD%A6%E4%B9%A0/" target="_blank">
+        <div>
+          
+          一、GCC编译过程此章节内容需要一定ubuntu和Linux知识 一、GCC简介：gcc的原名叫做GNU C语言 编译器（GNU C Compile），只能编译C语言程序，后来很快就做了扩展，支持了更多的编程语言，比如C+ Object-c …，改名为GNC 编译器 套件（GNU Compile Collection） 支持很多的硬件和操作系统。 二、编译过程C语言的编译过程可分为四个阶段：预处理
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-08 19:23" pubdate>
+              2022-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/00-%E9%A1%B9%E7%9B%AE/" class="category-chain-item">00-项目</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-知识点复习/1694780455921.png" srcset="/img/loading.gif" lazyload alt="嵌入式面试-知识点复习">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/" target="_blank">
+          嵌入式面试-知识点复习
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/" target="_blank">
+        <div>
+          
+          编程 语言汇编C&#x2F;C++字节内存32位机中， char：    1个字节short：   2个字节int：       4个字节long：    4个字节float：4个字节double：4个字节 机器数和真值1、机器数一个数在计算机中的二进制表示形式,  叫做这个数的机器数。最高位存放符号, 正数为0, 负数为1.比如，十进制中的数 +3 ，计算机字长为8位，转换成二进制就是00000
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-08 19:23" pubdate>
+              2022-05-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/00-%E9%A1%B9%E7%9B%AE/" class="category-chain-item">00-项目</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+  
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/04/06/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B2%BE%E7%AE%80%E7%89%88/" target="_blank">
+          <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png" srcset="/img/loading.gif" lazyload alt="嵌入式Linux学习笔记-精简版">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/06/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B2%BE%E7%AE%80%E7%89%88/" target="_blank">
+          嵌入式Linux学习笔记-精简版
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/04/06/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%B2%BE%E7%AE%80%E7%89%88/" target="_blank">
+        <div>
+          
+          Ubuntu系统入门篇一、 基础概念嵌入式和单片机的区别较早的定义  英国电器工程师协会定义的： 嵌入式系统（Embedded System），是一种“完全嵌入受控器件内部，为特定应用而设计的专用计算机系统”。 行业定义： 以应用为中心，计算机技术为基础，软硬件可剪裁，适应应用系统对功能、成本、体积、可靠性、功耗严格要求的计算机系统。 个人总结：除PC外的所有带有程序，可独立工作的系统都是嵌入式
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-06 00:00" pubdate>
+              2022-04-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+  
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

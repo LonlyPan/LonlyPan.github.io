@@ -1,0 +1,883 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="WiFiManager库解析3-10 JSON 基础本教程所需的教材和示例程序，可通过太极创客网站-3-4-4-1 JSON基础：获取。 JSON(JavaScript Object Notation) 是一种通用的轻量级数据交换文本格式。它很容易让人阅读和编写，也便于机器进行解析和生成。它使用JavaScript语法来存储和描述数据对象，但是JSON完全独立于JavaScript。JSON可适">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP8266教程-零基础入门学用物联网">
+<meta property="og:url" content="http://lonlypan.com/2020/10/20/ESP8266%E6%95%99%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%AD%A6%E7%94%A8%E7%89%A9%E8%81%94%E7%BD%91/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="WiFiManager库解析3-10 JSON 基础本教程所需的教材和示例程序，可通过太极创客网站-3-4-4-1 JSON基础：获取。 JSON(JavaScript Object Notation) 是一种通用的轻量级数据交换文本格式。它很容易让人阅读和编写，也便于机器进行解析和生成。它使用JavaScript语法来存储和描述数据对象，但是JSON完全独立于JavaScript。JSON可适">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/ESP8266教程-零基础入门学用物联网/1654313168756.png">
+<meta property="article:published_time" content="2020-10-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-19T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/ESP8266教程-零基础入门学用物联网/1654313168756.png">
+  
+  
+  <title>ESP8266教程-零基础入门学用物联网 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ESP8266教程-零基础入门学用物联网"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-10-20 00:00" pubdate>
+          2020年10月20日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          75 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ESP8266教程-零基础入门学用物联网</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年10月20日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <span id="more"></span>
+<h2 id="WiFiManager库解析"><a href="#WiFiManager库解析" class="headerlink" title="WiFiManager库解析"></a>WiFiManager库解析</h2><h2 id="3-10-JSON-基础"><a href="#3-10-JSON-基础" class="headerlink" title="3-10 JSON 基础"></a>3-10 JSON 基础</h2><p>本教程所需的教材和示例程序，可通过太极创客网站-<a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/iot-c/esp8266-nodemcu-web-client/json-basics/">3-4-4-1 JSON基础</a>：获取。</p>
+<p>JSON(JavaScript Object Notation) 是一种<strong>通用的轻量级数据交换文本格式</strong>。它很容易让人阅读和编写，也便于机器进行解析和生成。它使用JavaScript语法来存储和描述数据对象，但是JSON完全独立于JavaScript。JSON可适用于多种流行编程语言。这些特性使JSON成为理想的数据交换格式。</p>
+<h3 id="JSON语法规则要点"><a href="#JSON语法规则要点" class="headerlink" title="JSON语法规则要点"></a>JSON语法规则要点</h3><ul>
+<li>数据以“名”“值”对呈现</li>
+<li>数据“名”和“值”之间由冒号分隔</li>
+<li>大括号{}用于标注对象内容</li>
+<li>中括号[]用于标注数组内容</li>
+<li>逗号用于分隔数据、对象、数组</li>
+</ul>
+<h3 id="JSON数据"><a href="#JSON数据" class="headerlink" title="JSON数据"></a>JSON数据</h3><ul>
+<li>数据以“名”“值”对呈现</li>
+<li>数据“名”和“值”之间由冒号分隔</li>
+</ul>
+<p>JSON数据的书写格式是：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">“<span class="hljs-built_in">JSON</span>数据名”：<span class="hljs-built_in">JSON</span>数据值<br></code></pre></td></tr></table></figure>
+
+<p>JSON数据举例：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">“Year”: 2016</span><br><span class="hljs-section">“URL”:”www.taichi-maker.com”</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>JSON数据名称</strong><br>JSON数据名称需要放在双引号中。以下示例都是合法的JSON数据名：<br><code>“Value”、”信息1”</code></p>
+<p><strong>JSON数据值</strong></p>
+<p>JSON数据值可以是以下内容：</p>
+<ul>
+<li>数字（整数或浮点数）</li>
+<li>字符串</li>
+<li>逻辑值（true 或 false）</li>
+<li>数组（在中括号中）</li>
+<li>对象（在大括号中）</li>
+<li>null</li>
+</ul>
+<blockquote>
+<p>注意：一个JSON数据名称只能对应一个值。以下是一系列JSON数据的举例。</p>
+</blockquote>
+<h4 id="3-1-JSON数字数据示例"><a href="#3-1-JSON数字数据示例" class="headerlink" title="3.1 JSON数字数据示例"></a>3.1 JSON数字数据示例</h4><p>“value” : 25</p>
+<h4 id="3-2-JSON字符串数据示例"><a href="#3-2-JSON字符串数据示例" class="headerlink" title="3.2 JSON字符串数据示例"></a>3.2 JSON字符串数据示例</h4><p>“name” : “taichi-maker”</p>
+<h4 id="3-3-JSON逻辑值数据示例"><a href="#3-3-JSON逻辑值数据示例" class="headerlink" title="3.3 JSON逻辑值数据示例"></a>3.3 JSON逻辑值数据示例</h4><p>“bool_value” : true</p>
+<h4 id="3-4-JSON数组数据示例"><a href="#3-4-JSON数组数据示例" class="headerlink" title="3.4 JSON数组数据示例"></a>3.4 JSON数组数据示例</h4><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs prolog"><span class="hljs-string">&quot;info&quot;</span>: [<br>    &#123;<br>        <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>        <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>    &#125;,<br>    &#123;<br>        <span class="hljs-string">&quot;year&quot;</span>: <span class="hljs-number">2020</span>,<br>        <span class="hljs-string">&quot;month&quot;</span>: <span class="hljs-number">12</span>,<br>        <span class="hljs-string">&quot;day&quot;</span>: <span class="hljs-number">30</span><br>    &#125;<br>]<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-5-JSON对象数据示例"><a href="#3-5-JSON对象数据示例" class="headerlink" title="3.5 JSON对象数据示例"></a>3.5 JSON对象数据示例</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;info&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;taichi-maker&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;website&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-6-JSON-null-数据示例"><a href="#3-6-JSON-null-数据示例" class="headerlink" title="3.6 JSON null 数据示例"></a>3.6 JSON null 数据示例</h4><p><code>“value” : null</code></p>
+<h3 id="4-JSON-对象"><a href="#4-JSON-对象" class="headerlink" title="4. JSON 对象"></a>4. JSON 对象</h3><p>JSON对象在<strong>大括号{}</strong> 中书写，对象可以包含单个或者多个JSON数据。<br>对象（object） 是一个无序的数据集合（“‘名&#x2F;值’对”集合）。一个对象以“{”（左括号）开始，“}”（右括号）结束。每个“名称”后跟一个“:”（冒号）；“‘名&#x2F;值’ 对”之间使用“,”（逗号）分隔。</p>
+<p>以下是含有单个数据的JSON对象示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;taichi-maker&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>以下是含有多个数据的JSON对象示例。该对象由两个JSON数据组成。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;taichi-maker&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;website&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>我们再来看一个含有多个数据的JSON对象示例。该对象包含两个JSON数据。而每一个JSON数据又包含一个JSON对象。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;info&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>	<span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;taichi-maker&quot;</span><span class="hljs-punctuation">,</span><br>	<span class="hljs-attr">&quot;website&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;date&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>	<span class="hljs-attr">&quot;year&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2020</span><span class="hljs-punctuation">,</span><br>	<span class="hljs-attr">&quot;month&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">12</span><span class="hljs-punctuation">,</span><br>	<span class="hljs-attr">&quot;day&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">30</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-JSON-数组"><a href="#5-JSON-数组" class="headerlink" title="5. JSON 数组"></a>5. JSON 数组</h3><p>数组（array） 是相同元素的有序集合。一个数组以“[”（左中括号）开始，“]”（右中括号）结束。值之间使用“,”（逗号）分隔。 如下所示：<br>[“Tom”,”Jerry”,”Shuke”,”Beita”]<br>或者<br>[1,3,5,7]</p>
+<p>数组可包含一个或者多个对象。以下是包含单个对象的数组示例：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<br>    &#123;<br>        <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>        <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>    &#125;<br>]<br></code></pre></td></tr></table></figure>
+<p>以下是包含多个对象的数组示例：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<br>    &#123;<br>      <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>      <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>   &#125;,<br>   &#123;<br>      <span class="hljs-string">&quot;year&quot;</span>: <span class="hljs-number">2020</span>,<br>      <span class="hljs-string">&quot;month&quot;</span>: <span class="hljs-number">12</span>,<br>      <span class="hljs-string">&quot;day&quot;</span>: <span class="hljs-number">30</span><br>   &#125;<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<br>    &#123;<br>      <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>      <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>   &#125;,<br>   &#123;<br>      <span class="hljs-string">&quot;year&quot;</span>: <span class="hljs-number">2020</span>,<br>      <span class="hljs-string">&quot;month&quot;</span>: <span class="hljs-number">12</span>,<br>      <span class="hljs-string">&quot;day&quot;</span>: <span class="hljs-number">30</span><br>   &#125;<br>]<br></code></pre></td></tr></table></figure>
+<p>数组也可以包含单个或多个数组，如下所示：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<br>    [<br>        &#123;<br>            <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>            <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-string">&quot;year&quot;</span>: <span class="hljs-number">2020</span>,<br>            <span class="hljs-string">&quot;month&quot;</span>: <span class="hljs-number">12</span>,<br>            <span class="hljs-string">&quot;day&quot;</span>: <span class="hljs-number">30</span><br>        &#125;<br>    ],<br>    [<br>        &#123;<br>            <span class="hljs-string">&quot;temperature&quot;</span> : <span class="hljs-number">15</span>,<br>        &#125;<br>    ]		<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs prolog">[<br>    [<br>        &#123;<br>            <span class="hljs-string">&quot;name&quot;</span> : <span class="hljs-string">&quot;taichi-maker&quot;</span>,<br>            <span class="hljs-string">&quot;website&quot;</span> : <span class="hljs-string">&quot;www.taichi-maker.com&quot;</span><br>        &#125;,<br>        &#123;<br>            <span class="hljs-string">&quot;year&quot;</span>: <span class="hljs-number">2020</span>,<br>            <span class="hljs-string">&quot;month&quot;</span>: <span class="hljs-number">12</span>,<br>            <span class="hljs-string">&quot;day&quot;</span>: <span class="hljs-number">30</span><br>        &#125;<br>    ],<br>    [<br>        &#123;<br>            <span class="hljs-string">&quot;temperature&quot;</span> : <span class="hljs-number">15</span>,<br>        &#125;<br>    ]		<br>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-JSON-对象与数组混合存放示例"><a href="#6-JSON-对象与数组混合存放示例" class="headerlink" title="6.JSON 对象与数组混合存放示例"></a>6.JSON 对象与数组混合存放示例</h3><p>通过以下示例我们可以看到，该JSON对象包含有一个数据，数据名为results，该数据的值是一个数组。此数组只含有一个对象。此对象包含有三个数据。这三个数据的名称分别是：location、now和last_update。其中location的值是含有两个数据的对象。now的值是含有三个数据的对象。last_update的值是字符串”2020-03-01T20:10:00+08:00″。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs prolog">&#123;<br>  <span class="hljs-string">&quot;results&quot;</span>: [<br>    &#123;<br>      <span class="hljs-string">&quot;location&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Beijing&quot;</span>,<br>        <span class="hljs-string">&quot;country&quot;</span>: <span class="hljs-string">&quot;CN&quot;</span><br>      &#125;,<br>      <span class="hljs-string">&quot;now&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;Clear&quot;</span>,<br>        <span class="hljs-string">&quot;code&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>        <span class="hljs-string">&quot;temperature&quot;</span>: <span class="hljs-string">&quot;3&quot;</span><br>      &#125;,<br>      <span class="hljs-string">&quot;last_update&quot;</span>: <span class="hljs-string">&quot;2020-03-01T20:10:00+08:00&quot;</span><br>    &#125;<br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-11-ESP8266-JSON解析"><a href="#3-11-ESP8266-JSON解析" class="headerlink" title="3-11 ESP8266 JSON解析"></a>3-11 ESP8266 JSON解析</h2><p>解析JSON格式信息是一个较为繁琐的工作，因此我们将借助解析Arduino – ESP8266平台中解析JSON格式信息的第三方库——ArduionJson库。该库是目前最受好评的解析JSON信息第三方库。其基本信息如下：</p>
+<p>作者：BENOIT BLANCHON<br>官网：<a target="_blank" rel="noopener" href="https://arduinojson.org/">https://arduinojson.org/</a><br>GitHub: <a target="_blank" rel="noopener" href="https://github.com/bblanchon/ArduinoJson">https://github.com/bblanchon/ArduinoJson</a><br>本站下载地址：太极创客网站下载页Arduino &#x2F; ESP8266-NodeMCU第三方库下载部分</p>
+<h3 id="JSON解析示例-1：单一对象JSON解析"><a href="#JSON解析示例-1：单一对象JSON解析" class="headerlink" title="JSON解析示例-1：单一对象JSON解析"></a>JSON解析示例-1：单一对象JSON解析</h3><p>在以下示例中，您将会看到如何使用ESP8266配合ArduinoJson库来解析只有一个对象的简单JSON信息。该信息如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;taichi-maker&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;number&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>以下是该示例程序</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">/<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><br>项目名称/Project          : 零基础入门学用物联网<br>程序名称/Program name     : arduinojosn_1_object<br>团队/Team                : 太极创客团队 / Taichi-Maker (www.taichi-maker.com)<br>作者/Author              : CYNO朔<br>日期/Date（YYYYMMDD）     : 20200424<br>程序目的/Purpose          : <br>此程序用于演示如何使用arduinojson库解析以下json信息。该json包含一个对象，<br>对象中有一个数据。<br>&#123;<br><span class="hljs-code">  &quot;name&quot;: &quot;taichi-maker&quot;,</span><br><span class="hljs-code">  &quot;number&quot;: 1</span><br><span class="hljs-section">&#125;</span><br><span class="hljs-section">-----------------------------------------------------------------------</span><br>本示例程序为太极创客团队制作的《零基础入门学用物联网》中示例程序。<br>该教程为对物联网开发感兴趣的朋友所设计和制作。如需了解更多该教程的信息，请参考以下网页：<br>http://www.taichi-maker.com/homepage/esp8266-nodemcu-iot/<br><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>*/<br>#include &lt;ArduinoJson.h&gt;<br><br>void setup() &#123;<br><span class="hljs-code">  Serial.begin(9600);</span><br><span class="hljs-code">  Serial.println(&quot;&quot;);</span><br><br><span class="hljs-code">  // 重点1：DynamicJsonDocument对象</span><br><span class="hljs-code">  const size_t capacity = JSON_OBJECT_SIZE(2) + 30;</span><br><span class="hljs-code">  DynamicJsonDocument doc(capacity);</span><br><br><span class="hljs-code">  // 重点2：即将解析的json文件</span><br><span class="hljs-code">  String json = &quot;&#123;\&quot;name\&quot;:\&quot;taichi-maker\&quot;,\&quot;number\&quot;:1&#125;&quot;;</span><br><span class="hljs-code">  </span><br><span class="hljs-code">  // 重点3：反序列化数据</span><br><span class="hljs-code">  deserializeJson(doc, json);</span><br><br><span class="hljs-code">  // 重点4：获取解析后的数据信息</span><br><span class="hljs-code">  String nameStr = doc[&quot;name&quot;].as&lt;String&gt;();</span><br><span class="hljs-code">  int numberInt = doc[&quot;number&quot;].as&lt;int&gt;();</span><br><br><span class="hljs-code">  // 通过串口监视器输出解析后的数据信息</span><br><span class="hljs-code">  Serial.print(&quot;nameStr = &quot;);Serial.println(nameStr);</span><br><span class="hljs-code">  Serial.print(&quot;numberInt = &quot;);Serial.println(numberInt);</span><br>&#125;<br><br>void loop() &#123;&#125;<br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://arduino.stackexchange.com/questions/13498/cannot-pass-objects-of-non-trivially-copyable-type-class-string-through">Cannot pass objects of non-trivially-copyable type ‘class String’ through ‘…’</a></p>
+<h2 id="IOT物联网技术"><a href="#IOT物联网技术" class="headerlink" title="IOT物联网技术"></a>IOT物联网技术</h2><p><a target="_blank" rel="noopener" href="https://www.yuque.com/cloud-dev/iot-tech">IOT物联网技术</a></p>
+<h2 id="连接阿里云-远程控制通信"><a href="#连接阿里云-远程控制通信" class="headerlink" title="连接阿里云+远程控制通信"></a>连接阿里云+远程控制通信</h2><h3 id="aliyunIOTSDK库方法"><a href="#aliyunIOTSDK库方法" class="headerlink" title="aliyunIOTSDK库方法"></a>aliyunIOTSDK库方法</h3><p><a target="_blank" rel="noopener" href="https://www.xiaoheidiannao.com/210157.html">基于Arduino（ESP8266）与阿里云物联网产品开发基础教程</a><br><a target="_blank" rel="noopener" href="https://www.fons.com.cn/8756.html">怎样 3 行代码运用 arduino 接入阿里云物联网途径</a><br><a target="_blank" rel="noopener" href="https://github.com/yu-tou/arduino-aliyun-iot-sdk">yu-tou&#x2F;arduino-aliyun-iot-sdk</a><br><a target="_blank" rel="noopener" href="https://www.codenong.com/cs107032096/">手把手教你用Arduino接入阿里云物联网平台，ESP8266连接阿里云物联网平台必看教程…</a></p>
+<h3 id="MQTT协议自写库方法"><a href="#MQTT协议自写库方法" class="headerlink" title="MQTT协议自写库方法"></a>MQTT协议自写库方法</h3><p><a target="_blank" rel="noopener" href="https://www.ghost666.xyz/index.php/2020/05/10/esp8266link/">ESP8266基于MQTT连接阿里云物联网平台</a><br><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/740235">[C]NodeMCU(ESP8266)接入阿里云物联网平台</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4d6e216c2280">将ESP8266通过MQTT协议链接阿里云IoT物联网平台</a><br><a target="_blank" rel="noopener" href="https://www.qutaojiao.com/22384.html">ESP8266 for arduino 如何连接到阿里云物联网平台（AliYun）</a><br><a target="_blank" rel="noopener" href="https://my.oschina.net/u/4344048/blog/4483959">Arduino Esp8266开发 （三）上传数据到阿里云MQTT服务器</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv4992901/">只要会用电脑就能看懂的物联网教程（阿里云+esp8266+微信小程序）</a></p>
+<h2 id="MQTT"><a href="#MQTT" class="headerlink" title="MQTT"></a>MQTT</h2><p><a target="_blank" rel="noopener" href="https://pubsubclient.knolleary.net/api#callback">Arduino Client for MQTTAPI Documentation</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44985880/article/details/107419004">浅谈物联网开发最热协议—MQTT协议</a><br><a target="_blank" rel="noopener" href="https://bbs.elecfans.com/jishu_1901266_1_1.html">LiteOS云端对接教程03-LiteOS基于MQTT对接EMQ-X服务器</a><br><a target="_blank" rel="noopener" href="https://www.codenong.com/cs106993403/">教程ESP8266 连接到的免费的 EMQ X MQTT 服务器</a><br><a target="_blank" rel="noopener" href="https://www.emqx.io/cn/products/enterprise">EMQ X Enterprise</a><br><a target="_blank" rel="noopener" href="https://www.hangge.com/blog/cache/detail_2348.html">MQTT系列教程2（消息服务器EMQ的搭建和使用）</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41538097/article/details/107714104">EMQ 安装及简单使用</a></p>
+<h2 id="Ethernet-SD-Card"><a href="#Ethernet-SD-Card" class="headerlink" title="Ethernet + SD Card"></a>Ethernet + SD Card</h2><p><a target="_blank" rel="noopener" href="https://www.gitmemory.com/issue/esp8266/Arduino/5947/511925962">ESP HTTP Client file download in sdcard</a><br><a target="_blank" rel="noopener" href="https://www.esp8266.com/viewtopic.php?p=74497">DOWNLOADING LARGE FILE USING HTTPCLIENT AND WIFICLIENT CRASH</a><br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/5175">Downloading large files to spiffs via https #5175</a><br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/2861">HTTP client file download. #2861</a><br><a target="_blank" rel="noopener" href="https://learn.adafruit.com/arduino-ethernet-sd-card/serving-files-over-ethernet">Serving Files over Ethernet</a><br><a target="_blank" rel="noopener" href="https://www.arduino.cc/en/Tutorial/LibraryExamples/HttpClient">HTTP Client</a><br><a target="_blank" rel="noopener" href="https://forum.allaboutcircuits.com/threads/downloading-file-using-http-get-saving-to-sd-card-using-arduino-mkr1400-gsm.161588/">Downloading file using HTTP GET &amp; Saving to SD card using Arduino MKR1400 GSM</a><br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/2861">HTTP client file download.</a><br><a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/reference-index/arduino-library-index/sd-library/#Arduino%E5%90%91SD%E5%8D%A1%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE">Arduino – SD库</a><br><a target="_blank" rel="noopener" href="https://diyi0t.com/sd-card-arduino-esp8266-esp32/">SD Card Tutorial for Arduino, ESP8266 and ESP32</a><br><a target="_blank" rel="noopener" href="https://www.mischianti.org/2019/12/15/how-to-use-sd-card-with-esp8266-and-arduino/">How to use SD card with esp8266, esp32 and Arduino</a></p>
+<h2 id="SD文件时间"><a href="#SD文件时间" class="headerlink" title="SD文件时间"></a>SD文件时间</h2><p>这是 <a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/releases/tag/2.7.4">ESP8266 for arduino 2.7.4</a> 版本（和以前版本）的一个bug。在网络上查找许多资料，都涉及到一个函数：setTimeCallback &#x2F; dateTimeCallback。（后者为老版本函数，后被前者代替）。函数的原本作用是用该函数设置一个回调函数，该回调函数在你打开一个文件，并关闭该文件时被调用，函数内有修改文档时间的语句。<br>但经过测试，该回调函数并未被调用，最终在官方 issues 中找到答案，该问题也14天前刚发布的。<br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/7682">setTimeCallback is not working for ESP8266 with both SD.h and SDFS too #7682</a><br>问题内容就是说回调函数不起作用，在后面的官方回答中<a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/pull/7686">Hook up custom timestamp proc for SD&#x2F;SDFS</a>解决了该问题，通过修改 ESP8266 库。但最新版还未发布，所以截至目前（2020&#x2F;11&#x2F;13），我们唯一结局的办法就是自己手动修改库文件。<br>ESP8266开发板库安装在 (<code>2371</code>是你的用户名)<code>C:\Users\23714\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.7.4\libraries\SDFS\src</code>  </p>
+<p><strong>修改如下：</strong></p>
+<p>只是官方的修改记录，可自行对查看修改，下面仅做解释说明：<br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/commit/1bb0815fed4e0601f49e934b601e4912ff25a4e9">Hook up custom timestamp proc for SD&#x2F;SDFS (#7686)</a></p>
+<p>在 SDFS.cpp 文件中，第40，41行添加代码</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-comment">// Required to be global because SDFAT doesn&#x27;t allow a this pointer in it&#x27;s own time call</span><br>time_t (*__sdfs_timeCallback)(<span class="hljs-built_in">void</span>) = <span class="hljs-literal">null</span>ptr;<br></code></pre></td></tr></table></figure>
+
+<p>在SDFS.h 文件中，第208-212行添加代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">setTimeCallback</span><span class="hljs-params">(<span class="hljs-type">time_t</span> (*cb)(<span class="hljs-type">void</span>))</span> <span class="hljs-keyword">override</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-title">time_t</span> <span class="hljs-params">(*__sdfs_timeCallback)</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>    __sdfs_timeCallback = cb;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>删除原 213 行的语句 <code>time_t now = time(nullptr);</code>并在该语句后（216-222行）添加</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abnf">       time_t now<span class="hljs-comment">;</span><br>extern time_t (*__sdfs_timeCallback)(void)<span class="hljs-comment">;</span><br>       if (__sdfs_timeCallback) &#123;<br>           now <span class="hljs-operator">=</span> __sdfs_timeCallback()<span class="hljs-comment">;</span><br>       &#125; else &#123;<br>           now <span class="hljs-operator">=</span> time(nullptr)<span class="hljs-comment">;</span><br>       &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>最后测试修改源码后仍然没用，怀疑是已经将将库文件编译好了，有使用记录。所以卸载了arduino并重新安装，同时安装esp8266开发板库。此时并未打开任何工程文件，先按照上述方式修改后，再重新打开之前写好的工程文件，测试结果正确。</p>
+</blockquote>
+<p><strong>参考链接：</strong><br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/commit/1bb0815fed4e0601f49e934b601e4912ff25a4e9">Hook up custom timestamp proc for SD&#x2F;SDFS (#7686)</a><br><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/7682">setTimeCallback is not working for ESP8266 with both SD.h and SDFS too #7682</a><br><a target="_blank" rel="noopener" href="https://arduino.stackexchange.com/questions/76105/why-datetimecallback-in-sd-h-does-not-work">Why dateTimeCallback in sd.h does not work?</a><br><a target="_blank" rel="noopener" href="https://forum.arduino.cc/index.php?topic=330746.0">Add DATE and TIME to your SD CARD Files.</a><br><a target="_blank" rel="noopener" href="https://www.esp8266.com/viewtopic.php?p=87444">LITTLEFS HOW TO SET A SPECIFIC DATE TIME FOR FILE TIMESTAMP?</a><br><a target="_blank" rel="noopener" href="https://forum.arduino.cc/index.php?topic=656003.0">setTimeCallback not working for ESP8266 with SD.h</a><br><a target="_blank" rel="noopener" href="https://arduino.stackexchange.com/questions/39126/how-does-one-set-attributes-for-sd-files">enter description here</a><br><a target="_blank" rel="noopener" href="https://community.particle.io/t/sd-file-creation-date/49583">SD file creation date</a></p>
+<h2 id="获取网络时间"><a href="#获取网络时间" class="headerlink" title="获取网络时间"></a>获取网络时间</h2><p><a target="_blank" rel="noopener" href="https://github.com/esp8266/Arduino/issues/6921">configTime with TZ offset causes incorrect UTC time</a><br><a target="_blank" rel="noopener" href="https://www.arduino.cn/thread-93795-1-1.html">基于基于esp32的联网获取时间</a></p>
+<h2 id="OTA"><a href="#OTA" class="headerlink" title="OTA"></a>OTA</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xh870189248/article/details/103779637">【阿里云生活物联网架构师专题 ④】分享可商用的ESP8266 SDK连接阿里云物联网生活平台的在线远程升级OTA笔记。</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/uaime/article/details/100007393">MQTT之ESP8266 OTA固件升级</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/naisu_kun/article/details/107358763">使用Arduino开发ESP32（17）：固件更新演示</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/toopoo/article/details/88820221">SimonLiu的ESP8266与AliOS Things 学习教程系列之十七：AliOS Things之OTA和upgrade over err:-17错误解决</a><br><a target="_blank" rel="noopener" href="https://copyfuture.com/blogs-details/2019061914224633283wvn3on80pvjbw">ESP8266开发之旅 网络篇⑯ 无线更新——OTA固件更新</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangfengwu/p/13591513.html">001-使用阿里云物联网平台 OTA 远程升级STM32程序-基于ESP8266</a><br><a target="_blank" rel="noopener" href="https://www.debugger.wiki/article/html/1560930432311644">ESP8266开发之旅 网络篇⑯ 无线更新——OTA固件更新</a><br><a target="_blank" rel="noopener" href="https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html">OTA Updates</a><br><a target="_blank" rel="noopener" href="http://arduino.esp8266.com/Arduino/versions/2.0.0/doc/ota_updates/ota_updates.html">ESP8266 Arduino Core</a><br><a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/634500">ESP8266 OTA之服务器更新</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/GetcharZp/p/12161836.html">基于 arduino开发的esp8266 通过阿里云实现固件升级</a></p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p><a target="_blank" rel="noopener" href="https://arduinojson.org/v6/assistant/">ArduinoJson Assistant</a><br><a target="_blank" rel="noopener" href="https://www.arduino.cn/thread-80661-1-1.html">ESP8266 如何保存远程的图片到SPIFFS或SD卡呢</a><br><a target="_blank" rel="noopener" href="https://www.arduino.cn/thread-46248-1-1.html">arduino 开发的一些实用小技巧</a><br>extension:&#x2F;&#x2F;bfdogplmndidlpjfhoijckpakkdjkkil&#x2F;pdf&#x2F;viewer.html?file&#x3D;https%3A%2F%2F<a href="http://www.dfrobot.com.cn%2Fimages%2Fupload%2FFile%2F20190911180239nqyna5.pdf">www.dfrobot.com.cn%2Fimages%2Fupload%2FFile%2F20190911180239nqyna5.pdf</a></p>
+<h1 id="3-5寸"><a href="#3-5寸" class="headerlink" title="3.5寸"></a>3.5寸</h1><p>TF卡GND不能直连电源GND，否则会检测TF卡存在显示蓝屏并提示信息（5秒后在进入第一幅界面）。<br>测试在TF卡GND和电源GND之间串联10R以上电阻，TF卡不能工作，且无法检测卡存在。反之，使用一个导通电阻 &lt;10R 的芯片控制 GND 的通断，就可控制串口屏对TF卡的检测，从而 消除蓝皮提示。目前查找符合该条件的为：  </p>
+<p><a target="_blank" rel="noopener" href="https://item.szlcsc.com/236509.html">模拟开关RS2105XN</a></p>
+<h2 id="SD-NAND"><a href="#SD-NAND" class="headerlink" title="SD NAND"></a>SD NAND</h2><p>FAT、FAT32-1024KB可识别</p>
+<h2 id="TF卡工作电流"><a href="#TF卡工作电流" class="headerlink" title="TF卡工作电流"></a>TF卡工作电流</h2><p>某个博客上偶然看到的一个文章：</p>
+<ol>
+<li>在TF卡中写时不要直接在根目录下写文件，最好先建立一个文件夹，在文件夹里写，这样工作电流就会小很多，而且电流也很稳定（主要原因）</li>
+<li>小容量卡写电流小，大容量卡写电流大（2G:40mA，4G:50mA，16G:100mA，）</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.amobbs.com/thread-5384374-1-1.html">TF卡的工作电流有多大 ？</a></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ESP8266教程-零基础入门学用物联网</div>
+      <div>http://lonlypan.com/2020/10/20/ESP8266教程-零基础入门学用物联网/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年10月20日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/01/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C-Litematica%E6%8A%95%E5%BD%B1mod/" title="我的世界-Litematica投影mod">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">我的世界-Litematica投影mod</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/09/%E5%8D%95%E7%89%87%E6%9C%BA%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/" title="单片机开发应用经验总结">
+                        <span class="hidden-mobile">单片机开发应用经验总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

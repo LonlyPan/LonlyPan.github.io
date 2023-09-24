@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="1、History of C 21.Bell Labs，Dennis Ritchie，Ken thompson2.Unix3.Pascal，BASIC，C is POL（Programmers Oriented Language）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="零基础入门C语言-网易云课堂-乐学偶的">
+<meta property="og:url" content="http://lonlypan.com/2019/09/04/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8C%E8%AF%AD%E8%A8%80-%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%BE%E5%A0%82-%E4%B9%90%E5%AD%A6%E5%81%B6%E7%9A%84/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="1、History of C 21.Bell Labs，Dennis Ritchie，Ken thompson2.Unix3.Pascal，BASIC，C is POL（Programmers Oriented Language）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C语言学习笔记/1654312650232.png">
+<meta property="article:published_time" content="2019-09-04T10:06:00.000Z">
+<meta property="article:modified_time" content="2019-09-04T10:06:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C语言学习笔记/1654312650232.png">
+  
+  
+  <title>零基础入门C语言-网易云课堂-乐学偶的 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="零基础入门C语言-网易云课堂-乐学偶的"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-09-04 18:06" pubdate>
+          2019年9月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          178 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">零基础入门C语言-网易云课堂-乐学偶的</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2019年9月4日 晚上
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h3 id="1、History-of-C-2"><a href="#1、History-of-C-2" class="headerlink" title="1、History of C 2"></a>1、History of C 2</h3><p>1.Bell Labs，Dennis Ritchie，Ken thompson<br>2.Unix<br>3.Pascal，BASIC，C is POL（Programmers Oriented Language）</p>
+<span id="more"></span>
+<p> 2、why we choose C as our language to learn<br>1）Good Side：<br>One language to rule them all<br>1.POL（Programmers Oriented Language）:Access to hardware，very simple in Converting data，Library，<br>2.Efficiency（speed like assembly language），memory save<br>3.Portability（C compilers is everywhere）<br>4.FORTRAN，Python，Unix Operating System<br>2）Bad Side：<br>With great power, comes great responsibility<br>1.pointer<br>2.difficult (hard coring)</p>
+<p>3、What is computer？<br>1.CPU（Central Processing Unit）：Computing</p>
+<p>1.number<br>2.program -＞machine language</p>
+<p>1)RAM 1-＞Register 1<br>2)RAM 2-＞ Register 2<br>3) Register 1 + Register 2 －＞ Register 1<br>4) Register 1-＞ RAM 3</p>
+<p>2.RAM（Random Access Memory）：Workspace for programs and files<br>3.SSD（Solid-State Disk），Hard Disk：<br>4.Keyboard，Mouse，Monitor…etc…<br>4、Machine Language ＜- High-Level Language ＜- Nature Language(English)</p>
+<p>5、Buridan’s ass</p>
+<p>14、HL-＞M L Complier(Program)</p>
+<p>15、ANSI C99 American National Standards Institute<br>ISO C90 International Organization of Standardization</p>
+<p>Trust Us<br>Don’t Prevent<br>Small and Simple<br>Operation one way to do it<br>Fast<br>16、C9x Committe 1994<br>1.Internationalization<br>2.Improvement －＞ C99</p>
+<p>17、C11</p>
+<p>Optional<br>Concurrent Programming<br>C18 Embedded C：</p>
+<h3 id="三、程序设计与项目开发流程"><a href="#三、程序设计与项目开发流程" class="headerlink" title="三、程序设计与项目开发流程"></a>三、程序设计与项目开发流程</h3><p>1、Objective<br>2、Draw the sketch<br>3、Coding &amp; Commenting<br>4、Compile (Compiler and Debugging)<br>5、Run program（Windows Mac *nix IDE）<br>6、Testing &amp; Debugging<br>7、Maintaining &amp; Improving</p>
+<p>Development &amp; Operation －＞ DevOps 敏捷开发</p>
+<h3 id="四、深入理解程序机制"><a href="#四、深入理解程序机制" class="headerlink" title="四、深入理解程序机制"></a>四、深入理解程序机制</h3><p>1、.c(source code)<br>2、.exe(executable )code<br>3、.o(Object code) by Compiler<br>4、Linker （Start-up Code，Library Code）</p>
+<h3 id="五：安装虚拟机与Linux系统下的演示"><a href="#五：安装虚拟机与Linux系统下的演示" class="headerlink" title="五：安装虚拟机与Linux系统下的演示"></a>五：安装虚拟机与Linux系统下的演示</h3><p>36：<br>ls：查询目录<br>man xx 查询手册<br>q退出 clear清屏<br>mkdir xxx 新建目录<br>cd xxx&#x2F; 进目录<br>cat xxx.x 打开文件</p>
+<p>nano:<br>nano 打开nano编辑器 &#x3D; 记事本</p>
+<p>VIM:<br>VIM xxx.x 用VIM编辑器打开文件，没有则会新建（退出需保存）<br>先按 I 键，启动编写 退出编写 esc<br>shift+: -&gt; wq! 写入文件并退出VIM</p>
+<p>课时 45&#x2F;46<br>cc xx.c 编译(Enter) -&gt; a.out（所有文件的编译都会默认输出为a.out）<br>重命名 mv 源文件 目标文件 (Enter)<br>47&#x2F;48<br>pwd -&gt; 输入要执行的文件名（Enter） 不安全，不存在的文件名也会在hi行<br>安全做法：<br>echo $PATEH(大写) -&gt; .&#x2F;xx.out<br>49<br>cc -v 查看gcc版本（GNU Complier Collection）<br>gcc -std&#x3D;c99（C11） xx.c 指定编译器版本<br>50<br>GNU GNU is not unix</p>
+<h3 id="六：C语言简要介绍"><a href="#六：C语言简要介绍" class="headerlink" title="六：C语言简要介绍"></a>六：C语言简要介绍</h3><p>cheader file：#include &lt;stdio.h&gt; standard input and outputfunction：int main(void) &#x2F;* this is a comment *&#x2F;{    int num;    num &#x3D; 888;    printf(“this number %d”, num);}<br>“int” ：means it will return an integer，by the code “return 0”;<br>the fuction name is “name”<br>“void” ：means no argument give to this function</p>
+<p>some old write<br>1、main() C90 BUT ! C99-Cx<br>2、void main()</p>
+<p>comments：<br>&#x2F;* *&#x2F; ：is a comment ,just help person to know this programer,will not be compiler<br>&#x2F;&#x2F;xxxxx ：C++ and JAVA new add comment type</p>
+<p>braces：<br>{…}：braces，means the code in it is a block<br>bracker […]<br>parenthaeses(…)</p>
+<p>declaration：<br>“num” is a variable that can stort something,before they are used,all variable must be declared at the first of function (Defore C99)<br>you can declare a variable whenever they be used(After C99,not recommend)<br>int means this variable can stort “Int” type data，other type：floating point，character，bool，etc…</p>
+<p>assigment：</p>
+<p>printf: is a function<br>以某种格式输出formatted（argument参数） 真实参数（actual argument） 形式参数（formal argument）<br>\xx：escape sequence（转义字符）<br>%d：% is placeholder （占位） for the “num”，d means this place is a decimal variable</p>
+<p>other function：<br>after c99:<br>void dragon(void); &#x2F;&#x2F; prototype (function declaration)<br>prototype -&gt; compiler<br>void -&gt; return empty<br>(void) :this function not have a argument</p>
+<p>before C99:<br>void dragon(); &#x2F;&#x2F; if have no argument ,not recommend<br>other function：<br>after c99:<br>void dragon(void); &#x2F;&#x2F; prototype (function declaration)<br>prototype -&gt; compiler<br>void -&gt; return empty<br>(void) :this function not have a argument</p>
+<p>before C99:<br>void dragon(); &#x2F;&#x2F; if have no argument ,not recommend</p>
+<p>reserved identifiers：<br>if int float for while else case</p>
+<h3 id="七：数据与类型"><a href="#七：数据与类型" class="headerlink" title="七：数据与类型"></a>七：数据与类型</h3><p>scanf();：获取用户键盘输入<br>printf(“%.2f”,price); &#x2F;&#x2F;以两位小数精度打印price，多余的四舍五入<br>%s string格式输出<br>%d int格式输出<br>%f float格式输出<br>%o<br>%#o&#x2F;x<br>octal（base 8）<br>hexadecimal（base 16）</p>
+<p>data：varibles 变量 constants 常量</p>
+<p>bit：最小的储存单位01<br>byte：8 bits 0000 0001<br>words：储存一个字符的单位，视平台定大小<br>integer：（整数类型）：123 、-123、2<br>float：（浮浮点类型）12.0、-12.3、2.8 注意存储方式0.7E2</p>
+<p>多个同类型变量声明：<br>int xx1, xx2, xx3; &#x2F;&#x2F; 同时声明三个int类型的变量<br>initializing variables<br>int xx1 &#x3D; 0; &#x2F;&#x2F; 声明并初始化变量，避免随机值<br>int xx1&#x3D; 0, xx2, xx3&#x3D; 0; &#x2F;&#x2F; just init xx1 、xx3</p>
+<p>signed type：<br>short int<br>long int<br>long long int C99，long long（64bit）</p>
+<p>unsigned type：<br>unsighed （nonnegetive）<br>unsigned long int&#x2F;unsigned long unsigned short int</p>
+<p>93 string和char<br><a target="_blank" rel="noopener" href="http://www.acsilltable.com/">www.acsilltable.com</a></p>
+<p>string：”xx”<br>char：‘x’</p>
+<p>96 分辨char十进制码练习</p>
+<p>int main(void)<br>{<br>char user_input_char;<br>printf(“Please enter a char: \n”);<br>scanf(“%c”,&amp;user_input_char);<br>printf(The dec number is %d for char %c”,user_input_char,user_input_char);</p>
+<p>return 0;<br>}</p>
+<p>99 float<br>stm32030由于内存小，只能进行float型计算，使用printf类的函数stdio中的会占用大量内存（8KB左右）</p>
+<p>查看数据类型占用位数<br>printf（“%d”,sizeof(int)）</p>
+<h3 id="八、字符串与格式IO"><a href="#八、字符串与格式IO" class="headerlink" title="八、字符串与格式IO"></a>八、字符串与格式IO</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">char</span> name[<span class="hljs-number">10</span>];<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;What is you name ? \n&quot;</span>);<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%s&quot;</span>,name);<br>    <span class="hljs-built_in">printf</span>(Welcome %s ,Welcome to west world ! \n<span class="hljs-string">&quot;, name);</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>scanf(%s) 遇见空格退出，空格相当于表示字符串中断了，认为是两个字符串了name[10] 只能存储9各字符和一个结束符<code>#define </code>108 小tip,查找文件<code>find / -type d -name &quot;c_edu&quot;</code></p>
+<p><strong>常量</strong><br>const int RATE &#x3D;  0.2；<br>#define RATE 0.2</p>
+<p>课时115-117</p>
+<p>控制下的字符串 printf()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;I am %(s/f)\n&quot;</span>,var) ; <span class="hljs-comment">// %占位：指定某种转换的格式进行输出</span><br>“I am” is literal charactrs（原样输出）<br></code></pre></td></tr></table></figure>
+<p>要输出”%“，增加一个</p>
+<p>printf(“占比 d%%%\n”,num);  &#x2F;&#x2F;输出 8%</p>
+<p>输出改变器Modifier</p>
+<p>“xd%”  &#x2F;&#x2F; 指定输出位数，x为数字，x为正，靠右显示，x为负靠左显示<br>“x.xf%” &#x2F;&#x2F; 指定小数点前和后显示位数</p>
+<p>进制转换</p>
+<p>%x  %X   %#X，15<br>f F 0XF</p>
+<h2 id="C-C-应用笔记”"><a href="#C-C-应用笔记”" class="headerlink" title="C_C++-应用笔记”"></a>C_C++-应用笔记”</h2><p><strong>以下内容涉及面较广，有些内容并未详细展开说明，也有些未彻底深入探讨，请大家在阅读时多参考文末参考文章，自行斟酌、独立思考。</strong></p>
+<h3 id="static的作用"><a href="#static的作用" class="headerlink" title="static的作用"></a>static的作用</h3><p>static作为C和C++语句中的修饰符，可以<strong>修饰变量和函数</strong>，主要用于<strong>控制变量的存储方式和可见性</strong>。</p>
+<p>为了更好理解 static 作用，我们需要先了解程序在内存中的分布情况，具体请参考文章<br><a href="https://lonlypan.com/archivers/%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83">程序在内存中的分布</a></p>
+<h4 id="static的内部机制"><a href="#static的内部机制" class="headerlink" title="static的内部机制"></a>static的内部机制</h4><p>static修饰的数据成员是在数据段定义的，数据段同样也存放了全局变量，静态数据成员按定义出现的先后顺序依次初始化，注意静态成员嵌套时，要保证所嵌套的成员已经初始化了。消除时的顺序是初始化的反顺序。</p>
+<h3 id="C-语言的-static-关键字三种用途"><a href="#C-语言的-static-关键字三种用途" class="headerlink" title="C 语言的 static 关键字三种用途"></a>C 语言的 static 关键字三种用途</h3><h4 id="1-静态局部变量"><a href="#1-静态局部变量" class="headerlink" title="1. 静态局部变量"></a>1. 静态局部变量</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-type">static</span> <span class="hljs-type">int</span> s_i = <span class="hljs-number">0</span>;   <span class="hljs-comment">/* 静态局部变量，在函数内部定义 */</span><br>	<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;            <span class="hljs-comment">/* 普通局部变量 */</span><br>	<br>	s_i += <span class="hljs-number">2</span>;<br>	i += <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> (s_i + i);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h5 id="静态局部变量和局部变量对比"><a href="#静态局部变量和局部变量对比" class="headerlink" title="静态局部变量和局部变量对比"></a>静态局部变量和局部变量对比</h5><p><strong>存储方式：</strong></p>
+<ul>
+<li>静态局部变量在数据段分配内存，局部变量在栈区分配内存。  </li>
+<li>因此静态局部变量的生存周期直到程序运行结束，局部变量在函数执行结束立即释放。</li>
+</ul>
+<p><strong>可见性：</strong></p>
+<ul>
+<li>都仅能在函数内被访问</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>静态局部变量在首次调用该函数时执行一次初始化，此后不再进行初始化，局部变量在每次该函数被调用时都会被初始化。</li>
+<li>静态局部变量如果没有在声明时被显示初始化为确定的值，则在首次调用该函数时自动初始化为0。局部变量不会被自动初始化</li>
+</ul>
+<p>注意：<br>这里局部变量在函数执行结束后立即释放，该变量名是不存在了，但存放该值的地址处所存储的值依旧没变。释放的意义在于告诉程序该地址空闲，可以被用作它用。</p>
+<h4 id="2、静态全局变量"><a href="#2、静态全局变量" class="headerlink" title="2、静态全局变量"></a>2、静态全局变量</h4><p>实例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//file a.c文件内</span><br><span class="hljs-comment">//static int n = 15;   /* 静态全局变量，在函数外部定义 */</span><br><span class="hljs-type">int</span> n = <span class="hljs-number">15</span>;  <span class="hljs-comment">/* 普通全局变量 */</span><br> <br><span class="hljs-comment">//file b.c文件内</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br> <br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> n;<br> <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;before: %d\n&quot;</span>,n);<br>	n++;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;after: %d\n&quot;</span>,n);<br>&#125;<br><br><span class="hljs-comment">/* 执行结果 </span><br><span class="hljs-comment">--------------------------------</span><br><span class="hljs-comment">before: 15                     |</span><br><span class="hljs-comment">after: 16                      |</span><br><span class="hljs-comment">--------------------------------</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>从实例中可以知道我们的 b.c 文件通过 <code>extern</code> 使用了 a.c 定义的全局变量 <code>n</code>。<br>但如果我们将 <code>n</code> 改为静态全局变量后，则会出现类似 <code>undeference to &quot;n&quot;</code> 的报错，提示找不到 <code>n</code> ，因为static 限制了 <code>n</code> 的可见性，总结如下：</p>
+<h5 id="静态全局变量和局部变量对比"><a href="#静态全局变量和局部变量对比" class="headerlink" title="静态全局变量和局部变量对比"></a>静态全局变量和局部变量对比</h5><p><strong>存储方式：</strong></p>
+<ul>
+<li>两者都是存储在数据段，因此存在周期是一样的</li>
+</ul>
+<p><strong>可见性：</strong></p>
+<ul>
+<li>静态全局变量不能被其它文件所用，只能在其定义的文件内使用（可以理解为文件内全局变量），而全局变量可以被任意文件访问（使用extern）</li>
+<li>因此其它文件中可以定义相同名字的静态全局变量，不会发生冲突(因为static隔离了文件，其它文件使用相同的名字的变量，也跟它没关系了);</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>两者都是在程序执行前（main函数执行之前、编译器编译时）初始化</li>
+<li>静态全局变量如果没有在声明时被显示初始化为确定的值，则在程序执行前（区别于局部静态变量的函数首次执行时）自动初始化为0。全局变量不会被自动初始化</li>
+</ul>
+<h4 id="3、静态函数"><a href="#3、静态函数" class="headerlink" title="3、静态函数"></a>3、静态函数</h4><p>静态函数和静态全局变量类似。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-comment">/* file a.c文件内 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br> <br><span class="hljs-comment">// static void fn() /* 静态函数定义 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fn</span><span class="hljs-params">()</span>  </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;this is non-static func in a&quot;</span>);<br>&#125;<br> <br> <br><span class="hljs-comment">/* file b.c文件内 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br> <br><span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-type">void</span> <span class="hljs-title">fn</span><span class="hljs-params">()</span></span>;  <span class="hljs-comment">/* 我们用extern声明其他文件的fn(),供本文件使用 */</span><br> <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">fn</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上实例，程序运行可以正常输出：<code>this is non-static func in a</code> 。<br>但如果我们给 <code>void fn()</code> 加上  <code>static</code> 变为静态函数，则会 <code>undefined reference to &quot;fn&quot;</code>。</p>
+<h5 id="静态函数和一般函数对比"><a href="#静态函数和一般函数对比" class="headerlink" title="静态函数和一般函数对比"></a>静态函数和一般函数对比</h5><p><strong>存储方式：</strong></p>
+<ul>
+<li>函数都是存储在代码段，<code>static</code>并不改变存储位置。</li>
+</ul>
+<p><strong>可见性：</strong></p>
+<ul>
+<li>静态函数不能被其它文件所用，只能在其定义的文件内使用，而一般函数可以被任意文件访问（使用<code>extern</code>或包含该函数的声明的头文件）</li>
+<li>因此其它文件中可以定义相同名字的函数，不会发生冲突(因为static隔离了文件，其它文件使用相同的名字的变量，也跟它没关系了);</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>好像没这个说法</li>
+</ul>
+<h3 id="C-语言的-static-关键字额外二种用途"><a href="#C-语言的-static-关键字额外二种用途" class="headerlink" title="C++ 语言的 static 关键字额外二种用途"></a>C++ 语言的 static 关键字额外二种用途</h3><p>C++ 中除了包含上述三种用法和概念外，还有额外两种用法。</p>
+<h4 id="1、静态数据成员"><a href="#1、静态数据成员" class="headerlink" title="1、静态数据成员"></a>1、静态数据成员</h4><p>用于修饰 <code>class</code> 的数据成员，即所谓“静态成员”。这种数据成员的生存期大于 <code>class</code> 的对象（实体 instance）。<br>静态数据成员是每个 <code>class</code> 有一份（即所有类实例共享一个该变量），普通数据成员是每个 <code>instance</code> 有一份（即每个实例都有各自的该变量，互相独立），因此静态数据成员也叫做类变量，而普通数据成员也叫做实例变量</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span><br>&#123;<br>  <span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> m_w,m_h;  <span class="hljs-comment">/* 4bytes */</span><br>	<span class="hljs-type">static</span> <span class="hljs-type">int</span> s_sum;<br>	<br>  <span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Rectangle</span>(<span class="hljs-type">int</span> w,<span class="hljs-type">int</span> h)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_w = w;<br>		<span class="hljs-keyword">this</span>-&gt;m_h = h;<br>		s_sum += (<span class="hljs-keyword">this</span>-&gt;m_w * <span class="hljs-keyword">this</span>-&gt;m_h);<br>	&#125;<br> <br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">GetSum</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout&lt;&lt;<span class="hljs-string">&quot;sum = &quot;</span>&lt;&lt;s_sum&lt;&lt;endl;<br>	&#125;<br> <br> <br>&#125;;<br> <br><span class="hljs-type">int</span> Rectangle::s_sum = <span class="hljs-number">0</span>;  <span class="hljs-comment">/* 类外初始化 */</span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(Rectangle)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(Rectangle)&lt;&lt;endl;<br>    <br>	Rectangle *rect1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Rectangle</span>(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br>	rect1-&gt;<span class="hljs-built_in">GetSum</span>();<br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(rect1)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(*rect1)&lt;&lt;endl;<br>    <br>	<span class="hljs-function">Rectangle <span class="hljs-title">rect2</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)</span></span>;<br>	rect2.<span class="hljs-built_in">GetSum</span>();<br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(rect2)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(rect2)&lt;&lt;endl;<br>	<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/* 执行结果 </span><br><span class="hljs-comment">--------------------------------</span><br><span class="hljs-comment">sizeof(Rectangle)=8                     |</span><br><span class="hljs-comment">sum  = 12                      |</span><br><span class="hljs-comment">sizeof(rect1)=8</span><br><span class="hljs-comment">sum  = 18</span><br><span class="hljs-comment">sizeof(rect2)=8</span><br><span class="hljs-comment">--------------------------------</span><br><span class="hljs-comment">*/</span><br><br></code></pre></td></tr></table></figure>
+<p>由图可知。所有类或类对象的占用内存都为 8 bytes &#x3D; 两个int 型变量的内存和。也就是说静态成员并不占用类<code>Rectangle</code>和其对象的内存空间。<br>那么<code>static</code>在哪里分配内存的呢？是的，全局数据区(静态区)。<br>再看看<code>GetSum()</code>，第一次 12&#x3D;3*4，第二次 18&#x3D;12+2*3。由此可得，所有类实例共享一个 <code>sum</code> ，且 <code>sum</code> 只会被初始化一次，与实例无关。</p>
+<p><strong>存储方式：</strong></p>
+<ul>
+<li>静态成员在数据段分配内存（独立于类实例）</li>
+<li>一般数据成员，请参考文章  <a href="https://lonlypan.com/archivers/%E7%A8%8B%E5%BA%8F%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83">《程序在内存中的分布》</a></li>
+</ul>
+<p><strong>可见性：</strong></p>
+<ul>
+<li>由于静态数据成员不属于特定的类实例，所以在没有类实例时其在作用域就可见（即可访问）</li>
+<li>即一般数据成员只有在类实例创建后，才可以通过实例名访问</li>
+<li>而静态数据成员除了实例名，还可以直接通过类名访问</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>由于静态成员先于类实例存在，所以初始化在类体外进行，在程序一开始就初始化</li>
+<li>一般类成员在实例创建时初始化（一般在类构造函数内）</li>
+</ul>
+<h4 id="2、静态成员函数"><a href="#2、静态成员函数" class="headerlink" title="2、静态成员函数"></a>2、静态成员函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> m_w,m_h;<br>	<span class="hljs-type">static</span> <span class="hljs-type">int</span> s_sum;<br>	<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Rectangle</span>(<span class="hljs-type">int</span> w,<span class="hljs-type">int</span> h)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_w = w;<br>		<span class="hljs-keyword">this</span>-&gt;m_h = h;<br>		s_sum += (<span class="hljs-keyword">this</span>-&gt;m_w * <span class="hljs-keyword">this</span>-&gt;m_h);<br>	&#125;<br> <br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">GetSum</span><span class="hljs-params">()</span>  <span class="hljs-comment">//这里加上static</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout&lt;&lt;<span class="hljs-string">&quot;sum = &quot;</span>&lt;&lt;s_sum&lt;&lt;endl;<br>	&#125;<br> <br>&#125;;<br> <br><span class="hljs-type">int</span> Rectangle::s_sum = <span class="hljs-number">0</span>;  <span class="hljs-comment">//初始化</span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(Rectangle)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(Rectangle)&lt;&lt;endl;<br>    <br>	Rectangle *rect1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Rectangle</span>(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br>	rect1-&gt;<span class="hljs-built_in">GetSum</span>();<br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(rect1)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(*rect1)&lt;&lt;endl;<br>    <br>	<span class="hljs-function">Rectangle <span class="hljs-title">rect2</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)</span></span>;<br>	rect2.<span class="hljs-built_in">GetSum</span>();            <span class="hljs-comment">/* 一般访问方式 */</span><br>	cout&lt;&lt;<span class="hljs-string">&quot;sizeof(rect2)=&quot;</span>&lt;&lt;<span class="hljs-built_in">sizeof</span>(rect2)&lt;&lt;endl;<br>    <br>	Rectangle::<span class="hljs-built_in">GetSum</span>();  <span class="hljs-comment">/* 也可以可以用类名::函数名访问 */</span><br> <br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>存储方式：</strong></p>
+<ul>
+<li>函数都是存储在代码段，static并不改变存储位置。</li>
+</ul>
+<p><strong>可见性：</strong></p>
+<ul>
+<li>静态成员之间可以相互访问，即静态成员函数（仅）可以访问静态成员变量、静态成员函数</li>
+<li>静态成员函数不能访问非静态成员函数和非静态成员变量（因为静态函数先于他们存在）</li>
+<li>非静态成员函数可以任意地访问静态成员函数和静态数据成员</li>
+<li>静态函数可以使用类名或实例名访问，但一般函数只能通过实例名访问</li>
+</ul>
+<p><strong>初始化</strong></p>
+<ul>
+<li>好像没这个说法</li>
+</ul>
+<p><strong>补充说明</strong><br>在一些代码中，我们可能看到 class 类数据成员和成员函数都使用 static 修饰，此时类一般都是只实例化一个对象，其对象的概念较轻。类在这里的作用的更多的是可见性和方便管理。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014453898/article/details/64124269">1. C++static类成员，static类成员函数</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/majianfei1023/article/details/45290467">2. c++中static的用法详解</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/dqjyong/article/details/7976735">3. c++ static的作用，以及static对象在类和函数中区别</a><br><a target="_blank" rel="noopener" href="http://harlon.org/2018/03/21/cpluscplusstatic/">4. C++之静态详解</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/stoneJin/archive/2011/09/21/2183313.html">5. static作用（修饰函数、局部变量、全局变量）</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37439983">6. C&#x2F;C++ 中的static关键字</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/secondtonone1/p/5694436.html">7. C++ 局部静态变量，全局变量，全局静态变量，局部变量的区别和联系</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000004157283">8. C++局部静态变量在什么时候分配内存和初始化？</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/cpp-static-const.html">9. C++ static、const 和 static const 类型成员变量声明以及初始化</a>  </p>
+<h3 id="new和malloc-2020-04-11"><a href="#new和malloc-2020-04-11" class="headerlink" title="new和malloc-2020-04-11"></a>new和malloc-2020-04-11</h3><h4 id="malloc"><a href="#malloc" class="headerlink" title="malloc"></a>malloc</h4><p><code>void * malloc（size_t大小）;</code></p>
+<p><strong>简介：</strong><br>分配一个内存大小为 size 字节的块，并返回一个指向该块开头的指针。<br>新分配的内存块的内容未初始化，剩余的值不确定。<br>如果size为零，则返回值取决于特定的库实现（它可以是null指针，也可以不是null指针），但不应取消对返回的指针的引用。</p>
+<p><strong>参数：</strong><br>size – 内存块的大小，以字节为单位。<br>size_t 是无符号整数类型。</p>
+<p><strong>返回值：</strong><br>成功时，指向函数分配的内存块的指针。<br>该指针的类型始终为void*，可以将其强制转换为所需的数据指针类型，以便将其取消引用。<br>如果函数未能分配所请求的内存块，则返回空指针。</p>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* malloc example: random string generator*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span>      <span class="hljs-comment">/* printf, scanf, NULL */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span>     <span class="hljs-comment">/* malloc, free, rand */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span>    <span class="hljs-comment">/* strcpy, strcat */</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span> <span class="hljs-params">()</span><br>&#123;<br>   <span class="hljs-type">char</span> *str;<br> <br>   <span class="hljs-comment">/* 最初的内存分配 */</span><br>   str = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">malloc</span>(<span class="hljs-number">15</span>);<br>   <span class="hljs-built_in">strcpy</span>(str, <span class="hljs-string">&quot;runoob&quot;</span>);<br>   <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;String = %s,  Address = %u\n&quot;</span>, str, str);<br> <br>   <span class="hljs-comment">/* 重新分配内存 */</span><br>   str = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">realloc</span>(str, <span class="hljs-number">25</span>);  <span class="hljs-comment">/* 尝试重新调整之前调用 malloc 所分配的 str 所指向的内存块的大小 */</span><br>   <span class="hljs-built_in">strcat</span>(str, <span class="hljs-string">&quot;.com&quot;</span>);  <span class="hljs-comment">/* 把 src 所指向的字符串追加到 dest 所指向的字符串的结尾 */</span><br>   <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;String = %s,  Address = %u\n&quot;</span>, str, str);<br> <br>   <span class="hljs-built_in">free</span>(str);  <span class="hljs-comment">/* 释放内存 */</span><br> <br>   <span class="hljs-keyword">return</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">String = runoob,  Address = <span class="hljs-number">57917504</span><br>String = runoob.com,  Address = <span class="hljs-number">57917504</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong><br><code> str = (char *) malloc(15);</code><br> 这里的15 必须必须要大于要存储的字符宽度，包含结束符。<br> 如果小于所要存储的字符大小(比如将上文中 15 改为 1)，实际上运行结果还是一样的，但问题在于多出的字符空间是会随时被其它变量覆盖，不安全。<br> malloc 的作用就是开辟一个专用空间，不会被其它程序和变量占用。</p>
+<p><strong>参考链接：</strong><br><a target="_blank" rel="noopener" href="http://www.cplusplus.com/reference/cstdlib/malloc/">1. malloc</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-malloc.html">2. C 库函数 - malloc()</a>  </p>
+<h4 id="new"><a href="#new" class="headerlink" title="new"></a>new</h4><p><code>new data-type;</code></p>
+<p>data-type 可以是包含数组在内的任意内置的数据内省，也可以包括类或结构在内的用户自定义的任何数据类型。</p>
+<h5 id="内置数据类型分配"><a href="#内置数据类型分配" class="headerlink" title="内置数据类型分配"></a>内置数据类型分配</h5><p>实例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br>using namespace <span class="hljs-built_in">std</span>;<br> <br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span> <span class="hljs-params">()</span><br>&#123;<br>   <span class="hljs-type">double</span>* pvalue  = <span class="hljs-literal">NULL</span>; <span class="hljs-comment">/* 声明初始化一个为 null 的指针 */</span><br>                           <span class="hljs-comment">/* 因为用 new 分配返回的是内存地址，所以变量也必须为指针类型 */</span><br>   pvalue  = new <span class="hljs-type">double</span>;   <span class="hljs-comment">/* 为变量请求内存，分配失败，会返回 NULL指针 */</span><br> <br>   *pvalue = <span class="hljs-number">29494.99</span>;     <span class="hljs-comment">/* 在分配的地址存储值 */</span><br>   <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;Value of pvalue : &quot;</span> &lt;&lt; *pvalue &lt;&lt; <span class="hljs-built_in">endl</span>;  <span class="hljs-comment">/* 输出打印值 */</span><br> <br>   delete pvalue;         <span class="hljs-comment">/* 释放 pvalue 所指向的内存 */</span><br> <br>   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">Value of pvalue : <span class="hljs-number">29495</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="数组内存分配"><a href="#数组内存分配" class="headerlink" title="数组内存分配"></a>数组内存分配</h5><p><strong>一维数组</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 动态分配,数组长度为 m</span><br><span class="hljs-type">int</span> *array=<span class="hljs-keyword">new</span> <span class="hljs-type">int</span> [m];<br> <br><span class="hljs-comment">//释放内存</span><br><span class="hljs-keyword">delete</span> [] array;<br></code></pre></td></tr></table></figure>
+<p><strong>二维数组</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> **array<br><span class="hljs-comment">// 假定数组第一维长度为 m， 第二维长度为 n</span><br><span class="hljs-comment">// 动态分配空间</span><br>array = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span> *[m];<br><span class="hljs-keyword">for</span>( <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m; i++ )<br>&#123;<br>    array[i] = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span> [n]  ;<br>&#125;<br><span class="hljs-comment">//释放</span><br><span class="hljs-keyword">for</span>( <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m; i++ )<br>&#123;<br>    <span class="hljs-keyword">delete</span> [] arrary[i];<br>&#125;<br><span class="hljs-keyword">delete</span> [] array;<br></code></pre></td></tr></table></figure>
+
+<h5 id="类对象实例内存分配"><a href="#类对象实例内存分配" class="headerlink" title="类对象实例内存分配"></a>类对象实例内存分配</h5><p>对象与简单的数据类型没有什么不同。例如，请看下面的代码，我们将使用一个对象数组来理清这一概念：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Box</span><br>&#123;<br>   <span class="hljs-keyword">public</span>:<br>      <span class="hljs-built_in">Box</span>() &#123; <br>         cout &lt;&lt; <span class="hljs-string">&quot;调用构造函数！&quot;</span> &lt;&lt;endl; <br>      &#125;<br>      ~<span class="hljs-built_in">Box</span>() &#123; <br>         cout &lt;&lt; <span class="hljs-string">&quot;调用析构函数！&quot;</span> &lt;&lt;endl; <br>      &#125;<br>&#125;;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">( )</span></span><br><span class="hljs-function"></span>&#123;<br>   Box* myBoxArray = <span class="hljs-keyword">new</span> Box[<span class="hljs-number">4</span>];<br> <br>   <span class="hljs-keyword">delete</span> [] myBoxArray; <span class="hljs-comment">// 删除数组</span><br>   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果要为一个包含四个 Box 对象的数组分配内存，构造函数将被调用 4 次，同样地，当删除这些对象时，析构函数也将被调用相同的次数（4次）。</p>
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs">调用构造函数！<br>调用构造函数！<br>调用构造函数！<br>调用构造函数！<br>调用析构函数！<br>调用析构函数！<br>调用析构函数！<br>调用析构函数！<br></code></pre></td></tr></table></figure>
+
+<h4 id="delete-与-delete-区别："><a href="#delete-与-delete-区别：" class="headerlink" title="delete 与 delete[] 区别："></a>delete 与 delete[] 区别：</h4><p>1、针对简单类型 使用 new 分配后的不管是数组还是非数组形式内存空间用两种方式均可 如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> *a = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span>[<span class="hljs-number">10</span>];   <br><span class="hljs-keyword">delete</span> a;   <br><span class="hljs-keyword">delete</span> [] a;<br></code></pre></td></tr></table></figure>
+<p>此种情况中的释放效果相同，原因在于：分配简单类型内存时，内存大小已经确定，系统可以记忆并且进行管理，在析构时，系统并不会调用析构函数， 它直接通过指针可以获取实际分配的内存空间，哪怕是一个数组内存空间(在分配过程中 系统会记录分配内存的大小等信息，此信息保存在结构体_CrtMemBlockHeader中， 具体情况可参看VC安装目录下CRT\SRC\DBGDEL.cpp)</p>
+<p>2、针对类Class，两种方式体现出具体差异</p>
+<p>当你通过下列方式分配一个类对象数组：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span><br>&#123;<br>    <span class="hljs-keyword">private</span>:<br>        <span class="hljs-type">char</span> *m_cBuffer;<br>        <span class="hljs-type">int</span> m_nLen;<br>    <span class="hljs-keyword">public</span>:<br>        <span class="hljs-built_in">A</span>()&#123; m_cBuffer = <span class="hljs-keyword">new</span> <span class="hljs-type">char</span>[m_nLen]; &#125;<br>        ~<span class="hljs-built_in">A</span>() &#123; <span class="hljs-keyword">delete</span> [] m_cBuffer; &#125;<br>&#125;;<br>A *a = <span class="hljs-keyword">new</span> A[<span class="hljs-number">10</span>];<br><br><span class="hljs-comment">// 仅释放了a指针指向的全部内存空间 但是只调用了a[0]对象的析构函数 剩下的从a[1]到a[9]这9个用户自行分配的m_cBuffer对应内存空间将不能释放 从而造成内存泄漏</span><br><span class="hljs-keyword">delete</span> a;<br><br><span class="hljs-comment">// 调用使用类对象的析构函数释放用户自己分配内存空间并且   释放了a指针指向的全部内存空间</span><br><span class="hljs-keyword">delete</span> [] a;<br></code></pre></td></tr></table></figure>
+
+<p>所以总结下就是，如果ptr代表一个用new申请的内存返回的内存空间地址，即所谓的指针，那么：</p>
+<ul>
+<li><strong>delete ptr</strong> – 代表用来释放内存，且只用来释放ptr指向的内存。</li>
+<li><strong>delete[] rg</strong> – 用来释放rg指向的内存，！！还逐一调用数组中每个对象的 destructor！！</li>
+</ul>
+<p>对于像 int&#x2F;char&#x2F;long&#x2F;int*&#x2F;struct 等等简单数据类型，由于对象没有 destructor，所以用 delete 和 delete [] 是一样的！但是如果是C++ 对象数组就不同了！</p>
+<h5 id="new-和-malloc-内部的实现方式区别"><a href="#new-和-malloc-内部的实现方式区别" class="headerlink" title="new 和 malloc 内部的实现方式区别"></a>new 和 malloc 内部的实现方式区别</h5><p>new 的功能是在堆区新建一个对象，并返回该对象的指针。<br>所谓的【新建对象】的意思就是，将调用该类的构造函数，因为如果不构造的话，就不能称之为一个对象。</p>
+<p>而 malloc 只是机械的分配一块内存，如果用 mallco 在堆区创建一个对象的话，是不会调用构造函数的。<br>严格说来用 malloc 不能算是新建了一个对象，只能说是分配了一块与该类对象匹配的内存而已，然后强行把它解释为【这是一个对象】，按这个逻辑来，也不存在构造函数什么事。</p>
+<p>同样的，用 delete 去释放一个堆区的对象，会调用该对象的析构函数。<br>用 free 去释放一个堆区的对象，不会调用该对象的析构函数。</p>
+<p>做个简单的实验即可明了:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;malloc.h&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TEST</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> num1;<br>    <span class="hljs-type">int</span> num2;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">TEST</span>()<br>    &#123;<br>        num1 = <span class="hljs-number">10</span>;<br>        num2 = <span class="hljs-number">20</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Print</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        std::cout &lt;&lt; num1 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; num2 &lt;&lt; std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 用malloc()函数在堆区分配一块内存空间，然后用强制类型转换将该块内存空间</span><br>    <span class="hljs-comment">// 解释为是一个TEST类对象，这不会调用TEST的默认构造函数</span><br>    TEST * pObj1 = (TEST *)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">sizeof</span>(TEST));<br>    pObj1-&gt;<span class="hljs-built_in">Print</span>();<br><br>    <span class="hljs-comment">// 用new在堆区创建一个TEST类的对象，这会调用TEST类的默认构造函数</span><br>    TEST * pObj2 = <span class="hljs-keyword">new</span> TEST;<br>    pObj2-&gt;<span class="hljs-built_in">Print</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">运行结果：</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-----------------------------</span><br><span class="hljs-comment">-842150451 -842150451       |  pObj1所指的对象中，字段num1与num2都是垃圾值  </span><br><span class="hljs-comment">10 20                       |  pObj2所指的对象中，字段num1与num2显然是经过了构造后的值</span><br><span class="hljs-comment">-----------------------------</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="参考资料-1"><a href="#参考资料-1" class="headerlink" title="参考资料"></a>参考资料</h4><p><a target="_blank" rel="noopener" href="https://www.runoob.com/cplusplus/cpp-dynamic-memory.html">C++ 动态内存</a></p>
+<h3 id="数组-array-vector-2019-5-27"><a href="#数组-array-vector-2019-5-27" class="headerlink" title="数组_array_vector- 2019-5-27"></a>数组_array_vector- 2019-5-27</h3><p>C++ 中有三种数组：C风格的数组、std::array、std::vector。</p>
+<p>编译软件：Visual Studio 2019</p>
+<h4 id="C风格的数组"><a href="#C风格的数组" class="headerlink" title="C风格的数组"></a>C风格的数组</h4><p>这个风格不够现代，且不够安全，示例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">print_array</span><span class="hljs-params">(<span class="hljs-type">int</span> *arr)</span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">10</span>;i++)<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>,arr[i]);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">int</span> carr[<span class="hljs-number">10</span>]; <span class="hljs-comment">// 内容随机，</span><br>    print_array(carr);<br><br>    <span class="hljs-type">int</span> carr1[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">1</span>&#125;; <span class="hljs-comment">// 第一个元素为1，其余0</span><br>    print_array(carr1);<br><br>    <span class="hljs-type">int</span> carr2[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>&#125;; <span class="hljs-comment">// 第一个元素为1，第二个2，其余0</span><br>    print_array(carr2);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可能的输出如下：</p>
+<p>0 0 -1572448 32766 -1460174784 21991 -1460174775 21991 1327354688 10961<br>1 0 0 0 0 0 0 0 0 0<br>1 2 0 0 0 0 0 0 0 0   </p>
+<h4 id="std-array"><a href="#std-array" class="headerlink" title="std::array"></a>std::array</h4><p>std::array是C++11引入的一个模板类，封装了C风格的数组，因此是固定大小的数组容器。所谓固定大小，是指编译时就确定了大小。通常情况下是占用栈（stack）上的空间，且性能更好（相比std::vector）。</p>
+<p>需要头文件：</p>
+<p><code>#include &lt;array&gt;</code></p>
+<p>示例如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_array</span><span class="hljs-params">(std::array&lt;<span class="hljs-type">int</span>, <span class="hljs-number">10</span>&gt; arr)</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, arr[i]);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	std::array&lt;<span class="hljs-type">int</span>, 10&gt; stdarr; <span class="hljs-comment">// 表示int类型的大小为10的数组。内容随机，有的编译器会报错</span><br>	<span class="hljs-built_in">print_array</span>(stdarr);<br>	<br>	std::array&lt;<span class="hljs-type">int</span>, 10&gt; stdarr = &#123;<span class="hljs-number">1</span>&#125;; <span class="hljs-comment">// 第一个元素为1，其余0</span><br>	<span class="hljs-built_in">print_array</span>(stdarr);<br><br>	std::array&lt;<span class="hljs-type">int</span>, 10&gt; stdarr2 = &#123; <span class="hljs-number">1</span>,<span class="hljs-number">2</span> &#125;; <span class="hljs-comment">// 第一个元素为1，第二个2，其余0</span><br>	<span class="hljs-built_in">print_array</span>(stdarr2);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p>—— 第一个编译直接报错，显示未赋初值<br>1 0 0 0 0 0 0 0 0 0<br>1 2 0 0 0 0 0 0 0 0  </p>
+<p>std::array相比C风格数组的另一个优势是：可以使用STL的各种算法函数。 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/container/array">更多方法见这里 </a></p>
+<p>例如这里的示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_array</span><span class="hljs-params">(std::array&lt;<span class="hljs-type">int</span>, <span class="hljs-number">3</span>&gt; arr,<span class="hljs-type">int</span> size)</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, arr[i]);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	std::array&lt;<span class="hljs-type">int</span>, 3&gt; stdarr3 = &#123; <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span> &#125;;<br>	std::<span class="hljs-built_in">sort</span>(stdarr3.<span class="hljs-built_in">begin</span>(), stdarr3.<span class="hljs-built_in">end</span>());  <span class="hljs-comment">// 从低到高排序</span><br>	<span class="hljs-built_in">print_array</span>(stdarr3, <span class="hljs-number">3</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p>1 2 3</p>
+<h4 id="std-vector"><a href="#std-vector" class="headerlink" title="std::vector"></a>std::vector</h4><p>std::vector是一个老牌的C++模板类，提供了动态大小的数组。std::vector的数据是存储在堆（heap）上的，因此性能上不如std::array（堆的访问速度小于栈的访问速度）。</p>
+<p>首先包含头文件：</p>
+<p>示例如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_array</span><span class="hljs-params">(std::vector&lt;<span class="hljs-type">int</span>&gt; arr,<span class="hljs-type">int</span> size)</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, arr[i]);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	std::vector&lt;<span class="hljs-type">int</span>&gt; v = &#123; <span class="hljs-number">7</span>, <span class="hljs-number">5</span>, <span class="hljs-number">16</span>, <span class="hljs-number">8</span> &#125;;  <span class="hljs-comment">//定义一个可变大小的数组，并赋初值</span><br>	v.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">25</span>);  <span class="hljs-comment">// 向数组末尾添加数据</span><br>	v.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">13</span>);<br>	<span class="hljs-built_in">print_array</span>(v, v.<span class="hljs-built_in">size</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p>7 5 16 8 25 13</p>
+<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/container/vector">更多方法见这里：</a></p>
+<p>由于std::vector是动态大小的数组，那必然存在已有空间不够的情况，那空间大小是如何再次分配的呢？<br>通过跟进push_back的代码，可看到如下：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8C%E8%AF%AD%E8%A8%80-%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%BE%E5%A0%82-%E4%B9%90%E5%AD%A6%E5%81%B6%E7%9A%84/enter_description_here.png" srcset="/img/loading.gif" lazyload alt="enter_description_here"></p>
+<p>可知当最终空间不足时，会不断的把容量*2。容量是capacity，而不是size。size是已经占用数据的大小，capacity是vector为了实现动态数组，提前申请出的空间。因此vector当发生容量乘以2时，会带来数据的复制。从老的地址空间复制数据到扩大后的地址空间。这也是可能带来性能问题的地方。因此有时可以提前一次申请足够的空间，例如：std::vector&lt;int&gt; v(100)。</p>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4424579/stdvector-versus-stdarray-in-c">stdvector-versus-stdarray-in-c</a></li>
+</ul>
+<h4 id="扩展：二维数组，可变数组"><a href="#扩展：二维数组，可变数组" class="headerlink" title="扩展：二维数组，可变数组"></a>扩展：二维数组，可变数组</h4><h5 id="1、array-lt-array-lt-int-5-gt-3-gt-array-t-二维数组"><a href="#1、array-lt-array-lt-int-5-gt-3-gt-array-t-二维数组" class="headerlink" title="1、array &lt;array&lt;int, 5&gt;, 3 &gt;array_t  二维数组"></a>1、array &lt;array&lt;int, 5&gt;, 3 &gt;array_t  二维数组</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	array&lt;<span class="hljs-type">int</span>, 5&gt; array1 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> &#125;;  <span class="hljs-comment">//定义一个一维的array</span><br>	array&lt;<span class="hljs-type">int</span>, 5&gt; array2 = &#123; <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span> &#125;;<br>	array&lt;<span class="hljs-type">int</span>, 5&gt; array3 = &#123; <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span> &#125;;<br>	array &lt;array&lt;<span class="hljs-type">int</span>, 5&gt;, 3 &gt;<span class="hljs-type">array_t</span> = &#123; array1, array2, array3 &#125;;  <span class="hljs-comment">//定义一个二维数组 3行5列</span><br><br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-type">array_t</span>.<span class="hljs-built_in">size</span>(); i++)  <span class="hljs-comment">// 这里我们在实现数组的遍历的时候，可以使用array.size()求出数组的大小了</span><br>	&#123;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; array1.<span class="hljs-built_in">size</span>(); j++)<br>		&#123;<br>			cout &lt;&lt; <span class="hljs-type">array_t</span>[i][j] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>		&#125;<br>		cout &lt;&lt; endl;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p>1 2 3 4 5<br>6 7 8 9 10<br>11 12 13 14 15  </p>
+<h5 id="2、vector-lt-vector-lt-int-gt-gt-array-t-可变数组"><a href="#2、vector-lt-vector-lt-int-gt-gt-array-t-可变数组" class="headerlink" title="2、vector&lt;vector&lt;int&gt;&gt; array_t   可变数组"></a>2、vector&lt;vector&lt;int&gt;&gt; array_t   可变数组</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>	<span class="hljs-comment">//vector&lt;vector&lt;int&gt;&gt; array_t;</span><br>	vector&lt;<span class="hljs-type">int</span>&gt; array1 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> &#125;;  <span class="hljs-comment">//定义一个一维的可变array数组</span><br>	vector&lt;<span class="hljs-type">int</span>&gt; array2 = &#123; <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span> &#125;;  <br>	vector&lt;<span class="hljs-type">int</span>&gt; array3 = &#123; <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span> &#125;;<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-type">array_t</span> = &#123; array1, array2, array3 &#125;;  <span class="hljs-comment">//定义一个行列都可变的二维数组</span><br><br>	<span class="hljs-comment">//array_t.push_back(array1);</span><br>	<span class="hljs-type">int</span> i;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt;<span class="hljs-type">array_t</span>.<span class="hljs-built_in">size</span>(); i++)  <span class="hljs-comment">// 这里我们在实现数组的遍历的时候，可以使用array.size()求出数组的大小了</span><br>	&#123;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-type">array_t</span>[i].<span class="hljs-built_in">size</span>(); j++)<br>		&#123;<br>			cout &lt;&lt; <span class="hljs-type">array_t</span>[i][j] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>		&#125;<br>		cout &lt;&lt; endl;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出结果：注意这里数组大小是变化的</p>
+<p>1 2 3 4 5<br>6 7 8 9 10 11<br>11 12 13 14 15 16  </p>
+<h5 id="3、array-lt-vector-lt-int-gt-3-gt-array-t-局部可变二维数组"><a href="#3、array-lt-vector-lt-int-gt-3-gt-array-t-局部可变二维数组" class="headerlink" title="3、array &lt;vector&lt;int&gt;, 3&gt; array_t  局部可变二维数组"></a>3、array &lt;vector&lt;int&gt;, 3&gt; array_t  局部可变二维数组</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;array&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	vector&lt;<span class="hljs-type">int</span>&gt; array1 = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> &#125;;  <span class="hljs-comment">//定义一个一维的可变array</span><br>	vector&lt;<span class="hljs-type">int</span>&gt; array2 = &#123; <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span> &#125;;<br>	vector&lt;<span class="hljs-type">int</span>&gt; array3 = &#123; <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span> &#125;;<br>	array&lt;vector&lt;<span class="hljs-type">int</span>&gt;, 3&gt;<span class="hljs-type">array_t</span> = &#123; array1 ,array2 ,array3 &#125;;   <span class="hljs-comment">// 声明 3行 但 不定列（类型为int）的可变二维数组</span><br><br>	<span class="hljs-type">int</span> i;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt;<span class="hljs-type">array_t</span>.<span class="hljs-built_in">size</span>(); i++)  <span class="hljs-comment">// 这里我们在实现数组的遍历的时候，可以使用array.size()求出数组的大小了</span><br>	&#123;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-type">array_t</span>[i].<span class="hljs-built_in">size</span>(); j++)<br>		&#123;<br>			cout &lt;&lt; <span class="hljs-type">array_t</span>[i][j] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>		&#125;<br>		cout &lt;&lt; endl;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里和上一个很相似，注意程序区别。<br>输出结果： </p>
+<p>1 2 3 4 5<br>6 7 8 9 10 11<br>11 12 13 14 15 16  </p>
+<h5 id="4、vector-lt-array-lt-int-5-gt-gt-array-t"><a href="#4、vector-lt-array-lt-int-5-gt-gt-array-t" class="headerlink" title="4、vector&lt;array&lt;int,5&gt;&gt; array_t"></a>4、vector&lt;array&lt;int,5&gt;&gt; array_t</h5><p>这个留着大家自己探索吧<br>注意这里行是可变的，列示固定的。</p>
+<h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><p>array &lt;array&lt;int, 5&gt;, 3 &gt;array_t &#x3D; { array1, array2, array3 };  &#x2F;&#x2F;定义一个二维数组 3行5列</p>
+<p>在声明以上数组时，初始化的一维数组 array1 类型必须和 array&lt;int, 5&gt;是统一的，即不能按照 C写法（<code>int array1[] = &#123;......&#125;</code>）声明，否则会报错。当然你可以挨个赋值，就不用提前声明array1了。</p>
+<h3 id="程序在内存中的分布-2020-04-13"><a href="#程序在内存中的分布-2020-04-13" class="headerlink" title="程序在内存中的分布_2020-04-13"></a>程序在内存中的分布_2020-04-13</h3><p><strong>函数执行：</strong> 从函数的  <code>&#123;</code> 开始，到 <code>&#125;</code> 结束，这之后继续执行下一个函数。<br><strong>程序执行：</strong> 从<code>main()</code> 函数的 <code>&#123;</code>开始，到 <code>&#125;</code> 结束，这之后启动执行下一个程序。但其实对于大多数没有操作系统的单片机来说，只有一个 <code>main()</code> 函数，程序执行结束则意味着重启或停机。</p>
+<h4 id="内存分布"><a href="#内存分布" class="headerlink" title="内存分布"></a>内存分布</h4><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8C%E8%AF%AD%E8%A8%80-%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%BE%E5%A0%82-%E4%B9%90%E5%AD%A6%E5%81%B6%E7%9A%84/%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83.png" srcset="/img/loading.gif" lazyload alt="程序内存分布"><br><strong>1. stack栈区</strong></p>
+<ol>
+<li>存储自动变量、每次函数调用时需要保存的信息（函数参数，函数内局部变量，函数返回值，函数调用时的返回地址）</li>
+<li>函数返回时（执行结束），系统自动回收内存</li>
+<li>先入后出：最先存入栈中的数据最后取出。</li>
+</ol>
+<p><strong>2. heap堆区</strong></p>
+<ol>
+<li>动态分配的内存，由程序员申请（使用malloc()、new()等内存分配函数实现）</li>
+<li>若不手动释放内存，则一直存在。对于 new()，会在程序执行结束后由系统回收。</li>
+</ol>
+<p><strong>3. 数据段</strong></p>
+<p>编译器编译时就已经分配好内存</p>
+<ul>
+<li><p><strong>bbs段</strong></p>
+<p>未初始化的变量，在执行时由系统初始化为 0。例如：对于全局数组，会在程序执行（main函数开始）之前由系统全部初始化为0。</p>
+</li>
+<li><p><strong>data段</strong></p>
+<p>具有明确初始值的变量</p>
+</li>
+</ul>
+<p><strong>4.  text代码段</strong></p>
+<ol>
+<li>CPU执行的机器指令，即程序代码。</li>
+<li>只读数据（常量）</li>
+</ol>
+<blockquote>
+<p><strong>总结如下：</strong><br>堆栈和数据区存放的都是变量，但堆栈存放程序运行时的数据（由系统分配）。数据区则是在编译器编译期就已经分配好的<br>代码段存放代码和常量，即变量之外的数据</p>
+</blockquote>
+<p><strong>5. 命令行参数和环境变量</strong></p>
+<p>这个不是太明白，目前只是粗略了解，可能理解会有很多错误：</p>
+<ul>
+<li><p>命令行参数</p>
+<p>只要有操作系统就会有<strong>命令行</strong>这个概念，是操作系统的一个最基本的对外交互操作方式，使用者可以在命令行界面输入各种<strong>参数</strong>指令来执行比如读取文件，写入文件，运行程序等等操作。  这样使用者就可以正常运行整个系统程序。如果没有了<strong>命令行</strong>，就相当于整个操作系统（程序）对外封闭，别人无法获取任何信息，那么系统也就没有了意义。</p>
+<p>对于 windows系统，我们也可以理解我们每次双击打开文件，读写文件时其实是后台在调用命令行操作，这样用户不需要了解任何程序也可以正常使用这个系统。</p>
+</li>
+<li><p>环境变量</p>
+<p>可以理解为系统运行时的用到的各种 <strong>用户可修改的变量</strong>，比如 “Path” 变量，里面存储了一些常用命令所存放的目录路径， 当用户将自定义文件目录添加到 “Path” 下之后，运行某些程序除了在当前文件夹查找，还会到设置的 Path 路径中区查找。还比如 <strong>系统语言</strong> 等变量。</p>
+</li>
+</ul>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/muhuizz/1767467">1. main函数——命令行参数与环境变量</a>  </p>
+<h4 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h4><p><strong>1.分配和管理方式不同</strong> </p>
+<ul>
+<li>堆是动态分配的，其空间的分配和释放都由程序员控制。</li>
+<li>栈由编译器自动管理。栈有两种分配方式：静态分配和动态分配。<ul>
+<li>静态分配由编译器完成，比如局部变量的分配。</li>
+<li>动态分配由<code>malloc()</code>函数进行分配，但是栈的动态分配和堆是不同的，它的动态分配是由编译器进行释放，无须手工控制。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.产生碎片不同</strong></p>
+<ul>
+<li>对堆来说，频繁的new&#x2F;delete或者malloc&#x2F;free势必会造成内存空间的不连续，造成大量的碎片，使程序效率降低。</li>
+<li>对栈而言，则不存在碎片问题，因为栈是先进后出的队列，永远不可能有一个内存块从栈中间弹出。</li>
+</ul>
+<p><strong>3.生长方向不同</strong></p>
+<ul>
+<li>堆是从内存的低地址向高地址方向增长。</li>
+<li>栈是从内存的高地址向低地址方向增长。</li>
+</ul>
+<h4 id="程序举例"><a href="#程序举例" class="headerlink" title="程序举例"></a>程序举例</h4><h5 id="C程序"><a href="#C程序" class="headerlink" title="C程序"></a>C程序</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">0</span>;      <span class="hljs-comment">// a 在 data</span><br><span class="hljs-type">char</span> *p1;       <span class="hljs-comment">// p1 在 bss</span><br><br>main()            <span class="hljs-comment">/* 函数体在代码段 */</span><br>&#123;<br>    <span class="hljs-type">int</span> b;                      <span class="hljs-comment">// b 在 stack</span><br>    <span class="hljs-type">char</span> s[] = <span class="hljs-string">&quot;abc&quot;</span>;           <span class="hljs-comment">// s 在 stack, abc\0 在text代码段</span><br>    <span class="hljs-type">char</span> *p2;                   <span class="hljs-comment">// p2 在 stack</span><br>    <span class="hljs-type">char</span> *p3 = <span class="hljs-string">&quot;123456&quot;</span>;        <span class="hljs-comment">// p3 在 stack, 123456\0 在text代码段</span><br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> c = <span class="hljs-number">0</span>;           <span class="hljs-comment">// c 在 data</span><br>    p1 = (<span class="hljs-type">char</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">10</span>);    <span class="hljs-comment">// 申请的10字节内存在 heap, bss 中的指针 p1 指向 heap 中的内存</span><br>    p2 = (<span class="hljs-type">char</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">20</span>);    <span class="hljs-comment">// 申请的20字节内存在 heap, stack 中的指针 p2 指向heap中的内存</span><br>    <span class="hljs-built_in">strcpy</span>(p1, <span class="hljs-string">&quot;123456&quot;</span>);       <span class="hljs-comment">// 123456\0 在text代码段，编译器可能会将它与 p3 所指向的 &quot;123456&quot; 优化成一块</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="C-程序"><a href="#C-程序" class="headerlink" title="C++程序"></a>C++程序</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-comment">/* 类本身即其内部成员存储在代码区，不占用任何其它内存，只是一段代码，必须实例化才会具有意义 */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyObject</span>&#123;<br>    <span class="hljs-type">int</span> a;<br>    <br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><br>MyObject obj1;   <span class="hljs-comment">/* 语句1 */</span><br>MyObject *obj2 = <span class="hljs-keyword">new</span> MyObject;   <span class="hljs-comment">/* 语句2 */</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MyObject::func1</span><span class="hljs-params">()</span></span>&#123;<br>    MyObject obj3;   <span class="hljs-comment">/* 语句3 */</span><br>    MyObject *obj4 = <span class="hljs-keyword">new</span> MyObject;   <span class="hljs-comment">/* 语句 4*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>函数外部：</strong><br>语句1实例化的对象及其一般数据成员存放在全局数据段<br>语句2实例化的对象及其一般数据成员存放在堆区，因为使用 new 分配。  </p>
+<p><strong>函数外部：</strong><br>语句3 实例化的对象及其一般数据成员存放在栈中，随着函数执行结束而结束<br>语句4 实例化的对象及其一般数据成员存放在堆中，随着函数执行结束而结束。但此时销毁的只是指针 obj4，其指向的对象并没有，也就是还在占用内容，会造成内存泄露，所以必须要手动释放。</p>
+<h4 id="参考资料-2"><a href="#参考资料-2" class="headerlink" title="参考资料"></a>参考资料</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Lynn-Zhang/p/5449199.html">1. 程序在内存中的分布</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/155e83ba18b8">2. 程序在内存中的分布</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/why19911024/article/details/53033426">3. C 程序的内存空间布局</a><br><a target="_blank" rel="noopener" href="https://www.devbean.net/2014/02/cpp-create-object-on-heap-or-stack/#comment-17679">4. C++：在堆上创建对象，还是在栈上？</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000004149330">5. c++类的成员变量的存储位置？</a><br><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/1737185158839349467.html">6. c++中的类和实例分别存储在什么地方</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fuzhongmin05/article/details/59112081">7. C++成员函数在内存中的存储方式</a><br><a target="_blank" rel="noopener" href="https://www.daniweb.com/programming/software-development/threads/450593/class-members-on-stack-or-heap">8. Class Members on Stack Or Heap?</a><br><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/memory-layout-of-c-program/">9. Memory Layout of C Programs</a><br><a target="_blank" rel="noopener" href="https://www.quora.com/In-what-address-do-the-variables-get-stored-when-declared-in-C-or-C++https://www.quora.com/In-what-address-do-the-variables-get-stored-when-declared-in-C-or-C++">10. In what address do the variables get stored when declared in C or C++?</a>  </p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>零基础入门C语言-网易云课堂-乐学偶的</div>
+      <div>http://lonlypan.com/2019/09/04/零基础入门C语言-网易云课堂-乐学偶的/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年9月4日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/09/04/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title=" C++学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"> C++学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/09/03/C&amp;C++%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" title="C&amp;C++编码规范">
+                        <span class="hidden-mobile">C&amp;C++编码规范</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1284 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="自己需要改正的地方 建议使用 &#x2F;*...*&#x2F; 进行注释，多行单行都适用 全局变量应增加”g_“前缀，静态增加 s_ 前缀，下划线连接 定义函数时左花括号”{“单独占一行，其他的 if、while、for 等语句建议紧随其后 组成 switch、while、do...while 或 for 结构体的语句应该是复合语句。即使该复合语句只包含一条语句也要扩在 &amp;#123;&amp;#125;里 const、vi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&amp;C++编码规范">
+<meta property="og:url" content="http://lonlypan.com/2019/09/03/C&C++%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="自己需要改正的地方 建议使用 &#x2F;*...*&#x2F; 进行注释，多行单行都适用 全局变量应增加”g_“前缀，静态增加 s_ 前缀，下划线连接 定义函数时左花括号”{“单独占一行，其他的 if、while、for 等语句建议紧随其后 组成 switch、while、do...while 或 for 结构体的语句应该是复合语句。即使该复合语句只包含一条语句也要扩在 &amp;#123;&amp;#125;里 const、vi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C%26C%2B%2B%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/C_C%2B%2B.png">
+<meta property="article:published_time" content="2019-09-03T07:15:00.000Z">
+<meta property="article:modified_time" content="2019-09-03T07:15:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/C%26C%2B%2B%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/C_C%2B%2B.png">
+  
+  
+  <title>C&amp;C++编码规范 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C&amp;C++编码规范"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-09-03 15:15" pubdate>
+          2019年9月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          91 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C&amp;C++编码规范</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2019年9月3日 下午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h2 id="自己需要改正的地方"><a href="#自己需要改正的地方" class="headerlink" title="自己需要改正的地方"></a>自己需要改正的地方</h2><ul>
+<li>建议使用 <code>/*...*/</code> 进行注释，多行单行都适用</li>
+<li>全局变量应增加”g_“前缀，静态增加 <code>s_</code> 前缀，下划线连接</li>
+<li>定义函数时左花括号”{“单独占一行，其他的 <code>if</code>、<code>while</code>、<code>for</code> 等语句建议紧随其后</li>
+<li>组成 <code>switch、while、do...while</code> 或 <code>for</code> 结构体的语句应该是复合语句。即使该复合语句只包含一条语句也要扩在 <code>&#123;&#125;</code>里</li>
+<li><code>const、virtual、inline、case</code> 等关键字之后至少要留一个空格；函数名之后不要留空格，紧跟左括号 <code>(</code>，以与关键字区别<span id="more"></span></li>
+</ul>
+<blockquote>
+<p><strong>具体使用规则参考文后的使用示例</strong></p>
+</blockquote>
+<h2 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h2><p><strong>version：</strong> V0.3.1<br><strong>date：</strong>  2021-02-03<br><strong>Modification：</strong>    </p>
+<ul>
+<li>部分内容优化</li>
+</ul>
+<p><strong>version：</strong> V0.3<br><strong>date：</strong>  2020-04-13<br><strong>Modification：</strong>    </p>
+<ul>
+<li>修改代码示例</li>
+</ul>
+<p><strong>version：</strong> V0.2<br><strong>date：</strong>  2020-04-08<br><strong>Modification：</strong>    </p>
+<ul>
+<li>删除一些冗余、繁杂规范</li>
+<li>修改部分规范</li>
+</ul>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p><strong>建议将工程按照功能模块划分子目录，子目录再定义头文件和源文件目录</strong></p>
+<h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><ul>
+<li>为了防止头文件被重复引用，应当用<code>ifndef/define/endif</code>结构产生预处理块</li>
+<li>用 <code>#include &lt;...&gt;</code> 格式来引用标准库的头文件，用 <code>#include &quot;...&quot;</code> 引用非标准库的头文件</li>
+<li>头文件应当职责单一</li>
+<li><strong>头文件中适合放置接口的声明，不适合放置实现</strong><ul>
+<li>类的 public 函数若小于 20行，且是重要函数，可选择写在 <code>.h</code> 文件里</li>
+</ul>
+</li>
+<li><strong>不要在头文件中定义变量</strong></li>
+<li>建议每一个<code>.c</code>文件应有一个同名<code>.h</code>文件，用于声明需要对外公开的接口</li>
+<li><strong>一个模块通常包含多个<code>.c</code>文件，建议放在同一个目录下，目录名即为模块名；如果一个模块包含多个子模块，则建议每一个子模块提供一个对外的<code>.h</code>，文件名为子模块名</strong></li>
+<li>禁止循环依赖</li>
+<li>禁止包含用不到的头文件</li>
+<li>只能通过头文件.h使用<code>extern</code></li>
+<li>禁止在<code>extern &quot;C&quot; </code>包含头文件</li>
+</ul>
+<h2 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h2><ul>
+<li>头文件版权声明一致，放在头文件置顶位置</li>
+<li>如果提交的代码是在开源软件基础上修改所编写或衍生的代码，请遵循开源许可协议要求，并且已完成履行被修改软件的许可证义务</li>
+<li>MajorVersion 主版本号：从 0 开始的，从 alpha（0）到 beta（1）一直到现在的正式版本，主版本号表示一个全新的框架版本，例如：重大的重构、重大的feature改动、重大的不兼容性的变化，但往往不会发生；</li>
+<li>MinorVersion 子版本号：发布较大的新feature功能，或者较大的重构或者模块变化，或者出现不兼容性改动，会增加子版本号；子版本的发布会伴随着完整的change log，算是一个较大的版本发布，有仪式感；</li>
+<li>Revision 修正版本号：往往是bug fix，或者增加较小的feature，较小的功能改进或者模块变化，在保证完整向后兼容的前提下，会增加修正版本号；</li>
+<li>当主版本号增加时，子版本号及修正版本号置0；</li>
+<li>当子版本号增加时，修正版本号置0</li>
+</ul>
+<h2 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h2><ul>
+<li>版本命名规则： MajorVersion . MinorVersion . Revision 即： 主版本号 . 子版本号 . 修正版本号  如： v0.0.1, v1.1.0, 1.7.1</li>
+<li>通用规则：<strong>unix like风格，单词小写，用下划线连接，例如：text_mutex。</strong></li>
+<li>不使用缩写和汉语拼音</li>
+<li>避免名字中出现数字编号</li>
+<li>标识符前不应添加模块、项目、产品、部门的名称作为前缀</li>
+<li><strong>全局变量应增加”g_”前缀，静态增加”s_”前缀，指针增加”p_”前缀</strong></li>
+<li>注意在局部作用域中（单个文件内全局访问）的“全局变量”应视为局部变量，且建议使用静态前缀”s_”加以限定。</li>
+<li>类名、结构体、类型定义（typedef）首字母大写，其余小写，下划线连接</li>
+<li>类的数据成员在通用规格上后接下划线”_“，这样可以避免数据成员与成员函数的参数同名。</li>
+<li><strong>宏、数值、字符串、枚举等等常量的定义，建议采用全大写字母，使用下划线”_”连接</strong></li>
+<li>禁止单字节变量，除局部循环使用</li>
+<li>不建议使用匈牙利命名法</li>
+<li><strong>除了头文件或编译开关等特殊表示定义，宏定义不能使用下划线”_”开头和结尾</strong></li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li><strong>重复代码应该尽可能提炼成函数</strong></li>
+<li>避免函数过长，<strong>新增函数不超过40-50行</strong></li>
+<li>避免函数的代码块嵌套过深,不超过5级</li>
+<li><strong>函数应避免使用全局变量、静态局部变量和 I&#x2F;O 操作，不可避免的地方应集中使用</strong></li>
+<li>设计高扇入（被其它函数调用），合理扇出（调用其它函数）（小于7）的函数</li>
+<li><strong>不变参数使用<code>const</code></strong></li>
+<li>函数参数不超过5个</li>
+<li><strong>除打印类函数外，不要使用可变长参函数</strong></li>
+<li><strong>在源文件范围内声明和定义的所有函数，除非外部可见 ，都应增加<code>static</code>关键字</strong></li>
+<li><strong>不建议使用递归函数调用</strong></li>
+<li>用正确的反义词组命名具有互斥意义的变量或相反动作的函数等</li>
+<li>在多重循环中，应将最忙的循环放在最内层</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li><strong>一个变量只有一个功能，不要把一个变量用作多种用途</strong></li>
+<li><strong>不用或者少用全局变量</strong></li>
+<li><strong>在首次使用前初始化变量</strong></li>
+<li><strong>使用面向接口编程思想，通过API访问数据；若本模块数据需要对外开放，应提供接口函数来设置、获取</strong></li>
+<li>初始化变量离使用地方越近越好</li>
+<li>明确全局变量初始化顺序</li>
+<li><strong>尽量减少没有必要的数据类型默认转换与强制转换</strong></li>
+</ul>
+<h2 id="宏、常量"><a href="#宏、常量" class="headerlink" title="宏、常量"></a>宏、常量</h2><ul>
+<li><strong>宏定义表达式时，使用完备的括号</strong></li>
+<li>将宏定义的多条表达式放在大括号中。使用<code>do-while</code> 结构</li>
+<li><strong>不允许直接使用魔鬼数字</strong></li>
+<li>除非必要，应尽可能使用函数代替宏,除了<code>do-while</code> 结构</li>
+<li><strong>常量建议使用<code>const</code>代替宏</strong></li>
+<li>将多次被调用的“小函数”改为<code>inline</code>函数或者宏实现。</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
+<li>注释风格要统一，注释内容要清楚、明了、含义准确、防止注释二义性</li>
+<li>建议使用”&#x2F;<em>…</em>&#x2F;“进行注释，多行单行都适用</li>
+<li><strong>注释应放在起代码上方相邻位置或右方</strong></li>
+<li>避免在注释中使用缩写，除非是业界通用或子系统内标准化的缩写</li>
+<li><strong>文件头部要注释，建议注释列出：版权说明、版本号、生成日期、作者姓名、功能说明、与其他文件的关系、修改日志等，头文件的注释还应有函数功能的简要说明。</strong></li>
+<li>在代码的功能、意图层次上进行注释，即<strong>注释解释代码难以表达的意图，而不是仅仅重复描述代码</strong></li>
+<li><strong>函数声明处注释函数的功能、性能即用法，包括输入输出函数、函数返回值、可重入的要求等；定义处详细描述函数功能和实现要点，如实现的简要步骤、实现的理由、设计约束等</strong></li>
+<li><strong>对于函数名能够自解释的，可以不写注释。</strong></li>
+<li>在程序块的结束行右方加注释标记，以表明某程序块的结束。</li>
+<li><strong>全局变量要有详细的注释，包括对其功能、取值范围以及存取时注意事项等的说明</strong></li>
+</ul>
+<h2 id="排版与格式"><a href="#排版与格式" class="headerlink" title="排版与格式"></a>排版与格式</h2><ul>
+<li>程序块采用缩进风格编写，<strong>每级缩进为4格空格,不要使用tab键</strong></li>
+<li><strong>相对独立的程序块之间、变量说明之后必须加空行</strong></li>
+<li>一条语句不能过长 如必能拆分需要分行写</li>
+<li>一行只写一条语句</li>
+<li>if、for、do、while、case、switch、default等语句独占一行</li>
+<li>源程序中关系较为紧密的代码尽可能相邻</li>
+<li>注释符(包括„&#x2F;<em>‟„&#x2F;&#x2F;‟„</em>&#x2F;‟)与注释内容之间要用一个空格进行分隔</li>
+<li><strong>定义函数时左花括号”{“单独占一行，其他的<code>if</code>、<code>while</code>、<code>for</code>等语句建议紧随其后</strong></li>
+<li><strong>组成switch、while、do…while 或for 结构体的语句应该是复合语句。即使该复合语句只包含一条语句也要扩在{}里</strong></li>
+<li><strong>const、virtual、inline、case 等关键字之后至少要留一个空格；函数名之后不要留空格，紧跟左括号‘（’，以与关键字区别</strong></li>
+<li>逗号、分号只在后面加空格</li>
+<li><strong>二元操作符：“&#x3D;”、“+&#x3D;” “&gt;&#x3D;”、“&lt;&#x3D;”、“+”、“*”、“%”、“&amp;&amp;”、“||”、“&lt;&lt;”,“^”等的前后应加空格</strong></li>
+<li><strong>一元操作符：“!”、“~”、“++”、“–”、“&amp;”（地址运算符）等前后不加空格</strong></li>
+<li>if、for、while、switch等与后面的括号间应加空格，使if等关键字更为突出、明显</li>
+</ul>
+<h2 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h2><ul>
+<li>不使用与硬件或操作系统关系很大的语句，而使用建议的标准语句，以提高软件的可移植性和可重用性</li>
+</ul>
+<h2 id="业界编程规范"><a href="#业界编程规范" class="headerlink" title="业界编程规范"></a>业界编程规范</h2><ul>
+<li>C语言编程规范参考资料较多，大家可以自行了解，不再赘述。</li>
+</ul>
+<h2 id="编写示例"><a href="#编写示例" class="headerlink" title="编写示例"></a>编写示例</h2><h3 id="常见单词缩写表"><a href="#常见单词缩写表" class="headerlink" title="常见单词缩写表"></a>常见单词缩写表</h3><table>
+<thead>
+<tr>
+<th>单词</th>
+<th>缩写</th>
+<th>单词</th>
+<th>缩写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>argument</td>
+<td>arg</td>
+<td>buffer</td>
+<td>buf</td>
+</tr>
+<tr>
+<td>clock</td>
+<td>clk</td>
+<td>command</td>
+<td>cmd</td>
+</tr>
+<tr>
+<td>compare</td>
+<td>cmp</td>
+<td>configuration</td>
+<td>cfg</td>
+</tr>
+<tr>
+<td>device</td>
+<td>dev</td>
+<td>error</td>
+<td>err</td>
+</tr>
+<tr>
+<td>hexadecimal</td>
+<td>hex</td>
+<td>increment</td>
+<td>inc</td>
+</tr>
+<tr>
+<td>initialize</td>
+<td>init</td>
+<td>maximum</td>
+<td>max</td>
+</tr>
+<tr>
+<td>message</td>
+<td>msg</td>
+<td>minimum</td>
+<td>min</td>
+</tr>
+<tr>
+<td>parameter</td>
+<td>param</td>
+<td>previous</td>
+<td>prev</td>
+</tr>
+<tr>
+<td>register</td>
+<td>reg</td>
+<td>semaphore</td>
+<td>sem</td>
+</tr>
+<tr>
+<td>statistic</td>
+<td>stat</td>
+<td>synchronize</td>
+<td>syn</td>
+</tr>
+<tr>
+<td>temp</td>
+<td>tmp</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="常用缩写及含义"><a href="#常用缩写及含义" class="headerlink" title="常用缩写及含义"></a>常用缩写及含义</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@file</span>              文件名<br><span class="hljs-variable">@author</span>            作者<br><span class="hljs-variable">@brief</span>             简要说明<br><span class="hljs-variable">@param</span>             用于函数说明中，后面接参数名字，然后再接关于该参数的说明<br><span class="hljs-variable">@retval</span>            对函数返回值进行说明<br><span class="hljs-variable">@note</span>              注解信息<br><span class="hljs-variable">@attention</span>         注意信息<br><span class="hljs-variable">@warning</span>           警告信息<br><span class="hljs-variable">@see</span>               表示交叉参考<br><span class="hljs-variable">@TODO</span>              计划内容<br></code></pre></td></tr></table></figure>
+
+<h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment">  * Copyright (c)   LonlyPan . 1998-2011.  All rights reserved.  // 1998为创建日期，2011为最新文件修改日期</span><br><span class="hljs-comment">  * @file:    lcdmenu.c</span><br><span class="hljs-comment">  * @author:  LonlyPan</span><br><span class="hljs-comment">  * @version: V0.1</span><br><span class="hljs-comment">  * @date:    2019-09-04</span><br><span class="hljs-comment">  * @brief:   Header file of xxx module  // 用于详细说明此程序文件完成的主要功能，与其他模块  </span><br><span class="hljs-comment">  *                                     // 或函数的接口，输出值、取值范围、含义及参数间的控</span><br><span class="hljs-comment">  *                                     // 制、顺序、独立或依赖等关系</span><br><span class="hljs-comment">  * @attentio:        注意事项</span><br><span class="hljs-comment">  * @Modification:    本次版本修改添加了xxxx</span><br><span class="hljs-comment">  * @History:         // 修改历史记录表</span><br><span class="hljs-comment">  *   1.Version: 历史版本号</span><br><span class="hljs-comment">  *   Author:</span><br><span class="hljs-comment">  *     date: 历史版本日期</span><br><span class="hljs-comment">  *     Modification: 历史版本修改内容</span><br><span class="hljs-comment">  *   2.Version: 历史版本号</span><br><span class="hljs-comment">  *   ......</span><br><span class="hljs-comment">  */</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __XXX_XX_H  <span class="hljs-comment">/* 定义以防止递归包含  */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __XXX_XX_H</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;math.h&gt;</span>       <span class="hljs-comment">/* 引用标准库的头文件 */</span></span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> “myheader.h”   <span class="hljs-comment">/* 引用非标准库的头文件，若有重复，优先使用用户目录下的 */</span></span><br><br><span class="hljs-comment">/* 禁止在extern &quot;C&quot; 包含头文件 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;   <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span>               /* 类声明，首字母大写 */</span><br><span class="hljs-class">&#123;</span><br>  private: <span class="hljs-comment">/* 缩进两格 */</span><br>    <span class="hljs-comment">/* 数据成员最好全私有，使用函数访问修改 */</span><br>    <span class="hljs-built_in">string</span> table_name_;  <span class="hljs-comment">/*  缩进两格，后加下划线. */</span><br>    <br>  public:<br>   <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * @brief     xxx  // 简介、功能</span><br><span class="hljs-comment">   * @note   // 注意事项</span><br><span class="hljs-comment">   * @param xxx // 参数</span><br><span class="hljs-comment">   * @retval     xxx  // 返回值</span><br><span class="hljs-comment">   */</span><br>   <span class="hljs-comment">/* 函数声明处注释函数的功能、性能及用法，包括输入输出函数、函数返回值、可重入的要求等 */</span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">set_table_name</span><span class="hljs-params">()</span>;  <span class="hljs-comment">// 通用该规则命名  </span><br>    ...<br>&#125;;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PI 3.14   <span class="hljs-comment">// 全大写</span></span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> MI = <span class="hljs-number">1356</span>;  <span class="hljs-comment">// 全大写</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> day_number  = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 通用规则</span><br><br><span class="hljs-comment">/* 使用完备的 &#123;...&#125; ，并使用 do...while 结构 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FOO(x) do&#123; \         <span class="hljs-comment">/* 尽量少用define、使用const代替define */</span></span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arg is %s\n&quot;</span>, x); \<br>        do_something_useful(x); \<br>&#125; <span class="hljs-keyword">while</span>(<span class="hljs-number">0</span>)<br><br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(xxx)</span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  <span class="hljs-comment">/* xxx */</span></span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  <span class="hljs-comment">/* __cplusplus */</span></span><br> <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* __XXX_XX_H */</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/** 和源文件相同，但删除版本记录</span><br><span class="hljs-comment">  * Copyright (c)   LonlyPan . 1998-2011.  All rights reserved.  // 1998为创建日期，2011为最新文件修改日期</span><br><span class="hljs-comment">  * @file： lcdmenu.c</span><br><span class="hljs-comment">  * @author： LonlyPan</span><br><span class="hljs-comment">  * @version： V0.1</span><br><span class="hljs-comment">  * @date：  2019-09-04</span><br><span class="hljs-comment">  * @brief：  Source file of xxx module  // 用于详细说明此程序文件完成的主要功能，与其他模块  </span><br><span class="hljs-comment">  *                                     // 或函数的接口，输出值、取值范围、含义及参数间的控</span><br><span class="hljs-comment">  *                                     // 制、顺序、独立或依赖等关系</span><br><span class="hljs-comment">  */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;math.h&gt;</span>       <span class="hljs-comment">// 引用标准库的头文件</span></span><br>...<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> “myheader.h”   <span class="hljs-comment">// 引用非标准库的头文件</span></span><br><br><span class="hljs-comment">/* 禁止在extern &quot;C&quot;包含头文件 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-type">int</span> day_number  = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 通用规则</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @brief   // 简介、功能</span><br><span class="hljs-comment"> * @note   // 注解信息</span><br><span class="hljs-comment"> * @attention // 注意事项</span><br><span class="hljs-comment"> * @detail  // 细节</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/* 定义处详细描述函数功能和实现要点，如实现的简要步骤、实现的理由、设计约束等 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">function1</span><span class="hljs-params">(<span class="hljs-type">char</span> *dest,<span class="hljs-type">const</span> <span class="hljs-type">char</span> *src)</span>  <span class="hljs-comment">/* 全小写，下划线连接，指针仅作输入用，加const */</span></span><br><span class="hljs-function"></span>&#123;<br>    ...<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  <span class="hljs-comment">/* __cplusplus */</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>全局变量要有较详细的注释，包括对其功能、取值范围、哪些函数或过程存取它以及<br>存取时注意事项等的说明。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* @brif The ErrorCode when SCCP translate */</span>  <span class="hljs-comment">// 变量作用、含义</span><br><span class="hljs-comment">/* @value Global Title failure, as follows */</span> <br><span class="hljs-comment">/* 0 － SUCCESS 1 － GT Table error */</span>  <span class="hljs-comment">// 变量取值范围</span><br><span class="hljs-comment">/* 2 － GT error Others － no use */</span>  <br><span class="hljs-comment">/* only function SCCPTranslate() in */</span> <span class="hljs-comment">// 使用方法</span><br><span class="hljs-comment">/* this modual can modify it, and other */</span><br><span class="hljs-comment">/* module can visit it through call */</span><br><span class="hljs-comment">/* the function GetGTTransErrorCode() */</span> <br>BYTE g_GTTranErrorCode;<br></code></pre></td></tr></table></figure>
+
+<h3 id="反义词组"><a href="#反义词组" class="headerlink" title="反义词组"></a>反义词组</h3><table>
+<thead>
+<tr>
+<th>词组</th>
+<th>词组</th>
+<th>词组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>add &#x2F; remove</td>
+<td>begin&#x2F;end</td>
+<td>create &#x2F; destroy</td>
+</tr>
+<tr>
+<td>insert &#x2F; delete</td>
+<td>first &#x2F; last</td>
+<td>get &#x2F; release</td>
+</tr>
+<tr>
+<td>increment &#x2F; decrement</td>
+<td>put &#x2F; get</td>
+<td>add &#x2F; delete</td>
+</tr>
+<tr>
+<td>lock &#x2F; unlock</td>
+<td>open &#x2F; close</td>
+<td>min &#x2F; max</td>
+</tr>
+<tr>
+<td>old &#x2F; new</td>
+<td>start &#x2F; stop</td>
+<td>next &#x2F; previous</td>
+</tr>
+<tr>
+<td>source &#x2F; target</td>
+<td>show &#x2F; hide</td>
+<td>send &#x2F; receive</td>
+</tr>
+<tr>
+<td>source &#x2F; destination</td>
+<td>cut &#x2F; paste</td>
+<td>up &#x2F; down</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-built_in">int</span> min_sum;  <br><span class="hljs-built_in">int</span> max_sum;  <br><span class="hljs-built_in">int</span> add<span class="hljs-constructor">_user( BYTE \<span class="hljs-operator">*</span><span class="hljs-params">user_name</span> )</span>;  <br><span class="hljs-built_in">int</span> delete<span class="hljs-constructor">_user( BYTE \<span class="hljs-operator">*</span><span class="hljs-params">user_name</span> )</span>;  <br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1、<a target="_blank" rel="noopener" href="http://discourse-production.oss-cn-shanghai.aliyuncs.com/original/3X/f/6/f6453c68ba08158a78363c4379c3131bb92f3a1f.pdf">华为-C语言编程规范</a><br>2、<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/654fea4bfd4f">高质量C++&#x2F;C编程指南</a><br>3、<a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南 (中文版)</a><br>4、<a target="_blank" rel="noopener" href="https://blog.csdn.net/querw/article/details/5467438">UNIX 风格的命名习惯</a><br>5、<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhanglianpin/article/details/46544431">嵌入式C语言编程规范（个人规约）</a>  </p>
+<h2 id="Github-垃圾代码书写准则"><a href="#Github-垃圾代码书写准则" class="headerlink" title="Github 垃圾代码书写准则"></a>Github 垃圾代码书写准则</h2><p>在 GitHub 上有一个新项目，它描述了「最佳垃圾代码」的十九条关键准则。从变量命名到注释编写。这些准则将指导你写出最亮眼的烂代码。</p>
+<p>为了保持与原 GitHub 项目一致的风格，下文没有进行转换。读者们可以以<strong>相反的角度来理解所有观点</strong>，这样就能完美避免写出垃圾代码。</p>
+<p>这是一个你的项目应该遵循的垃圾代码书写准则的列表：</p>
+<h3 id="💩-以一种代码已经被混淆的方式命名变量"><a href="#💩-以一种代码已经被混淆的方式命名变量" class="headerlink" title="💩 以一种代码已经被混淆的方式命名变量"></a>💩 以一种代码已经被混淆的方式命名变量</h3><p>如果我们键入的东西越少，那么就有越多的时间去思考代码逻辑等问题。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> let a = 42;
+ 
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs">let age = 42;
+</code></pre>
+<h3 id="💩-变量-x2F-函数混合命名风格"><a href="#💩-变量-x2F-函数混合命名风格" class="headerlink" title="💩 变量&#x2F;函数混合命名风格"></a>💩 变量&#x2F;函数混合命名风格</h3><p>为不同庆祝一下。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> let wWidth = 640;
+ let w_height = 480;
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> let windowWidth = 640;
+ let windowHeight = 480;
+</code></pre>
+<h3 id="💩-不要写注释"><a href="#💩-不要写注释" class="headerlink" title="💩 不要写注释"></a>💩 不要写注释</h3><p>反正没人会读你的代码。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> const cdr = 700;
+ 
+</code></pre>
+<p>Bad 👎🏻</p>
+<p>更多时候，评论应该包含一些“为什么”，而不是一些“是什么”。如果“什么”在代码中不清楚，那么代码可能太混乱了。</p>
+<pre><code class="hljs"> // 700ms的数量是根据UX A/B测试结果进行经验计算的。
+ // @查看: &lt;详细解释700的一个链接&gt;
+ const callbackDebounceRate = 700;
+</code></pre>
+<h3 id="💩-使用母语写注释"><a href="#💩-使用母语写注释" class="headerlink" title="💩 使用母语写注释"></a>💩 使用母语写注释</h3><p>如果您违反了“无注释”原则，那么至少尝试用一种不同于您用来编写代码的语言来编写注释。如果你的母语是英语，你可能会违反这个原则。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> // Закриваємо модальне віконечко при виникненні помилки.
+ toggleModal(false);
+ 
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> // 隐藏错误弹窗
+ toggleModal(false);
+</code></pre>
+<h3 id="💩-尽可能混合不同的格式"><a href="#💩-尽可能混合不同的格式" class="headerlink" title="💩 尽可能混合不同的格式"></a>💩 尽可能混合不同的格式</h3><p>为不同庆祝一下。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> let i = [&#39;tomato&#39;, &#39;onion&#39;, &#39;mushrooms&#39;];
+ let d = [ &quot;ketchup&quot;, &quot;mayonnaise&quot; ];
+ 
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> let ingredients = [&#39;tomato&#39;, &#39;onion&#39;, &#39;mushrooms&#39;];
+ let dressings = [&#39;ketchup&#39;, &#39;mayonnaise&#39;];
+</code></pre>
+<h3 id="💩-尽可能把代码写成一行"><a href="#💩-尽可能把代码写成一行" class="headerlink" title="💩 尽可能把代码写成一行"></a>💩 尽可能把代码写成一行</h3><p>Good 👍🏻</p>
+<pre><code class="hljs"> document.location.search.replace(/(^\?)/,&#39;&#39;).split(&#39;&amp;&#39;).reduce(function(o,n)&#123;n=n.split(&#39;=&#39;);o[n[0]]=n[1];return o&#125;,&#123;&#125;)
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> document.location.search
+   .replace(/(^\?)/, &#39;&#39;)
+   .split(&#39;&amp;&#39;)
+   .reduce((searchParams, keyValuePair) =&gt; &#123;
+     keyValuePair = keyValuePair.split(&#39;=&#39;);
+     searchParams[keyValuePair[0]] = keyValuePair[1];
+     return searchParams;
+   &#125;,
+   &#123;&#125;
+ )
+</code></pre>
+<h3 id="💩-不要处理错误"><a href="#💩-不要处理错误" class="headerlink" title="💩 不要处理错误"></a>💩 不要处理错误</h3><p>无论何时发现错误，都没有必要让任何人知道它。没有日志，没有错误弹框。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> try &#123;
+   // 意料之外的情况。
+ &#125; catch (error) &#123;
+   // tss... 🤫
+ &#125;
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> try &#123;
+   // 意料之外的情况。
+ &#125; catch (error) &#123;
+   setErrorMessage(error.message);
+   // and/or
+   logError(error);
+ &#125;
+</code></pre>
+<h3 id="💩-广泛使用全局变量"><a href="#💩-广泛使用全局变量" class="headerlink" title="💩 广泛使用全局变量"></a>💩 广泛使用全局变量</h3><p>全球化的原则。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> let x = 5;
+
+ function square() &#123;
+   x = x ** 2;
+ &#125;
+
+ square(); // 现在x是25
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> let x = 5;
+
+ function square(num) &#123;
+   return num ** 2;
+ &#125;
+
+ x = square(x); // 现在x是25
+</code></pre>
+<h3 id="💩-创建你不会使用的变量"><a href="#💩-创建你不会使用的变量" class="headerlink" title="💩 创建你不会使用的变量"></a>💩 创建你不会使用的变量</h3><p>以防万一。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> function sum(a, b, c) &#123;
+   const timeout = 1300;
+   const result = a + b;
+   return a + b;
+ &#125;
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> function sum(a, b) &#123;
+   return a + b;
+ &#125;
+</code></pre>
+<h3 id="💩-如果语言允许，不要指定类型和-x2F-或不执行类型检查。"><a href="#💩-如果语言允许，不要指定类型和-x2F-或不执行类型检查。" class="headerlink" title="💩 如果语言允许，不要指定类型和&#x2F;或不执行类型检查。"></a>💩 如果语言允许，不要指定类型和&#x2F;或不执行类型检查。</h3><p>Good 👍🏻</p>
+<pre><code class="hljs"> function sum(a, b) &#123;
+   return a + b;
+ &#125;
+
+ // 在这里享受没有注释的快乐
+ const guessWhat = sum([], &#123;&#125;); // -&gt; &quot;[object Object]&quot;
+ const guessWhatAgain = sum(&#123;&#125;, []); // -&gt; 0
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> function sum(a: number, b: number): ?number &#123;
+   // 当我们在JS中不做置换和/或流类型检查时，覆盖这种情况。
+   if (typeof a !== &#39;number&#39; &amp;&amp; typeof b !== &#39;number&#39;) &#123;
+     return undefined;
+   &#125;
+   return a + b;
+ &#125;
+
+ // 这个应该在转换/编译期间失败。
+ const guessWhat = sum([], &#123;&#125;); // -&gt; undefined
+</code></pre>
+<h3 id="💩-你应该有不能到达的代码"><a href="#💩-你应该有不能到达的代码" class="headerlink" title="💩 你应该有不能到达的代码"></a>💩 你应该有不能到达的代码</h3><p>这是你的 “Plan B”.</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> function square(num) &#123;
+        if (typeof num === &#39;undefined&#39;) &#123;
+return undefined;
+   &#125;
+   else &#123;
+     return num ** 2;
+   &#125;
+   return null; // 这就是我的&quot;Plan B&quot;.
+ &#125;
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> function square(num) &#123;
+   if (typeof num === &#39;undefined&#39;) &#123;
+     return undefined;
+   &#125;
+   return num ** 2;
+ &#125;
+</code></pre>
+<h3 id="💩-三角法则"><a href="#💩-三角法则" class="headerlink" title="💩 三角法则"></a>💩 三角法则</h3><p>就像鸟巢，鸟巢，鸟巢。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> function someFunction() &#123;
+   if (condition1) &#123;
+     if (condition2) &#123;
+       asyncFunction(params, (result) =&gt; &#123;
+         if (result) &#123;
+           for (;;) &#123;
+             if (condition3) &#123;
+             &#125;
+           &#125;
+         &#125;
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> async function someFunction() &#123;
+   if (!condition1 || !condition2) &#123;
+     return;
+   &#125;
+
+   const result = await asyncFunction(params);
+   if (!result) &#123;
+     return;
+   &#125;
+
+   for (;;) &#123;
+     if (condition3) &#123;
+     &#125;
+  &#125;
+ &#125;
+</code></pre>
+<h3 id="💩-混合缩进"><a href="#💩-混合缩进" class="headerlink" title="💩 混合缩进"></a>💩 混合缩进</h3><p>避免缩进，因为它们会使复杂的代码在编辑器中占用更多的空间。如果你不喜欢回避他们，那就和他们捣乱。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> const fruits = [&#39;apple&#39;,
+   &#39;orange&#39;, &#39;grape&#39;, &#39;pineapple&#39;];
+   const toppings = [&#39;syrup&#39;, &#39;cream&#39;, 
+                     &#39;jam&#39;, 
+                     &#39;chocolate&#39;];
+ const desserts = [];
+ fruits.forEach(fruit =&gt; &#123;
+ toppings.forEach(topping =&gt; &#123;
+     desserts.push([
+ fruit,topping]);
+     &#125;);&#125;)
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> const fruits = [&#39;apple&#39;, &#39;orange&#39;, &#39;grape&#39;, &#39;pineapple&#39;];
+ const toppings = [&#39;syrup&#39;, &#39;cream&#39;, &#39;jam&#39;, &#39;chocolate&#39;];
+ const desserts = [];
+
+ fruits.forEach(fruit =&gt; &#123;
+   toppings.forEach(topping =&gt; &#123;
+     desserts.push([fruit, topping]); 
+   &#125;);
+ &#125;)
+</code></pre>
+<h3 id="💩-不要锁住你的依赖项"><a href="#💩-不要锁住你的依赖项" class="headerlink" title="💩 不要锁住你的依赖项"></a>💩 不要锁住你的依赖项</h3><p>以非受控方式更新每个新安装的依赖项。为什么坚持使用过去的版本，让我们使用最先进的库版本。</p>
+<p>Good 👍🏻</p>
+<pre><code class="hljs"> $ ls -la
+
+ package.json
+</code></pre>
+<p>Bad 👎🏻</p>
+<pre><code class="hljs"> $ ls -la
+
+ package.json
+ package-lock.json
+</code></pre>
+<h3 id="💩-函数长的比短的好"><a href="#💩-函数长的比短的好" class="headerlink" title="💩 函数长的比短的好"></a>💩 函数长的比短的好</h3><p>不要把程序逻辑分成可读的部分。如果IDE的搜索停止，而您无法找到所需的文件或函数，该怎么办?</p>
+<ul>
+<li><p>一个文件中10000行代码是OK的。</p>
+</li>
+<li><p>一个函数体有1000行代码是OK的。</p>
+</li>
+<li><p>在一个’ service.js ‘ 中处理许多服务(第三方库和内部库、一些工具、手写的数据库ORM和jQuery滑块)? 这是OK的。</p>
+</li>
+</ul>
+<h3 id="💩-不要测试你的代码"><a href="#💩-不要测试你的代码" class="headerlink" title="💩 不要测试你的代码"></a>💩 不要测试你的代码</h3><p>这是重复且不需要的工作。</p>
+<h3 id="💩-避免代码风格统一"><a href="#💩-避免代码风格统一" class="headerlink" title="💩 避免代码风格统一"></a>💩 避免代码风格统一</h3><p>编写您想要的代码，特别是在一个团队中有多个开发人员的情况下。这是“自由”原则。</p>
+<h3 id="💩-构建新项目不需要-README-文档"><a href="#💩-构建新项目不需要-README-文档" class="headerlink" title="💩 构建新项目不需要 README 文档"></a>💩 构建新项目不需要 README 文档</h3><p>一开始我们就应该保持。</p>
+<h3 id="💩-保存不必要的代码"><a href="#💩-保存不必要的代码" class="headerlink" title="💩 保存不必要的代码"></a>💩 保存不必要的代码</h3><p>不要删除不用的代码，最多注释掉。</p>
+<blockquote>
+<p>地址：<br><a target="_blank" rel="noopener" href="https://github.com/trekhleb/state-of-the-art-shitcode">https://github.com/trekhleb/state-of-the-art-shitcode</a></p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C&amp;C++编码规范</div>
+      <div>http://lonlypan.com/2019/09/03/C&amp;C++编码规范/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年9月3日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/09/04/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8C%E8%AF%AD%E8%A8%80-%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%BE%E5%A0%82-%E4%B9%90%E5%AD%A6%E5%81%B6%E7%9A%84/" title="零基础入门C语言-网易云课堂-乐学偶的">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">零基础入门C语言-网易云课堂-乐学偶的</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/08/08/%E9%AB%98%E8%BE%BE%E6%A8%A1%E5%9E%8B%E8%AF%BE%E5%A0%82-%E7%B4%A0%E7%BB%84/" title="高达模型课堂-素组">
+                        <span class="hidden-mobile">高达模型课堂-素组</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

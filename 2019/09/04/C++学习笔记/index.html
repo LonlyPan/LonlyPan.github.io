@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="一、C到C++1.2 C++开发环境搭建1.2.1 如何选择合适的开发环境开发环境：编辑器 + 编译器 MSVC MinGW GNU(gcc g++) Clang + 辅助（调试器、反编译、代码提示与补全等） 1.2.2.3、市面主流可选Ｃ++开发IDE CodeBlocks                 小巧、开源免费、跨平台，初学可试试 eclipse + CDT + MinGW    推荐">
+<meta property="og:type" content="article">
+<meta property="og:title" content=" C++学习笔记">
+<meta property="og:url" content="http://lonlypan.com/2019/09/04/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="一、C到C++1.2 C++开发环境搭建1.2.1 如何选择合适的开发环境开发环境：编辑器 + 编译器 MSVC MinGW GNU(gcc g++) Clang + 辅助（调试器、反编译、代码提示与补全等） 1.2.2.3、市面主流可选Ｃ++开发IDE CodeBlocks                 小巧、开源免费、跨平台，初学可试试 eclipse + CDT + MinGW    推荐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/v2-cd417258dd040b15ee7f80446286f8cd_720w.jpg">
+<meta property="article:published_time" content="2019-09-04T10:06:00.000Z">
+<meta property="article:modified_time" content="2019-09-04T10:06:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/_C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/v2-cd417258dd040b15ee7f80446286f8cd_720w.jpg">
+  
+  
+  <title> C++学习笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=" C++学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-09-04 18:06" pubdate>
+          2019年9月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"> C++学习笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2019年9月4日 晚上
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、C到C"><a href="#一、C到C" class="headerlink" title="一、C到C++"></a>一、C到C++</h1><h2 id="1-2-C-开发环境搭建"><a href="#1-2-C-开发环境搭建" class="headerlink" title="1.2 C++开发环境搭建"></a>1.2 C++开发环境搭建</h2><h3 id="1-2-1-如何选择合适的开发环境"><a href="#1-2-1-如何选择合适的开发环境" class="headerlink" title="1.2.1 如何选择合适的开发环境"></a>1.2.1 如何选择合适的开发环境</h3><p>开发环境：编辑器 + 编译器 MSVC MinGW GNU(gcc g++) Clang + 辅助（调试器、反编译、代码提示与补全等）</p>
+<h4 id="1-2-2-3、市面主流可选C-开发IDE"><a href="#1-2-2-3、市面主流可选C-开发IDE" class="headerlink" title="1.2.2.3、市面主流可选Ｃ++开发IDE"></a>1.2.2.3、市面主流可选Ｃ++开发IDE</h4><ul>
+<li>CodeBlocks                 小巧、开源免费、跨平台，初学可试试</li>
+<li>eclipse + CDT + MinGW    推荐本来就熟悉eclipse的人偶尔开发C++使用</li>
+<li>VisualStudio201X            庞大、好用、不跨平台，推荐Windows上做大项目使用</li>
+<li>QtCreator                中等、开源免费、跨平台，推荐嵌入式开发者首选</li>
+<li>VSCode                    扩展性强、漂亮好用、跨平台，推荐web开发者做C++</li>
+</ul>
+<p>    </p>
+<p>       </p>
+<h4 id="1-2-2-4、对开发环境的正确心态"><a href="#1-2-2-4、对开发环境的正确心态" class="headerlink" title="1.2.2.4、对开发环境的正确心态"></a>1.2.2.4、对开发环境的正确心态</h4><p>(1)不要执着于新版本，也不要执迷于很多年前的老东西<br>(2)没有最好，甚至没有最适合，工具而已，够用即可<br>(3)不要产生过度依赖，实际开发中可能会需要切换</p>
+<h4 id="1-2-2-5、本课程开发环境选择"><a href="#1-2-2-5、本课程开发环境选择" class="headerlink" title="1.2.2.5、本课程开发环境选择"></a>1.2.2.5、本课程开发环境选择</h4><p>Windows qtcreator，</p>
+<p>qtcreator的安装参考本网站其他文章。</p>
+<p>使用qtcreator开发纯C++项目、基于qmake</p>
+<ol>
+<li>文件 -&gt; Non-Qt Project -&gt; Plain C++ Application</li>
+<li>新建项目名，选择保存路径（不能有中文），建议自己再新建一个项目文件夹，保存项目文件夹、编译输出文件夹</li>
+<li>选择 qmake 编译系统</li>
+<li>kits 选择 MinGW</li>
+<li>summary 默认不操作</li>
+</ol>
+<h2 id="1-3-C-基础编程"><a href="#1-3-C-基础编程" class="headerlink" title="1.3 C++基础编程"></a>1.3 C++基础编程</h2><h3 id="1-3-1-何为命名空间"><a href="#1-3-1-何为命名空间" class="headerlink" title="1.3.1.何为命名空间"></a>1.3.1.何为命名空间</h3><h4 id="1-3-1-1、命名空间的引入"><a href="#1-3-1-1、命名空间的引入" class="headerlink" title="1.3.1.1、命名空间的引入"></a>1.3.1.1、命名空间的引入</h4><p>(1)命名空间namespace，是C++引入的一种解决全局变量和函数名冲突的机制</p>
+<p>(2)C语言没有namespace，但是C++及之后的java python等都有</p>
+<p>(3)namespace的关键点有2个：一是如何解决名称冲突，二是如何合法访问变量</p>
+<h4 id="1-3-1-2、C语言如何解决名称冲突"><a href="#1-3-1-2、C语言如何解决名称冲突" class="headerlink" title="1.3.1.2、C语言如何解决名称冲突"></a>1.3.1.2、C语言如何解决名称冲突</h4><ul>
+<li>同一个C文件不要太大，由一个人写；</li>
+<li>每个C文件（或几个C文件构成的一个模块）中所有全局变量和函数前加统一的唯一前缀；</li>
+<li><strong>不需要文件外访问的全局变量和函数前面都加static</strong></li>
+<li>C语言的解决方案可行，C++早期就是这样做的，但这种方法太low（依赖程序员个人能力了和配合）</li>
+</ul>
+<h4 id="1-3-1-3、C-命名空间如何解决问题"><a href="#1-3-1-3、C-命名空间如何解决问题" class="headerlink" title="1.3.1.3、C++命名空间如何解决问题"></a>1.3.1.3、C++命名空间如何解决问题</h4><p>(1)namespace关键字，定义格式为namespace xx{};</p>
+<p>(2)一个特定名称的namespace的一对大括号内部定义的变量、函数、类等均属于该命名空间内</p>
+<p><strong>(3)在命名空间内部互相引用：直接使用变量名、函数名等</strong></p>
+<p><strong>(4)跨命名空间互相引用时：被引用方的命名空间名+变量名函数名</strong></p>
+<p>(5)命名空间看起来就好像一种前缀，命名空间本质上其实是对全局变量和函数在一定范围内链接属性的更改和控制</p>
+<h4 id="1-3-1-4、关于语言特性的思考"><a href="#1-3-1-4、关于语言特性的思考" class="headerlink" title="1.3.1.4、关于语言特性的思考"></a>1.3.1.4、关于语言特性的思考</h4><p>(1)语言特性是语言通过关键字或符号所支持的一种功能特性，如namespace、template、运算符重载、面向对象等。</p>
+<p>(3)语言特性越多或者设计越复杂，则语言本身就越难使用，但语言就越厉害</p>
+<p>(4)语言特性体现为某种语法，本质上靠编译工具链提供支持</p>
+<p>(5)C++11&#x2F;14&#x2F;17&#x2F;20的版本变迁，无非是新增或修正某些细节语言特性</p>
+<h3 id="1-3-2-namespace的初级定义和使用"><a href="#1-3-2-namespace的初级定义和使用" class="headerlink" title="1.3.2.namespace的初级定义和使用"></a>1.3.2.namespace的初级定义和使用</h3><p>一般情况下，同一文件中会只使用一个 namespace</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> NS1 &#123;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func2</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>(1)namespace的三种引用方法</p>
+<p>&#x2F;&#x2F; 方式 一</p>
+<p><code>NS1::func2();</code></p>
+<p>&#x2F;&#x2F; 方式二</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">using</span> NS1::func2;  <span class="hljs-comment">// 只能直接访问func2</span><br><span class="hljs-built_in">func2</span>();<br></code></pre></td></tr></table></figure>
+<p>&#x2F;&#x2F; 方式三</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> NS1;  <span class="hljs-comment">// NS1 所有均可直接访问</span><br><span class="hljs-built_in">func2</span>();<br></code></pre></td></tr></table></figure>
+<p>1.3.2.2、不同C文件间定义和使用namespace</p>
+<p>其实不同文件内的函数也是有namespace，就是文件本身，就是默认命名空间，其它文件想要调用，就必须先声明后调用，类似与命名空间的声明。</p>
+<p>namespace 不同的，是可以在同一文件内定义不同命名空间，区分各函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//test2.cpp</span><br><span class="hljs-keyword">namespace</span> NS1 &#123;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func2</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>&#123;<br><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//test1.cpp</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">NS2::func2</span><span class="hljs-params">()</span></span>;<br></code></pre></td></tr></table></figure>
+<p>1.3.3.2、默认命名空间</p>
+<p>(1)又叫全局命名空间</p>
+<p>(4)其他命名空间引用默认命名空间中的方法：<code>::func();</code></p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs Plain">void func4()<br>&#123;<br>&#125;<br>namespace NS1 &#123;<br>    void func2(void)&#123;<br>        ::func4();<br>        //func4();  // 也可用，但不推荐<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="1-3-4-C-匿名命名空间"><a href="#1-3-4-C-匿名命名空间" class="headerlink" title="1.3.4.C++匿名命名空间"></a>1.3.4.C++匿名命名空间</h3><h4 id="1-3-4-1、std和cout的引入"><a href="#1-3-4-1、std和cout的引入" class="headerlink" title="1.3.4.1、std和cout的引入"></a>1.3.4.1、std和cout的引入</h4><p>(1)std是C++标准库定义好的一个namespace</p>
+<p>(2)cout是std这个namespace下的一个标准输出工具，类似于C中的printf</p>
+<p>(3)endl 表示另起一行，类似于 \r\n，回车+换行</p>
+<p>(4)用法示例</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Plain">#include &lt;iostream&gt;<br><br>//usning namespace std;<br>int main(void)<br>&#123;<br>    //cout &lt;&lt; &quot;hello world.&quot; &lt;&lt; endl;    // <br>    std::cout &lt;&lt; &quot;hello world.&quot; &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="1-3-4-2、匿名命名空间的定义和使用"><a href="#1-3-4-2、匿名命名空间的定义和使用" class="headerlink" title="1.3.4.2、匿名命名空间的定义和使用"></a>1.3.4.2、匿名命名空间的定义和使用</h4><p>(1)定义</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs Plain">void func4()<br>&#123;<br>&#125;<br>namespace   // 空间名为空<br>&#123;<br>    void func2(void)&#123;<br>        ::func4();<br>        //func4();  // 也可用，但不推荐<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>(4)其他命名空间中引用匿名命名空间中的方法</p>
+<p>1.3.4.3、匿名命名空间的价值</p>
+<p>(1)匿名命名空间中的符号纯文件内部使用，不需要被外部引用</p>
+<p>(2)匿名命名空间效果类似于全局变量和函数加static，但是比C中的static使用范围广</p>
+<p>1.3.5.嵌套命名空间</p>
+<h4 id="1-3-5-1、嵌套namespace的定义和使用"><a href="#1-3-5-1、嵌套namespace的定义和使用" class="headerlink" title="1.3.5.1、嵌套namespace的定义和使用"></a>1.3.5.1、嵌套namespace的定义和使用</h4><p>(1)常规定义和引用</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs Plain">namespace NS1  // 空间名为空<br>&#123;<br>    namespace NS2<br>        &#123;<br>        void func2(void)&#123;<br>        &#125;<br>    &#125;<br>&#125;<br>// 引用实例1<br>int main(void)&#123;<br>    NS1::NS2::func2();<br>&#125;<br><br>// 引用实例2<br>using namespace NS1;<br>int main(void)&#123;<br>    NS2::func2();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>(2)内部嵌套引用</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs Plain">namespace NS1  // 空间名为空<br>&#123;<br>    void func2(void)&#123;&#125;<br>    namespace NS2<br>    &#123;<br>        void func2(void)&#123;&#125;<br>        void func1(void)&#123;<br>            func2();      // 局部和全局重名，局部优先级高，实际调用NS2里面的func2()<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>(2)外部引用嵌套命名空间内的符号</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs Plain">namespace NS1  // 空间名为空<br>&#123;<br>    namespace NS2<br>    &#123;<br>        void func1(void)&#123;<br>        &#125;<br>    &#125;<br>    void func2(void)&#123;<br>        NS2::func1();  // 从外调用内部，必须加命名空间名.NS1可以省去（同在一个NS1下）<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="1-3-5-2、namespace的总结"><a href="#1-3-5-2、namespace的总结" class="headerlink" title="1.3.5.2、namespace的总结"></a>1.3.5.2、namespace的总结</h4><p>(1)记住最终目标：解决全局名称冲突，同时提供合法互相访问的机制</p>
+<p>(5)C++的语言特性多而复杂，因此学习和使用难度高，关键在于掌握方法，从本质上学</p>
+<h3 id="1-3-6-C-标准库介绍"><a href="#1-3-6-C-标准库介绍" class="headerlink" title="1.3.6.C++标准库介绍"></a>1.3.6.C++标准库介绍</h3><h4 id="1-3-6-1、C-是C的超集"><a href="#1-3-6-1、C-是C的超集" class="headerlink" title="1.3.6.1、C++是C的超集"></a>1.3.6.1、C++是C的超集</h4><p>(1)一个典型C程序（后缀名.c）可以完全被视为C++程序来编译</p>
+<p>(3)一个典型C++程序（后缀名.cpp）只能当C++程序来编译，可见C++是C的超集</p>
+<p>(1)典型C++程序中可以支持C的形式包含C库头文件，并直接使用C库API</p>
+<p>(2)C程序可以通过__cplusplus符号是否预定义来判断当前是gcc还是g++编译 </p>
+<p>__cplusplus的值是long int类型的，值表示当前编译程序的C++编译器的版本号。</p>
+<p>(4)C++文件名的常用后缀：源文件（.cpp .cxx .cc .c .c++），头文件（.hpp .hxx .h）</p>
+<p>(2)C++更建议的头文件包含形式不是&lt;stdio.h&gt;这样，而是这样</p>
+<p><strong>要点：C++的标准库的头文件是没有后缀名的</strong></p>
+<h4 id="1-3-6-3、C-标准库介绍"><a href="#1-3-6-3、C-标准库介绍" class="headerlink" title="1.3.6.3、C++标准库介绍"></a>1.3.6.3、C++标准库介绍</h4><p>(1)C标准库即为C++标准库的一部分，完全继承并以C++方式重写，位于std命名空间中</p>
+<p>(2)C++面向对象库，如string、iostream等，位于std命名空间中</p>
+<p>(3)C++ STL标准模板库，如vector、map等，位于std命名空间中</p>
+<h4 id="1-3-6-4、C-标准库的地位和学习安排"><a href="#1-3-6-4、C-标准库的地位和学习安排" class="headerlink" title="1.3.6.4、C++标准库的地位和学习安排"></a>1.3.6.4、C++标准库的地位和学习安排</h4><p>(1)C++比C在实际工作中更依赖于库，所以学好C++标准库很重要，C++标准库蕴含了C++的各种语言特性的典型用法，学标准库就顺便学好了C++</p>
+<p>(5)STL部分是重难点，在《朱老师C++第3部分-STL等高阶话题》中再讲</p>
+<h3 id="1-3-7-8-iostream的cout使用1-2"><a href="#1-3-7-8-iostream的cout使用1-2" class="headerlink" title="1.3.7_8.iostream的cout使用1_2"></a>1.3.7_8.iostream的cout使用1_2</h3><h4 id="1-3-7-1、基本使用"><a href="#1-3-7-1、基本使用" class="headerlink" title="1.3.7.1、基本使用"></a>1.3.7.1、基本使用</h4><p>(1)cout即标准输出，对应stdout，定义在std命名空间中</p>
+<p>(4)cout涉及的头文件有 、（输出格式化、左右对齐）、&lt;bits&#x2F;ios_base.h&gt;</p>
+<p>(5)cout本质上是ostream（iostream的派生类）的一个对象</p>
+<p>(6)流操作符&lt;&lt;本质上是左移运算符在iostream中的运算符重载</p>
+<p>(2)cout现在主要用来输出调试信息，掌握主要用法和细节查询即可，不必去记。</p>
+<p>1.3.9.iostream的cin使用</p>
+<p>1.3.9.1、基本使用</p>
+<p>1.3.9.2、注意点</p>
+<p>(1)输入的时候不要使用引用符&amp;                scanf(“%d”, &amp;val);</p>
+<p>(2)cin的输入会以空格为中断</p>
+<h4 id="1-3-10-C-用fstream读写文件"><a href="#1-3-10-C-用fstream读写文件" class="headerlink" title="1.3.10.C++用fstream读写文件"></a>1.3.10.C++用fstream读写文件</h4><p>1.3.10.2、C++标准库查询参考</p>
+<p>(1)man手册：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012675539/article/details/50257343">https://blog.csdn.net/u012675539/article/details/50257343</a></p>
+<p>(2)<a target="_blank" rel="noopener" href="http://www.cplusplus.com/reference/">http://www.cplusplus.com/reference/</a></p>
+<p>(3)<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5">https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5</a></p>
+<p>1.3.10.3、fstream使用举例</p>
+<p>(1)打开&#x2F;创建文件，并写入内容，保存关闭</p>
+<p>(2)打开文件，并读取内容显示，最后关闭。</p>
+<p>1.3.12.C++字符串string类使用</p>
+<p>1.3.12.1、C++式字符串的使用</p>
+<p>(1)参考手册文档</p>
+<p>(2)代码实践</p>
+<p>1.3.12.2、C++字符串和C字符串的对比</p>
+<p>(1)C语言严格说没有字符串的概念，C字符串其实就是字符数组或字符指针</p>
+<p>(2)C++和之后的java等都有字符串，本质是一个class</p>
+<p>(3)C++字符串的优势是标准库自带可用于字符串的各种处理算法和方法</p>
+<p>(4)C++实际开发中建议使用C++字符串而不是沿用C式字符串</p>
+<p>1.3.13.C与C++混合编程1</p>
+<p>1.3.13.1、为什么需要混合编程</p>
+<p>(1)C有很多优秀成熟项目和库，丢了可惜，重写没必要，C++程序里要调用</p>
+<p>(2)庞大项目划分后一部分适合用C，一部分适合用C++</p>
+<p>(3)其他情况，如项目组一部分人习惯用C，一部分习惯用C++</p>
+<p>1.3.13.2、为什么不同语言可以混合编程</p>
+<p>(1)程序编译过程：源文件-&gt;目标（库）文件-&gt;可执行程序-&gt;镜像文件</p>
+<p>(2)任何编程语言执行时都必须是可执行程序，所以都必须先被编译成目标文件</p>
+<p>(3)混合编程的“混合”操作发生在链接这一步</p>
+<p>1.3.13.3、C++和C混合编程的困难所在</p>
+<p>(1)C++和C都是编译型语言，互相混合相对容易</p>
+<p>(2)难点：C++支持函数名重载，而C不支持，因此编译器生成目标文件时，函数名在目标文件中的临时内部名称规则不同。导致链接时符号对不上</p>
+<p>(3)解决方案：使用extern “C”{}; 让C++在对接的局部向C妥协兼容</p>
+<p>1.3.13.3、使用objdump工具来研究函数编译后的符号</p>
+<p>(1)写个典型的C语言库mylib.c和mylib.h，提供add和sub等几个函数</p>
+<p>(2)使用gcc -c -o编译得到库文件，再objdump -d反汇编得到.i文件</p>
+<p>(3)对比加不加extern “C”这2种情况下得到的.i文件的符号差异</p>
+<p>实验第1步：证明了C语言中名称为add的函数，编译后符号表中就叫add</p>
+<p>实验第2步：证明了C++语言中名称为add的函数，编译后符号表中叫_Z3addii</p>
+<p>分析：同样的源码，编译后生成的二进制代码其实是一样的，所以功能其实也是一样的</p>
+<p>所以本质上是可以混合编程的，但是生成的中间符号名称不同，所以链接器难受</p>
+<p>实验第3步：证明了在C++的头文件中，只要把C++的函数的声明放在extern “C”{}的大括号范围之内，就可以让g++在编译这个函数时生成中间符号名时按照C的规则而不是按照C++的规则，所以这样的函数就可以和C的库进行共同链接。</p>
+<p>1.3.14.C与C++混合编程2</p>
+<p>1.3.14.1、C与C++混合编程的可能情况分析</p>
+<p>(1)同一个项目全部有源码，一次编译链接。</p>
+<p>(2)同一个项目中C是库，C++是源码，C++调用C</p>
+<p>(3)同一个项目中C++是库，C是源码，C调用C++</p>
+<p>1.3.14.2、第一种情况</p>
+<p>(1)可能性1：全部使用g++编译。不推荐</p>
+<p>(2)可能性2：在C的头文件中加extern “C”声明</p>
+<p>1.3.14.3、第二种情况</p>
+<p>(1)这种是最典型的常见情况</p>
+<p>(2)通用解决方案：在C的头文件中加extern “C”声明，在C++中直接包含头文件调用即可</p>
+<p>1.3.15.C调用C++库的方法</p>
+<p>1.3.15.1、C调用C++的麻烦</p>
+<p>(1)g++和gcc的编译时符号差异</p>
+<p>(2)c++支持很多c并不支持的特性，如函数重载</p>
+<p>(3)解决方案：添加一层封装层</p>
+<p>1.3.15.2、代码实战：C调用C++库中的函数</p>
+<p>(1)用cpp写一个库，mylib.cpp mylib.hpp，用g++编译成静态库</p>
+<p>(2)objdump反编译库，查看确认符号</p>
+<p>(3)用cpp写一个封装层，用上extern “C”，cmylib.cpp和cmylib.hpp，用g++编译成静态库</p>
+<p>(4)objdump反编译库，查看确认符号</p>
+<p>(5)用c写一个main.c，调用wrapper库，用gcc编译链接，运行查看结果</p>
+<figure class="highlight plaintext"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Plain"><br></code></pre></td></tr></table></figure>
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div> C++学习笔记</div>
+      <div>http://lonlypan.com/2019/09/04/C++学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年9月4日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/10/12/%E9%99%8D%E4%B8%B4-%E4%BD%A0%E2%BC%80%E2%BD%A3%E7%9A%84%E6%95%85%E4%BA%8B/" title="降临-你一生的故事">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">降临-你一生的故事</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/09/04/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8C%E8%AF%AD%E8%A8%80-%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%BE%E5%A0%82-%E4%B9%90%E5%AD%A6%E5%81%B6%E7%9A%84/" title="零基础入门C语言-网易云课堂-乐学偶的">
+                        <span class="hidden-mobile">零基础入门C语言-网易云课堂-乐学偶的</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1352 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="FPGA开发经验总结打两拍在学习按键、触摸按键以及FIFO实验中，都涉及到打两拍。实际上都是异步信号处理，可以看作这三个实验的按键按下信号的时钟核FPGA的时钟是不同步，按键的时钟是人，触摸按键的时钟的触摸芯片本身，FIFO中是两个不同频率时钟。所以这本质还是异步信号处理问题。也是信号的亚稳态处理问题，即一个信号的跳变不是瞬间的，是有一个亚稳态状态。  虽然第一级触发器（badt1）在采样异步信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPGA学习笔记">
+<meta property="og:url" content="http://lonlypan.com/2023/08/25/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="FPGA开发经验总结打两拍在学习按键、触摸按键以及FIFO实验中，都涉及到打两拍。实际上都是异步信号处理，可以看作这三个实验的按键按下信号的时钟核FPGA的时钟是不同步，按键的时钟是人，触摸按键的时钟的触摸芯片本身，FIFO中是两个不同频率时钟。所以这本质还是异步信号处理问题。也是信号的亚稳态处理问题，即一个信号的跳变不是瞬间的，是有一个亚稳态状态。  虽然第一级触发器（badt1）在采样异步信">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg">
+<meta property="article:published_time" content="2023-08-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-25T07:19:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/image_3_.jpg">
+  
+  
+  <title>FPGA学习笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FPGA学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-25 00:00" pubdate>
+          2023年8月25日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          31k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          255 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FPGA学习笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年8月25日 下午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <span id="more"></span>
+<h1 id="FPGA开发经验总结"><a href="#FPGA开发经验总结" class="headerlink" title="FPGA开发经验总结"></a>FPGA开发经验总结</h1><h2 id="打两拍"><a href="#打两拍" class="headerlink" title="打两拍"></a>打两拍</h2><p>在学习按键、触摸按键以及FIFO实验中，都涉及到打两拍。实际上都是异步信号处理，可以看作这三个实验的按键按下信号的时钟核FPGA的时钟是不同步，按键的时钟是人，触摸按键的时钟的触摸芯片本身，FIFO中是两个不同频率时钟。所以这本质还是异步信号处理问题。也是信号的亚稳态处理问题，即一个信号的跳变不是瞬间的，是有一个亚稳态状态。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693722595241.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>虽然第一级触发器（badt1）在采样异步信号的时候可能进入亚稳态，但是经过一个时钟周期的延时，当第二级触发器（bdat2）采样其输出信号时，它已经回到一个有效电平的稳定状态，使第二级触发器不会再出现亚稳态，从而防止了亚稳态在整个电路中的传播。<br>完全解决亚稳态的方法是不存在的。触发器可能正好采样到输入信号的变化中点，从此点回到稳定电平的状态需要等待的时间理论上为无穷大。然而实际电路中极小的噪声或环境的变化都会使触发器脱离亚稳态，所以只要满足足够大小的等待时间，亚稳态出现的概率就会减小到在工程中可以忽略或接收的程度。<br>如果系统的工作频率过高，系统中发生亚稳态的可能性就会增大，此时两级触发器构成的同步器不足以解决稳态问题，必须通过增加同步器的级数进而延长等待时间的方法来解决，带来的代价是异步信号的交互会变更慢。</p>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/x-zstu/p/16176817.html">异步信号与同步电路交互、亚稳态问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://aijishu.com/a/1060000000156160">高级FPGA设计技巧！多时钟域和异步信号处理解决方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://support.xilinx.com/s/question/0D54U00005hVBJZSA4/%E5%AF%B9%E4%BA%8E%E5%A4%96%E9%83%A8%E8%BE%93%E5%85%A5%E5%BC%95%E8%B5%B7%E7%9A%84%E4%BA%9A%E7%A8%B3%E6%80%81%E9%97%AE%E9%A2%98%E4%B8%80%E8%88%AC%E5%AF%B9%E8%BE%93%E5%85%A5%E4%BF%A1%E5%8F%B7%E6%89%93%E4%B8%A4%E6%8B%8D%E6%9D%A5%E5%A4%84%E7%90%86%E4%BD%86%E6%89%93%E4%B8%A4%E6%8B%8D%E5%8F%AA%E8%83%BD%E8%A7%A3%E5%86%B3%E5%A4%A7%E9%83%A8%E5%88%86%E7%9A%84%E9%97%AE%E9%A2%98%E6%AF%94%E5%A6%8297%E9%82%A3%E5%89%A9%E4%B8%8B%E7%9A%843%E6%80%8E%E4%B9%88%E5%8A%9E?language=zh_CN">对于外部输入引起的亚稳态问题，一般对输入信号打两拍来处理。但打两拍只能解决大部分的问题，比如97%，那剩下的3%怎么办？</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2294314">异步FIFO设计原理与设计方法以及重要问题汇总（包含verilog代码|Testbench|仿真结果）</a><h1 id="软件下载与安装"><a href="#软件下载与安装" class="headerlink" title="软件下载与安装"></a>软件下载与安装</h1></li>
+</ul>
+<h2 id="Vivado软件"><a href="#Vivado软件" class="headerlink" title="Vivado软件"></a>Vivado软件</h2><p>热知识：XILINX 被 AMD 收购了 ~如果你对该事件比较感兴趣，不妨看看： <a target="_blank" rel="noopener" href="https://www.amd.com/en/corporate/xilinx-acquisition">https://www.amd.com/en/corporate/xilinx-acquisition</a><br>Vivado 是 FPGA 厂商赛灵思公司（XILINX）于 2012 年发布的集成设计环境。<br>其包括高度集成的设计环境和新一代从系统到 IC 级的工具，赛灵思构建的 Vivado 工具把各</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>进入官网下载：<a target="_blank" rel="noopener" href="https://china.xilinx.com/support/download/index.html/content/xilinx/zh/downloadNav/vivado-design-tools.html">Vivado ML 开发者工具</a><br>最新版不稳定，推荐下载旧版本，这里选择正点原子用的最新版。进入历史版本中下载旧版本。选择2020.2版本下载，Windows在线安装包<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KEUWDPlV64QAQfiWLWoA4A?pwd=6666">https://pan.baidu.com/s/1KEUWDPlV64QAQfiWLWoA4A?pwd=6666</a><br>提取码：6666<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_20_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>下载需要登录Xilinx。如果已有Xilinx账户，直接填写账号和密码登录；如果没有账户，则点击“创建账号”即可免费创建一个新账号。如图B.4所示。</p>
+<ol>
+<li>点击创建密码：随后会转到登陆界面，直接点击 “创建密码” 进入注册页面</li>
+<li>账户创建：填写姓名以及邮箱，这里填的邮箱是用来接收验证信息的，所以一定要填一个能用的邮箱。然后选择语言首选项和位置，上面的信息其实除了邮箱都可以随便填。最后进行完谷人机身份验证后，点击 Submit 提交即可。 </li>
+<li>激活账户：访问令牌在你的邮箱中，如果你没有收到邮件，可以点击黑色按钮 “重新发送电子邮件”。 设置密码这块比较烦，长度必须包含10且需要包含 1个大写字母，1个小写字母，1个数字，1个特殊字符。这里不得不吐槽一下，是真的很麻烦。</li>
+<li>登陆账号：激活账户后，会跳转到登录页面。此时输入刚才的邮箱和密码即可登陆。</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_21_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"><br>认证个人信息：下载之前还需要再次填写个人信息，简单地填一下，然后点击 Download 按钮就可以下载了。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_22_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>打开安装包：下完完毕后我们打开安装包进行安装：</li>
+<li>如果弹出 Windows 安全中心警报，点击 允许访问 即可：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_23_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>点击 Next &gt;<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_24_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>再次输入账号密码：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_25_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>选择要安装的软件：这里选择Viavad<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_26_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>选择版本：这里选择Design Edition版本即可<br>  a. System Edition是面向大型系统设计的版本，具有高级功能，如高速原理图布局和高速系统级设计。System Edition包含有system generator for dsp with matlab工具。<br>  b. Design Edition是面向常规设计的版本，提供了大多数设计所需的功能。<br>  c. HL WebPACK Edition是免费版本，限制了一些高级功能。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_27_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>选择工具组件和器件库。为了节省存储空间，我们将用不到的工具组件和器件库去掉，如下图所示：<br>最下面的“Disk Space Required”表示在当前选项下 Vivado 在安装完成后所占用的磁盘空间大小， Vivado 对硬盘存储空间的占用相对来说还是挺大的。<br>点击 Next，进入安装目录设置页面，如下图所示：<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_28_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>同意许可<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_29_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>图中红色方框内是对安装目录的设置，可以点击后面的三个点来修改安装目录（注意，安装路径只能够包含字母、数字、下划线，否则安装程序有可能出问题）。其他的设置保持默认即可。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_30_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>进入 Summary 界面，该界面总结了前面所有安装的配置信息，供用户浏览确认。确认无误后，点击“Install”开始安装 Vivado 设计套件，如下图所示。（由于 Vivado 在安装期间会占用大量的电脑CPU 资源和内存资源，所以笔者建议在开始安装之前，尽量关闭电脑中其他的不必要的应用软件）<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_31_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>等待软件安装完成<br>这可能会是一个漫长的等待，长到令人窒息，就像是安装核弹发射系统一样。<br>期间可能会弹出下载失败，重试后依旧提示下载失败，此时可以点击 Cancel取消安装，重新安装即可。软件会保留已下载的文件，所以不会重头开始。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_32_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>在这期间可能会弹出 Windows 安全中心：信任安装即可。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_33_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ol>
+<h3 id="License注册"><a href="#License注册" class="headerlink" title="License注册"></a>License注册</h3><p>下载License文件，并解压</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1TZAkoJbpQlLIIuMnWuXdCg?pwd=6666">https://pan.baidu.com/s/1TZAkoJbpQlLIIuMnWuXdCg?pwd=6666</a><br>提取码：6666</p>
+<p>运行Vivado 软件，进入License管理<br>点击copy license，选择下载的文件<br>在View License Status 中查看是否成功，有效期至2037<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_34_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="参考资料：（一）-vivado2018-3安装注册指南"><a href="#参考资料：（一）-vivado2018-3安装注册指南" class="headerlink" title="参考资料：（一） vivado2018.3安装注册指南"></a>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42668358/article/details/125512721">（一） vivado2018.3安装注册指南</a></h3><h2 id="Modelsim软件"><a href="#Modelsim软件" class="headerlink" title="Modelsim软件"></a>Modelsim软件</h2><h3 id="下载："><a href="#下载：" class="headerlink" title="下载："></a>下载：</h3><p>一定要下载2020.4版本的，和Vivado2020.2配套，后面会联合仿真。如果版本不对应，可能会联合仿真失败<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1v4AMXQhexjFzHtdmdWaOkQ?pwd=6666">https://pan.baidu.com/s/1v4AMXQhexjFzHtdmdWaOkQ?pwd=6666</a><br>提取码：6666</p>
+<h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/646172508">https://zhuanlan.zhihu.com/p/646172508</a></p>
+<h3 id="Tab缩进修改"><a href="#Tab缩进修改" class="headerlink" title="Tab缩进修改"></a>Tab缩进修改</h3><p>Tools-&gt;edit preferences-&gt;by name-&gt;source-&gt;tabs<br>双击 tabs，软件默认为8，我改成了4<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693140353582.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h1 id="FPGA-开发流程"><a href="#FPGA-开发流程" class="headerlink" title="FPGA 开发流程"></a>FPGA 开发流程</h1><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1692973462775.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693036157272.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h1 id="LED工程抢先体验"><a href="#LED工程抢先体验" class="headerlink" title="LED工程抢先体验"></a>LED工程抢先体验</h1><h2 id="工程管理"><a href="#工程管理" class="headerlink" title="工程管理"></a>工程管理</h2><p>参考正点原子</p>
+<ol>
+<li>doc：开发过程中使用的辅助文档文件（如绘图软件绘制的波形图文件等）</li>
+<li>prj：新建工程及产生的文件（Vivado工程）</li>
+<li>rtl：开发过程中的 RTL 代码文件</li>
+<li>sim 仿真工程与仿真文件</li>
+</ol>
+<p>工程路径除了英文、数字以及下划线等，不要出现中文或者其它特殊字符，否则 FPGA 开发工具无法识别工程路径</p>
+<blockquote>
+<p>正点原子开发方式是先编写RTL代码，再modelsim中仿真，最终Vivado新建工程</p>
+</blockquote>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_1_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="需求分析-系统设计-模块设计-波形图"><a href="#需求分析-系统设计-模块设计-波形图" class="headerlink" title="需求分析-系统设计-模块设计-波形图"></a>需求分析-系统设计-模块设计-波形图</h2><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_4_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_5_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="RTL代码-Modelsim仿真代码"><a href="#RTL代码-Modelsim仿真代码" class="headerlink" title="RTL代码-Modelsim仿真代码"></a>RTL代码-Modelsim仿真代码</h2><p>建议直接在Modelsim编写代码，可以实时编译检测错误</p>
+<ul>
+<li>一般RTL文件名：工程名.v</li>
+<li>仿真文件名：vtf_工程名_test.v</li>
+</ul>
+<p>led.v RTL代码</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> led(<br>    <span class="hljs-keyword">input</span> key,<br>    <span class="hljs-keyword">output</span> led<br>);<br><br><span class="hljs-keyword">assign</span> led = ~key;<br><br><span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></table></figure>
+
+<p>vtf_led_test.v 仿真代码</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">`timescale <span class="hljs-number">1</span>ns/<span class="hljs-number">1</span>ns<br><br><span class="hljs-keyword">module</span> vtf_led_test();<br><br>reg <span class="hljs-keyword">key</span>;<br>wire led;<br><br>initial begin <br>    <span class="hljs-keyword">key</span> &lt;= <span class="hljs-number">1</span><span class="hljs-comment">&#x27;b1;</span><br><br>    #<span class="hljs-number">200</span><br>    <span class="hljs-keyword">key</span>  &lt;= <span class="hljs-number">1</span><span class="hljs-comment">&#x27;b1;</span><br>    #<span class="hljs-number">1000</span><br>    <span class="hljs-keyword">key</span>  &lt;= <span class="hljs-number">1</span><span class="hljs-comment">&#x27;b0;</span><br>    #<span class="hljs-number">600</span><br>    <span class="hljs-keyword">key</span>  &lt;= <span class="hljs-number">1</span><span class="hljs-comment">&#x27;b1;</span><br>    #<span class="hljs-number">1000</span><br>    <span class="hljs-keyword">key</span>  &lt;= <span class="hljs-number">1</span><span class="hljs-comment">&#x27;b0;</span><br><span class="hljs-keyword">end</span><br><br>led uut(<br>    .<span class="hljs-keyword">key</span>(<span class="hljs-keyword">key</span>),<br>    .led(led)<br>);<br><br>endmodule<br></code></pre></td></tr></table></figure>
+
+<h2 id="Modelsim仿真"><a href="#Modelsim仿真" class="headerlink" title="Modelsim仿真"></a>Modelsim仿真</h2><p>我们在仿真一些复杂的工程的时候往往需要对工程里的 IP 核进行仿真，当我们需要对 IP 核进行仿真时一定要事先将 IP 核的库文件加载到Modelsim 库中去。</p>
+<h3 id="1、新建工程"><a href="#1、新建工程" class="headerlink" title="1、新建工程"></a>1、新建工程</h3><p>在 modelsim 中建立 project，选择 File-&gt;New-&gt;Project</p>
+<ol>
+<li>在“Project Name”栏中填写工程名，建议和仿真的文件一样</li>
+<li>“Project Location”是Modelsim仿真工程路径，这里统一路径为工程下的 sim 文件夹</li>
+<li>下面两部分是用来设置仿真库名称和路径的，这里我们使用默认</li>
+<li>点击【OK】</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_7_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="2、导入文件"><a href="#2、导入文件" class="headerlink" title="2、导入文件"></a>2、导入文件</h3><p>选择窗口中共有四种操作：</p>
+<ul>
+<li>Create New File（创建新文件）</li>
+<li>Add Existing File（添加已有文件）</li>
+<li>Create Simulation（创建仿真）</li>
+<li>Create New Folder（创建新文件夹）</li>
+</ul>
+<ol>
+<li>这里我们先选择“Add Existing File”（添加已有文件）</li>
+<li>点击“Browse”按钮选择“led.v”文件，选择 Reference from current location 来引用设计文件，其他的保持默认设置，最后点击【OK】按钮。</li>
+<li>接下来以同样的方法添加仿真文件</li>
+<li>点击“Close”关闭文件创建&#x2F;添加框。</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_8_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="3、-编译"><a href="#3、-编译" class="headerlink" title="3、 编译"></a>3、 编译</h3><p>我们可以在菜单栏 【Compile】中找到编译相关命令，也可以在快捷工具栏或者在工作区中的右键弹出的菜单中找到编译相关命令。</p>
+<ul>
+<li>Compile Selected（编译所选）</li>
+<li>Compile All（编译全部）</li>
+<li>Compile Order：文件编译顺序，可以调整编译的.v 文件的编译顺序。</li>
+<li>Compile Report：编译报告，内容为当次编译的详细报告。 </li>
+<li>Compile Summary：编译摘要，执行过的编译操作都在编译摘要有记录。</li>
+<li>Compile out-of-data：只重新compile有修改過的檔案 (比較節省時間，故也較常用)</li>
+</ul>
+<p>我们单击 Compile All（编译全部）</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_11_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>文件编译后“Status”列可能会有三个不同状态。除了上图的用“√”表示的通过状态外，还有两个在 设计中不希望出现的状态：编译错误（显示红色的“×”）和包含警告的编译通过（对号的后面会出现一个 黄色的三角符号）。</p>
+<ul>
+<li>编译错误即 Modelsim 无法完成文件的编译工作。通常这种情况是因为被编译文件中包 含明显的语法错误</li>
+<li>编译结果中包含警告信息是一种比较特殊的状态，表示被编译的文件没有明显的语法错误，但可能包含一些影响最终输出结果的因素。这种状态在实际使用中较少出现，这类信息一般在功能仿真的时候不会带来明显的影响，不过可能会在后续的综合和时序仿真中造成无法估计的错误</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_12_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="4、仿真"><a href="#4、仿真" class="headerlink" title="4、仿真"></a>4、仿真</h3><p>在 ModelSim 菜单栏中找到【Simulate】→【Start Simulation…】菜单并点击，弹出如下右图所示页面</p>
+<ul>
+<li>Design Optimization：优化设计设置页面。</li>
+<li>Runtime Options：运行选项配置，例如波形格式配置、仿真时间设置等。</li>
+<li>Restart：重启仿真。</li>
+<li>Break&#x2F;End Simulation：终止仿真运行。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_13_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>配置仿真功能页面包含 6 个标签，分别是：Design、VHDL、Verilog、Libraries、SDF 和 Others。我们用的最多的是 Design、Libraries 和 SDF 这三个标签了</p>
+<ul>
+<li>Design 标签，该标签内居中的部分是 Modelsim 中当前包含的全部库，这些库和单元是为仿真服务的。可以使用 Ctrl 和 Shift 键来选择多个文件。右侧是 Resolution 选项，可以选择仿真的时间精度。这个选项一般都是设置在默认状态，这时 Modelsim 依照仿真设计文件中指定的最小时间刻度来进行仿真，如果设计文件中没有指定，则按 1ns 来进行仿真。最下方的区域是 Optimization 区域，可以在仿真开始的时候使能优化。</li>
+<li>Libraries 标签，我们可以设置搜索库。Search Libraries 和 Search Libraries First 的功能基本一致，唯一不同的是 Search Libraries First 中指定的库会在指定的用户库之前被搜索。</li>
+<li>SDF 标签，SDF 是 Standard Delay Format（标准延迟格式）的缩写，内部包含了各种延迟信息，也是用于时序仿真的重要文件。SDF Files 区域用来添加 SDF 文件，可以选择 Add 按钮进行添加，选择 Modify 按钮进行修改，选择 Delete 按钮删除添加的文件。<br>SDF Options 区域设置 SDF 文件的 warning 和 error 信息。第一个“Disable SDF warning”是禁用 SDF 警告，第二个“Reduce SDF errors to warnings”是把所有的 SDF 错误信息变成警告信息。区域 Multi-Sourcedelay 中可以控制多个目标对同一端口的驱动，如果有多个控制信号同时控制同一个端口或互连，且每个信号的延迟值不同，可以使用此选项统一延迟。下拉列表中可供选择的有三个选项：latest、min 和 max。latest选项选择最后的延迟作为统一值，max 选项选择所有信号中延迟最大的值作为统一值，min 选项选择所有信号中延迟最小的值作为统一值。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_14_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>接下来我们在 Design 标签页面中选择 work 库中的 tb_led 模块，在Optimization 一栏中勾选“Enable optimization”。</p>
+<blockquote>
+<p>注意：如果不进行上面的优化选项配置，Modelsim SE-64 2020.4 仿真会报如下截图所示错误：<img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693040774865.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+</blockquote>
+<p>然后点击上图的右下角的“Optimization Options”对优化选项进行如下图设置，设置完成后点击“OK”退出优化选项设置页面<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_15_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>弹出下图所示界面：<br>鼠标右键单击“u_led”，选择“Add Wave”选项，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_16_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>仿真软件的几个仿真按钮，如下图所示：</p>
+<ul>
+<li>Restart：复位仿真，点击该按钮会有一个弹框如下图。勾选不同的选项会复位对应的设置；我们修改代码编译成功后，不需要重新打开仿真界 面，直接使用仿真复位按键，上图弹窗全部勾选后点击“OK”，就可以重新开始运行仿真。</li>
+<li>Run Length：设置仿真时间，配合运行仿真按钮使用； </li>
+<li>Run：运行仿真，配合设置仿真时间一起使用，会按照设置仿真时长进行仿真；</li>
+<li>ContinueRun：继续仿真，在停止仿真后需要继续运行仿真，可以使用继续仿真按钮</li>
+<li>Run-All：一直仿真，点击仿真复位后，再点击一直仿真，仿真会一直运行，直到点击 Stop 停止仿真；</li>
+<li>Break：中断当前编译或者仿真； </li>
+<li>Stop：在下一步或者下一时间之前停止仿真。</li>
+</ul>
+<p>注意：使用“Run -All”与“ContinueRun”时，如果仿真工程是只有组合电路，没有使用时钟，就只能跑到仿真文件的激励的节点，不能一直运行仿真。此时如果在仿真文件添加持续的时钟输入，点击“Run -All”与“ContinueRun”时就会一直仿真。 </p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693040965836.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>本例程我们选择仿真时间为 10us，如下图所示，单击右边的运行按钮。<br>运行后的结果如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_17_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>这里将会对 ModelSim 软件中几个常用小工具进行简单的讲解。</p>
+<ul>
+<li>上图红框中的几个放大镜模样的工具分别是放大、缩小和全局显示功能，鼠标放到图标上会显示出它们的快捷键。</li>
+<li>上图红框中黄色图标是用来在波形图上添加用来标志的黄色竖线，紧跟着的是将添加的黄色竖线对齐到信号的下降沿和上升沿。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693041130450.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<h3 id="软件技巧"><a href="#软件技巧" class="headerlink" title="软件技巧"></a>软件技巧</h3><h4 id="Wave窗口独立"><a href="#Wave窗口独立" class="headerlink" title="Wave窗口独立"></a>Wave窗口独立</h4><p>wave右上角点击 dock&#x2F;undock 图标，就可以将Wave独立出来，更加方便查看波形<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_2_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h4 id="Wave窗口变量名路径隐藏"><a href="#Wave窗口变量名路径隐藏" class="headerlink" title="Wave窗口变量名路径隐藏"></a>Wave窗口变量名路径隐藏</h4><p>先将Wave窗口独立出来，然后在菜单栏的 Format 菜单中修改</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_3_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="Vivado工程"><a href="#Vivado工程" class="headerlink" title="Vivado工程"></a>Vivado工程</h2><h3 id="1、新建工程-1"><a href="#1、新建工程-1" class="headerlink" title="1、新建工程"></a>1、新建工程</h3><ul>
+<li>名称要能反应出工程所实现的功能，本次工程实现了点亮 LED 的功 能，因此项目名称命名为“led”。</li>
+<li>工程路径是我们在 7.2 小结中新建的 led&#x2F;prj 文件夹，工程路径不能包含中文、空格或者其它一些特殊的符 号，尽量使用英文、数字和下划线，否则工程会创建失败。</li>
+<li>取消默认勾选了 “Create project subdirectory”选项。如果勾选，Vivado 会在所选工程目录下自动创建一个与工程名同名的文件夹，用于存放工程内的各种文件。我们在前面已经做了统一的工程管理，所以我们取消该选项的勾选状态。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_18_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<ol>
+<li>“RTL Project”是指按照正常设计流程所选择的类型，这也是常用的一种类型。<br>  a. “Do not specify sources at this time”：用于设置是否在创建工程向导的过程中添加设计文件，如果勾选后，则不创建或者添加设计文件，我们后续需要添加设计文件，所以不勾选该选项。该选项勾选则结果就是直接跳过下一步：添加源文件。<br>  b. “Project is an extensible Vitis platform”：创建的工程是否需要扩展 Vitis 开发平台，点亮 LED等实验不需要 Vitis 开发平台。所以这个选项我们也不需要勾选。</li>
+<li>“Post-synthesis Project”在导入第三方工具所产生的综合后网表时才选择；</li>
+<li>“I&#x2F;O Planning Project”一般用于在开始 RTL 设计之前，创建一个用于早期 IO 规划和器件开发的空工程；</li>
+<li>“Imported Project” 用于从 ISE、 XST 或 Synopsys Synplify 导入现有的工程源文件；</li>
+<li>“Example Project”是指创建一个 Vivado 提供的工程模板。</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_19_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>选择了“RTL Project”后，我们点击“Next”，进入添加源文件页面。注意，如果勾选中图 7.3.53 中“RTL Project”下的“Do not specify sources at this time”，则不会出现添加源文件的界面。</p>
+<ol>
+<li>源文件编程语言有“ VHDL”与“Verilog”两种，我们所有工程的编程语言都选择“Verilog”语言。</li>
+<li>仿真文件的编程语言选择有“VHDL”、“Verilog”与“Mixed”三种选择。这里选择默认的混合编程语言“Mixed”。</li>
+<li>点击上图中“ +”后会下拉三个选项，分别是添加源文件（Add Source Files）、添加源文件夹（Add Source Directories）以及新建源文件（Create Source File），与④处三个选项的功能是一样的。<blockquote>
+<p>添加源文件的作用：有的设计可能是先使用Modesim，进行设计和仿真，然后再使用Vivado进行完整工程开发。这样我们就可以直接添加设计文件，不需要再重新编写了。<br>源文件的添加时链接方式，不是复制，所以最好将文件复制到工程目录下</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_35_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>因为我们已经编写好了源文件，所以这里我们直接选择“Add Files”按钮添加，<br>如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_40_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>添加约束文件，与添加源文件一样。一般是创建完工程后再创建&#x2F;添加约束文件<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_41_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<blockquote>
+<p>源文件的添加是链接方式，不是复制，所以最好将文件复制到工程目录下</p>
+</blockquote>
+<p>接下来选择开发板的芯片型号，我们可以直接在搜索框中输入完整的芯片型号，大家根据自己所使用 的 ZYNQ 核心板型号进行选择，这里我们输入“xc7z020clg400-2”，也可以根据芯片本身的所在系列、封装、速度等级以及工&#x2F;商业级等信息进行选择。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_42_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>下面介绍 Vivado 工程主界面中的几个主要子窗口：</p>
+<ol>
+<li>Flow Navigator。 Flow Navigator 提供对命令和工具的访问，其包含从设计输入到生成比特流的整个过程。 在点击了相应的命令时，整个 Vivado 工程主界面的各个子窗口可能会作出相应的更改。功能窗口。</li>
+<li>数据窗口区域。默认情况下， Vivado IDE 的这个区域显示的是设计源文件和数据相关的信息。类似与工程目录<ol>
+<li>Sources 窗口： 显示层次结构（Hierarchy）、 IP 源文件（IP Sources）、库（Libraries）和编译顺序（Compile Order）的视图</li>
+<li>Netlist 窗口： 提供分析后的（elaborated）或综合后的（synthesized）逻辑设计的分层视图。</li>
+</ol>
+</li>
+<li>Properties 窗口： 显示有关所选逻辑对象或器件资源的特性信息。</li>
+<li>工作空间（Workspace）： 工作区显示了具有图形界面的窗口和需要更多屏幕空间的窗口，包括：<br>● Project Summary。提供了当前工程的摘要信息，它在运行设计命令时动态地更新。<br>● 用于显示和编辑基于文本的文件和报告的 Text Editor。<br>● 原理图（Schematic）窗口。<br>● 器件（Device）窗口。<br>● 封装（Package）窗口。</li>
+<li>结果窗口区域：在 Vivado IDE 中所运行的命令的状态和结果，显示在结果窗口区域中，这是一组子窗口的集合。在运行命令、生成消息、创建日志文件和报告文件时，相关信息将显示在此区域。默认情况下，此区域包括以下窗口：<br>● Tcl Console： 允许您输入 Tcl 命令，并查看以前的命令和输出的历史记录。<br>● Messages： 显示当前设计的所有消息，按进程和严重性分类，包括“Error”、“CriticalWarning”、“Warning”等等<br>● Log： 显示由综合、实现和仿真 run 创建的日志文件。<br>● Reports： 提供对整个设计流程中的活动 run 所生成的报告的快速访问。<br>● Designs Runs： 管理当前工程的 runs。</li>
+<li>主工具栏： 主工具栏提供了对 Vivado IDE 中最常用命令的单击访问。</li>
+<li>主菜单： 主菜单栏提供对 Vivado IDE 命令的访问。</li>
+<li>窗口布局（Layout）选择器： Vivado IDE 提供预定义的窗口布局，以方便调用设计过程中的各种窗口。布局选择器使您能够轻松地更改窗口布局。或者，可以使用菜单栏中的“Layout”菜单来更改窗口布局。</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_43_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>这里着重讲解以下Flow Navigator。其包含从设计输入到生成比特流的整个过程。也就意味着这是一般的设计流程</p>
+<ol>
+<li>Project manager：工程管理，新建文档等，也就是源码</li>
+<li>IP INTEGRATOR：IP核设计，类似与设计好的库，这个一般在后期用到，可选。这个本质上也是Verilog源码</li>
+<li>Simulation：仿真，可选。正点原子的设计流程是在Modelsim中仿真，所以Vivado中就不需要这一步了。这里的仿真其实就是使用的Modelsim，是厂家集成到Vivado的，当然功能后速度都会相对差一些</li>
+<li>RTL analysis：RTL分析，会将我们编写的代码转换成RTL原理图（理论上的原理图，和FPGA硬件无关的）<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693060912071.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>I&#x2F;O约束：对RTL中的信号映射到实际引脚中。可以在综合后<br>  <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_45_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>Systhesis：综合，其实就是将RTL的原理图转成FPGA芯片已有资源的对应原理图，这个是跟FPGA实体挂钩的。所以就存在实现综合失败的问题，也就是RTL设计所需要的资源FPGA没有（比如不可综合的Verilog代码）<br>可以看出RTL和综合后是不一样的。I&#x2F;O输出输出都有BUF，而逻辑部分则是由LUT查找表实现的，具体可以学习FPGA相关书籍：这里推荐<strong>FPGA原理和结构</strong>，日本<strong>天野英晴</strong>编写，这里是一定要学的，不然后面的综合会看不懂<br><strong>综合过后还要进行时序约束，即添加时钟，纯组合电路不需要添加</strong><br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693061127971.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>Implementation：设计实现。就是将综合的原理图在FPGA芯片上实现。因为FPGA又喝多资源，单元性质的，所以同一个综合电路可以在FPGA不同的位置实现。这就引出后面的布局布线问题，类似于PCB设计。<br> <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_46_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>Program and Debug：程序下载与调试</li>
+</ol>
+<h3 id="2、设计输入"><a href="#2、设计输入" class="headerlink" title="2、设计输入"></a>2、设计输入</h3><p>双击 Sources→Design Sources 下的点亮 LED 灯文件，在 Vivado 软件中显示的界面如下图所示。</p>
+<p>每次保存后，Vivado 都会对源文件进行部分语法的检查，如果有语法的错误，Vivado 会给出提示。另外，在大多数情况下，Vivado IDE 会自动识别设计的顶层模块，当然，用户也可以手动指定顶层模块。从 “Sources”窗口的右击菜单中选择“Set as Top”来手动定义顶级模块。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_44_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="3、RTL分析"><a href="#3、RTL分析" class="headerlink" title="3、RTL分析"></a>3、RTL分析</h3><p>代码输入完毕之后，就可以对设计进行分析（Elaborated）了。点击“Flow Navigator”窗口中的 “Open Elaborated Design”按钮，如下图所示。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693062258069.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>此时，Vivado 会编译 RTL 源文件并进行全面的语法检查，并在 Messages 窗口中给出相应的“Error” 和“Warning”。打 开分析后（Elaborated）的设计，Vivado 会生成顶层原理图视图，并在默认 view layout 中显示设计，如下 图所示：<br>可以看到，此时窗口布局已经发生了变化，新增了 Schematic（原理图）、Netlist（网表）等窗口。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_47_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"><br>此时，底部的 Messages 窗口会显示分析阶段产生的消息，我们点亮 LED 实验的代码并没有产生错误提示，图中的一个警告信息是因为我们为了方便工 程管理，没有使用 Vivado 软件新建源文件自带的路径导致的警告，该警告不造成影响。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_48_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="4、I-x2F-O约束"><a href="#4、I-x2F-O约束" class="headerlink" title="4、I&#x2F;O约束"></a>4、I&#x2F;O约束</h3><p>I&#x2F;O约束 在综合之前任意步骤都可以。因为综合涉及到实际硬件，再设之前都没涉及到。</p>
+<p>在右上角的窗口布局（Layout）选择器中选择“I&#x2F;O Planing”，如 下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_49_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>此时，窗口布局会打开 IO 相关的子窗口，在其中的“I&#x2F;O Ports”窗口中，就可以进行 IO 的分配了。</p>
+<ul>
+<li>Name：工程中顶层端口的名称。 </li>
+<li>Direction：说明管脚是输入还是输出。 </li>
+<li>Neg Diff Pair：负差分对，差分信号在 I&#x2F;O Ports 窗口中只显示在一行里中（只会显示 P 端信号，N 端 信号显示在 Neg Diff Pair 属性栏中）。 </li>
+<li>Package Pin：配置管脚封装。</li>
+<li>Fixed：每一个端口都有 Fixed 属性，表明该逻辑端口是由用户赋值的。端口必须保持锁定状态，才能 避免生成比特流时不会发生错误。 </li>
+<li>Bank，I&#x2F;O Std，Vcco，Slew Type，Drive Strength：显示 I&#x2F;O 端口的参数值。 </li>
+<li>Bank：显示管脚所在的 Bank。 </li>
+<li>I&#x2F;O Std：配置管脚的电平标准，常用电平标准有 LVTTL 和 LVCMOS、SSTL、LVDS 与 HSTL 等。</li>
+<li>Vcco：选择的管脚的电压值。</li>
+<li>Vref：在我们的设计中，硬件上 VREF 引脚悬空。 </li>
+<li>Drive Strength：驱动强度，默认 12mA。 </li>
+<li>Slew Type：指上升下降沿的快慢，设置快功耗会高一点，默认设置慢（slow）。 </li>
+<li>Pull Type：管脚上下拉设置，有上拉、下拉、保持与不设置。 </li>
+<li>Off-Chip Termination：终端阻抗，默认 50Ω。 </li>
+<li>IN-TERM：是用于 input 的串联电阻。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693062578219.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>领航者开发板提供了 IO 引脚总表，在如下图所示位置<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_50_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>这里更具开发板原理图、引脚电压等设计管教约束如下：<br>  <img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_45_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>IO引脚列表很多时候，信号变量是被覆盖了，看不到，需要手动调整表格，让信号显示出来<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BF%A1%E5%8F%B7%E6%9F%A5%E7%9C%8B.gif" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="5、综合"><a href="#5、综合" class="headerlink" title="5、综合"></a>5、综合</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693064461762.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>综合完成后，弹出如下窗口</p>
+<ul>
+<li>“Run lmplementation”选项直接进行<strong>设计实现</strong>步骤</li>
+<li>“Open Synthesized Design”选项打开综合设计。即查看综合后的原理图</li>
+<li>查看报告</li>
+</ul>
+<p>这里选中“Open Synthesized Design”后点击“OK”<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_52_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>点击“OK”之后会出现一个弹框，这个弹框中选择“YES”就会打开综合后的原理图，如下图所示：<br>可以清晰地看到代码和电路图的对应关系，IBUF 是输入缓存，一般 VIVADO 会自动给输入信号 加上，作用是将输入管脚输入到 FPGA 内部；OBUF 是输出缓存，一般 VIVADO 会自动给输出信号加上， 作用是将输出信号送出 FPGA。代码中的取反是通过一个 LUT1 实现的。 </p>
+<p>打开综合后设计除了自动弹出的原理图界面外，还有一些其它选项，如下图所示</p>
+<ul>
+<li><p>Constraints Wizard：约束向导。 </p>
+</li>
+<li><p>Edit Timing Constraints：编辑时间约束。 </p>
+</li>
+<li><p>Set Up Debug：引导创建在线调试。</p>
+</li>
+<li><p>Report Timing Summary：报告时序摘要并运行时序分析。 </p>
+</li>
+<li><p>Report Clock Networks：时钟网络报告。 </p>
+</li>
+<li><p>Report Clock Interaction：时钟交互报告。 </p>
+</li>
+<li><p>Report Methodology：检查符合 UltraFast 设计方法的设计。 </p>
+</li>
+<li><p>Report DRC：设计规则检查。 </p>
+</li>
+<li><p>Report Noise：噪声分析报告。 </p>
+</li>
+<li><p>Report Utilization：资源利用率报告。 </p>
+</li>
+<li><p>Report Power：电源报告。 </p>
+</li>
+<li><p>Schematic：打开综合后的原理图设计。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_53_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="6、时钟约束"><a href="#6、时钟约束" class="headerlink" title="6、时钟约束"></a>6、时钟约束</h3></li>
+<li><p>时钟是在<strong>综合后的</strong></p>
+</li>
+<li><p>组合逻辑电路可以不要时钟约束</p>
+</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20230829-1.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20230829-2.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20230829-3.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="7、设计实现"><a href="#7、设计实现" class="headerlink" title="7、设计实现"></a>7、设计实现</h3><p>约束、综合完毕之后，就可以开始实现设计了。我们点击“Flow Navigator”窗口中的“Run Implementation”按钮，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693064855050.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>实现完成后会弹出如下提示窗口：<br>和前面的类似，该窗口有三个选项，从上到下分别是</p>
+<ul>
+<li>打开实现设计</li>
+<li>生成下载文件</li>
+<li>查看报告。</li>
+</ul>
+<p>这里我们打开实现设计<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_54_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>进入实现设计界 面，如下图所示：左边的“Netlist”窗口中有“Nets”与“Leaf Cells”，点击“Nets”与“Leaf Cells”下面的选项， 右边的器件图会高亮对应模块，所以实现设计将代码映射到了 FPGA 底层资源上。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_55_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p> 这时我们再次查看“Design Runs”窗口中的实现结果，如下图所示：已经全部实现完成，没有错误<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693065880313.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="8、下载"><a href="#8、下载" class="headerlink" title="8、下载"></a>8、下载</h3><p>在下载程序之前，首先要先生成用于下载到器件中的比特流文件，该文件的后缀为“.bit”。我们点击 “Flow Navigator”窗口中的“Generate Bitstream”按钮，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693065950884.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>此时我们可以看到在“Design Runs”窗口中显示正在生成比特流，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693065962491.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>比特流生成完毕之后，Vivado 会弹出提示窗口，如下图所示：<br>图中有四个选项，分别是</p>
+<ul>
+<li>打开实现设计</li>
+<li>查看报告</li>
+<li>打开硬件管理</li>
+<li>生成固化文件。</li>
+</ul>
+<p>我们可以直接选 择上图的“Open Hardware Manager”进入硬件管理界面，<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693065989636.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>也可以如上图所示，选择“Cancel”关闭该页面， 按照下面的描述进入硬件管理页面。 接下来我们开始下载比特流，点击“Flow Navigator”窗口中的“Open Hardware Manager”按钮，如 下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066029064.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>接着 Vivado 就会打开 Hardware Manager，同时窗口布局也跟着发生了变化，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066061542.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>接下来我们就要用到开发板和 Xilinx 下载器了。首先将 Xilinx 下载器一端连接电脑，另一端与开发板 上的 JTAG 接口相连接；然后连接开发板电源线，并打开电源开关。下图为领航者开发板的实物连接图<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066083718.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>开发板连接完成并打开电源开关后，点击“Hardware”子窗口中的“Auto Connect”按钮，如下图所 示：</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066094117.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>在“Hardware”子窗口中出现如下界面就表示 Vivado 就已经和下载器连接成功了，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066108345.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>我们点击上图中的“Program Device”，弹出的界面如下图所示<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066118701.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>此时 Bitstream File 一栏会自动识别到工程的比特流文件，我们直接点击“Program”按钮下载程序。<br>“Enable end of startup check”勾选就是使用下载完成校验，如果下载失败就会返回一个错误提示，一 般这里我们都是默认勾选的。</p>
+<p>程序下载完成后，我们可以看到位于底板上的 PL_LED0 灯是常灭状态，此时按下 PL_KEY0 按键，PL_LED0 灯会被点亮，松开按键，LED 灯被熄灭，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693066170758.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<blockquote>
+<p>需要说明的是，下载完比特流后，如果开发板断电，程序会丢失。如果想要程序断电不丢失的话，需要将程序固化至开发板中，这个需要在嵌入式 Vitis 软件中完成，ZYNQ 芯片无法单独固化比特流文件 （PL 的配置文件）。<strong>这是由于 ZYNQ 非易失性存储器的引脚（如 SD 卡、QSPI Flash）是 ZYNQ PS 部分 的专用引脚，这些非易失性存储器由 PS 的 ARM 处理器进行驱动，需要将 bit 流文件和 elf 文件（软件程 序的下载文件）合成一个 BOOT.BIN，才能进行固化，因此需要学习 ZYNQ 嵌入式 VITIS 的开发流程。</strong> 在 《领航者 ZYNQ 之嵌入式开发指南.pdf》文档中“第七章 程序固化实验”，会有一个单独的章节向大家介 绍程序固化的方法。 </p>
+</blockquote>
+<blockquote>
+<p>本章内容有限，Vivado 工具还有更多的使用规则本章没有进行介绍，用户可以查找 Xilinx 官方的使用 手册进行学习。<br>1．Vivado Design Suite User Guide:System-Level Design Entry (UG895)。<br>2．Vivado Design Suite User Guide: DesignAnalysis and Closure Techniques(UG906</p>
+</blockquote>
+<h3 id="程序固化"><a href="#程序固化" class="headerlink" title="程序固化"></a>程序固化</h3><p>使用vivado烧录下载后，会掉电丢失，这里讲解两种方法固化程序</p>
+<h4 id="boot程序文件制作"><a href="#boot程序文件制作" class="headerlink" title="boot程序文件制作"></a>boot程序文件制作</h4><h4 id="1、QSPI启动"><a href="#1、QSPI启动" class="headerlink" title="1、QSPI启动"></a>1、QSPI启动</h4><h4 id="2、SD卡启动"><a href="#2、SD卡启动" class="headerlink" title="2、SD卡启动"></a>2、SD卡启动</h4><h1 id="Verilog语法"><a href="#Verilog语法" class="headerlink" title="Verilog语法"></a>Verilog语法</h1><h2 id="Verilog-和-C-的区别"><a href="#Verilog-和-C-的区别" class="headerlink" title="Verilog 和 C 的区别"></a>Verilog 和 C 的区别</h2><p>Verilog 是硬件描述语言，在编译下载到 FPGA 之后，会生成电路，所以 Verilog 全部是<strong>并行处理与运行</strong>的；C 语言是软件语言，编译下载到单片机&#x2F;CPU 之后，还是<strong>软件指令</strong>，而不会根据你的代码生成相应的硬件电路，而<strong>单片机&#x2F;CPU 处理软件指令需要取址、译码、执行，是串行执行的</strong>。 Verilog 和 C 的区别也是 FPGA 和单片机&#x2F;CPU 的区别，由于 FPGA 全部并行处理，所以处理速度非常快，这个是 FPGA 的最大优势，这一点是单片机&#x2F;CPU 替代不了的。</p>
+<h2 id="Verilog-基础知识"><a href="#Verilog-基础知识" class="headerlink" title="Verilog 基础知识"></a>Verilog 基础知识</h2><h3 id="Verilog-的逻辑值"><a href="#Verilog-的逻辑值" class="headerlink" title="Verilog 的逻辑值"></a>Verilog 的逻辑值</h3><p>逻辑 0：表示低电平，也就是对应我们电路的 GND； 逻辑 1：表示高电平，也就是对应我们电路的 VCC； 逻辑 X：表示未知，有可能是高电平，也有可能是低电平； 逻辑 Z：表示高阻态，外部没有激励信号是一个悬空状态。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_56_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="Verilog-的标识符"><a href="#Verilog-的标识符" class="headerlink" title="Verilog 的标识符"></a>Verilog 的标识符</h3><ul>
+<li>定义<br>标识符(identifier）用于定义模块名、端口名和信号名等。Verilog 的标识符可以是任意一组字母、数 字、$和_(下划线)符号的组合，但标识符的第一个字符必须是字母或者下划线。另外，标识符是区分大小 写的。以下是标识符的几个例子：<br>Count<br>COUNT &#x2F;&#x2F;与 Count 不同。<br>R56_68<br>FIVE$ </li>
+<li>推荐写法如下：<br>count fifo_wr 不建议大小写混合使用，普通内部信号建议全部小写，参数定义建议大写，另外信号命名最好体现信 号的含义。 规范建议 以下是一些书写规范的要求： <ul>
+<li>1、用有意义的有效的名字如 sum、cpu_addr 等。 </li>
+<li>用下划线区分词语组合，如 cpu_addr。 </li>
+<li>采用一些前缀或后缀，比如：时钟采用 clk 前缀：clk_50m，clk_cpu；低电平采用_n 后缀： enable_n； </li>
+<li>统一缩写，如全局复位信号 rst。 </li>
+<li>同一信号在不同层次保持一致性，如同一时钟信号必须在各模块保持一致。 </li>
+<li>自定义的标识符不能与保留字（关键词）同名。 </li>
+<li>参数统一采用大写，如定义参数使用 SIZE。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Verilog-的数字进制格式"><a href="#Verilog-的数字进制格式" class="headerlink" title="Verilog 的数字进制格式"></a>Verilog 的数字进制格式</h3><p>Verilog 数字进制格式包括二进制、八进制、十进制和十六进制，一般常用的为二进制、十进制和十六 进制。 </p>
+<ul>
+<li>二进制表示如下：4’b0101 表示 4 位二进制数字 0101； </li>
+<li>十进制表示如下：4’d2 表示 4 位十进制数字 2（二进制 0010）； </li>
+<li>十六进制表示如下：4’ha 表示 4 位十六进制数字 a（二进制 1010），十六进制的计数方式为 0，1， 2…9，a，b，c，d，e，f，最大计数为 f（f：十进制表示为 15）。</li>
+</ul>
+<p>当代码中没有指定数字的位宽与进制时，<strong>默认为 32 位的十进制</strong>，比如 100，实际上表示的值为 32’d100。</p>
+<h3 id="Verilog-的数据类型"><a href="#Verilog-的数据类型" class="headerlink" title="Verilog 的数据类型"></a>Verilog 的数据类型</h3><p>在 Verilog 语法中，主要有三大类数据类型，即寄存器类型、线网类型和参数类型。从名称中，我们可以看出，真正在数字电路中起作用的数据类型应该是寄存器类型和线网类型。</p>
+<ol>
+<li>寄存器类型</li>
+</ol>
+<ul>
+<li>寄存器类型表示一个抽象的<strong>数据存储单元</strong>（但不一定就是寄存器），它<strong>只能在 always 语句和 initial 语句中被赋值</strong>。</li>
+<li>如果语句描述的是<strong>时序逻辑</strong>，即 always 语句带有时钟信号，则该<strong>寄存器变量对应为寄存器</strong></li>
+<li>如果语句描述的是组合逻辑，即 always 语句不带有时钟信 号，则该<strong>寄存器变量对应为硬件连线</strong></li>
+<li>寄存器类型的<strong>缺省值是 x</strong>（未知状态）。</li>
+<li>寄存器数据类型有很多种，如 reg、integer、real 等，其中最常用的就是 reg 类型，它的</li>
+<li><strong>always语句中的数据类型必须是reg型</strong></li>
+</ul>
+<p>使用方法如 下</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">//reg define</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] delay_cnt; <span class="hljs-comment">//延时计数器 32位的</span><br><span class="hljs-keyword">reg</span> key_flag ; <span class="hljs-comment">//按键标志 默认1bit</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>线网类型</li>
+</ol>
+<ul>
+<li>线网表示 Verilog 结构化元件间的物理连线。</li>
+<li>它的值由驱动元件的值决定，例如连续赋值或门的输出。如果没有驱动元件连接到线网，线网的缺省值为 z（高阻态）。</li>
+<li>线网类型同寄存器类型一样也是有很 多种，如 tri 和 wire 等，其中最常用的就是 wire 类型，它的使用方法如下：</li>
+</ul>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">//wire define</span><br><span class="hljs-keyword">wire</span> data_en; <span class="hljs-comment">//数据使能信号</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] data ; <span class="hljs-comment">//数据</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>参数类型</li>
+</ol>
+<ul>
+<li>参数其实就是一个常量，常被用于定义状态机的状态、数据位宽和延迟大小等</li>
+<li>可以在运行时修改参数的值，因此它又常被用于一些参数可调的模块中，使用户在实例化模块时，可以根据需要配置参数。</li>
+<li>在定义参数时，我们可以一次定义多个参数，参数与参数之间需要用逗号隔开。</li>
+<li>参数的定义是局部的，只在当前模块中有效。<br>它的使用方法如下：</li>
+</ul>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">//parameter define</span><br><span class="hljs-keyword">parameter</span> DATA_WIDTH = <span class="hljs-number">8</span>; <span class="hljs-comment">//数据位宽为8位</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Verilog-的运算符"><a href="#Verilog-的运算符" class="headerlink" title="Verilog 的运算符"></a>Verilog 的运算符</h2><h3 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_57_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_58_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_59_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="条件运算符"><a href="#条件运算符" class="headerlink" title="条件运算符"></a>条件运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_60_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_61_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="移位运算符"><a href="#移位运算符" class="headerlink" title="移位运算符"></a>移位运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_62_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="拼接运算符"><a href="#拼接运算符" class="headerlink" title="拼接运算符"></a>拼接运算符</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_63_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Verilog">A = <span class="hljs-number">4&#x27;b1010</span> ;<br>B = <span class="hljs-number">1&#x27;b1</span> ;<br>Y1 = &#123;B, A[<span class="hljs-number">3</span>:<span class="hljs-number">2</span>], A[<span class="hljs-number">0</span>], <span class="hljs-number">4&#x27;h3</span> &#125;;  <span class="hljs-comment">//结果为Y1=&#x27;b1100_0011</span><br>Y2 = &#123;<span class="hljs-number">4</span>&#123;B&#125;, <span class="hljs-number">3&#x27;d4</span>&#125;;  <span class="hljs-comment">//结果为 Y2=7&#x27;b111_1100</span><br>Y3 = &#123;<span class="hljs-number">32</span>&#123;<span class="hljs-number">1&#x27;b0</span>&#125;&#125;;  <span class="hljs-comment">//结果为 Y3=32h0，常用作寄存器初始化时匹配位宽的赋初值</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="运算符的优先级"><a href="#运算符的优先级" class="headerlink" title="运算符的优先级"></a>运算符的优先级</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_64_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693106957428.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="程序框架"><a href="#程序框架" class="headerlink" title="程序框架"></a>程序框架</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-number">1</span> <span class="hljs-keyword">module</span> led(<br><span class="hljs-number">2</span>   <span class="hljs-keyword">input</span> sys_clk , <span class="hljs-comment">//系统时钟</span><br><span class="hljs-number">3</span>   <span class="hljs-keyword">input</span> sys_rst_n, <span class="hljs-comment">//系统复位，低电平有效</span><br><span class="hljs-number">4</span>   <span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">3</span>:<span class="hljs-number">0</span>] led <span class="hljs-comment">//4位LED灯</span><br><span class="hljs-number">5</span> );<br><span class="hljs-number">6</span><br><span class="hljs-number">7</span> <span class="hljs-comment">//parameter define</span><br><span class="hljs-number">8</span> <span class="hljs-keyword">parameter</span> WIDTH = <span class="hljs-number">25</span> ;<br><span class="hljs-number">9</span> <span class="hljs-keyword">parameter</span> COUNT_MAX = <span class="hljs-number">25_000_000</span>; <span class="hljs-comment">//板载50M时钟=20ns，0.5s/20ns=25000000，需要25bit</span><br><span class="hljs-number">10</span> <span class="hljs-comment">//位宽</span><br><span class="hljs-number">11</span><br><span class="hljs-number">12</span> <span class="hljs-comment">//reg define</span><br><span class="hljs-number">13</span> <span class="hljs-keyword">reg</span> [WIDTH-<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] counter ;<br><span class="hljs-number">14</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] led_ctrl_cnt;<br><span class="hljs-number">15</span><br><span class="hljs-number">16</span> <span class="hljs-comment">//wire define</span><br><span class="hljs-number">17</span> <span class="hljs-keyword">wire</span> counter_en ;<br><span class="hljs-number">18</span><br><span class="hljs-number">19</span> <br><span class="hljs-number">20</span> <span class="hljs-comment">//** main code</span><br><span class="hljs-number">21</span> <br><span class="hljs-number">22</span><br><span class="hljs-number">23</span> <span class="hljs-comment">//计数到最大值时产生高电平使能信号</span><br><span class="hljs-number">24</span> <span class="hljs-keyword">assign</span> counter_en = (counter == (COUNT_MAX - <span class="hljs-number">1&#x27;b1</span>)) ? <span class="hljs-number">1&#x27;b1</span> : <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-number">25</span><br><span class="hljs-number">26</span> <span class="hljs-comment">//用于产生0.5秒使能信号的计数器</span><br><span class="hljs-number">27</span> <span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span><br><span class="hljs-number">28</span>   <span class="hljs-keyword">if</span> (sys_rst_n == <span class="hljs-number">1&#x27;b0</span>)<br><span class="hljs-number">29</span>     counter &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-number">30</span>   <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (counter_en)<br><span class="hljs-number">31</span>     counter &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-number">32</span>   <span class="hljs-keyword">else</span><br><span class="hljs-number">33</span>     counter &lt;= counter + <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-number">34</span>   <span class="hljs-keyword">end</span><br><span class="hljs-number">35</span><br><span class="hljs-number">36</span> <span class="hljs-comment">//led流水控制计数器</span><br><span class="hljs-number">37</span> <span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span><br><span class="hljs-number">38</span>   <span class="hljs-keyword">if</span> (sys_rst_n == <span class="hljs-number">1&#x27;b0</span>)<br><span class="hljs-number">39</span>     led_ctrl_cnt &lt;= <span class="hljs-number">2&#x27;b0</span>;<br><span class="hljs-number">40</span>   <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (counter_en)<br><span class="hljs-number">41</span>     led_ctrl_cnt &lt;= led_ctrl_cnt + <span class="hljs-number">2&#x27;b1</span>;<br><span class="hljs-number">42</span>   <span class="hljs-keyword">end</span><br><span class="hljs-number">43</span><br><span class="hljs-number">44</span> <span class="hljs-comment">//通过控制IO口的高低电平实现发光二极管的亮灭</span><br><span class="hljs-number">45</span> <span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span><br><span class="hljs-number">46</span>   <span class="hljs-keyword">if</span> (sys_rst_n == <span class="hljs-number">1&#x27;b0</span>)<br><span class="hljs-number">47</span>     led &lt;= <span class="hljs-number">4&#x27;b0</span>;<br><span class="hljs-number">48</span>   <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span><br><span class="hljs-number">49</span>     <span class="hljs-keyword">case</span> (led_ctrl_cnt)<br><span class="hljs-number">50</span>       <span class="hljs-number">2&#x27;d0</span> : led &lt;= <span class="hljs-number">4&#x27;b0001</span>;<br><span class="hljs-number">51</span>       <span class="hljs-number">2&#x27;d1</span> : led &lt;= <span class="hljs-number">4&#x27;b0010</span>;<br><span class="hljs-number">52</span>       <span class="hljs-number">2&#x27;d2</span> : led &lt;= <span class="hljs-number">4&#x27;b0100</span>;<br><span class="hljs-number">53</span>       <span class="hljs-number">2&#x27;d3</span> : led &lt;= <span class="hljs-number">4&#x27;b1000</span>;<br><span class="hljs-number">54</span>     <span class="hljs-keyword">default</span>: ;<br><span class="hljs-number">56</span>   <span class="hljs-keyword">end</span> <br><span class="hljs-number">57</span> <span class="hljs-keyword">end</span> <br><span class="hljs-number">58</span> <br><span class="hljs-number">59</span> <span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></table></figure>
+
+<p>第 1 行为模块定义，模块定义以 module 开始，endmodule 结束，如 59 行所示。<br>其次 2 到 5 行为端口定义，需要定义 led 模块的输入信号和输出信号，此处输入信号为系统时钟和复位信号，输出为 led 控制信号。<br>7 到 9 行为参数 parameter 定义，语法如 7 到 9 行所示，定义 parameter 的好处是可以灵活改变参数数字就能控制一些计数器最大计数值或者信号位宽的最大位宽。<br>12 到 14 行为 reg 信号定义，reg 信号一般情况下代表寄存器，比如此处控制 0.5 秒使能信号的计数器 counter。<br>16 到 17 行为 wire 信号定义，wire 信号就是硬件连线，比如此处的 counter_en，代表计数到最大值时 产生高电平使能，本质上是一个硬件连线，其实代表的是一些计数器&#x2F;寄存器做逻辑判断的结果。<br>19 到 21 行为 moudle 开始的注释，不添加工具综合也不会报错，但是我们推荐添加，作为一个良好的 编程规范。<br>23 到 24 行为 assign 语句的样式，条件成立选择 1，否则选择 0。<br>26 到 34 行是 always 语句的样式，<br>27 行代表在时钟上升沿或者复位的下降沿进行信号触发。begin&#x2F;end 代表语句的开始和结束。<br>28 到 33 行为 if&#x2F;else 语句，和 C 语言是比较类似的。<br>29 行的“&lt;&#x3D;”标记代表信号 是非阻塞赋值，信号赋值有非阻塞赋值和阻塞赋值两个方式，这个我们后面会详细解释。<br>36 和 42 行也是一个 always 语句，和 26 到 34 行类似。<br>44 和 57 行也是一个 always 语句，不过这个 always 语句中嵌入了一个 case 语句，case 语句的语法如 49 到 55 行所示，需要一个 case 关键字开始，endcase 关键字结束，default 作为默认分支，和 C 语言也是 类似的。当然 case 语句也可以用在不带时钟的 always 语句中，不过本例子的 always 都是带有时钟的。不 带时钟的 always 和带时钟的 always 语句的差异这个我们后面也会详细解释。<br>59 行是 endmodule 标记，代表模块的结束。 </p>
+<p>对于if条件超过一条赋值语句的情况，必须添加begin和end，代码如下所示：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">if</span>(en == <span class="hljs-number">1&#x27;b1</span>) <span class="hljs-keyword">begin</span><br>  b &lt;= <span class="hljs-number">1&#x27;b1</span>;<br>  c &lt;= <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-keyword">end</span>：<br></code></pre></td></tr></table></figure>
+
+<h2 id="阻塞与非阻塞赋值"><a href="#阻塞与非阻塞赋值" class="headerlink" title="阻塞与非阻塞赋值"></a>阻塞与非阻塞赋值</h2><h3 id="阻塞赋值，"><a href="#阻塞赋值，" class="headerlink" title="阻塞赋值，"></a>阻塞赋值，</h3><p>阻塞赋值，顾名思义，即在一个 always 块中，后面的语句会受到前语句的影响，具体来说，在同一个 always 中，一条阻塞赋值语句如果没有执行结束，那么该语句后面的语句就不能被执行，即被“阻塞”。也 就是说 always 块内的语句是一种顺序关系，这里和 C 语言很类似。符号“&#x3D;”用于阻塞的赋值（如:b &#x3D; a;），阻塞赋值“&#x3D;”在 begin 和 end 之间的语句是顺序执行，属于串行语句。<br>在这里定义两个缩写： </p>
+<ul>
+<li>RHS：赋值等号右边的表达式或变量可以写作 RHS 表达式或 RHS 变量； </li>
+<li>LHS：赋值等号左边的表达式或变量可以写作 LHS 表达式或 LHS 变量；</li>
+</ul>
+<p>阻塞赋值的执行可以认为是只有一个步骤的操作，即计算 RHS 的值并更新 LHS，此时不允许任何其他语句的干扰，所谓的阻塞的概念就是值在同一个 always 块中，其后面的赋值语句从概念上来讲是在前面 一条语句赋值完成后才执行的。</p>
+<p>使用阻塞赋值为例来实现这样一个功能：在复位的时候，a&#x3D;1，b&#x3D;2，c&#x3D;3；而在没有复位的时候，a 的值清零， 同时将 a 的值赋值给 b，b 的值赋值给 c，代码以及信号波形图如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693107402640.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693107407809.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>从波形图中可以看到，在复位的时候（rst_n&#x3D;0），a&#x3D;1，b&#x3D;2，c&#x3D;3； 而结束复位之后（波形图中的 0 时刻），当 clk 的上升沿到来时（波形图中的 2 时刻），a&#x3D;0，b&#x3D;0，c&#x3D;0。<br>这是因为阻塞赋值是在当前语句执行完成之后，才会执行后面的赋值语句，因此首先执行的是 a&#x3D;0，赋值完成后将 a 的值赋值给 b，由于此时 a 的值已经为 0，所以 b&#x3D;a&#x3D;0，最后执行的是将 b 的值赋值给 c，而 b 的值已经赋值为 0，所以 c 的值同样等于 0。</p>
+<h3 id="非阻塞赋值（Non-Blocking）"><a href="#非阻塞赋值（Non-Blocking）" class="headerlink" title="非阻塞赋值（Non-Blocking）"></a>非阻塞赋值（Non-Blocking）</h3><p>符号“&lt;&#x3D;”用于非阻塞赋值（如:b &lt;&#x3D; a;），非阻塞赋值是由时钟节拍决定，在时钟上升到来时，执行赋值语句右边，然后<strong>将 begin-end 之间的所有赋值语句同时赋值到赋值语句的左边</strong>，<strong>注意：是 begin—end 之间的所有语句，一起执行，且一个时钟只执行一次，属于并行执行语句</strong>。这个是和 C 语言最大的一个差 异点，大家要逐步理解并行执行的概念。<br>非阻塞赋值的操作过程可以看作两个步骤：</p>
+<ol>
+<li>赋值开始的时候，计算 RHS；</li>
+<li>赋值结束的时候，更新 LHS。</li>
+</ol>
+<p>所谓的非阻塞的概念是指，在计算非阻塞赋值的 RHS 以及 LHS 期间，允许其它的非阻塞赋值语句同时计算 RHS 和更新 LHS。<br>下面使用非阻塞赋值同样来实现这样一个功能：在复位的时候，a&#x3D;1，b&#x3D;2，c&#x3D;3；而在没有复位 的时候，a 的值清零，同时将 a 的值赋值给 b，b 的值赋值给 c，代码以及信号波形图如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693107555685.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693107559585.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>从波形图中可以看到，在复位的时候（rst_n&#x3D;0），a&#x3D;1，b&#x3D;2， c&#x3D;3；而结束复位之后（波形图中的 0 时刻），当 clk 的上升沿到来时（波形图中的 2 时刻），a&#x3D;0，b&#x3D;1， c&#x3D;2。这是因为非阻塞赋值在计算 RHS 和更新 LHS 期间，允许其它的非阻塞赋值语句同时计算 RHS 和更新 LHS。在波形图中的 2 时刻，RHS 的表达是 0、a、b，分别等于 0、1、2，这三条语句是同时更新LHS，所以 a、b、c 的值分别等于 0、1、2。 </p>
+<p>总结如下。 在<strong>描述组合逻辑电路的时候，使用阻塞赋值</strong>，比如 assign 赋值语句和不带时钟的 always 赋值语句，这种电路结构只与输入电平的变化有关系，代码如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs verilog">示例<span class="hljs-number">1</span>：<span class="hljs-keyword">assign</span>赋值语句<br><span class="hljs-keyword">assign</span> data = (data_en == <span class="hljs-number">1&#x27;b1</span>) ? <span class="hljs-number">8&#x27;d255</span> : <span class="hljs-number">8&#x27;d0</span>;<br><br>示例<span class="hljs-number">2</span>：不带时钟的<span class="hljs-keyword">always</span>语句<br><span class="hljs-keyword">always</span> @(*) <span class="hljs-keyword">begin</span><br>  <span class="hljs-keyword">if</span> (en) <span class="hljs-keyword">begin</span><br>    a = a0;<br>    b = b0;<br>  <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span><br>    a = a1;<br>    b = b1;<br>  <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>在描述<strong>时序逻辑的时候，使用非阻塞赋值</strong>，综合成时序逻辑的电路结构，比如带时钟的 always 语句；这种电路结构往往与触发沿有关系，只有在触发沿时才可能发生赋值的变化，代码如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span><br><span class="hljs-keyword">if</span> (!sys_rst_n) <span class="hljs-keyword">begin</span><br>	a &lt;= <span class="hljs-number">1&#x27;b0</span>;<br>	b &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span><br>	a &lt;= c;<br>	b &lt;= d;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="带时钟和不带时钟的always"><a href="#带时钟和不带时钟的always" class="headerlink" title="带时钟和不带时钟的always"></a>带时钟和不带时钟的always</h2><p>always 语句可以带时钟，也可以不带时钟。在 always 不带时钟时，逻辑功能和 assign 完全一致，虽然</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs verilog">产生的信号定义还是 <span class="hljs-keyword">reg</span> 类型，但是该语句产生的还是组合逻辑。<br><span class="hljs-number">44</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">3</span>:<span class="hljs-number">0</span>] led；<br><span class="hljs-number">45</span> <span class="hljs-keyword">always</span> @(*) <span class="hljs-keyword">begin</span><br><span class="hljs-number">49</span> <span class="hljs-keyword">case</span> (led_ctrl_cnt)<br><span class="hljs-number">50</span> <span class="hljs-number">2&#x27;d0</span> : led = <span class="hljs-number">4&#x27;b0001</span>;<br><span class="hljs-number">51</span> <span class="hljs-number">2&#x27;d1</span> : led = <span class="hljs-number">4&#x27;b0010</span>;<br><span class="hljs-number">52</span> <span class="hljs-number">2&#x27;d2</span> : led = <span class="hljs-number">4&#x27;b0100</span>;<br><span class="hljs-number">53</span> <span class="hljs-number">2&#x27;d3</span> : led = <span class="hljs-number">4&#x27;b1000</span>;<br><span class="hljs-number">54</span> <span class="hljs-keyword">default</span> : led = <span class="hljs-number">4&#x27;b0000</span>;<br><span class="hljs-number">55</span> <span class="hljs-keyword">endcase</span><br><span class="hljs-number">57</span> <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<p>在 always 带时钟信号时，这个逻辑语句才能产生真正的寄存器，如下示例 counter 就是真正的寄存器。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-number">26</span> <span class="hljs-comment">//用于产生 0.5 秒使能信号的计数器</span><br><span class="hljs-number">27</span> <span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span><br><span class="hljs-number">28</span> <span class="hljs-keyword">if</span> (sys_rst_n == <span class="hljs-number">1&#x27;b0</span>)<br><span class="hljs-number">29</span> counter &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-number">30</span> <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (counter_en)<br><span class="hljs-number">31</span> counter &lt;= <span class="hljs-number">1&#x27;b0</span>;<br><span class="hljs-number">32</span> <span class="hljs-keyword">else</span><br><span class="hljs-number">33</span> counter &lt;= counter + <span class="hljs-number">1&#x27;b1</span>;<br><span class="hljs-number">34</span> <span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="latch锁存器"><a href="#latch锁存器" class="headerlink" title="latch锁存器"></a>latch锁存器</h2><p>锁存器，是一种对<strong>脉冲电平敏感</strong>的存储单元电路。锁存器和寄存器都是基本存储单元，<strong>锁存器是电平触发的存储器，寄存器是边沿触发的存储器</strong>。两者的基本功能是一样的，都可以存储数据。<strong>锁存器是组合逻辑产生的，而寄存器是在时序电路中使用</strong>，由时钟触发产生的。<br>latch 的主要危害是会产生毛刺（glitch），这种毛刺对下一级电路是很危险的。并且其隐蔽性很强， 不易查出。因此在设计中，<strong>应尽量避免 latch 的使用</strong>。<br>代码里面出现 latch 的两个原因：在组合逻辑中，if 或者 case 语句不完整的描述，比如 if 缺少 else 分 支，case 缺少 default 分支，导致代码在综合过程中出现了 latch。解决办法就是 if 必须带 else 分支，case 必须带 default 分支。</p>
+<p>只有不带时钟的 always 语句 if 或者 case 语句不完整才会产生 latch，带时钟的if语句或者 case 语句不完整描述不会产生 latch。<br>下面为缺少 else 分支的带时钟的 always 语句和不带时钟的 always 语句，通过实际产生的电路图可以看到第二个是有一个 latch 的，第一个仍然是普通的带有时钟的寄存器。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693108087767.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693108239893.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h2><p>Verilog 是硬件描述语言，硬件电路是并行执行的，当需要按照流程或者步骤来完成某个功能时，代码 中通常会使用很多个 if 嵌套语句来实现，这样就增加了代码的复杂度，以及降低了代码的可读性，这个时候就可以使用状态机来编写代码。</p>
+<p>状态机相当于一个控制器，它将一项功能的完成分解为若干步，每一步对应于二进制的一个状态，通过预先设计的顺序在各状态之间进行转换，状态转换的过程就是实现逻辑功 能的过程。 </p>
+<p>状态机，全称是有限状态机（Finite State Machine，缩写为 FSM），是一种在有限个状态之间按一定 规律转换的时序电路，可以认为是组合逻辑和时序逻辑的一种组合。状态机通过控制各个状态的跳转来控制流程，使得整个代码看上去更加清晰易懂，在控制复杂流程的时候，状态机优势明显，因此基本上都会用到状态机，如 SDRAM 控制器等。</p>
+<p>根据状态机的输出是否与输入条件相关，可将状态机分为两大类，</p>
+<ul>
+<li>米勒 (Mealy)型状态机：组合逻辑的输出不仅取决于当前状态，还取决于输入状态。 </li>
+<li>摩尔(Moore)型状态机：组合逻辑的输出只取决于当前状态。</li>
+</ul>
+<h3 id="Mealy-状态机"><a href="#Mealy-状态机" class="headerlink" title="Mealy 状态机"></a>Mealy 状态机</h3><p>米勒状态机的模型如下图所示，模型中第一个方框是指产生下一状态的组合逻辑 F，F 是当前状态和 输入信号的函数，状态是否改变、如何改变，取决于组合逻辑 F 的输出；第二框图是指状态寄存器，其由 一组触发器组成，用来记忆状态机当前所处的状态，状态的改变只发生在时钟的跳边沿；第三个框图是指 产生输出的组合逻辑 G，状态机的输出是由输出组合逻辑 G 提供的，G 也是当前状态和输入信号的函数。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_65_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="Moore-状态机"><a href="#Moore-状态机" class="headerlink" title="Moore 状态机"></a>Moore 状态机</h3><p>摩尔状态机的模型如下图所示，对比米勒状态机的模型可以发现，其区别在于米勒状态机的输出由当 前状态和输入条件决定的，而摩尔状态机的输出只取决于当前状态。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_66_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="模块化设计"><a href="#模块化设计" class="headerlink" title="模块化设计"></a>模块化设计</h2><p>FPGA 逻辑设计中通常是一个大的模块中 包含了一个或多个功能子模块，Verilog 通过模块调用或称为<strong>模块实例化</strong>的方式来实现这些子模块与高层模 块的连接，有利于简化每一个模块的代码，易于维护和修改。 下面以一个实例(静态数码管显示实验)来说明模块和模块之间的例化方法。<br>在静态数码管显示实验中，我们根据功能将 FPGA 顶层例化了以下两个模块：计时模块 （time_count）和数码管静态显示模块（seg_led_static），如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693108804140.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>计时模块部分代码如下所示：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-number">1</span> <span class="hljs-keyword">module</span> time_count(<br><span class="hljs-number">2</span> 	<span class="hljs-keyword">input</span> clk , <span class="hljs-comment">// 时钟信号</span><br><span class="hljs-number">3</span> 	<span class="hljs-keyword">input</span> rst_n , <span class="hljs-comment">// 复位信号</span><br><span class="hljs-number">4</span><br><span class="hljs-number">5</span> 	<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> flag <span class="hljs-comment">// 一个时钟周期的脉冲信号</span><br><span class="hljs-number">6</span> );<br><span class="hljs-number">7</span><br><span class="hljs-number">8</span> <span class="hljs-comment">//parameter define</span><br><span class="hljs-number">9</span> <span class="hljs-keyword">parameter</span> MAX_NUM = <span class="hljs-number">25000_000</span>; <span class="hljs-comment">// 计数器最大计数值</span><br>……<br><span class="hljs-number">34</span> <span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></table></figure>
+
+<p>数码管静态显示模块部分代码如下所示：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-number">1</span> <span class="hljs-keyword">module</span> seg_led_static (<br><span class="hljs-number">2</span> <span class="hljs-keyword">input</span> clk , <span class="hljs-comment">// 时钟信号</span><br><span class="hljs-number">3</span> <span class="hljs-keyword">input</span> rst_n , <span class="hljs-comment">// 复位信号（低有效）</span><br><span class="hljs-number">4</span><br><span class="hljs-number">5</span> <span class="hljs-keyword">input</span> add_flag, <span class="hljs-comment">// 数码管变化的通知信号</span><br><span class="hljs-number">6</span> 	<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] sel , <span class="hljs-comment">// 数码管位选</span><br><span class="hljs-number">7</span> 	<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] seg_led <span class="hljs-comment">// 数码管段选</span><br><span class="hljs-number">8</span> );<br>……<br><span class="hljs-number">66</span> <span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></table></figure>
+
+<p>顶层模块代码如下所示：<br>代码的大致功能就是，</p>
+<ul>
+<li>计数子模块根据系统时钟计数，到TIME_SHOW 最大计数后，更新flag</li>
+<li>然后显示子模块收到flag(add_flag)变换后，就会将数码管显示数据+1，更新一次显示</li>
+<li>顶层模块，就是将输入输出信号，通过例化子模块的方式传递给子模块，同时将各自模块的信号链接</li>
+</ul>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span>module seg_led_static_top (<br><span class="hljs-symbol">2 </span>	<span class="hljs-keyword">input</span> sys_clk , // 系统时钟<br><span class="hljs-symbol">3 </span>	<span class="hljs-keyword">input</span> sys_rst_n, // 系统复位信号（低有效）<br><span class="hljs-number">4</span><br><span class="hljs-symbol">5 </span>	output [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] sel , // 数码管位选<br><span class="hljs-symbol">6 </span>	output [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] seg_led // 数码管段选<br><span class="hljs-number">7</span><br><span class="hljs-symbol">8 </span>);<br><span class="hljs-number">9</span><br><span class="hljs-symbol">10 </span>//parameter define<br><span class="hljs-symbol">11 </span>parameter TIME_SHOW = <span class="hljs-number">25</span><span class="hljs-comment">&#x27;d25000_000; // 数码管变化的时间间隔0.5s</span><br><span class="hljs-number">12</span><br><span class="hljs-symbol">13 </span>//wire define<br><span class="hljs-symbol">14 </span>wire add_flag; // 数码管变化的通知信号<br><span class="hljs-number">15</span><br><span class="hljs-symbol">16 </span>//*****************************************************<br><span class="hljs-symbol">17 </span>//** main code<br><span class="hljs-symbol">18 </span>//*****************************************************<br><span class="hljs-number">19</span><br><span class="hljs-symbol">20 </span>//例化计时模块<br><span class="hljs-symbol">21 </span>time_count #(<br><span class="hljs-symbol">22 </span>	.MAX_NUM (TIME_SHOW)<br><span class="hljs-symbol">23 </span>) u_time_count(<br><span class="hljs-symbol">24 </span>	.clk (sys_clk ),<br><span class="hljs-symbol">25 </span>	.rst_n (sys_rst_n),<br><span class="hljs-number">26</span><br><span class="hljs-symbol">27 </span>	.flag (add_flag )<br><span class="hljs-symbol">28 </span>);<br><span class="hljs-number">29</span><br><span class="hljs-symbol">30 </span>//例化数码管静态显示模块<br><span class="hljs-symbol">31 </span>seg_led_static u_seg_led_static (<br><span class="hljs-symbol">32 </span>	.clk (sys_clk ),<br><span class="hljs-symbol">33 </span>	.rst_n (sys_rst_n),<br><span class="hljs-number">34</span><br><span class="hljs-symbol">35 </span>	.add_flag (add_flag ),<br><span class="hljs-symbol">36 </span>	.sel (sel ),<br><span class="hljs-symbol">37 </span>	.seg_led (seg_led )<br><span class="hljs-symbol">38 </span>);<br><span class="hljs-number">39</span><br><span class="hljs-symbol">40 </span>endmodule<br></code></pre></td></tr></table></figure>
+<p>上面贴出了顶层模块的完整代码，子模块只贴出了模块的端口和参数定义的代码。这是因为顶层模块对子模块做例化时，只需要知道子模块的端口信号名，而不用关心子模块内部具体是如何实现的。如果子模块内部使用 parameter 定义了一些参数，Verilog 也支持对参数的例化（也叫参数的传递），即顶层模块可以通过例化参数来修改子模块内定义的参数。 我们先来看一下顶层模块是如何例化子模块的，例化方法如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_67_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"><br>上图右侧是例化的数码管静态显示模块，子模块名是指被例化模块的模块名，而例化模块名相当于标识，当例化多个相同模块时，可以通过例化名来识别哪一个例化，我们一般命名为“u_”+“子模块名”。信号 列表中“.”之后的信号是数码管静态显示模块定义的端口信号，括号内的信号则是顶层模块声明的信号，这 样就将顶层模块的信号与子模块的信号一一对应起来，同时需要注意信号的位宽要保持一致。 </p>
+<p>接下来再来介绍一下参数的例化，参数的例化是在模块例化的基础上，增加了对参数的信号定义，如 下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_68_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"><br>在对参数进行例化时，在模块名的后面加上“#”，表示后面跟着的是参数列表。计时模块定义的 MAX_NUM 和顶层模块的 TIME_SHOW 都是等于 25000_000，当在顶层模块定义 TIME_SHOW&#x3D;12500_000 时，那么子模块的 MAX_NUM 的值实际上是也等于 12500_000。当然即使子模 块包含参数，在做模块的例化时也可以不添加对参数的例化，这样的话，子模块的参数值等于该模块内部实际定义的值。</p>
+<p>值得一提的是，Verilog 语法中的 localparam 代表的意思同样是参数定义，用法和 parameter 基本一 致，区别在于 parameter 定义的参数可以做例化，而 localparam 定义的参数是指本地参数，上层模块不可 以对 localparam 定义的参数做例化。</p>
+<h1 id="数字电路基础"><a href="#数字电路基础" class="headerlink" title="数字电路基础"></a>数字电路基础</h1><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693135061532.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><h2 id="Vivado仿真"><a href="#Vivado仿真" class="headerlink" title="Vivado仿真"></a>Vivado仿真</h2><p>打开仿真后，系统会自动执行一次默认，仿真市场就是我们设置的 1000ns<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693627342817.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>如果我们后面新加了一些信号在波形显示界面，就需要将仿真时刻重 置为 0，重新开始仿真。点击“Restart”按钮后，波形窗口中的当前仿真时刻点（黄色标尺）就会回归到 0 时刻，且原先的所有波形都被清除，如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693627378355.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>这时我们点击仿真工具栏中的“Run For”按钮，默认仿真时长是 10us，如下图所</p>
+<blockquote>
+<p>这里的仿真时长和上面的不同，上面1000ns是我们打开仿真界面软件自动执行一次仿真的时长，之后就失效了，只有下次再重新打开仿真，软件才会继续执行这个时长的仿真。而这里的10us是我们在这个界面后续操作的时长，也就是后面所有手动操作都是这个时长。</p>
+</blockquote>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693627401555.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="Modelsim联合仿真"><a href="#Modelsim联合仿真" class="headerlink" title="Modelsim联合仿真"></a>Modelsim联合仿真</h2><p>教程:<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42837669/article/details/107829499">https://blog.csdn.net/weixin_42837669/article/details/107829499</a></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_1_.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="流水灯"><a href="#流水灯" class="headerlink" title="流水灯"></a>流水灯</h2><p>系统时钟 sys_clk 的时钟周期为 20ns（对应开发板板载的晶振频率为 50Mhz），计数器计时 0.5s 需要 0.5s&#x2F;20ns&#x3D;500000000ns&#x2F;20ns &#x3D; 25000000 个时钟周期，由于计数器是从 0 开始计数，所以计数器最大计数到 25000000-1，刚好是 0.5s。<br>由此绘制出 flow_led 模块的波形图如下图所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693140534588.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>计数器 cnt 实现计时的功能，其赋值在时序逻辑 always 语句中完成。对 led 的赋值同样在时序逻辑 always 语句中完成，由于流水灯的效果是依次按顺序点亮其中一个 LED 灯，所以可以通过移位的方式实 现。当 cnt 计数到最大值时，对 led 端口实现一次移位的操作。流水灯（flow_led.v）代码编写如下：</p>
+<h2 id="按键LED"><a href="#按键LED" class="headerlink" title="按键LED"></a>按键LED</h2><h2 id="按键蜂鸣器与分层设计"><a href="#按键蜂鸣器与分层设计" class="headerlink" title="按键蜂鸣器与分层设计"></a>按键蜂鸣器与分层设计</h2><p>vivado  自动识别顶层文件</p>
+<h2 id="触摸按键LED"><a href="#触摸按键LED" class="headerlink" title="触摸按键LED"></a>触摸按键LED</h2><h2 id="呼吸灯-amp-在线逻辑分析仪"><a href="#呼吸灯-amp-在线逻辑分析仪" class="headerlink" title="呼吸灯&amp;在线逻辑分析仪"></a>呼吸灯&amp;在线逻辑分析仪</h2><h3 id="在线逻辑分析仪"><a href="#在线逻辑分析仪" class="headerlink" title="在线逻辑分析仪"></a>在线逻辑分析仪</h3><ol>
+<li>HDL 实例化调试探针流程，这是集成层次最高的方法，但其灵活性也较差。在调试工作完毕之后，还需要在 HDL 源代码中删除 ILA IP 核，然后重新综合以生成最终的比特流。<br> 2.使用 Debug 标记创建 ILA 调试环境。用户设 置的调试信息会以 Tcl XDC 调试命令的形式保存到 XDC 约束文件中，在实现阶段，Vivado 会读取这些 XDC 调试命令，并在布局布线时加入这些 ILA IP 核。在调试工作完毕之后，用户可以在 HLD 代码中删除 之前添加的“Mark Debug”综合属性，并且在 XDC 文件中删除调试命令，然后再对设计进行重新编译， 以生成最终的比特流。 </li>
+<li>网表插入调试探针流程。第三种方法与第二种方法的使用区别很小，只是标记信号的方式不同，第二种是在综合前标记，第三种是在综合后标记。 4. 第四种方法是手动地在 XDC 约束文件中书写对应的 Tcl XDC 调试命令，这种方法集成层次最低，一般不会使用这种方法。</li>
+</ol>
+<p> 本小节同样以呼吸灯实验的工程为例，介绍前三种 ILA 调试流程，即“HDL 实例化调试探针流 程”、“使用 Debug 标记创建 ILA 调试环境”和“网表插入调试探针流程”。</p>
+<h4 id="1、HDL-实例化调试探针流程"><a href="#1、HDL-实例化调试探针流程" class="headerlink" title="1、HDL 实例化调试探针流程"></a>1、HDL 实例化调试探针流程</h4><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_4_121.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>General Options（常规选项）主要有如下三部分： </p>
+<ol>
+<li>Monitor Type：ILA 探针接口类型设置。Native 通常是用来测量电平或一定位宽信号，AXI 直接测量 AXI 总线的信号。<ol>
+<li>Number of Probes：探针数量设置，在 GUI 界面最大可设置 64 个，可以通过 TCL 脚本去生成 IP Core 超过 64 个，或者可以通过生成多个 ILA IP Core 去调试更多信号。每个探针还可以设置位宽，你可以测量一个多位的信号，也可以测量硬件的多个位，比如AD的14位数据。</li>
+<li>Sample Data Depth：采样数据深度，设置的数值越大，采样的数据越多，看到的波形数据越多，但最终占用的资源也会越多，并不是设置的越大越好。</li>
+</ol>
+</li>
+</ol>
+<p>探针无法探测时钟信号。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_6_23345.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>图中 Synthesis Options（综合选项）我们选择的是 Out of context per IP，简称 OOC。<br>对于顶层设计，Vivado使用自顶向下的全局（Global）综合方式，将顶层之下的所有逻辑模块都进行 综合，但是设置为 OOC 方式的模块除外，它们独立于顶层设计而单独综合。通常在整个设计周期中，顶层设计会被多次修改并综合，但有些子模块在创建完毕之后不会因为顶层设计的修改而被修改，如 IP，它们被设置为 OOC 综合方式。OOC 模块只会在综合顶层之前被综合一次，这样在顶层的设计迭代过程中， OOC 模块就不必跟随顶层模块而一次次产生相同结果的多余综合了，所以 OOC 流程减少了设计的周期， 并消除了设计迭代，使您可以保存和重用综合结果。<br>在对顶层进行综合时，OOC 模块会被视为 黑盒子，并且不会参与到顶层的综合中来。在综合之后的编译过程中，OOC 模块的黑盒子才会被打开，这 时其网表才是可见的，并参与到全局设计的实现过程中来。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693491185010.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="IP核PLL与例化"><a href="#IP核PLL与例化" class="headerlink" title="IP核PLL与例化"></a>IP核PLL与例化</h2><p>Xilinx7 系列器件中的时钟资源包含了时钟管理单元 CMT（全称 Clock Management Tile，即时钟管理单 元），每个 CMT 由一个 MMCM（全称 Mixed-Mode Clock Manager，即混合模式时钟管理）和一个 PLL（全 称 Phase Locked Loop，即锁相环）组成，xc7z020 芯片内部有 4 个 CMT，xc7z010 芯片内部有 2 个 CMT。</p>
+<ul>
+<li>PLL：为锁相回路或锁相环，用来统一整合时钟信号，使高频器件正常工作，如内存的存取数据 等。PLL 用于振荡器中的反馈技术。 </li>
+<li>MMCM（混合模式时钟管理）：是基于 PLL 的新型混合模式时钟管理器，实现了最低的抖动和抖 动滤波，为高性能的 FPGA 设计提供更高性能的时钟管理功能。<br> MMCM 是一个 PLL 上加入 DCM 的一部分以进行精细的相移，也就是说 MMCM 在 PLL 的基础 上加上了相位动态调整功能，又因为 PLL 是模拟电路，而动态调相是数字电路，所以 MMCM 被称为混合 模式。</li>
+</ul>
+<p>MMCM 相对 PLL 的优势就是相位可以动态调整，但 PLL 占用的面积更小，而在大部分的设计当中 大家使用 MMCM 或者 PLL 来对系统时钟进行分频、倍频和相位偏移都是完全可以的。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693493429693.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="编写代码-1"><a href="#编写代码-1" class="headerlink" title="编写代码"></a>编写代码</h3><p>例化IP核，使用提供的模板<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693624799421.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="IP-单端RAM"><a href="#IP-单端RAM" class="headerlink" title="IP-单端RAM"></a>IP-单端RAM</h2><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693576991979.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>Vivado 软件自带的 Block Memory Generator IP 核（缩写为 BMG，中文名为块 RAM 生成器），可以用 来配置生成 RAM 或者 ROM。</p>
+<ul>
+<li>RAM 是一种随机存取存储器，不仅可以读出存储的数据，同时还支持对存储 的数据进行修改，</li>
+<li>而 ROM 是一种只读存储器，也就是说，在工作时只能读出数据，而不能写入数据。</li>
+</ul>
+<p>需要 注意的是，配置生成的 RAM 或者 ROM 使用的都是 FPGA 内部的 BRAM 资源（Block RAM，即块随机存 储器，是 FPGA 厂商在逻辑资源之外，给 FPGA 加入的专用 RAM 块资源），只不过配置成 ROM 时只用到了嵌入式 BRAM 的读数据端口。本章我们主要介绍如何将 BMG IP 核配置成 RAM。<br>这里有个地方需要大家注意一下，Xilinx 7 系列器件内部的 BRAM 全部是真双端口 RAM，但是通过 BMG IP 核，我们还可以将其配置为伪双端口 RAM 或者单端口 RAM。 </p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693624574083.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>BMG IP 核配置成单端口 RAM 的框图如下图所示。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693577173868.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br>各个端口的功能描述如下：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693577189907.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F-20230902-110846.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="IP-伪双端RAM"><a href="#IP-伪双端RAM" class="headerlink" title="IP-伪双端RAM"></a>IP-伪双端RAM</h2><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693628761097.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="IP-FIFO"><a href="#IP-FIFO" class="headerlink" title="IP-FIFO"></a>IP-FIFO</h2><p>在使用 Vivado 的 FIFO Generato IP 核时，输入的读写时钟频率不能超过 500MHz</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693662806668.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<ol>
+<li><p>lnterface Type（接口模式： </p>
+<ol>
+<li>AXI Memory Mapped 接口一般用于与 PS 端进行数据交互；</li>
+<li>AXI Stream 接口一般应用于高速信号处理场景中，例如光口通信；</li>
+<li>Native 常规模式，FPGA端数据交互</li>
+</ol>
+</li>
+<li><p>Fifo Implementation（FIFO 实现)：资源+时钟的组合&#x3D;FIFO的实现，其中移位寄存器仅可用于实现同步 FIFO。</p>
+<ol>
+<li>资源：Block RAM（块 RAM）、Distributed RAM（分布式 RAM）、Shift Register（移位寄存器）和 Builtin FIFO（内置 FIFO），</li>
+<li>时钟： Common Clocks（公共时钟，即同步 FIFO）和 Independent Clocks（独立时 钟，即异步 FIFO）。资源与种类两两组合之下便有了七种不同的选择。<br> <strong>BRAM 和分布式 RAM 是创建 FIFO 时最常选用的存储资源类型，一般来说，FIFO 容量超过 1024 个字节就需要考虑使用 BRAM 了，没超过 1024 字节选择分布式 RAM。</strong></li>
+</ol>
+</li>
+<li><p>synchronization Stages（同步阶段）：定义跨交叉时钟域逻辑的同步器级数，即设置读写状态信号的输出延迟。保持默认设置 2 即可。</p>
+</li>
+<li><p>FIFO Implementation Options（FIFO 实现方案）：此处表格将 FIFO 的七种方案都列出了，粗体是我们正在配置的实现方案。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%83%8F-20230903-104821.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+</li>
+<li><p>Read Mode（读取模式）：</p>
+<ul>
+<li>“Standard FIFO（标准 FIFO）”，数据输出会比读使能 延迟一拍</li>
+<li>“First Word Fall Through （首字直通，简称 FWFT 模式，即预读模式）”，数据与读使能同时输出</li>
+</ul>
+</li>
+<li><p>Data Port Parameters（数据端口参数）：用于设置 FIFO 的读写数据位宽和读写深度，深度这里设置为 256，但实际深度只有 255；在实际应用中，FIFO 的读写数据位宽和深度在满足设计需求的情况下要尽量设置的小一点，因为 FIFO 使用的是片上 BRAM 资源，而 FPGA 内部的片上 BRAM 资源是有限的。 </p>
+</li>
+<li><p>ECC，Output Register and Power Gating Options（ECC、输出寄存器和电源选通选项），</p>
+<ul>
+<li>第一行有四个信号，当我们勾选 ECC（纠错码）后，可以选择 Hard ECC（硬 ECC）或 Soft ECC （软 ECC），并可以勾选 Single Bit Error Injection（注入单 bit 错误）和 Double Bit Error Injection（注入双 bit 错误），这里我们保持默认的不启用 ECC 即可。</li>
+<li>第二行有两个信号，“ECC Pipeline Reg（ECC 管道寄存器）”和“Dynamic Power Gating（动态功 率选通）”仅限 UltraScale 系列芯片使用 Builtin FIFO</li>
+<li>第三行用于配置输出寄存器，勾选“Output Registers（输出寄存器）”后，可以选择添加 “Embedded Registers（嵌入式寄存器）”和“Fabric Registers（结构寄存器）”。其作用是可以改善 FIFO 的时序，为此付出的代价是每添加一个输出寄存器，输出就会延后一拍。这里我们保持默认，不做勾选。 （4）、</li>
+</ul>
+</li>
+<li><p>“Initialization（初始化）”，也就是设置复位相关的参数，详情如下： </p>
+<ul>
+<li>Reset Pin（复位脚）：选择是否引入复位信号，高电平有效。FIFO 必须要进行复位操作，在进行复位操作时，读写时钟必须是有效 的。</li>
+<li>Enable Reset Synchronization（启用复位同步）：用于设置异步 FIFO 时是否启用同步复位，官方文档建议复位信号至少要保持三个时钟周期（以慢时钟为准）的有效，且在复位后至少要经过 三十个时钟周期（以慢时钟为准）后，才能对 FIFO 进行写数据操作。</li>
+<li>Enable Safety Circuit（启用安全电路）：用于设置 FIFO 是否向外输出 wr_rst_busy（写复位忙信号） 和 rd_rst_busy（读复位忙信号），两个信号皆是高电平表示处于复位状态，低电平表示空闲，可以通过这两个信号来判断 FIFO 是否复位完成。官方文档中建议当启用安全电路时， 复位信号至少要保持八个时钟周期（以慢时钟为准）的有效，且在复位后至少要经过六十个时钟周期（以 慢时钟为准）后，才能对 FIFO 进行写数据操作。 </li>
+<li>Reset Type（复位类型）：当选择使用非 Builtin FIFO 资源来实现同步 FIFO 时，可以选择复位类型为 Asynchronous Reset（异步复位）或 Synchronous Reset（同步复位），使用异步 FIFO 模式时不需要考虑该配置。</li>
+<li>Full Flags Reset Value（满信号的重置值）：用于设置复位时三个满信号（满信号，将满信号，设置满信号）的状态是高电平还是低电平。</li>
+<li>Dout Reset Value（输出的数据重置值）：设置复位期间 FIFO 输出总线上的数据值，若未启用，则复位期间输出总线上的值时未知的。切记设置时此值的位宽不可超过读数据的位宽，这里我们保持默认的 0 即可。</li>
+<li>Read Latency（读延迟），可以在此处看出经过以上设置后，输出被延迟了几拍。因为我们选择的读取模式是标准模式，且没有启用任何输出寄存器，所以输出延迟了一拍。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693711697802.png" srcset="/img/loading.gif" lazyload alt="-"></li>
+</ul>
+</li>
+<li><p>Optional Flags（可选标准）”，可勾选是否输出 Almost Full Flag（将满信号）和 Almost Empty Flag（将空信号），两个信号皆为高有效。</p>
+</li>
+<li><p>Handshaking Options（握手选项），可用于配置读写端口的握手机制，这里我们简单的介 绍下各个配置含义： </p>
+<ul>
+<li>Write Port Handshaking（写端口握手）：可使能 Write Ackongledge（写应答）信号和 Overflow（满溢 出）信号。其中写应答信号是成功写入数据的标志，一次成功写入对应一个写时钟周期的写应答，有效电平状态可配；满溢出信号是写入数据无效（溢出）的标志，一次溢出对应一个写时钟周期，有效电平状态可配。</li>
+<li>Read Port Handshaking（读端口握手）：可使能 Valid Flag（读有效标志）信号和 Underflow Flag（空 溢出）信号。这两个信号的有效电平状态同样可配，信号含义和写端口握手中的两个信号类似。</li>
+</ul>
+</li>
+<li><p>Programmable Flags（可编程标志）：有六个可配置参数，这里的参数配置将影响到可编程空满信号（prog_empty 和 prog_full 信号）在何时使能，各参数含义如下： • Programmable Full Type（可编程满类型）：有五种类型可选，如下表所示：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693711708363.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693712207891.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="UART与例化传参"><a href="#UART与例化传参" class="headerlink" title="UART与例化传参"></a>UART与例化传参</h2><p>UART 是一种采用异步串行通信方式的通用异步收发传输器（universal asynchronous receiver-transmitter）， 它在发送数据时将并行数据转换成串行数据来传输，在接收数据时将接收到的串行数据转换成并行数据。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693725887446.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1693736278214.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<pre><code class="verilog">//捕获接收端口下降沿(起始位)，得到一个时钟周期的脉冲信号
+// uart_rxd_d2 &amp; (~uart_rxd_d1) 下降沿检测
+// &amp; (~rx_flag) 保证不是在非接收数据过程中
+// 也就是start_en只有在下检验并且空闲时，才可以使能
+assign start_en = uart_rxd_d2 &amp; (~uart_rxd_d1) &amp; (~rx_flag);```
+
+## UART_数据包与状态机
+
+
+## AD/DA
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693745853767.png)
+
+最后，为了避免时钟抖动带来的波形毛刺，我们最好将本次实验中需要用到时钟都通过 PLL IP 核来进 行输出，即我们需要使用 PLL 来输出三路时钟，分别为 50MHz 的 DAC 驱动时钟，该时钟也作为 ROM 的 读时钟；25MHz 的 ADC 驱动时钟；25MHz 相位偏移 120 度的 ILA 采样时钟。
+这里有一点需要说明，理论上为了避免数据沿带来的毛刺，**ILA 采样时钟（也可以称为处理 ADC 数据的时钟）要与 ADC 驱动时钟的频率相同，相位相反（即相位偏移 180 度），但是实际测试发现偏移 120 度的话 ILA 显示的效果会更好**， 所以当大家发现采集的 ADC 波形有些许毛刺的话，在排除了硬件问题后，可以通过调整 ILA 采样时钟的相 位来消除毛刺。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693746515432.png)
+
+本次实验中我们的 ila 采样时钟频率为 25MHz，而 JTAG 下载器默认的时钟频率为 15MHz（也可能是其它频率，不同下载器的默认时钟频率可能存在差异），因为不满足 ILA 采样时钟频率不得低于 JTAG 下载器时钟频率的 2.5 倍的要求，所以我们需要将 JTAG 下载器的时钟频率降下来 （至少降到 10MHz），否则的话 ila 会采集不到数据。
+
+另外如果采集到的波形时平定波，说明DA的输出电压太高了，可以调节变阻器将电压调到合适范围
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693751643325.png)
+# Vitis-SDK开发
+
+Vitis 统一软件平台的前身为 Xilinx SDK，从 Vivado 2019.2 版本开始，Xilinx SDK 开发环境已统一整合 到全功能一体化的 Vitis 中。
+Vitis 开发平台除了启动方式、软件界面、使用方法与 SDK 开发平台略有区别， 其他操作几乎一模一样。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/FPGA学习笔记/1693665191256.png)
+</code></pre>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FPGA学习笔记</div>
+      <div>http://lonlypan.com/2023/08/25/FPGA学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月25日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/01/%E5%9B%BD%E4%BA%A7%E8%8A%AF%E7%89%87%E6%9B%BF%E6%8D%A2/" title="国产芯片替换">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">国产芯片替换</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/21/%E7%94%B5%E5%AD%90%E5%85%83%E5%99%A8%E4%BB%B6%E4%B8%8E%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80/" title="电子元器件与电路基础">
+                        <span class="hidden-mobile">电子元器件与电路基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

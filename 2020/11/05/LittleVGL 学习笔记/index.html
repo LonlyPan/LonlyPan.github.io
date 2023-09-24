@@ -1,0 +1,1452 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="版本： v7.7.2-dev平台： windows 10模拟平台： CodeBlocks on win10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LittleVGL 学习笔记">
+<meta property="og:url" content="http://lonlypan.com/2020/11/05/LittleVGL%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="版本： v7.7.2-dev平台： windows 10模拟平台： CodeBlocks on win10">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/logo3_lvgl.png">
+<meta property="article:published_time" content="2020-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-04T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_学习笔记/logo3_lvgl.png">
+  
+  
+  <title>LittleVGL 学习笔记 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LittleVGL 学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-11-05 00:00" pubdate>
+          2020年11月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          53k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          442 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LittleVGL 学习笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年11月5日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p><strong>版本：</strong> v7.7.2-dev<br><strong>平台：</strong> windows 10<br><strong>模拟平台：</strong> CodeBlocks on win10  </p>
+<span id="more"></span>
+
+<h1 id="移植"><a href="#移植" class="headerlink" title="移植"></a>移植</h1><h2 id="Tick-接口"><a href="#Tick-接口" class="headerlink" title="Tick 接口"></a>Tick 接口</h2><p>LittlevGL 需要一个系统嘀嗒 (tick) 来了解动画和其他任务的运行时间。</p>
+<p>您需要定期调用 <code> lv_tick_inc(tick_period)</code> 函数，并以毫秒为单位告知调用周期。例如，<code> lv_tick_inc(1)</code> 是每毫秒调用一次。</p>
+<p><code>lv_tick_inc </code>应该在一个比 lv_task_handler() 更高优先级的例程中调用（例如在一个中断中），以精确地知道经过的毫秒数，即使 <code>lv_task_handler</code>的执行需要更长的时间。</p>
+<p>在 FreeRTOS 中 ‘ lv_tick_inc ‘ 可以在 ‘ vApplicationTickHook ‘ 中调用。</p>
+<p>基于 Linux 的操作系统 (例如在Raspberry Pi上) 可以在线程中调用 ‘ lv_tick_inc ‘，如下所示:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scss">void * tick_thread (void *args)<br>&#123;<br>      <span class="hljs-built_in">while</span>(<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-built_in">usleep</span>(<span class="hljs-number">5</span>*<span class="hljs-number">1000</span>);   <span class="hljs-comment">/*Sleep for 5 millisecond*/</span><br>        <span class="hljs-built_in">lv_tick_inc</span>(<span class="hljs-number">5</span>);      <span class="hljs-comment">/*Tell LittlevGL that 5 milliseconds were elapsed*/</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>以1毫秒的分辨率提供对系统刻度的访问</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p><strong>uint32_t lv_tick_get(void)</strong></p>
+<ul>
+<li>获取自启动以来经过的毫秒数</li>
+<li><strong>return</strong><ul>
+<li>经过的毫秒数</li>
+</ul>
+</li>
+</ul>
+<p><strong>uint32_t lv_tick_elaps(uint32_t prev_tick)</strong><br>-获取自上一个时间戳以来经过的毫秒数</p>
+<ul>
+<li><strong>return</strong><ul>
+<li>自“ prev_tick”以来经过的毫秒数</li>
+</ul>
+</li>
+<li><strong>Parameters</strong><br>- prev_tick：上一个时间戳（systick_get（）的返回值）</li>
+</ul>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><p>ittleVGL是以对象（Object）为概念的，在LVGL中，用户界面的<strong>基本构建块</strong>是对象（Object），也称为控件。例如，按钮，标签，图像，列表，图表或文本区域。‘</p>
+<p>在<a target="_blank" rel="noopener" href="https://docs.lvgl.io/v6/zh-CN/html/object-types/index.html">对象类型</a>这里查看所有对象类型。</p>
+<h3 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h3><h4 id="基础属性"><a href="#基础属性" class="headerlink" title="基础属性"></a>基础属性</h4><p>所有的控件对象都具有一些共同的属性,如下所示</p>
+<ul>
+<li>位置(Position)</li>
+<li>大小(Size)</li>
+<li>父类(Parent)</li>
+<li>是否可拖拽(Drag enable)</li>
+<li>是否可点击(Click enable)等等</li>
+</ul>
+<p>你可以通过 <code>lv_obj_set_...</code>和 <code>lv_obj_get_...</code>这样的API接口对来读写这些属，就比如下面这样：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/*设置对象基本属性*/</span> <br>lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">btn1</span>, 100, 50)</span>; <span class="hljs-comment">//按钮大小</span><br>lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn1</span>, 20,30)</span>; <span class="hljs-comment">//按钮位置</span><br></code></pre></td></tr></table></figure>
+<p>要查看所有可用函数请访问基本对象的<a target="_blank" rel="noopener" href="https://docs.lvgl.io/v6/zh-CN/html/object-types/obj.html">文档</a>.</p>
+<h4 id="专属属性"><a href="#专属属性" class="headerlink" title="专属属性"></a>专属属性</h4><p>对象类型也有本身的专有属性，比如，一个滑动条有：</p>
+<ul>
+<li>最小最大值(Min. max. values)</li>
+<li>当前值(Current value)</li>
+<li>自定义样式(Custom styles)</li>
+</ul>
+<p>对于这些属性，每个对象类型都有唯一的API函数。例如一个滑块：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/*设置滑动条专有属性*/</span><br>lv<span class="hljs-constructor">_slider_set_range(<span class="hljs-params">slider1</span>, 0, 100)</span>;	   <span class="hljs-comment">/*设置最大最小值*/</span><br>lv<span class="hljs-constructor">_slider_set_value(<span class="hljs-params">slider1</span>, 40, LV_ANIM_ON)</span>;	<span class="hljs-comment">/*设置当前值（位置）*/</span><br>lv<span class="hljs-constructor">_slider_set_action(<span class="hljs-params">slider1</span>, <span class="hljs-params">my_action</span>)</span>;     <span class="hljs-comment">/*设置回调函数*/</span><br></code></pre></td></tr></table></figure>
+<p>这些对象类型的API已经描述在他们的 <a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/widgets/index.html">文档</a> 中，但是你也可以在他们各自的头文件中核查 (例如 lv_objx&#x2F;lv_slider.h)</p>
+<h3 id="对象工作机制"><a href="#对象工作机制" class="headerlink" title="对象工作机制"></a>对象工作机制</h3><h4 id="父子结构"><a href="#父子结构" class="headerlink" title="父子结构"></a>父子结构</h4><p>父对象可以被看作是其子对象的容器，每个对象只有一个父对象（screen对象除外）,父对象可以有无限数量的子对象。同时父对象的类型是没有限制，但是有一些典型的父对象（例如按钮）和典型的子对象（例如标签）。</p>
+<p>父对象和子对象之间具有如下2点特性:</p>
+<h4 id="一起移动-Moving-together"><a href="#一起移动-Moving-together" class="headerlink" title="一起移动(Moving together)"></a>一起移动(Moving together)</h4><p>如果父对象的位置更改,则子对象将随父对象一起移动,因此子对象的坐标位置是以父对象的左上角而言的,而不是以屏幕的左上角</p>
+<p>(0;0) 坐标表示对象的位置会保持在他们各自父对象的左上角</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606962374407.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv_obj_t<span class="hljs-operator"> * </span>par = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);  <span class="hljs-comment">/*在当前屏幕上创建一个父对象*/</span><br>lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">par</span>, 100, 80)</span>;	               <span class="hljs-comment">/*设置父对象大小*/</span><br><br>lv_obj_t<span class="hljs-operator"> * </span>obj1 = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">par</span>, NULL)</span>;	       <span class="hljs-comment">/*在前面创建的父对象上创建一个子对象*/</span><br>lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">obj1</span>, 10, 10)</span>;	                 <span class="hljs-comment">/*为新的子对象设置位置*/</span><br></code></pre></td></tr></table></figure>
+<p>Modify the position of the parent:</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606962536983.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">par</span>, 50, 50)</span>;	<span class="hljs-comment">/*移动父对象，子对象也会随之移动*/</span><br></code></pre></td></tr></table></figure>
+<p>(为简单演示，例子中没有给出调整对象颜色的代码)</p>
+<h4 id="子对象只可显示在父对象上"><a href="#子对象只可显示在父对象上" class="headerlink" title="子对象只可显示在父对象上"></a>子对象只可显示在父对象上</h4><p>如果子对象的一部分在父对象的外面,那么子对象的这一部分将不会被显示出来<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606962601758.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_obj_set_x(<span class="hljs-params">obj1</span>, -30)</span>;	<span class="hljs-comment">/*在父对象移动子对象的位置，-30 已经超出了父对象的大小范围*/</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="创建-删除对象"><a href="#创建-删除对象" class="headerlink" title="创建-删除对象"></a>创建-删除对象</h4><p>在littleVGL中,对象可以在运行时被创建和删除，这意味着仅当前创建的对象消耗RAM。例如，如果需要图表（chart），则可以在需要时创建它，并在不可见或不必要时将其删除。</p>
+<p>每一种对象都有其专属的 <strong>create</strong> 创建函数，他需要2个参数</p>
+<ul>
+<li>指向父对象的指针。要创建屏幕（screen），请以NULL作为父级。</li>
+<li>（可选）用于复制具有相同类型的对象的指针。该复制对象可以为NULL，以避免复制操作。</li>
+</ul>
+<p>所有对象使用 <code>lv_obj_t</code> 指针（C语言）作为句柄进行引用。以后可以使用该指针设置或获取对象的属性。</p>
+<p>创建函数看起来如下面这样:</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv_obj_t<span class="hljs-operator"> * </span>lv_ &lt;<span class="hljs-keyword">type</span>&gt;<span class="hljs-constructor">_create(<span class="hljs-params">lv_obj_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">parent</span>, <span class="hljs-params">lv_obj_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">copy</span>)</span>;<br></code></pre></td></tr></table></figure>
+<p>所有对象类型都有一个通用的<strong>删除</strong>函数。它删除对象及其所有子对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lv_obj_del</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> * obj)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>lv_obj_del will delete the object immediately. If for any reason you can’t delete the object immediately you can use lv_obj_del_async(obj). It is useful e.g. if you want to delete the parent of an object in the child’s LV_EVENT_DELETE signal.</p>
+<p><code>lv_obj_del</code>会立即删除对象。如果你由于某种原因不想立即删除的话，你可以使用<code>lv_obj_del_async(obj)</code>接口来异步删除，删除动作会在下一个<code>lv_task_handler</code> 调用时被执行。这很有用，例如，如果要在子对象的LV_EVENT_DELETE信号删除对象的父对象。</p>
+<p>另外你可以通过 <code>lv_obj_clean(obj)</code>接口来清除某个obj对象下的所有子对象（但不能删除对象本身）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">lv_obj_clean</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> * obj)</span></span>;<br></code></pre></td></tr></table></figure>
+<h3 id="Screens"><a href="#Screens" class="headerlink" title="Screens"></a>Screens</h3><p>确保不要混淆显示器和屏幕：</p>
+<ul>
+<li>显示（Displays）是绘制像素的物理硬件。</li>
+<li>屏幕（Screens ）是与特定显示器关联的高级根对象。一个显示器可以有多个与之关联的屏幕，但反之亦然。</li>
+</ul>
+<h4 id="创建-Screens"><a href="#创建-Screens" class="headerlink" title="创建 Screens"></a>创建 Screens</h4><p>屏幕对象是一个特殊的对象，因为他自己没有父对象，所以它以这样的方式来创建：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">lv_obj_t</span> * scr1 = <span class="hljs-built_in">lv_obj_create</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br></code></pre></td></tr></table></figure>
+<p>屏幕对象可以被创建为任何对象类型。例如，一个 基本对象或一个用一个图片作为壁纸</p>
+<h4 id="获取活跃的screen"><a href="#获取活跃的screen" class="headerlink" title="获取活跃的screen"></a>获取活跃的screen</h4><p>默认情况下，littleVGL会为显示器创建一个lv_obj类型的基础对象来作为它的屏幕,即最顶层的父类,可以通过lv_scr_act()接口来获取当前活跃的屏幕对象,通过lv_scr_load()接口来设置一个新的活跃屏幕对象</p>
+<p>每一次显示中始终有一个活动屏幕。默认情况下，littleVGL为每个显示创建并加载一个“基础对象(Base object)”作为屏幕。要获取当前活动的屏幕，请使用函数 <code>lv_scr_act()</code> 来获取活跃屏幕。</p>
+<h4 id="加载screens"><a href="#加载screens" class="headerlink" title="加载screens"></a>加载screens</h4><p>要加载新屏幕，如以下函数原型 <code>lv_scr_load(scr1)</code>.</p>
+<h4 id="动画加载screens"><a href="#动画加载screens" class="headerlink" title="动画加载screens"></a>动画加载screens</h4><p>可以使用动画加载新屏幕（类似PPT切换页面的动画,如：淡入淡出等）</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_scr_load_anim(<span class="hljs-params">scr</span>, <span class="hljs-params">transition_type</span>, <span class="hljs-params">time</span>, <span class="hljs-params">delay</span>, <span class="hljs-params">auto_del</span>)</span><br></code></pre></td></tr></table></figure>
+<p>transition_type存在以下转换类型：</p>
+<ul>
+<li>LV_SCR_LOAD_ANIM_NONE: 延时 time 毫秒后立即切换</li>
+<li>LV_SCR_LOAD_ANIM_OVER_LEFT&#x2F;RIGHT&#x2F;TOP&#x2F;BOTTOM：将新屏幕移到给定方向上</li>
+<li>LV_SCR_LOAD_ANIM_MOVE_LEFT&#x2F;RIGHT&#x2F;TOP&#x2F;BOTTOM：将旧屏幕和新屏幕都移至给定方向</li>
+<li>LV_SCR_LOAD_ANIM_FADE_ON：使新屏幕淡入覆盖屏幕</li>
+</ul>
+<p>Setting <code>auto_del</code> to <code>true</code> 会在动画结束时自动删除旧屏幕.</p>
+<p>在延迟time之后开始动画播放时，新屏幕将变为活动状态（(由 lv_scr_act（）返回创建）。</p>
+<h4 id="处理多个显示器-displays"><a href="#处理多个显示器-displays" class="headerlink" title="处理多个显示器 displays"></a>处理多个显示器 displays</h4><p>屏幕在当前选择的默认显示上创建。默认显示是使用 <code>lv_disp_drv_register</code>注册的最后一个显示屏，也可以使用<code>lv_disp_set_default(disp)</code>显式地选择一个新的默认显示。</p>
+<p><code>lv_scr_act()</code>，<code>lv_scr_load()</code>和<code>lv_scr_load_anim()</code>在默认屏幕上进行操作。</p>
+<p>查看 <a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/overview/display.html">Multi-display support</a> 了解更多</p>
+<h3 id="Parts"><a href="#Parts" class="headerlink" title="Parts"></a>Parts</h3><p>控件（ widgets）可以包含多个零部件。例如，<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/widgets/btn.html">按钮button</a>仅具有主要部分，而<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/widgets/slider.html">滑块Slider</a>则由背景，指示器和旋钮组成。</p>
+<p>各零部件的名称构造类似 <code>LV_ + &lt;TYPE&gt; _PART_ &lt;NAME&gt;</code>。例如 <code>LV_BTN_PART_MAIN</code> or <code>LV_SLIDER_PART_KNOB</code>。通常在将 样式styles 添加到对象时使用零部件。可以将不同的样式分配给对象的不同零部件。</p>
+<p>要了解有关零部件的更多信息，请阅读“<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/overview/style.html">样式</a>”概述的相关部分。</p>
+<h3 id="States"><a href="#States" class="headerlink" title="States"></a>States</h3><p>对象可以处于以下状态的组合</p>
+<ul>
+<li>LV_STATE_DEFAULT：正常，已发布</li>
+<li>LV_STATE_CHECKED：切换或选中 Toggled or checked</li>
+<li>LV_STATE_FOCUSED：通过键盘或编码器聚焦或通过触摸板&#x2F;鼠标单击Focused via keypad or encoder or clicked via touchpad&#x2F;mouse</li>
+<li>LV_STATE_EDITED  由编码器编辑Edit by an encoder</li>
+<li>LV_STATE_HOVERED 鼠标悬停（现在不支持）Hovered by mouse (not supported now)</li>
+<li>LV_STATE_PRESSED 已按下Pressed</li>
+<li>LV_STATE_DISABLED 禁用或不活动Disabled or inactive</li>
+</ul>
+<p>当用户按下、释放、聚焦等对象时，状态通常由库自动更改。但是，状态也可以手动更改。要完全覆盖当前状态，请使用 <code>lv_obj_set_state(obj, part, LV_STATE...)</code>。要设置或清除给定状态（但保持其他状态不变）使用 <code>lv_obj_add/clear_state(obj, part, LV_STATE_...)</code>，在两种情况下都可以使用 <strong>或|</strong> 状态值来组合。例如<code>lv_obj_set_state(obj, part, LV_STATE_PRESSED | LV_PRESSED_CHECKED)</code>。</p>
+<p>要了解有关零部件的更多信息，请阅读“<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/overview/style.html">样式</a>”概述的相关部分。</p>
+<h2 id="Layers-层"><a href="#Layers-层" class="headerlink" title="Layers 层"></a>Layers 层</h2><h3 id="创建顺序"><a href="#创建顺序" class="headerlink" title="创建顺序"></a>创建顺序</h3><p>默认情况下，LVGL在背景上绘制旧对象，在前景上绘制新对象。</p>
+<p>例如，假设我们向一个名为button1的父对象添加了一个按钮，然后向另一个名为button2的按钮添加了一个按钮。然后button1（及其子对象）将在背景中，并且可以被button2及其子对象覆盖。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606973910550.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/*创建一个屏幕*/</span><br>lv_obj_t*scr=lv<span class="hljs-constructor">_obj_create(NULL,NULL)</span>;<br>lv<span class="hljs-constructor">_scr_load(<span class="hljs-params">scr</span>)</span>;   <span class="hljs-comment">/*加载屏幕*/</span><br><br><span class="hljs-comment">/*创建两个按钮*/</span><br>lv_obj_t*btn1=lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">scr</span>,NULL)</span>;<span class="hljs-comment">/*创建一个按钮1在屏幕中*/</span><br>lv<span class="hljs-constructor">_btn_set_fit(<span class="hljs-params">btn1</span>,<span class="hljs-params">true</span>,<span class="hljs-params">true</span>)</span>;<span class="hljs-comment">/*使能自动设置大小根据内容*/</span><br>lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn1</span>,60,40)</span>;<span class="hljs-comment">/*设置该按钮的位置*/</span><br><br>lv_obj_t*btn2=lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">scr</span>,<span class="hljs-params">btn1</span>)</span>;<span class="hljs-comment">/*复制第一个按钮*/</span><br>lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn2</span>,180,80)</span>;<span class="hljs-comment">/*设置该按钮的位置*/</span><br><br><span class="hljs-comment">/*添加标签到按钮中*/</span><br>lv_obj_t*label1=lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn1</span>,NULL)</span>;<span class="hljs-comment">/*创建一个标签于按钮1*/</span><br>lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label1</span>,<span class="hljs-string">&quot;Button1&quot;</span>)</span>;<span class="hljs-comment">/*设置标签内容*/</span><br>lv_obj_t*label2=lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn2</span>,NULL)</span>;<span class="hljs-comment">/*创建标签于按钮2*/</span><br>lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label2</span>,<span class="hljs-string">&quot;Button2&quot;</span>)</span>;<span class="hljs-comment">/*设置标签的内容*/</span><br><br><span class="hljs-comment">/*删除第二个按钮标签*/</span><br>lv<span class="hljs-constructor">_obj_del(<span class="hljs-params">label2</span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="成为前景"><a href="#成为前景" class="headerlink" title="成为前景"></a>成为前景</h3><p>有几种方法可以将对象置于前景：Cai Xuefeng </p>
+<ul>
+<li>使用 <code>lv_obj_set_top(obj,true)</code>。如果对象或它的任何子对象被点击，那么LVGL将自动将该对象带到前景。它的工作原理类似于PC上的典型GUI。当点击背景中的一个窗口时，它会自动来到前景</li>
+<li>使用 <code>lv_obj_move_foreground(obj)</code>显式地告诉库将一个对象放到前景。类似地，使用<code>lv_obj_move_background(obj)</code>移动到背景</li>
+<li>当 <code>lv_obj_set_parent(obj,new_parent)</code>被使用时，对象将在new_parent父对象的前景</li>
+</ul>
+<h3 id="顶层和系统层"><a href="#顶层和系统层" class="headerlink" title="顶层和系统层"></a>顶层和系统层</h3><p>LVGL使用两个特殊的层，分别名为 <code>layer_top</code> 和 <code>layer_sys</code>。两者在显示器的所有屏幕上都是可见的和常见的。但是，<strong>它们不能在多个物理显示器之间共享</strong>。<code>layer_top</code>总是位于默认屏幕的顶部(<code>lv_scr_act()</code>)，而 <code>layer_sys</code> 位于 <code>layer_top</code>的顶部（不可更改，适合做 一些弹窗）</p>
+<p>用户可以使用 <code>layer_top</code> 创建一些随处可见的内容。例如，一个菜单栏，一个弹出窗口等等。如果单击click属性是启用的，那么 <code>layer_top</code> 将吸收所有用户的单击，并处理。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_obj_set_click(<span class="hljs-params">lv_layer_top</span>()</span>,<span class="hljs-literal">true</span>);<br></code></pre></td></tr></table></figure>
+
+<p>layer_sys也用于类似的目的在LVGL上。例如，它将鼠标光标放在那里，以确保它总是可见的</p>
+<h2 id="Events-事件"><a href="#Events-事件" class="headerlink" title="Events 事件"></a>Events 事件</h2><p>当发生用户可能感兴趣的事情时，事件将在LVGL中触发。例如对象：</p>
+<ul>
+<li>被点击</li>
+<li>被拖动</li>
+<li>其值已被更改，等等。</li>
+</ul>
+<p>用户可以将回调函数分配给对象以查看这些事件。实际上，它看起来像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">lv_obj_t</span> * btn = <span class="hljs-built_in">lv_btn_create</span>(<span class="hljs-built_in">lv_scr_act</span>(), <span class="hljs-literal">NULL</span>);<br><span class="hljs-built_in">lv_obj_set_event_cb</span>(btn, my_event_cb);   <span class="hljs-comment">/*指定一个事件回调函数*/</span><br><br>...<br><br><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">my_event_cb</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> * obj, <span class="hljs-type">lv_event_t</span> event)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">switch</span>(event) &#123;<br>        <span class="hljs-keyword">case</span> LV_EVENT_PRESSED:	<span class="hljs-comment">/*事件被按下*/</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Pressed\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LV_EVENT_SHORT_CLICKED:  <span class="hljs-comment">/*短点击*/</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Short clicked\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LV_EVENT_CLICKED:  <span class="hljs-comment">/*点击*/</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Clicked\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LV_EVENT_LONG_PRESSED:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Long press\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LV_EVENT_LONG_PRESSED_REPEAT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Long press repeat\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LV_EVENT_RELEASED:  <span class="hljs-comment">/*释放*/</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Released\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br><br>       <span class="hljs-comment">/*Etc.*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意：多个对象可以使用同一回调函数。</p>
+<h3 id="Event类型"><a href="#Event类型" class="headerlink" title="Event类型"></a>Event类型</h3><p>存在以下事件类型：</p>
+<h4 id="一般事件"><a href="#一般事件" class="headerlink" title="一般事件"></a>一般事件</h4><p>所有对象（例如Buttons&#x2F;Labels&#x2F;Sliders等）都将接收这些通用事件，而不管它们的类型如何。</p>
+<h5 id="相关的输入设备"><a href="#相关的输入设备" class="headerlink" title="相关的输入设备"></a>相关的输入设备</h5><p>当用户按下&#x2F;释放对象时发送这些消息。它们不仅用于鼠标指针，还可以用于键盘，编码器和按钮输入设备。访问<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/overview/indev.html">输入设备概述</a>部分以了解有关它们的更多信息。</p>
+<ul>
+<li>LV_EVENT_PRESSED  该对象已被按下</li>
+<li>LV_EVENT_PRESSING  对象被按下（在按下时连续发送）</li>
+<li>LV_EVENT_PRESS_LOST  仍在按下输入设备，但不再在对象上</li>
+<li>LV_EVENT_SHORT_CLICKED  在 <code>LV_INDEV_LONG_PRESS_TIME</code> 时间之前释放按键。如果拖动则不调用。</li>
+<li>LV_EVENT_LONG_PRESSED 持续按下 <code>LV_INDEV_LONG_PRESS_TIME</code>时间。如果拖动则不调用。</li>
+<li>LV_EVENT_LONG_PRESSED_REPEAT   在<code>LV_INDEV_LONG_PRESS_TIME</code>事件之后每<code>LV_INDEV_LONG_PRESS_REP_TIME</code>毫秒调用一次。如果拖动则不调用。</li>
+<li>LV_EVENT_CLICKED  释放时调用（无论长按），如果拖动则不调用。</li>
+<li>LV_EVENT_RELEASED 无论什么情况下，只要对象被释放时都会被调用，即使是拖动。如果在按下后从对象外部释放时，则不会调用。在这种情况下，<code>LV_EVENT_PRESS_LOST</code> 会被触发。</li>
+</ul>
+<h5 id="相关指针"><a href="#相关指针" class="headerlink" title="相关指针"></a>相关指针</h5><p>这些事件仅由类似指针的输入设备（例如鼠标或触摸板）发送</p>
+<ul>
+<li>LV_EVENT_DRAG_BEGIN 开始拖动对象</li>
+<li>LV_EVENT_DRAG_END  拖动完成（包括拖动并甩出（拖拽））</li>
+<li>LV_EVENT_DRAG_THROW_BEGIN 开始拖拽（拖动后释放“动量”）（控件会因为惯性仍会移动一段距离）</li>
+</ul>
+<h5 id="键盘和编码器"><a href="#键盘和编码器" class="headerlink" title="键盘和编码器"></a>键盘和编码器</h5><p>这些事件由键盘和编码器输入设备发送。在 [overview&#x2F;indev](Input devices) 了解更多。</p>
+<ul>
+<li>LV_EVENT_KEY  将按键发送到对象。通常在按下它或在长按之后重复时。可以通过以下方式检索按键<code>uint32_t*key=lv_event_get_data()</code></li>
+<li>LV_EVENT_FOCUSED  对象集中在其组中</li>
+<li>LV_EVENT_DEFOCUSED 对象在其组中散焦</li>
+</ul>
+<h5 id="一般事件库"><a href="#一般事件库" class="headerlink" title="一般事件库"></a>一般事件库</h5><p>发送的其他一般事件。</p>
+<ul>
+<li>LV_EVENT_DELETE 正在删除对象。释放相关的用户分配数据。</li>
+</ul>
+<h4 id="特别事件"><a href="#特别事件" class="headerlink" title="特别事件"></a>特别事件</h4><p>这些事件特定于特定的对象类型。</p>
+<ul>
+<li>LV_EVENT_VALUE_CHANGED  对象值已更改（例如，对于Slider）</li>
+<li>LV_EVENT_INSERT 某物被添加到对象中。（通常到文本区域）</li>
+<li>LV_EVENT_APPLY 单击“确定”，“应用”或类似的特定按钮。（通常来自键盘对象）LV_EVENT_CANCEL 单击“关闭”，“取消”或类似的特定按钮。（通常来自键盘对象）LV_EVENT_REFRESH 查询以刷新对象。永远不会由库发送，但可以由用户发送。</li>
+</ul>
+<p>请访问<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/widgets/index.html">enter description here</a>的文档，以了解对象类型使用哪些事件。</p>
+<h3 id="自定义的数据"><a href="#自定义的数据" class="headerlink" title="自定义的数据"></a>自定义的数据</h3><p>一些事件可能包含自定义数据。例如，<code>LV_EVENT_VALUE_CHANGED</code> 在某些情况下会告诉新值。有关更多信息，请访问<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/widgets/index.html">enter description here</a>的文档。要在事件回调中获取自定义数据，请使用 <code>lv_event_get_data()</code>。</p>
+<p>自定义数据的类型取决于发送对象，但如果是</p>
+<ul>
+<li>single number （数据）则是 uint32_t* 或 int32_t*</li>
+<li>文字则是char* 或 constchar*</li>
+</ul>
+<h3 id="手动发送事件"><a href="#手动发送事件" class="headerlink" title="手动发送事件"></a>手动发送事件</h3><h4 id="任意事件"><a href="#任意事件" class="headerlink" title="任意事件"></a>任意事件</h4><p>要将事件手动发送到对象，请使用 <code>lv_event_send(obj,LV_EVENT_...,&amp;custom_data)</code></p>
+<p>例如，它可以通过模拟按钮按下来手动关闭消息框（尽管有更简单的方法）：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/*Simulatethepressofthefirstbutton(indexesstartfromzero)*/</span><br>uint32_tbtn_id=<span class="hljs-number">0</span>;<br>lv<span class="hljs-constructor">_event_send(<span class="hljs-params">mbox</span>,LV_EVENT_VALUE_CHANGED,&amp;<span class="hljs-params">btn_id</span>)</span>;<br></code></pre></td></tr></table></figure>
+<h4 id="刷新事件"><a href="#刷新事件" class="headerlink" title="刷新事件"></a>刷新事件</h4><p><code>LV_EVENT_REFRESH</code> 是一个特殊事件，因为它旨在供用户用来通知对象刷新自身。一些例子：</p>
+<ul>
+<li>通知标签根据一个或多个变量（例如当前时间）刷新其文本</li>
+<li>语言更改时刷新标签</li>
+<li>如果满足某些条件，则启用按钮（例如，输入正确的PIN）</li>
+<li>如果超出限制，则将样式添加到对象&#x2F;从对象删除样式，等等。</li>
+</ul>
+<p>处理类似情况的最简单方法是使用以下函数。</p>
+<p><code>lv_event_send_refresh(obj)</code>只是 <code>lv_event_send(obj,LV_EVENT_REFRESH,NULL)</code>一个包装。因此，它只向对象发送一个 <code>LV_EVENT_REFRESH</code>.</p>
+<p><code>lv_event_send_refresh_recursive(obj)</code>向一个对象及其所有子对象发送<code>LV_EVENT_REFRESH</code>事件。如果将<code>NULL</code>作为参数传递，则所有显示的所有对象都将刷新。</p>
+<h2 id="LVGL的样式"><a href="#LVGL的样式" class="headerlink" title="LVGL的样式"></a>LVGL的样式</h2><p>样式用于设置对象的外观。lvgl中的样式受CSS启发很大。简而言之，概念如下：</p>
+<ul>
+<li>样式是一个 <code>lv_style_t</code>变量， 可以保存属性，例如边框宽度，文本颜色等。与classCSS类似。</li>
+<li>并非必须指定所有属性。未指定的属性将使用默认值。</li>
+<li>可以将样式分配给对象以更改其外观。</li>
+<li>样式可以被任意数量的对象使用。</li>
+<li>样式可以级联，这意味着可以将多个样式分配给一个对象（一个对象由多个零部件，会用到不同的样式），并且每种样式可以具有不同的属性。例如，<code>style_btn</code> 可能会是导致默认的灰色按钮，但<code>style_btn_red</code> 只需添加一个 <code>background-color=red</code> 就可以覆盖背景色。</li>
+<li>以后添加的样式具有更高的优先级。这意味着，如果以两种样式指定属性，则将使用后面添加的样式。</li>
+<li>如果未在对象中指定，则某些属性（例如，文本颜色）可以从父级继承。</li>
+<li>对象可以具有比“普通”样式更高优先级的局部样式local styles。</li>
+<li>与CSS（伪类描述不同的状态，例如:hover）不同，在lvgl中，将属性分配给给定的状态。（即“类”与状态无关，但是每个属性都有一个状态）</li>
+<li>当对象更改状态时可以应用过渡Transitions 。</li>
+</ul>
+<h3 id="States-1"><a href="#States-1" class="headerlink" title="States"></a>States</h3><p>对象可以处于以下状态：</p>
+<ul>
+<li>LV_STATE_DEFAULT（0x00）：正常，已释放</li>
+<li>LV_STATE_CHECKED（0x01）：切换或选中</li>
+<li>LV_STATE_FOCUSED（0x02）：通过键盘或编码器聚焦或通过触摸板&#x2F;鼠标单击LV_STATE_EDITED（0x04）：由编码器编辑</li>
+<li>LV_STATE_HOVERED（0x08）：鼠标悬停（现在不支持）</li>
+<li>LV_STATE_PRESSED（0x10）：已按下</li>
+<li>LV_STATE_DISABLED（0x20）：禁用或不禁用，</li>
+<li>状态的组合也是可能的。<code>LV_STATE_FOCUSED|LV_STATE_PRESSED</code></li>
+</ul>
+<p>可以在每种状态和状态组合中定义样式属性。例如，为默认和按下状态设置不同的背景颜色。如果未在状态中定义属性，则将使用最佳匹配状态的属性。通常，它表示带有 <code>LV_STATE_DEFAULT</code> 状态的属性。 ̨如果即使对于默认状态也未设置该属性，则将使用默认值。（请参阅稍后）</p>
+<p>但是“最佳匹配状态的属性”到底意味着什么？States的值代表着显示的的优先级（请参见上面的列表）。值越高，优先级越高。为了确定要使用哪个状态state的属性，我们举一个例子。让我们来看看背景色是这样定义的：</p>
+<ul>
+<li>LV_STATE_DEFAULT：白色</li>
+<li>LV_STATE_PRESSED：灰色</li>
+<li>LV_STATE_FOCUSED：红色</li>
+</ul>
+<ol>
+<li>默认情况下，对象处于默认状态，因此很简单：该属性在对象的当前状态中完美定义为白色</li>
+<li>按下对象时，有2个相关属性：默认为白色（默认与每个状态有关）和按下为灰色。按下状态的优先级为0x10，高于默认状态的0x00优先级，因此将使用灰色。</li>
+<li>当物体聚焦时，会发生与按下状态相同的事情，并且将使用红色。（焦点状态的优先级高于默认状态）。</li>
+<li>聚焦并按下对象时，灰色和红色都可以使用，但是按下状态的优先级高于聚焦，因此将使用灰色。</li>
+<li>可以为设置例如玫瑰色通过组合 <code>LV_STATE_PRESSED | LV_STATE_FOCUSED</code>。在这种情况下，此组合状态的优先级为0x02+0x10&#x3D;0x12，该优先级高于按下状态的优先级，因此将使用玫瑰色。</li>
+<li>选中对象后，没有属性可以设置此状态的背景色。因此，在缺少更好的选择的情况下，对象在默认状态的属性中仍为白色。</li>
+</ol>
+<p>一些实用说明：</p>
+<ul>
+<li>如果要为所有状态设置属性（例如红色背景色），只需将其设置为默认状态即可。如果对象找不到其当前状态的属性，它将回退到默认状态的属性。</li>
+<li>使用 <code>或|</code> 来描述复杂情况的属性。（例如，按+选中+集中）</li>
+<li>对不同的状态使用不同的样式元素可能是一个好主意。例如，很难找到 释放，按下，选中+按下，聚焦，聚焦+按下，聚焦+按下+选中等状态的背景颜色。相反，例如，将背景色用于按下和选中状态，并使用不同的边框颜色指示聚焦状态</li>
+</ul>
+<h3 id="级联样式"><a href="#级联样式" class="headerlink" title="级联样式"></a>级联样式</h3><p>不需要将所有属性设置为一种样式。可以向对象添加更多样式，然后让后来添加的样式修改或扩展其他样式的属性。例如，创建常规的灰色按钮样式，并为仅设置新的背景色的红色按钮创建新的样式。</p>
+<p>当在CSS中列出所有使用的类时，这是相同的概念。<code>&lt;divclass=&quot;.btn.btn-red&quot;&gt;</code></p>
+<p>较晚添加的样式优先于较早的样式。因此，在上面的灰色&#x2F;红色按钮示例中，应首先添加常规按钮样式，然后再添加红色样式。但是，仍然考虑来自状态State的优先级。因此，让我们研究以下情况：</p>
+<ul>
+<li>基本的按钮样式定义了默认状态为深灰色和按下状态为浅灰色</li>
+<li>红色按钮样式仅在默认状态下将背景色定义为红色</li>
+<li>在这种情况下，释放按钮时（它处于默认状态）它将是红色的，因为在最后添加的样式（红色样式）中找到了完美的匹配。按下按钮时，浅灰色是更好的搭配，因为它完美地描述了当前状态，因此按钮将是浅灰色的。</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>某些属性（通常与文本相关）可以从父对象的样式继承。仅当未以对象的样式（即使在默认状态下）设置给定属性时，才应用继承。在这种情况下，如果该属性是可继承的，则该属性的值也将在父级中搜索，直到一部分可以告诉该属性的值为止。父母会用自己的状态来说明价值。按下按钮后，文字颜色就从这里来，将使用按下的文字颜色。</p>
+<h3 id="小部件"><a href="#小部件" class="headerlink" title="小部件"></a>小部件</h3><p>对象可以具有可以具有自己样式的小部件。例如，页面包含四个部分：</p>
+<ul>
+<li>背景</li>
+<li>可卷动</li>
+<li>滚动条</li>
+<li>边缘闪光灯</li>
+<li>有三种类型的对象部分的<strong>主体，虚拟和现实</strong>。</li>
+</ul>
+<p>主要零部件通常是对象的背景和最大的部分。某些对象只有一个主要部分。例如，一个按钮只有一个背景。</p>
+<p>虚拟零部件是实时绘制到主体零部件的其他零部件。它们后面没有“真实”对象。例如，页面的滚动条不是真实的对象，仅在绘制页面背景时才绘制。虚拟零部件始终具有与主要零部件相同的状态。如果可以继承该属性，则在转到父级之前还将考虑主体部分。</p>
+<p>真实零部件是由主对象创建和管理的真实对象。例如，页面的可滚动部分是真实对象。实际零部件的状态可能与主要零部件的状态不同。要查看对象具有哪些部分，请访问其文档页面</p>
+<h3 id="初始化样式并设置-x2F-获取属性"><a href="#初始化样式并设置-x2F-获取属性" class="headerlink" title="初始化样式并设置&#x2F;获取属性"></a>初始化样式并设置&#x2F;获取属性</h3><p>样式存储在 <code>lv_style_t</code>变量中。样式变量应为<code>static</code>，全局或动态分配。换句话说，它们不能是函数中的局部变量，在函数存在时销毁。在使用样式之前，应使用进行初始化<code>lv_style_init(&amp;my_style)</code>。初始化后，可以设置样式属性。属性集函数格式如下所示：<code>lv_style_set_&lt;property_name&gt;(&amp;style,&lt;state&gt;,&lt;value&gt;);</code>。例如，上面提到的示例如下所示：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">staticlv_style_tstyle1;<br>lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style1</span>,LV_STATE_DEFAULT,LV_COLOR_WHITE)</span>;<br>lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style1</span>,LV_STATE_PRESSED,LV_COLOR_GRAY)</span>;<br>lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style1</span>,LV_STATE_FOCUSED,LV_COLOR_RED)</span>;<br>lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style1</span>,LV_STATE_FOCUSED|LV_STATE_PRESSED,<span class="hljs-params">lv_color_hex</span>(0xf88)</span>);<br></code></pre></td></tr></table></figure>
+
+<p>可以使用<code>lv_style_copy(&amp;style_destination,&amp;style_source)</code>复制样式。复制后，仍然可以自由添加属性。</p>
+<p>要删除属性，请使用：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">lv_style_remove_prop(<span class="hljs-name">&amp;style</span>,LV_STYLE_BG_COLOR|(<span class="hljs-name">LV_STATE_PRESSED&lt;&lt;LV_STYLE_STATE_POS</span>))<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>要从给定状态的样式中获取值，可以使用以下原型的功能：<code>_lv_style_get_color/int/opa/ptr(&amp;style, &lt;prop&gt;, &lt;result buf&gt;);.</code>。将选择最匹配的属性，并返回其优先级。如果找不到该属性，则将返回-1</p>
+<p>函数（…color&#x2F;int&#x2F;opa&#x2F;ptr）的形式应根据的类型使用&lt;prop&gt;。例如：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gcode">lv_color_t color;<br>i<span class="hljs-symbol">nt16</span>_t res;<br>res=_lv_style_get_color<span class="hljs-comment">(&amp;style1,LV_STYLE_BG_COLOR|(LV_STATE_PRESSED&lt;&lt;LV_STYLE_STATE_POS)</span>,&amp;color);<br><span class="hljs-keyword">if</span><span class="hljs-comment">(res&gt;=0)</span>&#123;<br>	<span class="hljs-comment">//the bg_color is loaded into `color`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>要重置样式（释放所有数据），请使用Cai Xuefeng </p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_style_reset(&amp;<span class="hljs-params">style</span>)</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="管理样式列表"><a href="#管理样式列表" class="headerlink" title="管理样式列表"></a>管理样式列表</h3><p>样式本身没有那么有用。应该将其分配给对象才能生效。对象的每个部分都存储一个样式列表，该列表是已分配样式的列表。</p>
+<p>要将样式添加到对象，请使用<code>lv_obj_add_style(obj,&lt;part&gt;,&amp;style)</code>，例如：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">btn</span>,LV_BTN_PART_MAIN,&amp;<span class="hljs-params">btn</span>)</span>; <span class="hljs-comment">/*Default button style*/</span><br>lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">btn</span>,LV_BTN_PART_MAIN,&amp;<span class="hljs-params">btn_red</span>)</span>;<span class="hljs-comment">/*Overwrite only a some colors to red*/</span><br></code></pre></td></tr></table></figure>
+
+<p>可以使用以下方式重置对象样式列表<code>lv_obj_reset_style_list(obj,&lt;part&gt;)</code></p>
+<p>如果已经分配给对象的样式发生更改（即，其属性之一设置为新值），则应通过以下方式通知使用该样式的对象：<code>lv_obj_refresh_style(obj)</code></p>
+<p>要获得属性的最终值，包括级联，继承，局部样式和过渡（请参见下文），可以使用以下类似的get函数：<code>lv_obj_get_style_&lt;property_name&gt;(obj, &lt;part&gt;)</code>。这些函数使用对象的当前状态，如果没有更好的候选者，则返回默认值。例如：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">lv_color_tcolor</span>=lv_obj_get_style_bg_color(btn,LV_BTN_PART_MAIN)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="本地风格"><a href="#本地风格" class="headerlink" title="本地风格"></a>本地风格</h3><p>在对象的样式列表中，也可以存储所谓的局部属性。与CSS的概念相同。局部样式与普通样式相同，但是它仅属于给定的对象，不能与其他对象共享。要设置本地属性，请使用<code>lv_obj_set_style_local_&lt;property_name&gt;(obj, &lt;part&gt;, &lt;state&gt;, &lt;value&gt;); </code>例如以下：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv<span class="hljs-constructor">_obj_set_style_local_bg_color(<span class="hljs-params">btn</span>,LV_BTN_PART_MAIN,LV_STATE_DEFAULT,LV_COLOR_RED)</span>;`<br></code></pre></td></tr></table></figure>
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><p>默认情况下，当对象更改状态（例如，按下状态）时，会立即设置新状态下的新属性。但是，通过过渡，可以在状态改变时播放动画。例如，在按下按钮后，可以在300毫秒内将其背景色设置为所按下的颜色。</p>
+<p>过渡的参数存储在样式中。可以设置</p>
+<ul>
+<li>过渡时间</li>
+<li>开始过渡之前的延迟</li>
+<li>动画path（也称为计时功能）</li>
+<li>要设置动画的属性</li>
+</ul>
+<p>可以为每个状态定义过渡属性。例如，将500ms过渡时间设置为默认状态将意味着当对象进入默认状态时，将应用500ms过渡时间。在按下状态下设置100ms过渡时间将意味着在进入按下状态时100ms过渡时间。因此，此示例配置将导致快速进入工作状态而缓慢回到默认状态。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>样式中可以使用以下属性。</p>
+<h4 id="混合属性"><a href="#混合属性" class="headerlink" title="混合属性"></a>混合属性</h4><ul>
+<li>radius（lv_style_int_t）：设置背景的半径。0：无半径，LV_RADIUS_CIRCLE：最大半径。默认值：0。</li>
+<li>clip_corner（bool）：true:可以将溢出的内容剪切到圆角（半径&gt;0）上。默认值：false。</li>
+<li>size（lv_style_int_t）：小部件内部元素的大小。是否使用此属性，请参见窗口小部件的文档。默认值：LV_DPI &#x2F; 20。</li>
+<li>transform_width（lv_style_int_t）：使用此值使对象在两侧更宽。默认值：0</li>
+<li>transform_height（lv_style_int_t）使用此值使对象在两侧都较高。默认值：0</li>
+<li>transform_angle（lv_style_int_t）：旋转类似图像的对象。它的uinit为0.1度，对于45度使用450。默认值：0。</li>
+<li>transform_zoom（lv_style_int_t）缩放类似图像的对象。LV_IMG_ZOOM_NONE正常大小为256（或），一半为128，一半为512，等等。默认值：LV_IMG_ZOOM_NONE</li>
+<li>opa_scale（lv_style_int_t）：继承。按此比例缩小对象的所有不透明度值。由于继承了子对象，因此也会受到影响。默认值：LV_OPA_COVER。</li>
+</ul>
+<h4 id="填充和边距属性"><a href="#填充和边距属性" class="headerlink" title="填充和边距属性"></a>填充和边距属性</h4><p>填充可在边缘的内侧设置空间。意思是“我不要我的孩子们离我的身体太近，所以要保留这个空间”。<br>填充内部设置了孩子之间的“差距”。边距在边缘的外侧设置空间。意思是“我想要我周围的空间”。</p>
+<p>如果启用了布局或自动调整，则这些属性通常由Container对象使用。但是，其他小部件也使用它们来设置间距。有关详细信息，请参见小部件的文档。</p>
+<ul>
+<li>pad_top（lv_style_int_t）：在顶部设置填充。默认值：0。</li>
+<li>pad_bottom（lv_style_int_t）：在底部设置填充。默认值：0。</li>
+<li>pad_left（lv_style_int_t）：在左侧设置填充。默认值：0。</li>
+<li>pad_right（lv_style_int_t）：在右侧设置填充。默认值：0。</li>
+<li>pad_inner（lv_style_int_t）：设置子对象之间对象内部的填充。默认值：0。</li>
+<li>margin_top（lv_style_int_t）：在顶部设置边距。默认值：0。</li>
+<li>margin_bottom（lv_style_int_t）：在底部设置边距。默认值：0。</li>
+<li>margin_left（lv_style_int_t）：在左边设置边距。默认值：0。</li>
+<li>margin_right（lv_style_int_t）：在右边设置边距。默认值：0。</li>
+<li><h4 id="背景属性"><a href="#背景属性" class="headerlink" title="背景属性"></a>背景属性</h4></li>
+</ul>
+<p>背景是一个可以具有渐变和radius舍入的简单矩形。</p>
+<ul>
+<li>bg_color（lv_color_t）指定背景的颜色。默认值：LV_COLOR_WHITE。</li>
+<li>bg_opa（lv_opa_t）指定背景的不透明度。默认值：LV_OPA_TRANSP。</li>
+<li>bg_grad_color（lv_color_t）指定背景渐变的颜色。右侧或底部的颜色是 <code> bg_grad_dir != LV_GRAD_DIR_NON</code>。默认值：LV_COLOR_WHITE。</li>
+<li>bg_main_stop（uint8_t）：指定渐变应从何处开始。0：最左&#x2F;最上位置，255：最右&#x2F;最下位置。默认值：0。</li>
+<li>bg_grad_stop（uint8_t）：指定渐变应在何处停止。0：最左&#x2F;最上位置，255：最右&#x2F;最下位置。预设值：255。</li>
+<li>bg_grad_dir（lv_grad_dir_t）指定渐变的方向。可以LV_GRAD_DIR_NONE&#x2F;HOR&#x2F;VER。默认值：LV_GRAD_DIR_NONE。</li>
+<li>bg_blend_mode（lv_blend_mode_t）：将混合模式设置为背景。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+<li><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979430122.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the background style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_1(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br><br>    <span class="hljs-comment">/*Make a gradient*/</span><br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_dir(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_GRAD_DIR_VER)</span>;<br><br>    <span class="hljs-comment">/*Shift the gradient to the bottom*/</span><br>    lv<span class="hljs-constructor">_style_set_bg_main_stop(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 128)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_stop(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 192)</span>;<br><br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="边框属性"><a href="#边框属性" class="headerlink" title="边框属性"></a>边框属性</h4><p>边框绘制在背景上方。它具有radius舍入。</p>
+<ul>
+<li>border_color（lv_color_t）指定边框的颜色。默认值：LV_COLOR_BLACK</li>
+<li>border_opa（lv_opa_t）指定边框的不透明度。默认值：LV_OPA_COVER</li>
+<li>border_width（lv_style_int_t）：设置边框的宽度。默认值：0。</li>
+<li>border_side（lv_border_side_t）指定要绘制边框的哪一侧。可以LV_BORDER_SIDE_NONE&#x2F;LEFT&#x2F;RIGHT&#x2F;TOP&#x2F;BOTTOM&#x2F;FULL。ORed值也是可能的。默认值：LV_BORDER_SIDE_FULL。</li>
+<li>border_post（bool）：如果true在绘制完所有子级之后绘制边框。默认值：false</li>
+<li>border_blend_mode（lv_blend_mode_t）：设置边框的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979543577.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the border style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_2(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 20)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add border to the bottom+right*/</span><br>    lv<span class="hljs-constructor">_style_set_border_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_50)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_side(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_RIGHT)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="轮廓属性"><a href="#轮廓属性" class="headerlink" title="轮廓属性"></a>轮廓属性</h4><p>轮廓类似于边框，但绘制在对象外部。</p>
+<ul>
+<li>outline_color（lv_color_t）指定轮廓的颜色。默认值：LV_COLOR_BLACK</li>
+<li>outline_opa（lv_opa_t）指定轮廓的不透明度。默认值：LV_OPA_COVER</li>
+<li>outline_width（lv_style_int_t）：设置轮廓的宽度。默认值：0。</li>
+<li>outline_pad（lv_style_int_t）设置对象和轮廓之间的空间。默认值：0</li>
+<li>outline_blend_mode（lv_blend_mode_t）：设置轮廓的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979605995.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the outline style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_3(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add outline*/</span><br>    lv<span class="hljs-constructor">_style_set_outline_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 2)</span>;<br>    lv<span class="hljs-constructor">_style_set_outline_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_outline_pad(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 8)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="阴影属性"><a href="#阴影属性" class="headerlink" title="阴影属性"></a>阴影属性</h4><p>阴影是对象下方的模糊区域。</p>
+<ul>
+<li>shadow_color（lv_color_t）指定阴影的颜色。默认值：LV_COLOR_BLACK</li>
+<li>shadow_opa（lv_opa_t）指定阴影的不透明度。默认值：LV_OPA_TRANSP</li>
+<li>shadow_width（lv_style_int_t）：设置轮廓的宽度（模糊大小）。默认值：0</li>
+<li>shadow_ofs_x（lv_style_int_t）：设置阴影的X偏移量。默认值：0</li>
+<li>shadow_ofs_y（lv_style_int_t）：设置阴影的Y偏移量。默认值：0</li>
+<li>shadow_spread（lv_style_int_t）：在每个方向上使阴影大于背景的值达到此值。默认值：0</li>
+<li>shadow_blend_mode（lv_blend_mode_t）：设置阴影的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979690907.png" srcset="/img/loading.gif" lazyload alt="enter description here"><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the Shadow style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_4(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add a shadow*/</span><br>    lv<span class="hljs-constructor">_style_set_shadow_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 8)</span>;<br>    lv<span class="hljs-constructor">_style_set_shadow_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_shadow_ofs_x(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 10)</span>;<br>    lv<span class="hljs-constructor">_style_set_shadow_ofs_y(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 20)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="图案属性"><a href="#图案属性" class="headerlink" title="图案属性"></a>图案属性</h4></li>
+</ul>
+<p>图案是在背景中间绘制或重复以填充整个背景的图像（或符号）。</p>
+<ul>
+<li>pattern_image（）：指向变量的指针，图像文件或符号的path。默认值：。constvoid*lv_img_dsc_tNULL</li>
+<li>pattern_opa（lv_opa_t）：指定图案的不透明度。默认值：LV_OPA_COVER</li>
+<li>pattern_recolor（lv_color_t）：将此颜色混合到图案图像中。如果是符号（文本），它将是文本颜色。默认值：LV_COLOR_BLACK。</li>
+<li>pattern_recolor_opa（lv_opa_t）：重着色的强度。默认值：（LV_OPA_TRANSP不重新着色）</li>
+<li>pattern_repeat（bool）：：true图案将作为马赛克重复。false：将图案放置在背景中间。默认值：false。</li>
+<li>pattern_blend_mode（lv_blend_mode_t）：设置图案的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979811531.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the pattern style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_5(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add a repeating pattern*/</span><br>    lv<span class="hljs-constructor">_style_set_pattern_image(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_SYMBOL_OK)</span>;<br>    lv<span class="hljs-constructor">_style_set_pattern_recolor(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_pattern_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_50)</span>;<br>    lv<span class="hljs-constructor">_style_set_pattern_repeat(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, <span class="hljs-params">true</span>)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="数值属性"><a href="#数值属性" class="headerlink" title="数值属性"></a>数值属性</h4><p>值是绘制到背景的任意文本。它可以是创建标签对象的轻量级替代。</p>
+<ul>
+<li>value_str（）：指向要显示的文本的指针。仅保存指针！（不要将局部变量与lv_style_set_value_str一起使用，而应使用静态，全局或动态分配的数据）。默认值：NULL</li>
+<li>value_color（lv_color_t）：文本的颜色。默认值：LV_COLOR_BLACK。</li>
+<li>value_opa（lv_opa_t）：文本的不透明度。默认值：LV_OPA_COVER。</li>
+<li>value_font（）：指向文本字体的指针。默认值：NULL</li>
+<li>value_letter_space（lv_style_int_t）：文本的字母空间。默认值：0</li>
+<li>value_line_space（lv_style_int_t）：文本的行距。默认值：0。</li>
+<li>value_align（lv_align_t）：文本的对齐方式。可以LV_ALIGN_…。默认值：LV_ALIGN_CENTER。</li>
+<li>value_ofs_x（lv_style_int_t）：与路线原始位置的X偏移量。默认值：0。</li>
+<li>value_ofs_y（lv_style_int_t）：从路线的原始位置偏移Y。默认值：0。</li>
+<li>value_blend_mode（lv_blend_mode_t）：设置文本的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606979916503.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the value style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_6(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add a value text properties*/</span><br>    lv<span class="hljs-constructor">_style_set_value_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_value_align(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_ALIGN_IN_BOTTOM_RIGHT)</span>;<br>    lv<span class="hljs-constructor">_style_set_value_ofs_x(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 10)</span>;<br>    lv<span class="hljs-constructor">_style_set_value_ofs_y(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 10)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br><br>    <span class="hljs-comment">/*Add a value text to the local style. This way every object can have different text*/</span><br>    lv<span class="hljs-constructor">_obj_set_style_local_value_str(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, <span class="hljs-string">&quot;Text&quot;</span>)</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="文字属性"><a href="#文字属性" class="headerlink" title="文字属性"></a>文字属性</h4><p>文本对象的属性。</p>
+<ul>
+<li>text_color（lv_color_t）：文本的颜色。默认值：LV_COLOR_BLACK。</li>
+<li>text_opa（lv_opa_t）：文本的不透明度。默认值：LV_OPA_COVER。</li>
+<li>text_font（）：指向文本字体的指针。默认值constlv_font_t*NULL</li>
+<li>text_letter_space（lv_style_int_t）：文本的字母空间。默认值：0</li>
+<li>text_line_space（lv_style_int_t）：文本的行距。默认值：0。</li>
+<li>text_decor（lv_text_decor_t）：添加文字修饰。可以LV_TEXT_DECOR_NONE&#x2F;UNDERLINE&#x2F;STRIKETHROUGH。默认值：LV_TEXT_DECOR_NONE。</li>
+<li>text_sel_color（lv_color_t）：设置文本选择的背景色。默认值：LV_COLOR_BLACK</li>
+<li>text_blend_mode（lv_blend_mode_t）：设置文本的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606980103626.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs sas">#include <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the text style properties</span><br><span class="hljs-comment"> */</span><br>void lv_ex_style_7(void)<br>&#123;<br>    static lv_style_t style;<br>    lv_style_init(<span class="hljs-variable">&amp;style</span>);<br><br>    lv_style_set_radius(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 5);<br>    lv_style_set_bg_opa(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, LV_OPA_COVER);<br>    lv_style_set_bg_color(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER);<br>    lv_style_set_border_width(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 2);<br>    lv_style_set_border_color(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE);<br><br>    lv_style_set_pad_top(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 10);<br>    lv_style_set_pad_bottom(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 10);<br>    lv_style_set_pad_<span class="hljs-meta">left</span>(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 10);<br>    lv_style_set_pad_<span class="hljs-meta">right</span>(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 10);<br><br>    lv_style_set_text_color(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE);<br>    lv_style_set_text_letter_space(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 5);<br>    lv_style_set_text_line_space(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, 20);<br>    lv_style_set_text_decor(<span class="hljs-variable">&amp;style</span>, LV_STATE_DEFAULT, LV_TEXT_DECOR_UNDERLINE);<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t <span class="hljs-comment">* obj = lv_label_create(lv_scr_act(), NULL);</span><br>    lv_obj_add_style(obj, LV_LABEL_PART_MAIN, <span class="hljs-variable">&amp;style</span>);<br>    lv_label_set_text(obj, <span class="hljs-string">&quot;Text of\n&quot;</span><br>                            <span class="hljs-string">&quot;a label&quot;</span>);<br>    lv_obj_alig<span class="hljs-meta">n</span>(obj, <span class="hljs-keyword">NULL</span>, LV_ALIGN_CENTER, 0, 0);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="线属性"><a href="#线属性" class="headerlink" title="线属性"></a>线属性</h4><p>线的属性。</p>
+<ul>
+<li>line_color（lv_color_t）：线条的颜色。默认值：LV_COLOR_BLACK</li>
+<li>line_opa（lv_opa_t）：直线的不透明度。默认值：LV_OPA_COVER</li>
+<li>line_width（lv_style_int_t）：线的宽度。默认值：0。</li>
+<li>line_dash_width（lv_style_int_t）：破折号的宽度。仅对水平或垂直线绘制虚线。0：禁用破折号。默认值：0。</li>
+<li>line_dash_gap（lv_style_int_t）：两条虚线之间的间隙。仅对水平或垂直线绘制虚线。0：禁用破折号。默认值：0。</li>
+<li>line_rounded（bool）：：true绘制圆角的线尾。默认值：false。</li>
+<li>line_blend_mode（lv_blend_mode_t）：设置线条的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606980179758.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span></span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the line style properties</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">lv_ex_style_8</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style;<br>    lv_style_init(&amp;style);<br><br>    lv_style_set_line_color(&amp;style, LV_STATE_DEFAULT, LV_COLOR_GRAY);<br>    lv_style_set_line_width(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">6</span>);<br>    lv_style_set_line_rounded(&amp;style, LV_STATE_DEFAULT, <span class="hljs-literal">true</span>);<br>	<br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    <span class="hljs-type">lv_obj_t</span> * obj = lv_line_create(lv_scr_act(), <span class="hljs-literal">NULL</span>);<br>    lv_obj_add_style(obj, LV_LINE_PART_MAIN, &amp;style);<br><br>    <span class="hljs-type">static</span> <span class="hljs-type">lv_point_t</span> p[] = &#123;\&#123;<span class="hljs-number">10</span>,<span class="hljs-number">30</span>\&#125;, \&#123;<span class="hljs-number">30</span>,<span class="hljs-number">50</span>\&#125;, \&#123;<span class="hljs-number">100</span>,<span class="hljs-number">0</span>\&#125;&#125;;  <span class="hljs-comment">// 我也不知道为啥这句话会导致github page报错，此处6个 &#x27;\&#x27;为多余，请自行删除</span><br>    lv_line_set_points(obj, p, <span class="hljs-number">3</span>);<br><br>    lv_obj_align(obj, <span class="hljs-literal">NULL</span>, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="图片属性"><a href="#图片属性" class="headerlink" title="图片属性"></a>图片属性</h4><p>图像的属性。</p>
+<ul>
+<li>image_recolor（lv_color_t）：将此颜色混合到图案图像中。如果是符号（文本），它将是文本颜色。默认值：LV_COLOR_BLACK</li>
+<li>image_recolor_opa（lv_opa_t）：重新着色的强度。默认值：（LV_OPA_TRANSP不重新着色）。默认值：LV_OPA_TRANSP</li>
+<li>image_opa（lv_opa_t）：图像的不透明度。默认值：LV_OPA_COVER</li>
+<li>image_blend_mode（lv_blend_mode_t）：设置图像的混合模式。可以LV_BLEND_MODE_NORMAL&#x2F;ADDITIVE&#x2F;SUBTRACTIVE）。默认值：LV_BLEND_MODE_NORMAL。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606980309881.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span></span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the image style properties</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">lv_ex_style_9</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style;<br>    lv_style_init(&amp;style);<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv_style_set_radius(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">5</span>);<br>    lv_style_set_bg_opa(&amp;style, LV_STATE_DEFAULT, LV_OPA_COVER);<br>    lv_style_set_bg_color(&amp;style, LV_STATE_DEFAULT, LV_COLOR_SILVER);<br>    lv_style_set_border_width(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">2</span>);<br>    lv_style_set_border_color(&amp;style, LV_STATE_DEFAULT, LV_COLOR_BLUE);<br><br>    lv_style_set_pad_top(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">10</span>);<br>    lv_style_set_pad_bottom(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">10</span>);<br>    lv_style_set_pad_left(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">10</span>);<br>    lv_style_set_pad_right(&amp;style, LV_STATE_DEFAULT, <span class="hljs-number">10</span>);<br><br>    lv_style_set_image_recolor(&amp;style, LV_STATE_DEFAULT, LV_COLOR_BLUE);<br>    lv_style_set_image_recolor_opa(&amp;style, LV_STATE_DEFAULT, LV_OPA_50);<br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> LV_USE_IMG</span><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    <span class="hljs-type">lv_obj_t</span> * obj = lv_img_create(lv_scr_act(), <span class="hljs-literal">NULL</span>);<br>    lv_obj_add_style(obj, LV_IMG_PART_MAIN, &amp;style);<br>    LV_IMG_DECLARE(img_cogwheel_argb);<br>    lv_img_set_src(obj, &amp;img_cogwheel_argb);<br>    lv_obj_align(obj, <span class="hljs-literal">NULL</span>, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="转换特性"><a href="#转换特性" class="headerlink" title="转换特性"></a>转换特性</h4><p>用于描述状态更改动画的属性。</p>
+<ul>
+<li>transition_time（lv_style_int_t）：过渡时间。默认值：0。</li>
+<li>transition_delay（lv_style_int_t）：转换前的延迟。默认值：0。</li>
+<li>transition_prop_1（propertyname）：应在其上应用过渡的属性。将属性名称<code>LV_STYLE_</code>与大写字母一起使用，例如<code>LV_STYLE_BG_COLOR</code>。默认值：0（无）。</li>
+<li>transition_prop_2（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。</li>
+<li>transition_prop_3（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。</li>
+<li>transition_prop_4（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。</li>
+<li>transition_prop_5（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。</li>
+<li>transition_prop_6（propertyname）：与transition_1相同，只是另一个属性。默认值：0（无）。</li>
+<li>transition_path（lv_anim_path_t）：过渡的动画path。（需要为静态或全局变量，因为仅保存了其指针）。默认值：（lv_anim_path_def线性path）。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Transition_properties.gif" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the transitions style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_10(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Set different background color in pressed state*/</span><br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_PRESSED, LV_COLOR_GRAY)</span>;<br><br>    <span class="hljs-comment">/*Set different transition time in default and pressed state</span><br><span class="hljs-comment">     *fast press, slower revert to default*/</span><br>    lv<span class="hljs-constructor">_style_set_transition_time(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 500)</span>;<br>    lv<span class="hljs-constructor">_style_set_transition_time(&amp;<span class="hljs-params">style</span>, LV_STATE_PRESSED, 200)</span>;<br><br>    <span class="hljs-comment">/*Small delay to make transition more visible*/</span><br>    lv<span class="hljs-constructor">_style_set_transition_delay(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 100)</span>;<br><br>    <span class="hljs-comment">/*Add `bg_color` to transitioned properties*/</span><br>    lv<span class="hljs-constructor">_style_set_transition_prop_1(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_STYLE_BG_COLOR)</span>;<br><br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_obj_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_OBJ_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="比例属性"><a href="#比例属性" class="headerlink" title="比例属性"></a>比例属性</h4><p>鳞片状元素的辅助属性。体重秤具有正常区域和末端区域。顾名思义，结束区域是标度的结束，可以是临界值或void值。正常区域在结束区域之前。两个区域可能具有不同的属性</p>
+<ul>
+<li>scale_grad_color（lv_color_t）：在正常区域中，在比例尺线上对该颜色进行渐变。默认值：LV_COLOR_BLACK。</li>
+<li>scale_end_color（lv_color_t）：结束区域中刻度线的颜色。默认值：LV_COLOR_BLACK。</li>
+<li>scale_width（lv_style_int_t）：比例尺的宽度。默认值：。默认值：。LV_DPI&#x2F;8LV_DPI&#x2F;8</li>
+<li>scale_border_width（lv_style_int_t）：在标准区域的比例尺外侧绘制的边框的宽度。默认值：0。</li>
+<li>scale_end_border_width（lv_style_int_t）：在结束区域的刻度外侧上绘制边框的宽度。默认值：0。</li>
+<li>scale_end_line_width（lv_style_int_t）：结束区域中比例线的宽度。默认值：0。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606981343856.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Using the scale style properties</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_style_11(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style;<br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style</span>)</span>;<br><br>    <span class="hljs-comment">/*Set a background color and a radius*/</span><br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Set some paddings*/</span><br>    lv<span class="hljs-constructor">_style_set_pad_inner(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 20)</span>;<br>    lv<span class="hljs-constructor">_style_set_pad_top(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 20)</span>;<br>    lv<span class="hljs-constructor">_style_set_pad_left(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br>    lv<span class="hljs-constructor">_style_set_pad_right(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 5)</span>;<br><br>    lv<span class="hljs-constructor">_style_set_scale_end_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_RED)</span>;<br>    lv<span class="hljs-constructor">_style_set_line_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_WHITE)</span>;<br>    lv<span class="hljs-constructor">_style_set_scale_grad_color(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_line_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 2)</span>;<br>    lv<span class="hljs-constructor">_style_set_scale_end_line_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 4)</span>;<br>    lv<span class="hljs-constructor">_style_set_scale_end_border_width(&amp;<span class="hljs-params">style</span>, LV_STATE_DEFAULT, 4)</span>;<br><br>    <span class="hljs-comment">/*Gauge has a needle but for simplicity its style is not initialized here*/</span><br>#<span class="hljs-keyword">if</span> LV_USE_GAUGE<br>    <span class="hljs-comment">/*Create an object with the new style*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>obj = lv<span class="hljs-constructor">_gauge_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">obj</span>, LV_GAUGE_PART_MAIN, &amp;<span class="hljs-params">style</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_align(<span class="hljs-params">obj</span>, NULL, LV_ALIGN_CENTER, 0, 0)</span>;<br>#endif<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在小部件的文档中，您将看到诸如“小部件使用典型的背景属性”之类的句子。“典型背景”属性是：</p>
+<ul>
+<li>背景</li>
+<li>边境</li>
+<li>大纲</li>
+<li>阴影</li>
+<li>模式</li>
+<li>值</li>
+</ul>
+<h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><p>主题是样式的集合。始终有一个活动主题，在创建对象时会自动应用其样式。它为UI提供了默认外观，可以通过添加其他样式来对其进行修改。</p>
+<p>默认的主题被设定在<code>lv_conf.h</code>与<code>LV_THEME_...</code>定义。每个主题都具有以下属性</p>
+<ul>
+<li>原色primary color</li>
+<li>二次色secondary color</li>
+<li>小字体</li>
+<li>普通字体</li>
+<li>字幕字体</li>
+<li>标题字体</li>
+<li>标志（特定于给定主题）</li>
+</ul>
+<p>如何使用这些属性取决于主题。</p>
+<p>有3个内置主题：</p>
+<ul>
+<li>empty空：未添加默认样式</li>
+<li>material材质：令人印象深刻的现代主题-单声道：用于黑白显示的简单黑白主题</li>
+<li>template模板：一个非常简单的主题，可以将其复制以创建自定义主题</li>
+</ul>
+<h4 id="扩展主题"><a href="#扩展主题" class="headerlink" title="扩展主题"></a>扩展主题</h4><p>内置主题可以通过自定义主题进行扩展。如果创建了自定义主题，则可以选择“基本主题”。基本主题的样式将添加到自定义主题之前。可以链接任何数量的主题。例如，材料主题-&gt;自定义主题-&gt;黑暗主题。这是有关如何基于当前活动的内置主题创建自定义主题的示例</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"> <span class="hljs-comment">/*Get the current theme (e.g. material). It will be the base of the custom theme.*/</span>   <br>lv_theme_t<span class="hljs-operator"> * </span>base_theme = lv<span class="hljs-constructor">_theme_get_act()</span>;<br><br><span class="hljs-comment">/*Initialize a custom theme*/</span><br>static lv_theme_t custom_theme;                         <span class="hljs-comment">/*Declare a theme*/</span><br>lv<span class="hljs-constructor">_theme_copy(&amp;<span class="hljs-params">custom_theme</span>, )</span>base_theme;               <span class="hljs-comment">/*Initialize the custom theme from the base theme*/</span>                           <br>lv<span class="hljs-constructor">_theme_set_apply_cb(&amp;<span class="hljs-params">custom_theme</span>, <span class="hljs-params">custom_apply_cb</span>)</span>;  <span class="hljs-comment">/*Set a custom theme apply callback*/</span><br>lv<span class="hljs-constructor">_theme_set_base(<span class="hljs-params">custom_theme</span>, <span class="hljs-params">base_theme</span>)</span>;            <span class="hljs-comment">/*Set the base theme of the csutom theme*/</span><br><br><span class="hljs-comment">/*Initialize styles for the new theme*/</span><br>static lv_style_t style1;<br>lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style1</span>)</span>;<br>lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style1</span>, LV_STATE_DEFAULT, <span class="hljs-params">custom_theme</span>.<span class="hljs-params">color_primary</span>)</span>;<span class="hljs-operator"></span><br><span class="hljs-operator"></span><br><span class="hljs-operator">...</span><br><span class="hljs-operator"></span><br><span class="hljs-operator"></span><span class="hljs-comment">/*Add a custom apply callback*/</span><br>static void custom<span class="hljs-constructor">_apply_cb(<span class="hljs-params">lv_theme_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">th</span>, <span class="hljs-params">lv_obj_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">obj</span>, <span class="hljs-params">lv_theme_style_t</span> <span class="hljs-params">name</span>)</span><br>&#123;<br>    lv_style_list_t<span class="hljs-operator"> * </span><span class="hljs-built_in">list</span>;<br><br>    switch(name) &#123;<br>        case LV_THEME_BTN:<br>            <span class="hljs-built_in">list</span> = lv<span class="hljs-constructor">_obj_get_style_list(<span class="hljs-params">obj</span>, LV_BTN_PART_MAIN)</span>;<br>            <span class="hljs-constructor">_lv_style_list_add_style(<span class="hljs-params">list</span>, &amp;<span class="hljs-params">my_style</span>)</span>;<br>            break;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1606981634954.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../../lv_examples.h&quot;</span><br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Create styles from scratch for buttons.</span><br><span class="hljs-comment"> */</span><br>void lv<span class="hljs-constructor">_ex_get_started_2(<span class="hljs-params">void</span>)</span><br>&#123;<br>    static lv_style_t style_btn;<br>    static lv_style_t style_btn_red;<br><br>    <span class="hljs-comment">/*Create a simple button style*/</span><br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style_btn</span>)</span>;<br>    lv<span class="hljs-constructor">_style_set_radius(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, 10)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_opa(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_OPA_COVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_COLOR_SILVER)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_COLOR_GRAY)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_dir(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_GRAD_DIR_VER)</span>;<br><br>    <span class="hljs-comment">/*Swap the colors in pressed state*/</span><br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_PRESSED, LV_COLOR_GRAY)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_PRESSED, LV_COLOR_SILVER)</span>;<br><br>    <span class="hljs-comment">/*Add a border*/</span><br>    lv<span class="hljs-constructor">_style_set_border_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_COLOR_WHITE)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_opa(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_OPA_70)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_width(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, 2)</span>;<br><br>    <span class="hljs-comment">/*Different border color in focused state*/</span><br>    lv<span class="hljs-constructor">_style_set_border_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_FOCUSED, LV_COLOR_BLUE)</span>;<br>    lv<span class="hljs-constructor">_style_set_border_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_FOCUSED | LV_STATE_PRESSED, LV_COLOR_NAVY)</span>;<br><br>    <span class="hljs-comment">/*Set the text style*/</span><br>    lv<span class="hljs-constructor">_style_set_text_color(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_COLOR_WHITE)</span>;<br><br>    <span class="hljs-comment">/*Make the button smaller when pressed*/</span><br>    lv<span class="hljs-constructor">_style_set_transform_height(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_PRESSED, -5)</span>;<br>    lv<span class="hljs-constructor">_style_set_transform_width(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_PRESSED, -10)</span>;<br>#<span class="hljs-keyword">if</span> LV_USE_ANIMATION<br>    <span class="hljs-comment">/*Add a transition to the size change*/</span><br>    static lv_anim_path_t path;<br>    lv<span class="hljs-constructor">_anim_path_init(&amp;<span class="hljs-params">path</span>)</span>;<br>    lv<span class="hljs-constructor">_anim_path_set_cb(&amp;<span class="hljs-params">path</span>, <span class="hljs-params">lv_anim_path_overshoot</span>)</span>;<br><br>    lv<span class="hljs-constructor">_style_set_transition_prop_1(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_STYLE_TRANSFORM_HEIGHT)</span>;<br>    lv<span class="hljs-constructor">_style_set_transition_prop_2(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, LV_STYLE_TRANSFORM_WIDTH)</span>;<br>    lv<span class="hljs-constructor">_style_set_transition_time(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, 300)</span>;<br>    lv<span class="hljs-constructor">_style_set_transition_path(&amp;<span class="hljs-params">style_btn</span>, LV_STATE_DEFAULT, &amp;<span class="hljs-params">path</span>)</span>;<br>#endif<br><br>    <span class="hljs-comment">/*Create a red style. Change only some colors.*/</span><br>    lv<span class="hljs-constructor">_style_init(&amp;<span class="hljs-params">style_btn_red</span>)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style_btn_red</span>, LV_STATE_DEFAULT, LV_COLOR_RED)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_color(&amp;<span class="hljs-params">style_btn_red</span>, LV_STATE_DEFAULT, LV_COLOR_MAROON)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_color(&amp;<span class="hljs-params">style_btn_red</span>, LV_STATE_PRESSED, LV_COLOR_MAROON)</span>;<br>    lv<span class="hljs-constructor">_style_set_bg_grad_color(&amp;<span class="hljs-params">style_btn_red</span>, LV_STATE_PRESSED, LV_COLOR_RED)</span>;<br>    lv<span class="hljs-constructor">_style_set_text_color(&amp;<span class="hljs-params">style_btn_red</span>, LV_STATE_DEFAULT, LV_COLOR_WHITE)</span>;<br>#<span class="hljs-keyword">if</span> LV_USE_BTN<br>    <span class="hljs-comment">/*Create buttons and use the new styles*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>btn = lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);     <span class="hljs-comment">/*Add a button the current screen*/</span><br>    lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn</span>, 10, 10)</span>;                            <span class="hljs-comment">/*Set its position*/</span><br>    lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">btn</span>, 120, 50)</span>;                          <span class="hljs-comment">/*Set its size*/</span><br>    lv<span class="hljs-constructor">_obj_reset_style_list(<span class="hljs-params">btn</span>, LV_BTN_PART_MAIN)</span>;         <span class="hljs-comment">/*Remove the styles coming from the theme*/</span><br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">btn</span>, LV_BTN_PART_MAIN, &amp;<span class="hljs-params">style_btn</span>)</span>;<br><br>    lv_obj_t<span class="hljs-operator"> * </span>label = lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn</span>, NULL)</span>;          <span class="hljs-comment">/*Add a label to the button*/</span><br>    lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label</span>, <span class="hljs-string">&quot;Button&quot;</span>)</span>;                     <span class="hljs-comment">/*Set the labels text*/</span><br><br>    <span class="hljs-comment">/*Create a new button*/</span><br>    lv_obj_t<span class="hljs-operator"> * </span>btn2 = lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">lv_scr_act</span>()</span>, btn);<br>    lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn2</span>, 10, 80)</span>;<br>    lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">btn2</span>, 120, 50)</span>;                             <span class="hljs-comment">/*Set its size*/</span><br>    lv<span class="hljs-constructor">_obj_reset_style_list(<span class="hljs-params">btn2</span>, LV_BTN_PART_MAIN)</span>;         <span class="hljs-comment">/*Remove the styles coming from the theme*/</span><br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">btn2</span>, LV_BTN_PART_MAIN, &amp;<span class="hljs-params">style_btn</span>)</span>;<br>    lv<span class="hljs-constructor">_obj_add_style(<span class="hljs-params">btn2</span>, LV_BTN_PART_MAIN, &amp;<span class="hljs-params">style_btn_red</span>)</span>;   <span class="hljs-comment">/*Add the red style on top of the current */</span><br>    lv<span class="hljs-constructor">_obj_set_style_local_radius(<span class="hljs-params">btn2</span>, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_RADIUS_CIRCLE)</span>; <span class="hljs-comment">/*Add a local style*/</span><br><br>    label = lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn2</span>, NULL)</span>;          <span class="hljs-comment">/*Add a label to the button*/</span><br>    lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label</span>, <span class="hljs-string">&quot;Button 2&quot;</span>)</span>;                     <span class="hljs-comment">/*Set the labels text*/</span><br>#endif<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p>您可以使用动画在开始值和结束值之间自动更改变量的值。动画将通过定期调用带有相应value参数的“animator”函数来发生。<br>该动画功能具有以下原型： </p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript">voidfunc(<span class="hljs-keyword">void</span>*<span class="hljs-keyword">var</span>,lv_anim_var_tvalue);<br></code></pre></td></tr></table></figure>
+<p>该原型与LVGL的大多数设置功能兼容。例如<br><code>lv_obj_set_x(obj, value) or lv_obj_set_width(obj, value)</code></p>
+<h3 id="创建动画"><a href="#创建动画" class="headerlink" title="创建动画"></a>创建动画</h3><p>要创建动画，必须初始化变量 lv_anim_t并使用lv_anim_set_…()功能对其进行配置。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/*初始化动画*----------------------*/</span><br>lv_anim_t a;<br>lv<span class="hljs-constructor">_anim_init(&amp;<span class="hljs-params">a</span>)</span>;<br><br><span class="hljs-comment">/*强制设置*------------------*/</span><br><br><span class="hljs-comment">/*设置“动画”时要调用的函数*/</span><br>lv<span class="hljs-constructor">_anim_set_exec_cb(&amp;<span class="hljs-params">a</span>,(<span class="hljs-params">lv_anim_exec_xcb_t</span>)</span>lv_obj_set_x);<br><br><span class="hljs-comment">/*Setthe&quot;animator&quot;function*/</span><br>lv<span class="hljs-constructor">_anim_set_var(&amp;<span class="hljs-params">a</span>,<span class="hljs-params">obj</span>)</span>;<br><br><span class="hljs-comment">/*动画时间【ms】*/</span><br>lv<span class="hljs-constructor">_anim_set_time(&amp;<span class="hljs-params">a</span>,<span class="hljs-params">duration</span>)</span>;<br><br><span class="hljs-comment">/*设置开始和结束值。.E.g.0,150*/</span><br>lv<span class="hljs-constructor">_anim_set_values(&amp;<span class="hljs-params">a</span>,<span class="hljs-params">start</span>,<span class="hljs-params">end</span>)</span>;<br><br><span class="hljs-comment">/*可选设置*------------------*/</span><br><br><span class="hljs-comment">/*开始动画之前要等待的时间[ms]*/</span><br>lv<span class="hljs-constructor">_anim_set_delay(&amp;<span class="hljs-params">a</span>,<span class="hljs-params">delay</span>)</span>;<br><br><span class="hljs-comment">/*设置路径（曲线）。默认为线性*/</span><br>lv<span class="hljs-constructor">_anim_set_path(&amp;<span class="hljs-params">a</span>,&amp;<span class="hljs-params">path</span>)</span>;<br><br><span class="hljs-comment">/*设置回调以在动画准备好时调用.*/</span><br>lv<span class="hljs-constructor">_anim_set_ready_cb(&amp;<span class="hljs-params">a</span>,<span class="hljs-params">ready_cb</span>)</span>;<br><br><span class="hljs-comment">/*设置在动画开始时调用的回调(afterdelay).*/</span><br>lv<span class="hljs-constructor">_anim_set_start_cb(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">start_cb</span>)</span>;<br><br><span class="hljs-comment">/*在此持续时间内也向后播放动画. Default is 0 (disabled) [ms]*/</span><br>lv<span class="hljs-constructor">_anim_set_playback_time(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">wait_time</span>)</span>; <br><br><span class="hljs-comment">/*播放前延迟. Default is 0 (disabled) [ms]*/</span><br>lv<span class="hljs-constructor">_anim_set_playback_delay(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">wait_time</span>)</span>;<br><br><span class="hljs-comment">/*重复次数. Default is 1.  LV_ANIM_REPEAT_INFINIT for 无限重复*/</span><br>lv<span class="hljs-constructor">_anim_set_repeat_count(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">wait_time</span>)</span>;<br><br><span class="hljs-comment">/*延迟再重复. Default is 0 (disabled) [ms]*/</span><br>lv<span class="hljs-constructor">_anim_set_repeat_delay(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">wait_time</span>)</span>;<br><br><span class="hljs-comment">/*true（默认）：立即应用开始值，false：延迟设置动画后再应用开始值。真正开始。 */</span><br>lv<span class="hljs-constructor">_anim_set_early_apply(&amp;<span class="hljs-params">a</span>, <span class="hljs-params">true</span><span class="hljs-operator">/</span><span class="hljs-params">false</span>)</span>;<br><br><span class="hljs-comment">/* START THE ANIMATION</span><br><span class="hljs-comment"> *------------------*/</span><br>lv<span class="hljs-constructor">_anim_start(&amp;<span class="hljs-params">a</span>)</span>;                             <span class="hljs-comment">/*Start the animation*/</span><br></code></pre></td></tr></table></figure>
+<p>您可以同时在同一变量上应用多个不同的动画。例如，使用lv_obj_set_x和lv_obj_set_y设置x和y坐标的动画。但是，只有一个动画可以存在给定的变量和函数对。因此lv_anim_start()将删除已经存在的可变功能动画。</p>
+<h3 id="动画path"><a href="#动画path" class="headerlink" title="动画path"></a>动画path</h3><p>您可以确定动画的path。在最简单的情况下，它是线性的，这意味着开始和结束之间的当前值线性变化。path主要是其计算基于所述动画的当前状态中的下一个值集的函数。当前，有以下内置path功能：</p>
+<ul>
+<li>lv_anim_path_linear线性动画</li>
+<li>lv_anim_path_step最后一步更改</li>
+<li>lv_anim_path_ease_in开头缓慢</li>
+<li>lv_anim_path_ease_out最后慢</li>
+<li>lv_anim_path_ease_in_out在开始和结束时也很慢</li>
+<li>lv_anim_path_overshoot超出最终值</li>
+<li>lv_anim_path_bounce从最终值反弹一点（就像撞墙一样）</li>
+</ul>
+<p> 可以这样初始化path：<br> <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"> lv_anim_path_t path;<br>lv<span class="hljs-constructor">_anim_path_init(&amp;<span class="hljs-params">path</span>)</span>;<br>lv<span class="hljs-constructor">_anim_path_set_cb(&amp;<span class="hljs-params">path</span>, <span class="hljs-params">lv_anim_path_overshoot</span>)</span>;<br>lv<span class="hljs-constructor">_anim_path_set_user_data(&amp;<span class="hljs-params">path</span>, &amp;<span class="hljs-params">foo</span>)</span>; <span class="hljs-comment">/*Optional for custom functions*/</span><br><br><span class="hljs-comment">/*Set the path in an animation*/</span><br>lv<span class="hljs-constructor">_anim_set_path(&amp;<span class="hljs-params">a</span>, &amp;<span class="hljs-params">path</span>)</span>;<br></code></pre></td></tr></table></figure></p>
+<h1 id="通过CodeBlocks模拟运行LittlevGL"><a href="#通过CodeBlocks模拟运行LittlevGL" class="headerlink" title="通过CodeBlocks模拟运行LittlevGL"></a>通过CodeBlocks模拟运行LittlevGL</h1><p>其实官方有使用教程：<a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_sim_codeblocks_win">lvgl&#x2F;lv_sim_codeblocks_win</a></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Tutorial <span class="hljs-keyword">for</span> Windows<br>Download <span class="hljs-keyword">and</span> install Git<br>Download CodeBlocks <span class="hljs-keyword">in</span> latest <span class="hljs-keyword">version</span>. It <span class="hljs-keyword">is</span> recommended <span class="hljs-keyword">to</span> use the <span class="hljs-keyword">version</span> which includes MinGW, <span class="hljs-keyword">as</span> otherwise you will have <span class="hljs-keyword">to</span> install <span class="hljs-keyword">and</span> configure it separately.<br>Clone this repository.<br><span class="hljs-keyword">Open</span> Command prompt (Win key + R -&gt; cmd -&gt; Enter) <span class="hljs-keyword">or</span> PowerShell (Win key + R -&gt; powershell -&gt; Enter) (<span class="hljs-keyword">if</span> you want different folder than C:/Users/username you have <span class="hljs-keyword">to</span> navigate <span class="hljs-keyword">to</span> it) <span class="hljs-keyword">and</span> <span class="hljs-keyword">type</span>: git clone https://github.com/lvgl/lv_sim_codeblocks_win.git<br><span class="hljs-keyword">In</span> that folder <span class="hljs-keyword">type</span>: cd lv_sim_codeblocks_win <span class="hljs-keyword">and</span> press Enter. Here <span class="hljs-keyword">type</span>: git submodule <span class="hljs-keyword">update</span> <span class="hljs-comment">--init --recursive and press Enter. This should download files to lvgl, lv_examples and lv_drivers folders.</span><br><span class="hljs-keyword">Open</span> CodeBlocks <span class="hljs-keyword">and</span> <span class="hljs-keyword">select</span> <span class="hljs-keyword">Open</span> an existing project. Navigate <span class="hljs-keyword">to</span> the lv_sim_codeblocks_win folder <span class="hljs-keyword">and</span> <span class="hljs-keyword">select</span> LittlevGL.cbp.<br>Click <span class="hljs-keyword">on</span> Build <span class="hljs-keyword">and</span> Run <span class="hljs-keyword">or</span> press F9.<br><span class="hljs-keyword">If</span> everything goes well, you should see your simulator running.<br></code></pre></td></tr></table></figure>
+<p>下面就跟着官方教程走。</p>
+<ol>
+<li>下载安装 git：<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">1.5 起步 - 安装 Git</a><br>比较简单，跟着git官方教程走就行了。这是为了后边使用命令下载 LVGL 仿真文件。</li>
+<li>下载安装 CodeBlocks：<a target="_blank" rel="noopener" href="http://www.codeblocks.org/downloads/26">CodeBlocks下载地址</a><br>选择带编译器的版本：codeblocks-20.03mingw-setup。<br>安装一路默认即可，可更改安装路径</li>
+<li>打开 cmd，输入命令: <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/lvgl/</span>lv_sim_codeblocks_win.git<br></code></pre></td></tr></table></figure>
+ 文件默认会下载到目录 <code>C:/Users/username</code>。如果自己指定目录，请提前进入指定目录下，再输入上述命令下载</li>
+<li>使用命令 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> lv_sim_codeblocks_win<br></code></pre></td></tr></table></figure>
+ 回车进入该文件目录下，并输入命令： <figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">git submodule update</span> <span class="hljs-literal">--</span><span class="hljs-comment">init</span> <span class="hljs-literal">--</span><span class="hljs-comment">recursive</span><br></code></pre></td></tr></table></figure>
+ 回车，将自动下载lvgl, lv_examples and lv_drivers 文件内容</li>
+<li>打开 codeblocks，开始界面点击 <code>Open an existing project</code>，进入我们刚下载的 <code>lv_sim_codeblocks_win</code>文件夹并选择 ittlevGL.cbp&#96; ，确认打开。</li>
+<li>单击 <code>Click on Build</code> 图标或者按 <code>F9</code> 编译运行工程。<br>如果编译时提示找不到编译器，出现无法编译的情况，则需对程序的编译环境进行重新配置<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/codeblock_settings.png" srcset="/img/loading.gif" lazyload alt="图 1"><br>这里先点击 <code>Auto-detect</code>自动检测看自己电脑上有没有，如果没有的话， 则需要单独下载mingw：<a target="_blank" rel="noopener" href="http://mingw-w64.org/doku.php">mingw-w64</a>。再设置mingw路径。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/settings_compiler.png" srcset="/img/loading.gif" lazyload alt="图 2">  </li>
+<li>开始使用仿真。</li>
+</ol>
+<blockquote>
+<p>这里下载仿真的 LVGL 版本比较老，7.6.0 版本，不过这与最新版差别并不大，新版主要时修复了一些bug。<br>关于最新版的仿真，目前并无方法。</p>
+</blockquote>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33661199/article/details/108199967">LVGL：Win7基于CodeBlocks的PC模拟仿真</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/SSA_ming/article/details/107875678">【LittleVGL】Windows环境下利用CodeBlocks搭建LittleVGL的PC模拟器环境配置问题</a></li>
+<li><a href="www.arterytek.com/download/AN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3.pdf">AN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3</a></li>
+</ul>
+<h1 id="使用PlatformIO运行LittlevGL"><a href="#使用PlatformIO运行LittlevGL" class="headerlink" title="使用PlatformIO运行LittlevGL"></a>使用PlatformIO运行LittlevGL</h1><blockquote>
+<p>该方案不可行，不可行！不可行！原因未知。<br>已在 windows 和 linux 都测试过，均不可用，源码编译有错误。</p>
+</blockquote>
+<p>该演示应帮助您使用出色的PlatformIO IDE组织项目。<br>它会自动安装所有内容-只需在vscode中打开此项目的文件夹，并同意安装它提供的所有功能<br>它包含可运行的LittlevGL演示，可在PC上运行（通过SDL驱动程序）。<br>它有示例，说明如何创建多个构建目标。例如：<br>native 快速在PC上建立原型接口<br>其他，为裸机构建固件</p>
+<h2 id="如何安装和使用演示"><a href="#如何安装和使用演示" class="headerlink" title="如何安装和使用演示"></a>如何安装和使用演示</h2><p>重要！native 构建（带有SDL2驱动程序的模拟器）仅在Linux上进行了测试！但是您仍然可以构建MCU目标。如果有人有兴趣改善其他OS支持（Windows，macOS）-欢迎PR。</p>
+<h3 id="Install-Visual-Studio-Code"><a href="#Install-Visual-Studio-Code" class="headerlink" title="Install Visual Studio Code"></a>Install Visual Studio Code</h3><p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a> </p>
+<h3 id="Install-SDL-drivers"><a href="#Install-SDL-drivers" class="headerlink" title="Install SDL drivers"></a>Install SDL drivers</h3><h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><p>先安装 <a target="_blank" rel="noopener" href="https://www.msys2.org/">MSYS2</a>，记住软件安装路径，后面用到。<br>之后打开 MSY32，只命令行输入下面语句：</p>
+<blockquote>
+<p>国内网速安装较慢，搭梯子请设置全局梯子，再重新打开 MSY32 并输入下面语句。</p>
+</blockquote>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs llvm">pacman -S mingw-w<span class="hljs-number">64</span>-<span class="hljs-keyword">x</span><span class="hljs-number">86</span>_<span class="hljs-number">64</span>-gcc mingw-w<span class="hljs-number">64</span>-<span class="hljs-keyword">x</span><span class="hljs-number">86</span>_<span class="hljs-number">64</span>-SDL<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p>将 Mingw-w64  安装路径下的 bin 文件夹(默认为 C:\msys64\mingw64\bin) 加载到 Windows 系统的 PATH 环境变量中</p>
+<ol>
+<li>在win10搜索框输入 <code>设置</code></li>
+<li>输入<code>环境变量</code>,选中<code>编辑账户的环境变量</code></li>
+<li>再弹窗中 变量 栏中找到 <code>Path</code> 并单击选中，单击 <code>编辑</code>按钮，弹窗中 单击 <code>新建</code>，紧接着单击 <code>浏览</code>,找到  Mingw-w64  安装路径下的 bin 文件夹</li>
+<li>一步步单击 <code>确定</code> 推出弹窗保存设置，之后重新打开 MSY32</li>
+<li>在MSY32中分别输入命令  <figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">g</span><span class="hljs-literal">++</span> <span class="hljs-literal">--</span><span class="hljs-comment">version</span><br><span class="hljs-comment">gdb</span> <span class="hljs-literal">--</span><span class="hljs-comment">version</span><br></code></pre></td></tr></table></figure>
+如果看不到预期的输出或g ++或gdb无法识别的命令，请检查安装（Windows控制面板&gt;程序），并确保PATH条目与Mingw-w64 bin文件夹位置匹配</li>
+</ol>
+<h3 id="构建-x2F-运行"><a href="#构建-x2F-运行" class="headerlink" title="构建&#x2F;运行"></a>构建&#x2F;运行</h3><p>下载 <a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_platformio">lv_platformio 文件</a></p>
+<p>打开 vscode，File -&gt; Open Folder 打开下载的文件</p>
+<ul>
+<li>如果你是第一次使用platformio，如果 vscode 弹窗提醒你要安装 PlatformIO 插件，请点击 <code>同意</code>。然后等待PlatformIO安装。</li>
+</ul>
+<p>构建&#x2F;执行：</p>
+<ul>
+<li>仿真: Terminal（终端） -&gt; Run Task…（） -&gt; PlatformIO: Execute (native)<br>Bare metal: Terminal -&gt; Run Build Task… -&gt; PlatformIO: Build (stm32f429_disco)</li>
+</ul>
+<h2 id="参考文件"><a href="#参考文件" class="headerlink" title="参考文件"></a>参考文件</h2><p><a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_platformio">Run LittlevGL via PlatformIO</a><br><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-mingw#_prerequisites">Using GCC with MinGW</a><br><a target="_blank" rel="noopener" href="https://littlevgl.readthedocs.io/en/latest/Doc/01.LittelvGL%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/LittlevGL.html#ainmation">LittlevGL基础控件学习</a><br><a target="_blank" rel="noopener" href="http://www.arterytek.com/download/AN0018_LittlevGL_on_AT32_MCU_ZH_V1.0.3.pdf">LittlevGL在AT32上的移植说明</a></p>
+<h1 id="STM32F4-SPI-DMA显示"><a href="#STM32F4-SPI-DMA显示" class="headerlink" title="STM32F4 SPI DMA显示"></a>STM32F4 SPI DMA显示</h1><p><a target="_blank" rel="noopener" href="https://mp.ofweek.com/ee/a545693620996">GUuiLite-MCU SPI屏也能跑这么炫酷的特效？来，移植起来秀一秀</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linxw-blog/p/12488682.html">STM32—SPI通信的总结(库函数操作)</a><br><a target="_blank" rel="noopener" href="https://my.oschina.net/u/4314849/blog/3447441">【STM32】使用DMA+SPI传输数据</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40831286/article/details/107633216">【LVGL学习之旅 01】移植LVGL到STM32</a><br><a target="_blank" rel="noopener" href="https://github.com/ScarsFun/lvgl_STM32F103_encoder_rtx5/blob/master/ili9341/dma.c">ScarsFun&#x2F;lvgl_STM32F103_encoder_rtx5</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangshenghui/p/5340483.html">(三)stm32之串口通信DMA传输完成中断</a><br><a target="_blank" rel="noopener" href="https://forum.lvgl.io/t/drawing-area-error-when-using-spi-dma-transmit-and-keypad/288">使用 spi dma 传输和键盘时绘图区域错误？</a><br><a target="_blank" rel="noopener" href="https://github.com/weefnn/pandora/blob/179ae468ab176c86b8b10732e22507869abeb56d/pandora_lvgl/pandora_lvgl/LVGL/hal_stm_lvgl/tft/tft.c#L32">weefnn&#x2F;pandora</a><br><a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_port_stm32f746_disco/blob/master/hal_stm_lvgl/tft/tft.c#L428-L429">lvgl&#x2F;lv_port_stm32f746_disco</a><br><a target="_blank" rel="noopener" href="https://www.firebbs.cn/thread-28679-1-1.html">两天移植littlevgl</a><br><a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_port_stm32f429_disco">lvgl&#x2F;lv_port_stm32f429_disco</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43862847/article/details/109318017">LVGL 优化帧率技巧</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43862847/article/details/109056321">f429 discovery开发版 LVGL移植（带操作系统）</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/as480133937/article/details/104827639">【STM32】HAL库 STM32CubeMX教程十一—DMA (串口DMA发送接收)</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sovagxa/p/9135653.html">STM32 DMA传输笔记（HAL库版）</a><br><a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X00009XkXmS/stm32f103c8cb-hal-library-with-spi-over-dma">STM32f103c8cb HAL library with SPI over DMA</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/53999597/stm32-cubemx-triggering-spi-dma-interrupt-using-interrupt">STM32 cubeMX: triggering SPI DMA interrupt using interrupt</a><br><a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X0000APclcf/halspitransmitreceivedma-transmit-interrupt-always-triggered-after-receive-interrupt">HAL_SPI_TransmitReceive_DMA() transmit interrupt always triggered after receive interrupt</a><br><a target="_blank" rel="noopener" href="https://microtechnics.ru/en/stm32cube-spi-and-dma-example/">STM32CubeMx. SPI and DMA usage example for STM32 MCU.</a></p>
+<h1 id="LVGL-移植"><a href="#LVGL-移植" class="headerlink" title="LVGL 移植"></a>LVGL 移植</h1><h2 id="文件移植与修改"><a href="#文件移植与修改" class="headerlink" title="文件移植与修改"></a>文件移植与修改</h2><p>跟随官方教程移植：<a target="_blank" rel="noopener" href="https://docs.lvgl.io/latest/en/html/get-started/index.html">v7.11.0-dev</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">The following steps show how <span class="hljs-built_in">to</span> setup LVGL <span class="hljs-keyword">on</span> <span class="hljs-title">an</span> <span class="hljs-title">embedded</span> <span class="hljs-title">system</span> <span class="hljs-title">with</span> <span class="hljs-title">a</span> <span class="hljs-title">display</span> <span class="hljs-title">and</span> <span class="hljs-title">a</span> <span class="hljs-title">touchpad</span>.<br><br>Download <span class="hljs-keyword">or</span> Clone <span class="hljs-keyword">the</span> library <span class="hljs-built_in">from</span> GitHub <span class="hljs-keyword">with</span> git clone <span class="hljs-keyword">https</span>://github.com/lvgl/lvgl.git<br><br>Copy <span class="hljs-keyword">the</span> lvgl <span class="hljs-built_in">folder</span> <span class="hljs-keyword">into</span> your project<br><br>Copy lvgl/lv_conf_template.h <span class="hljs-keyword">as</span> lv_conf.h next <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> lvgl <span class="hljs-built_in">folder</span>, change <span class="hljs-keyword">the</span> <span class="hljs-keyword">first</span> <span class="hljs-comment">#if 0 to 1 to enable the file&#x27;s content and set at least LV_HOR_RES_MAX, LV_VER_RES_MAX and LV_COLOR_DEPTH defines.</span><br><br>Include lvgl/lvgl.h where you need <span class="hljs-built_in">to</span> use LVGL related functions.<br><br>Call lv_tick_inc(x) every x <span class="hljs-built_in">milliseconds</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">a</span> Timer <span class="hljs-keyword">or</span> Task (x should be between <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">10</span>). It is required <span class="hljs-keyword">for</span> <span class="hljs-keyword">the</span> internal timing <span class="hljs-keyword">of</span> LVGL. Alternatively, configure LV_TICK_CUSTOM (see lv_conf.h) so that LVGL can retrieve <span class="hljs-keyword">the</span> current <span class="hljs-built_in">time</span> directly.<br><br>Call lv_init()<br><br>Create <span class="hljs-keyword">a</span> display buffer <span class="hljs-keyword">for</span> LVGL. LVGL will render <span class="hljs-keyword">the</span> graphics here <span class="hljs-keyword">first</span>, <span class="hljs-keyword">and</span> seed <span class="hljs-keyword">the</span> rendered image <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> display. The buffer size can be <span class="hljs-built_in">set</span> freely but <span class="hljs-number">1</span>/<span class="hljs-number">10</span> screen size is <span class="hljs-keyword">a</span> good starting point.<br></code></pre></td></tr></table></figure>
+<ol>
+<li>下载 LVGL 最新发布版 <a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl/releases/tag/v7.11.0">Release v7.11.0</a>。这里并不下载 master 仓库的。并将文件夹重命名为 <code>lvgl</code></li>
+<li>将 lvgl 文件夹复制到工程目录下，并在IDE中将 <code>lvgl</code> 文件夹添加到编译路径中</li>
+<li>将lvgl文件夹中的lv_conf_template.h复制并重命名为lv_conf，与lvgl同级目录</li>
+<li>打开lv_conf.h，将#if 0改为 # if 1，设置屏幕的宽高像素，以及颜色模式，如下代码所示 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">if</span> 1 <span class="hljs-comment">/*Set it to &quot;1&quot; to enable content*/</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> LV_CONF_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_CONF_H</span><br><span class="hljs-comment">/* clang-format off */</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span><br><br><span class="hljs-comment">/*====================</span><br><span class="hljs-comment">Graphical settings</span><br><span class="hljs-comment">*====================*/</span><br><br><span class="hljs-comment">/* Maximal horizontal and vertical resolution to support by the library.*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_HOR_RES_MAX          (240)  <span class="hljs-comment">// 水平像素</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_VER_RES_MAX          (320)  <span class="hljs-comment">// 垂直像素</span></span><br><br><span class="hljs-comment">/* Color depth:</span><br><span class="hljs-comment">* - 1:  1 byte per pixel</span><br><span class="hljs-comment">* - 8:  RGB332</span><br><span class="hljs-comment">* - 16: RGB565</span><br><span class="hljs-comment">* - 32: ARGB8888</span><br><span class="hljs-comment">*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_COLOR_DEPTH     16  <span class="hljs-comment">// 这里选择 RGB565模式</span></span><br></code></pre></td></tr></table></figure></li>
+<li>在你需要用到的littlevGL的文件添加#include “lvgl.h”</li>
+<li>调用lv_init();函数<br>在一个定时任务中调用<code>lv_tick_inc（x）</code>每x毫秒（x应在1到10之间）。 LVGL的内部时间需要。或者配置lv_tick_custom（请参阅LV_CONF.H）直接使用库函数自动调用<code>lv_tick_inc（x）</code>。</li>
+<li>调用 lv_init() 初始化</li>
+<li>设置显示缓冲区。LVGL首先将在此缓存图像数据，并将渲染图像作为显示器进行。缓冲区大小可以自由设置，但1&#x2F;10屏幕尺寸是一个很好的起点。<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">static</span> lv_disp_buf_t disp_buf;<br><span class="hljs-keyword">static</span> lv_color_t buf[LV_HOR_RES_MAX * LV_VER_RES_MAX <span class="hljs-regexp">/ 10];                     /</span>*Declare a buffer <span class="hljs-keyword">for</span> <span class="hljs-number">1</span><span class="hljs-regexp">/10 screen size*/</span><br>lv_disp_buf_init(&amp;disp_buf, buf, <span class="hljs-keyword">NULL</span>, LV_HOR_RES_MAX * LV_VER_RES_MAX <span class="hljs-regexp">/ 10);    /</span>*Initialize the display buffer*/<br></code></pre></td></tr></table></figure></li>
+<li>实现并注册可以将渲染图像复制到显示区域的函数： <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv_disp_drv_t disp_drv;               <span class="hljs-comment">/*Descriptor of a display driver*/</span><br>lv<span class="hljs-constructor">_disp_drv_init(&amp;<span class="hljs-params">disp_drv</span>)</span>;          <span class="hljs-comment">/*Basic initialization*/</span><br>disp_drv.flush_cb = my_disp_flush;    <span class="hljs-comment">/*Set your driver function*/</span><br>disp_drv.buffer = &amp;disp_buf;          <span class="hljs-comment">/*Assign the buffer to the display*/</span><br>lv<span class="hljs-constructor">_disp_drv_register(&amp;<span class="hljs-params">disp_drv</span>)</span>;      <span class="hljs-comment">/*Finally register the driver*/</span><br><br>void my<span class="hljs-constructor">_disp_flush(<span class="hljs-params">lv_disp_drv_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">disp</span>, <span class="hljs-params">const</span> <span class="hljs-params">lv_area_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">area</span>, <span class="hljs-params">lv_color_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">color_p</span>)</span><br>&#123;<br>    int32_t x, y;<br>    <span class="hljs-keyword">for</span>(y = area-&gt;y1; y &lt;= area-&gt;y2; y++) &#123;<br>        <span class="hljs-keyword">for</span>(x = area-&gt;x1; x &lt;= area-&gt;x2; x++) &#123;<br>            set<span class="hljs-constructor">_pixel(<span class="hljs-params">x</span>, <span class="hljs-params">y</span>, <span class="hljs-operator">*</span><span class="hljs-params">color_p</span>)</span>;  <span class="hljs-comment">/* Put a pixel to the display.*/</span><br>            color_p++;<br>        &#125;<br>    &#125;<br><br>    lv<span class="hljs-constructor">_disp_flush_ready(<span class="hljs-params">disp</span>)</span>;         <span class="hljs-comment">/* Indicate you are ready with the flushing*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+ 其中的set_pixel就是LCD顶层驱动的画点函数，这里直接替换成自己的画点函数即可。</li>
+<li>如果需要触摸输入就进行输入函数注册和实现，不需要就算了<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">lv_indev_drv_t indev_drv;                  <span class="hljs-comment">/*Descriptor of a input device driver*/</span><br>lv<span class="hljs-constructor">_indev_drv_init(&amp;<span class="hljs-params">indev_drv</span>)</span>;             <span class="hljs-comment">/*Basic initialization*/</span><br>indev_drv.<span class="hljs-keyword">type</span> = LV_INDEV_TYPE_POINTER;    <span class="hljs-comment">/*Touch pad is a pointer-like device*/</span><br>indev_drv.read_cb = my_touchpad_read;      <span class="hljs-comment">/*Set your driver function*/</span><br>lv<span class="hljs-constructor">_indev_drv_register(&amp;<span class="hljs-params">indev_drv</span>)</span>;         <span class="hljs-comment">/*Finally register the driver*/</span><br><br><span class="hljs-built_in">bool</span> my<span class="hljs-constructor">_touchpad_read(<span class="hljs-params">lv_indev_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">indev</span>, <span class="hljs-params">lv_indev_data_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">data</span>)</span><br>&#123;<br>    data-&gt;state = touchpad<span class="hljs-constructor">_is_pressed()</span> ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;<br>    <span class="hljs-keyword">if</span>(data-&gt;state<span class="hljs-operator"> == </span>LV_INDEV_STATE_PR) touchpad<span class="hljs-constructor">_get_xy(&amp;<span class="hljs-params">data</span>-&gt;<span class="hljs-params">point</span>.<span class="hljs-params">x</span>, &amp;<span class="hljs-params">data</span>-&gt;<span class="hljs-params">point</span>.<span class="hljs-params">y</span>)</span>;<br><br>    return <span class="hljs-literal">false</span>; <span class="hljs-comment">/*Return `false` because we are not buffering and no more data to read*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+这里 <code>touchpad_get_xy</code> 和 <code>touchpad_is_pressed()</code>也需要我们自己实现，目的就是将触摸坐标赋值给<code>data-&gt;point.x, &amp;data-&gt;point.y,data-&gt;state</code>。因此这里可以自由发挥，只要把坐标值给到这俩变量就行了。例如<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">my_touchpad_read</span><span class="hljs-params">(<span class="hljs-type">lv_indev_drv_t</span> * drv, <span class="hljs-type">lv_indev_data_t</span>*data)</span></span><br><span class="hljs-function"></span>&#123;<br>    data-&gt;point.x = touchpad_x;<br>    data-&gt;point.y = touchpad_y;<br>    data-&gt;state = LV_INDEV_STATE_PR <span class="hljs-keyword">or</span> LV_INDEV_STATE_REL;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">/*现在没有缓冲，所以没有更多的数据读取*/</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>定期调用lv_task_handler（）在主机中断或操作系统任务中每隔几毫秒。如果需要，它将重绘屏幕，处理输入设备等。</li>
+</ol>
+<p>For a more detailed guide go to the<a target="_blank" rel="noopener" href="https://docs.lvgl.io/v7/en/html/porting/index.html"> Porting </a>section.</p>
+<p>以上的 9-10 步其实官方已经有例程了，我们不用再自己编写，只需要修改即可。例程在 <code>lvgl\examples\porting</code>，这里面存放的就是对外接口适配例程。用哪一个，就更改那个名字，并在相应文件中修改 <code>#if 0</code> 启用。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/porting%E6%9B%B4%E5%90%8D.png" srcset="/img/loading.gif" lazyload alt="图 3">  </p>
+<ul>
+<li>lv_port_disp：显示相关。</li>
+<li>lv_port_indev：输入相关。</li>
+<li>lv_port_fs：文件系统相关。</li>
+</ul>
+<p>这里我们只使用 <code>lv_port_disp</code> 其它保持不动。并将 <code>lv_port_disp.c/h</code>文件复制到 lvgl 同级的 <code>lvgl_porting</code>目录下。 然后删除其它无关文件夹，最终文件结构如下：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84png.png" srcset="/img/loading.gif" lazyload alt="图 4">  </p>
+<p>这里我们按照上面的 8-10 步骤修改 lv_port_disp.c&#x2F;h 文件</p>
+<ol>
+<li><p>.c&#x2F;h 文件中的 <code>#if 0</code> 改为 <code># if 1</code> , .c 文件的头文件包含改为 <code>#include &quot;lv_port_disp.h&quot;</code> </p>
+ <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">/<span class="hljs-emphasis">*Copy this file as &quot;lv_port_disp.c&quot; and set this value to &quot;1&quot; to enable content*</span>/<br><span class="hljs-section">#if 1</span><br><br>/<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-emphasis">*</span><br><span class="hljs-emphasis">*</span>      INCLUDES<br><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-emphasis">*/</span><br><span class="hljs-emphasis">#include &quot;lv_port_disp.h&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>缓存数组已经在 <code>lv_port_disp_init(void)</code> 定义好了，这里我们仅使用一级缓存，将其他数组定去注释掉，不然会占用RAM，导致RAM不够用。</p>
+ <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk">    <span class="hljs-regexp">/* Example for 1) */</span><br>    static lv_disp_buf_t draw_buf_dsc_1;<br>    static lv_color_t draw_buf_1[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                          <span class="hljs-regexp">/*A buffer for 10 rows*/</span><br>    lv_disp_buf_init(&amp;draw_buf_dsc_1, draw_buf_1, NULL, LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-regexp">/*Initialize the display buffer*/</span><br><br>    <span class="hljs-regexp">/* Example for 2) */</span><br><span class="hljs-regexp">//</span>    static lv_disp_buf_t draw_buf_dsc_2;<br><span class="hljs-regexp">//</span>    static lv_color_t draw_buf_2_1[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                        <span class="hljs-regexp">/*A buffer for 10 rows*/</span><br><span class="hljs-regexp">//</span>    static lv_color_t draw_buf_2_2[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                        <span class="hljs-regexp">/*An other buffer for 10 rows*/</span><br><span class="hljs-regexp">//</span>    lv_disp_buf_init(&amp;draw_buf_dsc_2, draw_buf_2_1, draw_buf_2_2, LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-regexp">/*Initialize the display buffer*/</span><br><br>    <span class="hljs-regexp">/* Example for 3) */</span><br><span class="hljs-regexp">//</span>    static lv_disp_buf_t draw_buf_dsc_3;<br><span class="hljs-regexp">//</span>    static lv_color_t draw_buf_3_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];            <span class="hljs-regexp">/*A screen sized buffer*/</span><br><span class="hljs-regexp">//</span>    static lv_color_t draw_buf_3_2[LV_HOR_RES_MAX * LV_VER_RES_MAX];            <span class="hljs-regexp">/*An other screen sized buffer*/</span><br><span class="hljs-regexp">//</span>    lv_disp_buf_init(&amp;draw_buf_dsc_3, draw_buf_3_1, draw_buf_3_2, LV_HOR_RES_MAX * LV_VER_RES_MAX);   <span class="hljs-regexp">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<p> 同时注释掉下面屏幕尺寸赋值语句。之前我们已经在 lv_conf.h 中设置过了，下面语句的优先级最高即会覆盖掉 lv_conf.h 中的设置。但为了保持入口一致，我们统一在lv_conf.h中设置，这里的注释掉。</p>
+ <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">    <span class="hljs-regexp">/*Set the resolution of the display*/</span><br><span class="hljs-regexp">//</span>disp_drv.hor_res = <span class="hljs-number">240</span>;<br><span class="hljs-regexp">//</span>disp_drv.ver_res = <span class="hljs-number">320</span>;<br></code></pre></td></tr></table></figure></li>
+<li><p>修改 <code>disp_flush()</code>。<code>LCD_Fast_DrawPoint</code>就是我们之前编写的画点函数。</p>
+ <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lcd.h&quot;</span><br><br>static void disp<span class="hljs-constructor">_flush(<span class="hljs-params">lv_disp_drv_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">disp_drv</span>, <span class="hljs-params">const</span> <span class="hljs-params">lv_area_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">area</span>, <span class="hljs-params">lv_color_t</span> <span class="hljs-operator">*</span> <span class="hljs-params">color_p</span>)</span><br>&#123;<br>    <span class="hljs-comment">/*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/</span><br><br>    int32_t x;<br>    int32_t y;<br>    <span class="hljs-keyword">for</span>(y = area-&gt;y1; y &lt;= area-&gt;y2; y++) &#123;<br>        <span class="hljs-keyword">for</span>(x = area-&gt;x1; x &lt;= area-&gt;x2; x++) &#123;<br>            <span class="hljs-comment">/* Put a pixel to the display. For example: */</span><br>            <span class="hljs-comment">/* put_px(x, y, *color_p)*/</span><br>            <span class="hljs-constructor">LCD_Fast_DrawPoint(<span class="hljs-params">x</span>,<span class="hljs-params">y</span>,<span class="hljs-params">color_p</span>-&gt;<span class="hljs-params">full</span>)</span>;<br>            color_p++;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/* IMPORTANT!!!</span><br><span class="hljs-comment">    * Inform the graphics library that you are ready with the flushing*/</span><br>    lv<span class="hljs-constructor">_disp_flush_ready(<span class="hljs-params">disp_drv</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>触摸接口在 <code>lv_port_indev</code> 文件中，这里没用到，不添加。 </p>
+</li>
+<li><p>添加定时器，设置为1ms定时。在中断函数中调用 <code>lv_tick_inc(1)</code>。注意这里的 “1” 必须和中断事件移植，中断间隔几ms，这个数字就是几。且只能取 1-10。</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;lvgl.h&quot;</span></span><br><span class="hljs-comment">/* 中断回调函数 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">HAL_TIM_PeriodElapsedCallback</span><span class="hljs-params">(TIM_HandleTypeDef *htim)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">lv_tick_inc</span>(<span class="hljs-number">1</span>);<span class="hljs-comment">//lvgl的1ms心跳</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>编译，检查错误。主要就是头文件包含错误。注意在STM32CubeIDE中一定要将GUI文件夹设置源文件夹<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL_GUI_Sr_Loc.png" srcset="/img/loading.gif" lazyload alt="图 6"><br>其余头文件包含如下：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/LittleVGL_%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/LVGL_%E5%A4%B4%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt="图 5">  </p>
+</li>
+<li><p>编写主函数，驱动例程。</p>
+ <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">void test<span class="hljs-constructor">_screen(<span class="hljs-params">void</span>)</span><br>&#123;<br>    lv_obj_t<span class="hljs-operator"> * </span>btn = lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);     <span class="hljs-comment">/*Add a button the current screen*/</span><br>    lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn</span>, 10, 10)</span>;                            <span class="hljs-comment">/*Set its position*/</span><br>    lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">btn</span>, 120, 50)</span>;                          <span class="hljs-comment">/*Set its size*/</span><br><br>    lv_obj_t<span class="hljs-operator"> * </span>label = lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn</span>, NULL)</span>;          <span class="hljs-comment">/*Add a label to the button*/</span><br>    lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label</span>, <span class="hljs-string">&quot;Button&quot;</span>)</span>;                     <span class="hljs-comment">/*Set the labels text*/</span><br>&#125;<br><br>void setup<span class="hljs-literal">()</span><br>&#123;<br>    delay<span class="hljs-constructor">_init(84)</span>; <span class="hljs-comment">/* 延时函数初始化 */</span><br>    <span class="hljs-constructor">__HAL_SPI_ENABLE(&amp;<span class="hljs-params">hspi1</span>)</span>;<br>    <span class="hljs-constructor">HAL_TIM_Base_Start_IT(&amp;<span class="hljs-params">htim10</span>)</span>; <span class="hljs-comment">/* 使能定时器  */</span><br>    <span class="hljs-constructor">LCD_Init()</span>;<span class="hljs-comment">//LCD初始化</span><br>    delay<span class="hljs-constructor">_ms(100)</span>;<br><br>    lv<span class="hljs-constructor">_init()</span>;				<span class="hljs-comment">//lvgl系统初始化, 放在 LCD_Init() 后面</span><br>    lv<span class="hljs-constructor">_port_disp_init()</span>;	<span class="hljs-comment">//lvgl显示接口初始化,放在lv_init()的后面</span><br>    test<span class="hljs-constructor">_screen()</span>; <span class="hljs-comment">/* 初始化界面后立即会显示 */</span><br><br>    run_times = millis<span class="hljs-literal">()</span>;<br>&#125;<br><br><br><br>void loop<span class="hljs-literal">()</span><br>&#123;<br>    lv<span class="hljs-constructor">_task_handler()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> <code>test_screen</code> 函数作用是创建一个带字符的按钮控件，主函数通过调用 <code>lv_task_handler()</code> 显示创建的按钮控件。<br> loop 循环中一定不能有阻塞（延时函数），必须保证 <code>lv_task_handler()</code> 能够及时调用，或者放在中断中定时调用。</p>
+</li>
+</ol>
+<h2 id="LVGL快速入门"><a href="#LVGL快速入门" class="headerlink" title="LVGL快速入门"></a>LVGL快速入门</h2><h1 id="LVGL应用"><a href="#LVGL应用" class="headerlink" title="LVGL应用"></a>LVGL应用</h1><h2 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h2><p><a target="_blank" rel="noopener" href="https://forum.lvgl.io/t/screen-transitions-and-display-background/2582">Screen transitions and display background</a><br><a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl/issues/394">Multiple screen question #394</a><br><a target="_blank" rel="noopener" href="https://forum.lvgl.io/t/the-most-efficient-way-to-structure-a-multi-screen-littlevgl-project/1680">The most efficient way to structure a multi screen LittlevGL project</a><br><a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl/issues/93">button to change screen #93</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/yunjie167/article/details/105488356">LittlevGL 切换界面的演示</a><br><a target="_blank" rel="noopener" href="http://www.lingzhilab.com/lzbbs/resources.html?ecid=454">零知增强板-TFT扩展板 3.5寸 UI界面示例(lvgl)</a></p>
+<h2 id="LVGL优化"><a href="#LVGL优化" class="headerlink" title="LVGL优化"></a>LVGL优化</h2><p>该优化测试实在 240*320 的屏幕测试的，测试显示按钮+屏幕背景刷新</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">void test<span class="hljs-constructor">_screen(<span class="hljs-params">void</span>)</span><br>&#123;<br>    lv_obj_t<span class="hljs-operator"> * </span>btn = lv<span class="hljs-constructor">_btn_create(<span class="hljs-params">lv_scr_act</span>()</span>, NULL);     <span class="hljs-comment">/*Add a button the current screen*/</span><br>    lv<span class="hljs-constructor">_obj_set_pos(<span class="hljs-params">btn</span>, 10, 10)</span>;                            <span class="hljs-comment">/*Set its position*/</span><br>    lv<span class="hljs-constructor">_obj_set_size(<span class="hljs-params">btn</span>, 120, 50)</span>;                          <span class="hljs-comment">/*Set its size*/</span><br><br>    lv_obj_t<span class="hljs-operator"> * </span>label = lv<span class="hljs-constructor">_label_create(<span class="hljs-params">btn</span>, NULL)</span>;          <span class="hljs-comment">/*Add a label to the button*/</span><br>    lv<span class="hljs-constructor">_label_set_text(<span class="hljs-params">label</span>, <span class="hljs-string">&quot;Button&quot;</span>)</span>;                     <span class="hljs-comment">/*Set the labels text*/</span><br>&#125;<br><br>void setup<span class="hljs-literal">()</span><br>&#123;<br>	delay<span class="hljs-constructor">_init(84)</span>; <span class="hljs-comment">/* 延时函数初始化 */</span><br>	<span class="hljs-constructor">__HAL_SPI_ENABLE(&amp;<span class="hljs-params">hspi1</span>)</span>;<br>	<span class="hljs-constructor">HAL_TIM_Base_Start_IT(&amp;<span class="hljs-params">htim10</span>)</span>; <span class="hljs-comment">/* 使能定时器  */</span><br>	<span class="hljs-constructor">LCD_Init()</span>;<span class="hljs-comment">//LCD初始化</span><br>	delay<span class="hljs-constructor">_ms(100)</span>;<br><br>	lv<span class="hljs-constructor">_init()</span>;				<span class="hljs-comment">//lvgl系统初始化</span><br>	lv<span class="hljs-constructor">_port_disp_init()</span>;	<span class="hljs-comment">//lvgl显示接口初始化,放在lv_init()的后面</span><br>	test<span class="hljs-constructor">_screen()</span>; <span class="hljs-comment">/* 初始化界面后立即会显示 */</span><br>	run_times = millis<span class="hljs-literal">()</span>;   <span class="hljs-comment">// 记住显示前时间</span><br>	lv<span class="hljs-constructor">_task_handler()</span>;<br>	delay<span class="hljs-constructor">_ms(50)</span>;  <span class="hljs-comment">// 延时50ms。等待显示完成</span><br>	run_times = (millis<span class="hljs-literal">()</span>-run_times-<span class="hljs-number">50</span>);   <span class="hljs-comment">// 得到显示时间</span><br>	<span class="hljs-constructor">LCD_ShowNum(50,100,<span class="hljs-params">run_times</span>,5,16)</span>;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+<p>不同配置下显示该同一内容画面所消耗的时间、RAM、ROM对比。</p>
+<h3 id="DMA-中断-单buf"><a href="#DMA-中断-单buf" class="headerlink" title="DMA+中断+单buf"></a>DMA+中断+单buf</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">static</span> <span class="hljs-type">lv_disp_buf_t</span> disp_buf_1;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_color_t</span> buf_1[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1,  <span class="hljs-literal">NULL</span>,  LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：67ms</li>
+<li>RAM占用 73.55%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<p><strong><code>LV_HOR_RES_MAX * 10</code> 改为 <code>LV_HOR_RES_MAX * 20</code></strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">static</span> <span class="hljs-type">lv_disp_buf_t</span> disp_buf_1;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_color_t</span> buf_1[LV_HOR_RES_MAX * <span class="hljs-number">20</span>];                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1, <span class="hljs-literal">NULL</span>, LV_HOR_RES_MAX * <span class="hljs-number">20</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：55ms</li>
+<li>RAM占用  80.87%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<h3 id="双buf"><a href="#双buf" class="headerlink" title="双buf"></a>双buf</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss">static lv_disp_buf_t disp_buf_1;<br>static lv_color_t buf_1<span class="hljs-selector-attr">[LV_HOR_RES_MAX * 10]</span>;                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br>static lv_color_t buf_2<span class="hljs-selector-attr">[LV_HOR_RES_MAX * 10]</span>;<br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1, buf_2, LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：48ms</li>
+<li>RAM占用  80.87%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<p><strong><code>LV_HOR_RES_MAX * 10</code> 改为 <code>LV_HOR_RES_MAX * 20</code></strong></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss">static lv_disp_buf_t disp_buf_1;<br>static lv_color_t buf_1<span class="hljs-selector-attr">[LV_HOR_RES_MAX * 20]</span>;                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br>static lv_color_t buf_2<span class="hljs-selector-attr">[LV_HOR_RES_MAX * 20]</span>;<br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1, buf_2, LV_HOR_RES_MAX * <span class="hljs-number">20</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：42ms</li>
+<li>RAM占用  95.52%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<h3 id="减小RAM占用"><a href="#减小RAM占用" class="headerlink" title="减小RAM占用"></a>减小RAM占用</h3><p>修改以下内容对于显示时间几乎无影响，但可以大幅减小RAM暂用<br>上述测试都是在下属设置中(lv_conf.h)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#  <span class="hljs-keyword">define</span> LV_MEM_SIZE    (32U * 1024U)</span><br></code></pre></td></tr></table></figure>
+<p>下述为dma 单buffer的显示参数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#  <span class="hljs-keyword">define</span> LV_MEM_SIZE    (32U * 1024U)</span><br><br><span class="hljs-type">static</span> <span class="hljs-type">lv_disp_buf_t</span> disp_buf_1;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_color_t</span> buf_1[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1,  <span class="hljs-literal">NULL</span>,  LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：67ms</li>
+<li>RAM占用 73.55%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<p>修改 LV_MEM_SIZE 大小</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#  <span class="hljs-keyword">define</span> LV_MEM_SIZE    (8U * 1024U)</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：66ms</li>
+<li>RAM占用 36.05%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<h3 id="插件宏定义设为0"><a href="#插件宏定义设为0" class="headerlink" title="插件宏定义设为0"></a>插件宏定义设为0</h3><p>lv_conf.h设置不用的插件为0，速度无影响，内存增加<br>上述测试都是在下属设置中(lv_conf.h)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_ARC      1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_BAR      0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_BTN      1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_BTNMATRIX     0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CALENDAR 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CANVAS   0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CHECKBOX       0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CHART    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CONT     1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_CPICKER   0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_DROPDOWN    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_GAUGE    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_IMG      0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_IMGBTN   0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_KEYBOARD       0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_LABEL    1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_LED      0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_LINE     1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_LIST     0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_LINEMETER   0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_OBJMASK  0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_MSGBOX     0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_PAGE     0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_SPINNER      0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_ROLLER    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_SLIDER    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_SPINBOX       0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_SWITCH       0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_TEXTAREA       0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_TABLE    0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_TABVIEW      0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_TILEVIEW     0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_WIN      0</span><br></code></pre></td></tr></table></figure>
+<p>在上述配置下，下述为dma 单buffer的显示参数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#  <span class="hljs-keyword">define</span> LV_MEM_SIZE    (32U * 1024U)</span><br><br><span class="hljs-type">static</span> <span class="hljs-type">lv_disp_buf_t</span> disp_buf_1;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_color_t</span> buf_1[LV_HOR_RES_MAX * <span class="hljs-number">10</span>];                      <span class="hljs-comment">/*A buffer for 10 rows*/</span><br><span class="hljs-built_in">lv_disp_buf_init</span>(&amp;disp_buf_1, buf_1,  <span class="hljs-literal">NULL</span>,  LV_HOR_RES_MAX * <span class="hljs-number">10</span>);   <span class="hljs-comment">/*Initialize the display buffer*/</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>耗时：67ms</li>
+<li>RAM占用 73.55%  </li>
+<li>FLASH占用 65.12%</li>
+</ul>
+<p>如果将上述宏定义全部改为1（lvgl默认全为1）,显示参数为</p>
+<ul>
+<li>耗时：67ms</li>
+<li>RAM占用 73.55%  </li>
+<li>FLASH占用 72.38%</li>
+</ul>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40831286/article/details/107633216">【LVGL学习之旅 01】移植LVGL到STM32</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/456fb71ec798">STM32 移植 littlevGL GUI</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a40316.html">lvgl最新版本在STM32上的移植使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codeleading.com/article/56705058674/">stm32 DMA2D使用中断LVGL,提高LVGL帧率</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43862847/article/details/109318017">LVGL 优化帧率技巧</a></li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LittleVGL 学习笔记</div>
+      <div>http://lonlypan.com/2020/11/05/LittleVGL 学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年11月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/13/%E5%B5%8C%E5%85%A5%E5%BC%8FLinux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%9C%B1%E6%9C%89%E9%B9%8F/" title="嵌入式Linux学习笔记-朱有鹏">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">嵌入式Linux学习笔记-朱有鹏</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/05/%E5%9B%BD%E4%BA%A7%E5%8D%95%E7%89%87%E6%9C%BAMCU/" title="国产单片机MCU">
+                        <span class="hidden-mobile">国产单片机MCU</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

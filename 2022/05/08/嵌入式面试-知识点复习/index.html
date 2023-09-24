@@ -1,0 +1,1126 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="编程 语言汇编C&#x2F;C++字节内存32位机中， char：    1个字节short：   2个字节int：       4个字节long：    4个字节float：4个字节double：4个字节 机器数和真值1、机器数一个数在计算机中的二进制表示形式,  叫做这个数的机器数。最高位存放符号, 正数为0, 负数为1.比如，十进制中的数 +3 ，计算机字长为8位，转换成二进制就是00000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式面试-知识点复习">
+<meta property="og:url" content="http://lonlypan.com/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="编程 语言汇编C&#x2F;C++字节内存32位机中， char：    1个字节short：   2个字节int：       4个字节long：    4个字节float：4个字节double：4个字节 机器数和真值1、机器数一个数在计算机中的二进制表示形式,  叫做这个数的机器数。最高位存放符号, 正数为0, 负数为1.比如，十进制中的数 +3 ，计算机字长为8位，转换成二进制就是00000">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-知识点复习/1694780455921.png">
+<meta property="article:published_time" content="2022-05-08T11:23:00.000Z">
+<meta property="article:modified_time" content="2023-02-22T15:23:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-知识点复习/1694780455921.png">
+  
+  
+  <title>嵌入式面试-知识点复习 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="嵌入式面试-知识点复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-05-08 19:23" pubdate>
+          2022年5月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          152 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">嵌入式面试-知识点复习</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年2月22日 晚上
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="编程-语言"><a href="#编程-语言" class="headerlink" title="编程 语言"></a>编程 语言</h1><h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><h2 id="C-x2F-C"><a href="#C-x2F-C" class="headerlink" title="C&#x2F;C++"></a>C&#x2F;C++</h2><h3 id="字节内存"><a href="#字节内存" class="headerlink" title="字节内存"></a>字节内存</h3><p>32位机中，</p>
+<p>char：    1个字节<br>short：   2个字节<br>int：       4个字节<br>long：    4个字节<br>float：4个字节<br>double：4个字节</p>
+<h3 id="机器数和真值"><a href="#机器数和真值" class="headerlink" title="机器数和真值"></a>机器数和真值</h3><p>1、机器数<br>一个数在计算机中的二进制表示形式,  叫做这个数的机器数。最高位存放符号, 正数为0, 负数为1.<br>比如，十进制中的数 +3 ，计算机字长为8位，转换成二进制就是00000011。如果是 -3 ，就是 10000011 。那么，这里的 00000011 和 10000011 就是机器数。</p>
+<p>2、真值<br>带 ‘+’ 、’-‘号的数值。带符号位的机器数对应的真正数值称为机器数的真值。</p>
+<p>例：0000 0001的真值 &#x3D; +000 0001 &#x3D; +1，1000 0001的真值 &#x3D; –000 0001 &#x3D; –1</p>
+<h3 id="原码、反码、补码"><a href="#原码、反码、补码" class="headerlink" title="原码、反码、补码"></a>原码、反码、补码</h3><p>原码就是机器数，最高位表示符号位，其他位存放该数的二进制的绝对值。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">+1</span>]<span class="hljs-string">原</span> <span class="hljs-string">=</span> <span class="hljs-number">0000 </span><span class="hljs-number">0001</span><br>[<span class="hljs-number">-1</span>]<span class="hljs-string">原</span> <span class="hljs-string">=</span> <span class="hljs-number">1000 </span><span class="hljs-number">0001</span><br></code></pre></td></tr></table></figure>
+
+<p>反码</p>
+<ul>
+<li>正数的反码是其本身</li>
+<li>负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[+1]</span> = <span class="hljs-comment">[00000001]</span>原 = <span class="hljs-comment">[00000001]</span>反<br><span class="hljs-comment">[-1]</span> = <span class="hljs-comment">[10000001]</span>原 = <span class="hljs-comment">[11111110]</span>反<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>补码</p>
+<ul>
+<li>正数的补码就是其本身</li>
+<li>负数的补码是在其原码的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码的基础上+1)<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[+1]</span> = <span class="hljs-comment">[00000001]</span>原 = <span class="hljs-comment">[00000001]</span>反 = <span class="hljs-comment">[00000001]</span>补<br><br><span class="hljs-comment">[-1]</span> = <span class="hljs-comment">[10000001]</span>原 = <span class="hljs-comment">[11111110]</span>反 = <span class="hljs-comment">[11111111]</span>补<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>因为机器使用补码(只有加法而没有减法，即没有正负号的概念)</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">]1-1</span> <span class="hljs-string">=</span> <span class="hljs-number">1</span> <span class="hljs-string">+</span> <span class="hljs-string">(-1)</span> <span class="hljs-string">=</span> [<span class="hljs-number">0000 </span><span class="hljs-number">0001</span>]<span class="hljs-string">原</span> <span class="hljs-string">+</span> [<span class="hljs-number">1000 </span><span class="hljs-number">0001</span>]<span class="hljs-string">原</span> <span class="hljs-string">=</span> [<span class="hljs-number">0000 </span><span class="hljs-number">0001</span>]<span class="hljs-string">补</span> <span class="hljs-string">+</span> [<span class="hljs-number">1111 </span><span class="hljs-number">1111</span>]<span class="hljs-string">补</span> <span class="hljs-string">=</span> [<span class="hljs-number">0000 </span><span class="hljs-number">0000</span>]<span class="hljs-string">补=[0000</span> <span class="hljs-number">0000</span><span class="hljs-string">]原</span><br><span class="hljs-string">(-1)</span> <span class="hljs-string">+</span> <span class="hljs-string">(-127)</span> <span class="hljs-string">=</span> [<span class="hljs-number">1000 </span><span class="hljs-number">0001</span>]<span class="hljs-string">原</span> <span class="hljs-string">+</span> [<span class="hljs-number">1111 </span><span class="hljs-number">1111</span>]<span class="hljs-string">原</span> <span class="hljs-string">=</span> [<span class="hljs-number">1111 </span><span class="hljs-number">1111</span>]<span class="hljs-string">补</span> <span class="hljs-string">+</span> [<span class="hljs-number">1000 </span><span class="hljs-number">0001</span>]<span class="hljs-string">补</span> <span class="hljs-string">=</span> [<span class="hljs-number">1000 </span><span class="hljs-number">0000</span>]<span class="hljs-string">补</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694833197317.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>参考资料：<a target="_blank" rel="noopener" href="https://steemit.com/cn/@cifer/c-volatile">如何使用 C 语言中的 volatile 关键字?</a></p>
+<p>由于访问寄存器要比访问内存单元快的多，编译器在存取变量时，为提高存取速度，编译器优化有时会先把变量读取到一个寄存器中；以后再取变量值时就直接从寄存器中取值。但在很多情况下会读取到脏数据，严重影响程序的运行效果。</p>
+<p><strong>volatile 关键字的正确用法</strong><br>任何时候, 只要这个变量的值可能在不确定的时刻被修改, 那么它都应该被声明为 volatile. 什么是 “不确定的时刻” 呢, 其实总共不过是只有三种情况:</p>
+<ul>
+<li>存储器映射的硬件寄存器（Memory-mapped peripheral registers）</li>
+<li>被 ISR 修改的全局变量</li>
+<li>多线程编程中, 被多个 task 共同访问或修改的全局变量</li>
+</ul>
+<p>问题：一个参数既可以是const还可以是volatile吗？<br>可以的，例如只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。</p>
+<p>问题：一个指针可以是volatile 吗？<br>可以，当一个中服务子程序修改一个指向buffer的指针时。</p>
+<p>问题：下面的函数有什么错误？</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-built_in">int</span> square(<span class="hljs-keyword">volatile</span> <span class="hljs-built_in">int</span> *<span class="hljs-built_in">ptr</span>)<br>&#123;<br>	returnptr * *<span class="hljs-built_in">ptr</span><span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该程序的目的是用来返指针ptr指向值的平方，但是，由于ptr指向一个volatile型参数，编译器将产生类似下面的代码：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-built_in">int</span> square(<span class="hljs-keyword">volatile</span> <span class="hljs-built_in">int</span>*<span class="hljs-built_in">ptr</span>)<br>&#123;<br>	<span class="hljs-built_in">int</span> a,b<span class="hljs-comment">;</span><br>	a = *<span class="hljs-built_in">ptr</span><span class="hljs-comment">;</span><br>	b = *<span class="hljs-built_in">ptr</span><span class="hljs-comment">;</span><br>	<span class="hljs-keyword">return</span> a * b<span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>由于*ptr的值可能被意想不到地该变，因此a和b可能是不同的。结果，这段代码可能返不是你所期望的平方值！正确的代码如下：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-title">square</span><span class="hljs-params">(<span class="hljs-keyword">volatile</span> <span class="hljs-type">int</span>*ptr)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a;<br>	a = *ptr;<br>	<span class="hljs-keyword">return</span> a * a;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="inline函数"><a href="#inline函数" class="headerlink" title="inline函数"></a>inline函数</h3><p>在C语言中，如果一些函数被频繁调用，不断地有函数入栈，即函数栈，会造成栈空间或栈内存的大量消耗。为了解决这个问题，特别的引入了inline修饰符，表示为内联函数。</p>
+<p>大多数的机器上，调用函数都要做很多工作：调用前要先保存寄存器，并在返回时恢复，复制实参，程序还必须转向一个新位置执行。C++中支持内联函数，其目的是为了提高函数的执行效率，用关键字 inline 放在函数定义(注意是定义而非声明)的前面即可将函数指定为内联函数，内联函数通常就是将它在程序中的每个调用点上“内联地”展开。</p>
+<p>内联是以代码膨胀（复制）为代价，仅仅省去了函数调用的开销，从而提高函数的执行效率</p>
+<h3 id="error"><a href="#error" class="headerlink" title="error"></a>error</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">error</span> : 在編譯時，輸出錯誤訊息，警告使用者某些錯誤，並且不會真的進行執行，在巨集處理階段就會停止。</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined( HELLO_MESSAGE )</span><br><span class="hljs-meta"># <span class="hljs-keyword">error</span> <span class="hljs-string">&quot;You have forgotten to define the header file name.&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="ifndef-define-endif-作用和用法"><a href="#ifndef-define-endif-作用和用法" class="headerlink" title="#ifndef #define #endif 作用和用法"></a>#ifndef #define #endif 作用和用法</h3><p>主要目的是防止頭文件的重複包含和編譯.h文件，如下：</p>
+<p>#ifndef XX_H<br>#define XX_H<br>…<br>#endif</p>
+<h3 id="给定一个整型变量a，写两段代码，第一个设置a的bit-3，第二个清除a-的bit-3。在以上两个操作中，要保持其它位不变。"><a href="#给定一个整型变量a，写两段代码，第一个设置a的bit-3，第二个清除a-的bit-3。在以上两个操作中，要保持其它位不变。" class="headerlink" title="给定一个整型变量a，写两段代码，第一个设置a的bit 3，第二个清除a 的bit 3。在以上两个操作中，要保持其它位不变。"></a>给定一个整型变量a，写两段代码，第一个设置a的bit 3，第二个清除a 的bit 3。在以上两个操作中，要保持其它位不变。</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> BIT3 (0x1&lt;&lt;3)</span><br><span class="hljs-type">static</span> <span class="hljs-type">int</span> a;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">set_bit3</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	a |= BIT3;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear_bit3</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	a &amp;= ~BIT3;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="评价下面的代码片断："><a href="#评价下面的代码片断：" class="headerlink" title="评价下面的代码片断："></a>评价下面的代码片断：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> zero = <span class="hljs-number">0</span>;<br><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> compzero = <span class="hljs-number">0xFFFF</span>;  <span class="hljs-comment">// 0的补码</span><br><span class="hljs-comment">/*1&#x27;s complement of zero */</span><br></code></pre></td></tr></table></figure>
+<p>对于一个int型不是16位的处理器为说，上面的代码是不正确的。应编写如下：</p>
+<p>unsigned int compzero &#x3D; ~0;</p>
+<h3 id="对于一个频繁使用的短小函数-在C语言中应用什么实现-在C-中应用什么实现"><a href="#对于一个频繁使用的短小函数-在C语言中应用什么实现-在C-中应用什么实现" class="headerlink" title="对于一个频繁使用的短小函数,在C语言中应用什么实现,在C++中应用什么实现?"></a>对于一个频繁使用的短小函数,在C语言中应用什么实现,在C++中应用什么实现?</h3><p>c用宏定义，c++用inline</p>
+<h3 id="纯虚函数如何定义？使用时应注意什么？"><a href="#纯虚函数如何定义？使用时应注意什么？" class="headerlink" title="纯虚函数如何定义？使用时应注意什么？"></a>纯虚函数如何定义？使用时应注意什么？</h3><p>｀virtual void f()&#x3D;0;｀<br>是接口，子类必须要实现</p>
+<h3 id="sizeof-和-strlen-区别"><a href="#sizeof-和-strlen-区别" class="headerlink" title="sizeof() 和 strlen()区别"></a>sizeof() 和 strlen()区别</h3><ul>
+<li>sizeof() 是一个运算符，而 strlen() 是一个函数。</li>
+<li>sizeof() 计算的是变量或类型所占用的内存字节数，而 strlen() 计算的是字符串中字符的个数。</li>
+<li>sizeof() 可以用于任何类型的数据，而 strlen() 只能用于以空字符 ‘\0’ 结尾的字符串。</li>
+<li>sizeof() 计算字符串的长度，包含末尾的 ‘\0’，strlen() 计算字符串的长度，不包含字符串末尾的 ‘\0’。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> *c=<span class="hljs-string">&quot;abcdef&quot;</span>;<br><span class="hljs-type">char</span> d[]=<span class="hljs-string">&quot;abcdef&quot;</span>;<br><span class="hljs-type">char</span> e[]=&#123;<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>,<span class="hljs-string">&#x27;d&#x27;</span>,<span class="hljs-string">&#x27;e&#x27;</span>,<span class="hljs-string">&#x27;f&#x27;</span>&#125;;<br><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d%d/n&quot;</span>,<span class="hljs-built_in">sizeof</span>(c),<span class="hljs-built_in">strlen</span>(c));<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d%d/n&quot;</span>,<span class="hljs-built_in">sizeof</span>(d),<span class="hljs-built_in">strlen</span>(d));<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d%d/n&quot;</span>,<span class="hljs-built_in">sizeof</span>(e),<span class="hljs-built_in">strlen</span>(e));<br><br>输出的结果是:<br><span class="hljs-number">4</span> <span class="hljs-number">6</span><br><span class="hljs-number">7</span> <span class="hljs-number">6</span><br><span class="hljs-number">6</span> <span class="hljs-number">14</span><br><br><span class="hljs-type">int</span> a[<span class="hljs-number">5</span>]=&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>&#125;;<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;sizeof  数组名=%d\n&quot;</span>,<span class="hljs-built_in">sizeof</span>(a));<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;sizeof *数组名=%d\n&quot;</span>,<span class="hljs-built_in">sizeof</span>(*a));<br>输出的结果是:<br><span class="hljs-keyword">sizeof</span>  数组名=<span class="hljs-number">20</span><br><span class="hljs-keyword">sizeof</span> *数组名=<span class="hljs-number">4</span><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="static的用法（定义和用途）"><a href="#static的用法（定义和用途）" class="headerlink" title="static的用法（定义和用途）"></a>static的用法（定义和用途）</h3><p>1）用static修饰局部变量：使其变为静态存储方式(静态数据区)，那么这个局部变量在函数执行完成之后不会被释放，而是继续保留在内存中。</p>
+<p>2）用static修饰全局变量：使其只在本文件内部有效，而其他文件不可连接或引用该变量。</p>
+<p>3）用static修饰函数：对函数的连接方式产生影响，使得函数只在本文件内部有效，对其他文件是不可见的（这一点在大工程中很重要很重要，避免很多麻烦，很常见）。这样的函数又叫作静态函数。使用静态函数的好处是，不用担心与其他文件的同名函数产生干扰，另外也是对函数本身的一种保护机制。</p>
+<h3 id="const的用法（定义和用途）"><a href="#const的用法（定义和用途）" class="headerlink" title="const的用法（定义和用途）"></a>const的用法（定义和用途）</h3><p>const主要用来修饰变量、函数形参和类成员函数：</p>
+<p>1）用const修饰常量：定义时就初始化，以后不能更改。<br>2）用const修饰形参：func(const int a){};该形参在函数里不能改变<br>3）用const修饰类成员函数：该函数对成员变量只能进行只读操作，就是const类成员函数是不能修改成员变量的数值的。</p>
+<p>下面的声明都是什么意思？</p>
+<p>前两个的作用是一样，a是一个常整型数。<br>第三个意味着a是一个指向常整型数的指针（也就是，整型数是不可修改的，但指针可以）。<br>第四个意思a是一个指向整型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）。<br>最后一个意味着a是一个指向常整型数的常指针（也就是说，指针指向的整型数是不可修改的，同时指针也是不可修改的）。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">const int <span class="hljs-selector-tag">a</span>;  // 常整型数。<br>int const <span class="hljs-selector-tag">a</span>;  // 常整型数。const和int不管谁先谁后，都是在修饰XXX<br>const int *<span class="hljs-selector-tag">a</span>; // *<span class="hljs-selector-tag">a</span>只读，但<span class="hljs-selector-tag">a</span>不只读，即*<span class="hljs-selector-tag">a</span>不可更改，但<span class="hljs-selector-tag">a</span>可以更改<br>int *const <span class="hljs-selector-tag">a</span>; // 表示<span class="hljs-selector-tag">a</span>是一个常指针，即<span class="hljs-selector-tag">a</span>只读，*<span class="hljs-selector-tag">a</span>不只读，即<span class="hljs-selector-tag">a</span>不可更改，但*<span class="hljs-selector-tag">a</span>可以更改<br>int const * const <span class="hljs-selector-tag">a</span> ;  // <span class="hljs-selector-tag">a</span>、*<span class="hljs-selector-tag">a</span>不只读。表示<span class="hljs-selector-tag">a</span>是一个常指针，且指向常数<br></code></pre></td></tr></table></figure>
+
+<h3 id="const常量和-define的区别（编译阶段、安全性、内存占用等）"><a href="#const常量和-define的区别（编译阶段、安全性、内存占用等）" class="headerlink" title="const常量和#define的区别（编译阶段、安全性、内存占用等）"></a>const常量和#define的区别（编译阶段、安全性、内存占用等）</h3><p>用#define max 100 ; 定义的常量是没有类型的（不进行类型安全检查，可能会产生意想不到的错误），所给出的是一个立即数，编译器只是把所定义的常量值与所定义的常量的名字联系起来，define所定义的宏变量在预处理阶段的时候进行替换，在程序中使用到该常量的地方都要进行拷贝替换；</p>
+<p>用const int max &#x3D; 255 ; 定义的常量有类型（编译时会进行类型检查）名字，存放在内存的静态区域中，在编译时确定其值。在程序运行过程中const变量只有一个拷贝，而#define所定义的宏变量却有多个拷贝，所以宏定义在程序运行过程中所消耗的内存要比const变量的大得多</p>
+<h3 id="经典的sizeof-struct-和sizeof-union-内存对齐"><a href="#经典的sizeof-struct-和sizeof-union-内存对齐" class="headerlink" title="经典的sizeof(struct)和sizeof(union)内存对齐"></a>经典的sizeof(struct)和sizeof(union)内存对齐</h3><p>结构体内所有数据成员各自内存对齐后，结构体本身还要进行一次内存对齐，保证整个结构体占用内存大小是结构体内最大数据成员的最小整数倍；</p>
+<ul>
+<li>使用32位编译，int占4， char 占1， unsigned short 占2，char* 占4，函数指针占4个，由于是32位编译是4字节对齐，所以该结构体占16个字节。（说明：按几字节对齐，是根据结构体的最长类型决定的，这里是int是最长的字节，所以按4字节对齐）；<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-keyword">struct</span> <span class="hljs-built_in">CAT_s</span><br>&#123;<br>    <span class="hljs-type">int</span> ld;<br>    <span class="hljs-type">char</span> Color;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> Age;<br>    <span class="hljs-type">char</span> *Name;<br>    <span class="hljs-type">void</span>(*Jump)(<span class="hljs-type">void</span>);<br>&#125;Garfield;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>如程序中有#pragma pack(n)预编译指令，则所有成员对齐以n字节为准(即偏移量是n的整数倍)，不再考虑当前类型以及最大结构体内类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> pack(1)</span><br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">fun</span>&#123;<br>  <span class="hljs-type">int</span> i;<br>  <span class="hljs-type">double</span> d;<br>  <span class="hljs-type">char</span> c;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>1.找到占用字节最多的成员；<br>2.union的字节数必须是占用字节最多的成员的字节的倍数，而且需要能够容纳其他的成员</p>
+<ul>
+<li>本例中long,占用8个字节,int k[5]中都是int类型,仍然是占用4个字节的，然后union的字节数必须是占用字节最多的成员的字节的倍数,而且需要能够容纳其他的成员,为了要容纳k(20个字节),就必须要保证是8的倍数的同时还要大于20个字节,所以是24个字节。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> &#123;<br>    <span class="hljs-type">long</span> i;<br>    <span class="hljs-type">int</span> k[<span class="hljs-number">5</span>];<br>    <span class="hljs-type">char</span> c;<br>&#125;D<br></code></pre></td></tr></table></figure>
+
+<h3 id="位域："><a href="#位域：" class="headerlink" title="位域："></a>位域：</h3><ol>
+<li>位段声明和结构体类似</li>
+<li>位段的成员必须是int、unsigned int、signed int<br>3 .位段的成员名后边有一个冒号和一个数字</li>
+</ol>
+<ul>
+<li>无位域名，只用来作填充或调整位置。是不能使用的<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">bs</span>   <br>&#123;   <br>	<span class="hljs-type">unsigned</span> a:<span class="hljs-number">4</span>   <br>	<span class="hljs-type">unsigned</span> :<span class="hljs-number">0</span> <span class="hljs-comment">/*空域*/</span>   <br>	<span class="hljs-type">unsigned</span> b:<span class="hljs-number">4</span> <span class="hljs-comment">/*从下一单元开始存放*/</span>   <br>	<span class="hljs-type">unsigned</span> c:<span class="hljs-number">4</span>     <br>&#125;; <br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>m和n一起，刚好占用一个字节内存，后是short两个个字节，加起来就3个字节，然后联合体占了四个字节，总共7个字节了，最后int h占了四个字节，就是11个字节了，由结构体字节是最大类型的整数倍，所以是12字节</p>
+<p>那么多余的一个字节是放在什么位置呢，答案是short的前面，也就是m和n其实是占了两个字节的</p>
+<blockquote>
+<p>结构体内的成员的首地址相对于结构体首地址的偏移量是其类型大小的整数倍，比如说short型成员相对于结构体的首地址的地址偏移量应该是2的倍数。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">data_t</span>&#123;<br>   <span class="hljs-type">char</span> m:<span class="hljs-number">3</span>;<br>   <span class="hljs-type">char</span> n:<span class="hljs-number">5</span>;<br>   <span class="hljs-type">short</span> s:<span class="hljs-number">4</span>;<br>    <br>   <span class="hljs-keyword">union</span>&#123;<br>   <span class="hljs-type">int</span> a;<br>   <span class="hljs-type">char</span> b;<br>   &#125;;<br>    <br>   <span class="hljs-type">int</span> h;<br>&#125;<span class="hljs-type">data_t</span>;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="大小端"><a href="#大小端" class="headerlink" title="大小端"></a>大小端</h3><p>大端格式：即低地址存高位数据<br>小端格式：即低地址存低位数据</p>
+<ul>
+<li>STM32是小端系统</li>
+<li>常见的CPU PowerPC、IBM是大端模式，x86是小端模式。ARM既可以工作在大端模式，也可以工作在小端模式，一般ARM都默认是小端模式。一般通讯协议都采用的是大端模式。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694855955559.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>判断系统大小端</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">union</span>&#123;<br>      <span class="hljs-type">int</span> a;  <span class="hljs-comment">//4 bytes</span><br>      <span class="hljs-type">char</span> b; <span class="hljs-comment">//1 byte</span><br>    &#125; data;<br>  <br>    data.a = <span class="hljs-number">1</span>; <span class="hljs-comment">//占4 bytes，十六进制可表示为 0x 00 00 00 01</span><br><br>    <span class="hljs-comment">//b因为是char型只占1Byte，a因为是int型占4Byte</span><br>    <span class="hljs-comment">//所以，在联合体data所占内存中，b所占内存等于a所占内存的低地址部分 </span><br>	<span class="hljs-comment">//联合体变量总是从低地址存储</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-number">1</span> == data.b)&#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Little_Endian\n&quot;</span>);<br>     &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Big_Endian\n&quot;</span>);<br>     &#125;<br>   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="new和malloc"><a href="#new和malloc" class="headerlink" title="new和malloc"></a>new和malloc</h3><p>1）malloc和free是c++&#x2F;c语言的库函数，需要头文件支持stdlib.h；new和delete是C++的关键字，不需要头文件，需要编译器支持；</p>
+<p>2）使用new操作符申请内存分配时，无需指定内存块的大小，编译器会根据类型信息自行计算。而malloc则需要显式地支持所需内存的大小。</p>
+<p>3）new操作符内存分配成功时，返回的是对象类型的指针，类型严格与对象匹配，无需进行类型转换，故new是符合类型安全性的操作符。而malloc内存分配成功则是返回void<em>，需要通过强制类型转换将void</em>指针转换成我们需要的类型。</p>
+<p>4）new内存分配失败时，会抛出bad_alloc异常。malloc分配内存失败时返回NULL。</p>
+<h3 id="extern”C”-的作用"><a href="#extern”C”-的作用" class="headerlink" title="extern”C” 的作用"></a>extern”C” 的作用</h3><p>我们可以在C++中使用C的已编译好的函数模块，这时候就需要用到extern”C”。也就是extern“C” 都是在c++文件里添加的。</p>
+<p>extern在链接阶段起作用（四大阶段：预处理–编译–汇编–链接）。</p>
+<h3 id="用变量a给出下面的定义"><a href="#用变量a给出下面的定义" class="headerlink" title="用变量a给出下面的定义"></a>用变量a给出下面的定义</h3><p>a) 一个整型数；<br>b）一个指向整型数的指针；<br>c）一个指向指针的指针，它指向的指针是指向一个整型数；<br>d）一个有10个整型的数组；<br>e）一个有10个指针的数组，该指针是指向一个整型数；<br>f）一个指向有10个整型数数组的指针；<br>g）一个指向函数的指针，该函数有一个整型参数并返回一个整型数；<br>h）一个有10个指针的数组，该指针指向一个函数，该函数有一个整型参数并返回一个整型数</p>
+<p>答案：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">a)<span class="hljs-built_in">int</span> a<br>b)<span class="hljs-built_in">int</span> *a;<br>c)<span class="hljs-built_in">int</span> **a;<br>d)<span class="hljs-built_in">int</span> a[<span class="hljs-number">10</span>];<br>e)<span class="hljs-built_in">int</span> *a [<span class="hljs-number">10</span>];<br>f) <span class="hljs-built_in">int</span> a[<span class="hljs-number">10</span>], *p=a;<br>g)<span class="hljs-built_in">int</span> (*a)(<span class="hljs-built_in">int</span>)<br>h) <span class="hljs-built_in">int</span>( *a[<span class="hljs-number">10</span>])(<span class="hljs-built_in">int</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><h3 id="一个程序从开始运行到结束的完整过程（四个过程）"><a href="#一个程序从开始运行到结束的完整过程（四个过程）" class="headerlink" title="一个程序从开始运行到结束的完整过程（四个过程）"></a>一个程序从开始运行到结束的完整过程（四个过程）</h3><p>预处理（Pre-Processing）、编译（Compiling）、汇编（Assembling）、链接（Linking）</p>
+<h3 id="什么是堆，栈，内存泄漏和内存溢出？"><a href="#什么是堆，栈，内存泄漏和内存溢出？" class="headerlink" title="什么是堆，栈，内存泄漏和内存溢出？"></a>什么是堆，栈，内存泄漏和内存溢出？</h3><p>栈由系统操作，程序员不可以操作。</p>
+<p>所以内存泄漏是指堆内存的泄漏。堆内存是指程序从堆中分配的，大小任意的（内存块的大小可以在程序运行期决定），使用完后必须显式释放的内存。应用程序一般使用malloc，new等函数从堆中分配到一块内存，使用完后，程序必须负责相应的调用free或delete释放该内存块，否则，这块内存就不能被再次使用。</p>
+<p>内存溢出：你要求分配的内存超出了系统能给你的，系统不能满足需求，于是产生溢出。</p>
+<p>内存越界：向系统申请了一块内存，而在使用内存时，超出了申请的范围（常见的有使用特定大小数组时发生内存越界）</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>int (*s[10])(int) 表示的是什么啊？</p>
+<p>答案：int(<em>s[10])(int) 函数指针数组，每个指针指向一个int func(int param)的函数。</em>s[10]表明一个指针数组，数组长度为10，右边的（int），（）为声明函数，int表明函数参数为int型。前面的int表明函数返回值为int型</p>
+<h3 id="程序编写"><a href="#程序编写" class="headerlink" title="程序编写"></a>程序编写</h3><p>嵌入式系统中经常要用到无限循环，你怎么用C编写死循环。</p>
+<p>答案：while(1){}或者for(;;)</p>
+<p>写一个“标准”宏，这个宏输入两个参数并返回较小的一个。</p>
+<p>答案：.#defineMin(X, Y) ((X)&gt;(Y)?(Y):(X))  &#x2F;&#x2F;结尾没有‘；</p>
+<h3 id="问答查错"><a href="#问答查错" class="headerlink" title="问答查错"></a>问答查错</h3><p>7、请问以下代码有什么问题：</p>
+<p><code>int  main() &#123; chara; char *str=&amp;a; strcpy(str,”hello”); printf(str); return 0; &#125;</code></p>
+<p>答案：没有为str分配内存空间，将会发生异常问题出在将一个字符串复制进一个字符变量指针所指地址。虽然可以正确输出结果，但因为越界进行内在读写而导致程序崩溃。</p>
+<p>8、<code>char* s=”AAA”; printf(“%s”,s); s[0]=’B’; printf(“%s”,s);</code>有什么错？</p>
+<p>答案：”AAA”是字符串常量。s是指针，指向这个字符串常量，所以声明s的时候就有问题。 cosnt char*s&#x3D;”AAA”; 然后又因为是常量，所以对是s[0]的赋值操作是不合法的。</p>
+<p>交换两个变量的值，不使用第三个变量。即a&#x3D;3,b&#x3D;5,交换之后a&#x3D;5,b&#x3D;3;</p>
+<p>答案：有两种解法, 一种用算术算法, 一种用^(异或)<br>a &#x3D; a + b;<br>b &#x3D; a – b;<br>a &#x3D; a – b;<br>or<br>a &#x3D; a^b;&#x2F;&#x2F; 只能对int,char..<br>b &#x3D; a^b;<br>a &#x3D; a^b;<br>or<br>a^&#x3D; b ^&#x3D; a;</p>
+<p>已知一个数组table，用一个宏定义，求出数据的元素个数</p>
+<p>答案：#defineNTBL #define NTBL (sizeof(table)&#x2F;sizeof(table[0]))</p>
+<p>static全局变量与普通的全局变量有什么区别？static局部变量和普通局部变量有什么区别？static函数与普通函数有什么区别？</p>
+<p>答案：</p>
+<ol>
+<li>全局变量(外部变量)的说明之前再冠以static 就构成了静态的全局变量。全局变量本身就是静态存储方式，静态全局变量当然也是静态存储方式。这两者在存储方式上并无不同。这两者的区别虽在于非静态全局变量的作用域是整个源程序， 当一个源程序由多个源文件组成时，非静态的全局变量在各个源文件中都是有效的。而静态全局变量则限制了其作用域，即只在定义该变量的源文件内有效， 在同一源程序的其它源文件中不能使用它。由于静态全局变量的作用域局限于一个源文件内，只能为该源文件内的函数公用，因此可以避免在其它源文件中引起错误。</li>
+<li>从以上分析可以看出，把局部变量改变为静态变量后是改变了它的存储方式即改变了它的生存期。把全局变量改变为静态变量后是改变了它的作用域，限制了它的使用范围。</li>
+<li>static函数与普通函数作用域不同。仅在本文件。只在当前源文件中使用的函数应该说明为内部函数(static)，内部函数应该在当前源文件中说明和定义。对于可在当前源文件以外使用的函数，应该在一个头文件中说明，要使用这些函数的源文件要包含这个头文件 </li>
+<li>static全局变量与普通的全局变量有什么区别：static全局变量只初使化一次，防止在其他文件单元中被引用;</li>
+<li>static局部变量和普通局部变量有什么区别：static局部变量只被初始化一次，下一次依据上一次结果值；</li>
+<li>static函数与普通函数有什么区别：static函数在内存中只有一份，普通函数在每个被调用中维持一份拷贝</li>
+</ol>
+<p>程序的局部变量存在于（）中，全局变量存在于（）中，动态申请数据存在于（）中。</p>
+<p>答案：栈；静态区；堆</p>
+<p>队列和栈有什么区别？</p>
+<p>答案：队列先进先出，栈后进先出÷</p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><h1 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h1><h2 id="计算机组成原理"><a href="#计算机组成原理" class="headerlink" title="计算机组成原理"></a>计算机组成原理</h2><h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h2 id="计算机体系结构"><a href="#计算机体系结构" class="headerlink" title="计算机体系结构"></a>计算机体系结构</h2><h2 id="数据库（）"><a href="#数据库（）" class="headerlink" title="数据库（）"></a>数据库（）</h2><h2 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h2><h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><h2 id="硬件基础"><a href="#硬件基础" class="headerlink" title="硬件基础"></a>硬件基础</h2><h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><h2 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h2><h2 id="单片机"><a href="#单片机" class="headerlink" title="单片机"></a>单片机</h2><h3 id="一、MCU对比"><a href="#一、MCU对比" class="headerlink" title="一、MCU对比"></a>一、MCU对比</h3><p>问题一：STM32F1和F4的区别？</p>
+<ul>
+<li>内核不同：F1是Cortex-M3内核，F4是Cortex-M4内核；</li>
+<li>主频不同：F1主频72MHz，F4主频168MHz；</li>
+<li>浮点运算：F1无浮点运算单位，F4有；</li>
+<li>功能性能：F4外设比F1丰富且功能更强大，比如GPIO翻转速率、上下拉电阻配置、ADC精度等；</li>
+<li>内存大小：F1内部SRAM最大64K，F4有192K(112+64+16)。</li>
+</ul>
+<h3 id="二、STM32-启动过程"><a href="#二、STM32-启动过程" class="headerlink" title="二、STM32 启动过程"></a>二、STM32 启动过程</h3><p>问题一：介绍以下STM32启动过程？<br>以F1为例</p>
+<ol>
+<li>通过Boot引脚设定,寻找初始地址，映射MSP和PC地址</li>
+<li>初始化堆栈指针 MSP &#x3D; _initial_sp</li>
+<li>初始化程序计数器指针 PC &#x3D; Reset_Handler，第一条指令开始执行程序</li>
+<li>设置堆和栈的大小</li>
+<li>初始化中断向量表</li>
+<li>配置外部 SRAM 作为数据存储器（可选）</li>
+<li>配置系统时钟，通过调用 SystemInit 函数（可选）</li>
+<li>调用 C 库中的_main 函数初始化用户堆栈，最终调用 main 函数</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694781717927.png" srcset="/img/loading.gif" lazyload alt="初始化堆栈、MSP 和 PC后的内存情况"></p>
+<h3 id="三、GPIO"><a href="#三、GPIO" class="headerlink" title="三、GPIO"></a>三、GPIO</h3><p>问题一：介绍以下GPIO？<br>GPIO 8种工作模式（gpio_init.GPIO_Mode）：<br>（1） GPIO_Mode_AIN 模拟输入<br>（2） GPIO_Mode_IN_FLOATING 浮空输入<br>（3） GPIO_Mode_IPD 下拉输入<br>（4） GPIO_Mode_IPU 上拉输入<br>（5） GPIO_Mode_Out_OD 开漏输出<br>（6） GPIO_Mode_Out_PP 推挽输出<br>（7） GPIO_Mode_AF_OD 复用开漏输出<br>（8） GPIO_Mode_AF_PP 复用推挽输出</p>
+<p>APB2负责 AD，I&#x2F;O，高级TIM，串口1。<br>APB1负责 DA，USB，SPI，I2C，CAN，串口2345，普通TIM，PWR</p>
+<p>GPIO框图剖析：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694781899346.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="四、通信"><a href="#四、通信" class="headerlink" title="四、通信"></a>四、通信</h3><p>问题一：串行通信方式介绍？</p>
+<ul>
+<li>同步通信：I2C 半双工，SPI 全双工、UART全双工同步</li>
+<li>异步通信：RS485 半双工、RS232 全双工、UART全双工异步<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694782402164.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>问题二：数据同步方式</p>
+<ul>
+<li>同步通信双方共用同一时钟信号，在总线上保持统一的时序和周期完成信息传输。<br>优点：可以实现高速率、大容量的数据传输，以及点对多点传输。<br>缺点：要求发送时钟和接收<br>时钟保持严格同步，收发双方时钟允许的误差较小，同时硬件复杂。</li>
+<li>异步通信不需要时钟信号，而是在数据信号中加入开始位和停止位等一些同步信号，某些通信中还需要双方约定传输速率。<br>优点：没有时钟信号硬件简单，双方时钟可允许一定误差。<br>缺点：通信速率较低，只适用点对点传输。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694782452020.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<h4 id="串口"><a href="#串口" class="headerlink" title="串口"></a>串口</h4><p>串口通信中，常用的协议包括RS-232、RS-422 和 RS-485 等。</p>
+<p>问题一：串口协议简介</p>
+<ul>
+<li>起始位，由一个逻辑 0的数据位表示</li>
+<li>停止位，可以是 0.5、1、1.5 或 2 个逻辑 1 的数据位表示</li>
+<li>有效数据位，5、6、7 或 8 个位长。低位（LSB）在前，高位（MSB）在后。</li>
+<li>校验位，奇校验（数据和校验中1总数为奇数），偶校验，无校验<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694782688791.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>问题一：串口初始化配置？<br>串口设置的一般步骤可以总结为如下几个步骤：<br>（1）串口时钟使能，GPIO时钟使能<br>（2）串口复位<br>（3）GPIO端口模式设置<br>（4）串口参数初始化，主要包含：波特率设置（115200）、8个数据位、1个停止位、奇偶校验位、硬件数据流控制、收发模式。<br>（5）开启中断并且初始化NVIC（如果需要开启中断才需要这个步骤）<br>（6）使能串口<br>（7）编写中断处理函数</p>
+<p>问题二：USART主要特点？<br>（1）全双工操作（相互独立的接收数据和发送数据）；<br>（2）同步操作时，可主机时钟同步，也可从机时钟同步；<br>（3）独立的高精度波特率发生器，不占用定时&#x2F;计数器；<br>（4）支持5、6、7、8和9位数据位，1或2位停止位的串行数据桢结构；<br>（5）由硬件支持的奇偶校验位发生和检验；<br>（6）数据溢出检测；<br>（7）帧错误检测；<br>（8）包括错误起始位的检测噪声滤波器和数字低通滤波器；<br>（9）三个完全独立的中断，TX发送完成、TX发送数据寄存器空、RX接收完成；<br>（10）支持多机通信模式；<br>（11）支持倍速异步通信模式。</p>
+<h4 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h4><p>问题一：I2C简介</p>
+<ul>
+<li>高位（MSB）在前。</li>
+<li>由数据线 SDA 和时钟线 SCL 构成</li>
+<li>总线上每一个器件都有一个唯一的地址识别</li>
+<li>数据线 SDA 和时钟线 SCL 都是双向线路，都通过一个电流源或上拉电阻连接到正电压。</li>
+<li>起始信号，SCL 为高电平时，SDA 由高到低的跳变。是一种电平跳变时序信号。</li>
+<li>停止信号，SCL 为高电平时，SDA 由低到高的跳变。是一种电平跳变时序信号</li>
+<li>应答信号，发送器每发送一个字节，就在时钟脉冲 9 期间释放数据线，由接收器反馈一个应答信号。低电平为有效应答位（ACK 简称应答位），表示接收器成功地接收了该字节。<br>有效应答的要求是从机在第 9 个时钟脉冲之前的低电平期间将 SDA 线拉低</li>
+<li>数据有效性，数据在 SCL 的上升沿到来之前就需准备好。并在下降沿到来之前必须稳定。SCL高电平期间检测数据</li>
+<li>空闲状态，IIC 总线的 SDA 和 SCL 两条信号线同时处于高电平时，规定为总线的空闲状态。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694783117060.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>问题二：I2C配置主机模式端口该怎么配置？<br>软件模拟：</p>
+<ul>
+<li>GPIO 时钟</li>
+<li>SCL 推挽输出 SDA 开漏输出</li>
+<li>编写信号函数（起始信号，停止信号，应答信号）</li>
+<li>编写 IIC 的读写函数</li>
+</ul>
+<p>问题三：I2C仲裁机制？<br>遵循“低电平优先”的原则，即谁先发送低电平谁就会掌握对总线的控制权。</p>
+<p>问题三：I2C基本读写过程</p>
+<ul>
+<li>从机地址+读&#x2F;写 &#x3D; 8位<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694784497420.png" srcset="/img/loading.gif" lazyload alt="enter description here"><br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694784501983.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<h4 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h4><p>问题一：SPI需要几根线？</p>
+<ul>
+<li>MISO（Master In &#x2F; Slave Out）主设备数据输入，从设备数据输出。</li>
+<li>MOSI（Master Out &#x2F; Slave In）主设备数据输出，从设备数据输入。</li>
+<li>SCLK（Serial Clock）时钟信号，由主设备产生。</li>
+<li>CS（Chip Select）从设备片选信号，由主设备产生。。</li>
+</ul>
+<p>问题二：SPI 的传输方式：</p>
+<ul>
+<li>全双工通信，在任何时刻，主机与从机之间都可以同时进行数据的发送和接收。</li>
+<li>单工通信，就是在同一时刻，只有一个传输的方向，发送或者是接收。</li>
+<li>半双工通信，就是在同一时刻，只能为一个方向传输数据。</li>
+</ul>
+<p>问题三：SPI通信的四种模式？<br>各个工作模式的不同在于 SCLK 不同, 具体工作由 CPOL，CPHA 决定。</p>
+<ul>
+<li>CPOL: (Clock Polarity)，时钟极性：表示当SCLK空闲idle的时候，其电平的值是低电平0还是高电平1</li>
+<li>CPHA:(Clock Phase)，时钟相位：对应着数据采样是在第几个边沿（edge），是第一个边沿还是第二个边沿，0对应着第一个边沿，1对应着第二个边沿。</li>
+</ul>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694785179612.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>问题三： SPI 配置步骤</p>
+<ol>
+<li>时钟使能</li>
+<li>SPI 参数初始化(工作模式、数据时钟极性、时钟相位等)。</li>
+<li>使能 SPI 时钟和配置相关引脚的复用功能。</li>
+<li>使能 SPI</li>
+<li>启动传输（数据高低位优先可选，一般高位在前）</li>
+</ol>
+<p>问题三：该如何确定使用哪种模式？<br>看从设备的数据手册，如W25Q32JV</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vhdl"><span class="hljs-number">5.1</span> Standard SPI Instructions<br>...<br>SPI <span class="hljs-keyword">bus</span> operation Mode <span class="hljs-number">0</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) <span class="hljs-keyword">and</span> <span class="hljs-number">3</span> (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) are supported. ...<span class="hljs-keyword">For</span> Mode <span class="hljs-number">0</span>, the CLK <span class="hljs-keyword">signal</span> <span class="hljs-keyword">is</span> normally low <span class="hljs-keyword">on</span> the falling <span class="hljs-keyword">and</span> rising edges <span class="hljs-keyword">of</span> /CS. <span class="hljs-keyword">For</span> Mode <span class="hljs-number">3</span>, the CLK <span class="hljs-keyword">signal</span> <span class="hljs-keyword">is</span> normally high <span class="hljs-keyword">on</span> the falling <span class="hljs-keyword">and</span> rising edges <span class="hljs-keyword">of</span> /CS.<br></code></pre></td></tr></table></figure>
+
+<h4 id="232"><a href="#232" class="headerlink" title="232"></a>232</h4><ul>
+<li>全双工方式工作，需要地线、发送线和接收线三条线。</li>
+<li>RS232只能实现点对点的通信方式。</li>
+<li>RS232仅仅规定了接受端和发送端的电气特性。它没有规定或推荐任何数据协议。</li>
+<li>接口信号电平高，容易损坏接口电路的芯片。逻辑“1”为-3 ~ -15V;逻辑为“0”：+3 ~ +15V，噪声裕量为2V。</li>
+<li>传输速率低。最高波特率19200bps。</li>
+<li>容易受到共模干扰，因此抗噪性较弱。</li>
+<li>传输距离有限。只能达到大约15米。</li>
+</ul>
+<h4 id="485"><a href="#485" class="headerlink" title="485"></a>485</h4><p>问题一：485介绍</p>
+<ul>
+<li>2 线，半双工，多点通信的类型。</li>
+<li>RS485 仅仅规定了接受端和发送端的电气特性。它没有规定或推荐任何数据协议。</li>
+<li>用缆线两端的电压差值来表示传递信号。</li>
+<li>采用平衡驱动器和差分接收器的组合，抗干扰能力强。</li>
+<li>共模电压范围为-7～+12V</li>
+<li>一般最大支持32个多点拓扑连接，用特制的 485 芯片，可以达到 128 个或者 256 个节点，最大的可以支持到 400 个节点。</li>
+<li>传输速率高。10 米时，RS485 的数据最高传输速率可达 35Mbps，在 1200m 时，传输速度可达 100Kbps。</li>
+<li>最小差分电压容限：200mV（最末端），最小1.5V差分电压输出</li>
+</ul>
+<p>RS485 推荐使用在点对点网络中，比如：线型，总线型网络等，而不能是星型，环型网络。</p>
+<p>理想情况下 RS485 需要 2 个终端匹配电阻，其阻值要求等于传输电缆的特性阻抗（一般为 120Ω）。没有特性阻抗的话，当所有的设备都静止或者没有能量的时候就会产生噪声，而且线移需要双端的电压差。没有终接电阻的话，会使得较快速的发送端产生多个数据信号的边缘，导致数据传输出错。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694788916900.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>问题一：485与232比较<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694789648760.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h4 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h4><p>问题一：CAN总结介绍</p>
+<ul>
+<li>半双工的</li>
+<li>差分信号</li>
+<li>报文的优先级，判断仲裁段 ID 信息，线与逻辑，显性电平（0）优先<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694790042903.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+<li>传输距离远（最远10Km），传输速率快（最高1MHz bps）；</li>
+<li>多主结构,单条总线最多可接110个节点，并可方便的扩充节点数；  </li>
+<li>有硬件CRC校验，受干扰概率小，数据出错率极低；  </li>
+<li>自动检测报文发送成功与否，可硬件自动重发，传输可靠性很高；  </li>
+<li>硬件报文滤波功能，只接收必要信息，减轻cpu负担，简化软件编制；</li>
+</ul>
+<p>问题一：CAN 协议5 种类型<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694790898846.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>问题一：数据帧</p>
+<ul>
+<li>RTR 位 (Remote Transmission Request Bit)，远程传输请求位，为显性电平时表示数据帧，隐性电平时表示遥控帧。</li>
+<li>IDE 位 (Identifier ExtensionBit)，标识符扩展位，它是用于区分标准格式与扩展格式，显性电平时表示标准格式，隐性电平时表示扩展格式。</li>
+<li>SRR 位 (Substitute Remote Request Bit)，只存在于扩展格式，它用于替代标准格式中的 RTR位。</li>
+<li>控制段。 r1 和 r0 为保留位，默认为显性。DLC 段 (Data Length Code)，译为数据长度码，它由 4 个数据位组成，用于表示本报文中的数据段含有多少个字节， DLC 段表示的数字为 0~8。</li>
+<li>数据段为数据帧的核心内容，它是节点要发送的原始信息，由 0~8 个字节组成，MSB 先行。</li>
+<li>CRC 段，CAN 的报文包含了一段 15 位的 CRC 校验码。CRC 部分的计算一般由 CAN 控制器硬件完成，出错时的处理则由软件控制最大重发数。在 CRC 校验码之后，有一个 CRC 界定符，它为隐性位，主要作用是把 CRC 校验码与后面的 ACK段间隔起来。</li>
+<li>ACK 段，ACK 段包括一个 ACK 槽位，和 ACK 界定符位。类似 I2C 总线，在 ACK 槽位中，发送节点发送的是隐性位，而接收节点则在这一位中发送显性位以示应答。在 ACK 槽和帧结束之间由 ACK 界定符间隔开。</li>
+<li>帧结束，EOF 段 (End Of Frame)，译为帧结束，帧结束段由发送节点发送的 7 个隐性位表示结束。<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694790204323.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>问题二：CAN初始化配置步骤?</p>
+<ol>
+<li>配置相关引脚的复用功能，使能CAN时钟</li>
+<li>设置CAN工作模式及波特率等</li>
+<li>设置滤波器</li>
+</ol>
+<p>问题三：CAN发送数据格式?</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs abnf">CanTxMsg TxMessage<span class="hljs-comment">;</span><br>TxMessage.StdId<span class="hljs-operator">=</span><span class="hljs-number">0</span>x12<span class="hljs-comment">; // 标准标识符</span><br>TxMessage.ExtId<span class="hljs-operator">=</span><span class="hljs-number">0</span>x12<span class="hljs-comment">; // 设置扩展标示符</span><br>TxMessage.IDE<span class="hljs-operator">=</span>CAN_Id_Standard<span class="hljs-comment">; // 标准帧</span><br>TxMessage.RTR<span class="hljs-operator">=</span>CAN_RTR_Data<span class="hljs-comment">; // 数据帧</span><br>TxMessage.DLC<span class="hljs-operator">=</span>len<span class="hljs-comment">; // 要发送的数据长度 发送8个字节</span><br>for(i<span class="hljs-operator">=</span><span class="hljs-number">0</span><span class="hljs-comment">;i&lt;len;i++)</span><br>  TxMessage.Data[i]<span class="hljs-operator">=</span>msg[i]<span class="hljs-comment">; //数据</span><br></code></pre></td></tr></table></figure>
+<p>问题一：CAN总线与RS485的比较</p>
+<ol>
+<li>速度与距离：CAN与RS485以1Mbit&#x2F;S的高速率传输的距离都不超过100M，高速上的距离差不多。但在低速时CAN以5Kbit&#x2F;S时，距离可达10KM，而485再低的速率也只能到1219米左右（都无中继）。</li>
+<li>总线利用率：RS485是单主从结构，就是一个总线上只能有一台主机，通讯都由它发起的，它没有下命令，下面的节点不能发送，而且要发完即答，受到答复后，主机才向下一个节点询问，这样是为了防止多个节点向总线发送数据，而造成数据错乱。而CAN－bus是多主从结构，每个节点都有CAN控制器，多个节点发送时，以发送的ID号自动进行仲裁，这样就可以实现总线数据不错乱，而且一个节点发完，另一个节点可以探测到总线空闲，而马上发送，这样省去了主机的询问，提高了总线利用率，增强了快速性。所以在汽车等实性要求高的系统，都是用CAN总线，或者其他类似的总线。</li>
+<li>错误检测机制，RS485只规定了物理层，而没有数据链路层，所以它对错误是无法识别的，除非一些短路等物理错误。这样容易造成一个节点破坏了，拼命向总线发数据（一直发1），这样造成整个总线瘫痪。所以RS485一旦坏一个节点，这个总线网络都挂。而CAN总线有CAN控制器，可以对总线任何错误进行检测，如果自身错误超过128个，就自动闭锁。保护总线。如果检测到其他节点错误或者自身错误，都会向总线发送错误帧，来提示其他节点，这个数据是错误的。大家小心。这样CAN总线一旦有一个节点CPU程序跑飞了，它的控制器自动闭锁。保护总线。所以在安全性要求高的网路，CAN是很强的。</li>
+<li>CAN具有完善的通信协议，可由CAN控制器芯片及其接口芯片来实现，从而大大降低了系统的开发难度，缩短了开发周期，这些是只仅仅有电气协议的RS-485所无法比拟的。</li>
+</ol>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694788781252.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="五、DMA"><a href="#五、DMA" class="headerlink" title="五、DMA"></a>五、DMA</h3><p>问题一：DMA介绍？<br>直接存储器存取(DMA) 用来提供在外设和存储器之间或者存储器和存储器之间的高速数据传输。无须CPU干预，数据可以通过DMA快速地移动，这就节省了CPU的资源来做其他操作。<br>问题一：DMA传输模式有几种？<br>DMA_Mode_Circular 循环模式<br>DMA_Mode_Normal 正常缓存模式<br>应用场景：GPS、蓝牙，都是用的循环采集，DMA_Mode_Circular模式。<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h3 id="六、中断"><a href="#六、中断" class="headerlink" title="六、中断"></a>六、中断</h3><p>问题：什么时中断，中断处理方式？<br>中断是指在计算机运行期间,系統內發生非尋常的或急需處理的事件，使得CPU暂时中断当前正在執行的程序而转去執行相应的事件处理程序。待处理完毕后又返回原來被中断处继续执行得过程</p>
+<p><strong>步驟:</strong></p>
+<ol>
+<li>暫停目前process的進行，並將執行狀況儲存起來</li>
+<li>根據interrupt id 找尋 interrupt vector，取得interrupt service routine（中断处理程序）的起始地址</li>
+<li>執行ISR</li>
+<li>執行完ISR後，回到中斷前的執行進度<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694831669521.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ol>
+<p>中断处理程序注意事项：</p>
+<ul>
+<li>ISR不能有返回值；</li>
+<li>ISR不能传递參數；</li>
+<li>ISR應該是短而高效的，在ISR中做浮点运算是不明智的；</li>
+<li>ISR中不應該有重入和性能上的問題，因此不應該使用printf()函數。浮点一般都是不可重入的</li>
+</ul>
+<p>问题一：描述一下中断的处理流程？<br>（1）初始化中断，设置触发方式是上升沿&#x2F;下降沿&#x2F;双沿触发。<br>（2）触发中断，进入中断服务函数<br>问题二：STM32的中断控制器支持多少个外部中断？<br>STM32的中断控制器支持19个外部中断&#x2F;事件请求：<br>从图上来看，GPIO 的管脚 GPIOx.0~GPIOx.15(x&#x3D;A，B，C，D，E，F，G)分别对应中断线 0 ~ 15。<br>另外四个EXTI线的连接方式如下：<br>● EXTI线16连接到PVD输出<br>● EXTI线17连接到RTC闹钟事件<br>● EXTI线18连接到USB唤醒事件<br>● EXTI线19连接到以太网唤醒事件(只适用于互联型产品)<br>中断服务函数列表：<br>IO口外部中断在中断向量表中只分配了7个中断向量，也就是只能使用7个中断服务函数。<br>EXTI0_IRQHandler<br>EXTI1_IRQHandler<br>EXTI2_IRQHandler<br>EXTI3_IRQHandler<br>EXTI4_IRQHandler<br>EXTI9_5_IRQHandler<br>EXTI15_10_IRQHandler<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h3 id="七、时钟系统"><a href="#七、时钟系统" class="headerlink" title="七、时钟系统"></a>七、时钟系统</h3><p>问题一：STM32有几个时钟源？<br>STM32 有5个时钟源:HSI、HSE、LSI、LSE、PLL。<br>①、HSI是高速内部时钟，RC振荡器，频率为8MHz，精度不高。<br>②、HSE是高速外部时钟，可接石英&#x2F;陶瓷谐振器，或者接外部时钟源，频率范围为4MHz<del>16MHz。<br>③、LSI是低速内部时钟，RC振荡器，频率为40kHz，提供低功耗时钟。　<br>④、LSE是低速外部时钟，接频率为32.768kHz的石英晶体。<br>⑤、PLL为锁相环倍频输出，其时钟输入源可选择为HSI&#x2F;2、HSE或者HSE&#x2F;2。倍频可选择为2</del>16倍，但是其输出频率最大不得超过72MHz。<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h3 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h3><p>问题一：简述STM32的ADC系统的功能特性？<br>（1）12bit分辨率<br>（2）自动校准<br>（3）可编程数据对齐（转换结果支持左对齐或右对齐方式存储在16位数据寄存器）<br>（4）单次和连续转换模式</p>
+<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h3><p>问题：<br>问题一：已知STM32的系统时钟为72MHz，如何设置相关寄存器，实现20ms定时？<br>解答：<br>参看：STM32开发 – Systick定时器<br>通过SysTick_Config(SystemCoreClock &#x2F; OS_TICKS_PER_SEC))&#x2F;&#x2F;1ms定时器</p>
+<p>其中：</p>
+<p>uint32_t SystemCoreClock         &#x3D; SYSCLK_FREQ_72MHz;        &#x2F;<em>!&lt; System Clock Frequency (Core Clock) <em>&#x2F;<br>#define SYSCLK_FREQ_72MHz  72000000<br>#define OS_TICKS_PER_SEC       1000    &#x2F;</em> Set the number of ticks in one second<br>1<br>2<br>3<br>如果需要20ms则，可以通一设置一个全局变量，然后定初值得为20，这样，每个systick中断一次，这个全局变量减1，减到0,即systick中断20次，时间为：1ms</em>20&#x3D;20ms。从而实现20ms的定时。<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h3 id="HardFault-Handler处理"><a href="#HardFault-Handler处理" class="headerlink" title="HardFault_Handler处理"></a>HardFault_Handler处理</h3><p>问题一：造成原因？<br>(1)数组越界操作；<br>(2)内存溢出，访问越界；<br>(3)堆栈溢出，程序跑飞；<br>(4)中断处理错误；<br>问题二：处理方式？<br>（1）在startup_stm32f10x_cl.s里找到HardFault_Handler的地址重映射，并重新编写，让其跳转到HardFaultHandle函数。<br>（2）打印查看R0、R1、R2、R3、R12、LR、PC、PSR寄存器。<br>（3） 查看Fault状态寄存器组（SCB-&gt;CFSR和SCB-&gt;HFSR）<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h3 id="低功耗模式"><a href="#低功耗模式" class="headerlink" title="低功耗模式"></a>低功耗模式</h3><p>问题一：低功耗模式有几种？唤醒方式是什么？<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-%E7%9F%A5%E8%AF%86%E7%82%B9%E5%A4%8D%E4%B9%A0/1694784826538.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="八、协议"><a href="#八、协议" class="headerlink" title="八、协议"></a>八、协议</h3><h4 id="Modbus"><a href="#Modbus" class="headerlink" title="Modbus"></a>Modbus</h4><h4 id="FreeRTOS"><a href="#FreeRTOS" class="headerlink" title="FreeRTOS"></a>FreeRTOS</h4><h4 id="uCOSII"><a href="#uCOSII" class="headerlink" title="uCOSII"></a>uCOSII</h4><p>UCOSII任务调度<br>问题：<br>问题一：RTOS的任务是怎么写的？如何切出这个任务？<br>解答：<br>一个任务，也称作一个线程。<br>UCOS有一个任务调度机制，根据任务的优先级进行调度。<br>一个是硬件中断， 那么系统会将当前任务有关变量入栈，然后执行中断服务程序，执行完成后出栈返回.<br>另一个是任务之间的切换，使用的方法就是任务调度，每一个任务有自己的栈，顺度也是一样的入栈，然后执行另一个程序，然后出线返回。</p>
+<p>并非是每一任务按优先级顺序轮流执行的，而是高优先级的任务独占运行，除非其主动放弃执行，否则低优先级任务不能抢占，同时高优先级可以把放出去给低优先级任务使用的CPU占用权抢回来。所以ucos的任务间要注意插入等待延时，以便ucos切出去让低优先级任务执行。</p>
+<p>十二、UCOSII中任务间的通信<br>问题：<br>问题一：UCOSII中任务间的通信方式有哪几种？<br>解答：<br>在UCOSII中，是使用信号量、邮箱（消息邮箱）和消息队列这些被称作事件的中间环节来实现任务间的通信的，还有全局变量。<br>信号量：<br>参看：ucosII 信号量使用总结(举例讲解)<br>信号量用于：<br>1.控制共享资源的使用权（满足互斥条件）<br>2.标志某时间的发生<br>3.使2个任务的行为同步</p>
+<p>应用实例：互斥信号量<br>作为互斥条件，信号量初始化为1。<br>实现目标：调用串口发送命令，必须等待返回“OK”字符过后，才能发送下一条命令。每个任务都有可能使用到此发送函数，不能出现冲突！</p>
+<p>邮箱（消息邮箱）：</p>
+<p>消息队列：<br>概念：<br>（1）消息队列实际上就是邮箱阵列。<br>（2）任务和中断都可以将一则消息放入队列中，任务可以从消息队列中获取消息。<br>（3）先进入队列的消息先传给任务(FIFO)。<br>（4）每个消息队列有一张等待消息任务的等待列表，如果消息列中没有消息，则等待消息的任务就被挂起，直到消息到来。</p>
+<p>应用场景：<br>串口接收程序中的接收缓冲区。<br>储存外部事件。<br>————————————————<br>版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/116021595">https://blog.csdn.net/qq_29350001/article/details/116021595</a></p>
+<h2 id="FPGA"><a href="#FPGA" class="headerlink" title="FPGA"></a>FPGA</h2><h2 id="接口协议"><a href="#接口协议" class="headerlink" title="接口协议"></a>接口协议</h2><h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h2 id="bootloader"><a href="#bootloader" class="headerlink" title="bootloader"></a>bootloader</h2><h2 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h2><h2 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h2><h2 id="文件系统一致"><a href="#文件系统一致" class="headerlink" title="文件系统一致"></a>文件系统一致</h2><h2 id="系统移植"><a href="#系统移植" class="headerlink" title="系统移植"></a>系统移植</h2><h2 id="应用编程"><a href="#应用编程" class="headerlink" title="应用编程"></a>应用编程</h2><h2 id="项目"><a href="#项目" class="headerlink" title="项目"></a>项目</h2><h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h2 id="图形学"><a href="#图形学" class="headerlink" title="图形学"></a>图形学</h2><h2 id="虚拟化"><a href="#虚拟化" class="headerlink" title="虚拟化"></a>虚拟化</h2><h2 id="高性能计算HPC"><a href="#高性能计算HPC" class="headerlink" title="高性能计算HPC"></a>高性能计算HPC</h2><span id="more"></span>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/00-%E9%A1%B9%E7%9B%AE/" class="category-chain-item">00-项目</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>嵌入式面试-知识点复习</div>
+      <div>http://lonlypan.com/2022/05/08/嵌入式面试-知识点复习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年5月8日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/08/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95-C%E8%AF%AD%E8%A8%80%E5%86%8D%E5%AD%A6%E4%B9%A0/" title="嵌入式面试-C语言再学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">嵌入式面试-C语言再学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/03/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-Github/" title="Hexo博客搭建-Github">
+                        <span class="hidden-mobile">Hexo博客搭建-Github</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,836 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="理论计算Bresenhan算法将坐标系分割成棋盘形状，每个像素占有一个棋格，当我们进行采样时（直线斜率小于1），如下图所示，假设给定绘图的起始点为（10,11），那么绘制下一个采样点的坐标必然是从（11,11）和（11,12）中选择一个。如果把这种情况一般化，对于绘制直线的起始点是（Xk,Yk），那么其下一个采样点必然是（Xk+1,Yk）或者(Xk+1,Yk+1)中的一个。  那么该选择这两点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Marlin固件中Bresenham算法与实现">
+<meta property="og:url" content="http://lonlypan.com/2020/01/08/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="理论计算Bresenhan算法将坐标系分割成棋盘形状，每个像素占有一个棋格，当我们进行采样时（直线斜率小于1），如下图所示，假设给定绘图的起始点为（10,11），那么绘制下一个采样点的坐标必然是从（11,11）和（11,12）中选择一个。如果把这种情况一般化，对于绘制直线的起始点是（Xk,Yk），那么其下一个采样点必然是（Xk+1,Yk）或者(Xk+1,Yk+1)中的一个。  那么该选择这两点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png">
+<meta property="article:published_time" content="2020-01-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-01-07T16:00:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin_使用自定义Serial1_2_3额外串口/Marlin-Logo-GitHub.png">
+  
+  
+  <title>Marlin固件中Bresenham算法与实现 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Marlin固件中Bresenham算法与实现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-01-08 00:00" pubdate>
+          2020年1月8日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Marlin固件中Bresenham算法与实现</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年1月8日 凌晨
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <span id="more"></span>
+
+<h2 id="理论计算"><a href="#理论计算" class="headerlink" title="理论计算"></a>理论计算</h2><p>Bresenhan算法将坐标系分割成棋盘形状，每个像素占有一个棋格，当我们进行采样时（直线斜率小于1），如下图所示，假设给定绘图的起始点为（10,11），那么绘制下一个采样点的坐标必然是从（11,11）和（11,12）中选择一个。如果把这种情况一般化，对于绘制直线的起始点是（X<del>k</del>,Y<del>k</del>），那么其下一个采样点必然是（X<del>k+1</del>,Y<del>k</del>）或者(X<del>k+1</del>,Y<del>k+1</del>)中的一个。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/1.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>那么该选择这两点中的哪一个点呢？选择更接近理论线路径的那个点。</p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/2.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/3.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p>想要得到<strong>3.16表达式</strong>，需要将y<del>k</del>&#x3D;m*x<del>k</del>+b(一般直线方程)带入<strong>式3.14</strong>中，而且应该注意△y和△x都是常量，△y为给定的起始点和终点的纵坐标差的绝对值，△x为给定的起始点和终点的横坐标的差的绝对值。</p>
+<blockquote>
+<p>注意：文中所说的p<del>0</del>是已经根据运动起点计算出的p值，它决定的是实际第一步的运动方向。许多文章也叫p<del>1</del>。</p>
+</blockquote>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/4.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/Marlin%E5%9B%BA%E4%BB%B6%E4%B8%ADBresenham%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0/5.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<blockquote>
+<p>这里的△x实际是运动长度最长的那个轴总长度作为横坐标（上述默认X轴移动最长），△y是我们当前要移动的轴总长度，p也是依赖于当前轴的（上面默认p0 &#x3D; py,实际还有px）</p>
+</blockquote>
+<p>上图中是首先计算出p<del>0</del>,再判断p<del>0</del>决定第一步该怎么走，再对p进行计算，再判断，如此循环。注意这个判断和计算顺序。</p>
+<hr>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>实际代码如下：</p>
+<ul>
+<li>我们不知道那个是最长轴，则p<del>0</del>是随着轴变化的，每个轴都需要单独计算</li>
+<li>默认 xEnd &gt; x0,yEnd &gt; y0</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-type">void</span> <span class="hljs-title function_">lineBresenham</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> xEnd,<span class="hljs-type">int</span> yEnd)</span><br>&#123;<br><br>	<span class="hljs-type">int</span> dx=xEnd-x0,dy=yEnd-y0;<br>    <span class="hljs-type">int</span> dm = max(dx,dy)   <span class="hljs-comment">// 取最长轴</span><br>	<span class="hljs-type">int</span> px=<span class="hljs-number">2</span>*dx-dm;   <span class="hljs-comment">// p0x</span><br>    <span class="hljs-type">int</span> py=<span class="hljs-number">2</span>*dy-dm;   <span class="hljs-comment">// p0y</span><br>	<span class="hljs-type">int</span> counter = <span class="hljs-number">0</span>;  <span class="hljs-comment">//  计算已经运动的步数，和最长轴对比看是否到达终点</span><br>    <br>	SetPixel(x,y);  <span class="hljs-comment">// 画初始点</span><br>	<span class="hljs-keyword">while</span> (counter&lt;dm)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(px&gt;<span class="hljs-number">0</span>)&#123;   <span class="hljs-comment">// 这里如果我们假设x轴最长，则实际px始终大于0，则px就失去了意义</span><br>			x++;<br>			px+=<span class="hljs-number">2</span>*dx<span class="hljs-number">-2</span>*dm;<br>		&#125;<br>        <span class="hljs-keyword">else</span><br>          px+=<span class="hljs-number">2</span>*dx;	<br>          <br>        <span class="hljs-keyword">if</span>(py&gt;<span class="hljs-number">0</span>)&#123;<br>			y++;<br>			p+=<span class="hljs-number">2</span>*dy<span class="hljs-number">-2</span>*dm;<br>		&#125;<br>        <span class="hljs-keyword">else</span><br>          py+=<span class="hljs-number">2</span>*dy;<br>          <br>        counter ++;<br>		SetPixel(x,y);  <span class="hljs-comment">// 画点</span><br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>不知道你有没有发现无论p是正负，都需要计算 p<del>k+1</del> &#x3D; p<del>k</del> +Δy，只有在p<del>k</del> &gt;0时，才再减去Δx。</p>
+<p>但是再程序上你没法将它提取出来，这就很尴尬。而且若是提取出来只能放在 if 语句之前，那么问题来了，咋搞？</p>
+<p>仔细分析你会发现问题出来p<del>0</del>上，因为我们在设置p<del>0</del>变量时就已经根据初始位置进行了一次预计算。如果我们这里将p<del>0</del>在往前推一次，你会发现一个很神奇的现象</p>
+<ul>
+<li><strong>p<del>-1</del> &#x3D; dm</strong>，它不依赖当前轴，即所有轴的p<del>-1</del>相同</li>
+</ul>
+<p>然后将p<del>0</del>的计算并入到while循环中，此时再将上述程序优化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-type">void</span> <span class="hljs-title function_">lineBresenham</span><span class="hljs-params">(<span class="hljs-type">int</span> x,<span class="hljs-type">int</span> y,<span class="hljs-type">int</span> xEnd,<span class="hljs-type">int</span> yEnd)</span><br>&#123;<br><br>	<span class="hljs-type">int</span> dx=xEnd-x0,dy=yEnd-y0;<br>    <span class="hljs-type">int</span> dm = max(dx,dy)   <span class="hljs-comment">// 取最长轴</span><br>	<span class="hljs-type">int</span> px = py =-dm<br>	<span class="hljs-type">int</span> counter = <span class="hljs-number">0</span>;  <span class="hljs-comment">//  计算已经运动的步数，和最长轴对比看是否到达终点</span><br>    <br>	SetPixel(x,y);  <span class="hljs-comment">// 画初始点</span><br>	<span class="hljs-keyword">while</span> (counter&lt;dm)<br>	&#123;<br>        px+ = <span class="hljs-number">2</span>*dx  <span class="hljs-comment">// 在这里计算p0</span><br>		<span class="hljs-keyword">if</span>(px&gt;<span class="hljs-number">0</span>)&#123;   <span class="hljs-comment">// 这里如果我们假设x轴最长，则实际px始终大于0，则px就失去了意义</span><br>			x++;<br>			px- = <span class="hljs-number">2</span>*dm;<br>		&#125;<br>        <br>        py+ = <span class="hljs-number">2</span>*dy<br>		<span class="hljs-keyword">if</span>(py&gt;<span class="hljs-number">0</span>)&#123;<br>			y++;<br>			py- = <span class="hljs-number">2</span>*dm;<br>		&#125;<br>      <br>        counter ++;<br>		SetPixel(x,y);  <span class="hljs-comment">// 画点</span><br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>你会发现效果一样，只是更改了p<del>0</del>的计算位置，我们就可以将程序优化一部分。</p>
+<p>再进一步变换一下想法，为了减少计算量，我们将所有的公式左右两边都除以2。则</p>
+<ul>
+<li>1&#x2F;2p<del>0</del> &#x3D;Δy-1&#x2F;2Δx</li>
+</ul>
+<p>令p<del>0</del> &#x3D; 1&#x2F;2p<del>0</del>，并不影响正负值判断。则：</p>
+<ul>
+<li><p>p<del>-1</del> &#x3D;1&#x2F;2Δx </p>
+</li>
+<li><p>p<del>k</del> &lt;0：p<del>k+1</del> &#x3D; p<del>k</del> +Δy</p>
+</li>
+<li><p>p<del>k</del> &gt;0：p<del>k+1</del> &#x3D; p<del>k</del> +Δy - Δx</p>
+</li>
+</ul>
+<p>到这里其实就和Marlin的程序基本是一致的了。</p>
+<p>下面是Marlin的源程序，简化了一些并加了注释</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs sqf">void Stepper::isr() &#123;<br>   <br>   <span class="hljs-comment">// p-1 =1/2Δx </span><br>   <span class="hljs-comment">// step_event_count = dm 最长轴步数</span><br>    counter_X = counter_Y = counter_Z = counter_E = -(current_block-&gt;step_event_count &gt;&gt; <span class="hljs-number">1</span>);<br>    step_events_completed = <span class="hljs-number">0</span>;  <span class="hljs-comment">//计算已经运动的步数，和最长轴对比看是否到达终点</span><br>    bool all_steps_done = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 到达终点标志</span><br>  <br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> _COUNTER(AXIS) counter_## AXIS  <span class="hljs-comment">// 每轴 pk 宏</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> _APPLY_STEP(AXIS) AXIS ##_APPLY_STEP  <span class="hljs-comment">// 驱动每轴step引脚，发出一个脉冲走一步</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> _INVERT_STEP_PIN(AXIS) INVERT_## AXIS ##_STEP_PIN  <span class="hljs-comment">// 脉冲方向，用户设定</span></span><br>    <br>    <span class="hljs-comment">// 开始脉冲</span><br>    <span class="hljs-comment">// steps[]是每轴的 dx/y/z</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> PULSE_START(AXIS) \</span><br><span class="hljs-meta">      _COUNTER(AXIS) += current_block-&gt;steps[_AXIS(AXIS)]; \   <span class="hljs-comment">// pk+1 = pk + dx</span></span><br>      <span class="hljs-keyword">if</span> (<span class="hljs-variable">_COUNTER</span>(AXIS) &gt; <span class="hljs-number">0</span>) &#123; <span class="hljs-variable">_APPLY_STEP</span>(AXIS)(!<span class="hljs-variable">_INVERT_STEP_PIN</span>(AXIS),<span class="hljs-number">0</span>); &#125;<br><br>    <span class="hljs-comment">// 停止脉冲，重置Bresenham计数器，更新位置</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> PULSE_STOP(AXIS) \</span><br><span class="hljs-meta">      if (_COUNTER(AXIS) &gt; 0) &#123; \</span><br><span class="hljs-meta">        _COUNTER(AXIS) -= current_block-&gt;step_event_count; \  <span class="hljs-comment">// pk+1- = pk+1 - 2*dm</span></span><br>        <span class="hljs-variable">_APPLY_STEP</span>(AXIS)(<span class="hljs-variable">_INVERT_STEP_PIN</span>(AXIS),<span class="hljs-number">0</span>); \    <span class="hljs-comment">// 停止脉冲</span><br>      &#125;<br>     <br>     <br>     PULSE_START(X);  <span class="hljs-comment">// 开始驱动</span><br>     PULSE_START(Y);<br>     PULSE_START(Z);<br>     PULSE_START(E);<br>     <br>     DELAY_NOPS(EXTRA_CYCLES_XYZE);  <span class="hljs-comment">// 脉冲延时，一个脉短时间限制</span><br>     <br>     PULSE_STOP(X);<br>     ...<br>      <br>      <span class="hljs-keyword">if</span> (++step_events_completed &gt;= current_block-&gt;step_event_count) &#123;<br>            all_steps_done = <span class="hljs-literal">true</span>;<br>             <span class="hljs-built_in">break</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hyman_c/article/details/53432852">画线算法-Bresenham算法</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_679933490102vv8z.html">3D打印机：FPGA+Nios_ii移植Marlin固件二：Marlin固件的详细分析</a></li>
+<li><a target="_blank" rel="noopener" href="http://members.chello.at/easyfilter/bresenham.html">The Beauty of Bresenham’s Algorithm</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html">The Bresenham Line-Drawing Algorithm</a></li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Marlin固件中Bresenham算法与实现</div>
+      <div>http://lonlypan.com/2020/01/08/Marlin固件中Bresenham算法与实现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年1月8日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/12/%E7%AE%A1%E9%81%93%E7%9A%84%E6%95%85%E4%BA%8B/" title="管道的故事">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">管道的故事</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/01/%E6%8A%8A%E6%97%B6%E9%97%B4%E5%BD%93%E4%BD%9C%E6%9C%8B%E5%8F%8B/" title="把时间当作朋友">
+                        <span class="hidden-mobile">把时间当作朋友</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="芯片商城立创商城艾矽易e络盟贸泽电子得捷电子猎芯网华秋商城云汉芯城亿配芯城世强硬创 学习论坛21ic阿莫电子OpenedvRISC-V MCU中文社区 触控IC_水位检测IC-VK36W1D系列及资料淘宝店铺 AWS01资料 SC01A资料  常用硬件接口定义DB9 公头的232和485定义 485也有用Pin1(A)和Pin2(B)，但一般使用Pin3(B)和Pin4(A)  母头和公头序号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="硬件设计应用经验总结">
+<meta property="og:url" content="http://lonlypan.com/2021/01/24/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="芯片商城立创商城艾矽易e络盟贸泽电子得捷电子猎芯网华秋商城云汉芯城亿配芯城世强硬创 学习论坛21ic阿莫电子OpenedvRISC-V MCU中文社区 触控IC_水位检测IC-VK36W1D系列及资料淘宝店铺 AWS01资料 SC01A资料  常用硬件接口定义DB9 公头的232和485定义 485也有用Pin1(A)和Pin2(B)，但一般使用Pin3(B)和Pin4(A)  母头和公头序号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/硬件应用经验总结/图像_3.png">
+<meta property="article:published_time" content="2021-01-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-24T09:12:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/硬件应用经验总结/图像_3.png">
+  
+  
+  <title>硬件设计应用经验总结 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="硬件设计应用经验总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-01-24 00:00" pubdate>
+          2021年1月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">硬件设计应用经验总结</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2021年1月24日 下午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <span id="more"></span>
+
+<h2 id="芯片商城"><a href="#芯片商城" class="headerlink" title="芯片商城"></a>芯片商城</h2><p><a target="_blank" rel="noopener" href="https://www.szlcsc.com/">立创商城</a><br><a target="_blank" rel="noopener" href="https://www.iceasy.com/">艾矽易</a><br><a target="_blank" rel="noopener" href="https://www.element14.com/">e络盟</a><br><a target="_blank" rel="noopener" href="https://www.mouser.cn/">贸泽电子</a><br><a target="_blank" rel="noopener" href="https://www.digikey.cn/">得捷电子</a><br><a target="_blank" rel="noopener" href="https://www.ichunt.com/">猎芯网</a><br><a target="_blank" rel="noopener" href="https://www.hqchip.com/">华秋商城</a><br><a target="_blank" rel="noopener" href="https://www.ickey.cn/">云汉芯城</a><br><a target="_blank" rel="noopener" href="https://www.yibeiic.com/">亿配芯城</a><br><a target="_blank" rel="noopener" href="https://www.sekorm.com/">世强硬创</a></p>
+<h2 id="学习论坛"><a href="#学习论坛" class="headerlink" title="学习论坛"></a>学习论坛</h2><p><a target="_blank" rel="noopener" href="https://bbs.21ic.com/iclist-696-1.html">21ic</a><br><a target="_blank" rel="noopener" href="https://www.amobbs.com/index.php">阿莫电子</a><br><a target="_blank" rel="noopener" href="http://www.openedv.com/">Openedv</a><br><a target="_blank" rel="noopener" href="https://www.rvmcu.com/">RISC-V MCU中文社区</a></p>
+<h2 id="触控IC-水位检测"><a href="#触控IC-水位检测" class="headerlink" title="触控IC_水位检测"></a>触控IC_水位检测</h2><p><a target="_blank" rel="noopener" href="http://www.szvinka.com/index.php?id=1718">IC-VK36W1D系列及资料</a><br><a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-1592340106.15.22952ed63L1EZj&id=601188511441">淘宝店铺</a></p>
+<p><a href="chrome-extension://bocbaocobfecmglnmeaeppambideimao/pdf/viewer.html?file=https://datasheet.lcsc.com/szlcsc/1806090423_AD-Semicon-AWS01_C132395.pdf">AWS01资料</a></p>
+<p><a href="chrome-extension://bocbaocobfecmglnmeaeppambideimao/pdf/viewer.html?file=http://icman.cn/uploads/soft/180402/SC01A_datasheet_V10.pdf">SC01A资料</a></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/%E6%99%B6%E5%B0%8A%E5%BE%AE%E7%94%B5%E5%AD%90%E8%A7%A6%E6%91%B8%E8%8A%AF%E7%89%87%E9%80%89%E5%9E%8B.jpg" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="常用硬件接口定义"><a href="#常用硬件接口定义" class="headerlink" title="常用硬件接口定义"></a>常用硬件接口定义</h2><h3 id="DB9"><a href="#DB9" class="headerlink" title="DB9"></a>DB9</h3><ul>
+<li>公头的232和485定义</li>
+<li>485也有用Pin1(A)和Pin2(B)，但一般使用Pin3(B)和Pin4(A)<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/1668419515110.png" srcset="/img/loading.gif" lazyload alt="enter description here"></li>
+</ul>
+<p>母头和公头序号方向相反，但序号对应的功能一致，左右手关系<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/1668419502622.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h2 id="电磁阀控制电路"><a href="#电磁阀控制电路" class="headerlink" title="电磁阀控制电路"></a>电磁阀控制电路</h2><h3 id="电路图"><a href="#电路图" class="headerlink" title="电路图"></a>电路图</h3><p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/%E7%94%B5%E7%A3%81%E9%98%80%E7%94%B5%E8%B7%AF%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p>1、<a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a230r.1.14.8.ae64660d0n9QvC&id=538084270345&ns=1&abbucket=6#detail">硬石4路NPN&#x2F;PNP板 输出功率 放大中继 电磁阀驱动</a>，by 淘宝-硬石电子</p>
+<p>2、<a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a1z0d.6639537.1997196601.137.1bac7484W2QDjk&id=540953458276">1路 单路 光电隔离 电磁阀 继电器 驱动板</a>，by 淘宝-ALZARD Automation</p>
+<p>3、<a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a1z0d.6639537.1997196601.159.1bac7484W2QDjk&id=565117275990">光耦隔离模块 AOD4184大功率CMOS 电磁阀继电器驱动</a>，by 淘宝-飞翼电子科技</p>
+<h3 id="电磁阀节能模块"><a href="#电磁阀节能模块" class="headerlink" title="电磁阀节能模块"></a>电磁阀节能模块</h3><p>主要解决电磁阀长时间通电发热问题</p>
+<p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/b8a46ef758fafab068dc0256.html">节能降温模块CoolCoil含图纸</a><br>  <a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?spm=a1z0d.6639537.1997196601.363.1bac7484W2QDjk&id=574025807043">电磁阀线圈节能模块淘宝</a></p>
+<h2 id="线控耳机原理”"><a href="#线控耳机原理”" class="headerlink" title="线控耳机原理”"></a>线控耳机原理”</h2><p><a target="_blank" rel="noopener" href="https://v.youku.com/v_show/id_XNzQzOTA2MDcy.html?f=22320331&amp;amp;firsttime=0">线控背后的原理 如何打造自己的线控耳机</a><br><a target="_blank" rel="noopener" href="https://v.youku.com/v_show/id_XNzI5NTY2NTE2.html?spm=a2hbt.13141534.1_2.d_1_31&f=22320331">TONE 零开始认识耳机3.5插头</a><br><a target="_blank" rel="noopener" href="http://www.360doc.com/content/15/0924/17/19315284_501281153.shtml">繁而简单的原理 线控结构其实并不神秘</a></p>
+<h2 id="手机屏幕点击器"><a href="#手机屏幕点击器" class="headerlink" title="手机屏幕点击器"></a>手机屏幕点击器</h2><p><a target="_blank" rel="noopener" href="http://nicekwell.net/blog/20161008/bie-cai-bai-kuai-er-bot.html">别踩白块儿bot</a></p>
+<p><a target="_blank" rel="noopener" href="http://bbs.eeworld.com.cn/thread-823066-1-1.html">网上看到有人用一电子装置模拟人手指触摸手机屏幕，请问这什么原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv1226619/">如何制作一个硬件打歌机（上）</a></p>
+<h2 id="锂电池充电"><a href="#锂电池充电" class="headerlink" title="锂电池充电"></a>锂电池充电</h2><p>DW06 与 DW07 的电路一致、区别的是 过充过放等检测电压不同。<br>DW06、DW03一颗料代替DW01+8205锂电保护</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mark_md/article/details/107698101">DW06、DW07 锂电保护IC手册电路，锂电池过充过放过流短路保护芯片电路</a><br><a target="_blank" rel="noopener" href="http://club.szlcsc.com/article/auther_1577_1_38667.html">锂电池保护板必备：DW06、DW03一颗料代替DW01+8205锂电保护</a><br><a target="_blank" rel="noopener" href="https://xw.qq.com/cmsid/20201110A01A9900">干货｜深入剖析锂电池保护电路工作原理</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nA411J75j/?spm_id_from=333.788.videocard.8">锂电池为啥要保护板，取掉保护板充&#x2F;放电会发生什么？</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Lz4y1y7X3">锂电池接了保护板，就可以用五伏电压直接充电了吗？</a></p>
+<h2 id="非隔离电源设计"><a href="#非隔离电源设计" class="headerlink" title="非隔离电源设计"></a>非隔离电源设计</h2><p><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a71278.html">隔离电源和非隔离电源入门必看</a><br><a target="_blank" rel="noopener" href="http://image1.big-bit.com/2016/0714/20160714053821839.pdf">智能家居电源的需求与方案探讨</a><br><a target="_blank" rel="noopener" href="https://oshwhub.com/li-chuang-zhi-neng-ying-jian-bu/ji-yulnk306dn-di-fei-ge-liac-dc-dian-yuan_transfer">C2912956_基于LNK306的非隔离AC-DC电源验</a><br><a target="_blank" rel="noopener" href="https://oshwhub.com/zhqsoft/KP1071">基于KP1071非隔离LED恒流驱动</a><br><a target="_blank" rel="noopener" href="http://img002.hc360.cn/k2/M0B/F9/80/wKhQxVlcUTCEEN7AAAAAAKROXbc270.pdf">KPS10SP非隔离电源控制器</a><br><a target="_blank" rel="noopener" href="https://item.szlcsc.com/294120.html"><a target="_blank" rel="noopener" href="https://item.szlcsc.com/294120.html">KP1071LSPA</a></a><br><a target="_blank" rel="noopener" href="https://item.szlcsc.com/3114756.html">PN8016SSC-R1B</a><br><a target="_blank" rel="noopener" href="https://item.szlcsc.com/172571.html">SDH8302STR</a><br><a target="_blank" rel="noopener" href="https://www.cirmall.com/circuit/18678/">220V-5V非隔离物联网电源（XH308h）电路方案设计（pcb）</a><br><a target="_blank" rel="noopener" href="https://www.cirmall.com/circuit/18526/">LKN306非隔离开关电源电路的设计（芯片手册+bom表+文件包）</a><br><a target="_blank" rel="noopener" href="https://www.cirmall.com/circuit/28868/">基于乐鑫ESP8266的WiFi智能插座(原理图+PCB)</a></p>
+<p>交流AC220v转5v应急灯供电电路图参数<br><img src="https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/2022-04-09-%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6/1649490686812.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LonlyPan/LonlyPan.github.io@master/hexo_images/2022-04-09-%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6/1649490705635.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<!--more-->
+
+
+
+<h2 id="模拟电路知识"><a href="#模拟电路知识" class="headerlink" title="模拟电路知识"></a>模拟电路知识</h2><!--more-->
+<p><a target="_blank" rel="noopener" href="https://www.mdeditor.tw/pl/pwyf">MOS管的知识，看这一篇就可以了</a><br><a target="_blank" rel="noopener" href="https://taileliekaishi.blog.csdn.net/article/details/108179254">硬件设计—分立元件</a><br><a target="_blank" rel="noopener" href="https://i.youku.com/i/UMTM4ODY4MDc4OA==/videos?spm=a2hzp.8253869.0.0&order=1&page=1&last_item=&last_pn=8&last_vid=166299129">萤火学堂</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k6IhPYG8xUCoKQMiT_LSvQ">巧学系列——模拟电路</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI4MDA2OTM4MA==&mid=2459411068&idx=1&sn=575f27d36c0d1823d78fb505a813e465&chksm=fcdd1617cbaa9f01bc37c0ff9065008e3c9d08d2ccdbdc417517e4c15a00b480610b4950f6cf&scene=21#wechat_redirect">巧明NPN和PNP的联系与区别</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/--Destroyer--/p/13560711.html">MOSFET防反接保护电路安全措施</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenhuanqiangnihao/article/details/112602538">MOSFET | 如何看懂MOSFET手册？</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhouxianjin123/category_9559304.html">分立器件</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/albert992/category_9513939.html?utm_source=BWXQ_bottombtn&spm=1001.2101.3001.4225">电子元器件</a></p>
+<h2 id="二极管"><a href="#二极管" class="headerlink" title="二极管"></a>二极管</h2><h2 id="MOS管"><a href="#MOS管" class="headerlink" title="MOS管"></a>MOS管</h2><h3 id="手册名词缩写"><a href="#手册名词缩写" class="headerlink" title="手册名词缩写"></a>手册名词缩写</h3><p>1.9A,600V：表示MOSFET在常温下的通流能力为1.9A，关断时Vds耐压为600V；</p>
+<ul>
+<li><strong>Vds：</strong> 最大导通电压</li>
+<li><strong>Vgs：</strong> 最大耐压</li>
+<li><strong>Id 漏极电流：</strong> ID具有负温度系数。</li>
+<li><strong>Rds(on)：</strong> 导通内阻：RDS(on)具有正温度系数<br>ID 和 RDS(on)具有相关性，从感觉上也能理解。它们还都与温度有关。ID越大 RDS(on)也越大，所以在电流较大的时候功耗并不完全来自于电流，还来自于导通电阻。<br>影响ID 和 RDS(on)因素还有一个——Vgs。转移特性。VGS越低ID的能力越低</li>
+<li><strong>Ton&amp;Toff：</strong> 开关时间</li>
+<li><strong>Ciss&amp;Coss：</strong> 输入、输出电容</li>
+<li><strong>TCase：</strong> 壳温、TAmbient - 环境温度、TJunction - 结温。</li>
+</ul>
+<h2 id="硬件电路设计参考"><a href="#硬件电路设计参考" class="headerlink" title="硬件电路设计参考"></a>硬件电路设计参考</h2><h3 id="电子元件购买"><a href="#电子元件购买" class="headerlink" title="电子元件购买"></a>电子元件购买</h3><p><a target="_blank" rel="noopener" href="https://www.hqew.com/">华强电子网</a><br><a target="_blank" rel="noopener" href="https://www.iceasy.com/">艾矽易</a><br><a target="_blank" rel="noopener" href="https://cn.element14.com/">e络盟</a><br><a target="_blank" rel="noopener" href="https://www.mouser.tw/">Mouser貿澤电子</a><br><a target="_blank" rel="noopener" href="https://www.szlcsc.com/">立创商城</a></p>
+<h3 id="PCB设计"><a href="#PCB设计" class="headerlink" title="PCB设计"></a>PCB设计</h3><p><a target="_blank" rel="noopener" href="https://www.digikey.tw/zh/resources/conversion-calculators/conversion-calculator-pcb-trace-width">PCB 走線寬度計算器</a><br><a target="_blank" rel="noopener" href="http://www.dwenzhao.cn/cal/basic/ipcb.html">PCB导线的电流容量</a><br><a target="_blank" rel="noopener" href="https://www.convertunits.com/from/mils/to/mm">Convert mils to mm</a></p>
+<p><a target="_blank" rel="noopener" href="https://saturnpcb.com/pcb_toolkit/">Saturn PCB Design Toolkit Version 7.12</a></p>
+<h2 id="PCB设计生产知识汇总"><a href="#PCB设计生产知识汇总" class="headerlink" title="PCB设计生产知识汇总"></a>PCB设计生产知识汇总</h2><!--more-->
+<p><a target="_blank" rel="noopener" href="https://www.mr-wu.cn/history-of-pcbs/">PCB的发展历史及展望</a><br><a target="_blank" rel="noopener" href="http://www.sz-jlc.info/public/jishuzhuanlan/2018/0815/21.html">重磅《嘉立创PCB设计应用教材》,欢迎免费下载！</a></p>
+<ul>
+<li>欢迎大家下载，百度网盘：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1HjDbmf8Qivkz5XhFNKd7Wg">https://pan.baidu.com/s/1HjDbmf8Qivkz5XhFNKd7Wg</a>  （下载密码：jfid）<br><a target="_blank" rel="noopener" href="https://www.mr-wu.cn/video-for-pcb-production-process/">PCB电路板板厂生产流程介绍</a><br><a href="www.edatop.com/down/faq/pcb/pcb-hwrf-PCB-763.pdf">PCB制造流程及说明</a><br><a target="_blank" rel="noopener" href="https://www.sz-jlc.co/NewClass-26.html">嘉立创技术专栏</a><h3 id="元器件采购"><a href="#元器件采购" class="headerlink" title="元器件采购"></a>元器件采购</h3></li>
+</ul>
+<h3 id="PCB设计-1"><a href="#PCB设计-1" class="headerlink" title="PCB设计"></a>PCB设计</h3><h4 id="PCB设计当中的拼板及注意事项"><a href="#PCB设计当中的拼板及注意事项" class="headerlink" title="PCB设计当中的拼板及注意事项"></a>PCB设计当中的拼板及注意事项</h4><p><a target="_blank" rel="noopener" href="https://www.myoschain.com/share/blog/140770989100236800">关于PCB设计当中的拼板及注意事项</a><br><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_13917db010102vvh8.html">邮票孔PCB线路板不同切割方式对比</a> </p>
+<h3 id="PCB制造"><a href="#PCB制造" class="headerlink" title="PCB制造"></a>PCB制造</h3><p><a target="_blank" rel="noopener" href="https://www.jlc.com/portal/q6i1462.html">PCB打样中:过孔(via)&#x2F;焊盘(pad)的设计(钻孔层）</a><br><a target="_blank" rel="noopener" href="https://www.mr-wu.cn/pcb-she-ji-zhi-zao-hang-ye-nei-hei-hua-1/">PCB设计制造行业内黑话（一）</a><br><a target="_blank" rel="noopener" href="https://www.jlc.com/portal/t6i99.html">嘉立创之：电路板可制造性设计</a></p>
+<h4 id="IPC规范"><a href="#IPC规范" class="headerlink" title="IPC规范"></a>IPC规范</h4><h4 id="生产厂家"><a href="#生产厂家" class="headerlink" title="生产厂家"></a>生产厂家</h4><h5 id="嘉立创"><a href="#嘉立创" class="headerlink" title="嘉立创"></a>嘉立创</h5><p><a target="_blank" rel="noopener" href="https://www.jlc.com/portal/vtechnology.html">PCB工艺参数</a><br><a target="_blank" rel="noopener" href="https://www.jlc.com/portal/server_guide_112.html">下单前技术员必看</a></p>
+<h5 id="捷多邦"><a href="#捷多邦" class="headerlink" title="捷多邦"></a>捷多邦</h5><h4 id="铜厚"><a href="#铜厚" class="headerlink" title="铜厚"></a>铜厚</h4><p><a target="_blank" rel="noopener" href="https://open.tech2real.com/info_detail_page?id=16935#index">学员说1OZ铜厚，1mm板厚的六层板，他该怎么选择pp和core(续)</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26553259">PCB孔铜厚度标准及成品铜厚构成、由来</a></p>
+<h4 id="表面处理"><a href="#表面处理" class="headerlink" title="表面处理"></a>表面处理</h4><p><a target="_blank" rel="noopener" href="https://www.mr-wu.cn/ji-zhong-chang-yong-de-pcb-biao-mian-chu-li-gong-yi-ji-qi-you-que-dian/">PCB制造行业的黑话（二）- 几种常用的PCB表面处理工艺及其优缺点和适用场景</a></p>
+<h3 id="与结构设计配合"><a href="#与结构设计配合" class="headerlink" title="与结构设计配合"></a>与结构设计配合</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>PCB外形尺寸。</li>
+<li>元器件位置，接口位置，方便后续生产组装</li>
+</ul>
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
+<li>元器件选型</li>
+<li>PCB整体模型</li>
+</ul>
+<h3 id="FreeCad"><a href="#FreeCad" class="headerlink" title="FreeCad"></a>FreeCad</h3><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=b3NoAOxOGxA">https://www.youtube.com/watch?v=b3NoAOxOGxA</a><br><a target="_blank" rel="noopener" href="https://www.digikey.tw/zh/resources/conversion-calculators/conversion-calculator-pcb-trace-width">https://www.digikey.tw/zh/resources/conversion-calculators/conversion-calculator-pcb-trace-width</a></p>
+<p><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/1598684205211.png" srcset="/img/loading.gif" lazyload alt="enter description here"></p>
+<h3 id="Kicad"><a href="#Kicad" class="headerlink" title="Kicad"></a>Kicad</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhiqiang_zhang/p/11114701.html">KiCAD文字或丝印批量操作批量换层</a><br><a target="_blank" rel="noopener" href="http://club.szlcsc.com/article/details_2634_1.html">【汇总】SMT相关的教程汇总</a><br><a target="_blank" rel="noopener" href="http://club.szlcsc.com/article/details_44132_1.html">手把手教你创建超漂亮的BOM表（手焊党福音？！不用丝印也能焊对了？！）重大更新</a><br><a target="_blank" rel="noopener" href="http://club.szlcsc.com/article/details_40621_1.html">【资料】立创EDA原理图库与PCB库创建规范.pdf</a></p>
+<h3 id="PCB布线"><a href="#PCB布线" class="headerlink" title="PCB布线"></a>PCB布线</h3><p>线宽与电流<br>过孔与电流<br>走线与板边<br>焊盘与半边</p>
+<h3 id="电源设计"><a href="#电源设计" class="headerlink" title="电源设计"></a>电源设计</h3><h4 id="电池充电"><a href="#电池充电" class="headerlink" title="电池充电"></a>电池充电</h4><h5 id="芯片厂商"><a href="#芯片厂商" class="headerlink" title="芯片厂商"></a>芯片厂商</h5><ol>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com.cn/zh-cn/power-management/battery-management/charger-ics/overview.html">（外）TI电池充电器 IC</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.maximintegrated.com/cn/products/power/battery-management/battery-charger-ics.html">（外）Maxim电池充电器</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.analog.com/cn/products/power-management/battery-management/battery-charger-ic.html">（外）ADI电池充电器IC</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.mojay.com.cn/index.php/product-3.html">（中）茂捷半导体代理商</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ic-fortune.com/new_about01.asp">（中）富晶電子</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.consonance-elec.com/index.html">（中）如韵电子</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.hmsemi.com/index.php/about_v_37_2.html">（中）华之美半导体</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.natlinear.com/index.php?m=&c=product&a=product&pone=8">（中）南麟</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.injoinic.com/">（中）英集芯科技</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.lsdtek.com/category-ic63.html">（中）利盛达科技</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.chipstar-ic.com/products.asp?/12.html">上海智浦欣微电子有限公司</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.torex.com.cn/technical-support/application-note/battery-charge-ics/">（日）特瑞仕半导体TOREX</a></li>
+</ol>
+<h3 id="按键"><a href="#按键" class="headerlink" title="按键"></a>按键</h3><ol>
+<li><a target="_blank" rel="noopener" href="http://www.yuandicn.com/index.html">台湾元迪电子科技</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.so-han.com/about.html">深圳市首韩科技</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.krhro.com/">韩国韩荣部品株式会社</a></li>
+</ol>
+<h3 id="记一起TFT屏调试惨痛教训"><a href="#记一起TFT屏调试惨痛教训" class="headerlink" title="记一起TFT屏调试惨痛教训"></a>记一起TFT屏调试惨痛教训</h3><p>最近在编写 LCD 驱动库，有一款  2.4寸的 ST7789 屏。一开始使用并口驱动调试并没有问题，一切正常。但是当改为 spi 串口驱动时，却怎么也驱动过不了，屏幕没有任何反应。在调试近一天后，冷静思考，看了一遍又一遍厂家例程、芯片手册、网上例程，我断定程序没有错误。那么只能时硬件了，但查了接线也并没有错误啊，但我注意到了一个表格：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/FPC%E6%8E%A5%E5%8F%A3%E9%80%89%E6%8B%A9.png" srcset="/img/loading.gif" lazyload alt="图 6"><br>但在厂家给了另一个pdf（屏幕尺寸规格书）中并没有此内容，这个内容是在产品承认书中，然后对比我的屏幕FPC背面的电阻焊接：<br><img src="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E7%A1%AC%E4%BB%B6%E5%BA%94%E7%94%A8%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/FPC%E5%AE%9E%E9%99%85%E6%8E%A5%E5%8F%A3.jpg" srcset="/img/loading.gif" lazyload alt="图 7"><br>可以发现接线时默认接了 R1、R3、R5的，也就是默认16位驱动。如果我需要SPI串口驱动吗，应该改为R2、R4、R6焊接（此时PIN39-40无用）或者接R7、R8、R9(这样就可以通过Pin38-40通过外部接线任意调整接口模式)。这里选择后者，方便调试。然后烧录程序，一切正常。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/01-%E4%B8%93%E4%B8%9A/" class="category-chain-item">01-专业</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>硬件设计应用经验总结</div>
+      <div>http://lonlypan.com/2021/01/24/硬件设计应用经验总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年1月24日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/24/%E4%B8%8A%E5%B8%9D%E6%8E%B7%E9%AA%B0%E5%AD%90%E5%90%97-%E9%87%8F%E5%AD%90%E7%89%A9%E7%90%86%E5%8F%B2%E8%AF%9D/" title="上帝掷骰子吗-量子物理史话">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">上帝掷骰子吗-量子物理史话</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/17/%E5%9F%BA%E4%BA%8E%20OpenOCD%20%E7%9A%84%20STM32CubeIDE%20%E5%BC%80%E5%8F%91%E7%83%A7%E5%BD%95%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-DAPLINK/" title="基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK">
+                        <span class="hidden-mobile">基于 OpenOCD 的 STM32CubeIDE 开发烧录调试环境搭建-DAPLINK</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

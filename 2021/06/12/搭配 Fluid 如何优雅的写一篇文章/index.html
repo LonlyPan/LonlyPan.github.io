@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LonlyPan">
+  <meta name="keywords" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+  
+    <meta name="description" content="文章参考：https:&#x2F;&#x2F;hexo.fluid-dev.com&#x2F;posts&#x2F;fluid-write&#x2F;              基于Hexo-Fluid，记录当前博客的一些常用语法以及进阶使用配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭配 Fluid 如何优雅的写一篇文章">
+<meta property="og:url" content="http://lonlypan.com/2021/06/12/%E6%90%AD%E9%85%8D%20Fluid%20%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%86%99%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:site_name" content="LonlyPan个人站">
+<meta property="og:description" content="文章参考：https:&#x2F;&#x2F;hexo.fluid-dev.com&#x2F;posts&#x2F;fluid-write&#x2F;              基于Hexo-Fluid，记录当前博客的一些常用语法以及进阶使用配置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E6%90%AD%E9%85%8D_Fluid_%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%86%99%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/hexo%2Bfluid.png">
+<meta property="article:published_time" content="2021-06-12T06:33:00.000Z">
+<meta property="article:modified_time" content="2020-05-08T06:33:00.000Z">
+<meta property="article:author" content="LonlyPan">
+<meta property="article:tag" content="LonlyPan个人站，LonlyPan，Lonly，致简，丢了幸福的猪，逍遥勿忘心安">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/%E6%90%AD%E9%85%8D_Fluid_%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%86%99%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/hexo%2Bfluid.png">
+  
+  
+  <title>搭配 Fluid 如何优雅的写一篇文章 - LonlyPan个人站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lonlypan.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f56279d43c733d547ea06f75f8e05d89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LonlyPan的博客站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books/">
+                <i class="iconfont icon-book"></i>
+                书影
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                朋友
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="搭配 Fluid 如何优雅的写一篇文章"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-06-12 14:33" pubdate>
+          2021年6月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">搭配 Fluid 如何优雅的写一篇文章</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2020年5月8日 下午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <div class="note note-success">
+            <p>文章参考：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/posts/fluid-write/">https://hexo.fluid-dev.com/posts/fluid-write/</a></p>
+          </div>
+
+
+<p>基于Hexo-Fluid，记录当前博客的一些常用语法以及进阶使用配置。</p>
+<span id="more"></span>
+
+
+<p>Fluid官网文档：<a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/">Fuild 配置指南</a><br>Hexo官网文档：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">hexo文档</a></p>
+<h1 id="配图"><a href="#配图" class="headerlink" title="配图"></a>配图</h1><p><strong>常用配图资源</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wallpaperhub.app/">wallpaperhub</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallhaven.cc/">Wallhaven</a></li>
+<li><a target="_blank" rel="noopener" href="https://unsplash.com/">Unsplash</a></li>
+</ul>
+<p>文章首页封面图推荐大小 540x320px</p>
+<h1 id="Fluid主题语法"><a href="#Fluid主题语法" class="headerlink" title="Fluid主题语法"></a>Fluid主题语法</h1><h2 id="便签"><a href="#便签" class="headerlink" title="便签"></a>便签</h2><p>表示强调、提示，类似 “&gt;” 语法。<br>在 markdown 中加入如下的代码来使用便签：</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name">note</span> success %&#125;</span><span class="language-xml"></span><br><span class="language-xml">文字 或者 `markdown` 均可</span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;% <span class="hljs-name">endnote</span> %&#125;</span><br></code></pre></td></tr></table></figure>
+<p>或者使用 HTML 形式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;note note-primary&quot;</span>&gt;</span>标签<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>可选便签：</p>
+<div class="note note-primary">
+            <p>primary</p>
+          </div>
+
+<div class="note note-secondary">
+            <p>secondary</p>
+          </div>
+
+<div class="note note-success">
+            <p>success</p>
+          </div>
+
+<div class="note note-danger">
+            <p>danger</p>
+          </div>
+
+<div class="note note-warning">
+            <p>warning</p>
+          </div>
+
+<div class="note note-info">
+            <p>info</p>
+          </div>
+
+<div class="note note-light">
+            <p>light</p>
+          </div>
+
+<div class="note note-warning">
+            <p>WARNING<br>使用时 <code>&lt;div class=&quot;note note-primary&quot;&gt;             &lt;p&gt;&lt;code&gt;和&lt;/code&gt;&lt;/p&gt;           &lt;/div&gt;</code> 需单独一行，否则会出现问题</p>
+          </div>
+
+
+<h2 id="页内跳转"><a href="#页内跳转" class="headerlink" title="页内跳转"></a>页内跳转</h2><p><a href="#demo">点击到达跳转位置演示</a> </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">&lt;<span class="hljs-keyword">a</span> href=<span class="hljs-string">&quot;#demo&quot;</span>&gt;点击到达跳转位置演示&lt;/<span class="hljs-keyword">a</span>&gt; <span class="hljs-comment"># 在需要跳转的地方添加此代码。</span><br>&lt;<span class="hljs-keyword">a</span> id=<span class="hljs-string">&quot;demo&quot;</span>&gt;跳转位置演示（跳转位置设置点）&lt;/<span class="hljs-keyword">a</span>&gt; <span class="hljs-comment"># 在跳转位置添加次代码。</span><br></code></pre></td></tr></table></figure>
+<p><a id="demo">跳转位置演示（跳转位置设置点）</a> </p>
+<h2 id="details-标签"><a href="#details-标签" class="headerlink" title="details 标签"></a>details 标签</h2><p>用于展示代码较多需要折叠或折叠相关内容，以下为演示。summary 填写显示名称。</p>
+<details>
+<summary>Demo</summary>
+<pre><code class="hljs">
+coding...
+</pre></code>
+</details>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">details</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">summary</span>&gt;</span>Demo<span class="hljs-tag">&lt;/<span class="hljs-name">summary</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">code</span>&gt;</span><br>  coding...<br><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">code</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="iframe-页面镶套"><a href="#iframe-页面镶套" class="headerlink" title="iframe 页面镶套"></a>iframe 页面镶套</h2><p>iframe 页面镶套可以帮助我们更好的展示一个页面。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;iframe <span class="hljs-attribute">src</span>=<span class="hljs-string">&quot;https://lonlypan.com&quot;</span> <span class="hljs-attribute">width</span>=<span class="hljs-string">&quot;100%&quot;</span> <span class="hljs-attribute">height</span>=<span class="hljs-string">&quot;500&quot;</span> <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;topFrame&quot;</span> <span class="hljs-attribute">scrolling</span>=<span class="hljs-string">&quot;yes&quot;</span>  <span class="hljs-attribute">noresize</span>=<span class="hljs-string">&quot;noresize&quot;</span> <span class="hljs-attribute">frameborder</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;topFrame&quot;</span>&gt;&lt;/iframe&gt;<br></code></pre></td></tr></table></figure>
+<p><code>src=&quot; &quot;</code>为网页链接，必须是 https，实测 http 不显示， <code>width=&quot;100%&quot;</code> 为宽度自适应，高度请根据实际需求调整，注意移动端页面是否匹配。 scrolling 为滚动条参数。frameborder 为边框参数。noresize 属性规定用户无法调整框架的大小。</p>
+<p><strong>最终效果</strong></p>
+<iframe src="https://lonlypan.com/" width="100%" height="480" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
+
+<h1 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h1><h2 id="哔哩哔哩视频嵌入"><a href="#哔哩哔哩视频嵌入" class="headerlink" title="哔哩哔哩视频嵌入"></a>哔哩哔哩视频嵌入</h2><p>需要修改主题配置文件即_config.fluid.yml文件：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 指定自定义 .css 文件路径，用法和 custom_js 相同</span><br><span class="hljs-comment"># The usage is the same as custom_js</span><br>custom_css: <span class="hljs-regexp">/css/</span>custom.css<br></code></pre></td></tr></table></figure>
+
+<p>在主题的 <code>fluid\source\css</code> 文件夹下新建 <code>custom.css</code> 文件，并添加以下css代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/*哔哩哔哩视频适配*/</span><br>.bilibili&#123;<br>    position: relative;<br>    width: <span class="hljs-number">100</span>%;<br>    height: <span class="hljs-number">0</span>;     ``<br>	<span class="hljs-comment">/*高度设置这里无效，设置为0，用padding撑开div*/</span><br>    padding-bottom: <span class="hljs-number">75</span>%;    <span class="hljs-comment">/*68%到80%都可以*/</span><br>&#125;<br>.bilibili iframe &#123;<br>    position: absolute;<br>    width: <span class="hljs-number">100</span>%;<br>    height: <span class="hljs-number">100</span>%;<br>    left: <span class="hljs-number">0</span>;<br>    top: <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>插入时写成如下形式即可：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;div class<span class="hljs-operator">=</span><span class="hljs-string">&quot;bilibili&quot;</span>&gt;<br>    &lt;iframe src<span class="hljs-operator">=</span><span class="hljs-string">&quot;////player.bilibili.com/player.html?aid=248260059&amp;bvid=BV1Qv411G76v&amp;cid=343709769&amp;page=1&amp;high_quality=1&quot;</span>  scrolling<span class="hljs-operator">=</span><span class="hljs-string">&quot;no&quot;</span> border<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> frameborder<span class="hljs-operator">=</span><span class="hljs-string">&quot;no&quot;</span> framespacing<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> allowfullscreen<span class="hljs-operator">=</span><span class="hljs-string">&quot;true&quot;</span>&gt;&lt;/iframe&gt;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+<p><code>&lt;iframe ...&gt;&lt;/iframe&gt;</code>所有内容，在bilibili网页端点击视频下方分享图标-&gt;嵌入代码，直接获取。追加 <code>&amp;high_quality=1</code>可设置默认清晰度为最高</p>
+<blockquote>
+<p>该方法也适用于所有iframe 页面镶套 ，做到页面自适应和显示调整。</p>
+</blockquote>
+<p><strong>最终效果</strong></p>
+<div class="bilibili">
+    <iframe src="////player.bilibili.com/player.html?aid=248260059&bvid=BV1Qv411G76v&cid=343709769&page=1&high_quality=1"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</div>
+
+<p><strong>参考资料：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/104996801">hexo博客插入图片与视频方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://liuzhihang.com/2019/09/14/hexo-inserts-bilibili-video.html">Hexo中插入Bilibili视频</a></li>
+<li><a target="_blank" rel="noopener" href="https://hongcyu.cn/posts/hexo-bilibili.html">HEXO博客引用B站视频并自动适配</a></li>
+</ul>
+<h2 id="图片加速"><a href="#图片加速" class="headerlink" title="图片加速"></a>图片加速</h2><p>用   <a target="_blank" rel="noopener" href="https://www.jsdelivr.com/?docs=gh">jsDelivr CDN官网</a> 加速访问。</p>
+<p>图片</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>cdn.jsdelivr.net<span class="hljs-regexp">/gh/</span>LonlyPan<span class="hljs-regexp">/LonlyPan.github.io@main/</span><br></code></pre></td></tr></table></figure>
+<p><code>LonlyPan/LonlyPan.github.io</code>是 存储图片的 <code>hexo_images</code> 文件夹地址，<code>@main</code>  必须要加。</p>
+<p><strong>参考资料：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/138582151">使用 jsDelivr CDN 对 Github 图床进行加速，带给你如丝滑般的图片体验</a></li>
+<li><a target="_blank" rel="noopener" href="https://ld246.com/article/1583894928771">GitHub 图床的正确用法，通过 jsDelivr CDN 全球加速</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/104996801">hexo博客插入图片与视频方法</a></li>
+</ul>
+<h2 id="Fusion360-模型在线展示"><a href="#Fusion360-模型在线展示" class="headerlink" title="Fusion360 模型在线展示"></a>Fusion360 模型在线展示</h2><p>Fusion 软件中，文件-&gt;共享，生成分享链接，不过只能看不能下载，按如下格式编写即可：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;iframe <span class="hljs-attribute">src</span>=<span class="hljs-string">&quot;https://a360.co/38PcGXr&quot;</span> <span class="hljs-attribute">width</span>=<span class="hljs-string">&quot;100%&quot;</span> <span class="hljs-attribute">height</span>=<span class="hljs-string">&quot;480&quot;</span> <span class="hljs-attribute">allowfullscreen</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attribute">webkitallowfullscreen</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attribute">mozallowfullscreen</span>=<span class="hljs-string">&quot;true&quot;</span>  <span class="hljs-attribute">frameborder</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;&lt;/iframe<br></code></pre></td></tr></table></figure>
+<p><code>src=&quot; &quot;</code>  填写的就是软件生成的共享链接，<code>width=&quot;100%&quot; height=&quot;480&quot;</code> 指定了显示大小，也可以自定义参数，随便填。</p>
+<p><strong>最终效果</strong></p>
+<iframe src="https://a360.co/38PcGXr" width="100%" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/03-%E7%9E%8E%E6%8A%98%E8%85%BE/" class="category-chain-item">03-瞎折腾</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>搭配 Fluid 如何优雅的写一篇文章</div>
+      <div>http://lonlypan.com/2021/06/12/搭配 Fluid 如何优雅的写一篇文章/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LonlyPan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年6月12日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                <i class="iconfont icon-nc"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/24/Win10%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" title="Win10使用问题与技巧总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Win10使用问题与技巧总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/24/bilibili%E6%8A%95%E7%A8%BF%E4%B8%8E%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91-%E5%BF%85%E5%89%AA/" title="bilibili投稿与视频剪辑-必剪">
+                        <span class="hidden-mobile">bilibili投稿与视频剪辑-必剪</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"geH90Q7ihl9Si5Llagt8GcC2-MdYXbMMI","appKey":"fO2rYFt9wStdv0SX7C7omkal","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://geh90q7i.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-copyright"> 2019-2022 |</i> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f56279d43c733d547ea06f75f8e05d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
