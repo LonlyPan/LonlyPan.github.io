@@ -861,6 +861,172 @@ double                               %lf/%lg
 %g和%lg不会保留   如 3.14
 %02d 两位数，如果不够前面补0， 如 02
 
+# 分支与跳转语句
+
+## 一、if语句
+
+关于if语句形式2分析：
+
+如果希望在if和else之间有多条语句，必须使用花括号创建一个代码块。下面的结构违反了C语法，因为编译器期望if和else之间只有一条语句。
+```
+if (x >0)
+	printf ("x = \n");
+	x++;
+else
+	printf ("x <= 0");
+```
+编译器会把printf()语句看作if语句的部分，将x\++语句看作一条单独的语句，而不把它作为if语句的一部分。然后会认为else没有所属的if，这是个错误，应该使用花括号。或者参看do while (0)语句。
+```
+if (x >0)
+{
+	printf ("x = \n");
+	x++;
+}
+else
+	printf ("x <= 0");
+```
+判断条件通常是一个关系表达式，也就是用一个关系运算符构成的表达式，例如：< 或者 ==。利用C的逻辑运算符，可以作何多个关系表达式以创建更复杂的判断。
+
+需要注意的几点：
+
+1、赋值运算符和逻辑运算符
+
+例如：
+
+if (5 = n)    语法错误
+
+if (5 == n)  检查n的值是否为5
+
+2、  if(n != 0)可用if (n)代替
+
+3、if (n >= 9 && n <= 100) 不要写成 if (90 <= n <= 100)
+
+问题在于该代码是语义错误，我不是语法错误，因为对于<=运算符的求值顺序是由左到右的，所以会把该测试表达式解释为如下形式：
+
+(90 <= n)  <= 100
+
+子表达式90 <= n的值为1（真）或0（假）。任何一个值都小于100，因此不管n的值是什么，整个表达式总是为真，所以需要使用&&来检查范围。
+
+例如：  if (5 > 2 > 3) 布尔值为0（假）.
+
+
+
+注意： 零值表示“假”，非零值表示“真”，负数也是非零值。
+
+
+#include <stdio.h>  
+int main (void)  
+{  
+	if (-1)
+	{
+		printf ("111111111\n");
+	}
+ 
+	printf ("222222222\n");
+	return 0;  
+}  
+输出结果：
+111111111
+222222222
+二、循环辅助手段：continue和break
+
+1、continue语句
+
+continue命令可以与三种循环形式中的任何一种一起作用，但是不能喝switch语句一起使用。他导致程序控制跳过循环中的剩余语句。对于while和for循环，开始下一个循环周期。对于do while循环，对退出条件进行判断，如果必要，开始下一个循环周期。
+
+用处：可以在主语语句中消除一级缩排。当语句很长或者已经有很深的嵌套时，作为占位符，使代码根据可读性：
+
+while (getchar () != '\n')
+
+continue;
+
+2、break语句
+
+循环中的break语句导致程序终止包含它的循环，并进行程序的下一阶段。break命令可以与三种循环形式中的任何一种以及switch语句一起使用。它导致程序控制跳过包含它的循环或switch语句的剩余部分，继续执行紧跟在循环或switch后的下一条命令。
+
+break语句实质上是switch语句的附属物，顺便提一下，break语句用于循环和switch中，而continue仅用于循环。
+
+例如：在if语句中使用continue会出现： 错误：continue语句出现在循环以外。
+
+
+
+三、多重选择：switch和break
+
+
+
+以上面的例子来说明switch语句：
+
+如果i为整形值1或者2，则打印22222。如果它的值为3，则打印33333和44444（因为杂case 3后没有break语句，所以流程继续到随后的语句），如果它的值为4，则打印44444,。对于其他值，仅打印hello world
+
+
+#include <stdio.h>
+int main (void)
+{
+int i = 0;
+scanf ("%d", &i);
+switch (i)
+{
+case 1:
+// printf ("11111\n");
+// break;
+case 2:
+printf ("22222\n");
+break;
+case 3:
+printf ("33333\n");
+// break;
+case 4:
+printf ("44444\n");
+break;
+default:
+printf ("hello world\n");
+break;
+}
+return 0;
+}		
+
+
+//示例
+switch (enSize)
+{
+   case PIC_QCIF:
+        stH264Cbr.u32BitRate = 256; /* average bit rate */
+        break;
+   case PIC_QVGA:    /* 320 * 240 */
+   case PIC_CIF: 
+        stH264Cbr.u32BitRate = 512;
+        break;
+   case PIC_D1:
+   case PIC_VGA:	   /* 640 * 480 */
+        stH264Cbr.u32BitRate = 1024*2;
+        break;
+   case PIC_HD720:   /* 1280 * 720 */
+        stH264Cbr.u32BitRate = 1024*2;
+        break;
+   case PIC_HD1080:  /* 1920 * 1080 */
+        stH264Cbr.u32BitRate = 1024*4;
+        break;
+   case PIC_5M:  /* 2592 * 1944 */
+        stH264Cbr.u32BitRate = 1024*8;
+        break;                       
+   default :
+        stH264Cbr.u32BitRate = 1024*4;
+        break;
+}
+
+总体注解：
+
+程序控制按照逻辑表达式的值跳转到相应的case标签处。然后程序流程继续通过所有剩余的语句，直达再次由break语句重定向。逻辑表达式和case标签必须都是整型值（包括类型char），并且标签必须是常量或者完全有常量组成的表达式。如果没有表达式值相匹配的case标签，那么控制定位到标签为default的语句，如果它存在的话。否则，控制传递给紧跟着switch语句的下一条语句。
+
+每个 switch 语句中只能出现一条 default 子句。但是，它可以出现在语句列表的任何位置，而且语句流会像贯穿一个 case 标签一样贯穿 default 子句。
+
+四、goto语句
+
+不要轻易使用
+
+可以了解一下：
+
+while(1)、for( ; ; )、goto这三者可作为死循环
 
 # 关键字
 C语言一共有32个关键字，如下表所示：
