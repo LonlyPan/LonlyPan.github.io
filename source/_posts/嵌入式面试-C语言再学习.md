@@ -9,6 +9,7 @@ hide: false
 # comment: false
 categories: 00-项目
 ---
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695540014832.png)
 
 # 一、GCC编译过程
 
@@ -5300,6 +5301,366 @@ hello world
 ```
 # 关键字typedef
 
+## 一、typedef 介绍
+
+typedef为C语言的关键字，作用是为一种数据类型定义一个新名字。比如人们常常使用 typedef 来编写更美观和可读的代码。所谓美观，意指 tepedef 能隐藏笨拙的语法构造以及平台相关的数据类型，从而增强可移植性以及未来的可维护性。
+
+这里的数据类型包括内部数据类型（int,char等）和自定义的数据类型（struct等）。 在编程中使用typedef目的一般有两个，一个是给变量一个易记且意义明确的新名字，另一个是简化一些比较复杂的类型声明。
+
+typedef 使用方法如下：
+```
+typedef existing_type new_type_name;
+```
+注意：typedef 并不创建新的类型。它仅仅为现有类型添加一个同义字。
+typedef的简单应用：
+```
+
+typedef unsigned char BYTE;
+BYTE b1, b2;
+```
+在这个类型定义之后，标识符 BYTE 可作为类型 unsigned char 的缩写。该定义的作用域取决于 typedef 语句所在的位置。如果定义是在一个函数内部，它的作用域是局部的，限定在那个函数里。如果定义是在函数外部，它将具有全局作用域。
+
+通常，这些定义使用大写字母，以提醒用户这个类型名称实际上是一个符号缩写。不过，您也可以使用小写字母。
+
+
+
+## 二、typedef 用法总结
+
+### 1、typedef 与 define 区别
+
+
+首先你要了解 typedef 和 define 的区别，宏定义只是简单的字符串代换，是在预处理完成的，而typedef是在编译时处理的，它不是作简单的代换，而是对类型说明符重新命名。被命名的标识符具有类型定义说明的功能。
+
+请看下面的例子：
+```
+#define P1 int *
+
+typedef (int *) P2
+```
+从形式上看这两者相似，但在实际使用中却不相同。
+
+下面用P1、P2说明变量时就可以看出它们的区别：
+
+P1 a, b;  在宏代换后变成： int *a, b;  表示 a 是指向整型的指针变量，而 b 是整型变量。
+
+P2 a, b;  表示a,b都是指向整型的指针变量。因为PIN2是一个类型说明符。
+
+由这个例子可见，宏定义虽然也可表示数据类型， 但毕竟是作字符代换。在使用时要分外小心，以避出错。
+
+总结，typedef和#define的不同之处：
+
+1、与#define不同，typedef 给出的符号名称仅限于对类型，而不是对值。
+
+2、typedef 的解释由编译器，而不是是处理器执行。
+
+3、虽然它的范围有限，但在其受限范围内，typedef 比 #define 更灵活。
+
+
+### 2、常规变量类型定义
+
+typedef 声明可用来表示一个变量的含义。
+
+例如：typedef unsigned char uchar
+描述：uchar等价于unsigned char类型定义
+           uchar c声明等于unsigned char c声明
+
+
+
+### 3、数组类型定义
+
+例如： typedef int array[2];
+描述： array等价于 int [2]定义;
+            array a声明等价于int a[2]声明
+
+扩展： typedef int array[M][N];
+描述： array等价于 int [M][N]定义;
+            array a声明等价于int a[M][N]声明
+
+
+
+### 4、指针类型定义
+
+例如： typedef int *pointer;
+描述： pointer等价于 int *定义;
+            pointer p声明等价于int *p声明
+
+例如： typedef int *pointer[M];
+描述： pointer等价于 int *[M]定义;
+            pointer p声明等价于int *p[M]声明
+
+
+
+### 5、函数地址说明
+描述： C把函数名字当做函数的首地址来对待，我们可以使用最简单的方法得到函数地址
+例如： 函数:int func(void);
+            unsigned long funcAddr=(unsigned long)func；
+            funcAddr的值是func函数的首地址
+
+### 6、函数声明
+例如： typedef int func(void);  
+            func等价于 int (void)类型函数
+描述1： func f声明等价于 int f(void)声明，用于文件的函数声明
+描述2： func *pf声明等价于 int (*pf)(void)声明，用于函数指针的声明，见下一条
+
+### 7、函数指针
+例如： typedef int (*func)(void)
+描述： func等价于int (*)(void)类型
+            func pf等价于int (*pf)(void)声明，pf是一个函数指针变量
+
+### 8、识别typedef的方法：
+a).第一步。使用已知的类型定义替代 typdef 后面的名称，直到只剩下一个名字不识别为正确
+    如typedef u32   (*func)(u8);
+    从上面的定义中找到 typedef __u32  u32; typedef __u8 u8
+    继续找到 typedef unsigned int __u32; typedef unsigned char __u8;
+    替代位置名称 typedef unsigned int  (*func)(void);
+    现在只有func属于未知
+b).第二步.未知名字为定义类型，类型为取出名称和 typedef 的所有部分，如上为
+    func等价于unsigned unsigned  int  (*)(unsigned  char);
+c).第三部.定义一个变量时，变量类型等价于把变量替代未知名字的位置所得到的类型
+    func f等价于unsigned unsigned int  (*f)(unsigned char)
+
+
+
+### 9、结构体定义
+
+
+结构体的一般定义形式为：
+
+标签（tag）字段允许为成员列表提供一个名字，这样它就可以在后续的声明中使用。标签允许多个声明使用同一个成员列表，并且创建同一种类型的结构。
+```
+[cpp]  view plain  copy    
+struct　标签{    
+     类型名1　成员名1;  
+     类型名2　成员名2;  
+    ……  
+     类型名n　成员名n;　　　  
+ }结构体变量;  
+ 
+```
+如果 标签 存在，结构体变量 不存在，定义如下：
+```
+[cpp]  view plain  copy    
+struct Student{  
+    char name[20];//姓名  
+    int age;//年龄  
+    float height;//身高  
+};  
+  
+struct Student stu   //Student 为标签  stu 为结构体变量  
+```
+如果 结构体变量 存在， 标签 可有可无，定义如下：
+```
+[cpp]  view plain  copy    
+struct Student{  //Student 可有可无  
+    char name[20];//姓名  
+    int age;//年龄  
+    float height;//身高  
+}stu;  
+```
+使用typedef起别名，标签 可有可无，结构体变量 位置变为该 类型名
+```
+[cpp]  view plain  copy    
+typedef struct Student{ //Student 可有可无  
+    char name[20];//姓名  
+    int age;//年龄  
+    float height;//身高  
+}Stu; //Stu 为类型名  
+  
+Stu stu； //Stu 为类型名，stu 为结构体变量  
+```
+注意，字符串初始化不能直接赋值，需要使用 strcpy 函数
+```
+[cpp]  view plain  copy    
+#include <stdio.h>    
+#include <string.h>    
+    
+typedef struct     
+{    
+    int n;    
+    float m;    
+    char name[20];    
+}Ptr;    
+    
+int main (void)    
+{    
+    Ptr p;    
+    //Ptr p = {11, 12.9, "hello"};     
+    strcpy (p.name, "hello");  //注意字符串不能直接赋值    
+    p.n = 11;    
+    p.m = 12.9;    
+    printf ("n = %d, name = %s, m = %g\n", p.n, p.name, p.m);    
+    return 0;    
+}    
+输出结果：    
+n = 11, name = hello, m = 12.9    
+```
+### 10、结构体指针
+
+```
+struct Node {
+    int data;
+    struct Node *nextptr;
+};
+```
+使用 typede 上面的代码可以改写为如下：
+```
+typedef struct Node pNode;
+struct Node {
+    int data;
+    pNode *nextptr;
+};
+或者
+
+
+typedef struct Node{
+    int data;
+    struct Node *nextptr;
+}pNode;
+```
+## 三、typedef 用途
+
+
+用途一：与#define的区别
+typedef 行为有点像 #define 宏，用其实际类型替代同义字。不同点是 typedef 在编译时被解释，
+
+因此让编译器来应付超越预处理器能力的文本替换。
+
+
+ 
+ 用途二：减少错误
+定义一种类型的别名，而不只是简单的宏替换。可以用作同时声明指针型的多个对象。比如：
+```
+[cpp]  view plain  copy  
+char* pa, pb; // 这多数不符合我们的意图，它只声明了一个指向字符变量的指针，  
+// 和一个字符变量；  
+```
+以下则可行：
+```
+[cpp]  view plain  copy  
+typedef char* PCHAR;  
+PCHAR pa, pb;    
+```
+这种用法很有用，特别是char* pa, pb的定义，初学者往往认为是定义了两个字符型指针，其实不是，而用typedef char* PCHAR就不会出现这样的问题，减少了错误的发生。
+
+
+用途三:    直观简洁
+用在旧的C代码中，帮助struct。以前的代码中，声明struct新对象时，必须要带上struct，即形式为： struct 结构名对象名，如：
+```
+[cpp]  view plain  copy  
+struct tagPOINT1  
+ {  
+    int x;  
+    int y;   
+};  
+struct tagPOINT1 p1;  
+```
+而在C++中，则可以直接写：结构名对象名，即：tagPOINT1 p1;
+```
+[cpp]  view plain  copy  
+typedef struct tagPOINT  
+{  
+    int x;  
+    int y;  
+}POINT;  
+```
+POINT p1; // 这样就比原来的方式少写了一个struct，比较省事，尤其在大量使用的时候,或许，在C++中，typedef的这种用途二不是很大，但是理解了它，对掌握以前的旧代码还是有帮助的，毕竟我们在项目中有可能会遇到较早些年代遗留下来的代码。
+
+
+用途四：平台无关性
+用typedef来定义与平台无关的类型。
+
+typedef 有另外一个重要的用途，那就是定义机器无关的类型，例如，你可以定义一个叫 REAL 的浮点类型，在目标机器上它可以获得最高的精度： 
+`typedef long double REAL;   `
+在不支持 long double 的机器上，该 typedef 看起来会是下面这样： 
+`typedef double REAL;   `
+并且，在连 double 都不支持的机器上，该 typedef 看起来会是这样：  
+`typedef float REAL;  ` 
+也就是说，当跨平台时，只要改下 typedef 本身就行，不用对其他源码做任何修改。
+
+标准库就广泛使用了这个技巧，比如size_t。另外，因为typedef是定义了一种类型的新别名，不是简单的字符串替换，所以它比宏来得稳健。
+
+
+用途五：掩饰复合类型
+typedef 还可以掩饰复合类型，如指针和数组。 
+
+例如，你不用像下面这样重复定义有 81 个字符元素的数组： 
+```
+char line[81];  
+char text[81];   
+```
+定义一个 typedef，每当要用到相同类型和大小的数组时，可以这样： 
+
+```typedef char Line[81];   ```
+此时Line类型即代表了具有81个元素的字符数组，使用方法如下： 
+
+```Line text, secondline;  
+getline(text);   
+```
+同样，可以象下面这样隐藏指针语法： 
+
+```typedef char * pstr;  
+int mystrcmp(pstr, pstr);  
+```
+这里将带我们到达第一个 typedef 陷阱。标准函数 strcmp()有两个‘ const char *'类型的参数。因此，它可能会误导人们象下面这样声明 mystrcmp()： 
+```[cpp]  view plain  copy  
+int mystrcmp(const pstr, const pstr);   
+```
+用GNU的gcc和g++编译器，是会出现警告的，按照顺序，‘const pstr'被解释为‘char* const‘（一个指向 char 的指针常量），两者表达的并非同一意思。为了得到正确的类型，应当如下声明： 
+
+`typedef const char* pstr;  `
+
+用途六：代码简化
+代码简化。为复杂的声明定义一个新的简单的别名。方法是：在原来的声明里逐步用别名替换一部分复杂声明，如此循环，把带变量名的部分留到最后替换，得到的就是原声明的最简化版。举例： 
+
+ 原声明：
+```
+[cpp]  view plain  copy  
+void (*b[10]) (void (*)());  
+```
+变量名为b，先替换右边部分括号里的，pFunParam为别名
+
+`typedef void (*pFunParam)();  `
+再替换左边的变量b，pFunx为别名二：
+
+
+`typedef void (*pFunx)(pFunParam);  `
+原声明的最简化版：
+
+`pFunx b[10];  `
+原声明：
+
+
+`doube(*)() (*e)[9];  `
+变量名为e，先替换左边部分，pFuny为别名一：
+
+`typedef double(*pFuny)();  `
+再替换右边的变量e，pFunParamy为别名二
+
+
+`typedef pFuny (*pFunParamy)[9];  `
+原声明的最简化版：
+
+
+`pFunParamy e;  `
+理解复杂声明可用的“右左法则”：从变量名看起，先往右，再往左，碰到一个圆括号就调转阅读的方向；括号内分析完就跳出括号，还是按先右后左的顺序，如此循环，直到整个声明分析完。举例：
+
+`int (*func)(int *p);  `
+首先找到变量名func，外面有一对圆括号，而且左边是一个*号，这说明func是一个指针；然后跳出这个圆括号，先看右边，又遇到圆括号，这说明(*func)是一个函数，所以func是一个指向这类函数的指针，即函数指针，这类函数具有int*类型的形参，返回值类型是int。
+
+
+`int (*func[5])(int *);  `
+func右边是一个[]运算符，说明func是具有5个元素的数组；func的左边有一个*，说明func的元素是指针（注意这里的*不是修饰func，而是修饰func[5]的，原因是[]运算符优先级比*高，func先跟[]结合）。跳出这个括号，看右边，又遇到圆括号，说明func数组的元素是函数类型的指针，它指向的函数具有int*类型的形参，返回值类型为int。
+
+
+用途七：typedef 和存储类关键字（storage class specifier） 
+这种说法是不是有点令人惊讶，typedef 就像 auto，extern，mutable，static，和 register 一样，是一个存储类关键字。这并不是说 typedef 会真正影响对象的存储特性；它只是说在语句构成上，typedef 声明看起来象 static，extern 等类型的变量声明。下面将带到第二个陷阱： 
+
+`typedef register int FAST_COUNTER; // 错误  `
+　　编译通不过。问题出在你不能在声明中有多个存储类关键字。因为符号 typedef 已经占据了存储类关键字的位置，在 typedef 声明中不能用 register（或任何其它存储类关键字）。
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53883571
+
 #  C 预处理器
 
 gcc/cc xxx.c  可以编译链接C源程序生成一个可执行文件 a.out
@@ -6748,15 +7109,16 @@ NULL 指针并不指向任何对象。因此，除非是用于赋值或比较运
 结构体的一般定义形式为：
 
 标签（tag）字段允许为成员列表提供一个名字，这样它就可以在后续的声明中使用。标签允许多个声明使用同一个成员列表，并且创建同一种类型的结构。
-
+```
 struct　标签{  
      类型名1　成员名1;
      类型名2　成员名2;
     ……
      类型名n　成员名n;　　　
  }结构体变量;
-
+```
 1、如果 标签 存在，结构体变量 不存在，定义如下：
+```
 struct Student{
     char name[20];//姓名
     int age;//年龄
@@ -6764,15 +7126,17 @@ struct Student{
 };
  
 struct Student stu   //Student 为标签  stu 为结构体变量
-
+```
 2、如果 结构体变量 存在， 标签 可有可无，定义如下：
+```
 struct Student{  //Student 可有可无
     char name[20];//姓名
     int age;//年龄
     float height;//身高
 }stu;
-
+```
 3、使用typedef起别名，标签可有可无，结构体变量 位置变为该 类型名
+```
 typedef struct Student{ //Student 可有可无
     char name[20];//姓名
     int age;//年龄
@@ -6780,8 +7144,9 @@ typedef struct Student{ //Student 可有可无
 }Stu; //Stu 为类型名
  
 Stu stu； //Stu 为类型名，stu 为结构体变量
-
+```
 4、注意，字符串初始化不能直接赋值，需要使用 strcpy 函数
+```
 #include <stdio.h>  
 #include <string.h>  
   
@@ -6804,65 +7169,77 @@ int main (void)
 }  
 输出结果：  
 n = 11, name = hello, m = 12.9  
+```
+## 一、结构体的定义
 
-一、结构体的定义
 1、定义形式
 结构体内部的元素，也就是组成成分，我们一般称为"成员"。
 结构体的一般定义形式为：
-
+```
 struct　结构体名{  
      类型名1　成员名1;
      类型名2　成员名2;
     ……
      类型名n　成员名n;　　　
  };
+```
 2、举例
 比如，我们定义一个学生
-
+```
 struct Student{
     char name[20];//姓名
     int age;//年龄
     float height;//身高
 };
+```
 上面定义了一个叫做Student的结构体，共有name、age、height3个成员。呵呵，看到这里是否有点面向对象的味道呢，其实这跟面向对象完全是两码事，只能说感觉有点像。
 
-二、结构体变量的定义
+## 二、结构体变量的定义
 前面只是定义了名字为Student的结构体类型，并非定义了一个结构体变量，就像int一样，只是一种类型。
 接下来定义一个结构体变量，方式有好多种。
 
 1、先定义结构体类型，再定义变量
+```
 struct Student{
     char name[20];//姓名
     int age;//年龄
     float height;//身高
 };
 struct Student stu;
+```
 定义了一个结构体变量，变量名为stu。struct和Student是连着使用的。
 
 2、定义结构体类型的同时定义变量
+```
 struct Student{
     char name[20];//姓名
     int age;//年龄
     float height;//身高
 }stu;
+```
 结构体变量名为stu
 3、直接定义结构体类型变量，省略类型名
+```
 struct {
     char name[20];//姓名
     int age;//年龄
     float height;//身高
 }stu;
+```
 结构体变量名为stu
 
-三、结构体的注意点
+### 三、结构体的注意点
 1、不允许对结构体本身递归定义
+```
 如下做法是错误的，注意第3行
 
 struct Student {
      int age;
      struct Student stu;
  };
+```
 2、结构体内可以包含别的结构体
+```
  struct Date {
       int year;
       int month;
@@ -6873,28 +7250,32 @@ struct Student {
       char name[20];
       struct Date birthday; //................(1)
  };
+```
 注：（1）行
 3、定义结构体类型，只是说明了该类型的组成情况，并没有给它分配存储空间，就像系统不为int类型本身分配空间一样。只有当定义属于结构体类型的变量时，系统才会分配存储空间给该变量
+```
 struct Student {
      char name[20];
      int age;
  };
+```
 //................在此之前，系统并没有分配存储空间
 struct Student stu;//...............当执行到该6行时，系统才会分配存储空间给stu变量。
 
 4、结构体变量占用的内存空间是其成员所占内存之和，而且各成员在内存中按定义的顺序依次排列
 比如下面的Student结构体：
-
+```
  struct Student {
      char ch; 
      int num; 
      float height; 
  };
+```
 根据结构体内存对齐与补齐规则，这个Student变量共占用内存：12字节。
 
 
 考虑一个问题， 空结构体所占内存多大？
-
+```
 #include <stdio.h>
  
 struct strudent
@@ -6910,31 +7291,37 @@ int main (void)
 输出结果：
 在C中， sizeof (stu) = 0
 在C++中， sizeof (stu) = 1
+```
+## 四、结构体的初始化
 
-四、结构体的初始化
 将各成员的初值，按顺序地放在一对大括号{}中，并用逗号分隔，一一对应赋值。
 比如初始化Student结构体变量stu
-
+```
  struct Student {
      char name[20];
      int age;
  };
  struct Student stu = {"MJ", 27};
+```
 只能在定义变量的同时进行初始化赋值，初始化赋值和变量的定义不能分开，下面的做法是错误的：
-
+```
 struct Student stu;
 stu = {"MJ", 27};
-五、结构体的使用
+```
+## 五、结构体的使用
 1、一般对结构体变量的操作是以成员为单位进行的，引用的一般形式为：结构体变量名.成员名
+```
  struct Student {
      char name[20];
      int age;
  };
  struct Student stu; 
  stu.age = 27; // 访问stu的age成员........(2)
+```
 (2)行对结构体的age成员进行了赋值。"."称为成员运算符，它在所有运算符中优先级最高
 
 2、如果某个成员也是结构体变量，可以连续使用成员运算符"."访问最低一级成员
+```
 struct Date {
        int year;
        int month;
@@ -6948,7 +7335,9 @@ struct Date {
  stu.birthday.year = 1986;
  stu.birthday.month = 9;
  stu.birthday.day = 10;
+```
 3、相同类型的结构体变量之间可以进行整体赋值
+```
 struct Student {
       char name[20];
       int age;
@@ -6957,47 +7346,50 @@ struct Student {
  struct Student stu2 = stu1; // 将stu1直接赋值给stu2
  printf("age is %d", stu2.age);
 输出结果为： age is 27
-
-六、结构体数组
+```
+## 六、结构体数组
 1、定义
 跟结构体变量一样，结构体数组也有3种定义方式
 （1）、
-
+```
 struct Student {
     char name[20];
     int age;
 };
 struct Student stu[5]; //定义1
+```
 （2）、
-
+```
 struct Student {
     char name[20];
     int age;
 } stu[5]; //定义2
+```
 （3）、
-
+```
 struct {
     char name[20];
     int age;
 } stu[5]; //定义3
+```
 上面3种方式，都是定义了一个变量名为stu的结构体数组，数组元素个数是5
 
 2、初始化
+```
 struct {
     char name[20];
     int age;
 } stu[2] = { {"MJ", 27}, {"JJ", 30} };
+```
 也可以用数组下标访问每一个结构体元素，跟普通数组的用法是一样的
 
-七、结构体作为函数参数
+## 七、结构体作为函数参数
 将结构体变量作为函数参数进行传递时，其实传递的是全部成员的值，也就是将实参中成员的值一一赋值给对应的形参成员。因此，形参的改变不会影响到实参。
-
-96E7DE2F-5EFE-4B92-A0A4-EE196E126A3D.png
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695539929926.png)
 首先在(3)行定义了一个结构体类型Student
 在(4)行定义了一个结构体变量stu，并在(5)行将其作为实参传入到test函数
 输出结果为：
-
-24165811-5748e293af5f4dec8f1fb855727a3e76.png
+![24165811-5748e293af5f4dec8f1fb855727a3e76.png](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695539952441.png)
 形参是改变了，但是实参一直没有变过。
 八、指向结构体的指针变量
 1、每个结构体变量都有自己的存储空间和地址，因此指针也可以指向结构体变量
@@ -7006,13 +7398,11 @@ struct {
 （1）、结构体变量名.成员名
 （2）、(*指针变量名).成员名
 （3）、指针变量名->成员名
-
-38622765-4312-4EEE-8D42-148230B72355.png
+![38622765-4312-4EEE-8D42-148230B72355.png](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695539957336.png)
 
 输出结果为：
 
-24170725-fe1c21f2d61e4db1a3ea18223098c21b.png
-
+![24170725-fe1c21f2d61e4db1a3ea18223098c21b.png](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695539964091.png)
 
 # 存储类型关键字
 
