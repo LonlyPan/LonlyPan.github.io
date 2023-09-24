@@ -2475,18 +2475,221 @@ return;
 堆和栈的区别可以用如下的比喻来看出： 
 使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。
 
+# EOF、feof函数、ferror函数
+
+## EOF详解
+
+**EOF**是end of file的缩写，表示"文字流"（stream）的结尾。这里的"文字流"，可以是文件（file），也可以是标准输入（stdin）。
+
+EOF不是特殊字符，而是一个定义在头文件stdio.h的常量，一般等于-1。
+**#define EOF (-1)**
+
+在C语言中，或更精确地说成C标准函数库中表示文件结束符（end of file）。在while循环中以EOF作为文件结束标志，这种以EOF作为文件结束标志的文件，必须是文本文件。在文本文件中，数据都是以字符的ASCII代码值的形式存放。我们知道，ASCII代码值的范围是0~127，不可能出现-1，因此可以用EOF作为文件结束标志。
+
+```
+//文件结尾 示例
+#include<stdio.h>
+void main()
+{
+    FILE *fp;
+    char c;
+    fp=fopen("abc.txt","r");
+    while((c=fgetc(fp))!=EOF)
+        printf("%c",c);
+    fclose(fp);
+}
+```
+
+除了表示文件结尾，EOF还可以表示标准输入的结尾。但是，标准输入与文件不一样，无法事先知道输入的长度，必须手动输入一个字符，表示到达EOF。
+
+
+1）将getchar()的返回值与EOF进行比较。如果不相同，则你还没有到达文件结尾。换句话说，你可以使用如下表达式：
+
+while （(ch = getchar ()) != EOF）
+
+```
+#include <stdio.h>  
+int main(void)  
+{  
+    char ch;  
+    while ((ch = getchar ()) != EOF)  
+        putchar (ch);  
+    return 0;  
+}  
+```
+
+2） scanf()函数  返回一个整数值，这个值是成功读取的项目数，或者当遇到文件结束时返回一个EOF(文件结尾符)。
+```
+#include <stdio.h>
+int main (void)
+{
+	int n = 0;
+	while (scanf ("%d", &n) != EOF)
+	{
+		printf ("hello world!\n");
+	}
+	return 0;
+}
+```
+3）fclose ( )函数 如果成功返回 0，否则返回EOF（-1）。
+
+4）如果读入字符时发现已经到达文件结尾，getc ( )函数 会返回一个特殊值EOF。
+```
+int ch;
+FILE * fp;
+fp = fopen ("abc.txt", "r");
+while ((ch = getc (fp)) != EOF)
+{
+	putchar (ch);
+}
+```
+## feof ( )函数：
+**函数原型：**
+int feof(FILE * stream);
+所在头文件：
+stdio.h
+**返回值：**
+返回非零值代表已到达文件尾
+**函数说明：**
+feof ( ) 用来侦测是否读取到了文件尾, 尾数stream 为fopen()所返回之文件指针. 如果已到文件尾则返回非零值, 其他情况返回0
+```
+//示例
+#include <stdio.h>
+int main ()
+{
+   FILE *fp;
+   int c;
+   fp = fopen("abc.txt","r");
+   if(fp == NULL) 
+   {
+      perror("打开文件时发生错误");
+      return(-1);
+   }
+   while(1)
+   {
+      c = fgetc(fp);
+      if( feof(fp) ) //到文件结尾 feof (fp) 为 1
+      { 
+          break ;
+      }
+      printf("%c", c);
+   }
+   fclose(fp);
+   return(0);
+}
+```
+
+## EOF与feof函数区别
+
+EOF是文本文件结束的标志。在文本文件中，数据是以字符的ASCⅡ代码值的形式存放，普通字符的ASCⅡ代码的范围是32到127（十进制），EOF的16进制代码为0xFF（十进制为-1），因此可以用EOF作为文件结束标志。 当把数据以二进制形式存放到文件中时，就会有-1值的出现，因此不能采用EOF作为二进制文件的结束标志。
+为解决这一个问题，ASCI C提供一个feof函数，用来判断文件是否结束。feof函数既可用以判断二进制文件又可用以判断文本文件。
+
+注意：feof ( )函数，读取文件的最后一个字符以后，C 语言的feof ( ) 函数依然返回 0，表明没有到达文件结尾；只有当fgetc ( ) 向后再读取一个字符（即越过最后一个字符），feof()才会返回一个非零值，表示到达文件结尾。
+//示例
+#include <stdio.h>  
+int main ()  
+{  
+   FILE *fp;  
+   int c;  
+   fp = fopen("abc.txt","r");  
+   if(fp == NULL)   
+   {  
+      perror("打开文件时发生错误");  
+      return(-1);  
+   }  
+   c = fgetc(fp);  
+   while(!feof (fp))  
+   {  
+      printf("%c", c);  
+      c = fgetc(fp); //打印所有的数据之后，需要再fgetc(fp)一次，函数feof(fp)的返回值才为真
+   }  
+   fclose(fp);  
+   return(0);  
+}  
+
+//改良版
+#include <stdio.h>  
+int main ()  
+{  
+   FILE *fp;  
+   int c;  
+   fp = fopen("abc.txt","r");  
+   if(fp == NULL)   
+   {  
+      perror("打开文件时发生错误");  
+      return(-1);  
+   }  
+   while(1)  
+   {  
+      c = fgetc(fp);  
+      if( feof(fp) ) //到文件结尾 feof (fp) 为 1  
+      {   
+          break ;  
+      }  
+      printf("%c", c);  
+   }  
+   fclose(fp);  
+   return(0);  
+}  
+
+
+
+ferror()函数
+函数原型：
+int ferror(FILE *stream)
+返回值：
+如果设置了与流关联的错误标识符，该函数返回一个非零值，否则返回一个零值。
+函数描述：
+ferror，函数名，在调用各种输入输出函数（如 putc.getc.fread.fwrite等）时，如果出现错误，除了函数返回值有所反映外，还可以用ferror函数检查。 它的一般调用形式为 ferror(fp)；如果ferror返回值为0（假），表示未出错。如果返回一个非零值，表示出错。应该注意，对同一个文件 每一次调用输入输出函数，均产生一个新的ferror函 数值，因此，应当在调用一个输入输出函数后立即检 查ferror函数的值，否则信息会丢失。在执行fopen函数时，ferror函数的初始值自动置为0。
+
+#include <stdio.h>
+int main()
+{
+   FILE *fp;
+   char c;
+   fp = fopen("file.txt", "w");
+   c = fgetc(fp);
+   if( ferror(fp) )
+   {
+      printf("读取文件：file.txt 时发生错误\n");
+   }
+   clearerr(fp);
+   if( ferror(fp) )
+   {
+      printf("读取文件：file.txt 时发生错误\n");
+   }
+   fclose(fp);
+   return(0);
+}
+假设我们有一个文本文件 file.txt，它是一个空文件。让我们编译并运行上面的程序，因为我们试图读取一个以只写模式打开的文件，这将产生以下结果。
+读取文件：file.txt 时发生错误
+通过上面的例子可以看到，clearerr 清除了出错标志。
+
+
+clearerr 函数
+函数原型：
+void clearerr(FILE *stream)
+函数功能：
+在大多数实现中，为每个流在 FILE 对象中维护了两个标志：
+出错标志
+文件结束标志
+调用 clearerr 可以清除这两个标志
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53100563
+
 # 文件
 
-**文件是什么**
+## 文件是什么
 
 一个文件（file）通常就是磁盘上的一段命名的存储区。C 将文件看成是连续的字节序列，其中每一个字节都可以单独地读取。
 
-**二进制和文本模式**
+## 二进制和文本模式
 1、在windows系统中，文本模式下，文件以"\r\n"代表换行。若以文本模式打开文件，并用fputs等函数写入换行符"\n"时，函数会自动在"\n"前面加上"\r"。即实际写入文件的是"\r\n" 。
 
 2、在类Unix/Linux系统中文本模式下，文件以"\n"代表换行。所以Linux系统中在文本模式和二进制模式下并无区别。
 
-**标准文件**
+## 标准文件
 
 C 程序自动打开3个文件。这3个文件被称为标准输入，标准输出和标准错误输出。默认的标准输入是系统的一般输入设备，通常为键盘；默认的标准输出和标准错误输出是系统的一般输出设备，通常为显示器，分别得到文件描述符 0, 1, 2.
 
@@ -2504,13 +2707,15 @@ stdio.h文件把3个文件指针与3个C 程序自动打开的标准文件进行
 
 这些指针都是FILE指针类型，所以可以被用作标准I/O函数的参数。
 
-**stdout和stderr比较：**
+## stdout和stderr比较：
 
 stderr -- 标准错误输出设备
 stdout -- 标准输出设备 (printf("..")) 同 stdout。
 两者默认向屏幕输出。但如果用转向标准输出到磁盘文件，则可看出两者区别。stdout输出到磁盘文件，stderr在屏幕，例如：
+```
 fprintf(stderr, "Can't open it!\n");
 fprintf(stdout, "Can't open it!\n");
+```
 在my.exe
 Can't open it!
 Can't open it!
@@ -2525,19 +2730,17 @@ TYPE tmp.txt
 Can't open it!
 Can't open it!
 
-
-
 stderr是不缓存的，stdout是行间缓存的。请注意：
+```
 for(i = 0; i < 10; i++)
     {
       fprintf(stdout, "This is stdout[%d]", i);
       fprintf(stderr, "This is stderr[%d]", i);
     }
+```
 会全部显示stderr之后，再显示stdout。又因为stdout是行内缓存，所以加 \n 后会立刻显示。
 
-
-
-文件操作分成如下三个步骤：
+**文件操作分成如下三个步骤：**
 
 1、打开文件 （fopen）
 
@@ -2547,84 +2750,54 @@ for(i = 0; i < 10; i++)
 
 下面来一一介绍：
 
-打开文件 -- fopen ( )函数：
+## 打开文件 -- fopen ( )函数：**
 
-函数原型：
+**函数原型：**
 FILE * fopen(const char * path,const char * mode);
 
-返回值：
+**返回值：**
 
 文件顺利打开后，指向该流的文件指针就会被返回。如果文件打开失败则返回NULL，并把错误代码存在errno中。
 一般而言，打开文件后会做一些文件读取或写入的动作，若打开文件失败，接下来的读写动作也无法顺利进行，所以一般在fopen()后作错误判断及处理。
 
-参数说明：
+**参数说明：**
 
 path：字符串包含欲打开的文件路径及文件名
 
 mode：C 字符串，包含了文件访问模式，模式如下：
 
 
-模式字符串
+| 模式字符串 |  |
+|---|---| 
+|“r”|以只读方式打开文件，该文件必须存在|
+|“r+”|以只读写方式打开文件，该文件必须存在|
+|“w”|打开只写文件，若文件存在则文件长度清零，即该文件内容会消失。
+若文件不存在则建立该文件|
+|“w+”|打开可读写文件，若文件存在则文件长度清零，即该文件内容会消失。若文件不存在则建立该文件。|
+|“a”|以附加的方式打开只写文件。若文件不存在，则会建立该文件，如果文件存在，写入的数据会被加到文件尾，即文件原先的内容会被保留。（EOF符保留）|
+|“a+”|以附加方式打开可读写的文件。若文件不存在，则会建立文件，如果文件存在，写入的数据会被加到文件尾后，即文件原先的内容会被保留。（原来的EOF符不保留）|
+|“rb”, “wb”, “ab”, “ab+”, “a+b”, “wb+”, “w+b”, “ab+”, “a+b”|与前面的模式相似，只是使用二进制模式而非文本模式打开文件|
 
- 
+## 关闭文件 -- fclose ( )函数：
 
-“r”
-
-以只读方式打开文件，该文件必须存在
-
-“r+”
-
-以只读写方式打开文件，该文件必须存在
-
-“w”
-
-打开只写文件，若文件存在则文件长度清零，即该文件内容会消失。
-
-若文件不存在则建立该文件
-
-“w+”
-
-打开可读写文件，若文件存在则文件长度清零，即该文件内容会消失。
-
-若文件不存在则建立该文件。
-
-“a”
-
-以附加的方式打开只写文件。若文件不存在，则会建立该文件，如果文件存在，
-
-写入的数据会被加到文件尾，即文件原先的内容会被保留。（EOF符保留）
-
-“a+”
-
-以附加方式打开可读写的文件。若文件不存在，则会建立文件，如果文件存在，
-
-写入的数据会被加到文件尾后，即文件原先的内容会被保留。（原来的EOF符不保留）
-
-“rb”, “wb”, “ab”, “ab+”, “a+b”,
-
- “wb+”, “w+b”, “ab+”, “a+b”
-
-与前面的模式相似，只是使用二进制模式而非文本模式打开文件
-
-
-关闭文件 -- fclose ( )函数：
-
-函数原型：
+**函数原型：**
 
 int fclose( FILE *fp );
 
-返回值：
+**返回值：**
 如果流成功关闭，fclose 返回 0，否则返回EOF（-1）。（如果流为NULL，而且程序可以继续执行，fclose设定error number给EINVAL，并返回EOF。）
 
 因此，可在fclose(fp)后使用
+```
 if(fclose())
 {
     perror("fclose");
 }
+```
 来判断是否成功关闭文件，关闭失败，则fclose返回“1”并输出出错原因。
 
 扩展：C语言再学习 -- EOF与feof函数
-
+```
 [cpp]  view plain  copy    
 示例一：  
 #include<stdio.h>  
@@ -2641,13 +2814,13 @@ int main(void)
     fp = NULL;  
      return 0;  
 }  
-
+```
 在文件操作时，需要注意以下几点问题
 1、在定义文件指针时，要将文件指针指向空；如 FILE *fp = NULL;
 2、需要判断文件是否打开成功，如 if(NULL == fp)
 3、文件操作完成后，注意要将文件关闭，否则会造成文件所占用内存泄露和在下次访问文件时出现问题。
 4、文件关闭后，需要将文件指针指向空，这样做会防止出现游离指针，而对整个工程造成不必要的麻烦；如：fp = NULL;
-
+```
 [cpp]  view plain  copy    
 // 一个简单的文件压缩程序  
 #include <stdio.h>  
@@ -2687,45 +2860,44 @@ int main (int argc, char *argv[])
         fprintf (stderr, "Error in closing files\n");  
     return 0;  
 }  
-  
+
 同一目录下创建文件eddy，里面添加内容 So even Eddy came oven ready .  
 输出结果：创建 eddy.red  
 Send money  
+```
 
-操作文件 -- fread ( )函数和fwrite ( )函数
+## 操作文件 -- fread ( )函数和fwrite ( )函数**
 
-fwrite ( )函数
+### fwrite ( )函数
 
-函数功能：
+**函数功能：**
 指向文件写入一个数据块。
-函数原型：
+**函数原型：**
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream);
 注意：这个函数以二进制形式对文件进行操作，不局限于文本文件
-参数：
+**参数：**
 （1）buffer：是一个指针，对fwrite来说，是要获取数据的地址；
 （2）size：要写入内容的单字节数；（size_t是sizeof返回的类型，通常是unsigned int类型）
 （3）count:要进行写入size字节的数据项的个数；
 （4）stream:目标文件指针；
-返回值：
+**返回值：**
 返回实际写入的数据块数目 count。
 
+### fread ( )函数：
 
-
-fread ( )函数：
-
-函数原型
+**函数原型**
 size_t fread ( void *buffer, size_t size, size_t count, FILE *stream);
-参数：
+**参数：**
 （1）buffer：用于接收数据的内存地址
 （2）size：要读的每个数据项的字节数，单位是字节 （size_t是sizeof返回的类型，通常是unsigned int类型）
 （3）count：要读count个数据项，每个数据项size个字节.
 （4）stream：输入流
-返回值：
+**返回值：**
 返回真实写入的项数，若大于count则意味着产生了错误。另外，产生错误后，文件位置指示器是无法确定的。若其他stream或buffer为空指针，或在unicode模式中写入的字节数为奇数，此函数设置errno为EINVAL以及返回0.
-函数功能：
+**函数功能：**
 从一个文件流中读数据，最多读取count个项，每个项size个字节，如果调用成功返回实际读取到的项个数（小于或等于count），如果不成功或读到文件末尾返回 0。
 
-
+```
 [cpp]  view plain  copy    
 #include <stdio.h>  
 #include <string.h>  
@@ -2750,22 +2922,22 @@ int main()
    fclose(fp);  
    return(0);  
 }  
+```
+## 随机存取：fseek ( )、ftell ( )、rewind ( )
 
-随机存取：fseek ( )、ftell ( )、rewind ( )
+### fseek ( )函数
 
-fseek ( )函数
-
-函数功能：
+**函数功能：**
 
 重定位流（数据流/文件）上的文件内部位置指针
 
 注意：文件指针指向文件/流。位置指针指向文件内部的字节位置，随着文件的读取会移动，文件指针如果不重新赋值将不会改变或指向别的文件。
 
-函数原型：
+**函数原型：**
 
 int fseek(FILE *stream, long offset, int fromwhere);
 
-参数：
+**参数：**
 
 （1）stream：为文件指针
 （2）offset：为偏移量，正数表示正向偏移，负数表示负向偏移（数字值用3L、10L等，L后缀表示long类型）
@@ -2775,11 +2947,11 @@ SEEK_CUR： 当前位置
 SEEK_END： 文件结尾
 其中SEEK_SET,SEEK_CUR和SEEK_END依次为0，1和2.
 
-返回值：
+**返回值：**
 
 成功，返回 0，失败返回 -1，并设置error的值，可以用perror()函数输出错误。
 
-函数描述：
+**函数描述：**
 
 函数设置文件指针stream的位置。如果执行成功，stream将指向以fromwhere（偏移起始位置：文件头0（SEEK_SET），当前位置1（SEEK_CUR），文件尾2（SEEK_END））为基准，偏移offset（指针偏移量）个字节的位置。如果执行失败（比如offset超过文件自身大小），则不改变stream指向的位置。
 
@@ -2787,7 +2959,7 @@ SEEK_END： 文件结尾
 
 fseek函数和lseek函数类似，但lseek返回的是一个off_t数值，而fseek返回的是一个整型.
 
-
+```
 #include <stdio.h>
 int main (void)
 {
@@ -2820,24 +2992,24 @@ int main (void)
 C
 G
 M
+```
 
+### ftell ()函数
 
-ftell ()函数
-
-函数原型：
+**函数原型：**
 
 long ftell(FILE *stream);
 
-函数功能：
+**函数功能：**
 函数 ftell() 用于得到文件位置指针当前位置相对于文件首的偏移字节数。在随机方式存取文件时，由于文件位置频繁的前后移动，程序不容易确定文件的当前位置。使用fseek函数后再调用函数ftell()就能非常容易地确定文件的当前位置。
 
-返回值：
+**返回值：**
 
 以一个long类型值返回一个文件的当前位置。如果发生错误，则返回 -1L，全局变量 errno 被设置为一个正值。
 
 调用示例编辑：
 ftell(fp);利用函数 ftell() 也能方便地知道一个文件的长。如以下语句序列： fseek(fp, 0L,SEEK_END); len =ftell(fp); 首先将文件的当前位置移到文件的末尾，然后调用函数ftell()获得当前位置相对于文件首的位移，该位移值等于文件所含字节数。
-
+```
 
 #include <stdio.h>
 int main (void)
@@ -2860,18 +3032,19 @@ int main (void)
  
 输出结果：
 abc.txt 的总大小 = 8 字节
+```
 
+### rewind ()函数：
 
-rewind ()函数：
-
-函数原型：
+**函数原型：**
 void rewind(FILE *stream)
-返回值：
+**返回值：**
 该函数不返回任何值。
-函数功能: 
+**函数功能:** 
 将文件内部的位置指针重新指向一个流（数据流/文件）的开头
 注意：不是文件指针而是文件内部的位置指针，随着对文件的读写文件的位置指针（指向当前读写字节）向后移动。而文件指针是指向整个文件，如果不重新赋值文件指针不会改变。
 rewind函数作用等同于 (void)fseek(stream, 0L, SEEK_SET);[1] 
+```
 #include <stdio.h>
  
 int main()
@@ -2917,7 +3090,7 @@ int main()
 输出结果：
 Hello World!
 Hello World!
-
+```
 # 函数
 
 ## 一、函数概述
