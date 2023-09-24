@@ -662,7 +662,7 @@ sizeof(*p)呢？
 sizeof (p) = 4;  因为 p为指针，32位系统 指针所占字节为 4个字节
 
 sizeof (*p) = 4;  因为 *p 为 指针所指向的变量为int类型，整型为 4个字节
-
+```
 #include <stdio.h>
  
 int main (void)
@@ -675,7 +675,9 @@ int main (void)
 }
 输出结果：
 i = 4, j = 2
+```
 3、int a[100];
+
 sizeof (a) 的值是多少？
 sizeof(a[100])呢？ //请尤其注意本例。
 sizeof(&a)呢？
@@ -689,7 +691,7 @@ sizeof (&a) = 4;  因为 &a 为数组的地址即指针，32位系统 指针所�
 
 sizeof (&a[0]) = 4; 因为&a[0] 为数组的首元素的地址即指针，32位系统 指针所占字节为 4个字节
 
-
+```
 #include <stdio.h>
  
 int main (void)
@@ -706,16 +708,19 @@ sizeof (a) = 400
 sizeof (a[100] = 4
 sizoef (&a) = 4
 sizeof (&a[0] = 4
-
-4、int b[100];
+```
+4、
+```
+int b[100];
 void fun(int b[100])
 {
 sizeof(b);// sizeof (b) 的值是多少？
 }
+```
 
 sizeof (b) = 4;  因为函数中的数组形参或函数类型的形参，sizeof给出其指针的大小。参数传递数组永远都是传递指向数组首元素的指针。
 
-
+```
 #include <stdio.h>
  
 void fun (int b[100]) //指针做形参
@@ -731,7 +736,8 @@ int main (void)
 }
 输出结果：
 sizeof (b) = 4
-
+```
+```
 #include <stdio.h>
 void foo (void)
 {
@@ -749,10 +755,7 @@ int main (void)
 }
 输出结果：
 sizeof (foo) = 4
-————————————————
-版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/52277578
-<!--more-->
+```
 
 # 关键字
 C语言一共有32个关键字，如下表所示：
