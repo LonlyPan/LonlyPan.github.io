@@ -842,6 +842,26 @@ scanf()格式转换修饰符
 |h、l、L|”%hd“和”%hi“指示该值将会存储在一个short int中。”%ho“、”%hx“”%hu“指示该值将会存储在一个unsigned short int中。”%ld“和”%li“指示该值将存储在一个long中。”%lo“、”lx“、”lu“指示该值将会存储在一个unsigned long中。”%le“、”%lf“、”%lg“指示该值将会存储在double中。将L与e、f、g一起使用指示该值将会存储在long double中。如果没有这些修饰符，d、i、o、x指示int类型，e、f、g指示float类型|
 |空格|只能修饰 %c ， 忽略输入的前导空白字符
 
+>对于scanf()除了%c以外，对每一个输入项忽略其前导空白字符（空格、制表符、换行符）。从第一个非空白字符开始，直到遇到空白字符或达到宽度或遇到当前输入格式的非法字符时停止当前项输入，进入下一输入项
+
+ 简单总结：
+
+数据类型和占位符之间的对应关系
+char和unsingned char     %c
+short                                  %hd
+unsigned short                 %hu
+long                                   %ld
+unsigned long                  %lu
+int                                      %d
+unsigned int                     %u
+float                                   %f/%g
+double                               %lf/%lg
+
+%f和%lf会保留小数点后面多余的0   如 3.1400000   .2%f得 3.14
+%g和%lg不会保留   如 3.14
+%02d 两位数，如果不够前面补0， 如 02
+
+
 # 关键字
 C语言一共有32个关键字，如下表所示：
 
