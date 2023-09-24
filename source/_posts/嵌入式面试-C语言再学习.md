@@ -757,6 +757,8 @@ int main (void)
 sizeof (foo) = 4
 ```
 
+# printf、scanf占位符
+
 # 关键字
 C语言一共有32个关键字，如下表所示：
 
