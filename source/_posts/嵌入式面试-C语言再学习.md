@@ -5302,6 +5302,824 @@ hello world
 
 #  C 预处理器
 
+gcc/cc xxx.c  可以编译链接C源程序生成一个可执行文件 a.out
+
+整个过程中可以划分为以下的4步流程:
+1. 预处理/预编译： 主要用于包含头文件的扩展，以及执行宏替换等 //加上 -E
+2. 编译：主要用于将高级语言程序翻译成汇编语言，得到汇编语言    //加上 -S
+3. 汇编：主要用于将汇编语言翻译成机器指令，得到目标文件           //加上 -c
+4. 链接：主要用于将目标文件和标准库链接，得到可执行文件           //加上 -o
+
+gcc/cc xxx.o 实现链接的处理,默认生成可执行文件a.out,可以通过选项-o来指定输出文件名
+
+参看：C语言再学习 -- GCC编译过程
+
+根据上面的描述我们可以知道预处理的所在时期，编译程序之前，先由预处理器检查程序，根据程序中使用的预处理指令，预处理器用符号缩略语所代表的内容替换程序中的缩略语。下面详细介绍各个预处理指令：
+
+## 一、#define的用法
+
+#define 是一个预处理指令，这个预处理执行可以定义宏。与所有预处理指令一样，预处理指令#define用#符号作为行的开头。预处理指令从#开始，到其后第一个换行符为止。也就是说，指令的长度限于一行代码。如果想把指令扩展到几个物理行，可使用反斜线后紧跟换行符的方法实现，换行符代表按下回车键在源代码文件中新起一行所产生的字符，而不是符号 \n 代表的字符。在预处理开始前，系统会删除反斜线和换行符的组合，从而达到把指令扩展到几个物理行的效果。可以使用标准C注释方法在#define行中进行注释。
+
+```
+//使用反斜线+回车
+#define OW "hello\
+world!" /*注意第二行要左对齐*/
+```
+每一个#define行由三部分组成：
+
+- 第一部分，指令#deine自身。
+- 第二部分，所选择的缩略语，这些缩略语称为宏（分为对象宏和函数宏）。宏的名字中不允许有空格，而且必须遵循C变量命名规则：只能使用字母、数字和下划线（_），第一个字符不能为数字。习惯上宏名用大写字母表示，以便于与变量区别。但也允许用小写字母。
+- 第三部分，（#define行的其余部分）称为替换列表或主体。
+
+**注意，结尾没有分号**
+
+
+宏所代表的数字可以在编译命令中指定（使用-D选项）
+```
+/*
+ 宏演示
+ */
+#include <stdio.h>
+int main()
+{
+	int num=0;
+	int arr[SIZE]={};   //使用gcc -D可以宏定义这个数字
+	for(num = 0;num <= SIZE - 1;num++)
+	{
+		arr[num]=num;
+		printf("%d ",arr[num]);
+	}
+	printf("\n");
+	return 0;
+}
+gcc -D SIZE=4 define.c
+输出结果：
+0 1 2 3
+```
+
+函数宏：
+
+通过使用参数，可以创建外形和作用都与函数相似的类函数宏。宏的参数也用圆括号括起来。类函数宏的定义中，用圆括号括起来一个或多个参数，随后这些参数出现在替换部分。
+
+```
+#include <stdio.h>
+#define SQUARE(X) X*X
+#define PR(X) printf ("The result is %d\n", X)
+ 
+int main (void)
+{
+	int x = 4;
+	int z;
+ 
+	printf ("x = %d\n", x);
+	z = SQUARE(x);
+	printf ("Evaluating SQUARE(x): ");
+	PR(z);
+ 
+	z = SQUARE(2);
+	printf ("Evaluating SQUARE(2): ");
+	PR(z);
+ 
+	printf ("Evaluating 100/SQUARE(2): ");
+	PR(100/SQUARE(2));
+ 
+	z = SQUARE(x+2);
+	printf ("Evaluating SQUARE(x+2): ");
+	PR(z);
+	
+	printf ("x is %d\n", x);
+	z = SQUARE(++x);
+	printf ("Eavluating SQUARE(++x): ");
+	PR(SQUARE (++x));
+	printf ("After incrementing, x is %x\n", x);
+ 
+	return 0;
+}
+输出结果：
+x = 4
+Evaluating SQUARE(x): The result is 16
+Evaluating SQUARE(2): The result is 4
+Evaluating 100/SQUARE(2): The result is 100
+Evaluating SQUARE(x+2): The result is 14
+x is 4
+Eavluating SQUARE(++x): The result is 36
+After incrementing, x is 6
+```
+
+SQUARE(x+2) 输出结果是14，而不是想要的6*6 = 36。这是因为预处理器不进行计算，而只进行字符串替换。在出现x的地方，预处理都用字符串 x+2进行替换。x*x 变为 x+2*x+2 根据运算符优先级，则结果为 14
+
+100/SQUARE(2)输出结果是 100，而不是想要的 25。因为，根据优先级规则，表达式是从左到右求值的。
+
+100/2*2 = 100
+
+要处理前面两个示例中的情况，需要如下定义：
+#define SQUARE(x) ((x) * (x))
+从中得到的经验是使用必须的足够多的圆括号来保证以正确的顺序进行运行和结合。
+
+SQUARE(++x) 根据编译器的不同会出现两种不同的结果。解决这个问题的最简单的方法是避免在宏的参数中使用++x。一般来说，在宏中不要使用增量或减量运算符。
+
+参看：C 语言再学习 -- 运算符与表达式
+
+利用宏参数创建字符串：#运算符
+在类函数宏的替换部分中，#符号用作一个预处理运算符，它可以把语言符号转化为字符串。
+
+例如：如果x是一个宏参量，那么#x可以把参数名转化为相应的字符串。该过程称为字符串化。
+
+```
+#include <stdio.h>
+#define PSQR(x) printf ("The square of " #x" is %d\n", ((x)*(x)))
+ 
+int main (void)
+{
+	int y = 2;
+	PSQR (y);
+	PSQR (2 + 4);
+	return 0;
+}
+输出结果：
+The square of y is 4
+The square of 2 + 4 is 36
+#include <stdio.h>
+#include <string.h>
+#define VEG(n) #n
+int main()
+{
+	char str[20];
+	strcpy(str,VEG(num));//num 
+	printf("%s\n",str);//拷贝
+	return 0;
+}
+输出结果：
+num
+```
+预处理器的粘合剂：##运算符
+和#运算符一样，##运算符可以用于类函数宏的替换部分。另外，##还可用于类对象宏的替换部分。这个运算符把两个语言符号组合成单个语言符号。
+```
+
+#include <stdio.h>
+#define XNAME(n) x##n
+#define PRINT_XN(n) printf ("x"#n" = %d\n", x##n)
+ 
+int main (void)
+{
+	int XNAME (1) = 14; //变为 int x1 = 14;
+	int XNAME (2) = 20; //变为 int x2 = 20;
+	PRINT_XN (1);       //变为 printf ("x1 = %d\n", x1);
+	PRINT_XN (2);       //变为 printf ("x2 = %d\n", x2);
+	return 0;
+}
+输出结果：
+x1 = 14
+x2 = 20
+```
+
+宏用于简单函数：
+
+```
+#include <stdio.h>
+#define MAX(x,y) ((x)>(y) ? (x) : (y))  /*比较大小*/
+#define ABS(x) ((x) < 0 ? -(x) : (x))   /*绝对值*/
+#define ISSIGN(x) ((x) == '+' || (x) == '-' ? 1 : 0)  /*正负号*/ 
+int main()
+{
+	printf ("较大的为： %d\n", MAX(5,3));
+	printf ("绝对值为： %d\n", ABS (-2));
+	printf ("正负号为： %d\n", ISSIGN ('+'));
+	return 0;
+}
+输出结果：
+较大的为： 5
+绝对值为： 2
+正负号为： 1
+```
+下面是需要注意的几点：
+
+1、宏的名字中不能有空格，但是在替代字符串中可以使用空格。ANSI C 允许在参数列表中使用空格。
+
+2、用圆括号括住每个参数，并括住宏的整体定义。
+
+3、用大写字母表示宏函数名，便于与变量区分。
+
+4、有些编译器限制宏只能定义一行。即使你的编译器没有这个限制，也应遵守这个限制。
+
+5、宏的一个优点是它不检查其中的变量类型，这是因为宏处理字符型字符串，而不是实际值。
+
+
+
+面试：用预处理指令#define 声明一个常数，用以表明1年中有多少秒（忽略闰年问题） 
+
+#define SEC (60*60*24*365)UL
+
+考察内容：
+1、懂得预处理器将为你计算常量表达式的值，因此，可直接写出你是如何计算一年中有多少秒而不是计算出实际的值，这样更清晰而没有代价。
+2、意识到这个表达式将使一个16 位机的整形数溢出，因此要用到长整形符号 L ，告诉编译器这个常数是长整形数。
+3、如果你在你的表达式中用到UL（表示无符号长整型），那么你有了一个好的起点。
+
+
+面试：写一个“标准”宏MIN ，这个宏输入两个参数并返回较小的一个
+
+#define MIN(A,B) ((A) <= (B) ? (A) : (B))
+
+考察内容：
+
+1、三目表达式的使用
+2、使用必须的足够多的圆括号来保证以正确的顺序进行运行和结合
+3、进一步讨论，在宏中不要使用增量或减量运算符
+
+研究：C语言中用宏定义（define）表示数据类型和用typedef定义数据类型有什么区别？
+
+宏定义只是简单的字符串代换，是在预处理完成的，而typedef是在编译时处理的，它不是作简单的代换，而是对类型说明符重新命名。被命名的标识符具有类型定义说明的功能。
+
+请看下面的例子：
+```
+#define P1 int *
+
+typedef (int *) P2
+```
+从形式上看这两者相似，但在实际使用中却不相同。
+
+下面用P1、P2说明变量时就可以看出它们的区别：
+
+P1 a, b;  在宏代换后变成： int *a, b;  表示 a 是指向整型的指针变量，而 b 是整型变量。
+
+P2 a, b;  表示a,b都是指向整型的指针变量。因为P2是一个类型说明符。
+
+由这个例子可见，宏定义虽然也可表示数据类型， 但毕竟是作字符代换。在使用时要分外小心，以避出错。
+
+
+总结，typedef和#define的不同之处：
+
+1、与#define不同，typedef 给出的符号名称仅限于对类型，而不是对值。
+2、typedef 的解释由编译器，而不是是处理器执行。
+3、虽然它的范围有限，但在其受限范围内，typedef 比 #define 更灵活。
+
+
+用于定义字符串，尤其是路径
+
+A),#define ENG_PATH_1 E:\English\listen_to_this\listen_to_this_3               
+
+B),#define ENG_PATH_2 “ E:\English\listen_to_this\listen_to_this_3” // A 为 定义路径， B  为定义字符串
+
+C), #define ENG_PATH_3 E:\English\listen_to_this\listen\
+_to_this_3
+
+还没发现问题？这里用了 4 个反斜杠，到底哪个是接续符？回去看看接续符反斜杠。反斜杠作为接续符时，在本行其后面不能再有任何字符，空格都不行。所以，只有最后一个反斜杠作为接续符。但是请注意：有的系统里规定路径的要用双反斜杠“ \\” ,比如：
+#define ENG_PATH_4 E:\\English\\listen_to_this\\listen_to_this_3
+
+
+## 二、#undef 指令
+
+取消定义一个给定的 #define。
+
+例如有如下宏定义：
+
+#define LIMIT 40
+
+则指令
+
+#undef LIMIT
+
+会取消该定义。
+
+现在就可以重新定义LIMIT，以使它有一个新的值。即使开始没有定义LIMIT，取消LIMIT的定义也是合法的。如果想使用一个特定名字，但又不能确定前面是否已经使用了该名字，为安全起见，就可以取消该名字的定义。
+
+注意：#define 宏的作用域从文件中的定义点开始，直到用 #undef 指令取消宏为止，或直到文件尾为止（由二者中最先满足的那个结束宏的作用域）。还应注意，如果用头文件引入宏，那么，#define 在文件中的位置依赖 #define 指令的位置。
+
+```
+#include <stdio.h>
+#define X 3
+#define Y X*3
+#undef X
+#define X 2
+ 
+int main (void)
+{
+	printf ("Y = %d\n", Y);
+	printf ("X = %d\n", X);
+	return 0;
+}
+输出结果：
+Y = 6
+X = 2
+```
+```
+#include <stdio.h>
+#define X 3
+#define Y X*3
+#define X 2   //不可重复定义
+ 
+ 
+int main (void)
+{
+int z = Y;
+	printf ("Y = %d\n", z);
+	printf ("X = %d\n", X);
+	return 0;
+}
+输出结果：
+test.c:4:0: 警告： “X”重定义 [默认启用]
+test.c:2:0: 附注： 这是先前定义的位置
+```
+
+## 三、文件包含：#include
+
+
+预处理器发现#include指令后，就会寻找后跟的文件名并把这个文件的内容包含但当前文件中。被包含文件中的文件将替换源代码文件中的#include指令，就像你把被包含文件中的全部内容键入到源文件中的这个特定位置一样。
+
+#include 指令有两种使用形式：
+
+1） #include <filename.h>    文件名放在尖括号中
+
+在UNIX系统中，尖括号告诉预处理器在一个或多个标准系统目录中寻找文件。 
+
+如： #include <stdio.h>
+
+查看：
+ls /usr/include
+ls kernel/include 
+
+
+
+2） #include "filename.h"    文件名放在双引号中
+
+在UNIX系统中，双引号告诉预处理器现在当前目录（或文件名中指定的其他目录）中寻找文件，然后在标准位置寻找文件。
+
+如： #include "hot.h"     #include "/usr/buffer/p.h"
+
+
+习惯上使用后缀 .h 表示头文件，这类文件包含置于程序头部的信息。头文件经常包含预处理语句。有些头文件由系统提供。但也可以自由创建自己的头文件。
+
+
+## 四、条件编译
+
+#if：表示如果...
+#ifdef： 表示如果定义...
+#ifndef：表示如果没有定义...
+#else： 表示否则...与#ifdef/#ifndef搭配使用  //笔试题  注意，没有#elseif
+#elif： 表示否则如果...与#if/#ifdef/#ifndef搭配使用
+#endif： 表示结束判断，与#if/#ifdef/#ifndef搭配使用
+
+注意：#if 和 if 区别
+
+#if=>主要用于编译期间的检查和判断
+if   =>主要用于程序运行期间的检查和判断Z
+
+最常见的形式：
+
+```
+#ifdef 标识符 
+程序段1 
+#else 
+程序段2 
+#endif 
+```
+作用：当标识符已经被定义过（一般用#define命令定义），则对程序段1进行编译，否则编译程序段2。其中#else部分也可以没有，即：
+```
+#ifdef 标识符
+程序段1
+#endif
+```
+这里的“程序段”可以是语句组，也可以是命令行。这种条件编译可以提高C源程序的通用性。如果一个C源程序在不同计算机系统上运行，而不同的计算机又有一定的差异。例如，我们有一个数据类型，在Windows平台中，应该使用long类型表示，而在其他平台应该使用float表示，这样往往需要对源程序做必要的修改，这就降低了程序的通用性。可以用以下的条件编译：
+```
+#ifdef WINDOWS 
+#define MYTYPE long 
+#else 
+#define MYTYPE float 
+#endif 
+```
+如果在Windows上编译程序，则可以在程序的开始加上
+`#define WINDOWS`
+这样则编译下面的命令行：
+`#define MYTYPE long`
+如果在这组条件编译命令之前曾出现以下命令行：
+`#define WINDOWS 0`
+则预编译后程序中的MYTYPE都用float代替。这样，源程序可以不必任何修改就可以用于不同类型的计算机系统。当然以上介绍的只是一种简单的情况，可以根据此思路设计出其他的条件编译。
+例如，在调试程序时，常常希望输出一些所需的信息，而在调试完成后不再输出这些信息。可以在源程序中插入以下的条件编译段：
+```
+#ifdef DEBUG 
+print ("device_open(%p)\n", file); 
+#endif 
+```
+如果在它的前面有以下命令行：
+`#define DEBUG`
+则在程序运行时输出file指针的值，以便调试分析。调试完成后只需将这个define命令行删除即可。有人可能觉得不用条件编译也可以达到此目的，即在调试时加一批printf语句，调试后一一将prntf语句删除。的确，这是可以的。但是，当调试时加的printf语句比较多时，修改的工作量是很大的。用条件编译，则不必一一删除printf语句。只需删除前面的一条#define DEBUG 命令即可，这时所有的用DEBUG 作标识符的条件编译段都使其中的printf语句不起作用，起到统一控制的作用，如同一个“开关”一样。
+有时也采用下面的形式：
+```
+#ifndef 标识符 
+程序段1 
+#else 
+程序段2 
+#endif 
+```
+只是第一行与第一种形式不同：将“#ifdef”改为“#ifndef”。它的作用是，若标识符未被定义则编译程序段1，否则编译程序段2。这种形式与第一种形式的作用相反。
+
+一般地，当某文件包含几个头文件，而且每个头文件都可能定义了相同的宏，使用#ifndef可以防止该宏重复定义。
+
+```
+/*test.h*/
+#ifndef SIZE
+#define SIZE 100
+#endif
+```
+#ifndef 指令通常用于防止多次包含同一文件，也就是说，头文件可采用类似下面几行的设置：
+```
+//头文件卫士
+#ifndef THINGS_H_
+#define THINGS_H_
+#endif
+```
+还有一种形式，就是#if 后面跟一个表达式，而不是一个简单的标识符：
+```
+#if 表达式 
+程序段1 
+#else 
+程序段2 
+#endif 
+```
+它的作用是：当指定的表达式为真（非零）时就编译程序段1，否则编译程序段2.可以事先给定一定条件，使程序在不同的条件下执行不同的功能。例如：
+```
+#include <stdio.h>
+#define LETTER 1
+ 
+int main (void)
+{
+	#if LETTER
+	printf ("111\n");
+	#else
+	printf ("222\n");
+	#endif
+	return 0;
+}
+输出结果：
+111
+```
+这种形式也可以用作注释用：#if 1  和 #if 0
+```
+#include <stdio.h>
+int main (void)
+{
+	#if 0
+	printf ("111\n");
+	#endif
+	
+	printf ("222\n");
+	return 0;
+}
+输出结果：
+222
+```
+
+最后一种形式
+```
+#if 标识符
+#elif
+程序段1
+#elfi
+程序段2
+。。。
+#else
+程序段n
+#endif
+```
+#if...#elif（任意多次）...#else...#endif，以上结构可以从任意逻辑表达式选择一组编译，这种结构可以根据任意逻辑表达式进行选择。
+```
+/*
+ 	条件编译演示
+ */
+#include <stdio.h>
+#define SAN
+int main()
+{
+#if	defined(YI)  //布尔值
+	printf("1\n");
+#elif	defined(ER)	//布尔值
+	printf("2\n");
+#elif	defined(SAN)	
+	printf("3\n");
+#else
+	printf("4\n");
+#endif
+	return 0;
+}
+输出结果：
+3
+```
+这里，define是一个预处理运算符。如果 define 的参数已用#define定义过，那么define返回1，否则返回 0 。这种方法的优点在于它可以和#elif一起使用。
+
+
+**应用示例：**
+我们主要使用以下几种方法，假设我们已在程序首部定义：
+
+#define DEBUG
+
+#define TEST
+
+1、利用#ifdef / #endif 将程序功能模块包括进去，以向某用户提供该功能.
+
+```
+在程序首部定义#define HNLD：
+#ifdef HNLD
+include"n166_hn.c"
+#endif
+```
+如果不许向别的用户提供该功能，则在编译之前将首部的HNLD加下划线即可。
+
+
+2、在每一个子程序前加上标记，以便追踪程序的运行。
+```
+
+#ifdef DEBUG
+printf(" Now is in hunan !");
+#endif
+```
+
+3、避开硬件的限制。有时一些具体应用环境的硬件不一样，但限于条件，本地缺乏这种设备，于是绕过硬件，直接写出预期结果。具体做法是：
+```
+#ifndef TEST
+i=dial();
+//程序调试运行时绕过此语句
+#else
+i=0;
+#endif
+```
+调试通过后，再屏蔽TEST的定义并重新编译，即可发给用户使用了。
+
+有一个问题，如何确保使用的标识符在其他任何地方都没有定义过？
+
+通常编译器提供商采用下述方法解决这个问题：用文件名做标识符，并在文件名中使用大写字母、用下划线代替文件名中的句点字符、用下划线（可能使用两条下划线）做前缀和后缀。例如，检查头文件read.h，可以发现许多类似的语句：
+
+#ifndef  __READ_H__    //作为开头的预处理指令则当它后面的宏名称被定义过则编译后一组否则编译前一组
+#define __READ_H__     //防止被重复定义
+extern int num=0;
+#endif  __READ_H__
+参看：C语言再学习 -- 标识符
+
+
+
+扩展：extern "C"
+
+通过 extern "C" 可以要求 C++ 编译器按照 C方式处理函数接口，即不做换名，当然也就无法重载。
+
+1） C 调 C++，在 C++ 的头文件如下设置：
+
+
+extern "C" int add (int x, int y);
+extern "C" {
+int add (int x, int y);
+int sub (int x, int y);
+}
+//示例 add.h
+#ifndef _ADD_H
+#define _ADD_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+int add (int ,int );
+#ifdef __cplusplus
+}
+#endif
+#endif
+
+2）C++ 调 C，在C++ 的主函数如下设置：
+
+extern "C" {
+#include "chead.h"
+}
+//示例 main.cpp
+#include <iostream>
+using namespace std;
+extern "C" {
+#include "05sub.h"
+}
+int main (void) {
+	int x=456,y=123;
+	cout << x << "+" << y << "="
+		<< sub(x, y) << endl;
+	return 0;
+}
+
+
+五、预定义宏
+
+__DATE__进行预处理的日期（“Mmm dd yyyy”形式的字符串文字）
+
+__FILE__代表当前源代码文件名的字符串文字
+
+__BASE_FILE__获取正在编译的源文件名
+
+__LINE__代表当前源代码文件中的行号的整数常量
+
+__TIME__源文件编译时间，格式为“hh: mm: ss”
+
+__STDC__设置为 1时，表示该实现遵循 C标准
+
+__STDC_HOSTED__为本机环境设置为 1，否则设为 0
+
+__STDC_VERSION__为C99时设置为199901L
+
+__FUNCTION__或者 __func__  获取所在的函数名（预定义标识符，而非预定义宏）
+
+
+#include <stdio.h>
+int main (void)
+{
+	printf ("The file is %s\n", __FILE__);
+	printf ("The base_file is %s\n", __BASE_FILE__);
+	printf ("The line is %d\n", __LINE__);
+	printf ("The function is %s\n", __FUNCTION__);
+	printf ("The func is %s\n", __func__);
+	printf ("The date is %s\n", __DATE__);
+	printf ("The time is %s\n", __TIME__);
+	return 0;
+}
+输出结果：
+The file is part.c
+The base_file is part.c
+The line is 6
+The function is main
+The func is main
+The date is Nov 22 2016
+The time is 15:46:30
+
+六、常用的新指令
+
+#line 整数n =>表示修改代码的行数/指定行号   插入到程序中表示从行号n开始执行，修改下一行的行号为n
+#error  字符串 => 表示产生一个错误信息
+#warning 字符串 => 表示产生一个警告信息
+
+
+//#line 预处理指令的使用
+#include <stdio.h>
+#line 200 
+int main(void)
+{
+	printf("The line is %d\n",__LINE__);
+	return 0;
+}
+输出结果：
+The line is 202
+//#error和#warning的使用
+#include <stdio.h>
+ 
+#define VERSION 4
+#define VERSION 2
+#define VERSION 3
+#if(VERSION < 3)
+	#error "版本过低"
+#elif(VERSION > 3)
+	#warning "版本过高"
+#endif
+ 
+int main(void)
+{
+	printf("程序正常运行\n");
+	return 0;
+}
+输出结果：
+警告： #warning "版本过高"
+//错误： #error "版本过低"
+//程序正常运行
+
+
+
+七、#pragma
+
+#pragma GCC dependency 文件名 
+表示当前文件依赖于指定的文件，如果当前文件的最后一次，修改的时间早于依赖的文件，则产生警告信息
+
+#include <stdio.h>
+//当前程序依赖于01print.c文件
+#pragma GCC dependency "01print.c"
+int main(void)
+{
+	printf("Good Good Study,Day Day Up!\n");
+	return 0;
+}
+输出结果：
+致命错误： 01print.c：没有那个文件或目录
+编译中断。
+
+#pragma GCC poison 标示符
+表示将后面的标示符设置成毒药，一旦使用标示符，则产生错误或警告信息
+//毒药的设置
+#include <stdio.h>
+//#define GOTO goto
+//将goto设置为毒药
+#pragma GCC poison goto
+ 
+ 
+int main(void)
+{
+	//GOTO ok;
+	goto ok;
+		printf("main函数开始\n");
+	ok:
+		printf("main函数结束\n");
+	return 0;
+}
+输出结果：
+错误： 试图使用有毒的“goto”
+ 
+ 
+
+
+#pragma pack (整数n)
+表示按照整数n倍进行补齐和对齐
+//设置结构体的对齐和补齐方式
+#include <stdio.h>
+ 
+//设置结构体按照2的整数倍进行对齐补齐
+#pragma pack(2) //8
+//#pragma pack(1) //6 
+//#pragma pack(3) //error 
+//char short int long int  long long
+ 
+int main(void)
+{
+	struct S
+	{
+		char c1;
+		int i;
+		char c2;
+	};
+	printf("sizeof(struct S) = %d\n",sizeof(struct S));//12
+	return 0;
+}
+输出结果：
+sizeof(struct S) = 8
+
+
+#pragma message
+
+message 参数： message 参数是我最喜欢的一个参数，它能够在编译信息输出窗，口中输出相应的信息，这对于源代码信息的控制是非常重要的。其使用方法为：
+
+#pragma message(“消息文本”)
+
+当编译器遇到这条指令时就在编译输出窗口中将消息文本打印出来。当我们在程序中定义了许多宏来控制源代码版本的时候，我们自己有可能都会忘记有没有正确的设置这些宏，此时我们可以用这条指令在编译的时候就进行检查。假设我们希望判断自己有没有在源代码的什么地方定义了_X86 这个宏可以用下面的方法.
+
+
+#define _X86
+#ifdef _X86
+#pragma message ("_X86 macro activated!")
+#endif
+输出结果：
+附注： #pragma message：_X86 macro activated!
+当我们定义了_X86 这个宏以后，应用程序在编译时就会在编译输出窗口里显示“_X86 macro activated!”。我们就不会因为不记得自己定义的一些特定的宏而抓耳挠腮了.
+
+
+#pragma code_seg
+
+另一个使用得比较多的 pragma 参数是 code_seg。格式如：
+#pragma code_seg( ["section-name"[,"section-class"] ] )
+它能够设置程序中函数代码存放的代码段，当我们开发驱动程序的时候就会使用到它。
+
+
+#pragma once
+
+#pragma once (比较常用）
+只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在Visual C++6.0 中就已经有了，但是考虑到兼容性并没有太多的使用它。
+
+#pragma hdrstop
+#pragma hdrstop 表示预编译头文件到此为止，后面的头文件不进行预编译。 BCB 可以预编译头文件以加快链接的速度，但如果所有头文件都进行预编译又可能占太多磁盘空间，所以使用这个选项排除一些头文件。有时单元之间有依赖关系，比如单元 A 依赖单元 B，所以单元 B 要先于单元 A 编译。你可以用#pragma startup 指定编译优先级，如果使用了#pragma package(smart_init) ， BCB就会根据优先级的大小先后编译。
+
+
+#pragma resource
+
+#pragma resource "*.dfm"表示把*.dfm 文件中的资源加入工程。 *.dfm 中包括窗体外观的定义。
+
+
+#pragma warning
+
+#pragma warning( disable : 4507 34; once : 4385; error : 164 )
+等价于：
+#pragma warning(disable:4507 34) // 不显示 4507 和 34 号警告信息
+#pragma warning(once:4385) // 4385 号警告信息仅报告一次
+#pragma warning(error:164) // 把 164 号警告信息作为一个错误。
+同时这个 pragma warning 也支持如下格式：
+#pragma warning( push [ ,n ] )
+#pragma warning( pop )
+这里 n 代表一个警告等级(1---4)。
+#pragma warning( push )保存所有警告信息的现有的警告状态。
+#pragma warning( push, n)保存所有警告信息的现有的警告状态，并且把全局警告等级设定为 n。
+#pragma warning( pop )向栈中弹出最后一个警告信息，在入栈和出栈之间所作的一切改动取消。例如：
+#pragma warning( push )
+#pragma warning( disable : 4705 )
+#pragma warning( disable : 4706 )
+#pragma warning( disable : 4707 )
+//.......
+#pragma warning( pop )
+在这段代码的最后，重新保存所有的警告信息(包括 4705， 4706 和 4707)。
+
+#pragma comment
+
+#pragma comment(...)
+该指令将一个注释记录放入一个对象文件或可执行文件中。常用的 lib 关键字，可以帮我们连入一个库文件。 比如：
+#pragma comment(lib, "user32.lib")
+该指令用来将 user32.lib 库文件加入到本工程中。linker:将一个链接选项放入目标文件中,你可以使用这个指令来代替由命令行传入的或者在开发环境中设置的链接选项,你可以指定/include 选项来强制包含某个对象,例如:
+#pragma comment(linker, "/include:__mySymbol")
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53158517
 
 # 存储类型关键字
 
