@@ -892,28 +892,26 @@ else
 1、赋值运算符和逻辑运算符
 
 例如：
-
+```
 if (5 = n)    语法错误
 
-if (5 == n)  检查n的值是否为5
-
+if (5 == n)  正确，检查n的值是否为5
+```
 2、  if(n != 0)可用if (n)代替
 
 3、if (n >= 9 && n <= 100) 不要写成 if (90 <= n <= 100)
 
-问题在于该代码是语义错误，我不是语法错误，因为对于<=运算符的求值顺序是由左到右的，所以会把该测试表达式解释为如下形式：
-
+问题在于该代码是语义错误，不是语法错误，因为对于<=运算符的求值顺序是由左到右的，所以会把该测试表达式解释为如下形式：
+```
 (90 <= n)  <= 100
-
+```
 子表达式90 <= n的值为1（真）或0（假）。任何一个值都小于100，因此不管n的值是什么，整个表达式总是为真，所以需要使用&&来检查范围。
 
 例如：  if (5 > 2 > 3) 布尔值为0（假）.
 
+**注意： 零值表示“假”，非零值表示“真”，负数也是非零值。**
 
-
-注意： 零值表示“假”，非零值表示“真”，负数也是非零值。
-
-
+```
 #include <stdio.h>  
 int main (void)  
 {  
@@ -928,11 +926,12 @@ int main (void)
 输出结果：
 111111111
 222222222
-二、循环辅助手段：continue和break
+```
+## 二、循环辅助手段：continue和break
 
 1、continue语句
 
-continue命令可以与三种循环形式中的任何一种一起作用，但是不能喝switch语句一起使用。他导致程序控制跳过循环中的剩余语句。对于while和for循环，开始下一个循环周期。对于do while循环，对退出条件进行判断，如果必要，开始下一个循环周期。
+continue命令可以与三种循环形式中的任何一种一起作用，但是不能和switch语句一起使用。他导致程序控制跳过循环中的剩余语句。对于while和for循环，开始下一个循环周期。对于do while循环，对退出条件进行判断，如果必要，开始下一个循环周期。
 
 用处：可以在主语语句中消除一级缩排。当语句很长或者已经有很深的嵌套时，作为占位符，使代码根据可读性：
 
@@ -950,15 +949,14 @@ break语句实质上是switch语句的附属物，顺便提一下，break语句�
 
 
 
-三、多重选择：switch和break
-
+## 三、多重选择：switch和break
 
 
 以上面的例子来说明switch语句：
 
 如果i为整形值1或者2，则打印22222。如果它的值为3，则打印33333和44444（因为杂case 3后没有break语句，所以流程继续到随后的语句），如果它的值为4，则打印44444,。对于其他值，仅打印hello world
 
-
+```
 #include <stdio.h>
 int main (void)
 {
@@ -984,35 +982,7 @@ break;
 }
 return 0;
 }		
-
-
-//示例
-switch (enSize)
-{
-   case PIC_QCIF:
-        stH264Cbr.u32BitRate = 256; /* average bit rate */
-        break;
-   case PIC_QVGA:    /* 320 * 240 */
-   case PIC_CIF: 
-        stH264Cbr.u32BitRate = 512;
-        break;
-   case PIC_D1:
-   case PIC_VGA:	   /* 640 * 480 */
-        stH264Cbr.u32BitRate = 1024*2;
-        break;
-   case PIC_HD720:   /* 1280 * 720 */
-        stH264Cbr.u32BitRate = 1024*2;
-        break;
-   case PIC_HD1080:  /* 1920 * 1080 */
-        stH264Cbr.u32BitRate = 1024*4;
-        break;
-   case PIC_5M:  /* 2592 * 1944 */
-        stH264Cbr.u32BitRate = 1024*8;
-        break;                       
-   default :
-        stH264Cbr.u32BitRate = 1024*4;
-        break;
-}
+```
 
 总体注解：
 
@@ -1020,13 +990,1181 @@ switch (enSize)
 
 每个 switch 语句中只能出现一条 default 子句。但是，它可以出现在语句列表的任何位置，而且语句流会像贯穿一个 case 标签一样贯穿 default 子句。
 
-四、goto语句
+## 四、goto语句
 
 不要轻易使用
 
 可以了解一下：
 
 while(1)、for( ; ; )、goto这三者可作为死循环
+
+# 输入/输出
+
+## 一、缓冲区
+
+输入字符的立即回显是非缓冲或直接输入的一个实例，它表示你键入的字符被收集并存储在一个被称为缓冲区的临时存储区域中。按下回车可使你所键入的字符块对程序变成可用。
+
+为什么需要缓冲区？首先，将若干个字符作为一个块传输比逐个发送这些字符耗费的时间少。其次，如果你输入有误，就可以使用你的键盘更正功能来修改错误。当最终按下回车键时，你就可以发送正确的输入。另一个方面，一些交互性的程序需要非缓冲收入。
+
+缓冲分为两类，完全缓冲I/O和行缓冲I/O。对完全缓冲输入来说，缓冲区满时被清空（内容被发送至目的地）。这种类型的缓冲通常出现在文件输入中。缓冲区的大小取决于系统，但512字节和4096字节是常见的值。对行缓冲I/O来说，遇到一个换行符时将被清空缓冲区。键盘输入时标准的行缓冲，因此按下回车键将清空缓冲区。
+
+当输入函数检测到已经读取了缓冲区中的全部字符时，它会请求系统将下一块缓冲区大小的数据复制到缓冲区，通过这种方式，输入函数可以读入文件中的全部内容，直到文件结尾。函数在读入最后以缓冲区数据中的最后一个字符后，会将文件结尾指示器的值设置为真。于是下一个被调用的输入函数将返回EOF。
+
+以类似的方式，输出函数将数据写入缓冲区，当缓冲区以满时，就将数据复制到文件中。
+
+缓冲区相关函数：
+
+1、ungetc ( ) 函数
+
+函数原型：
+int ungetc(int char, FILE *stream)
+参数：
+char -- 这是要被推入的字符。该字符以其对应的 int 值进行传递。
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了输入流。
+返回值：
+如果成功，则返回被推入的字符，否则返回 EOF，且流 stream 保持不变。
+函数功能：
+把字符 char（一个无符号字符）推入到指定的流 stream 中，以便它是下一个被读取到的字符。
+
+```
+#include <stdio.h>
+int main (void)
+{
+	FILE * fp;
+	int c;
+	char buffer[256];
+ 
+	fp = fopen ("abc.txt", "r");
+	if (fp == NULL)
+	{
+		perror ("打开文件时发生错误");
+		return -1;
+	}
+ 
+	while (1)
+	{
+		c = getc (fp);
+		if( feof(fp) ) //到文件结尾 feof (fp) 为 1    
+    {     
+          break ;    
+    }    
+		if (c == '!')
+		{
+			ungetc ('+', fp);
+		}
+		else 
+		{
+			ungetc (c, fp);
+		}
+		fgets (buffer, 255, fp);
+		fputs (buffer, stdout);
+	}
+	return 0;
+}
+```
+假设我们有一个文本文件 abc.txt，它的内容如下。文件将作为实例中的输入：
+this is w3cschool
+!c standard library
+!library functions and macros
+ 
+让我们编译并运行上面的程序，这将产生以下结果：
+this is w3cschool
++c standard library
++library functions and macros
+
+2、fllush ( )函数
+
+函数原型：
+int fflush(FILE *stream)
+参数：
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象指定了一个缓冲流。
+返回值：
+如果成功，该函数返回零值。指定的流没有缓冲区或者只读打开时也返回0值。如果发生错误，则返回 EOF，且设置错误标识符（即 feof）。
+函数功能：
+清除读写缓冲区，需要立即把输出缓冲区的数据进行物理写入时
+fflush()会强迫将缓冲区内的数据写回参数stream 指定的文件中. 如果参数stream 为NULL,fflush()会将所有打开的文件数据更新.
+
+其他用法编辑
+fflush(stdin)刷新标准输入缓冲区，把输入缓冲区里的东西丢弃[非标准]
+fflush(stdout)刷新标准输出缓冲区，把输出缓冲区里的东西打印到标准输出设备上
+printf("。。。。。。。。。。。");后面加fflush(stdout)；可提高打印效率
+
+只有满足如下四个条件中的某一个，输出缓冲区里的内容才会显示在屏幕上
+1 "\n"换行字符前面的内容会打印在屏幕上
+2 当主函数结束后程序打印的内容出现在屏幕上
+3 当输出缓冲区被充满了的时候里面的内容会被打印在屏幕上
+4 可以使用fflush(stdout)语句把输出缓冲区里的内容强制显示在屏幕上
+```
+#include <stdio.h>
+int main(void)
+{
+	int num=0;
+	printf("1");   //一种是加换行
+	fflush(stdout);	//把输出缓冲区里的内容强制显示在屏幕上
+	while(1);  //死循环      //另一种是可以结束
+ 
+	return 0;
+}
+```
+3、setvbuf ()函数
+
+函数功能：
+定义流 stream 应如何缓冲
+函数原型：
+int setvbuf(FILE *stream, char *buffer, int mode, size_t size)
+参数：
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了一个打开的流。
+buffer -- 这是分配给用户的缓冲。如果设置为 NULL，该函数会自动分配一个指定大小的缓冲。
+mode -- 这指定了文件缓冲的模式：
+模式：
+_IOFBF 全缓冲：对于输出，数据在缓冲填满时被一次性写入。对于输入，缓冲会在请求输入且缓冲为空时被填充。
+_IOLBF 行缓冲：对于输出，数据在遇到换行符或者在缓冲填满时被写入，具体视情况而定。对于输入，缓冲会在请求输入且缓冲为空时被填充，直到遇到下一个换行符。
+_IONBF 无缓冲：不使用缓冲。每个 I/O 操作都被即时写入。buffer 和 size 参数被忽略。
+size --这是缓冲的大小，以字节为单位。
+返回值：
+如果成功，则该函数返回 0，否则返回非零值。
+
+注意：This function should be called once the file associated with the stream has already been opened but before any input or output operation has taken place.
+意思是这个函数应该在打开流后,立即调用,在任何对该流做输入输出前
+
+```
+#include <stdio.h>
+#include <string.h>
+ 
+int main()
+{
+ 
+   char buff[1024];
+   memset( buff, '\0', sizeof( buff ));
+ 
+   fprintf(stdout, "启用全缓冲\n");
+   setvbuf(stdout, buff, _IOFBF, 1024);
+ 
+   fprintf(stdout, "这里是 w3cschool.cc\n");
+   fprintf(stdout, "该输出将保存到 buff\n");
+   fflush( stdout );
+ 
+   fprintf(stdout, "这将在编程时出现\n");
+   fprintf(stdout, "最后休眠五秒钟\n");
+ 
+   sleep(5);
+ 
+   return(0);
+}
+```
+让我们编译并运行上面的程序，这将产生以下结果。在这里，程序把缓冲输出保存到 buff，直到首次调用 fflush() 为止，然后开始缓冲输出，最后休眠 5 秒钟。它会在程序结束之前，发送剩余的输出到 STDOUT。
+启用全缓冲
+这里是 w3cschool.cc
+该输出将保存到 buff
+这将在编程时出现
+最后休眠五秒钟
+
+
+4、setbuf () 函数
+
+函数功能：
+
+C 库函数 void setbuf(FILE *stream, char *buffer) 定义流 stream 应如何缓冲。该函数应在与流 stream 相关的文件被打开时，且还未发生任何输入或输出操作之前被调用一次。
+
+函数声明：
+void setbuf(FILE *stream, char *buffer)
+参数：
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了一个打开的流。
+buffer --  这是分配给用户的缓冲，它的长度至少为 BUFSIZ 字节，BUFSIZ 是一个宏常量，表示数组的长度。
+返回值：
+该函数不返回任何值。
+
+说明：
+
+setbuf函数具有打开和关闭缓冲机制。为了带缓冲进行I/O，参数buf必须指向一个长度为BUFSIZE(定义在stdio.h头文件中)的缓冲区。通常在此之后该流就是全缓冲的，但是如果该流与一个终端设备相关，那么某些系统也可以将其设置为行缓冲。为了关闭缓冲，可以将buf参数设置为NULL。
+```
+__BEGIN_NAMESPACE_STD
+/* If BUF is NULL, make STREAM unbuffered.
+   Else make it use buffer BUF, of size BUFSIZ.  */
+extern void setbuf (FILE *__restrict __stream, char *__restrict __buf) __THROW;
+/* Make STREAM use buffering mode MODE.
+   If BUF is not NULL, use N bytes of it for buffering;
+   else allocate an internal buffer N bytes long.  */
+extern int setvbuf (FILE *__restrict __stream, char *__restrict __buf,
+            int __modes, size_t __n) __THROW;
+__END_NAMESPACE_STD
+
+ 
+/* Default buffer size.  */
+#ifndef BUFSIZ
+# define BUFSIZ _IO_BUFSIZ
+#endif
+```
+
+//示例一
+```
+#include <stdio.h>  
+char outbuf[BUFSIZ]; 
+int main(void) 
+{ 
+    setbuf(stdout, outbuf);  // 把缓冲区与流相连
+    puts("This is a test of buffered output.\n");
+    puts(outbuf);
+    fflush(stdout);  // 刷新
+    puts(outbuf);  // 输出
+    return 0; 
+}
+输出结果：
+This is a test of buffered output.
+ 
+This is a test of buffered output.
+ 
+ 
+This is a test of buffered output.
+ 
+This is a test of buffered output.
+```
+
+
+程序先把outbuf与输出流相连，然后输出一个字符串，这时因为缓冲区已经与流相连，所以outbuf中也保存着这个字符串，紧接着puts函数又输出一遍，所以现在outbuf中保存着两个一样的字符串。刷新输出流之后，再次puts，则又输出两个字符串。为了关闭缓冲，可以将buf参数设置为NULL。
+
+```
+#include <stdio.h>  
+char outbuf[BUFSIZ]; 
+int main(void) 
+{ 
+    setbuf(stdout, outbuf);  // 把缓冲区与流相连
+    setbuf (stdout, NULL);  //关闭缓冲
+    puts("This is a test of buffered output.");
+    puts(outbuf);
+    fflush(stdout);  // 刷新
+    puts(outbuf);  // 输出
+    return 0; 
+}
+输出结果：
+This is a test of buffered output.
+```
+看一下下面这种写法对不对:
+```
+#include <stdio.h>
+ 
+int main (void)
+{
+	int c;
+	char buf[BUFSIZ];
+	setbuf(stdout, buf);
+	while((c=getchar())!=EOF)
+		putchar(c);
+	return 0;
+}
+```
+遗憾的是，这个程序是错误的，仅仅是因为一个细微的原因。程序中对库函数 setbuf 的调用，通知了输入/输出库所有字符的标准输出应该首先缓存在buf中。要找到问题出自何处，我们不妨思考一下 buf 缓冲区最后一次被清空是在什么时候？答案是在main函数结束之后，作为程序交回控制给操作系统之前C运行时库所必须进行的清理工作的一部分。但是，在此之前buf字符数组已经被释放！要避免这种类型的错误有两种办法。
+第一种办法是让缓冲数组成为静态数组，既可以直接显式声明buf为静态：
+static char buf[BUFSIZ];
+
+也可以把buf声明完全移到main函数之外。第二种办法是动态分配缓冲区，在程序中并不主动释放分配的缓冲区（译注：由于缓冲区是动态分配的，所以main函数结束时并不会释放该缓冲区，这样C运行时库进行清理工作时就不会发生缓冲区已释放的情况）：
+char *malloc();
+setbuf(stdout，malloc(BUFSIZ));
+如果读者关心一些编程“小技巧”，也许会注意到这里其实并不需要检查malloc函数调用是否成功。如果malloc函数调用失败，将返回一个null指针。setbuf函数的第二个参数取值可以为null，此时标准输出不需要进行缓冲。这种情况下，程序仍然能够工作，只不过速度较慢而已。
+
+下面这个例子可以很好的看出上面所讲。
+
+```
+#include <stdio.h>
+//static char outbuf[50];
+int main(void)
+{
+	char outbuf[50];
+	/* 将outbuf与stdout输出流相连接 */
+	setbuf(stdout,outbuf);
+	/* 向stdout中放入一些字符串 */
+	puts("This is a test of buffered output.");
+	puts("This output will go into outbuf");
+	puts("and won't appear until the buffer");
+	puts("fills up or we flush the stream.\n");
+	/* 以下是outbuf中的内容 */
+	puts(outbuf);
+	/*刷新流*/
+	fflush(stdout);
+return 0;
+}
+输出结果：
+This is a test of buffered output.
+This output will go into outbuf
+and won't appear until the buffer
+fills up or we flush the stream.
+ 
+``` 
+ 
+段错误 (核心已转储)
+
+
+
+## 二、键盘输入
+
+参看：C语言再学习 -- 文件
+
+1、键盘输入由一个被称为sdin的流表示，而屏幕（或电传打字机，或其他输出设备）上的输出由一个称为stdout的流表示。getchar()、putchar、printf()、scanf()函数都是标准的I/O的成员，这些函数通这两个流打交道。
+
+2、在printf函数调用语句里用%s做占位符就可以把一个字符串打印在屏幕上可以使用scanf函数从键盘得到一个字符串并把它记录在一个数组里（这个时候要使用%s作为占位符）如果输入内容有空格则只能得到空格前的部分如果输入内容超过数组容量则会出现严重错误fgets函数也可以用来从键盘得到字符串并记录到一个数组里  fgets(str,10,stdin) 
+这个函数需要三个参数
+1 数组名称
+2 数组中存储区个数
+3 用stdin表示键盘
+
+如果输入的字符个数不够则会把最后输入的回车当作'\n'字符也放到数组里   如果输入的字符过多则只会截取前面的一部分下次都字符串的时候会从后面没有处理的内容里读取应该在每次使用fgets函数获得字符串以后把可能存在的垃圾数据清理掉清理语句应该放在一个分支里，只有当确保有垃圾数据的时候才需要清理
+```
+/*
+   从键盘得到字符串演示 
+   */
+#include <stdio.h>
+#include <string.h>
+int main() {
+	char str[10] = {};   //"01234678'\n'"
+	printf("请输入一个字符串：");
+	//scanf("%s", str);
+	fgets(str, 10, stdin);//表示从键盘上向数组str输入10个字节
+	if (strlen(str) == 9 && str[8] != '\n')
+	//有效字符个数为9个   &&  下标为8的字节不为'\n'
+ {
+	    scanf("%*[^\n]");//清空换行符以前的缓冲    
+	    scanf("%*c");   //清除换行符            
+	     //输入 "0123456789101112"
+   	     //得到 "012345678"
+	}
+	printf("%s\n", str);
+	return 0;
+}
+```
+3、判断文件结尾
+
+C的处理方法是让getchar()函数在到文件完结为时返回一个特殊值，而不是去管操作系统是如何检测文件结尾的。赋予该值的名称为EOF（End Of File）。因此，检测到文件尾时getchar()的返回值是EOF。scanf()函数在检测到文件结尾时也返回EOF。通常EOF在stdio.h文件中定义。如下所示：
+
+#define EOF (-1)
+
+将getchar()的返回值与EOF进行比较。如果不相同，则你还没有到达文件结尾。换句话说，你可以使用如下表达式：
+
+while （(ch = getchar ()) != EOF）
+
+在Unix系统中，你能通过在一行开始键入Ctrl+D来从键盘模拟文件结束条件；DOS系统则使用Ctrl+Z来达到这个目的。
+
+顺便提一句，Linux中按下Ctrl+Z，表示将该进程中断，在后台挂起，用 fg 命令可以重新切回到前台；按下Ctrl+C表示终止该进程。
+
+参看：C语言再学习 -- EOF、feof函数、ferror函数
+```
+#include <stdio.h>
+int main(void)
+{
+	char ch;
+	while ((ch = getchar ()) != EOF)
+		putchar (ch);
+	return 0;
+}
+```
+## 三、scanf() 清空缓冲区
+
+在不同速度的设备之间传递数据的时候需要使用缓冲区临时储存数据
+scanf函数工作是会利用有一个输入缓冲区把用户在键盘上输入的字符历史存储起来，程序实际上从这个输入缓冲区里获得数字先进入输入缓冲区的数据必须优先处理，如果计算机先输入的内容没有处理如果用户输入的内容和scanf函数要求的格式不一致则他们会一直无法被处理这会导致后面输入的内容也无法处理，可以使用如下两条语句把输入缓冲区里可能存在的错误数据丢弃：
+scanf("%[^\n]");  //把输入缓冲区里第一个换行字符前的所有内容丢弃
+scanf("%*c");     //把输入缓冲区里第一个换行字符丢弃
+```
+/*
+ 	输入缓冲区演示
+ */
+/*
+ 如果输入错误scanf之后的内容都无法不能执行
+ */
+#include <stdio.h>
+int main(void)
+{
+	int num=0,num1=0;
+	printf("请输入一个数字：");
+	scanf("%d",&num);
+	scanf("%*[^\n]");	//把输入缓冲区里第一个换行字符前的所有内容丢弃
+	scanf("%*c");		//把输入缓冲区里第一个换行字符丢弃
+	printf("num是%d\n",num);
+	printf("请再输入一个数字：");
+	scanf("%d",&num1);
+	scanf("%*[^\n]");
+	scanf("%*c");
+	printf("num1是%d\n",num1);
+	return 0;
+}
+```
+## 四、printf() 函数使用输出缓冲区临时存储要打印的内容
+只有满足如下四个条件中的某一个，输出缓冲区里的内容才会显示在屏幕上
+1 "\n"换行字符前面的内容会打印在屏幕上
+2 当主函数结束后程序打印的内容出现在屏幕上
+3 当输出缓冲区被充满了的时候里面的内容会被打印在屏幕上
+4 可以使用fflush(stdout)语句把输出缓冲区里的内容强制显示在屏幕上
+```
+#include <stdio.h>
+int main(void)
+{
+	int num=0;
+	printf("1");   //一种是加换行
+	fflush(stdout);	//把输出缓冲区里的内容强制显示在屏幕上
+	while(1);  //死循环      //另一种是可以结束
+ 
+	return 0;
+}
+```
+## 五、getcahr()和putchar()
+getchar ()函数没有参数，他返回来自输入设备的下一个字符。例如，下面的语句读取下一个输入字符并将它的值赋给变量ch：
+
+ch = getchar();
+
+该语句与下面的语句有同样的效果： scanf ("%c", &ch);
+
+putchar()函数打印它的参数。例如下面的语句将先前赋给ch的值作为字符打印出来：
+
+putchar (ch);
+
+该语句与下面的语句有同样的效果：  printf ("%c", ch);     /*不打印换行符（'\0'）*/
+
+注意： 它们不需要格式说明符，因为它们只对字符起作用。这两个函数通常都在stdio.h文件中定义（而且他们通常只是预处理器宏（macro）），而不是真正的函数。
+```
+#include <stdio.h>
+int main (void)
+{
+	char ch;
+	int count = 0;
+	while ((ch = getchar ()) != EOF && count++ < 10)
+		putchar (ch);
+	return 0;
+}
+```
+## 六、getchar()和scanf()混合使用
+getchar()读取每个字符，包括空格、制表符和换行符；而scanf()在读取数字是则会跳过空格、制表符和换行符。因此他们不能很好的混合在一起。
+
+例如：
+```
+
+#include <stdio.h>
+void display (char, int ,int);
+int main (void)
+{
+	char ch;
+	int n,m;
+	printf ("enter a char: \n");
+	//while ((ch = getchar ()) != '\n')
+	while ((ch = getchar ()) != EOF)
+	{
+		if (scanf ("%d%d", &n, &m) != 2)
+			break;
+		display (ch, n, m);
+#if 0
+		while (getchar () != '\n')
+			continue;
+#endif
+		scanf ("%*[^\n]");
+		scanf ("%*c");
+	}
+	return 0;
+}
+ 
+void display (char ch, int n, int m)
+{
+	int row, col;
+	for (row = 1; row <= n; row++)
+	{	
+		for (col = 1; col <=m; col++)
+		putchar (ch);
+		printf ("\n");
+	}
+}
+```
+## 七、输入确认
+两个例子：
+
+```
+#include <stdio.h>
+int main (void)
+{
+	int n;
+	scanf ("%d", &n);
+	printf ("%d\n", n < 0 ? n : (-n));
+#if 0
+	while (n >= 0)
+	{
+		scanf ("%d", &n);
+	}
+	printf ("%d\n", n);
+#endif
+	return 0;
+}
+```
+```
+#include <stdio.h>
+int main (void)
+{
+	int n;
+	char ch;
+	while (scanf ("%d", &n) != 1)
+	{
+		while ((ch = getchar ()) != '\n')	
+			putchar (ch);
+	}
+	return 0;
+}
+```
+输入有字符组成，但scanf()可以将输入转换成整数或浮点值。使用想%d或%f这样的说明符能限制可接受的输入的字符类型，但getchar()和使用%c的scanf()接受任何字符。
+八、字符串输入
+
+三种方法：
+
+1、scanf()函数输入
+
+char *str1[20];
+
+char *str2[20];
+
+scanf ("%s %s", str1, str2);
+
+str是已分配的20字节存储块的地址，也可以使用C库里分配存储空间的函数，如malloc()。
+
+char *ptr = (*char)malloc (20*sizeof (char));
+
+scanf()可以不仅可以读取字符串还可以获取单个字符。如果使用%s格式，字符串读到（但不包括）下一个空白字符（比如空格、制表符或换行符）输入结束。
+
+scanf()函数返回一个整数值，这个值是成功读取的项目数，或者当遇到文件结束时返回一个EOF(文件结尾符)。
+
+```
+#include <stdio.h>
+int main (void)
+{
+	char n[12], m[11];
+	scanf ("%5s %10s", n, m); /*指定输出字段宽度，%5s，则scanf()就会读入5个字符*/
+	printf ("%s, %s\n", n, m);
+	return 0;
+}
+输出结果：
+student 
+stude, nt
+```
+2、gets()函数输入
+
+gets()函数从系统的标准输入设备（通常是键盘）获得一个字符串。因为字符串没有预定的长度，所以gets()需要知道输入何时结束。解决办法是读字符串直到遇到一个换行字符串(\n)，按回车键可以产生这个字符。它将读取换行符并将其丢弃，这样下一次读取就会在新的一行开始。它读取换行符之前（不包括换行符）的所有字符，在这些字符后添加一个字符(\0)，然后把这个字符交给调用它的程序。
+
+gets()函数通过两种方式获得输入：
+
+A、它使用一个地址把字符串赋予name
+
+B、gets()的代码使用return关键字返回字符串的地址，程序把这个地址分配给ptr。注意到ptr是一个指针，这意味着gets()必须返回一个指向char的指针值。需要注意的是gets()返回的指针与传递给它的是同一个指针。输入字符串只有一个备份，它放在作为函数参数传递过来的地址中。
+
+```
+#include <stdio.h>
+int main (void)
+{
+	char name[50];
+	char *ptr;
+	while ((ptr = gets (name)) != NULL)
+	{
+		printf ("name is %s\n", name);
+		printf ("ptr is %s\n", ptr);
+		break;
+	}
+	return 0;
+}
+输出结果：
+HELLO
+name is HELLO
+ptr is HELLO
+```
+3、fgets()函数输入
+fgets()是为文件I/O而设计的，它与gets()有三方面不同：
+
+A、gets()不检查预留存储区是否能够容纳实际输入的数据，多出来的字符简单地溢出到相邻的内存区。而fgets()函数可以在第二个参数来说明最大读入字符数，如果这个参数值为n，fgets()就会读取最多n-1个字符或者读完一个换行符为止，由这二者最先满足的那个来结束输入。
+
+B、如果fgets()读取到换行符，就会把它存到字符串里，这样每次显示字符串时就会显示换行符；而不是像gets()那样丢弃它。
+
+C、fgets()还需第三个参数来说明读哪一个文件。从键盘上读数据时，可以使用stdin(代表standard input)作为该参数，这个标识符在stdio.h中定义。
+
+```
+#include <stdio.h>
+int main (void)
+{
+	char name [20];
+	char *ptr;
+	ptr = fgets (name, 20, stdin);
+	printf ("%s?, hi %s!\n", name, ptr);
+	return 0;
+}
+输出结果：
+JOY
+JOY
+?, hi JOY
+!
+```
+
+去掉换行符：
+
+```
+#include <stdio.h>
+#include <string.h>
+ 
+int main (void)
+{
+	char name[20];
+	char *ptr;
+	char *find;
+	ptr = fgets (name, 20, stdin);
+	find = strchr (name, '\n');
+	if (find)
+		*find = '\0';
+	printf ("%s?,hi,%s!\n",ptr, name);
+	return 0;
+}
+输出结果：
+Joy
+Joy?,hi,Joy!<strong>
+</strong>
+```
+
+# 函数
+
+一、函数概述
+
+1、首先什么是函数？
+
+函数是用于完成特定任务的程序代码的自包含单元。
+
+2、为什么使用函数？
+
+第一、函数的使用可以身故重复代码的编写。第二、函数使得程序更加模块化，有利于程序的阅读修改和完善。
+
+3、main函数原型
+
+int main (int argc, char * argv[], char * envp[]) {....}
+
+第一个参数：命令行参数的个数
+
+第二个参数：命令行参数的地址信息
+
+第三个参数：环境表的首地址
+
+参数argc表示输入参数的个数(含命令名)，如果有命令行参数，argc应不小于1；argv表示传入的参数的字符串，是一个字符串数组，argv[0]表示命令名，argv[1]指向第一个命令行参数；至于第三个参数env，它与全局变量environ相比也没有带来更多益处，所以POSIX.1也规定应使用environ而不使用第三个参数。通常用getenv和putenv函数来存取特定的环境变量，而不是直接使用environ变量。例如：
+
+
+//main函数原型的使用
+#include <stdio.h>
+int main(int argc,char* argv[],char* envp[])
+{
+	printf("argc=%d\n",argc);
+	int i=0;
+	for(i=0;i<argc;i++)
+	{
+		printf("感谢%s\n",argv[i]);
+	}
+	//声明全局变量
+	extern char** environ;
+	printf("environ=%p,envp=%p\n",environ,envp);//直接访问环境表
+	return 0;
+}
+输出结果为：
+argc=1
+感谢./a.out
+environ=0xbfab74cc,envp=0xbfab74cc
+
+再如：
+
+命令行为：myprogram c:\a.txt c:\b.txt
+则：argc==3
+argv[0]=="myprogram"
+argv[1]=="c:\\a.txt"
+argv[2]=="c:\\b.txt"
+再再如：
+
+#include <stdio.h>
+int main (int argc, char *argv[])
+{
+	int count;
+	printf ("The command line has %d arguments: \n", argc - 1);
+	for (count = 1; count < argc; count++)
+		printf ("%d: %s\n", count, argv[count]);
+	printf ("\n");
+	return 0;
+}
+输出结果：
+tarena@ubuntu:~/project/C$ ./a.out I LOVE YOU
+The command line has 3 arguments: 
+1: I
+2: LOVE
+3: YOU
+
+
+
+每个C程序都必须有一个 main 函数，因为它是程序执行的起点。关键字 int 表示函数返回一个整型值，关键字 void 表示函数不接受任何参数。main 函数的函数体包括左花括号和与之匹配的右花括号之间的任何内容。
+
+注意：如果没有写明返回值，一般默认为 int 类型。
+
+
+main （void）
+{
+...
+    return 0；
+}
+
+二、函数声明和定义
+
+1、函数声明
+
+在任何程序在使用函数之前都需要声明该函数的类型。
+
+例如：int imax (int a, int b);
+
+第一个int指的是函数类型；位于圆括号内的两个int表明该函数的形式参数为int类型。分号的作用表示该语句是进行函数声明而不是函数定义。
+
+在函数原型中可以根据自己的喜好省略变量名。
+
+int imax (int , int);
+
+需要注意的是这些变量名只是虚设的名字，他们不必和函数定义中使用的变量名想匹配。使用这种函数原型信息，编译器就可以检查函数调用语句是否和其原型声明一致。比如检查参数个数是否正确，参数类型是否匹配。将声明语句放置在main ()之前和之内两种方式都是正确的。需要重点注意的是函数声明要在使用函数之前进行。当在main之前函数定义的话，就不需要声明语句了。
+
+
+#include <stdio.h>
+int imin (int, int);
+int main (void)
+{
+    int inim (int, int);
+}
+2、隐式声明
+如果被调用函数写在调用函数后面则编译器会猜测被调用函数的格式，这叫做函数的隐式声明。隐式声明可以和实际情况不一致这时就会出错，可以把被调用函数的声明单独写在文件开头，这叫做函数的显示声明。除了主函数以外的所有函数都应该进行显示声明，因为主函数永远不是被调用函数。如果main()之后又函数定义，main()之前却没有函数声明的话，编译的时候会出现隐式声明报错。
+
+3、头文件的使用
+
+如果把main ()函数放在第一个文件中吧自定义哈拿书放在第二个文件中实现，那么第一个文件仍需要使用函数原型。如果把函数原型放在一个头文件中，就不必每次使用这些函数时输入其原型声明了。
+
+
+#ifndef	__02READ_H__
+#define __02READ_H__
+extern int num;		//主函数全局变量写在了头文件里且要加extern关键字
+int read(char， int);	//函数声明
+#define PI 3.14
+#endif 
+4、函数定义
+函数声明只是将函数类型告诉编译器，而函数定义部分则是函数的实际实现代码。之所以使用函数原型，是为了在编译器编译第一个调用函数的语句之前想其表明该函数的使用方法。因此，可以在首次调用某函数之前对该函授进行完整的定义。这样函数定义部分就和函数原型有着相同的作用。通常对较小的函数会这样做：
+
+//下面既是一个函数的定义，也是它的原型
+#include <stdio.h>
+int imax (int a, int b)
+{
+	return a > b ? a : b;
+}
+ 
+int main (void)
+{
+	int x, z;
+	scanf ("%d", &x);
+	z = imax (x, 50);
+	printf ("%d\n", z);
+	return 0;
+}
+
+三、函数形参与实参
+1、形式参数
+
+函数定义为下面的函数：
+
+void show (char ch, int num)
+
+这行代码通知编译器show()使用名为ch和num的两个参数，并且这两个参数的类型分别为char和int。变量ch和num被称为形式参数。
+
+注意：ANSI C形式要求在每个变量前声明其类型。也就是说，不能像通常变量声明那样使用变量列表声明同一类型的变量。如下所示：
+
+void dibs (int x, y, z)  /*不正确的函数头*/
+
+void dibs (int x, int y, int z)  /*正确的函数头*/
+
+2、实际参数
+
+函数调用中，通常使用实际参数对ch和num赋值，如：
+
+show (SPACE, 12);
+
+形式参数是被调函数中的变量，而实际参数是调用函数分配给被调用函数变量的特定数值。实际参数可以是常量、变量或一个复杂的表达式。但是无论何种形式的实际参数，执行时首先要计算其值，然后将该值复制给被调用函数中相应的形式参数。
+
+3、无参数
+
+void dibs (void);
+
+为了表示一个函数确实不使用参数，需要在圆括号内加入void关键字。
+
+四、递归函数
+
+1、递归介绍
+
+C允许一个函数条用其本身，这种调用过程被称为递归。
+
+递归与循环比较：
+
+采用递归函数解决问题的思路叫递归
+采用循环解决同样问题的思路叫递推
+
+递归一般可以代替循环语句使用。有些情况下使用循环语句比较好，而有些时候使用递归更有效。递归方法虽然使用程序结构优美，但其执行效率却没有循环语句高。一般来说，选择循环更好一些。首先，因为每次递归调用都拥有自己的变量集合，所以就需要占用较多的内存；每次递归调用需要把心的变量集合存储在堆栈中。其次，由于进行每次函数调用需要花费一定的时间，所以递归的执行速度较慢。
+
+
+//示例一
+#include <stdio.h>
+void show (int);
+ 
+int main (void)
+{
+	show (1);
+	return 0;
+}
+ 
+void show (int n)
+{
+	printf ("Level %d: n location %p\n", n, &n);
+	if (n < 4)
+		show (n + 1);
+	printf ("Level %d: n location %p\n", n, &n);
+}
+ 
+执行结果如下：
+Level 1: n location 0xbf8bf680
+Level 2: n location 0xbf8bf660
+Level 3: n location 0xbf8bf640
+Level 4: n location 0xbf8bf620
+Level 4: n location 0xbf8bf620
+Level 3: n location 0xbf8bf640
+Level 2: n location 0xbf8bf660
+Level 1: n location 0xbf8bf680
+
+
+//示例二
+#include <stdio.h>
+ 
+void print (int num)
+{
+	if (num == 1)
+	{
+		printf ("1\n");
+		return ;
+	}
+	printf ("%d\n", num);
+	print (num -1);
+}
+ 
+int main (void)
+{
+	print (10);
+	return 0;
+}
+输出结果：
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+
+
+2、递归的基本原理
+
+第一：每一级的函数调用都有自己的变量。
+
+第二：每一次函数调用都会有一次返回。
+
+第三：递归函数中，位于递归调用前的语句和各级被调用函数具有相同的执行顺序。
+
+第四：递归函数中，位于递归调用后的语句的执行顺序和各个被调用函数的顺序相反。
+
+第五：虽然每一级递归都有自己的变量，但是函数代码并不会得到复制。
+
+最后：递归函数中必须包含可以终止递归调用的语句。
+
+3、递归的优缺点
+
+其优点在于为某些变成问题提供了最简单的解决方法，而缺点是一些递归算法会很快耗尽计算机的内存资源。同时，使用递归的程序难于阅读和维护。
+
+
+
+五、指针函数和函数指针
+
+指针函数：返回指向char的指针的函数，例如：char * fump ( );
+函数指针：指向返回类型char的函数指针，例如：char (* frump) ( );
+这里需要明白一个符号之间优先级的问题，"( )"的优先级比"*"要高。
+
+再考虑一个，char (* flump[3]) ( );
+
+由3个指针组成的数组，每个指针指向返回类型为 char 的函数
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/52351060
+
+九、字符串输出
+
+1、printf()函数输出
+
+printf ("%s, %s\n", name, str);
+
+printf ()函数需要一个字符串地址作为参数，优点在于可以格式化多种数据类型。
+
+2、puts()函数输出
+
+puts()函数只需要给出字符串参数的地址，每一个字符串都是单行显示。与printf()不同，puts()显示字符串时自动在其后添加一个换行符。当遇到空字符就会停止，必须确保有空字符(\0)存在。
+
+
+#include <stdio.h>
+int main (void)
+{
+	char code1[] = "haha!";
+	char code[] = {'h','e','l','l','o',' ','w','o','r','l','d' };
+	char code2[] = "show!";
+	puts (code);
+	return 0;
+}
+输出结果：
+hello worldhaha!
+说明：code没有空字符(\0)，因此它是一个字符数组不是一个字符串，puts()函数将继续执行直到遇到code2中的空字符。
+3、fputs()函数输出
+
+fputs()函数需要第二个参数来说明要写的文件。可以使用stdout (代表 stdndard output)作为参数来进行输出显示，stdout在stdio.h中定义。与puts()不同，fputs()并不为输出自动添加换行符。
+
+注意：gets()丢掉输入里的换行符，但是puts()为输出添加换行符。fgets()存储输入中的换行符，而fputs不为输出添加换行符。由此可见:
+
+gets()和 puts()一起使用，fgets()和fputs()一起使用。
+
+4、putcahr()函数输出，扩展
+
+
+#include <stdio.h>
+int put (const char *); /*使用const关键字*/
+int main (void)
+{
+	char arr[] = {'h', 'e', ' ' , 'l', 'l', 'o'}; /*区分空格符 ''*和空白符'\0'/
+	char *ptr = arr;
+	while (*ptr != '\0'){  /*等价于 while (*ptr)*/
+		putchar (*ptr++);
+	}
+	putchar ('\n');
+	printf ("I love you %d\n" ,
+		("hello world!")); /*计算机先计算put()函数，所以先输出hello world！*/
+	return 0;
+}
+int put (const char *string)
+{
+	int count = 0;
+	while (*string){  
+		putchar (*string++);
+	    count++;	
+	}
+	putchar ('\n'); /*putchar不打印换行符*/
+ 
+	return count; 
+}
+输出结果：
+he llo
+hello world!
+I love you 12
+
+
+十、文件输入
+
+1、getc ()函数输入
+
+函数功能:
+从流中取字符
+函数用法:
+int getc(FILE *stream);
+
+//read the next character from stream and return it as an unsigned char cast to a int ,or EOF on end of file or error.
+
+注意: 此函数被ISO C声明为一个宏，所以在用时不能将其做为函数指针传(有一些编用时不能将其做为函数指针传(有一些编译器将其以函数形式也给另说)。
+
+
+//示例
+#include<stdio.h>
+int main()
+{
+   char c;
+ 
+   printf("请输入字符：");
+   c = getc(stdin);
+   printf("输入的字符：");
+   putc(c, stdout);
+   
+   return(0);
+}
+getc、fgetc、getchar函数区别：
+
+//函数原型
+#include <stdio.h>
+int getc(FILE *stream);
+int fgetc(FILE *stream);
+int getchar(void);
+getchar ()函数从标准输入（键盘）获得一个字符: 
+
+ch = getchar ( );
+
+getc ()函数从fp指定的文件中获得一个字符：
+
+ch = getc (fp);
+
+所以，ch = getc (stdin) 和 ch = getchar ( )的作用是一样的。
+
+参看：fgetc和getc的区别
+
+两个都是用来从stream中取得一个字符的，区别在于调用getc函数时所用的参数stream不能是有副作用的表达式，而fgetc函数则可以，也就是说，getc可以被当作宏来调用，而fgetc只能作为函数来调用。一般来说，调用宏比调用函数耗费的时间少。
+
+扩展：有副作用的表达式，指的是表达式执行后，会改变表达式中某些变量的值 
+最简单的如++i，这个表达式执行后，i的值会改变，这样的表达式是不应该在宏调用里出现的
+
+
+//fgetc()示例
+#include <stdio.h>
+int main(void)
+{
+    FILE *fp;
+    int c;
+    fp = fopen("abc.txt", "r");
+    while((c = fgetc(fp)) != EOF) 
+    {
+        if (c == 'b') 
+        {
+            putchar(c);
+        }
+    }
+    fclose(fp);
+    return 0;
+}
+
+
+2、fprintf ()函数
+
+fprintf ()的工作方式和printf()相似，区别在于前者需要第一个参数来指定合适的文件。
+
+函数声明：
+int fprintf(FILE * stream, const char * format, ...);
+函数说明：
+fprintf()会根据参数format 字符串来转换并格式化数据, 然后将结果输出到参数stream 指定的文件中, 直到出现字符串结束('\0')为止。
+返回值：
+关于参数format 字符串的格式请参考printf(). 成功则返回实际输出的字符数, 失败则返回-1, 错误原因存于errno 中.
+参数：
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了流。
+format -- 这是 C 字符串，包含了要被写入到流 stream 中的文本。它可以包含嵌入的 format 标签，format 标签可被随后的附加参数中指定的值替换，并按需求进行格式化。
+
+参看：C语言再学习 -- printf、scanf占位符
+
+/*
+ 	fprintf函数演示
+ */
+#include <stdio.h>
+int main()
+{
+	FILE *p_file = fopen("b.txt","w");
+	if(p_file)
+	{
+	//	printf("%c,%g,%d\n",'c',3.14f,46);	//打印在屏幕上
+		fprintf(p_file,"%c,%g,%d\n",'c',3.14,46);//fprintf函数可以把数据按照格式记录到文本文件中
+		fclose(p_file);
+		p_file=NULL;
+	}
+	return 0;
+}
+
+
+十一、文件输出
+
+1、putc ()函数
+
+函数功能：
+用于输入一个字符到指定流中
+函数原型：
+int putc(int ch, FILE *stream);
+参数：
+参数ch表示要输入的位置，参数stream为要输入的流。
+返回值：
+若正确，返回输入的的字符，否则返回EOF。
+
+
+//putc示例
+#include <stdio.h>
+int main ()
+{
+   FILE *fp;
+   int ch;
+   fp = fopen("abc.txt", "w");
+   for( ch = 33 ; ch <= 100; ch++ ) 
+   {
+      putc(ch, fp);
+   }
+   fclose(fp);
+   
+   return(0);
+}
+ 
+//fgetc读取
+#include <stdio.h>
+int main ()
+{
+   FILE *fp;
+   int c;
+ 
+   fp = fopen("file.txt","r");
+   while(1)
+   {
+      c = fgetc(fp);
+      if( feof(fp) )
+      {
+          break ;
+      }
+      printf("%c", c);
+   }
+   fclose(fp);
+   return(0);
+}
+
+putc与putchar的区别：
+
+putchar函数，输出到显示器
+
+putc函数，将字符输入到文件
+
+把stdout作为putc()函数的第二个参数。stdout是在stdout中定义的与标准输出相关的文件指针，
+所以putc (ch, stdout) 和 putchar ( )的作用是一样的。
+
+
+2、fscanf ()函数
+
+fscanf ()的工作方式和scanf()相似，区别在于前者需要第一个参数来指定合适的文件。
+
+函数声明：
+int fscanf(FILE *stream, const char *format, ...)
+参数：
+stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了流。
+format -- 这是 C 字符串，包含了以下各项中的一个或多个：空格字符、非空格字符和format说明符。
+
+参看：C语言再学习 -- printf、scanf占位符
+返回值：
+如果成功，该函数返回成功匹配和赋值的个数。如果到达文件末尾或发生读错误，则返回 EOF。
+
+
+/*
+ 	fscanf函数演示
+ */
+#include <stdio.h>
+int main()
+{
+	char ch=0;
+	float fnum=0.0;
+	int num=0;
+	FILE *p_file=fopen("b.txt","r");
+	if(p_file)
+	{
+	//	scanf("%c%g%d",&ch,&fnum,&num);
+		fscanf(p_file,"%c %g %d",&ch,&fnum,&num);//fscanf函数可以从文件中按照格式把数据拷贝到内存的存储区里
+		printf("%g %c %d\n",fnum,ch,num);  //拷贝到存储区我们就可以打印出来
+		fclose(p_file);
+		p_file=NULL;
+	}
+	return 0;
+}
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/52316708
 
 # 关键字
 C语言一共有32个关键字，如下表所示：
