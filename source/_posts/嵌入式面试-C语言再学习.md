@@ -5847,11 +5847,12 @@ i=0;
 有一个问题，如何确保使用的标识符在其他任何地方都没有定义过？
 
 通常编译器提供商采用下述方法解决这个问题：用文件名做标识符，并在文件名中使用大写字母、用下划线代替文件名中的句点字符、用下划线（可能使用两条下划线）做前缀和后缀。例如，检查头文件read.h，可以发现许多类似的语句：
-
+```
 #ifndef  __READ_H__    //作为开头的预处理指令则当它后面的宏名称被定义过则编译后一组否则编译前一组
 #define __READ_H__     //防止被重复定义
 extern int num=0;
 #endif  __READ_H__
+```
 参看：C语言再学习 -- 标识符
 
 
@@ -5862,7 +5863,7 @@ extern int num=0;
 
 1） C 调 C++，在 C++ 的头文件如下设置：
 
-
+```
 extern "C" int add (int x, int y);
 extern "C" {
 int add (int x, int y);
@@ -5879,9 +5880,9 @@ int add (int ,int );
 }
 #endif
 #endif
-
+```
 2）C++ 调 C，在C++ 的主函数如下设置：
-
+```
 extern "C" {
 #include "chead.h"
 }
@@ -5897,9 +5898,9 @@ int main (void) {
 		<< sub(x, y) << endl;
 	return 0;
 }
+```
 
-
-五、预定义宏
+## 五、预定义宏
 
 __DATE__进行预处理的日期（“Mmm dd yyyy”形式的字符串文字）
 
@@ -5919,7 +5920,7 @@ __STDC_VERSION__为C99时设置为199901L
 
 __FUNCTION__或者 __func__  获取所在的函数名（预定义标识符，而非预定义宏）
 
-
+```
 #include <stdio.h>
 int main (void)
 {
@@ -5940,14 +5941,15 @@ The function is main
 The func is main
 The date is Nov 22 2016
 The time is 15:46:30
+```
 
-六、常用的新指令
+##  六、常用的新指令
 
 #line 整数n =>表示修改代码的行数/指定行号   插入到程序中表示从行号n开始执行，修改下一行的行号为n
 #error  字符串 => 表示产生一个错误信息
 #warning 字符串 => 表示产生一个警告信息
 
-
+```
 //#line 预处理指令的使用
 #include <stdio.h>
 #line 200 
@@ -5958,6 +5960,8 @@ int main(void)
 }
 输出结果：
 The line is 202
+```
+```
 //#error和#warning的使用
 #include <stdio.h>
  
@@ -5979,14 +5983,14 @@ int main(void)
 警告： #warning "版本过高"
 //错误： #error "版本过低"
 //程序正常运行
+```
 
 
+## 七、#pragma
 
-七、#pragma
-
-#pragma GCC dependency 文件名 
+### #pragma GCC dependency 文件名 
 表示当前文件依赖于指定的文件，如果当前文件的最后一次，修改的时间早于依赖的文件，则产生警告信息
-
+```
 #include <stdio.h>
 //当前程序依赖于01print.c文件
 #pragma GCC dependency "01print.c"
@@ -5998,9 +6002,10 @@ int main(void)
 输出结果：
 致命错误： 01print.c：没有那个文件或目录
 编译中断。
-
-#pragma GCC poison 标示符
+```
+### #pragma GCC poison 标示符
 表示将后面的标示符设置成毒药，一旦使用标示符，则产生错误或警告信息
+```
 //毒药的设置
 #include <stdio.h>
 //#define GOTO goto
@@ -6019,12 +6024,14 @@ int main(void)
 }
 输出结果：
 错误： 试图使用有毒的“goto”
- 
+```
  
 
 
-#pragma pack (整数n)
+### #pragma pack (整数n)
+
 表示按照整数n倍进行补齐和对齐
+```
 //设置结构体的对齐和补齐方式
 #include <stdio.h>
  
@@ -6047,9 +6054,9 @@ int main(void)
 }
 输出结果：
 sizeof(struct S) = 8
+```
 
-
-#pragma message
+### #pragma message
 
 message 参数： message 参数是我最喜欢的一个参数，它能够在编译信息输出窗，口中输出相应的信息，这对于源代码信息的控制是非常重要的。其使用方法为：
 
@@ -6057,38 +6064,39 @@ message 参数： message 参数是我最喜欢的一个参数，它能够在编
 
 当编译器遇到这条指令时就在编译输出窗口中将消息文本打印出来。当我们在程序中定义了许多宏来控制源代码版本的时候，我们自己有可能都会忘记有没有正确的设置这些宏，此时我们可以用这条指令在编译的时候就进行检查。假设我们希望判断自己有没有在源代码的什么地方定义了_X86 这个宏可以用下面的方法.
 
-
+```
 #define _X86
 #ifdef _X86
 #pragma message ("_X86 macro activated!")
 #endif
 输出结果：
 附注： #pragma message：_X86 macro activated!
+```
 当我们定义了_X86 这个宏以后，应用程序在编译时就会在编译输出窗口里显示“_X86 macro activated!”。我们就不会因为不记得自己定义的一些特定的宏而抓耳挠腮了.
 
 
-#pragma code_seg
+### #pragma code_seg
 
 另一个使用得比较多的 pragma 参数是 code_seg。格式如：
 #pragma code_seg( ["section-name"[,"section-class"] ] )
 它能够设置程序中函数代码存放的代码段，当我们开发驱动程序的时候就会使用到它。
 
 
-#pragma once
+### #pragma once
 
 #pragma once (比较常用）
-只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在Visual C++6.0 中就已经有了，但是考虑到兼容性并没有太多的使用它。
+只要在头文件的最开始加入这条指令就能够保证头文件被编译一次，这条指令实际上在Visual C\++6.0 中就已经有了，但是考虑到兼容性并没有太多的使用它。
 
-#pragma hdrstop
+### #pragma hdrstop
 #pragma hdrstop 表示预编译头文件到此为止，后面的头文件不进行预编译。 BCB 可以预编译头文件以加快链接的速度，但如果所有头文件都进行预编译又可能占太多磁盘空间，所以使用这个选项排除一些头文件。有时单元之间有依赖关系，比如单元 A 依赖单元 B，所以单元 B 要先于单元 A 编译。你可以用#pragma startup 指定编译优先级，如果使用了#pragma package(smart_init) ， BCB就会根据优先级的大小先后编译。
 
 
-#pragma resource
+### #pragma resource
 
 #pragma resource "*.dfm"表示把*.dfm 文件中的资源加入工程。 *.dfm 中包括窗体外观的定义。
 
 
-#pragma warning
+### #pragma warning
 
 #pragma warning( disable : 4507 34; once : 4385; error : 164 )
 等价于：
@@ -6110,16 +6118,14 @@ message 参数： message 参数是我最喜欢的一个参数，它能够在编
 #pragma warning( pop )
 在这段代码的最后，重新保存所有的警告信息(包括 4705， 4706 和 4707)。
 
-#pragma comment
+### #pragma comment
 
 #pragma comment(...)
 该指令将一个注释记录放入一个对象文件或可执行文件中。常用的 lib 关键字，可以帮我们连入一个库文件。 比如：
 #pragma comment(lib, "user32.lib")
 该指令用来将 user32.lib 库文件加入到本工程中。linker:将一个链接选项放入目标文件中,你可以使用这个指令来代替由命令行传入的或者在开发环境中设置的链接选项,你可以指定/include 选项来强制包含某个对象,例如:
 #pragma comment(linker, "/include:__mySymbol")
-————————————————
-版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/53158517
+
 
 # 存储类型关键字
 
