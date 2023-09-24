@@ -2174,16 +2174,12 @@ p = NULL;/*请加上这句*/
 malloc 从堆里获得空间，函数返回的指针指向堆里的一块内存。操作系统中有一个记录空闲内存地址的链表。当操作系统收到程序的申请时，就会遍历该链表，然后寻找第一个空间大于所申请空间的堆结点，然后将该结点链表删除，并将该结点空间分配给程序。
 
 
-
 2、free 释放了什么
 
 free 释放的是指针指向的内存。注意，释放的是内存，而不是指针。
 
 指针是一个变量，只有程序结束时才被销毁，释放内存空间后，原来指向这块空间的指针还是存在的，只不过现在指针指向的内容是未定义的，所以说是垃圾。因此，释放内存后要把指针指向NULL，防止指针在后面不小心又被解引用了。
-
-
-
-
+```
 /*
  	动态分配内存演示
  */
@@ -2210,7 +2206,7 @@ int main()	//动态分配内存可以实现跨函数存储区，动态分配内�
 	}
 	return 0;
 }
-
+```
 
 
 思考一个问题，上面的例子为什么不能在 int * read (void)；函数里 释放和置空？
@@ -2224,24 +2220,26 @@ malloc函数的实质体现在，它有一个将可用的内存块连接为一�
 
 
 
-进程中的内存区域划分
-（1）代码区 存放程序的功能代码的区域，比如：函数名
-（2）只读常量区 主要存放字符串常量和const修饰的全局变量
-（3）全局区 主要存放已经初始化的全局变量和static修饰的全局变量
-（4）BSS段 主要存放没有初始化的全局变量和static修饰的局部变量，BSS段会在main函数执行之前自动清零
-（5）堆区 主要表示使用malloc/calloc/realloc等手动申请的动态内存空间，内存由程序员手动申请和手动释放
-（6）栈区 主要存放局部变量（包括函数的形参），const修饰的局部变量，以及块变量，该内存区域由操作系统自动管理
+**进程中的内存区域划分**
+1. 代码区 存放程序的功能代码的区域，比如：函数名
+2. 只读常量区 主要存放字符串常量和const修饰的全局变量
+3. 全局区 主要存放已经初始化的全局变量和static修饰的全局变量
+4. BSS段 主要存放没有初始化的全局变量和static修饰的局部变量，BSS段会在main函数执行之前自动清零
+5. 堆区 主要表示使用malloc/calloc/realloc等手动申请的动态内存空间，内存由程序员手动申请和手动释放
+6. 栈区 主要存放局部变量（包括函数的形参），const修饰的局部变量，以及块变量，该内存区域由操作系统自动管理
 
 
 内存地址从小到大分别是：
+
 代码区 只读常量区 全局区 BSS段 堆 栈
+
 其中堆区和栈区并没有明确的分割线，可以适当的调整
 
 图示1：可执行程序在存储器中的存放
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式面试-C语言再学习/1695535725404.png)
 
 
-
-
+```
 //进程中的内存区域划分
 #include <stdio.h>
 #include <stdlib.h>
@@ -2305,8 +2303,8 @@ BBS段:&i9=0x804a030
 栈区:&i6=0xbfbcc04c
 栈区:&i8=0xbfbcc048
 栈区:strs=0xbfbcc037
-
-
+```
+```
 //字符串存储形式的比较
 #include <stdio.h>
 #include <stdlib.h>
@@ -2358,7 +2356,7 @@ int main()
 --------------------------
 堆区 ps=0x804877a
 堆区 p=0x8eb2008
-
+```
 
 什么是堆、栈？
 
@@ -2368,15 +2366,11 @@ int main()
 
 堆：是大家共有的空间，分全局堆和局部堆。全局堆就是所有没有分配的空间，局部堆就是用户分配的空间，堆在操作系统对进程初始化的时候分配，运行过程中也可以像系统要额外的堆，但是记得用完了要还给操作系统，要不然就是内存泄漏。
 
-
-
-栈：是个线程独有的，保存其运行状态和局部自动变量的。栈在线程开始的时候初始化，每个线程的栈互相独立，因此，栈是 thread safe的。每个C++对象的数据成员也存在在栈中，每个函数都有自己的栈，栈被用来在函数之间传递参数。操作系统在切换线程的时候回自动的切换栈，就是切换 SS/ESP寄存器。栈空间不需要再高级语言里面显式的分配和释放。
-
-
+栈：是个线程独有的，保存其运行状态和局部自动变量的。栈在线程开始的时候初始化，每个线程的栈互相独立，因此，栈是 thread safe的。每个C\++对象的数据成员也存在在栈中，每个函数都有自己的栈，栈被用来在函数之间传递参数。操作系统在切换线程的时候回自动的切换栈，就是切换 SS/ESP寄存器。栈空间不需要再高级语言里面显式的分配和释放。
 
 示例：
 
-
+```
 //main.cpp 
 int a = 0; 全局初始化区 
 char *p1; 全局未初始化区 
@@ -2392,7 +2386,7 @@ p2 = (char *)malloc(20);
 分配得来得10和20字节的区域就在堆区。 
 strcpy(p1, "123456"); 123456放在常量区，编译器可能会将它与p3所指向的"123456"优化成一个地方。 
 }
-
+```
 
 
 堆和栈的理论知识：
@@ -2480,6 +2474,470 @@ return;
 
 堆和栈的区别可以用如下的比喻来看出： 
 使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。
+
+# 文件
+
+文件是什么
+
+一个文件（file）通常就是磁盘上的一段命名的存储区。C 将文件看成是连续的字节序列，其中每一个字节都可以单独地读取。
+
+
+二进制和文本模式
+1、在windows系统中，文本模式下，文件以"\r\n"代表换行。若以文本模式打开文件，并用fputs等函数写入换行符"\n"时，函数会自动在"\n"前面加上"\r"。即实际写入文件的是"\r\n" 。
+
+2、在类Unix/Linux系统中文本模式下，文件以"\n"代表换行。所以Linux系统中在文本模式和二进制模式下并无区别。
+
+标准文件
+
+C 程序自动打开3个文件。这3个文件被称为标准输入，标准输出和标准错误输出。默认的标准输入是系统的一般输入设备，通常为键盘；默认的标准输出和标准错误输出是系统的一般输出设备，通常为显示器，分别得到文件描述符 0, 1, 2.
+
+下面的方法从标准输入（键盘）获得一个字符：  ch = getchar ( );
+
+标准文件指针：
+
+stdio.h文件把3个文件指针与3个C 程序自动打开的标准文件进行了并联，如下表所示：
+
+标准文件  
+
+文件指针  
+
+一般使用的设备  
+
+标准输入
+
+stdin
+
+键盘
+
+标准输出
+
+stdout
+
+显示器
+
+标准错误
+
+stderr
+
+显示器
+
+这些指针都是FILE指针类型，所以可以被用作标准I/O函数的参数。
+
+
+
+stdout和stderr比较：
+
+stderr -- 标准错误输出设备
+stdout -- 标准输出设备 (printf("..")) 同 stdout。
+两者默认向屏幕输出。但如果用转向标准输出到磁盘文件，则可看出两者区别。stdout输出到磁盘文件，stderr在屏幕，例如：
+fprintf(stderr, "Can't open it!\n");
+fprintf(stdout, "Can't open it!\n");
+在my.exe
+Can't open it!
+Can't open it!
+Can't open it!
+
+转向标准输出到磁盘文件tmp.txt
+my.exe > tmp.txt
+Can't open it!
+
+用TYPE 看 tmp.txt的内容：
+TYPE tmp.txt
+Can't open it!
+Can't open it!
+
+
+
+stderr是不缓存的，stdout是行间缓存的。请注意：
+for(i = 0; i < 10; i++)
+    {
+      fprintf(stdout, "This is stdout[%d]", i);
+      fprintf(stderr, "This is stderr[%d]", i);
+    }
+会全部显示stderr之后，再显示stdout。又因为stdout是行内缓存，所以加 \n 后会立刻显示。
+
+
+
+文件操作分成如下三个步骤：
+
+1、打开文件 （fopen）
+
+2、操作文件 （fread/fwrite）
+
+3、关闭文件 （fclose）
+
+下面来一一介绍：
+
+打开文件 -- fopen ( )函数：
+
+函数原型：
+FILE * fopen(const char * path,const char * mode);
+
+返回值：
+
+文件顺利打开后，指向该流的文件指针就会被返回。如果文件打开失败则返回NULL，并把错误代码存在errno中。
+一般而言，打开文件后会做一些文件读取或写入的动作，若打开文件失败，接下来的读写动作也无法顺利进行，所以一般在fopen()后作错误判断及处理。
+
+参数说明：
+
+path：字符串包含欲打开的文件路径及文件名
+
+mode：C 字符串，包含了文件访问模式，模式如下：
+
+
+模式字符串
+
+ 
+
+“r”
+
+以只读方式打开文件，该文件必须存在
+
+“r+”
+
+以只读写方式打开文件，该文件必须存在
+
+“w”
+
+打开只写文件，若文件存在则文件长度清零，即该文件内容会消失。
+
+若文件不存在则建立该文件
+
+“w+”
+
+打开可读写文件，若文件存在则文件长度清零，即该文件内容会消失。
+
+若文件不存在则建立该文件。
+
+“a”
+
+以附加的方式打开只写文件。若文件不存在，则会建立该文件，如果文件存在，
+
+写入的数据会被加到文件尾，即文件原先的内容会被保留。（EOF符保留）
+
+“a+”
+
+以附加方式打开可读写的文件。若文件不存在，则会建立文件，如果文件存在，
+
+写入的数据会被加到文件尾后，即文件原先的内容会被保留。（原来的EOF符不保留）
+
+“rb”, “wb”, “ab”, “ab+”, “a+b”,
+
+ “wb+”, “w+b”, “ab+”, “a+b”
+
+与前面的模式相似，只是使用二进制模式而非文本模式打开文件
+
+
+关闭文件 -- fclose ( )函数：
+
+函数原型：
+
+int fclose( FILE *fp );
+
+返回值：
+如果流成功关闭，fclose 返回 0，否则返回EOF（-1）。（如果流为NULL，而且程序可以继续执行，fclose设定error number给EINVAL，并返回EOF。）
+
+因此，可在fclose(fp)后使用
+if(fclose())
+{
+    perror("fclose");
+}
+来判断是否成功关闭文件，关闭失败，则fclose返回“1”并输出出错原因。
+
+扩展：C语言再学习 -- EOF与feof函数
+
+[cpp]  view plain  copy    
+示例一：  
+#include<stdio.h>  
+int main(void)  
+{  
+    FILE*fp = NULL;  
+    fp = fopen("abc.txt", "r");  
+    if(NULL == fp)  
+    {  
+    perror("error...");  
+        exit (1);  
+    }  
+    fclose (fp);  
+    fp = NULL;  
+     return 0;  
+}  
+
+在文件操作时，需要注意以下几点问题
+1、在定义文件指针时，要将文件指针指向空；如 FILE *fp = NULL;
+2、需要判断文件是否打开成功，如 if(NULL == fp)
+3、文件操作完成后，注意要将文件关闭，否则会造成文件所占用内存泄露和在下次访问文件时出现问题。
+4、文件关闭后，需要将文件指针指向空，这样做会防止出现游离指针，而对整个工程造成不必要的麻烦；如：fp = NULL;
+
+[cpp]  view plain  copy    
+// 一个简单的文件压缩程序  
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <string.h>  
+  
+#define LEN 40  
+int main (int argc, char *argv[])  
+{  
+    FILE *in, *out;  
+    int ch;  
+    char name[LEN];  
+    int count = 0;  
+  
+    if (argc < 2)  
+    {  
+        fprintf (stderr, "Usage: %s filename\n", argv[0]);  
+        exit (1);  
+    }  
+    if ((in = fopen (argv[1], "r")) == NULL)  
+    {  
+        fprintf (stderr, "I couldn't open the file \"s\"\n", argv[1]);  
+        exit (2);  
+    }  
+  
+    strcpy (name, argv[1]);  
+    strcat (name, ".red");  
+    if ((out = fopen (name, "w")) == NULL)  
+    {  
+        fprintf (stderr, "Can't Create output file.\n");  
+        exit (3);  
+    }  
+    while ((ch = getc (in)) != EOF)  
+        if (count++ % 3 == 0)  
+            putc (ch, out);  
+    if (fclose (in) != 0 || fclose (out) != 0)  
+        fprintf (stderr, "Error in closing files\n");  
+    return 0;  
+}  
+  
+同一目录下创建文件eddy，里面添加内容 So even Eddy came oven ready .  
+输出结果：创建 eddy.red  
+Send money  
+
+操作文件 -- fread ( )函数和fwrite ( )函数
+
+fwrite ( )函数
+
+函数功能：
+指向文件写入一个数据块。
+函数原型：
+size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream);
+注意：这个函数以二进制形式对文件进行操作，不局限于文本文件
+参数：
+（1）buffer：是一个指针，对fwrite来说，是要获取数据的地址；
+（2）size：要写入内容的单字节数；（size_t是sizeof返回的类型，通常是unsigned int类型）
+（3）count:要进行写入size字节的数据项的个数；
+（4）stream:目标文件指针；
+返回值：
+返回实际写入的数据块数目 count。
+
+
+
+fread ( )函数：
+
+函数原型
+size_t fread ( void *buffer, size_t size, size_t count, FILE *stream);
+参数：
+（1）buffer：用于接收数据的内存地址
+（2）size：要读的每个数据项的字节数，单位是字节 （size_t是sizeof返回的类型，通常是unsigned int类型）
+（3）count：要读count个数据项，每个数据项size个字节.
+（4）stream：输入流
+返回值：
+返回真实写入的项数，若大于count则意味着产生了错误。另外，产生错误后，文件位置指示器是无法确定的。若其他stream或buffer为空指针，或在unicode模式中写入的字节数为奇数，此函数设置errno为EINVAL以及返回0.
+函数功能：
+从一个文件流中读数据，最多读取count个项，每个项size个字节，如果调用成功返回实际读取到的项个数（小于或等于count），如果不成功或读到文件末尾返回 0。
+
+
+[cpp]  view plain  copy    
+#include <stdio.h>  
+#include <string.h>  
+int main()  
+{  
+   FILE *fp;  
+   char c[] = "This is w3cschool";  
+   char buffer[20];  
+  
+   /* 打开文件用于读写 */  
+   fp = fopen("file.txt", "w+");  
+  
+   /* 写入数据到文件 */  
+   fwrite(c, strlen(c) + 1, 1, fp);  
+  
+   /* 查找文件的开头 */  
+   fseek(fp, SEEK_SET, 0);  
+  
+   /* 读取并显示数据 */  
+   fread(buffer, strlen(c)+1, 1, fp);  
+   printf("%s\n", buffer);  
+   fclose(fp);  
+   return(0);  
+}  
+
+随机存取：fseek ( )、ftell ( )、rewind ( )
+
+fseek ( )函数
+
+函数功能：
+
+重定位流（数据流/文件）上的文件内部位置指针
+
+注意：文件指针指向文件/流。位置指针指向文件内部的字节位置，随着文件的读取会移动，文件指针如果不重新赋值将不会改变或指向别的文件。
+
+函数原型：
+
+int fseek(FILE *stream, long offset, int fromwhere);
+
+参数：
+
+（1）stream：为文件指针
+（2）offset：为偏移量，正数表示正向偏移，负数表示负向偏移（数字值用3L、10L等，L后缀表示long类型）
+（3）origin：设定从文件的哪里开始偏移,可能取值为：SEEK_CUR、 SEEK_END 或 SEEK_SET
+SEEK_SET： 文件开头
+SEEK_CUR： 当前位置
+SEEK_END： 文件结尾
+其中SEEK_SET,SEEK_CUR和SEEK_END依次为0，1和2.
+
+返回值：
+
+成功，返回 0，失败返回 -1，并设置error的值，可以用perror()函数输出错误。
+
+函数描述：
+
+函数设置文件指针stream的位置。如果执行成功，stream将指向以fromwhere（偏移起始位置：文件头0（SEEK_SET），当前位置1（SEEK_CUR），文件尾2（SEEK_END））为基准，偏移offset（指针偏移量）个字节的位置。如果执行失败（比如offset超过文件自身大小），则不改变stream指向的位置。
+
+上面这句话意思是，函数执行之后，文件指针就移动到了fromwhere + offset位置处，如果offset超过文件自身大小，则不改变stream指向的位置。
+
+fseek函数和lseek函数类似，但lseek返回的是一个off_t数值，而fseek返回的是一个整型.
+
+
+#include <stdio.h>
+int main (void)
+{
+	char ch = 0;
+	FILE *fp = fopen ("abc.txt", "r");
+	if (fp)
+	{
+		//ABCDEFGHIGKLMN
+		fseek (fp, 2L, SEEK_SET); //文件开头  (ABC)
+		//（2+0 = 2 文件指针移动到2的位置）
+		fread (&ch,sizeof (char), 1, fp);
+		printf ("%c\n", ch);
+ 
+ 		fseek (fp, 3L, SEEK_CUR); //当前位置 （CDEFG）
+ 		//（3+1 = 4 文件指针移动到4的位置）
+ 		fread (&ch,sizeof (char), 1, fp); 
+ 		printf ("%c\n", ch);
+ 		
+ 		fseek (fp, -3L, SEEK_END); //文件结尾 MN） 
+ 		//（-3+2 = -1 文件指针移动到-1位置）
+ 		fread (&ch,sizeof (char), 1, fp); 
+ 		printf ("%c\n", ch);
+ 		
+ 		fclose (fp); 
+ 		fp = NULL;
+	} 
+	return 0;
+}
+输出结果：
+C
+G
+M
+
+
+ftell ()函数
+
+函数原型：
+
+long ftell(FILE *stream);
+
+函数功能：
+函数 ftell() 用于得到文件位置指针当前位置相对于文件首的偏移字节数。在随机方式存取文件时，由于文件位置频繁的前后移动，程序不容易确定文件的当前位置。使用fseek函数后再调用函数ftell()就能非常容易地确定文件的当前位置。
+
+返回值：
+
+以一个long类型值返回一个文件的当前位置。如果发生错误，则返回 -1L，全局变量 errno 被设置为一个正值。
+
+调用示例编辑：
+ftell(fp);利用函数 ftell() 也能方便地知道一个文件的长。如以下语句序列： fseek(fp, 0L,SEEK_END); len =ftell(fp); 首先将文件的当前位置移到文件的末尾，然后调用函数ftell()获得当前位置相对于文件首的位移，该位移值等于文件所含字节数。
+
+
+#include <stdio.h>
+int main (void)
+{
+	FILE *fp;
+	int len;
+	//ABCDEF
+	fp = fopen ("abc.txt", "r");
+	if (fp == NULL)
+	{
+		perror ("error");
+		return -1;
+	}
+	fseek (fp, 0, SEEK_END);
+	len = ftell (fp);
+	fclose (fp);
+	printf ("abc.txt 的总大小 = %d 字节\n", len);
+	return 0;
+}
+ 
+输出结果：
+abc.txt 的总大小 = 8 字节
+
+
+rewind ()函数：
+
+函数原型：
+void rewind(FILE *stream)
+返回值：
+该函数不返回任何值。
+函数功能: 
+将文件内部的位置指针重新指向一个流（数据流/文件）的开头
+注意：不是文件指针而是文件内部的位置指针，随着对文件的读写文件的位置指针（指向当前读写字节）向后移动。而文件指针是指向整个文件，如果不重新赋值文件指针不会改变。
+rewind函数作用等同于 (void)fseek(stream, 0L, SEEK_SET);[1] 
+#include <stdio.h>
+ 
+int main()
+{
+   char str[] = "Hello World!";
+   FILE *fp;
+   int ch;
+ 
+   /* 首先让我们在文件中写入一些内容 */
+   fp = fopen( "file.txt" , "w" );
+   fwrite(str , 1 , sizeof(str) , fp );
+   fclose(fp);
+ 
+   fp = fopen( "file.txt" , "r" );
+   while(1)
+   {
+      ch = fgetc(fp);
+      if( feof(fp) )
+      {
+          break ;
+      }
+      printf("%c", ch);
+   }
+   
+   rewind(fp); //从头从新开始打印
+  
+   printf("\n");
+   while(1)
+   {
+      ch = fgetc(fp);
+      if( feof(fp) )
+      {
+          break ;
+      }
+      printf("%c", ch);
+     
+   }
+   printf ("\n");
+   fclose(fp);
+ 
+   return(0);
+}
+输出结果：
+Hello World!
+Hello World!
 
 # 函数
 
