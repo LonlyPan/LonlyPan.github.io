@@ -6743,6 +6743,280 @@ NULL 指针并不指向任何对象。因此，除非是用于赋值或比较运
 
 一个汉字是两个字符，一个英文字母是一个字符，标点符号也是一个字符
 
+# 关键字struct
+
+结构体的一般定义形式为：
+
+标签（tag）字段允许为成员列表提供一个名字，这样它就可以在后续的声明中使用。标签允许多个声明使用同一个成员列表，并且创建同一种类型的结构。
+
+struct　标签{  
+     类型名1　成员名1;
+     类型名2　成员名2;
+    ……
+     类型名n　成员名n;　　　
+ }结构体变量;
+
+1、如果 标签 存在，结构体变量 不存在，定义如下：
+struct Student{
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+};
+ 
+struct Student stu   //Student 为标签  stu 为结构体变量
+
+2、如果 结构体变量 存在， 标签 可有可无，定义如下：
+struct Student{  //Student 可有可无
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+}stu;
+
+3、使用typedef起别名，标签可有可无，结构体变量 位置变为该 类型名
+typedef struct Student{ //Student 可有可无
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+}Stu; //Stu 为类型名
+ 
+Stu stu； //Stu 为类型名，stu 为结构体变量
+
+4、注意，字符串初始化不能直接赋值，需要使用 strcpy 函数
+#include <stdio.h>  
+#include <string.h>  
+  
+typedef struct   
+{  
+    int n;  
+    float m;  
+    char name[20];  
+}Ptr;  
+  
+int main (void)  
+{  
+    Ptr p;  
+    //Ptr p = {11, 12.9, "hello"};   
+    strcpy (p.name, "hello");  //注意字符串不能直接赋值  
+    p.n = 11;  
+    p.m = 12.9;  
+    printf ("n = %d, name = %s, m = %g\n", p.n, p.name, p.m);  
+    return 0;  
+}  
+输出结果：  
+n = 11, name = hello, m = 12.9  
+
+一、结构体的定义
+1、定义形式
+结构体内部的元素，也就是组成成分，我们一般称为"成员"。
+结构体的一般定义形式为：
+
+struct　结构体名{  
+     类型名1　成员名1;
+     类型名2　成员名2;
+    ……
+     类型名n　成员名n;　　　
+ };
+2、举例
+比如，我们定义一个学生
+
+struct Student{
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+};
+上面定义了一个叫做Student的结构体，共有name、age、height3个成员。呵呵，看到这里是否有点面向对象的味道呢，其实这跟面向对象完全是两码事，只能说感觉有点像。
+
+二、结构体变量的定义
+前面只是定义了名字为Student的结构体类型，并非定义了一个结构体变量，就像int一样，只是一种类型。
+接下来定义一个结构体变量，方式有好多种。
+
+1、先定义结构体类型，再定义变量
+struct Student{
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+};
+struct Student stu;
+定义了一个结构体变量，变量名为stu。struct和Student是连着使用的。
+
+2、定义结构体类型的同时定义变量
+struct Student{
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+}stu;
+结构体变量名为stu
+3、直接定义结构体类型变量，省略类型名
+struct {
+    char name[20];//姓名
+    int age;//年龄
+    float height;//身高
+}stu;
+结构体变量名为stu
+
+三、结构体的注意点
+1、不允许对结构体本身递归定义
+如下做法是错误的，注意第3行
+
+struct Student {
+     int age;
+     struct Student stu;
+ };
+2、结构体内可以包含别的结构体
+ struct Date {
+      int year;
+      int month;
+      int day;
+  };
+ 
+ struct Student {
+      char name[20];
+      struct Date birthday; //................(1)
+ };
+注：（1）行
+3、定义结构体类型，只是说明了该类型的组成情况，并没有给它分配存储空间，就像系统不为int类型本身分配空间一样。只有当定义属于结构体类型的变量时，系统才会分配存储空间给该变量
+struct Student {
+     char name[20];
+     int age;
+ };
+//................在此之前，系统并没有分配存储空间
+struct Student stu;//...............当执行到该6行时，系统才会分配存储空间给stu变量。
+
+4、结构体变量占用的内存空间是其成员所占内存之和，而且各成员在内存中按定义的顺序依次排列
+比如下面的Student结构体：
+
+ struct Student {
+     char ch; 
+     int num; 
+     float height; 
+ };
+根据结构体内存对齐与补齐规则，这个Student变量共占用内存：12字节。
+
+
+考虑一个问题， 空结构体所占内存多大？
+
+#include <stdio.h>
+ 
+struct strudent
+{
+ 
+}stu;
+ 
+int main (void)
+{
+	printf ("sizeof (stu) = %d\n", sizeof (stu));
+	return 0;
+}
+输出结果：
+在C中， sizeof (stu) = 0
+在C++中， sizeof (stu) = 1
+
+四、结构体的初始化
+将各成员的初值，按顺序地放在一对大括号{}中，并用逗号分隔，一一对应赋值。
+比如初始化Student结构体变量stu
+
+ struct Student {
+     char name[20];
+     int age;
+ };
+ struct Student stu = {"MJ", 27};
+只能在定义变量的同时进行初始化赋值，初始化赋值和变量的定义不能分开，下面的做法是错误的：
+
+struct Student stu;
+stu = {"MJ", 27};
+五、结构体的使用
+1、一般对结构体变量的操作是以成员为单位进行的，引用的一般形式为：结构体变量名.成员名
+ struct Student {
+     char name[20];
+     int age;
+ };
+ struct Student stu; 
+ stu.age = 27; // 访问stu的age成员........(2)
+(2)行对结构体的age成员进行了赋值。"."称为成员运算符，它在所有运算符中优先级最高
+
+2、如果某个成员也是结构体变量，可以连续使用成员运算符"."访问最低一级成员
+struct Date {
+       int year;
+       int month;
+       int day;
+  };
+  struct Student {
+      char name[20];
+      struct Date birthday;
+ };
+ struct Student stu;
+ stu.birthday.year = 1986;
+ stu.birthday.month = 9;
+ stu.birthday.day = 10;
+3、相同类型的结构体变量之间可以进行整体赋值
+struct Student {
+      char name[20];
+      int age;
+  };
+ struct Student stu1 = {"MJ", 27};
+ struct Student stu2 = stu1; // 将stu1直接赋值给stu2
+ printf("age is %d", stu2.age);
+输出结果为： age is 27
+
+六、结构体数组
+1、定义
+跟结构体变量一样，结构体数组也有3种定义方式
+（1）、
+
+struct Student {
+    char name[20];
+    int age;
+};
+struct Student stu[5]; //定义1
+（2）、
+
+struct Student {
+    char name[20];
+    int age;
+} stu[5]; //定义2
+（3）、
+
+struct {
+    char name[20];
+    int age;
+} stu[5]; //定义3
+上面3种方式，都是定义了一个变量名为stu的结构体数组，数组元素个数是5
+
+2、初始化
+struct {
+    char name[20];
+    int age;
+} stu[2] = { {"MJ", 27}, {"JJ", 30} };
+也可以用数组下标访问每一个结构体元素，跟普通数组的用法是一样的
+
+七、结构体作为函数参数
+将结构体变量作为函数参数进行传递时，其实传递的是全部成员的值，也就是将实参中成员的值一一赋值给对应的形参成员。因此，形参的改变不会影响到实参。
+
+96E7DE2F-5EFE-4B92-A0A4-EE196E126A3D.png
+首先在(3)行定义了一个结构体类型Student
+在(4)行定义了一个结构体变量stu，并在(5)行将其作为实参传入到test函数
+输出结果为：
+
+24165811-5748e293af5f4dec8f1fb855727a3e76.png
+形参是改变了，但是实参一直没有变过。
+八、指向结构体的指针变量
+1、每个结构体变量都有自己的存储空间和地址，因此指针也可以指向结构体变量
+2、结构体指针变量的定义形式：struct 结构体名称 *指针变量名
+3、 有了指向结构体的指针，那么就有3种访问结构体成员的方式
+（1）、结构体变量名.成员名
+（2）、(*指针变量名).成员名
+（3）、指针变量名->成员名
+
+38622765-4312-4EEE-8D42-148230B72355.png
+
+输出结果为：
+
+24170725-fe1c21f2d61e4db1a3ea18223098c21b.png
+————————————————
+版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53817234
+
+
 # 存储类型关键字
 
 定义： 是对声明的实现或者实例化。连接器(linker)需要定义来引用内存实体。与上面的声明相应的定义如下：参看：C语言再学习 -- 存储类、链接
