@@ -5657,10 +5657,602 @@ func右边是一个[]运算符，说明func是具有5个元素的数组；func�
 
 `typedef register int FAST_COUNTER; // 错误  `
 　　编译通不过。问题出在你不能在声明中有多个存储类关键字。因为符号 typedef 已经占据了存储类关键字的位置，在 typedef 声明中不能用 register（或任何其它存储类关键字）。
+
+# 关键字const
+
+## 一、const 介绍
+
+1、const 定义
+
+const 修饰的数据类型是指常类型，常类型的变量或对象的值是不能被更新的。
+
+2、const 目的
+
+const 推出的初始目的，正是为了取代预编译指令，消除它的缺点，同时继承它的优点（后面会讲到 const 与 宏的区别）。
+
+3、const 作用
+
+1. 可以定义 const 常量，具有不可变性。例如：
+`const int Max = 100; ` `Max++`会产生错误。
+2. 便于进行类型检查，使编译器对处理内容有更多了解，消除一些隐患。例如：
+`void f(const int i) {....}` 编译器就会知道 i 是一个常量，不允许修改。
+3. 同宏定义一样，可以避免意义模糊的数字出现，同样可以很方便进行参数的调整和修改。做到不变则已，一变都变。
+4. 可以保护被修改的东西，防止意外的修改，增强程序的健壮性。例如：
+```   
+#include <stdio.h>  
+void f (const int i)  
+{  
+    i = 10;  //在函数体内修改了 i ，编译器就会报错。  
+}     
+int main (void)  
+{  
+    f (1);  
+    return 0;  
+}  
+  
+输出结果：  
+错误： 向只读形参‘i’赋值  
+```
+5. 可以节省空间，避免不必要的内存分配。例如：
+```
+#define PI 3.14159 //常量宏 
+const double Pi=3.14159; //此时并未将Pi放入RAM中
+double i=Pi; //此时为Pi分配内存，以后不再分配！ 
+double I=PI; //编译期间进行宏替换，分配内存 
+double j=Pi; //没有内存分配 
+
+double J=PI; //再进行宏替换，又一次分配内存！ 
+```
+```
+//test.c  
+#include <stdio.h>  
+int main (void)  
+{  
+    const double Pi;  
+    double i = Pi;  
+    double j = Pi;  
+    return 0;  
+}  
+
+objdump -d test   
+  
+ 080483b4 <main>:  
+ 80483b4:   55                      push   %ebp  
+ 80483b5:   89 e5                   mov    %esp,%ebp  
+ 80483b7:   83 e4 f8                and    $0xfffffff8,%esp  
+ 80483ba:   83 ec 20                sub    $0x20,%esp  
+ 80483bd:   dd 44 24 08             fldl   0x8(%esp)  
+ 80483c1:   dd 5c 24 10             fstpl  0x10(%esp)  
+ 80483c5:   dd 44 24 08             fldl   0x8(%esp)  
+ 80483c9:   dd 5c 24 18             fstpl  0x18(%esp)  
+ 80483cd:   b8 00 00 00 00          mov    $0x0,%eax  
+ 80483d2:   c9                      leave    
+ 80483d3:   c3                      ret    
+```
+//test1.c  
+#include <stdio.h>  
+#define PI 3.14159  
+int main (void)  
+{  
+    double i = PI;  
+    double j = PI;  
+}  
+objdump -d test1   
+ 080483b4 <main>:  
+ 80483b4: 55                   push   %ebp  
+ 80483b5: 89 e5                mov    %esp,%ebp  
+ 80483b7: 83 e4 f8             and    $0xfffffff8,%esp  
+ 80483ba: 83 ec 10             sub    $0x10,%esp  
+ 80483bd: dd 05 b0 84 04 08    fldl   0x80484b0  
+ 80483c3: dd 1c 24             fstpl  (%esp)  
+ 80483c6: dd 05 b0 84 04 08    fldl   0x80484b0  
+ 80483cc: dd 5c 24 08          fstpl  0x8(%esp)  
+ 80483d0: c9                   leave    
+ 80483d1: c3                   ret      
+ 80483d2: 90                   nop  
+ 80483d3: 90                   nop  
+const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是像#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干份拷贝。 
+6）为函数重载提供了一个参考
+
+
+class A
+{
+  void f(int i)       {......} //一个函数
+  void f(int i) const {......} //上一个函数的重载
+           ......
+};
+7）提高效率
+
+编译器通常不为普通 const 常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。
+
+
+
+二、const 使用
+
+1、const 修饰一般常量
+
+一般常量是指简单类型的只读变量。这种常量在定义时，修饰符const可以用在类型说明符前，也可以用在类型说明符后。例如： 
+int const x=2;  或  const int x=2;
+
+
+const int a = 10;
+a = 20; // 错误，变量a为常量，只读，不能被修改；
+ 
+int const b = 10;
+b = 20; // 错误，变量b为常量，只读，不能被修改；
+
+注意：
+
+1）在定义该const变量时，通常需要对它进行初始化，因为以后就没有机会再改变它了
+
+
+//C 下
+#include <stdio.h>
+ 
+int main (void)
+{
+	const int i;  //自动初始值为 随机数
+        //i = 10; //如果此时再向它赋值，会出现错误： 向只读变量‘i’赋值
+	printf ("%d\n", i);
+}
+输出结果：
+-1217368076  //随机数
+//C++下
+#include <iostream>
+int main (void) {
+   int const i;
+   //i = 10; //如果此时再向它赋值，会出现错误： 向只读变量‘i’赋值
+}
+/* gcc编译器不够严格，g++编译器下会报错 */错误： 未初始化的常量‘i’
+2）const int const i = 10; 是否可行
+
+//在C 下是可行的，但是还是不推荐使用
+#include <stdio.h>
+int main (void)
+{
+	const int const i = 10;
+	printf ("%d\n", i);
+	return 0;
+}
+输出结果：
+10
+//在C++ 下是错误的
+#include <iostream>
+int main (void)
+{
+	const int const i = 10;
+	std::cout << i << std::endl;
+}
+输出结果：
+错误： 重复的‘const’
+
+扩展：常量与变量
+
+参看：如何理解C语言常量与变量
+
+说着说着，其实搞混了const到底修饰的是什么了。什么是常量，什么是变量？
+
+常量，例如5， "abc"，等，肯定是只读的，因为常量是被编译器放在内存中的只读区域，当然也就不能够去修改它。
+
+enum类型和#define宏，这两个都可以用来定义常量。
+
+
+采用宏定义#define指令创建一个指定数组大小的明显常量（SIZE），可以在定义数组和设置循环限制时使用这个常量，以后更改数组大小的时候方便处理，例如：
+
+#define SIZE 5
+
+int arr[SIZE];
+
+
+变量 其值是可以改变的。一个变量应该有一个名字，在内存中占据一定的存储单元。变量定义必须放在变量使用之前。一般放在函数体的开头部分。要区分变量名和变量值是两个不同的概念。例如：int x = 3；
+
+
+
+而“只读变量”则是在内存中开辟一个地方来存放它的值，只不过这个值由编译器限定不允许被修改。C语言关键字const就是用来 限定一个变量 不允许被改变的修饰符（Qualifier）。        
+
+例如，const int a;
+
+const只是一个修饰符，不管怎么样 a 仍然是一个int型的变量。
+
+
+指定数组大小
+
+直到C99标准出现之前，声明数组时在方括号内只能使用整数常量表达式。整数常量表达式是由整数常量组成的表达式。sizeof表达式被认为是一个整数常量，而(和C++不同)一个const值却不是整数常量。并且该表达式的值必须大于0。
+
+#define SIZE 5  
+int n = 5;  
+float a1[5];            //可以  
+float a2[5*2 + 1];      //可以  
+float a3[sizeof (int) +1];  //可以  
+float a4[-4];           //不可以，数组大小必须大于0  
+float a5[0];            //不可以，数组大小必须大于0  
+float a6[2.5];          //不可以，数组大小必须大于0  
+float a7[(int)2.5];     //可以，把float类型指派为int类型  
+float a8[n];            //C99之前不允许  
+float a9[SIZE];         //可以  
+
+//C99支持 这种形式，并不会报错
+#include <stdio.h>
+int main (void)
+{
+    const int n = 5;
+    int a[n];
+    return 0;
+}
+
+
+但是 const修饰的只读变量 不能放在 case  关键字后面、不能放在enum枚举名称后面，因为 case 关键字后面和枚举类型声明必须要 整数常量。
+
+#include <stdio.h>
+#define n 2  //常量
+int main (void)
+{
+	//int n = 2;   //变量，会出现错误： case 标号不能还原为一个整常量
+	//const int n = 2;  //只读变量，会出现错误： case 标号不能还原为一个整常量
+ 
+	switch (3)
+	{
+		case 1:
+			printf ("11111\n");
+			break;
+		case n:
+			printf ("222222\n");
+			break;
+		case 3:
+			printf ("333333\n");
+			break;
+		default:
+			printf ("4444444\n");
+			break;
+	}
+ 
+	return 0;
+}
+输出结果：
+333333
+
+#include <stdio.h>
+#define n 3  //常量
+//int n = 3;  //变量，会出现错误： ‘QIU’的枚举值不是一个整数常量
+//const int n = 3;  //只读变量，会出现错误： ‘QIU’的枚举值不是一个整数常量
+typedef enum {
+	CHUN =  1,
+	XIA =  2,
+	QIU = n,
+	DONG = 4
+}Season;
+ 
+int main (void)
+{
+	printf ("%d\n", QIU);
+	return 0;
+}
+输出结果：
+3
+
+
+
+2、const修饰指针、数组
+
+const定义的变量具有只读性，const修饰的只读变量必须在定义的时候初始化。
+
+1）修饰数组
+
+定义或说明一个只读数组可采用如下格式：
+int const a[5]={1, 2, 3, 4, 5};或
+const int a[5]={1, 2, 3, 4, 5};
+
+
+const int numbers[] = {1, 2, 3, 4, 5};
+numbers[1] = 10; // 错误，数组被const修饰，因此，数组内容不可修改
+2）修饰指针
+
+这里给出一个记忆和理解的方法：
+先忽略类型名（编译器解析的时候也是忽略类型名），我们看 const 离哪个近。“近水楼先得月”，离谁近就修饰谁。
+
+int arr[5];
+const int *p = arr; //const 修饰*p，p 是指针，可变； *p 是指针指向的对象，不可变。
+int const *p = arr; //const 修饰*p，p 是指针， 可变；*p 是指针指向的对象，不可变。
+int *const p = arr; //const 修饰 p， p 是指针，不可变； p 指向的对象可变。
+const int *const p= arr; //前一个 const 修饰*p，后一个 const 修饰 p，指针 p 和 p 指向的对象都不可变。
+
+
+//示例一
+int a = 10;
+int b = 20;
+const int *p = &a;
+//等同 int const *p = &a;
+p  = &b; // 正确
+*p = 20; // 错误，指针变量p所指向的地址中的内容不能通过指针变量修改
+a  = 20; // 正确，变量a并没有被const关键字修饰；
+//示例二
+int a = 10;
+int b = 20;
+int * const p = &a;
+p  = &b; // 错误，指针p只能指向同一个地址；
+*p = 20; // 正确
+//示例三
+int a = 10;
+int b = 20;
+const int * const p = &a;
+p  = &b; // 错误
+*p = 20; // 错误
+
+扩展：
+
+指针数组和数组指针
+
+指针数组：首先它是一个数组，数组的元素都是指针，例如：int *ptr1[10];
+
+数组指针：首先它是一个指针，它指向一个数组，例如：int (*ptr2)[10];
+
+这里需要明白一个符号之间优先级的问题，"[ ]"的优先级比"*"要高。p1 先与“ []”结合，构成一个数组的定义，数组名为 p1， int *修饰的是数组的内容，即数组的每个元素。那现在我们清楚，这是一个数组，其包含 10 个指向 int 类型数据的指针，即指针数组。
+
+至于 p2 就更好理解了，在这里"( )"的优先级比"[ ]"高，"*"号和 p2 构成一个指针的定义，指针变量名为 p2， int 修饰的是数组的内容，即数组的每个元素。数组在这里并没有名字，是个匿名数组。那现在我们清楚 p2 是一个指
+针，它指向一个包含 10 个 int 类型数据的数组，即数组指针。
+
+
+
+为什么要讲指针数组和数组指针呢？是因为看到Dan Saks总结的const 用法很受启发。从另一个角度，来分析了const 的真实意义。
+
+参看：const 的真实的意义（包含了Dan Saks以及一些网络人的理解）
+
+文章从下面例子开始：
+
+typedef void *VP;
+const VP vectorTable[]
+={..<data>..};           (1)
+应该等同于：
+const void* vectorTable[]
+={..<data>..};           (2)
+然而，在(1)中连接器把vectorTable放在了CONSTANT（只读）区，但是在(2)中却放在了DATA（数据）区。这是编译器的正常行为还是BUG?”
+
+
+
+typedef关键字我们比较熟悉，参看：C语言再学习 -- 关键字typedef
+
+如果 const 只是单纯的修饰指针，如，const void *P， void * const P，这也不过是简单考虑 指针常量，和常量指针问题。但是本例中修饰的 const void* vectorTable[] 是指针数组。这也是为什么要先区分指针数组和数组指针了。
+
+再有就是需要清楚，存储类说明符和数据类型及类型修饰符。参看：C语言再学习--关键字
+
+对应的就是文章里所说的声明说明符和声明符。
+
+每一条C/C++声明语句都是有两个基本部分组成：零个或多个声明说明符序列；以及一个或多个 声明符序列，中间用逗号隔开。比如：
+
+static unsigned int n = 3， m = 2；
+
+extern int n； 等等
+
+可以看出，存储类说明符，对于数据类型没有直接影响。而const 和 volatile 不是数据类型，它是限定符（specifier）。不会影响数据类型。
+
+然后就明白了， 在(1)中，可看做 constVP vectorTable[] 修饰的是数组，所以vectorTable为只读；在(2)中，可以看做 constvoid *vectorTable[] 修饰的是指针数组，*vectorTable[]不可变，vectorTable[]是可变的，所以放在了DATA（数据）区。
+
+
+
+3、const 修饰函数的形参和返回值
+
+1）const 修饰符也可以修饰函数的传递参数，格式如下：
+
+void Fun (const int Var);
+
+告诉编译器Var在函数中是无法改变的，从而防止了使用者的一些无意或错误的修改。之前讲字符串，可以看到许多字符串函数就是如此定义的。
+
+参看：C语言再学习 -- 字符串和字符串函数
+
+2）const 修饰符也可以修饰函数的返回值，返回值不可被改变，格式如下：
+
+const int Fun1 ( );
+
+const MyClass Fun2 ( );
+
+上述写法限定函数的返回值不可被更新，当函数返回内部的类型时，已经是一个数值，当然不可被赋值更新，所以，此时const无意义，最好去掉，以免困惑。当函数返回自定义的类型时，这个类型仍然包含可以被赋值的变量成员，所以，此时有意义。
+
+
+
+在C++里，对 const 进行了进一步扩展 ：
+
+4、const 修饰常对象
+
+常对象是指 对象常量，定义格式，如下：
+
+class A;
+    const A a;
+A const a;
+定义常对象时，同样要进行初始化，并且该对象不能再被更新，修饰符const可以放在类名后面，也可以放在类名前面。
+
+
+
+5、const 修饰常引用
+
+使用const修饰符也可以说明引用，被说明的引用为常引用，该引用所引用的对象不能被更新。其定义格式，如下：
+const double & v;
+
+
+
+6、const 修饰类的成员变量
+
+const修饰类的成员函数，表示成员常量，不能被修改，同时它只能在初始化列表中赋值。
+
+class A
+{ 
+    …
+    const int nValue;         //成员常量不能被修改
+    …
+    A(int x): nValue(x) { } ; //只能在初始化列表中赋值
+} 
+规则：
+1）const对象只能访问const成员函数,而非const对象可以访问任意的成员函数,包括const成员函数.
+2）const对象的成员是不可修改的,然而const对象通过指针维护的对象却是可以修改的.
+3）const成员函数不可以修改对象的数据,不管对象是否具有const性质.它在编译时,以是否修改成员数据为依据,进行检查.
+4） 然而加上mutable修饰符的数据成员,对于任何情况下通过任何手段都可修改,自然此时的const成员函数是可以修改它的。
+
+
+
+7、const 修饰类的成员函数
+
+const修饰符也可以修饰类的成员函数，格式如下：
+
+class ClassName 
+{
+public:
+　 　int Fun() const;
+　 .....
+}；
+这样，在调用函数Fun时就不能修改类里面的数据 。
+
+对于const类对象/指针/引用，只能调用类的const成员函数，因此，const修饰成员函数的最重要作用就是限制对于const对象的使用。
+
+
+
+总结：
+
+关键字const的作用是为给读你代码的人传达非常有用的信息，实际上，声明一个参数为常量是为了告诉了用户这个参数的应用目的
+　　如果你曾花很多时间清理其它人留下的垃圾，你就会很快学会感谢这点多余的信息。（当然，懂得用const的程序员很少会留下的垃圾让别人来清理的。）
+通过给优化器一些附加的信息，使用关键字const也许能产生更紧凑的代码。合理地使用关键字const可以使编译器很自然地保护那些不希望被改变的参数，防止其被无意的代码修改。简而言之，这样可以减少bug的出现。
+欲阻止一个变量被改变，可以使用 const 关键字。 
+1）在定义该const 变量时，通常需要对它进行初始化，因为以后就没有机会再去改变它了；
+2）对指针来说，可以指定指针本身为const，也可以指定指针所指的数据为 const，或二者同时指定为const；
+3）在一个函数声明中，const可以修饰形参，表明它是一个输入参数，在函数内部不能改变其值；
+4）对于类的成员函数，若指定其为const 类型，则表明其是一个常函数，不能修改类的成员变量；
+5）对于类的成员函数，有时候必须指定其返回值为const 类型，以使得其返回值不为“左值”。
+
+
+
+三、const 与 extern 和 define的区别和联系
+
+1、const 与 extern关系
+
+参看：c与c++中的extern const的区别和联系
+
+extern const int n;  //通过
+
+extern const int i = 10;  //错误
+
+示例一：
+
+
+//file1.c
+const int n = 10;
+//file2.c
+#include <stdio.h>
+extern const int n;
+ 
+int main (void)
+{
+	printf ("%d\n", n);
+	return 0;
+}
+编译：gcc file1.c file2.c -o file
+输出结果：
+10
+示例二：
+
+#include <stdio.h>
+extern const int i = 10; //如果声明、定义
+int main (void)
+{
+	printf ("%d\n", i);
+	return 0;
+}
+输出结果：
+警告： ‘i’已初始化，却又被声明为‘extern’
+
+
+在示例一中，gcc -c file1.c 生成 file1.o。然后使用 readelf -s file1.o 查看符号表： 
+
+root@# readelf -s file1.o 
+ 
+Symbol table '.symtab' contains 9 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS file1.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1 
+     3: 00000000     0 SECTION LOCAL  DEFAULT    2 
+     4: 00000000     0 SECTION LOCAL  DEFAULT    3 
+     5: 00000000     0 SECTION LOCAL  DEFAULT    4 
+     6: 00000000     0 SECTION LOCAL  DEFAULT    6 
+     7: 00000000     0 SECTION LOCAL  DEFAULT    5 
+     8: 00000000     4 OBJECT  GLOBAL DEFAULT    4 n
+可以看到最后一行，n 在符号表中是 GLOBAL（全局）的。
+接下来，我们不用改动代码，只是使用 g++ file1.c file2.c -o file 编译程序，可以看出错误：
+
+
+ g++ file1.c file2.c -o file
+/tmp/cc3vh9lu.o: In function `main':
+file2.c:(.text+0xa): undefined reference to `n'
+collect2: ld 返回 1
+链接错误原因是找不到 n 的定义。
+使用 g++ -c file1.c 生成 file1.o，再使用 readelf -s file1.o 查看符号表：
+
+
+readelf -s file1.o 
+ 
+Symbol table '.symtab' contains 9 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS file1.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1 
+     3: 00000000     0 SECTION LOCAL  DEFAULT    2 
+     4: 00000000     0 SECTION LOCAL  DEFAULT    3 
+     5: 00000000     0 SECTION LOCAL  DEFAULT    4 
+     6: 00000000     4 OBJECT  LOCAL  DEFAULT    4 _ZL1n
+     7: 00000000     0 SECTION LOCAL  DEFAULT    6 
+     8: 00000000     0 SECTION LOCAL  DEFAULT    5 
+ 6: 00000000     4 OBJECT  LOCAL  DEFAULT    4 _ZL1n
+表明，n 变成了一个 LOCAL（本地）对象，只能在 file1.c 中可见，对file2.c 不可见。
+
+
+
+解决方法：
+
+将 file1.c中的
+
+
+//file.c
+const int n = 10;
+改为：
+
+//file.c
+extern const int n = 10;
+这样g++编译器在第一次看到 n 的定义的时候，因为存在extern关键字，就把它当成GLOBAL对象写入符号表：
+
+g++ -c file1.c 生成 file1.O
+readelf -s file1.o 
+ 
+Symbol table '.symtab' contains 9 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS file1.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1 
+     3: 00000000     0 SECTION LOCAL  DEFAULT    2 
+     4: 00000000     0 SECTION LOCAL  DEFAULT    3 
+     5: 00000000     0 SECTION LOCAL  DEFAULT    4 
+     6: 00000000     0 SECTION LOCAL  DEFAULT    6 
+     7: 00000000     0 SECTION LOCAL  DEFAULT    5 
+     8: 00000000     4 OBJECT  GLOBAL DEFAULT    4 n
+
+2、const 与 define 关系
+
+参看：const的用法详解
+
+上面有提到， 由于const定义常量从汇编的角度来看，只是给出了对应的内存地址， 而不是象#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干个拷贝。
+
+const 与define宏定义:
+1）编译器处理方式不同:   define宏是在预处理阶段展开；const常量是编译运行阶段使用。
+2）类型和安全检查不同：define宏没有类型，不做任何类型检查，仅仅是展开；const常量有具体的类型，在编译阶段会执行类型检查；
+3）存储方式不同：define宏仅仅是展开不会分配内存；const常量会在内存中分配；（只是说一般情况）
+4）const 可以节省空间，避免不必要的内存分配。 例如：
+
+
+#define PI 3.14159 //常量宏   
+const doulbe Pi=3.14159; //此时并未将Pi放入ROM中 ......   
+double i=Pi; //此时为Pi分配内存，以后不再分配！   
+double I=PI; //编译期间进行宏替换，分配内存   
+double j=Pi; //没有内存分配   
+double J=PI; //再进行宏替换，又一次分配内存！
 ————————————————
 版权声明：本文为CSDN博主「聚优致成」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_29350001/article/details/53883571
-
+原文链接：https://blog.csdn.net/qq_29350001/article/details/53991550
 #  C 预处理器
 
 gcc/cc xxx.c  可以编译链接C源程序生成一个可执行文件 a.out
