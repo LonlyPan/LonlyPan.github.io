@@ -5693,64 +5693,19 @@ int main (void)
 输出结果：  
 错误： 向只读形参‘i’赋值  
 ```
-5. 可以节省空间，避免不必要的内存分配。例如：
+5. 可以节省空间，避免不必要的内存分配。const定义的只读变量在程序运行过程中只有一份拷贝（因为它是全局的只读变量，存放在静态区），而#define定义的宏常量在内存中有若干个拷贝。
+总结：编译器通常不为普通的const只读变量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的值，没有了存储与读内存的操作，使得它的效率也很高。C\++中是不太推荐用宏的，尽量少用。因为C++是强类型的语言，希望通过类型检查来降低程序中的很多错误，而宏只是在编译期前做简单替换，绕过了类型检查，失去了强类型系统的优势支撑。
 ```
 #define PI 3.14159 //常量宏 
 const double Pi=3.14159; //此时并未将Pi放入RAM中
 double i=Pi; //此时为Pi分配内存，以后不再分配！ 
 double I=PI; //编译期间进行宏替换，分配内存 
 double j=Pi; //没有内存分配 
-
 double J=PI; //再进行宏替换，又一次分配内存！ 
 ```
-```
-//test.c  
-#include <stdio.h>  
-int main (void)  
-{  
-    const double Pi;  
-    double i = Pi;  
-    double j = Pi;  
-    return 0;  
-}  
 
-objdump -d test   
-  
- 080483b4 <main>:  
- 80483b4:   55                      push   %ebp  
- 80483b5:   89 e5                   mov    %esp,%ebp  
- 80483b7:   83 e4 f8                and    $0xfffffff8,%esp  
- 80483ba:   83 ec 20                sub    $0x20,%esp  
- 80483bd:   dd 44 24 08             fldl   0x8(%esp)  
- 80483c1:   dd 5c 24 10             fstpl  0x10(%esp)  
- 80483c5:   dd 44 24 08             fldl   0x8(%esp)  
- 80483c9:   dd 5c 24 18             fstpl  0x18(%esp)  
- 80483cd:   b8 00 00 00 00          mov    $0x0,%eax  
- 80483d2:   c9                      leave    
- 80483d3:   c3                      ret    
-```
-//test1.c  
-#include <stdio.h>  
-#define PI 3.14159  
-int main (void)  
-{  
-    double i = PI;  
-    double j = PI;  
-}  
-objdump -d test1   
- 080483b4 <main>:  
- 80483b4: 55                   push   %ebp  
- 80483b5: 89 e5                mov    %esp,%ebp  
- 80483b7: 83 e4 f8             and    $0xfffffff8,%esp  
- 80483ba: 83 ec 10             sub    $0x10,%esp  
- 80483bd: dd 05 b0 84 04 08    fldl   0x80484b0  
- 80483c3: dd 1c 24             fstpl  (%esp)  
- 80483c6: dd 05 b0 84 04 08    fldl   0x80484b0  
- 80483cc: dd 5c 24 08          fstpl  0x8(%esp)  
- 80483d0: c9                   leave    
- 80483d1: c3                   ret      
- 80483d2: 90                   nop  
- 80483d3: 90                   nop  
+这里的实质意思是说，Pi在定义时并未分配内存，只有在使用时分配，且只在第一次使用时分配内存。
+
 const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是像#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干份拷贝。 
 6）为函数重载提供了一个参考
 
