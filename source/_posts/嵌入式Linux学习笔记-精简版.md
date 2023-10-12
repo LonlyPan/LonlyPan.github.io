@@ -4550,44 +4550,11 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697120116616.png)
 
-#### cc.h 文件
-新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
-```
-#ifndef __CC_H
-#define __CC_H
+同时将cc.h文件额拷贝到工程中，cc.h里面存放一些SDK库文件需要使用到的数据类型，其实就是有些第三方库包括这个 SDK 使用的数据类型名大多都是简写，需要重新定义一下。
 
-/*
- * 自定义一些数据类型供库文件使用
- */
-#define     __I     volatile 
-#define     __O     volatile 
-#define     __IO    volatile
+#### start.S 编写
 
-typedef   signed          char int8_t;
-typedef   signed short     int int16_t;
-typedef   signed           int int32_t;
-typedef unsigned          char uint8_t;
-typedef unsigned short     int uint16_t;
-typedef unsigned           int uint32_t;
-typedef unsigned long     long uint64_t;
-typedef	  signed char  	 	   s8;		
-typedef	  signed short 	  int  s16;
-typedef	  signed int 		   s32;
-typedef	  signed long long int s64;
-typedef	unsigned char 		   u8;
-typedef	unsigned short int     u16;
-typedef	unsigned int 		   u32;
-typedef	unsigned long long int u64;
-
-
-#endif
-
-```
-在cc.h文件中我们定义了很多的数据类型，因为有些第三方库会用到这些变量类型。其实就是有些第三方库包括这个 SDK 使用的数据类型名大多时简写，需要重新定义一下。
-
-#### 编写实验代码
-
-start.S 和上文一样，直接复制。  
+ 和上文一样，直接复制。  
 main.c 如下：
 ```
 #include "fsl_common.h"
