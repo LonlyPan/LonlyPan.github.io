@@ -4477,6 +4477,36 @@ I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”
 
 LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
+
+### 官方SDK移植实验
+
+NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，这个SDK包提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写代码的，因此我们使用的是Windows版本的。Windows版本SDK里面的例程提供了IAR版本。
+
+不是所有的半导体厂商都会为Cortex-A架构的芯片编写裸机SDK包，我使用过那么多的Cotex-A系列芯片，也就发现了NXP给I.MX6ULL编写了裸机SDK包。而且去NXP官网看一下，会发现只有I.MX6ULL这一款Cotex-A内核的芯片有裸机SDK包，NXP的其它Cotex-A芯片都没有。说明在NXP的定位里面，I.MX6ULL就是一个Cotex-A内核的高端单片机，定位类似ST的STM32H7。
+
+使用Cortex-A内核芯片的时候不要想着有类似STM32库一样的东西，I.MX6ULL是一个特例，基本所有的Cortex-A内核的芯片都不会提供裸机SDK包。
+
+I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-6-processors/i-mx-6ull-single-core-processor-with-arm-cortex-a7-core:i.MX6ULL?tab=Design_Tools_Tab)，下载界面如图所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6ULL_SDK包下载界面.png)
+
+双击SDK_2.2_MCIM6ULL_RFP_Win.exe安装SDK包，安装的时候需要记住安装位置
+
+我们重点是需要SDK包里面与寄存器定义相关的文件，一共需要如下三个文件：
+
+ - fsl_common.h：位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_common.h。
+ - fsl_iomuxc.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_iomuxc.h。
+ - MCIMX6Y2.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\MCIMX6YH2.h。
+
+整个SDK包我们就需要上面这三个文件，把这三个文件准备好，我们后面移植要用。
+
+### 实验程序编写
+
+#### SDK文件移植
+
+使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中，这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
+
+
+
 ### 实验程序编写
 
 **所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
@@ -4735,146 +4765,7 @@ SP指针=0X80200000，因为I.MX6U-ALPHA开发板 上 的DDR3地址范围  是0X
 >这里需要将 start.S 和 后面的main.c 看成同一个文件，main 其实就是指代用C写称的main函数，这里.c文件再编译时会转为main函数，并且我们通过 Makefile 使得 start.S 文件在 main.c 文件之前，并合并成一个 `.o` 文件，这样在 `.o` 文件中 srat.S 中的内容排在 main.c 内容前面，则系统会先运行 start.S 的内容，然后通过 `B main` 跳转到main函数，继续执行。
 
 
-在main.h里面输入代码：
-```java
-#ifndef __MAIN_H
-#define __MAIN_H
 
-/* CCM 相关寄存器地址 */
-#define CCM_CCGR0 *((volatile unsigned int *)0x020C4068)
-#define CCM_CCGR1 *((volatile unsigned int *)0x020C406C)
-#define CCM_CCGR2 *((volatile unsigned int *)0x020C4070)
-#define CCM_CCGR3 *((volatile unsigned int *)0x020C4074)
-#define CCM_CCGR4 *((volatile unsigned int *)0x020C4078)
-#define CCM_CCGR5 *((volatile unsigned int *)0x020C407C)
-#define CCM_CCGR6 *((volatile unsigned int *)0x020C4080)
-
-#define SW_MUX_GPIO1_IO03 *((volatile unsigned int *)0x020E0068)
-#define SW_PAD_GPIO1_IO03 *((volatile unsigned int *)0x020E02F4)
-
-/* GPIO1相关寄存器地址 */
-#define GPIO1_DR *((volatile unsigned int *)0x0209C000)
-#define GPIO1_GDIR *((volatile unsigned int *)0x0209C004)
-#define GPIO1_PSR *((volatile unsigned int *)0x0209C008)
-#define GPIO1_ICR1 *((volatile unsigned int *)0x0209C00C)
-#define GPIO1_ICR2 *((volatile unsigned int *)0x0209C010)
-#define GPIO1_IMR *((volatile unsigned int *)0x0209C014)
-#define GPIO1_ISR *((volatile unsigned int *)0x0209C018)
-#define GPIO1_EDGE_SEL *((volatile unsigned int *)0x0209C01C)
-
-#endif
-
-```
-
-在main.c里面输入如下所示代码
-```java
-#include "main.h"
-
-/**
- * @brief 使能I.MX6U所有外设时钟
- * @note  
- * @param 
- * @retval
- */
-void clk_enable()
-{
-    CCM_CCGR0 = 0xffffffff;
-    CCM_CCGR1 = 0xffffffff;
-    CCM_CCGR2 = 0xffffffff;
-    CCM_CCGR3 = 0xffffffff;
-    CCM_CCGR4 = 0xffffffff;
-    CCM_CCGR5 = 0xffffffff;
-    CCM_CCGR6 = 0xffffffff;
-}
-
-
-/**
- * @brief 初始化LED对应的GPIO
- * @note  
- * @param 
- * @retval
- */
-void led_init(void)
-{
-    /* 1、初始化IO复用,复用为GPIO1_IO03 */
-    SW_MUX_GPIO1_IO03 = 0x5;
-    /* 2、配置GPIO1_IO03的IO属性
-     *bit 16:0 HYS关闭
-     *bit [15:14]: 00 默认下拉
-     *bit [13]: 0 kepper功能 
-     *bit [12]: 1 pull/keeper使能
-     *bit [11]: 0 关闭开路输出
-     *bit [7:6]: 10 速度100Mhz
-     *bit [5:3]: 110 R0/6驱动能力
-     *bit [0]: 0 低转换率
-     */
-    SW_PAD_GPIO1_IO03 = 0x10B0;
-    /* 3、初始化GPIO, GPIO1_IO03设置为输出*/
-    GPIO1_GDIR = 0x00000008;
-    /* 4、设置GPIO1_IO03输出低电平，打开LED0 */
-    GPIO1_DR = 0x0;
-}
-/**
- * @brief 打开LED灯
- * @note  
- * @param 
- * @retval
- */
-void led_on(void)
-{
-    GPIO1_DR &= ~(1<<3); /* 将GPIO1_DR的bit3清零 */
-}
-/**
- * @brief 关闭LED灯
- * @note  
- * @param 
- * @retval
- */
-void led_off(void)
-{
-    GPIO1_DR |= (1<<3); /* 将GPIO1_DR的bit3置1 */
-}
-/**
- * @brief 短时间延时函数
- * @note  n: 要延时循环次数(空操作循环次数，模式延时)
- * @param 
- * @retval
- */
-void delay_short(volatile unsigned int n)
-{
-    while(n--){}
-}
-/**
- * @brief 延时函数,在396Mhz的主频下延时时间大约为1ms
- * @note  n: 要延时的ms数
- * @param 
- * @retval
- */
-void delay_ms(volatile unsigned int n)
-{
-    while (n--)
-    {
-        delay_short(0x7ff);
-    }
-    
-}
-
-int main(void)
-{
-    clk_enable();  /* 使能所有的时钟*/
-    led_init();    /* 初始化led         */
-
-    while (1)
-    {
-        led_off();
-        delay_ms(1000);
-
-        led_on();
-        delay_ms(1000);
-    }
-    return 0;
-}
-```
 
 ### 编译下载验证
 
@@ -5057,225 +4948,6 @@ SECTIONS{
 [Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/htmls/index.html)
 [arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
 
-## 模仿STM32驱动开发格式实验
-
-创建VSCode工程，工作区名字为“ledc_stm32”，新建三个文件：start.S、main.c和imx6ul.h。其中start.S是汇编文件，start.S文件的内容和第十章的start.S一样，直接复制过来就可以。main.c 和imx6ul.h是C文件。
-
-```
-
-/* 
- * 外设寄存器组的基地址 
- */
-#define CCM_BASE					(0X020C4000)
-#define CCM_ANALOG_BASE				(0X020C8000)
-#define IOMUX_SW_MUX_BASE			(0X020E0014)
-#define IOMUX_SW_PAD_BASE			(0X020E0204)
-#define GPIO1_BASE                  (0x0209C000)
-#define GPIO2_BASE                  (0x020A0000)
-#define GPIO3_BASE                  (0x020A4000)
-#define GPIO4_BASE                  (0x020A8000)
-#define GPIO5_BASE                  (0x020AC000)
-
-/* 
- * CCM寄存器结构体定义，分为CCM和CCM_ANALOG 
- */
-typedef struct 
-{
-	volatile unsigned int CCR;
-	volatile unsigned int CCDR;
-	volatile unsigned int CSR;
-	volatile unsigned int CCSR;
-	volatile unsigned int CACRR;
-	volatile unsigned int CBCDR;
-	volatile unsigned int CBCMR;
-	volatile unsigned int CSCMR1;
-	volatile unsigned int CSCMR2;
-	volatile unsigned int CSCDR1;
-	volatile unsigned int CS1CDR;
-	volatile unsigned int CS2CDR;
-	volatile unsigned int CDCDR;
-	volatile unsigned int CHSCCDR;
-	volatile unsigned int CSCDR2;
-	volatile unsigned int CSCDR3;	
-	volatile unsigned int RESERVED_1[2];
-	volatile unsigned int CDHIPR;  
-	volatile unsigned int RESERVED_2[2];
-	
-	... 此处省略部分代码
-	
-	
-	/* 
-	* 外设指针 
-	*/
-	#define CCM					((CCM_Type *)CCM_BASE)
-	#define CCM_ANALOG			((CCM_ANALOG_Type *)CCM_ANALOG_BASE)
-	#define IOMUX_SW_MUX		((IOMUX_SW_MUX_Type *)IOMUX_SW_MUX_BASE)
-	#define IOMUX_SW_PAD		((IOMUX_SW_PAD_Type *)IOMUX_SW_PAD_BASE)
-	#define GPIO1				((GPIO_Type *)GPIO1_BASE)
-	#define GPIO2				((GPIO_Type *)GPIO2_BASE)
-	#define GPIO3				((GPIO_Type *)GPIO3_BASE)
-	#define GPIO4				((GPIO_Type *)GPIO4_BASE)
-	#define GPIO5				((GPIO_Type *)GPIO5_BASE)
-```
-在编写寄存器组结构体的时候注意寄存器的地址是否连续，有些外设的寄存器地址可能不是连续的，会有一些保留地址，因此我们需要在结构体中留出这些保留的寄存器。  
-
-比如CCM的CCGR6寄存器地址为0X020C4080，而寄存器CMEOR的地址为0X020C4088。按照地址顺序递增的原理，寄存器CMEOR的地址应该是0X020C4084，但是实际上CMEOR的地址是0X020C4088，相当于中间跳过了0X020C4088-0X020C4080=8个字节，如果寄存器地址连续的话应该只差4个字节(32位)，但是现在差了8个字节，所以需要在寄存器CCGR6和CMEOR直接加入一个保留寄存器，这个就是“示例代码”中第47行RESERVED_3[1]的来源。如果不添加保留为来占位的话就会导致寄存器地址错位！
-
-main.c文件中输入如下所示内容：
-```
-#include "imx6ul.h"
-
-/*
- * @description	: 使能I.MX6U所有外设时钟
- * @param 		: 无
- * @return 		: 无
- */
-void clk_enable(void)
-{
-	CCM->CCGR0 = 0XFFFFFFFF;
-	CCM->CCGR1 = 0XFFFFFFFF;
-
-	CCM->CCGR2 = 0XFFFFFFFF;
-	CCM->CCGR3 = 0XFFFFFFFF;
-	CCM->CCGR4 = 0XFFFFFFFF;
-	CCM->CCGR5 = 0XFFFFFFFF;
-	CCM->CCGR6 = 0XFFFFFFFF;
-}
-
-/*
- * @description	: 初始化LED对应的GPIO
- * @param 		: 无
- * @return 		: 无
- */
-void led_init(void)
-{
-	/* 1、初始化IO复用 */
-	IOMUX_SW_MUX->GPIO1_IO03 = 0X5;		/* 复用为GPIO1_IO03 */
-
-
-	/* 2、配置GPIO1_IO03的IO属性	
-	 *bit 16:0 HYS关闭
-	 *bit [15:14]: 00 默认下拉
-     *bit [13]: 0 kepper功能
-     *bit [12]: 1 pull/keeper使能
-     *bit [11]: 0 关闭开路输出
-     *bit [7:6]: 10 速度100Mhz
-     *bit [5:3]: 110 R0/6驱动能力
-     *bit [0]: 0 低转换率
-     */
-    IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;
-
-
-	/* 3、初始化GPIO */
-	GPIO1->GDIR = 0X0000008;	/* GPIO1_IO03设置为输出 */
-
-	/* 4、设置GPIO1_IO03输出低电平，打开LED0 */	
-	GPIO1->DR &= ~(1 << 3);	
-	
-}
-
-/*
- * @description	: 打开LED灯
- * @param 		: 无
- * @return 		: 无
- */
-void led_on(void)
-{
-	/* 将GPIO1_DR的bit3清零 	*/
-	GPIO1->DR &= ~(1<<3); 
-}
-
-/*
- * @description	: 关闭LED灯
- * @param 		: 无
- * @return 		: 无
- */
-void led_off(void)
-{
-	/* 将GPIO1_DR的bit3置1 */
-	GPIO1->DR |= (1<<3); 
-}
-
-/*
- * @description	: 短时间延时函数
- * @param - n	: 要延时循环次数(空操作循环次数，模式延时)
- * @return 		: 无
- */
-void delay_short(volatile unsigned int n)
-{
-	while(n--){}
-}
-
-/*
- * @description	: 延时函数,在396Mhz的主频下
- * 			  	  延时时间大约为1ms
- * @param - n	: 要延时的ms数
- * @return 		: 无
- */
-void delay(volatile unsigned int n)
-{
-	while(n--)
-	{
-		delay_short(0x7ff);
-	}
-}
-
-/*
- * @description	: mian函数
- * @param 		: 无
- * @return 		: 无
- */
-int main(void)
-{
-	clk_enable();		/* 使能所有的时钟 			*/
-	led_init();			/* 初始化led 			*/
-
-	while(1)			/* 死循环 				*/
-	{	
-		led_off();		/* 关闭LED 			*/
-		delay(500);		/* 延时500ms 			*/
-
-		led_on();		/* 打开LED 			*/
-		delay(500);		/* 延时500ms 			*/
-	}
-
-	return 0;
-}
-
-```
-
-main.c中7个函数，这7个函数的含义和前面的main.c文件一样，只是函数体写法变了，寄存器的访问采用imx6ul.h中定义的外设指针。比如第27行设置GPIO1_IO03的复用功能就可以通过“IOMUX_SW_MUX->GPIO1_IO03”来给寄存SW_MUX_CTL_PAD_GPIO1_IO03赋值。
-
-## 官方SDK移植实验
-
-在上一章中，我们参考ST官方给STM32编写的stm32f10x.h来自行编写I.MX6U的寄存器定义文件。自己编写这些寄存器定义不仅费时费力，没有任何意义，而且很容易写错，幸好NXP官方为I.MX6ULL编写了SDK包，在SDK包里面NXP已经编写好了寄存器定义文件，所以我们可以直接移植SDK包里面的文件来用。虽然NXP是为I.MX6ULL编写的SDK包，但是I.MX6UL也是可以使用的！
-
-### I.MX6ULL官方SDK包简介
-
-NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，这个SDK包提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写代码的，因此我们使用的是Windows版本的。Windows版本SDK里面的例程提供了IAR版本。
-
-不是所有的半导体厂商都会为Cortex-A架构的芯片编写裸机SDK包，我使用过那么多的Cotex-A系列芯片，也就发现了NXP给I.MX6ULL编写了裸机SDK包。而且去NXP官网看一下，会发现只有I.MX6ULL这一款Cotex-A内核的芯片有裸机SDK包，NXP的其它Cotex-A芯片都没有。说明在NXP的定位里面，I.MX6ULL就是一个Cotex-A内核的高端单片机，定位类似ST的STM32H7。
-
-使用Cortex-A内核芯片的时候不要想着有类似STM32库一样的东西，I.MX6ULL是一个特例，基本所有的Cortex-A内核的芯片都不会提供裸机SDK包。
-
-I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-6-processors/i-mx-6ull-single-core-processor-with-arm-cortex-a7-core:i.MX6ULL?tab=Design_Tools_Tab)，下载界面如图所示
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6ULL_SDK包下载界面.png)
-
-双击SDK_2.2_MCIM6ULL_RFP_Win.exe安装SDK包，安装的时候需要记住安装位置
-
-我们重点是需要SDK包里面与寄存器定义相关的文件，一共需要如下三个文件：
-
- - fsl_common.h：位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_common.h。
- - fsl_iomuxc.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_iomuxc.h。
- - MCIMX6Y2.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\MCIMX6YH2.h。
-
-整个SDK包我们就需要上面这三个文件，把这三个文件准备好，我们后面移植要用。
-
-### 实验程序编写
-
-#### SDK文件移植
-
-使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中，这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
 
 #### cc.h 文件
 新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
