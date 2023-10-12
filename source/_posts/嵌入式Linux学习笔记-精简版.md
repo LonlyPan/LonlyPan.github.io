@@ -4480,7 +4480,7 @@ LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
 ### 官方SDK移植实验
 
-NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，这个SDK包提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写代码的，因此我们使用的是Windows版本的。Windows版本SDK里面的例程提供了IAR版本。
+NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，
 
 不是所有的半导体厂商都会为Cortex-A架构的芯片编写裸机SDK包，那么多的Cotex-A系列芯片，也就发现了NXP给I.MX6ULL编写了裸机SDK包。而且只有I.MX6ULL这一款Cotex-A内核的芯片有裸机SDK包，NXP的其它Cotex-A芯片都没有。
 
@@ -4489,6 +4489,7 @@ NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库�
 I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-6-processors/i-mx-6ull-single-core-processor-with-arm-cortex-a7-core:i.MX6ULL?tab=Design_Tools_Tab)，下载界面如图所示
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6ULL_SDK包下载界面.png)
 
+提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写移植SDK代码的，因此我们使用的是Windows版本的。
 双击SDK_2.2_MCIM6ULL_RFP_Win.exe安装SDK包，安装的时候需要记住安装位置
 
 我们重点是需要SDK包里面与寄存器定义相关的文件，一共需要如下三个文件：
@@ -4500,11 +4501,219 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 
 ### 实验程序编写
 
+**所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
+
 使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中
 
+#### cc.h 文件
+新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
+```
+#ifndef __CC_H
+#define __CC_H
+
+/*
+ * 自定义一些数据类型供库文件使用
+ */
+#define     __I     volatile 
+#define     __O     volatile 
+#define     __IO    volatile
+
+typedef   signed          char int8_t;
+typedef   signed short     int int16_t;
+typedef   signed           int int32_t;
+typedef unsigned          char uint8_t;
+typedef unsigned short     int uint16_t;
+typedef unsigned           int uint32_t;
+typedef unsigned long     long uint64_t;
+typedef	  signed char  	 	   s8;		
+typedef	  signed short 	  int  s16;
+typedef	  signed int 		   s32;
+typedef	  signed long long int s64;
+typedef	unsigned char 		   u8;
+typedef	unsigned short int     u16;
+typedef	unsigned int 		   u32;
+typedef	unsigned long long int u64;
 
 
-**所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
+#endif
+
+```
+在cc.h文件中我们定义了很多的数据类型，因为有些第三方库会用到这些变量类型。其实就是有些第三方库包括这个 SDK 使用的数据类型名大多时简写，需要重新定义一下。
+
+#### 编写实验代码
+
+start.S 和上文一样，直接复制。  
+main.c 如下：
+```
+#include "fsl_common.h"
+#include "fsl_iomuxc.h"
+#include "MCIMX6Y2.h"
+
+/*
+ * @description	: 使能I.MX6U所有外设时钟
+ * @param 		: 无
+ * @return 		: 无
+ */
+void clk_enable(void)
+{
+	CCM->CCGR0 = 0XFFFFFFFF;
+	CCM->CCGR1 = 0XFFFFFFFF;
+
+	CCM->CCGR2 = 0XFFFFFFFF;
+	CCM->CCGR3 = 0XFFFFFFFF;
+	CCM->CCGR4 = 0XFFFFFFFF;
+	CCM->CCGR5 = 0XFFFFFFFF;
+	CCM->CCGR6 = 0XFFFFFFFF;
+
+}
+
+/*
+ * @description	: 初始化LED对应的GPIO
+ * @param 		: 无
+ * @return 		: 无
+ */
+void led_init(void)
+{
+	/* 1、初始化IO复用 */
+	IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03,0);		/* 复用为GPIO1_IO0 */
+
+	/* 2、、配置GPIO1_IO03的IO属性	
+	 *bit 16:0 HYS关闭
+	 *bit [15:14]: 00 默认下拉
+     *bit [13]: 0 kepper功能
+     *bit [12]: 1 pull/keeper使能
+     *bit [11]: 0 关闭开路输出
+     *bit [7:6]: 10 速度100Mhz
+     *bit [5:3]: 110 R0/6驱动能力
+     *bit [0]: 0 低转换率
+     */
+	IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03,0X10B0);
+
+	/* 3、初始化GPIO,设置GPIO1_IO03设置为输出  */
+	GPIO1->GDIR |= (1 << 3);	
+	
+	/* 4、设置GPIO1_IO03输出低电平，打开LED0 */
+	GPIO1->DR &= ~(1 << 3);			
+}
+
+/*
+ * @description	: 打开LED灯
+ * @param 		: 无
+ * @return 		: 无
+ */
+void led_on(void)
+{
+	/* 将GPIO1_DR的bit3清零 	*/
+	GPIO1->DR &= ~(1<<3); 
+}
+
+/*
+ * @description	: 关闭LED灯
+ * @param 		: 无
+ * @return 		: 无
+ */
+void led_off(void)
+{
+	/* 将GPIO1_DR的bit3置1 */
+	GPIO1->DR |= (1<<3); 
+}
+
+/*
+ * @description	: 短时间延时函数
+ * @param - n	: 要延时循环次数(空操作循环次数，模式延时)
+ * @return 		: 无
+ */
+void delay_short(volatile unsigned int n)
+{
+	while(n--){}
+}
+
+/*
+ * @description	: 延时函数,在396Mhz的主频下
+ * 			  	  延时时间大约为1ms
+ * @param - n	: 要延时的ms数
+ * @return 		: 无
+ */
+void delay(volatile unsigned int n)
+{
+	while(n--)
+	{
+		delay_short(0x7ff);
+	}
+}
+
+/*
+ * @description	: mian函数
+ * @param 		: 无
+ * @return 		: 无
+ */
+int main(void)
+{
+	clk_enable();		/* 使能所有的时钟 			*/
+	led_init();			/* 初始化led 			*/
+
+	while(1)			/* 死循环 				*/
+	{	
+		led_off();		/* 关闭LED 			*/
+		delay(500);		/* 延时500ms 			*/
+
+		led_on();		/* 打开LED 			*/
+		delay(500);		/* 延时500ms 			*/
+	}
+
+	return 0;
+}
+```
+
+这里仅在 `led_init(void)`中使用了两个 SDK 函数
+
+- IOMUXC_SetPinMux
+- IOMUXC_SetPinConfig
+ 
+其 中 函 数IOMUXC_SetPinMux是 用 来 设 置IO复 用 功 能 的 ， 最 终 肯 定 设 置 的 是 寄 存 器“IOMUXC_SW_MUX_CTL_PAD_XX”。  
+函数IOMUXC_SetPinConfig设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”，所以上面两个函数其实就是上一章中的：
+```
+IOMUX_SW_MUX->GPIO1_IO03 = 0X5;
+IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;`
+```
+
+其余部分则是使用的 SDK 内部寄存器定义，替代前面我们自己写的寄存器定义。
+
+#### 编译下载验证
+
+Makefile文件内容如下：
+```
+CROSS_COMPILE ?= arm-linux-gnueabihf-
+NAME		  ?= ledc
+
+CC 		:= $(CROSS_COMPILE)gcc
+LD		:= $(CROSS_COMPILE)ld
+OBJCOPY := $(CROSS_COMPILE)objcopy
+OBJDUMP := $(CROSS_COMPILE)objdump
+
+OBJS 	:= start.o main.o
+
+$(NAME).bin:$(OBJS)
+	$(LD) -Timx6ul.lds -o $(NAME).elf $^
+	$(OBJCOPY) -O binary -S $(NAME).elf $@
+	$(OBJDUMP) -D -m arm $(NAME).elf > $(NAME).dis
+
+%.o:%.s
+	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
+	
+%.o:%.S
+	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
+	
+%.o:%.c
+	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
+	
+clean:
+	rm -rf *.o $(NAME).bin $(NAME).elf $(NAME).dis
+```
+
+Makefile文件是在前面的Makefile上修改的，只是使用到了变量替代一些文本，更懒了。。。效果实际是一样的。链接脚本imx6ul.lds的内容和前面一样，直接使用。
+
+
 
 在 `linux/driver/board_driver` 文件夹下新建本次的工程文件夹 `1_led`，并在这个目录下新建一个名为“led.s”的汇编文件和一个名为“.vscode”的目录，创建好以后“1_led” 如下所示
 ```
@@ -4944,213 +5153,6 @@ SECTIONS{
 [arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
 
 
-#### cc.h 文件
-新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
-```
-#ifndef __CC_H
-#define __CC_H
-
-/*
- * 自定义一些数据类型供库文件使用
- */
-#define     __I     volatile 
-#define     __O     volatile 
-#define     __IO    volatile
-
-typedef   signed          char int8_t;
-typedef   signed short     int int16_t;
-typedef   signed           int int32_t;
-typedef unsigned          char uint8_t;
-typedef unsigned short     int uint16_t;
-typedef unsigned           int uint32_t;
-typedef unsigned long     long uint64_t;
-typedef	  signed char  	 	   s8;		
-typedef	  signed short 	  int  s16;
-typedef	  signed int 		   s32;
-typedef	  signed long long int s64;
-typedef	unsigned char 		   u8;
-typedef	unsigned short int     u16;
-typedef	unsigned int 		   u32;
-typedef	unsigned long long int u64;
-
-
-#endif
-
-```
-在cc.h文件中我们定义了很多的数据类型，因为有些第三方库会用到这些变量类型。其实就是有些第三方库包括这个 SDK 使用的数据类型名大多时简写，需要重新定义一下。
-
-#### 编写实验代码
-
-start.S 和上文一样，直接复制。  
-main.c 如下：
-```
-#include "fsl_common.h"
-#include "fsl_iomuxc.h"
-#include "MCIMX6Y2.h"
-
-/*
- * @description	: 使能I.MX6U所有外设时钟
- * @param 		: 无
- * @return 		: 无
- */
-void clk_enable(void)
-{
-	CCM->CCGR0 = 0XFFFFFFFF;
-	CCM->CCGR1 = 0XFFFFFFFF;
-
-	CCM->CCGR2 = 0XFFFFFFFF;
-	CCM->CCGR3 = 0XFFFFFFFF;
-	CCM->CCGR4 = 0XFFFFFFFF;
-	CCM->CCGR5 = 0XFFFFFFFF;
-	CCM->CCGR6 = 0XFFFFFFFF;
-
-}
-
-/*
- * @description	: 初始化LED对应的GPIO
- * @param 		: 无
- * @return 		: 无
- */
-void led_init(void)
-{
-	/* 1、初始化IO复用 */
-	IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03,0);		/* 复用为GPIO1_IO0 */
-
-	/* 2、、配置GPIO1_IO03的IO属性	
-	 *bit 16:0 HYS关闭
-	 *bit [15:14]: 00 默认下拉
-     *bit [13]: 0 kepper功能
-     *bit [12]: 1 pull/keeper使能
-     *bit [11]: 0 关闭开路输出
-     *bit [7:6]: 10 速度100Mhz
-     *bit [5:3]: 110 R0/6驱动能力
-     *bit [0]: 0 低转换率
-     */
-	IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03,0X10B0);
-
-	/* 3、初始化GPIO,设置GPIO1_IO03设置为输出  */
-	GPIO1->GDIR |= (1 << 3);	
-	
-	/* 4、设置GPIO1_IO03输出低电平，打开LED0 */
-	GPIO1->DR &= ~(1 << 3);			
-}
-
-/*
- * @description	: 打开LED灯
- * @param 		: 无
- * @return 		: 无
- */
-void led_on(void)
-{
-	/* 将GPIO1_DR的bit3清零 	*/
-	GPIO1->DR &= ~(1<<3); 
-}
-
-/*
- * @description	: 关闭LED灯
- * @param 		: 无
- * @return 		: 无
- */
-void led_off(void)
-{
-	/* 将GPIO1_DR的bit3置1 */
-	GPIO1->DR |= (1<<3); 
-}
-
-/*
- * @description	: 短时间延时函数
- * @param - n	: 要延时循环次数(空操作循环次数，模式延时)
- * @return 		: 无
- */
-void delay_short(volatile unsigned int n)
-{
-	while(n--){}
-}
-
-/*
- * @description	: 延时函数,在396Mhz的主频下
- * 			  	  延时时间大约为1ms
- * @param - n	: 要延时的ms数
- * @return 		: 无
- */
-void delay(volatile unsigned int n)
-{
-	while(n--)
-	{
-		delay_short(0x7ff);
-	}
-}
-
-/*
- * @description	: mian函数
- * @param 		: 无
- * @return 		: 无
- */
-int main(void)
-{
-	clk_enable();		/* 使能所有的时钟 			*/
-	led_init();			/* 初始化led 			*/
-
-	while(1)			/* 死循环 				*/
-	{	
-		led_off();		/* 关闭LED 			*/
-		delay(500);		/* 延时500ms 			*/
-
-		led_on();		/* 打开LED 			*/
-		delay(500);		/* 延时500ms 			*/
-	}
-
-	return 0;
-}
-```
-
-这里仅在 `led_init(void)`中使用了两个 SDK 函数
-
-- IOMUXC_SetPinMux
-- IOMUXC_SetPinConfig
- 
-其 中 函 数IOMUXC_SetPinMux是 用 来 设 置IO复 用 功 能 的 ， 最 终 肯 定 设 置 的 是 寄 存 器“IOMUXC_SW_MUX_CTL_PAD_XX”。  
-函数IOMUXC_SetPinConfig设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”，所以上面两个函数其实就是上一章中的：
-```
-IOMUX_SW_MUX->GPIO1_IO03 = 0X5;
-IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;`
-```
-
-其余部分则是使用的 SDK 内部寄存器定义，替代前面我们自己写的寄存器定义。
-
-#### 编译下载验证
-
-Makefile文件内容如下：
-```
-CROSS_COMPILE ?= arm-linux-gnueabihf-
-NAME		  ?= ledc
-
-CC 		:= $(CROSS_COMPILE)gcc
-LD		:= $(CROSS_COMPILE)ld
-OBJCOPY := $(CROSS_COMPILE)objcopy
-OBJDUMP := $(CROSS_COMPILE)objdump
-
-OBJS 	:= start.o main.o
-
-$(NAME).bin:$(OBJS)
-	$(LD) -Timx6ul.lds -o $(NAME).elf $^
-	$(OBJCOPY) -O binary -S $(NAME).elf $@
-	$(OBJDUMP) -D -m arm $(NAME).elf > $(NAME).dis
-
-%.o:%.s
-	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
-	
-%.o:%.S
-	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
-	
-%.o:%.c
-	$(CC) -Wall -nostdlib -c -O2 -o $@ $<
-	
-clean:
-	rm -rf *.o $(NAME).bin $(NAME).elf $(NAME).dis
-```
-
-Makefile文件是在前面的Makefile上修改的，只是使用到了变量替代一些文本，更懒了。。。效果实际是一样的。链接脚本imx6ul.lds的内容和前面一样，直接使用。
 
 ## BSP工程管理实验
 
