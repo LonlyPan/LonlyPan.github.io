@@ -4496,7 +4496,7 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
  - fsl_iomuxc.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_iomuxc.h。
  - MCIMX6Y2.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\MCIMX6YH2.h。
 
-这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
+这三个文件直接编译的话肯定会出错的！需要对其做删减且容易出错，推荐直接使用原子删减好的文件。
 
 ### 实验程序编写
 
