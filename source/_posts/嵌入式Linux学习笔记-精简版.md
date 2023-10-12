@@ -4504,7 +4504,7 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 **所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
 
 使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中
-![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1697120116617]]]" )
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697120116616.png)
 
 #### cc.h 文件
 新建一个名为cc.h的头文件，cc.h里面存放一些SDK库文件需要使用到的数据类型，在cc.h里面输入如下代码：
