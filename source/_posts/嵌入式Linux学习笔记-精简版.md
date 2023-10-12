@@ -4482,7 +4482,7 @@ LED0接到了GPIO_3上，GPIO_3就是GPIO1_IO03
 
 NXP针对I.MX6ULL编写了一个SDK包，这个SDK包就类似于STM32的STD库或者HAL库，这个SDK包提供了Windows和Linux两种版本，分别针对主机系统是Windows和Linux。因为我们是在Windows下来编写代码的，因此我们使用的是Windows版本的。Windows版本SDK里面的例程提供了IAR版本。
 
-不是所有的半导体厂商都会为Cortex-A架构的芯片编写裸机SDK包，我使用过那么多的Cotex-A系列芯片，也就发现了NXP给I.MX6ULL编写了裸机SDK包。而且去NXP官网看一下，会发现只有I.MX6ULL这一款Cotex-A内核的芯片有裸机SDK包，NXP的其它Cotex-A芯片都没有。说明在NXP的定位里面，I.MX6ULL就是一个Cotex-A内核的高端单片机，定位类似ST的STM32H7。
+不是所有的半导体厂商都会为Cortex-A架构的芯片编写裸机SDK包，那么多的Cotex-A系列芯片，也就发现了NXP给I.MX6ULL编写了裸机SDK包。而且只有I.MX6ULL这一款Cotex-A内核的芯片有裸机SDK包，NXP的其它Cotex-A芯片都没有。
 
 使用Cortex-A内核芯片的时候不要想着有类似STM32库一样的东西，I.MX6ULL是一个特例，基本所有的Cortex-A内核的芯片都不会提供裸机SDK包。
 
@@ -4492,22 +4492,17 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 双击SDK_2.2_MCIM6ULL_RFP_Win.exe安装SDK包，安装的时候需要记住安装位置
 
 我们重点是需要SDK包里面与寄存器定义相关的文件，一共需要如下三个文件：
-
  - fsl_common.h：位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_common.h。
  - fsl_iomuxc.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\drivers\fsl_iomuxc.h。
  - MCIMX6Y2.h:位置为SDK_2.2_MCIM6ULL\devices\MCIMX6Y2\MCIMX6YH2.h。
 
-整个SDK包我们就需要上面这三个文件，把这三个文件准备好，我们后面移植要用。
+这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
 
 ### 实验程序编写
 
-#### SDK文件移植
-
-使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中，这三个文件直接编译的话肯定会出错的！需要对其做删减，因为这三个文件里面的代码都比较大，所以就不详细列出这三个文件删减以后的内容了。直接使用原子删减好的文件。
+使用VSCode新建工程，将fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这三个文件拷贝到工程中
 
 
-
-### 实验程序编写
 
 **所有的裸机实验我们都在Ubuntu下完成，使用VSCode编辑器！**
 
