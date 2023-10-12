@@ -4361,7 +4361,9 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
  - [ARM® Cortex™-A Series Programmer's Guide  Version: 4.0](https://developer.arm.com/documentation/den0013/d)
  - [ARM ArchitectureReference Manual ARMv7-A and ARMv7-R edition.pdf](https://developer.arm.com/documentation/ddi0406/cd)
 
-## 汇编LED灯实验
+## SDK-LED灯实验
+
+这里直接跳过正电原子的汇编、C语言、模仿STM32驱动开发实验。
 
 ### I.MX6U GPIO详解
 
