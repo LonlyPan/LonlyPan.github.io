@@ -4554,9 +4554,9 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 
 同时将cc.h文件额拷贝到工程中，cc.h里面存放一些SDK库文件需要使用到的数据类型，其实就是有些第三方库包括这个 SDK 使用的数据类型名大多都是简写，需要重新定义一下。
 
-#### start.S 编写
+#### main.c
 
- 和上文一样，直接复制。  
+  
 main.c 如下：
 ```
 #include "fsl_common.h"
@@ -4692,7 +4692,9 @@ IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;`
 ```
 
 其余部分则是使用的 SDK 内部寄存器定义，替代前面我们自己写的寄存器定义。
+#### start.S 编写
 
+ 和上文一样，直接复制。
 #### 编译下载验证
 
 Makefile文件内容如下：
