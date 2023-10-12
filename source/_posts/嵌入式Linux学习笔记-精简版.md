@@ -4682,16 +4682,10 @@ int main(void)
 这里仅在 `led_init(void)`中使用了两个 SDK 函数
 
 - IOMUXC_SetPinMux
+用来设置IO复用功能的 ， 最终设置的其实就是寄存器“IOMUXC_SW_MUX_CTL_PAD_XX”。  
 - IOMUXC_SetPinConfig
- 
-其 中 函 数IOMUXC_SetPinMux是 用 来 设 置IO复 用 功 能 的 ， 最 终 肯 定 设 置 的 是 寄 存 器“IOMUXC_SW_MUX_CTL_PAD_XX”。  
-函数IOMUXC_SetPinConfig设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”，所以上面两个函数其实就是上一章中的：
-```
-IOMUX_SW_MUX->GPIO1_IO03 = 0X5;
-IOMUX_SW_PAD->GPIO1_IO03 = 0X10B0;`
-```
+设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”
 
-其余部分则是使用的 SDK 内部寄存器定义，替代前面我们自己写的寄存器定义。
 
 #### start.S 编写
 
