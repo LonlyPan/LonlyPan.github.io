@@ -4879,13 +4879,42 @@ clean:
 
 我们学习 STM32 等其他的单片机的时候，编译完代码以后可以直接通过 MDK 或者 IAR下载到内部的 flash 中。但是 I.MX6U 虽然内部有 96K 的 ROM，但是这 96K 的 ROM 是 NXP自己用的，不向用户开放。所以相当于说 I.MX6U 是没有内部 flash 的，但是我们的代码得有地
 方存放啊，为此，I.MX6U 支持从外置的 NOR Flash、NAND Flash、SD/EMMC、SPI NOR Flash和 QSPI Flash 这些存储介质中启动，所以我们可以将代码烧写到这些存储介质中中。因此，我们在调试裸机和 Uboot 的时候是将代码下载到 SD 中，当调试完成以后量产的时候要将裸机或者 Uboot 烧写到 SPI NOR Flash、EMMC、NAND 等这些存储介质中的。
-那么，如何将我们前面编译出来的 led.bin 烧写到 SD 卡中呢？肯定有人会认为直接复制led.bin 到 SD 卡中不就行了，错！编译出来的可执行文件是怎么存放到 SD 中的，存放的位置是什么？这个 NXP 是有详细规定的！我们必须按照 NXP 的规定来将代码烧写到 SD 卡中，否则代码是绝对运行不起来的。《IMX6UL 参考手册》的第 8 章“Chapter 8 System Boot”就是专门讲解 I.MX6U 启动的，我们下一章会详细的讲解 I.MX6U 启动方式的。正点原子专门编写了一个软件来将编译出来的.bin 文件烧写到 SD 卡中，这个软件叫做“imxdownload”，软件我们已经放到了开发板光盘中，路径为：开发板光盘->5、开发工具->2、
-Ubuntu 下裸机烧写软件->imxdownload，imxdownlaod 只能在 Ubuntu 下使用，使用步骤如下：
+那么，如何将我们前面编译出来的 led.bin 烧写到 SD 卡中呢？肯定有人会认为直接复制led.bin 到 SD 卡中不就行了，错！编译出来的可执行文件是怎么存放到 SD 中的，存放的位置是什么？这个 NXP 是有详细规定的！我们必须按照 NXP 的规定来将代码烧写到 SD 卡中，否则代码是绝对运行不起来的。《IMX6UL 参考手册》的第 8 章“Chapter 8 System Boot”就是专门讲解 I.MX6U 启动的，我们下一章会详细的讲解 I.MX6U 启动方式的。正点原子专门编写了一个软件来将编译出来的.bin 文件烧写到 SD 卡中，这个软件叫做“imxdownload”，软件我们已经放到了开发板光盘中，路径为：开发板光盘->5、开发工具->2、Ubuntu 下裸机烧写软件->imxdownload，imxdownlaod 只能在 Ubuntu 下使用，使用步骤如下：
 
-1、将 imxdownload 拷贝到工程根目录下
-我们要将 imxdownload 拷贝到工程根目录下，也就是和 led.bin 处于同一个文件夹下，要不然烧写会失败的，拷贝完成以后如图 8.4.3.1 所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697354936604.png)
-2、给予 imxdownload 可执行权限
+将正点原子的软件“imxdownload”，拷贝到工程根目录下，也就是和led.bin处于同一个文件夹下
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls
+imxdownload  led.bin  led.dis  led.elf  led.o  led.s  load.imx  Makefile
+```
+给该软件赋予执行权限
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ chmod 777 imxdownload 
+```
+准备一张新的 SD(TF)卡，确保 SD 卡里面没有数据，因为我们在烧写代码的时候可能会格式化 SD 卡！！！
+Ubuntu 下所有的设备文件都在目录“/dev”里面，所以插上 SD 卡以后也会出现在“/dev”里面，其中存储设备都是以“/dev/sd”开头的。我们要先看一下不插 SD 卡的时候电脑都有哪些存储设备，以防插入 SD 卡以后分不清谁是谁。输入如下所示命令：
+```
+ls /dev/sd*
+```
+当前电脑的存储文件如图 8.4.3.3 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697355115968.png)
+插 SD 卡，并挂在到Ubuntu下
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697355180655.png)
+当前电脑的存储文件如图 8.4.3.3 所示：
+使用imxdownload向SD卡烧写led.bin文件，命令格式如下：
+```
+./imxdownload   <.bin file>    <SDCard>
+```
+实例：
+```
+./imxdownload led.bin /dev/sdd
+```
+最后会生成一个 `load.imx` 文件。这个文件就是软件imxdownload根据NXP官方启动方式介绍的内容，在led.bin文件前面添加了一些数据头以后生成的。最终烧写到SD卡里面的就是这个load.imx文件，而非led.bin。
+>烧写速度是201KB/s。注意这个烧写速度，如果这个烧写速度在几百KB/s以下那么就是正常烧写。如果这个烧写速度大于几十MB/s、甚至几百MB/s那么肯定是烧写失败了！
+>解决方法就是重新插拔SD卡，但一般出现这种情况，重新插拔SD卡基本没啥用，只有重启Ubuntu，原因不清楚。
+
+最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
+
 
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
 chmod 777 imxdownload
@@ -4898,99 +4927,6 @@ chmod 777 imxdownload
 
 
 
-在 `linux/driver/board_driver` 文件夹下新建本次的工程文件夹 `1_led`，并在这个目录下新建一个名为“led.s”的汇编文件和一个名为“.vscode”的目录，创建好以后“1_led” 如下所示
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ touch led.s
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ mkdir .vscode
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls -a
-.  ..  led.s  .vscode
-```
-
-.vscode文件夹里面存放VSCode的工程文件，led.s就是我们新建的汇编文件，我们稍后会在led.s这个文件中编写汇编程序。使用VSCode打开1_leds这个文件夹，在led.s中输入如下代码：
-```
-/**
-  * Copyright (c)   LonlyPan . 1998-2020.  All rights reserved.
-  * @file:    led.s
-  * @author:  LonlyPan
-  * @version: V1.0
-  * @date:    2020-11-29
-  * @brief:   裸机实验1 汇编点灯
-              使用汇编来点亮开发板上的LED灯，学习和掌握如何用汇编语言来完成对I.MX6U处理器的GPIO初始化和控制。
-  * @attentio: 
-  * @Modification: 
-  * @History:
-  *   1.Version: V1.0
-  *   Author: LonlyPan
-  *     date: 2020-11-29
-  *     Modification: 初版
-  */
-
-.global _start /* 全局标号 */
-
-/**
- * @brief  _start函数，程序从此函数开始执行此函数完成时钟使能、GPIO初始化、最终控制GPIO输出低电平来点亮LED灯
- * @note    
- * @param 
- * @retval  
- */
-
-_start:   
- 
-/* 使能所有的IO 时钟 */
-LDR R0, =0X020C4068  /* 寄存器CCGR0 */
-LDR R1, =0XFFFFFFFF
-STR R1, [R0]
-
-LDR R0, =0X020C406C  /* 寄存器CCGR1 */
-STR R1, [R0]
-
-LDR R0, =0X020C4070  /* 寄存器CCGR2 */
-STR R1, [R0]
-
-LDR R0, =0X020C4074  /* 寄存器CCGR3 */
-STR R1, [R0]
-
-LDR R0, =0X020C4078  /* 寄存器CCGR4 */
-STR R1, [R0]
-
-LDR R0, =0X020C407C  /* 寄存器CCGR5 */
-STR R1, [R0]
-
-LDR R0, =0X020C4080  /* 寄存器CCGR6 */
-STR R1, [R0]
-
-/* 2、设置GPIO1_IO03复用为GPIO1_IO03 */
-LDR R0, =0x020E0068  /* 将寄存器 SW_MUX_GPIO1_IO3_BASE加载到r0中 */
-LDR R1, =0x5 /* 设置寄存器 SW_MUX_GPIO1_IO3_BASE 的 MUX_MODE 为 5 也就是 GPIO 模式 */
-STR R1, [R0]
-
-/* 配置 GPIO_IO03 的 IO 属性 
- * bit [16]: 0 HYS 关闭
- * bit [15"14]: 00 默认下拉
- * bit [13]: 0 keeper功能
- * bit [12]: 1 pull/keeper 使能
- * bit [11]: 0 关闭开路输出
- * bit [7:6]: 10 速度 100MHz
- * bit [5:3]: 110 R0/6 驱动能力
- * bit [0]: 0 低压摆率*/
- LDR R0, =0x020E02F4 /* 寄存器 SW_PAD_GPIO1_IO03_BASE */
- LDR R1, =0x10B0  /* 0001 0000 1011 0000arm-linux-gnueabihf-gcc -g -c led.s -0 led.o
-
-/* 设置 GPIO_IO03 为输出 */
-LDR R0, =0x0209C004 /* 寄存器 GPIO_GDIR*/
-LDR R1, =0x00000008
-STR R1, [R0]
-
-/* 打开 LED0 设置 GPIO_IO03 输出低电平*/
-LDR R0, =0x0209C000
-LDR R1, =0
-STR R1, [R0]
-
-/* 死循环 */
-loop:
-  b loop
-
-```
 
 ### 编译下载验证
 
@@ -5008,30 +4944,6 @@ loop:
 位置有关码：LDR PC,=LABEL等类似的代码都是位置有关码。
 
 #### 代码烧写
-
-将正点原子的软件“imxdownload”，拷贝到工程根目录下，也就是和led.bin处于同一个文件夹下
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls
-imxdownload  led.bin  led.dis  led.elf  led.o  led.s  load.imx  Makefile
-```
-给该软件赋予执行权限
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ chmod 777 imxdownload 
-```
-使用imxdownload向SD卡烧写led.bin文件，命令格式如下：
-```
-./imxdownload   <.bin file>    <SDCard>
-```
-实例：
-```
-./imxdownload led.bin /dev/sdd
-```
-最后会生成一个 `load.imx` 文件。这个文件就是软件imxdownload根据NXP官方启动方式介绍的内容，在led.bin文件前面添加了一些数据头以后生成的。最终烧写到SD卡里面的就是这个load.imx文件，而非led.bin。
->烧写速度是201KB/s。注意这个烧写速度，如果这个烧写速度在几百KB/s以下那么就是正常烧写。如果这个烧写速度大于几十MB/s、甚至几百MB/s那么肯定是烧写失败了！
->解决方法就是重新插拔SD卡，但一般出现这种情况，重新插拔SD卡基本没啥用，只有重启Ubuntu，原因不清楚。
-
-最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
 ## C语言版LED灯
 
