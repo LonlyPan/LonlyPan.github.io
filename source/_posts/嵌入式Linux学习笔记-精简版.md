@@ -4845,7 +4845,7 @@ arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
 
 和第二种一样，只是Makefile写法不同，用到了更多的变量。
 
-Makefile文件是在前面的Makefile上修改的，只是使用到了变量替代一些文本，更懒了。。。效果实际是一样的。链接脚本imx6ul.lds的内容和前面一样，直接使用。
+Makefile文件是在前面的Makefile上修改的，只是使用到了变量替代一些文本，更高效了。效果实际是一样的。链接脚本imx6ul.lds的内容和前面一样，直接使用。
 ```
 CROSS_COMPILE ?= arm-linux-gnueabihf-
 NAME		  ?= ledc
