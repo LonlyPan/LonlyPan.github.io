@@ -4725,9 +4725,9 @@ int main(void)
 - IOMUXC_SetPinConfig
 设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”
 
-#### 程序编译
+### 程序编译
 
-##### 第一种方案
+#### 第一种方案
 
 创建Makefile文件并输入如下内容：
 ```
@@ -4774,11 +4774,11 @@ arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
 
 
 
-##### 第二种方案
+#### 第二种方案
 
 使用到链接脚本
 
-###### 链接脚本编写
+##### 链接脚本编写
 
 在上面的Makefile中我们链接代码的时候使用如下语句：
 ```java
@@ -4829,7 +4829,7 @@ SECTIONS{
 第6行是main.o这个文件，其实可以不用写出来，因为main.o的位置就无所谓了，可以由编译器自行决定链接位置。
 在第11、13行有“\_\_bss_start”和“\_\_bss_end”符号，对这两个符号进行赋值，其值为定位符“.”，这两个符号用来保存.bss段的起始地址和结束地址。前面说了.bss段是定义了但是没有被初始化的变量，我们需要手动对.bss段的变量清零的，因此我们需要知道.bss段的起始和结束地址，这样我们直接对这段内存赋0即可完成清零。通过第11、13行代码，.bss段的起始地址和结束地址就保存在了“\_\_bss_start”和“\_\_bss_end”中，我们就可以直接在汇编或者C文件里面使用这两个符号。
 
-###### 修改Makefile
+##### 修改Makefile
 
 将Makefile中的如下一行代码：
 ```
@@ -4841,7 +4841,7 @@ arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
 ```
 其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了
 
-##### 第三种方案
+#### 第三种方案
 
 和第二种一样，只是Makefile写法不同，用到了更多的变量。
 
@@ -4875,11 +4875,18 @@ clean:
 	rm -rf *.o $(NAME).bin $(NAME).elf $(NAME).dis
 ```
 
-#### 下载验证
+### 下载验证
 
+我们学习 STM32 等其他的单片机的时候，编译完代码以后可以直接通过 MDK 或者 IAR下载到内部的 flash 中。但是 I.MX6U 虽然内部有 96K 的 ROM，但是这 96K 的 ROM 是 NXP自己用的，不向用户开放。所以相当于说 I.MX6U 是没有内部 flash 的，但是我们的代码得有地
+方存放啊，为此，I.MX6U 支持从外置的 NOR Flash、NAND Flash、SD/EMMC、SPI NOR Flash和 QSPI Flash 这些存储介质中启动，所以我们可以将代码烧写到这些存储介质中中。因此，我们在调试裸机和 Uboot 的时候是将代码下载到 SD 中，当调试完成以后量产的时候要将裸机或者 Uboot 烧写到 SPI NOR Flash、EMMC、NAND 等这些存储介质中的。
+那么，如何将我们前面编译出来的 led.bin 烧写到 SD 卡中呢？肯定有人会认为直接复制led.bin 到 SD 卡中不就行了，错！编译出来的可执行文件是怎么存放到 SD 中的，存放的位置是什么？这个 NXP 是有详细规定的！我们必须按照 NXP 的规定来将代码烧写到 SD 卡中，否则代码是绝对运行不起来的。《IMX6UL 参考手册》的第 8 章“Chapter 8 System Boot”就是专门讲解 I.MX6U 启动的，我们下一章会详细的讲解 I.MX6U 启动方式的。正点原子专门编写了一个软件来将编译出来的.bin 文件烧写到 SD 卡中，这个软件叫做“imxdownload”，软件我们已经放到了开发板光盘中，路径为：开发板光盘->5、开发工具->2、
+Ubuntu 下裸机烧写软件->imxdownload，imxdownlaod 只能在 Ubuntu 下使用，使用步骤如下：
 
+1、将 imxdownload 拷贝到工程根目录下
+我们要将 imxdownload 拷贝到工程根目录下，也就是和 led.bin 处于同一个文件夹下，要不然烧写会失败的，拷贝完成以后如图 8.4.3.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697354936604.png)
+2、给予 imxdownload 可执行权限
 
-Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
 chmod 777 imxdownload
 //给予 imxdownoad 可执行权限，一次即可
