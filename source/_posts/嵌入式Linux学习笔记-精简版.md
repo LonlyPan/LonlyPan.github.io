@@ -4564,7 +4564,7 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 新建VScode工程，工程名字为“ledc”，新建三个文件：start.S、main.c和main.h。其中start.S是汇编文件，main.c和main.h是C语言相关文件。
  
 在创建的start.s中输入如下代码：
- ```
+```
 .global _start    /* 全局标号 */
 
 /*
@@ -4774,11 +4774,11 @@ arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
 
 
 
-#### 第二种方案
+##### 第二种方案
 
 使用到链接脚本
 
-##### 链接脚本编写
+###### 链接脚本编写
 
 在上面的Makefile中我们链接代码的时候使用如下语句：
 ```java
@@ -4829,9 +4829,7 @@ SECTIONS{
 第6行是main.o这个文件，其实可以不用写出来，因为main.o的位置就无所谓了，可以由编译器自行决定链接位置。
 在第11、13行有“\_\_bss_start”和“\_\_bss_end”符号，对这两个符号进行赋值，其值为定位符“.”，这两个符号用来保存.bss段的起始地址和结束地址。前面说了.bss段是定义了但是没有被初始化的变量，我们需要手动对.bss段的变量清零的，因此我们需要知道.bss段的起始和结束地址，这样我们直接对这段内存赋0即可完成清零。通过第11、13行代码，.bss段的起始地址和结束地址就保存在了“\_\_bss_start”和“\_\_bss_end”中，我们就可以直接在汇编或者C文件里面使用这两个符号。
 
-##### 修改Makefile
- 
-#### 修改Makefile
+###### 修改Makefile
 
 将Makefile中的如下一行代码：
 ```
@@ -4843,6 +4841,7 @@ arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
 ```
 其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了
 
+##### 第三种方案
 
 
 Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
