@@ -4691,7 +4691,7 @@ int main(void)
 
 创建Makefile文件并输入如下内容：
 ```
-led.bin:led.s
+led.bin:led.c
 	arm-linux-gnueabihf-gcc -g -c led.s -o led.o  @编译文件，只编译不链接。-g 产生调试信息。-c 编译源文件但不链接
 	arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf @链接文件，将 .o 文件链接到指定链接位置
 	arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin @led.elf文件转换为led.bin文件 -O 指定格式输出 -S 不复制源文件中的重定位信息和符号信息 -g 不复制源文件调试信息
