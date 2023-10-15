@@ -4916,6 +4916,8 @@ ls /dev/sd*
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
 
+
+
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
 chmod 777 imxdownload
 //给予 imxdownoad 可执行权限，一次即可
