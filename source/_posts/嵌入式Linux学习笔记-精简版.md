@@ -4875,7 +4875,7 @@ clean:
 	rm -rf *.o $(NAME).bin $(NAME).elf $(NAME).dis
 ```
 
-#### 编译下载验证
+#### 下载验证
 
 
 
