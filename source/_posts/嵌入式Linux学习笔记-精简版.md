@@ -4554,9 +4554,8 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 
 同时将cc.h文件额拷贝到工程中，cc.h里面存放一些SDK库文件需要使用到的数据类型，其实就是有些第三方库包括这个 SDK 使用的数据类型名大多都是简写，需要重新定义一下。
 
-#### main.c
+#### main.c编写
 
-  
 main.c 如下：
 ```
 #include "fsl_common.h"
@@ -4686,10 +4685,28 @@ int main(void)
 - IOMUXC_SetPinConfig
 设置的是IO的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”
 
+#### 程序编译
+
+创建Makefile文件
+```
+lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls
+led.s  Makefile
+```
+输入如下内容：
+```
+led.bin:led.s
+	arm-linux-gnueabihf-gcc -g -c led.s -o led.o  @编译文件，只编译不链接。-g 产生调试信息。-c 编译源文件但不链接
+	arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf @链接文件，将 .o 文件链接到指定链接位置
+	arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin @led.elf文件转换为led.bin文件 -O 指定格式输出 -S 不复制源文件中的重定位信息和符号信息 -g 不复制源文件调试信息
+	arm-linux-gnueabihf-objdump -D led.elf > led.dis @反汇编  -D 反汇编所有段
+	
+clean:
+	rm -rf *.o led.bin led.elf led.dis
+
+```
+
 
 #### start.S 链接脚本编写
-
-### 链接脚本
 
 在上面的Makefile中我们链接代码的时候使用如下语句：
 ```java
@@ -4874,23 +4891,6 @@ loop:
 
 ### 编译下载验证
 
-创建Makefile文件
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls
-led.s  Makefile
-```
-输入如下内容：
-```
-led.bin:led.s
-	arm-linux-gnueabihf-gcc -g -c led.s -o led.o  @编译文件，只编译不链接。-g 产生调试信息。-c 编译源文件但不链接
-	arm-linux-gnueabihf-ld -Ttext 0X87800000 led.o -o led.elf @链接文件，将 .o 文件链接到指定链接位置
-	arm-linux-gnueabihf-objcopy -O binary -S -g led.elf led.bin @led.elf文件转换为led.bin文件 -O 指定格式输出 -S 不复制源文件中的重定位信息和符号信息 -g 不复制源文件调试信息
-	arm-linux-gnueabihf-objdump -D led.elf > led.dis @反汇编  -D 反汇编所有段
-	
-clean:
-	rm -rf *.o led.bin led.elf led.dis
-
-```
 
 编写执行 `make` 完成编译
 
