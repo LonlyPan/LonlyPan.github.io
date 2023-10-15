@@ -4875,8 +4875,7 @@ clean:
 	rm -rf *.o $(NAME).bin $(NAME).elf $(NAME).dis
 ```
 
-
-
+#### 编译下载验证
 
 
 
@@ -4887,7 +4886,7 @@ chmod 777 imxdownload
 ./imxdownload ledc.bin /dev/sdd //下载到 SD 卡中, 不能烧写到/dev/sda 或 sda1 设备里面！
 
  
-#### 编译下载验证
+
 
 
 
