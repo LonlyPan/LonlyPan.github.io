@@ -4752,6 +4752,36 @@ int main(void)
 
 ```
 
+第1行定义了一个变量objs，objs包含着要生成ledc.bin所需的材料：start.o和main.o，这里要注意start.o一定要放到最前面！因为在后面链接的时候start.o要在最前面，因为start.o是最先要执行的文件！
+
+第3行就是默认目标，目的是生成最终的可执行文件ledc.bin，ledc.bin依赖start.o和main.o如果当前工程没有start.o和main.o的时候就会找到相应的规则去生成start.o和main.o。比如start.o是start.s文件编译生成的，因此会执行第8行的规则。
+
+第4行是使用arm-linux-gnueabihf-ld进行链接，链接起始地址是0X87800000，但是这一行用到了自动变量“$^”，“$^”的意思是所有依赖文件的集合，在这里就是objs这个变量的值：start.o和main.o。链接的时候start.o要链接到最前面，因为第一行代码就是start.o里面的，因此这一行就相当于：
+```
+arm-linux-gnueabihf-ld -Ttext0X87800000 -o ledc.elf start.o main.o
+```
+第5行使用arm-linux-gnueabihf-objcopy来将ledc.elf文件转为ledc.bin，本行也用到了自动变量“$@”，“$@”的意思是目标集合，在这里就是“ledc.bin”，那么本行就相当于：
+```
+arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
+```
+第6行使用arm-linux-gnueabihf-objdump来反汇编，生成ledc.dis文件。
+
+第8~15行就是针对不同的文件类型将其编译成对应的.o文件，其实就是汇编.s(.S)和.c文件，比如start.s就会使用第8行的规则来生成对应的start.o文件。  
+
+第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
+
+#### 修改Makefile
+
+将Makefile中的如下一行代码：
+```
+arm-linux-gnueabihf-ld -Ttext0X87800000-o ledc.elf $^
+```
+改为：
+```
+arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
+```
+其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了
+
 第 1 行定义了一个变量 objs，objs 包含着要生成 ledc.bin 所需的材料：start.o 和 main.o。这里要注意 start.o 一定要放到
 最前面！因为在后面链接的时候 start.o 要在最前面，因为 start.o 是最先要执行的文件！
 第 3 行就是默认目标，目的是生成最终的可执行文件 ledc.bin，ledc.bin 依赖 start.o 和 main.o。如果当前工程没有 start.o 和 main.o 的时候就会找到相应的规则去生成 start.o 和 main.o。比如start.o 是 start.s 文件编译生成的，因此会执行第 8 行的规则。
@@ -4766,7 +4796,7 @@ start.s 要编译成 start.o 的话第 8 行和第 9 行就相当于：
 start.o:start.s
 arm-linux-gnueabihf-gcc -Wall -nostdlib -c -O2 -o start.o start.s
 ```
-第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
+
 
 #### 第二种方案
 
@@ -5034,40 +5064,7 @@ clean:
 
 上述的MakefileMakefile要复杂一点了，里面用到了Makefile变量和自动变量。
 
-第1行定义了一个变量objs，objs包含着要生成ledc.bin所需的材料：start.o和main.o，这里要注意start.o一定要放到最前面！因为在后面链接的时候start.o要在最前面，因为start.o是最先要执行的文件！
-
-第3行就是默认目标，目的是生成最终的可执行文件ledc.bin，ledc.bin依赖start.o和main.o如果当前工程没有start.o和main.o的时候就会找到相应的规则去生成start.o和main.o。比如start.o是start.s文件编译生成的，因此会执行第8行的规则。
-
-第4行是使用arm-linux-gnueabihf-ld进行链接，链接起始地址是0X87800000，但是这一行用到了自动变量“$^”，“$^”的意思是所有依赖文件的集合，在这里就是objs这个变量的值：start.o和main.o。链接的时候start.o要链接到最前面，因为第一行代码就是start.o里面的，因此这一行就相当于：
-```
-arm-linux-gnueabihf-ld -Ttext0X87800000 -o ledc.elf start.o main.o
-```
-第5行使用arm-linux-gnueabihf-objcopy来将ledc.elf文件转为ledc.bin，本行也用到了自动变量“$@”，“$@”的意思是目标集合，在这里就是“ledc.bin”，那么本行就相当于：
-```
-arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
-```
-第6行使用arm-linux-gnueabihf-objdump来反汇编，生成ledc.dis文件。
-
-第8~15行就是针对不同的文件类型将其编译成对应的.o文件，其实就是汇编.s(.S)和.c文件，比如start.s就会使用第8行的规则来生成对应的start.o文件。  
-
-编译完成以后可以使用软件imxdownload将其下载到SD卡中，命令如下：
-```
-chmod777 imxdownload//给予imxdownoad可执行权限，一次即可.
-/imxdownload ledc.bin /dev/sdd//下载到SD卡中
-```
-
-
-#### 修改Makefile
-
-将Makefile中的如下一行代码：
-```
-arm-linux-gnueabihf-ld -Ttext0X87800000-o ledc.elf $^
-```
-改为：
-```
-arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
-```
-其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了。
+。
 
 ### arm-linux-gcc/ld/objcopy/objdump参数总结
 
