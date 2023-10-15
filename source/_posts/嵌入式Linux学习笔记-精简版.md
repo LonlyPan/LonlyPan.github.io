@@ -4770,32 +4770,8 @@ arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
 
 第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
 
-#### 修改Makefile
 
-将Makefile中的如下一行代码：
-```
-arm-linux-gnueabihf-ld -Ttext0X87800000-o ledc.elf $^
-```
-改为：
-```
-arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
-```
-其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了
 
-第 1 行定义了一个变量 objs，objs 包含着要生成 ledc.bin 所需的材料：start.o 和 main.o。这里要注意 start.o 一定要放到
-最前面！因为在后面链接的时候 start.o 要在最前面，因为 start.o 是最先要执行的文件！
-第 3 行就是默认目标，目的是生成最终的可执行文件 ledc.bin，ledc.bin 依赖 start.o 和 main.o。如果当前工程没有 start.o 和 main.o 的时候就会找到相应的规则去生成 start.o 和 main.o。比如start.o 是 start.s 文件编译生成的，因此会执行第 8 行的规则。
-第 4 行是使用 arm-linux-gnueabihf-ld 进行链接，链接起始地址是 0X87800000，但是这一行用到了自动变量“$^”，“$^”的意思是所有依赖文件的集合，在这里就是 objs 这个变量的值：start.o 和 main.o。链接的时候 start.o 要链接到最前面，因为第一行代码就是 start.o 里面的，因此这一行就相当于：
-```arm-linux-gnueabihf-ld -Ttext 0X87800000 -o ledc.elf start.o main.o```
-第 5 行使用 arm-linux-gnueabihf-objcopy 来将 ledc.elf 文件转为 ledc.bin，本行也用到了自动变量“$@”，“$@”的意思是目标集合，在这里就是“ledc.bin”，那么本行就相当于：
-```arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin```
-第 6 行使用 arm-linux-gnueabihf-objdump 来反汇编，生成 ledc.dis 文件。
-第 8~15 行就是针对不同的文件类型将其编译成对应的.o 文件，其实就是汇编.s(.S)和.c 文件，比如 start.s 就会使用第 8 行的规则来生成对应的 start.o 文件。第 9 行就是具体的命令，这行也用到了自动变量“$@”和“$<”，其中“$<”的意思是依赖目标集合的第一个文件。比如
-start.s 要编译成 start.o 的话第 8 行和第 9 行就相当于：
-```
-start.o:start.s
-arm-linux-gnueabihf-gcc -Wall -nostdlib -c -O2 -o start.o start.s
-```
 
 
 #### 第二种方案
@@ -4855,6 +4831,20 @@ SECTIONS{
 
 ##### 修改Makefile
  
+#### 修改Makefile
+
+将Makefile中的如下一行代码：
+```
+arm-linux-gnueabihf-ld -Ttext0X87800000-o ledc.elf $^
+```
+改为：
+```
+arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
+```
+其实就是将-T后面的0X87800000改为imx6ul.lds，表示使用imx6ul.lds这个链接脚本文件。修改完成以后使用新的Makefile和链接脚本文件重新编译工程，编译成功以后就可以烧写到SD卡中验证了
+
+
+
 Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
 chmod 777 imxdownload
