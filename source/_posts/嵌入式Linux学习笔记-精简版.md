@@ -4768,6 +4768,9 @@ arm-linux-gnueabihf-gcc -Wall -nostdlib -c -O2 -o start.o start.s
 ```
 第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
 
+#### 第二种方案
+
+使用到链接简本
 
 Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
