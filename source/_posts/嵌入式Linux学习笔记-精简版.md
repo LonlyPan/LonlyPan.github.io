@@ -4689,12 +4689,7 @@ int main(void)
 
 ##### 第一种方案
 
-创建Makefile文件
-```
-lonly@lonly-VirtualBox:~/linux/driver/board_driver/1_led$ ls
-led.s  Makefile
-```
-输入如下内容：
+创建Makefile文件并输入如下内容：
 ```
 led.bin:led.s
 	arm-linux-gnueabihf-gcc -g -c led.s -o led.o  @编译文件，只编译不链接。-g 产生调试信息。-c 编译源文件但不链接
