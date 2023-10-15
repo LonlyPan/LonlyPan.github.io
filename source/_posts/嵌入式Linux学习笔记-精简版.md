@@ -4770,13 +4770,8 @@ arm-linux-gnueabihf-gcc -Wall -nostdlib -c -O2 -o start.o start.s
 
 #### 第二种方案
 
-使用到链接简本
+使用到链接脚本
 
-Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
-软件 imxdownload 将其下载到 SD 卡中，命令如下：
-chmod 777 imxdownload
-//给予 imxdownoad 可执行权限，一次即可
-./imxdownload ledc.bin /dev/sdd //下载到 SD 卡中, 不能烧写到/dev/sda 或 sda1 设备里面！
 
 
 
@@ -4832,6 +4827,12 @@ SECTIONS{
 在第11、13行有“\_\_bss_start”和“\_\_bss_end”符号，对这两个符号进行赋值，其值为定位符“.”，这两个符号用来保存.bss段的起始地址和结束地址。前面说了.bss段是定义了但是没有被初始化的变量，我们需要手动对.bss段的变量清零的，因此我们需要知道.bss段的起始和结束地址，这样我们直接对这段内存赋0即可完成清零。通过第11、13行代码，.bss段的起始地址和结束地址就保存在了“\_\_bss_start”和“\_\_bss_end”中，我们就可以直接在汇编或者C文件里面使用这两个符号。
 
  
+Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
+软件 imxdownload 将其下载到 SD 卡中，命令如下：
+chmod 777 imxdownload
+//给予 imxdownoad 可执行权限，一次即可
+./imxdownload ledc.bin /dev/sdd //下载到 SD 卡中, 不能烧写到/dev/sda 或 sda1 设备里面！
+
  
 #### 编译下载验证
 
