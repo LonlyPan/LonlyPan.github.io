@@ -4843,6 +4843,9 @@ arm-linux-gnueabihf-ld -Timx6ul.lds -o ledc.elf $^
 
 ##### 第三种方案
 
+和第二种一样，只是Makefile写法不同，用到了更多的变量。
+
+
 
 Makefile 文件就讲到这里，我们可以将整个工程拿到 Ubuntu 下去编译，编译完成以后可以使用
 软件 imxdownload 将其下载到 SD 卡中，命令如下：
