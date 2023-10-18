@@ -5085,17 +5085,8 @@ clean:
 我们接下来详细分析一下Makefile源码：
 - 第1~7行定义了一些变量，除了第2行以外其它的都是跟编译器有关的，如果使用其它编译器的话只需要修改第1行即可。
 - 第2行的变量TARGET目标名字，不同的例程肯定名字不一一样。
-- 第9行的变量INCDIRS包含整个工程的.h头文件目录，文件中的所有头文件目录都要添加到变量INCDIRS中。比如本例程中包含.h头文件的目录有imx6ul、bsp/clk、bsp/delay和bsp/led，所以就需要在变量INCDIRS中添加这些目录，即:
- ```
-  INCDIRS := imx6ul bsp/clk bsp/led bsp/delay
-```
-  符号“\”，相当于“换行符”，表示本行和下一行属于同一行，一般一行写不下的时候就用符号“\”来换行。
-  在后面的裸机例程中我们会根据实际情况来在变量INCDIRS中添加头文件目录。
-- 第14行是变量SRCDIRS，和变量INCDIRS一样，只是SRCDIRS包含的是整个工程的所有.c和.S文件目录。比如本例程包含有.c和.S的目录有bsp/clk、bsp/delay、bsp/led和project，即：
-```
-  SRCDIRS := projectbsp/clk bsp/led bsp/delay
-```
-  同样的，后面的裸机例程中我们也要根据实际情况在变量SRCDIRS中添加相应的文件目录。
+- 第9行的变量INCDIRS包含整个工程的.h头文件目录，文件中的所有头文件目录都要添加到变量INCDIRS中。比如本例程中包含.h头文件的目录有imx6ul、bsp/clk、bsp/delay和bsp/led，所以就需要在变量INCDIRS中添加这些目录
+- 第14行是变量SRCDIRS，和变量INCDIRS一样，只是SRCDIRS包含的是整个工程的所有.c和.S文件目录。比如本例程包含有.c和.S的目录有bsp/clk、bsp/delay、bsp/led和project
 - 第19行的变量INCLUDE是用到了函数patsubst，通过函数patsubst给变量INCDIRS添加一个“-I”，即：
  ```
   INCLUDE := -I imx6ul -I bsp/clk -I bsp/led -I bsp/delay
@@ -5127,9 +5118,11 @@ clean:
 - 第33行指定了一个伪目标clean，伪目标前面讲解Makefile的时候已经讲解过了。
 - 第35~47行就很熟悉了，
   
-的Makefile文件内容重点工作是找到要编译哪些文件？编译的.o文件存放到哪里？使用到的编译命令和前面实验使用的一样，其实Makefile的重点工作就是解决“从哪里来到哪里去的”问题，也就是找到要编译的源文件、编译结果存放到哪里？真正的编译命令很简洁。
+Makefile文件内容重点工作是找到要编译哪些文件？编译的.o文件存放到哪里？使用到的编译命令和前面实验使用的一样，其实Makefile的重点工作就是解决“从哪里来到哪里去的”问题，也就是找到要编译的源文件、编译结果存放到哪里？真正的编译命令很简洁。
 
 链接脚本imx6ul.lds的内容基本和上一章一样，主要是start.o文件路径不同，且删除了main.o 路径
+> 这里为什么能删除main.o 路径
+> 其实从一开始的链接脚本编写时，main.o路径就可以不适用，因为start.s启动文件里有程序跳转到main函数，所以不需要指定，由编译器自己决定man.o 位置就行了
 ```
 SECTIONS{
 	. = 0X87800000;
