@@ -5088,7 +5088,7 @@ clean:
 - 第9行的变量INCDIRS包含整个工程的.h头文件目录，文件中的所有头文件目录都要添加到变量INCDIRS中。比如本例程中包含.h头文件的目录有imx6ul、bsp/clk、bsp/delay和bsp/led，所以就需要在变量INCDIRS中添加这些目录
 - 第14行是变量SRCDIRS，和变量INCDIRS一样，只是SRCDIRS包含的是整个工程的所有.c和.S文件目录。比如本例程包含有.c和.S的目录有bsp/clk、bsp/delay、bsp/led和project
 - 第19行的变量INCLUDE是用到了函数patsubst，通过函数patsubst给变量INCDIRS添加一个“-I”，即：
- ```
+```
   INCLUDE := -I imx6ul -I bsp/clk -I bsp/led -I bsp/delay
 ```
   加“-I”的目的是因为Makefile语法要求指明头文件目录的时候需要加上“-I”。
