@@ -4770,6 +4770,77 @@ arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
 
 第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
 
+##### arm-linux-gcc/ld/objcopy/objdump参数总结
+
+**arm-linux-gcc -wall -O2 -c -o $@ $<**
+ 
+ - -o 只激活预处理,编译,和汇编,也就是他只把程序做成obj文件
+ - -Wall 指定产生全部的警告信息
+ - -O2 编译器对程序提供的编译优化选项，在编译的时候使用该选项，可以使生成的执行文件的执行效率提高
+ - -c 表示只要求编译器进行编译，而不要进行链接，生成以源文件的文件名命名但把其后缀由 .c 或 .cc 变成 .o 的目标文件
+ - -S 只激活预处理和编译，就是指把文件编译成为汇编代码
+
+**arm-linux-ld**
+直接指定代码段,数据段,BSS段的起始地址
+ - -Ttest startaddr
+ - -Tdata startaddr
+ - -Tbss startaddr
+
+示例:  
+`Arm-linux-ld –Ttext 0x0000000 –g led.o –o led_elf`
+ 
+使用连接脚本设置地址:  
+`Arm-linux-ld –Ttimer.lds –o timer_elf  $^`  
+其中timer.lds 为连接脚本，完整的连接脚本格式:  
+```
+SECTIONS{
+	…
+	Secname start ALING(aling) (NOLOAD):AT(ldaddr)
+	{contents} > region:phdr=fill
+	…..
+}
+```
+**arm-linux-objcopy**
+被用来复制一个目标文件的内容到另一个文件中,可用于不同源文件的之间的格式转换
+示例:  
+`Arm-linux-objcopy –o binary –S elf_file bin_file`  
+常用的选项:
+
+ - input-file , outflie
+ - 输入和输出文件,如果没有outfile,则输出文件名为输入文件名
+ - 2.-l bfdname或—input-target=bfdname
+ - 用来指明源文件的格式,bfdname是BFD库中描述的标准格式名,如果没指明,则arm-linux-objcopy自己分析
+ - 3.-O bfdname 输出的格式
+ - 4.-F bfdname 同时指明源文件,目的文件的格式
+ - 5.-R sectionname 从输出文件中删除掉所有名为sectionname的段
+ - 6.-S 不从源文件中复制重定位信息和符号信息到目标文件中
+ - 7.-g 不从源文件中复制调试符号到目标文件中
+
+ 
+**arm-linux-objdump**
+查看目标文件（.o文件）和库文件(.a文件）信息。
+示例：  
+`arm-linux-objdump -D -m arm led_elf > led.dis`
+**相关参数**
+ - -D 显示文件中所有汇编信息
+ - -m machine
+ 
+指定反汇编目标文件时使用的架构，当待反汇编文件本身没有描述架构信息的时候(比如S-records)，这个选项很有用。可以用-i选项列出这里能够指定的架构.这里例子中指定反汇编得到的目标文件使用ARM架构。
+ - -b bfdname 指定目标码格式
+ - -disassemble或者-d 反汇编可执行段
+ - -dissassemble-all或者-D 反汇编所有段
+ - -EB,-EL指定字节序
+ - -file-headers或者-f 显示文件的整体头部摘要信息
+ - -section-headers,–headers或者-h 显示目标文件中各个段的头部摘要信息
+ - -info 或者-I 显示支持的目标文件格式和CPU架构
+ - -section=name或者-j name显示指定section 的信息
+ - -architecture=machine或者-m machine 指定反汇编目标文件时使用的架构
+
+### 参考链接
+
+[Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/htmls/index.html)
+[arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
+
 
 
 
@@ -4897,7 +4968,8 @@ ls /dev/sd*
 ```
 当前电脑的存储文件如图 8.4.3.3 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697355115968.png)
-插 SD 卡，并挂在到Ubuntu下
+插 SD 卡，并挂在到Ubuntu下，在输入命令“ls /dev/sd*”来查看当前 Ubuutu 下的存储设备，如图所示：
+/dev/sdd 是我的 SD 卡，/dev/sdd1 是 SD 卡的第一个分区。如果你的 SD 卡有多个分区的话可能会出现/dev/sdd2、/dev/sdd3 等等。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697355180655.png)
 当前电脑的存储文件如图 8.4.3.3 所示：
 使用imxdownload向SD卡烧写led.bin文件，命令格式如下：
@@ -4915,186 +4987,23 @@ ls /dev/sd*
 最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
-
-
-
-软件 imxdownload 将其下载到 SD 卡中，命令如下：
-chmod 777 imxdownload
-//给予 imxdownoad 可执行权限，一次即可
-./imxdownload ledc.bin /dev/sdd //下载到 SD 卡中, 不能烧写到/dev/sda 或 sda1 设备里面！
-
- 
-
-
-
-
-
-
-### 编译下载验证
-
-
-编写执行 `make` 完成编译
-
-运行地址 `<--->`链接地址：他们两个是等价的，只是两种不同的说法。
-加载地址 `<--->`存储地址：他们两个是等价的，也是两种不同的说法。
-
-运行地址：程序在SRAM、SDRAM中执行时的地址。就是执行这条指令时，PC应该等于这个地址，换句话说，PC等于这个地址时，这条指令应该保存在这个地址内。
-
-加载地址：程序保存在Nand flash中的地址。
-
-位置无关码：B、BL、MOV都是位置位置无关码。
-位置有关码：LDR PC,=LABEL等类似的代码都是位置有关码。
-
-#### 代码烧写
-
-## C语言版LED灯
-
-
-
-
-
-### 编译下载验证
-
-```java
-objs:=start.o main.o
-
-ledc.bin:$(objs)
-	arm-linux-gnueabihf-ld -Ttext 0X87800000 -o ledc.elf $^
-	arm-linux-gnueabihf-objcopy -O binary -S ledc.elf $@
-	arm-linux-gnueabihf-objdump -D -m arm ledc.elf > ledc.dis
-
-%.o:%.s
-	arm-linux-gnueabihf-gcc -Wall -nostdlib -c  -o $@ $<
-
-%.o:%.S
-	arm-linux-gnueabihf-gcc -Wall -nostdlib -c  -o $@ $<
-
-%.o:%.c
-	arm-linux-gnueabihf-gcc -Wall -nostdlib -c  -o $@ $<
-
-clean:
-	rm -rf *.o ledc.bin ledc.elf ledc.dis
-```
-
-上述的MakefileMakefile要复杂一点了，里面用到了Makefile变量和自动变量。
-
-。
-
-### arm-linux-gcc/ld/objcopy/objdump参数总结
-
-**arm-linux-gcc -wall -O2 -c -o $@ $<**
- 
- - -o 只激活预处理,编译,和汇编,也就是他只把程序做成obj文件
- - -Wall 指定产生全部的警告信息
- - -O2 编译器对程序提供的编译优化选项，在编译的时候使用该选项，可以使生成的执行文件的执行效率提高
- - -c 表示只要求编译器进行编译，而不要进行链接，生成以源文件的文件名命名但把其后缀由 .c 或 .cc 变成 .o 的目标文件
- - -S 只激活预处理和编译，就是指把文件编译成为汇编代码
-
-**arm-linux-ld**
-直接指定代码段,数据段,BSS段的起始地址
- - -Ttest startaddr
- - -Tdata startaddr
- - -Tbss startaddr
-
-示例:  
-`Arm-linux-ld –Ttext 0x0000000 –g led.o –o led_elf`
- 
-使用连接脚本设置地址:  
-`Arm-linux-ld –Ttimer.lds –o timer_elf  $^`  
-其中timer.lds 为连接脚本，完整的连接脚本格式:  
-```
-SECTIONS{
-	…
-	Secname start ALING(aling) (NOLOAD):AT(ldaddr)
-	{contents} > region:phdr=fill
-	…..
-}
-```
-**arm-linux-objcopy**
-被用来复制一个目标文件的内容到另一个文件中,可用于不同源文件的之间的格式转换
-示例:  
-`Arm-linux-objcopy –o binary –S elf_file bin_file`  
-常用的选项:
-
- - input-file , outflie
- - 输入和输出文件,如果没有outfile,则输出文件名为输入文件名
- - 2.-l bfdname或—input-target=bfdname
- - 用来指明源文件的格式,bfdname是BFD库中描述的标准格式名,如果没指明,则arm-linux-objcopy自己分析
- - 3.-O bfdname 输出的格式
- - 4.-F bfdname 同时指明源文件,目的文件的格式
- - 5.-R sectionname 从输出文件中删除掉所有名为sectionname的段
- - 6.-S 不从源文件中复制重定位信息和符号信息到目标文件中
- - 7.-g 不从源文件中复制调试符号到目标文件中
-
- 
-**arm-linux-objdump**
-查看目标文件（.o文件）和库文件(.a文件）信息。
-示例：  
-`arm-linux-objdump -D -m arm led_elf > led.dis`
-**相关参数**
- - -D 显示文件中所有汇编信息
- - -m machine
- 
-指定反汇编目标文件时使用的架构，当待反汇编文件本身没有描述架构信息的时候(比如S-records)，这个选项很有用。可以用-i选项列出这里能够指定的架构.这里例子中指定反汇编得到的目标文件使用ARM架构。
- - -b bfdname 指定目标码格式
- - -disassemble或者-d 反汇编可执行段
- - -dissassemble-all或者-D 反汇编所有段
- - -EB,-EL指定字节序
- - -file-headers或者-f 显示文件的整体头部摘要信息
- - -section-headers,–headers或者-h 显示目标文件中各个段的头部摘要信息
- - -info 或者-I 显示支持的目标文件格式和CPU架构
- - -section=name或者-j name显示指定section 的信息
- - -architecture=machine或者-m machine 指定反汇编目标文件时使用的架构
-
-### 参考链接
-
-[Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/htmls/index.html)
-[arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
-
+> 如果遇到sd启动，没有反应，一定要重新格式化sd卡，是有windows的右键格式化，**不要使用其它软件进行格式化！！！**
 
 
 ## BSP工程管理实验
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1607522806467.png)
-
-嵌入式硬件工程师主要职责是负责设计嵌入式系统的硬件原理图，使用相应的工具画出PCB图，后期配合嵌入式软件工程师调试系统。  
-嵌入式软件工程师从系统软件上又可以分为两种：
-- BSP工程师
-- 嵌入式应用软件工程师。
- 
-嵌入式应用软件工程师主要是负责编写基于嵌入式系统的应用软件。类似于基于windows上的QQ， word。
-
-BSP工程师，顾名思义就是负责板级支持包的开发、调试和维护工作。那么什么是板级支持包呢？前面我们讲过，嵌入式硬件工程师负责设计硬件，画出PCB图，工厂会根据PCB图生产出对应的电路板。一个嵌入式系统光有电路板是不够的，还要有对应的软件支持，软件开发的前提是首先使板子正常稳定的工作，然后再在其上编写对应的应用软件以实现其特有的功能。其中使板子正常稳定的工作的代码就属于板级支持包。 那么BSP工程师的具体工作有哪些呢？
-
-对于不跑操作系统的设备来讲，其功能相对简单一点，使用的主控芯片一般也比较简单，比如风靡一时的51系列单片机、stm系列的单片机。对于这些简单系统来讲，它对软件开发人员要求相对比较低，当然也就没有我前面所说的分工那么详细，有时候甚至从画板、点亮、开发都是由一个人来完成的。对于跑操作系统来讲的设备，就不一样了。一般来讲，跑操作系统的设备其软件开发分三个阶段：
-
-1. 点亮板子
-第一批板子出厂时是不包含任何软件的。BSP工程师需要结合硬件原理图修改从芯片厂商拿到的参考代码，调试板子，使板子上的操作系统能够正常稳定工作，从而提供一个稳定的开发调试环境，这个过程叫做点亮板子，行话叫做Bringup。这属于BSP工程师最具有价值含量的工作之一，因为它对BSP工程师所掌握的知识的广度和深度都有一定要求。其中会涉及到计算机原理、操作系统，处理器架构等，还包括硬件方面的一些知识。综合起来其最核心的工作就是对内核的移植、裁剪。
-
-2. 使能板子上所有设备
-上个阶段中，板子的CPU和基本的器件已经能正常工作，这个阶段中将使能所有的外设，并为后面要开发的应用程序提供对应的软件控制接口。这个过程的实质是对应的操作系统下驱动开发的过程，需要掌握硬件工作的原理，操作系统的相关知识。
-
-3. 为板子开发应用程序
-如前文所述，嵌入式系统是一个具有专一功能的系统，其上所有的硬件，软件都应该为这一功能服务。第二个阶段结束的时候，板子上所有的设备都已经可以正常使用了。这个阶段的任务就是开发应用程序来实现某种特定的功能，应用程序中会使用第二阶段提供的软件接口控制板子上的设备来完成这一功能。
-
-上述前两个阶段属于BSP开发的内容，第三个阶段属于嵌入式应用软件开发的过程。综上所述，BSP工程师主要应该具备的能力主要有：
-
- - 掌握计算机原理方面的知识；
- - 掌握操作系统的相关知识，深入研究某种操作系统，目前来讲，研究linux操作系统应该是大部分人的选择；
- - 精湛的C语言功底和一定的C++/汇编的知识。
- - 掌握一定的硬件和电路原理方面的知识；
- - 熟悉常见的接口协议，如I2C, SPI, UART, USB等。
-
-> 我的理解：BSP 其实就是底层驱动开发，写些程序能够控制芯片以及外设、并准备发操作系统运行环境，然后留出 API 接口供后面的软件开发人员使用。而软件开发人员是不需要关心底层硬件的。简单来世就是链接硬件和软件的桥梁。所以就需要既懂硬件（驱动开发）也懂软件（API接口）。
+BSP 其实就是底层驱动开发，写些程序能够控制芯片以及外设、并准备好操作系统运行环境，然后留出 API 接口供后面的软件开发人员使用。而软件开发人员是不需要关心底层硬件的。简单来说就是链接硬件和软件的桥梁。所以就需要既懂硬件（驱动开发）也懂软件（API接口）。
 
 标题的 BSP 工程管理，其实就是将所有编写的底层驱动程序归类整理到一个文件夹，对程序分功能管理。不至于混乱。
 
 新建名为“5_ledc_bsp”的文件夹，在里面新建bsp、imx6ul、obj和project这4个文件夹
 
 - bsp用来存放驱动文件
-- imx6ul用来存放跟芯片有关的文件，比如NXP官方的SDK库文件；
+- imx6ul用来存放跟芯片有关的文件，比如NXP官方的SDK库文件 ；
 - obj用来存放编译生成的.o文件；
 - project存放start.S和main.c文件，也就是应用文件；
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697459947741.png)
 
 将cc.h、fsl_common.h、fsl_iomuxc.h和MCIMX6Y2.h这四个文件拷贝到文件夹imx6ul中；  
 将start.S和main.c这两个文件拷贝到文件夹project中。
