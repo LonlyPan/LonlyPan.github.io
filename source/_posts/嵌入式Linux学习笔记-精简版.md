@@ -4987,7 +4987,7 @@ ls /dev/sd*
 最后设置拨码开关为SD卡启动。设置好以后按一下开发板的复位键，如果代码运行正常的话LED0就会被点亮。为了验证，可以把SD卡拔了再重启，会发现led是熄灭的。说明sd卡起作用了，即程序执行了。 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/拨码开关SD卡启动设置.png)
 
-> 如果遇到sd启动，没有反应，一定要重新格式化sd卡，是有windows的右键格式化，**不要使用其它软件进行格式化！！！**
+> 如果遇到sd启动，没有反应，一定要重新格式化sd卡，只需要使用windows的右键格式化，**不要使用其它软件进行格式化！！！**
 
 
 ## BSP工程管理实验
