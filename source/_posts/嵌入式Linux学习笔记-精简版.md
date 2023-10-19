@@ -5581,6 +5581,8 @@ Switcher clocks 见下图
 4. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，重新将pll1_sw_clk的时钟源切换回pll1_main_clk，切换回来以后的pll1_sw_clk就等于1056MHz。
 5. 最后设置寄存器CCM_CACRR的ARM_PODF为2分频，I.MX6U的内核主频就为1056/2=528MHz。
 
+内核时钟的错误
+
 #### PFD时钟设置
 
 置好主频以后我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
