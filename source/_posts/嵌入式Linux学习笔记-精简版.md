@@ -5528,41 +5528,9 @@ Makefile在之前章节的基础上修改变量TARGET为key，在变量INCDIRS�
 
 ### I.MX6U时钟系统详解
 
-I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认情况下内部bootrom会将I.MX6U的主频设置为396MHz。我们在使用I.MX6U的时候肯定是要发挥它的最大性能，那么主频肯定要设置到528MHz(其它型号可以设置更高，比如696MHz)，其它的外设时钟也要设置到NXP推荐的值。I.MX6U的系统时钟在《I.MX6ULL/I.MX6UL参考手册》的第10章“Chapter 10Clock and Power Management”和第18章“Chapter 18Clock Controller Module (CCM)”这两章有详细的讲解。
+I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认情况下内部bootrom会将I.MX6U的主频设置为396MHz。
 
-#### 系统时钟来源
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/开发板时钟原理图.png)
-
-I.MX6U-ALPHA开发板的系统时钟来源于两部分：32.768KHz和24MHz的晶振，其中32.768KHz晶振是I.MX6U 的RTC时钟源，24MHz晶振是I.MX6U内核和其它外设的时钟源，也是我们重点要分析的。
-
-#### 7路PLL时钟源
-
-I.MX6U的外设有很多，不同的外设时钟源不同，NXP将这些外设的时钟源进行了分组，一共有7组，这7组时钟源都是从24MHz晶振PLL而来的，因此也叫做7组PLL，这7组PLL结构如图所示：
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/初级PLLs时钟源生成图.png)
-
-1. ARM_PLL（PLL1），此路PLL是供ARM内核使用的，ARM内核时钟就是由此PLL生成的，此PLL通过编程的方式最高可倍频到1.3GHz。
-2. 528_PLL(PLL2)，此路PLL也叫做System_PLL，此路PLL是固定的22倍频，不可编程修改。因此，此路PLL时钟=24MHz* 22 =528MHz，这也是为什么此PLL叫做528_PLL的原因。此PLL分出了4路PFD，分别为：PLL2_PFD0~PLL2_PFD3，这4路PFD和528_PLL共同作为其它很多外设的根时钟源。通常528_PLL和这4路PFD是I.MX6U内部系统总线的时钟源，比如内处理逻辑单元、DDR接口、NAND/NOR接口等等。
-3. USB1_PLL(PLL3)，此路PLL主要用于USBPHY，此PLL也有四路PFD，为：PLL3_PFD0~PLL3_PFD3，USB1_PLL是固定的20倍频，因此USB1_PLL=24MHz *20=480MHz。USB1_PLL虽然主要用于USB1PHY，但是其和四路PFD同样也可以作为其他外设的根时钟源。
-4. USB2_PLL(PLL7)，看名字就知道此路PLL是给USB2PHY使用的。同样的，此路PLL固定为20倍频，因此也是480MHz。
-5. ENET_PLL(PLL6),此路PLL固定为20+5/6倍频，因此ENET_PLL=24MHz *(20+5/6) = 500MHz。此路PLL用于生成网络所需的时钟，可以在此PLL的基础上生成25/50/100/125MHz的网络时钟。
-6. VIDEO_PLL(PLL5),此路PLL用于显示相关的外设，比如LCD，此路PLL的倍频可以调整，PLL的输出范围在650MHz~1300MHz。此路PLL在最终输出的时候还可以进行分频，可选1/2/4/8/16分频。
-7. AUDIO_PLL(PLL4),此路PLL用于音频相关的外设，此路PLL的倍频可以调整，PLL的输出范围同样也是650MHz~1300MHz，此路PLL在最终输出的时候也可以进行分频，可选1/2/4分频。
-
-#### 时钟树简介
-
-《IMX6ULL参考手册》里时钟树在“Chapter 18Clock Controller Module (CCM)”的18.3小节给出了I.MX6U详细的时钟树图：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/I.MX6U时钟树.png)
-
-左边的CLOCK_SWITCHER就是我们上一小节讲解的那7路PLL和8路PFD，右边的SYSTEM CLOCKS就是芯片外设，中间的CLOCK ROOT GENERATOR是最复杂的！这一部分就像“月老”一样，给左边的CLOCK_SWITCHER和右边的SYSTEM CLOCKS进行牵线搭桥。外设时钟源是有多路可以选择的，CLOCK ROOT GENERATOR就负责从7路PLL和8路PFD中选择合适的时钟源给外设使用。
-
-《IMX6ULL参考手册》里时钟树在“Chapter 18Clock Controller Module (CCM)”的18.5.1.5.1 Clock Switcher  
-Switcher clocks 见下图
-
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/Switcher_clock_generation.png)
-
-#### 内核时钟设置
+### 内核时钟设置
 
 先从主频开始，我们将I.MX6U的主频设置为528MHz，ARM内核时钟如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
@@ -5581,7 +5549,7 @@ Switcher clocks 见下图
 4. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，重新将pll1_sw_clk的时钟源切换回pll1_main_clk，切换回来以后的pll1_sw_clk就等于1056MHz。
 5. 最后设置寄存器CCM_CACRR的ARM_PODF为2分频，I.MX6U的内核主频就为1056/2=528MHz。
 
-##### 内核时钟的错误
+#### 内核时钟的错误
 
 上面关于有一处2分频的描述，说是被骗了，其实是手册写错了，也就是根本没有后面灰色的那个2分频
 
@@ -5592,9 +5560,9 @@ Switcher clocks 见下图
 所以可知6uL最早这里也有一个灰色的2分频，是手册编写错误
 而6ULL和6UL除了性能上由一些差距，这些底层内核其实都是一样的，所以这里6ull的描述应该也是错误的，只不过到目前位置，官网还没有更新这个错误。
 
-#### PFD时钟设置
+### PFD时钟设置
 
-置好主频以后我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
+我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
 
 #### AHB、IPG和PERCLK外设时钟设置
