@@ -5518,35 +5518,7 @@ int main(void)
 
 ### 编译下载验证
 
-Makefile在之前章节的基础上修改变量TARGET为key，在变量INCDIRS和SRCDIRS中追加“bsp/gpio”和“bsp/key”，修改完成以后如下所示：
-```
-CROSS_COMPILE 	?= arm-linux-gnueabihf-
-TARGET		  	?= key
-
-/* 省略掉其它代码...... */
-
-INCDIRS 		:= imx6ul \
-				   bsp/clk \
-				   bsp/led \
-				   bsp/delay \
-				   bsp/beep \
-				   bsp/gpio \
-				   bsp/key
-				   			   
-SRCDIRS			:= project \
-				   bsp/clk \
-				   bsp/led \
-				   bsp/delay \
-				   bsp/beep \
-				   bsp/gpio \
-				   bsp/key
-				   
-				   
-/* 省略掉其它代码...... */
-	
-clean:
-	rm -rf $(TARGET).elf $(TARGET).dis $(TARGET).bin $(COBJS) $(SOBJS)
-```
+Makefile在之前章节的基础上修改变量TARGET为key，在变量INCDIRS和SRCDIRS中追加“bsp/gpio”和“bsp/key”
 
 烧写成功以后将SD卡插到开发板的SD卡槽中，然后复位开发板。如果代码运行正常的话LED0会以大约500ms周期闪烁，按下开发板上的KEY0按键，蜂鸣器打开，再按下KEY0按键，蜂鸣器关闭。
 
