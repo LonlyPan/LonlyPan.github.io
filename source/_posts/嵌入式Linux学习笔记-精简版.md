@@ -5572,11 +5572,14 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 设置 PLL2 的 4 路 PFD 频率，用到寄存器是 CCM_ANALOG_PFD_528n，寄存器结构如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697811421055.png)
 寄存器 CCM_ANALOG_PFD_528n 其实分为四组，分别对应PFD0~PFD3，每组 8 个 bit，我们就以 PFD0 为例，看一下如何设置 PLL2_PFD0 的频率。PFD0对应的寄存器位如下：
-**PFD0_FRAC:** PLL2_PFD0 的分频数，PLL2_PFD0 的计算公式为 528*18/PFD0_FRAC，此为 可 设 置 的 范 围 为12~35 。 如 果PLL2_PFD0的 频 率 要 设 置 为352MHz话，PFD0_FRAC=528*18/352=27。
-**PFD0_STABLE:** 此位为只读位，可以通过读取此位判断 PLL2_PFD0 是否稳定。
-**PFD0_CLKGATE:** PLL2_PFD0 输出使能位，为 1 的时候关闭 PLL2_PFD0 的输出，为 0 的时候使能输出。
+- **PFD0_FRAC:** PLL2_PFD0 的分频数，PLL2_PFD0 的计算公式为 528*18/PFD0_FRAC，此为 可 设 置 的 范 围 为12~35 。 如 果PLL2_PFD0的 频 率 要 设 置 为352MHz话，PFD0_FRAC=528*18/352=27。
+- **PFD0_STABLE:** 此位为只读位，可以通过读取此位判断 PLL2_PFD0 是否稳定。
+- **PFD0_CLKGATE:** PLL2_PFD0 输出使能位，为 1 的时候关闭 PLL2_PFD0 的输出，为 0 的时候使能输出。
 
 如果我们要设置 PLL2_PFD0 的频率为 352MHz 的话就需要设置 PFD0_FRAC 为 27，PFD0_CLKGATE为0 。 PLL2_PFD1~PLL2_PFD3设 置 类 似 ， 频 率 计 算 公 式 都 是528*18/PFDX_FRAC(X=1~3) ， 因 此PLL2_PFD1=594MHz的 话 ， PFD1_FRAC=16 ；PLL2_PFD2=400MHz 的话 PFD2_FRAC 不能整除，因此取最近的整数值，即 PFD2_FRAC=24，这样 PLL2_PFD2 实际为 396MHz；PLL2_PFD3=297MHz 的话，PFD3_FRAC=32。
+
+设 置 PLL3_PFD0~PLL3_PFD3 这 4 路 PFD 的 频 率 ， 使 用 到 的 寄 存 器 是
+CCM_ANALOG_PFD_480n，此寄存器结构如图 16.1.5.2 所示：
 
 #### AHB、IPG和PERCLK外设时钟设置
 
