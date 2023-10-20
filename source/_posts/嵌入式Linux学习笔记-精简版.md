@@ -5546,8 +5546,13 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 所以可知6uL最早这里也有一个灰色的2分频，是手册编写错误
 而6ULL和6UL除了性能上由一些差距，这些底层内核其实都是一样的，所以这里6ull的描述应该也是错误的，只不过到目前位置，官网还没有更新这个错误。
 
-在修改 PLL1 时钟频率的时候我们需要先将内核时钟源改为其他的时钟源，PLL1 可选择的
-时钟源如图 16.1.4.4 所示：
+在修改 PLL1 时钟频率之前，我们需要先将内核时钟源改为其他的时钟源，这样才能保证修改PLL1时钟时，系统还能继续正常工作。等 PLL1 时钟频率 调整完成以后再切换回来。PLL1 可选择的时钟源如图 所示：
+①、pll1_sw_clk 也就是 PLL1 的最终输出频率。
+② 、此处是 一 个 选择器 ， 选择 pll1_sw_clk 的时钟源 ， 由 寄 存 器 CCM_CCSR 的PLL1_SW_CLK_SEL 位决定 pll1_sw_clk 是选择 pll1_main_clk 还是 step_clk。
+③、此处也是一个选择器，选择 step_clk 的时钟源，由寄存器 CCM_CCSR 的 STEP_SEL 位来决定 step_clk 是选择 osc_clk 还是 secondary_clk。一般选择 osc_clk，也就是 24MHz 的晶振。这里我们就用到了一个寄存器 CCM_CCSR，此寄存器结构如图 16.1.4.5 所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697810916109.png)
+
 
 经过上面几步的分析可知，假如我们要设置内核主频为528MHz，那么PLL1可以设置为1056MHz，寄存器CCM_CACRR的ARM_PODF位设置为2分频即可。  
 同理，如果要将主频设置为696MHz，那么PLL1就可以设置为696MHz，CCM_CACRR的ARM_PODF设置为1分频即可。  
