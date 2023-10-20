@@ -5537,6 +5537,9 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 - 内核时钟源ARM_CLOCK_ROOT来自于PLL1，PLL1 的频率可以通过寄存器 CCM_ANALOG_PLL_ARMn 来设置。
 - 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
 
+假如我们要设置内核主频为528MHz，那么PLL1可以设置为1056MHz，寄存器CCM_CACRR的ARM_PODF位设置为2分频即可。  
+同理，如果要将主频设置为696MHz，那么PLL1就可以设置为696MHz，CCM_CACRR的ARM_PODF设置为1分频即可。  
+
 上图有一处2分频的描述，手册写错了，也就是根本没有后面灰色的那个2分频
 
 以下是最新版的6ul参考手册时钟部分描述
@@ -5554,24 +5557,26 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697810916109.png)
 
 
-经过上面几步的分析可知，假如我们要设置内核主频为528MHz，那么PLL1可以设置为1056MHz，寄存器CCM_CACRR的ARM_PODF位设置为2分频即可。  
-同理，如果要将主频设置为696MHz，那么PLL1就可以设置为696MHz，CCM_CACRR的ARM_PODF设置为1分频即可。  
-
-修改I.MX6U主频的修改步骤如下：
+总结修改I.MX6U主频的修改步骤如下：
 1. 设置寄存器CCSR的STEP_SEL位，设置step_clk的时钟源为24M的晶振。
 2. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，设置pll1_sw_clk的时钟源为step_clk=24MHz，通过这一步我们就将I.MX6U的主频先设置为24MHz，直接来自于外部的24M晶振。
 3. 设置寄存器CCM_ANALOG_PLL_ARMn，将pll1_main_clk(PLL1)设置为1056MHz。
 4. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，重新将pll1_sw_clk的时钟源切换回pll1_main_clk，切换回来以后的pll1_sw_clk就等于1056MHz。
 5. 最后设置寄存器CCM_CACRR的ARM_PODF为2分频，I.MX6U的内核主频就为1056/2=528MHz。
 
-#### 内核时钟的错误
-
-
-
 ### PFD时钟设置
 
-我们还需要设置好其他的PLL和PFD时钟，PLL1上一小节已经设置了，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
+我们还需要设置好其他的PLL和PFD时钟，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
+
+设置 PLL2 的 4 路 PFD 频率，用到寄存器是 CCM_ANALOG_PFD_528n，寄存器结构如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697811421055.png)
+寄存器 CCM_ANALOG_PFD_528n 其实分为四组，分别对应PFD0~PFD3，每组 8 个 bit，我们就以 PFD0 为例，看一下如何设置 PLL2_PFD0 的频率。PFD0对应的寄存器位如下：
+**PFD0_FRAC:** PLL2_PFD0 的分频数，PLL2_PFD0 的计算公式为 528*18/PFD0_FRAC，此为 可 设 置 的 范 围 为12~35 。 如 果PLL2_PFD0的 频 率 要 设 置 为352MHz话，PFD0_FRAC=528*18/352=27。
+**PFD0_STABLE:** 此位为只读位，可以通过读取此位判断 PLL2_PFD0 是否稳定。
+**PFD0_CLKGATE:** PLL2_PFD0 输出使能位，为 1 的时候关闭 PLL2_PFD0 的输出，为 0 的时候使能输出。
+
+如果我们要设置 PLL2_PFD0 的频率为 352MHz 的话就需要设置 PFD0_FRAC 为 27，PFD0_CLKGATE为0 。 PLL2_PFD1~PLL2_PFD3设 置 类 似 ， 频 率 计 算 公 式 都 是528*18/PFDX_FRAC(X=1~3) ， 因 此PLL2_PFD1=594MHz的 话 ， PFD1_FRAC=16 ；PLL2_PFD2=400MHz 的话 PFD2_FRAC 不能整除，因此取最近的整数值，即 PFD2_FRAC=24，这样 PLL2_PFD2 实际为 396MHz；PLL2_PFD3=297MHz 的话，PFD3_FRAC=32。
 
 #### AHB、IPG和PERCLK外设时钟设置
 
