@@ -5537,7 +5537,7 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 - 内核时钟源ARM_CLOCK_ROOT来自于PLL1
 - 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
 
-上面关于有一处2分频的描述，说是被骗了，其实是手册写错了，也就是根本没有后面灰色的那个2分频
+上图关于有一处2分频的描述，说是被骗了，其实是手册写错了，也就是根本没有后面灰色的那个2分频
 
 以下是最新版的6ul参考手册时钟部分描述
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697724161332.png)
