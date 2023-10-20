@@ -5569,41 +5569,12 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 我们还需要设置好其他的PLL和PFD时钟，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/NXP推荐的PFD频率.png)
 
-设置 PLL2 的 4 路 PFD 频率，用到寄存器是 CCM_ANALOG_PFD_528n，寄存器结构如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697811421055.png)
-寄存器 CCM_ANALOG_PFD_528n 其实分为四组，分别对应PFD0~PFD3，每组 8 个 bit，我们就以 PFD0 为例，看一下如何设置 PLL2_PFD0 的频率。PFD0对应的寄存器位如下：
-- **PFD0_FRAC:** PLL2_PFD0 的分频数，PLL2_PFD0 的计算公式为 528*18/PFD0_FRAC，此为 可 设 置 的 范 围 为12~35 。 如 果PLL2_PFD0的 频 率 要 设 置 为352MHz话，PFD0_FRAC=528*18/352=27。
-- **PFD0_STABLE:** 此位为只读位，可以通过读取此位判断 PLL2_PFD0 是否稳定。
-- **PFD0_CLKGATE:** PLL2_PFD0 输出使能位，为 1 的时候关闭 PLL2_PFD0 的输出，为 0 的时候使能输出。
-
-如果我们要设置 PLL2_PFD0 的频率为 352MHz 的话就需要设置 PFD0_FRAC 为 27，PFD0_CLKGATE为0 。 PLL2_PFD1~PLL2_PFD3设 置 类 似 ， 频 率 计 算 公 式 都 是528*18/PFDX_FRAC(X=1~3) ， 因 此PLL2_PFD1=594MHz的 话 ， PFD1_FRAC=16 ；PLL2_PFD2=400MHz 的话 PFD2_FRAC 不能整除，因此取最近的整数值，即 PFD2_FRAC=24，这样 PLL2_PFD2 实际为 396MHz；PLL2_PFD3=297MHz 的话，PFD3_FRAC=32。
-
-设 置 PLL3_PFD0~PLL3_PFD3 这 4 路 PFD 的 频 率 ， 使 用 到 的 寄 存 器 是
-CCM_ANALOG_PFD_480n，此寄存器结构如图 16.1.5.2 所示：
-
 #### AHB、IPG和PERCLK外设时钟设置
 
-
-这里正点原子教程称为根时钟，但自认为叫外设时钟要好一下，概念越多容易混乱。参考时钟树知道：
-- AHB：即AHB_CLK_ROOT。用于 uSDHC。
-- IPG：即IPG_CLK_ROOT。用于 ADC-WDOG。貌似目前并没有用到这个外设。
-- PERCLK：即PERCLK_CLK_ROOT。用于EPIT-I2C。貌似目前并没有用到这个外设。
- 
-I.MX6U外设时钟可设置范围如图所示：
+7 路 PLL 和 8 路 PFD 设置完成以后最后还需要设置 AHB_CLK_ROOT 和 IPG_CLK_ROOT的时钟，I.MX6U 外设根时钟可设置范围如图 所示
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设根时钟可设置范围.png)
 
-图给出了大多数外设的根时钟设置范围，AHB_CLK_ROOT最高可以设置132MHz，IPG_CLK_ROOT和PERCLK_CLK_ROOT最高可以设置66MHz。
-
-AHB_CLK_ROOT和IPG_CLK_ROOT的涉及如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/总线时钟图.png)
-- ① 此选择器用来选择pre_periph_clk的时钟源，可以选择PLL2、PLL2_PFD2、PLL2_PFD0和PLL2_PFD2/2。寄存器CCM_CBCMR的PRE_PERIPH_CLK_SEL位决定选择哪一个，默认选择PLL2_PFD2，因此pre_periph_clk=PLL2_PFD2=396MHz。
-- ② 此选择器用来选择periph_clk的时钟源，由寄存器CCM_CBCDR的PERIPH_CLK_SEL位与PLL_bypass_en2组成的或来选择。当CCM_CBCDR的PERIPH_CLK_SEL位为0的时候periph_clk=pr_periph_clk=396MHz。
-- ③ 通过CBCDR的AHB_PODF位来设置AHB_CLK_ROOT的分频值，可以设置1~8分频，如果想要AHB_CLK_ROOT=132MHz的话就应该设置为3分频：396/3=132MHz。图16.1.2中虽然写的是默认4分频，但是I.MX6U的内部bootrom将其改为了3分频！
-- ④ 通过CBCDR的IPG_PODF位来设置IPG_CLK_ROOT的分频值，可以设置1~4分频，IPG_CLK_ROOT时钟源是AHB_CLK_ROOT，要想IPG_CLK_ROOT=66MHz的话就应该设置2分频：132/2=66MHz。
-  
-最后要设置的就是PERCLK_CLK_ROOT时钟频率，其时钟结构图如图16.1.6.3所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/PERCLK_CLK_ROOT时钟结构.png)
-PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CCM_CSCMR1的PERCLK_CLK_SEL位来决定，如果为0的话PERCLK_CLK_ROOT的时钟源就是IPG_CLK_ROOT=66MHz。可以通过寄存器CCM_CSCMR1的PERCLK_PODF位来设置分频，如果要设置PERCLK_CLK_ROOT为66MHz的话就要设置为1分频。
+图给出了大多数外设的根时钟设置范围，我们就将 AHB_CLK_ROOT、IPG_CLK_ROOT 和 PERCLK_CLK_ROOT 分 别 设 置 为 132MHz 、 66MHz 、 66MHz 。AHB_CLK_ROOT 和 IPG_CLK_ROOT 的设计如图所示：
 
 在修改如下时钟选择器或者分频器的时候会引起与MMDC的握手发生：
 - mmdc_podf
@@ -5611,9 +5582,9 @@ PERCLK_CLK_ROOT来 源 有 两 种 ：OSC(24MHz)和IPG_CLK_ROOT，由寄存器CC
 - periph2_clk_sel
 - arm_podf
 - ahb_podf
-- 
- 发生握手信号以后需要等待握手完成，寄存器CCM_CDHIPR中保存着握手信号是否完成，如果相应的位为1的话就表示握手没有完成，如果为0的话就表示握手完成。另外在修改arm_podf和ahb_podf的时候需要先关闭其时钟输出，等修改完成以后再打开，否则的话可能会出现在修改完成以后没有时钟输出的问题。本教程需要修改寄存器CCM_CBCDR的AHB_PODF位来设置AHB_ROOT_CLK的时钟，所以在修改之前必须先关闭AHB_ROOT_CLK的输出。但是笔者**没有找到相应的寄存器，因此目前没法关闭，那也就没法设置AHB_PODF了。不过AHB_PODF内部bootrom设置为了3分频**，如果pre_periph_clk的时钟源选择PLL2_PFD2的话，AHB_ROOT_CLK也是396MHz/3=132MHz。
+
+发生握手信号以后需要等待握手完成，寄存器CCM_CDHIPR中保存着握手信号是否完成，如果相应的位为1的话就表示握手没有完成，如果为0的话就表示握手完成。另外在修改arm_podf和ahb_podf的时候需要先关闭其时钟输出，等修改完成以后再打开，否则的话可能会出现在修改完成以后没有时钟输出的问题。本教程需要修改寄存器CCM_CBCDR的AHB_PODF位来设置AHB_ROOT_CLK的时钟，所以在修改之前必须先关闭AHB_ROOT_CLK的输出。但是笔者**没有找到相应的寄存器，因此目前没法关闭，那也就没法设置AHB_PODF了。不过AHB_PODF内部bootrom设置为了3分频**，如果pre_periph_clk的时钟源选择PLL2_PFD2的话，AHB_ROOT_CLK也是396MHz/3=132MHz。
  
 ###  实验程序编写
  
- 本试验在上一章试验“7_key”的基础上完成，因为本试验只配置I.MX6U的系统时钟，因此我们直接在文件“bsp_clk.c”上做修改，修改bsp_clk.c的内容如下：   s
+ 本试验在上一章试验“7_key”的基础上完成，因为本试验只配置I.MX6U的系统时钟，因此我们直接在文件“bsp_clk.c”上做修改，修改bsp_clk.c的内容如下：   
