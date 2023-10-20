@@ -5536,8 +5536,15 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
 - 内核时钟源ARM_CLOCK_ROOT来自于PLL1
 - 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
-- 大家不要被此处的2分频给骗了，此处没有进行2分频(我就被这个2分频骗了好久，主频一直配置不正确！)。
-- 经过第2步2分频以后的就是ARM的内核时钟，也就是I.MX6U的主频。
+
+上面关于有一处2分频的描述，说是被骗了，其实是手册写错了，也就是根本没有后面灰色的那个2分频
+
+以下是最新版的6ul参考手册时钟部分描述
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697724161332.png)
+而参考NXP官网的一个问答：[ARM domain divider in i.MX6UL?](https://community.nxp.com/t5/i-MX-Processors/What-is-ARM-domain-divider-in-i-MX6UL/m-p/590490)，可知再2016版的6UL参考手册描述中是这样的
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697724233860.png)
+所以可知6uL最早这里也有一个灰色的2分频，是手册编写错误
+而6ULL和6UL除了性能上由一些差距，这些底层内核其实都是一样的，所以这里6ull的描述应该也是错误的，只不过到目前位置，官网还没有更新这个错误。
 
 PLL1 的频率可以通过寄存器 CCM_ANALOG_PLL_ARMn 来设置。接下来详细的看一下 CCM_CACRR 和CCM_ANALOG_PLL_ARMn 这两个寄存器，CCM_CACRR 寄存器结构如图 16.1.4.2 所示：
 
@@ -5554,14 +5561,7 @@ PLL1 的频率可以通过寄存器 CCM_ANALOG_PLL_ARMn 来设置。接下来详
 
 #### 内核时钟的错误
 
-上面关于有一处2分频的描述，说是被骗了，其实是手册写错了，也就是根本没有后面灰色的那个2分频
 
-以下是最新版的6ul参考手册时钟部分描述
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697724161332.png)
-而参考NXP官网的一个问答：[ARM domain divider in i.MX6UL?](https://community.nxp.com/t5/i-MX-Processors/What-is-ARM-domain-divider-in-i-MX6UL/m-p/590490)，可知再2016版的6UL参考手册描述中是这样的
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697724233860.png)
-所以可知6uL最早这里也有一个灰色的2分频，是手册编写错误
-而6ULL和6UL除了性能上由一些差距，这些底层内核其实都是一样的，所以这里6ull的描述应该也是错误的，只不过到目前位置，官网还没有更新这个错误。
 
 ### PFD时钟设置
 
