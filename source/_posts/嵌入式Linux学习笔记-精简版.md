@@ -5534,12 +5534,12 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 
 先从主频开始，我们将I.MX6U的主频设置为528MHz，ARM内核时钟如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ARM内核时钟树.png)
-- ① 内核时钟源来自于PLL1
-- ② 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
-- ③ 大家不要被此处的2分频给骗了，此处没有进行2分频(我就被这个2分频骗了好久，主频一直配置不正确！)。
-- ④ 经过第②步2分频以后的就是ARM的内核时钟，也就是I.MX6U的主频。
+- 内核时钟源ARM_CLOCK_ROOT来自于PLL1
+- 通过寄存器CCM_CACRR的ARM_PODF位对PLL1进行分频，可选择1/2/4/8分频，
+- 大家不要被此处的2分频给骗了，此处没有进行2分频(我就被这个2分频骗了好久，主频一直配置不正确！)。
+- 经过第2步2分频以后的就是ARM的内核时钟，也就是I.MX6U的主频。
 
-
+PLL1 的频率可以通过寄存器 CCM_ANALOG_PLL_ARMn 来设置。接下来详细的看一下 CCM_CACRR 和CCM_ANALOG_PLL_ARMn 这两个寄存器，CCM_CACRR 寄存器结构如图 16.1.4.2 所示：
 
 
 经过上面几步的分析可知，假如我们要设置内核主频为528MHz，那么PLL1可以设置为1056MHz，寄存器CCM_CACRR的ARM_PODF位设置为2分频即可。  
