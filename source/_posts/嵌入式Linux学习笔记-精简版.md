@@ -5719,7 +5719,6 @@ void imx6u_clkinit(void)
  */
 
 _start:
-
 	ldr pc, =Reset_Handler		/* 复位中断 					*/	
 	ldr pc, =Undefined_Handler	/* 未定义中断 					*/
 	ldr pc, =SVC_Handler		/* SVC(Supervisor)中断 		*/
@@ -5729,6 +5728,12 @@ _start:
 	ldr pc, =IRQ_Handler		/* IRQ中断 					*/
 	ldr pc, =FIQ_Handler		/* FIQ(快速中断)未定义中断 			*/`
 ```
+
+向量跳转表，每条占四个字节（一个字），地址范围为0x0000 0000～@0x0000 0020
+ARM体系结构规定在上电复位后的起始位置，必须有8条连续的跳转指令，通过硬件实现。他们就是中断向量表。ARM在上电复位后，是从0x00000000开始启动的，以后系统每当有异常出现，则CPU会根据异常号，从内存的0x00000000处开始查表做相应的处理
+
+因此根据上面代码来说，系统一上电就会执行
+
 
 
 #### 2. 中断向量偏移
