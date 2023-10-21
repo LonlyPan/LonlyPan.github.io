@@ -5714,19 +5714,30 @@ ARM 处理器都是从地址 0X00000000 开始运行的，但是我们学习 STM
 
 #### 3. GIC 中断控制器
 
-STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制器叫做 GIC，
-关于 GIC 的详细内容请参考开发板光盘中的文档《ARM Generic Interrupt Controller(ARM GIC
-控制器)V2.0.pdf》。
-GIC 是 ARM 公司给 Cortex-A/R 内核提供的一个中断控制器，类似 Cortex-M 内核中的
-NVIC。目前 GIC 有 4 个版本:V1~V4，V1 是最老的版本，已经被废弃了。V2~V4 目前正在大
-量的使用。GIC V2 是给 ARMv7-A 架构使用的，比如 Cortex-A7、Cortex-A9、Cortex-A15 等，
-V3 和 V4 是给 ARMv8-A/R 架构使用的，也就是 64 位芯片使用的。I.MX6U 是 Cortex-A 内核
-的，因此我们主要讲解 GIC V2。GIC V2 最多支持 8 个核。ARM 会根据 GIC 版本的不同研发
-出不同的 IP 核，那些半导体厂商直接购买对应的 IP 核即可，比如 ARM 针对 GIC V2 就开发出
-了 GIC400 这个中断控制器 IP 核。当 GIC 接收到外部中断信号以后就会报给 ARM 内核，但是
-ARM 内核只提供了四个信号给 GIC 来汇报中断情况：VFIQ、VIRQ、FIQ 和 IRQ，他们之间的
-关系如图 17.1.3.1 所示：：
+STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制器叫做 GIC，关于 GIC 的详细内容请参考开发板光盘中的文档《ARM Generic Interrupt Controller(ARM GIC控制器)V2.0.pdf》。
+
+是 ARM 公司给 Cortex-A/R 内核提供的一个中断控制器，类似 Cortex-M 内核中的NVIC。目前 GIC 有 4 个版本:V1~V4，I.MX6U 是 GIC V2。当 GIC 接收到外部中断信号以后就会报给 ARM 内核，但是ARM 内核只提供了四个信号给 GIC 来汇报中断情况：
+- VFIQ:虚拟快速 FIQ。
+- VIRQ:虚拟外部 IRQ。
+- FIQ:快速中断 IRQ。
+- IRQ:外部中断 IRQ。
+
+VFIQ 和 VIRQ 是针对虚拟化的，我们不讨论虚拟化，剩下的就是 FIQ 和 IRQ 了，本教程我们只使用 IRQ，所以相当于 GIC 最终向 ARM 内核就上报一个 IRQ信号。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697885069293.png)
+
+#### 中断 ID
+
+中断源有很多，为了区分这些不同的中断源肯定要给他们分配一个唯一 ID，这些 ID 就是中断 ID。每一个 CPU 最多支持 1020 个中断 ID，中断 ID 号为 ID0~ID1019。这 1020 个 ID 分配如下：
+ID0~ID15：这 16 个 ID 分配给 SGI(Software-generated Interrupt)，软件中断。固定的
+ID16~ID31：这 16 个 ID 分配给 PPII(Private Peripheral Interrupt)，私有中断固定的
+ID32~ID1019：这 988 个 ID 分配给 SPI(Shared Peripheral Interrupt),共享中断，顾名思义，所有 Core 共享的中断。具体 ID 对应哪个中断那由半导体厂商定义。
+
+I.MX6U 的总共使用了 128 个中断 ID，加上前面属于 PPI 和 SGI 的 32 个 ID，I.MX6U 的中断源共有 128+32=160个，这 128 个中断 ID 对应的中断在《I.MX6ULL 参考手册》的“3.2 Cortex A7 interrupts”小节，我们前面移植了 NXP 官方 SDK中的文件 MCIMX6Y2C.h，在此文件中定义了一个枚举类型 IRQn_Type，此枚举类型就枚举出了 I.MX6U 的所有中断
+
+
+
+
+中断源如表 17.1.3.1 所示：
 ————————————————
 版权声明：本文为CSDN博主「凌肖战」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/wojiaxiaohuang2014/article/details/130061922
