@@ -5802,7 +5802,15 @@ MRC 的指令格式和 MCR 一样，只不过在 MRC 指令中 Rt 就是目标�
 `MRC p15, 0, r0, c0, c0, 0`
 CP15 协处理器有 16 个 32 位寄存器，c0~c15，本章实验要用到c0、c1、c12 和 c15这四个寄存器
 
-#### 其他配置
+#### 中断使能
 
+1、IRQ 和 FIQ 总中断使能
+IRQ 和 FIQ 分别是外部中断和快速中断的总开关，因此要想使用 I.MX6U 上的外设中断就必须先打开 IRQ 中断(本教程不使用
+FIQ)。
 
+2、ID0~ID1019 中断使能和禁止
+
+GIC 寄存器 GICD_ISENABLERn 和 GICD_ ICENABLERn 用来完成外部中断的使能和禁止，对于 Cortex-A7 内核来说中断 ID 只使用了 512 个。一个 bit 控制一个中断 ID 的使能，那么就需要 512/32=16 个 GICD_ISENABLER 寄存器来完成中断的使能。同理，也需要 16 个GICD_ICENABLER 寄存器来完成中断的禁止。其中 GICD_ISENABLER0 的 bit[15:0]对应ID15~0 的 SGI 中断，GICD_ISENABLER0 的 bit[31:16]对应 ID31~16 的 PPI 中断。剩下的GICD_ISENABLER1~GICD_ISENABLER15 就是控制 SPI 中断的。
+
+#### 中断使能
 
