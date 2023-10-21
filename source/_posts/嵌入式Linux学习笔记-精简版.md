@@ -6256,3 +6256,13 @@ void gpio_clearintflags(GPIO_Type* base, unsigned int pin)
     base->ISR |= (1 << pin);
 }
 ```
+
+首先修改了 gpio_init 函数，在此函数里面添加了中断配置代码。另外也新增加了 4 个函数
+- gpio_intconfig：配置 GPIO 的中断功能。
+- gpio_enableint：GPIO 中断使能函数。
+- gpio_disableint：GPIO 中断禁止函数。
+- gpio_clearintflags：GPIO 中断标志位清除函数。
+
+bsp_gpio.c 文件重点就是增加了一些跟 GPIO 中断有关的函数，都比较简单。
+
+关于 GPIO 中断内容已经在**汇编LED**小节进行了详细的讲解
