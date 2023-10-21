@@ -6266,3 +6266,66 @@ void gpio_clearintflags(GPIO_Type* base, unsigned int pin)
 bsp_gpio.c 文件重点就是增加了一些跟 GPIO 中断有关的函数，都比较简单。
 
 关于 GPIO 中断内容已经在**汇编LED**小节进行了详细的讲解
+
+#### 按键中断驱动文件编写
+```
+#include "bsp_exit.h"
+#include "bsp_gpio.h"
+#include "bsp_int.h"
+#include "bsp_delay.h"
+#include "bsp_beep.h"
+
+/*
+ * @description			: 初始化外部中断
+ * @param				: 无
+ * @return 				: 无
+ */
+void exit_init(void)
+{
+	gpio_pin_config_t key_config;
+
+	/* 1、设置IO复用 */
+	IOMUXC_SetPinMux(IOMUXC_UART1_CTS_B_GPIO1_IO18,0);			/* 复用为GPIO1_IO18 */
+	IOMUXC_SetPinConfig(IOMUXC_UART1_CTS_B_GPIO1_IO18,0xF080);
+
+	/* 2、初始化GPIO为中断模式 */
+	key_config.direction = kGPIO_DigitalInput;
+	key_config.interruptMode = kGPIO_IntFallingEdge;
+	key_config.outputLogic = 1;
+	gpio_init(GPIO1, 18, &key_config);
+
+	GIC_EnableIRQ(GPIO1_Combined_16_31_IRQn);				/* 使能GIC中对应的中断 */
+	system_register_irqhandler(GPIO1_Combined_16_31_IRQn, (system_irq_handler_t)gpio1_io18_irqhandler, NULL);	/* 注册中断服务函数 */
+	gpio_enableint(GPIO1, 18);								/* 使能GPIO1_IO18的中断功能 */
+}
+
+/*
+ * @description			: GPIO1_IO18最终的中断处理函数
+ * @param				: 无
+ * @return 				: 无
+ */
+void gpio1_io18_irqhandler(void)
+{ 
+	static unsigned char state = 0;
+
+	/*
+	 *采用延时消抖，中断服务函数中禁止使用延时函数！因为中断服务需要
+	 *快进快出！！这里为了演示所以采用了延时函数进行消抖，后面我们会讲解
+	 *定时器中断消抖法！！！
+ 	 */
+
+	delay(10);
+	if(gpio_pinread(GPIO1, 18) == 0)	/* 按键按下了  */
+	{
+		state = !state;
+		beep_switch(state);
+	}
+	
+	gpio_clearintflags(GPIO1, 18); /* 清除中断标志位 */
+}
+```
+exit_init 是中断初始化函数。初始化 KEY 所使用的 UART1_CTS 这个 IO，设置其复用为 GPIO1_IO18，然后配置 GPIO1_IO18 为下降沿触发中断。
+在 26 行调用函数 GIC_EnableIRQ来使能 GPIO_IO18 所对应的中断总开关
+27 行调用函数 system_register_irqhandler 注册 ID99 所对应的中断处理函数，GPIO1_IO16~IO31这 16 个 IO 共用一个中断处理函数，至于具体是哪个 IO 引起的中断，那就需要在中断处理函数中判断了。
+28 行通过函数 gpio_enableint 使能 GPIO1_IO18 这个 IO 对应的中断。函数 gpio1_io18_irqhandler 就是 27 行注册的中断处理函数，也就是我们学习 STM32 的时候某个 GPIO 对应的中断服务函数。在此函数里面编写中断处理代码，
+第 50 行就是蜂鸣器开关控制代码，也就是我们本试验的目的。当中断处理完成以后肯定要清除中断标志位，第 53行调用函数 gpio_clearintflags 来清除 GPIO1_IO18 的中断标志位。
