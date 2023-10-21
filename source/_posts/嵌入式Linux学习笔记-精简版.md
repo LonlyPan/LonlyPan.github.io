@@ -5707,7 +5707,24 @@ void imx6u_clkinit(void)
 中断服务程序的入口地址或存放中断服务程序的首地址称为中断向量，因此中断向量表是一系列中断服务程序入口地址组成的表。
 这些中断服务程序 ( 函数 ) 在中断向量表中的位置是由半导体厂商定好的，当某个中断被触发以后就会自动跳转到中断向量表中对应的中断服务程序 ( 函数 ) 入口地址处。中断向量表在整个程 序的最前面。
 ```
+.global _start  				/* 全局标号 */
 
+/*
+ * 描述：	_start函数，首先是中断向量表的创建
+ * 参考文档:ARM Cortex-A(armV7)编程手册V4.0.pdf P42，3 ARM Processor Modes and Registers（ARM处理器模型和寄存器）
+ * 		 	ARM Cortex-A(armV7)编程手册V4.0.pdf P165 11.1.1 Exception priorities(异常)
+ */
+
+_start:
+
+	ldr pc, =Reset_Handler		/* 复位中断 					*/	
+	ldr pc, =Undefined_Handler	/* 未定义中断 					*/
+	ldr pc, =SVC_Handler		/* SVC(Supervisor)中断 		*/
+	ldr pc, =PrefAbort_Handler	/* 预取终止中断 					*/
+	ldr pc, =DataAbort_Handler	/* 数据终止中断 					*/
+	ldr	pc, =NotUsed_Handler	/* 未使用中断					*/
+	ldr pc, =IRQ_Handler		/* IRQ中断 					*/
+	ldr pc, =FIQ_Handler		/* FIQ(快速中断)未定义中断 			*/`
 ```
 
 #### 2. 中断向量偏移
