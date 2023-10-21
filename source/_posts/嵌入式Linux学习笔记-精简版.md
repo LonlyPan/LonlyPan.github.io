@@ -5714,14 +5714,18 @@ ARM 处理器都是从地址 0X00000000 开始运行的，但是我们学习 STM
 
 #### 3. GIC 中断控制器
 
-类似于STM32 单片机的 NVIC，全称叫做 Nested Vectored Interrupt Controller(内嵌向量中断控制器)。
-
-控制器：多个外部中断源共享中断资源，必须解决相应的一些问题，例如CPU芯片上只有一个INTR输入端，多个中断源如何与INTR连接、中断矢量如何区别、各中断源的优先级如何判定等。这就需要中断控制器。
-
-中断系统得有个管理机构， GIC中断控制器（Generic Interrupt Controller） 是 ARM 公司给 Cortex-A/R 内核提供的一个中断控制器。 GIC用于管理 Cortex-A 的中断。GIC 提供了开关中断，设置中断优先级。
-当 GIC 接收到外部中断信号以后就会报给 ARM 内核，但是
-ARM 内核只提供了四个信号给 GIC 来汇报中断情况： VFIQ 、 VIRQ 、 FIQ 和 IRQ 。
-如下图所示：
+STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制器叫做 GIC，
+关于 GIC 的详细内容请参考开发板光盘中的文档《ARM Generic Interrupt Controller(ARM GIC
+控制器)V2.0.pdf》。
+GIC 是 ARM 公司给 Cortex-A/R 内核提供的一个中断控制器，类似 Cortex-M 内核中的
+NVIC。目前 GIC 有 4 个版本:V1~V4，V1 是最老的版本，已经被废弃了。V2~V4 目前正在大
+量的使用。GIC V2 是给 ARMv7-A 架构使用的，比如 Cortex-A7、Cortex-A9、Cortex-A15 等，
+V3 和 V4 是给 ARMv8-A/R 架构使用的，也就是 64 位芯片使用的。I.MX6U 是 Cortex-A 内核
+的，因此我们主要讲解 GIC V2。GIC V2 最多支持 8 个核。ARM 会根据 GIC 版本的不同研发
+出不同的 IP 核，那些半导体厂商直接购买对应的 IP 核即可，比如 ARM 针对 GIC V2 就开发出
+了 GIC400 这个中断控制器 IP 核。当 GIC 接收到外部中断信号以后就会报给 ARM 内核，但是
+ARM 内核只提供了四个信号给 GIC 来汇报中断情况：VFIQ、VIRQ、FIQ 和 IRQ，他们之间的
+关系如图 17.1.3.1 所示：：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697885069293.png)
 ————————————————
 版权声明：本文为CSDN博主「凌肖战」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
