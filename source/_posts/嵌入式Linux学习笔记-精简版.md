@@ -5852,3 +5852,12 @@ GICD_IPRIORITYR[40] = 5 << 3;
 ```
 
 ### 程序编写
+
+#### 移植SDK包中断相关文件
+
+将 SDK 包中的文件 core_ca7.h 拷贝到本章试验工程中的“imx6ul”文件夹中，参考试验“9_int”中 core_ca7.h 进行修改。主要留下和 GIC 相关的内容，我们重点是需要 core_ca7.h 中的 10 个 API 函数，这 10 个函数如表 17.3.1.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697898230986.png)
+移植好 core_ca7.h 以后，修改文件 imx6ul.h，在里面加上如下一行代码：
+`#include "core_ca7.h"`
+
+#### 重新编写 start.S 文件
