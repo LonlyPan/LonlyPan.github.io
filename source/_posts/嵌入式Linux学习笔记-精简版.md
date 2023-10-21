@@ -4770,7 +4770,7 @@ arm-linux-gnueabihf-objcopy -O binary -S ledc.elf ledc.bin
 
 第 17 行就是工程清理规则，通过命令“make clean”就可以清理工程。
 
-##### arm-linux-gcc/ld/objcopy/objdump参数总结
+##### 参数总结
 
 **arm-linux-gcc -wall -O2 -c -o $@ $<**
  
@@ -4797,7 +4797,7 @@ SECTIONS{
 	…
 	Secname start ALING(aling) (NOLOAD):AT(ldaddr)
 	{contents} > region:phdr=fill
-	…..
+	…
 }
 ```
 **arm-linux-objcopy**
@@ -4824,7 +4824,6 @@ SECTIONS{
 **相关参数**
  - -D 显示文件中所有汇编信息
  - -m machine
- 
 指定反汇编目标文件时使用的架构，当待反汇编文件本身没有描述架构信息的时候(比如S-records)，这个选项很有用。可以用-i选项列出这里能够指定的架构.这里例子中指定反汇编得到的目标文件使用ARM架构。
  - -b bfdname 指定目标码格式
  - -disassemble或者-d 反汇编可执行段
@@ -4836,13 +4835,10 @@ SECTIONS{
  - -section=name或者-j name显示指定section 的信息
  - -architecture=machine或者-m machine 指定反汇编目标文件时使用的架构
 
-### 参考链接
+##### 参考链接
 
 [Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/htmls/index.html)
 [arm-linux-gcc/ld/objcopy/objdump参数总结](https://blog.csdn.net/muyuyuzhong/article/details/7755291)
-
-
-
 
 
 #### 第二种方案
@@ -5703,3 +5699,21 @@ void imx6u_clkinit(void)
 ```
 
 ## GPIO中断
+
+### 1. 中断向量表
+
+中断向量表即中断向量的列表。
+
+中断向量表是一个表，这个表里面存放的是中断向量。
+中断服务程序的入口地址或存放中断服务程序的首地址成为中断向量，因此中断向量表是一系列中断服务程序入口地址组成的表。
+这些中断服务程序 ( 函数 ) 在中断向量表中的位置是由半导体厂商定好的，当某个中断被触发以后就会自动跳转到中断向量表中对应的中断服务程序 ( 函数 ) 入口地址处。中断向量表在整个程 序的最前面。
+2. 中断向量偏移
+我们说 ARM 处理器都是从地址 0X00000000 开始运行的，但是我们学习 STM32 的时候
+代码是下载到 0X8000000 开始的存储区域中。因此中断向量表是存放到 0X8000000 地址处
+的，而不是 0X00000000 ，这样不是就出错了吗？
+为了解决这个问题， Cortex-M 架构引入了一 个新的概念——中断向量表偏移。
+通过中断向量表偏移就可以将中断向量表存放到任意地址 处，中断向量表偏移配置在函数 SystemInit 中完成，通过向 SCB_VTOR 寄存器写入新的中断 向量表首地址即可。
+3. GIC 中断控制器
+————————————————
+版权声明：本文为CSDN博主「凌肖战」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/wojiaxiaohuang2014/article/details/130061922
