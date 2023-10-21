@@ -5734,6 +5734,8 @@ _start:
 因此根据上面代码来说，系统上电即复位，会立即执行复位中断
 但这里有个问题，就是根据前面的例程，我们的程序是从0X87800000开始的，即_start:后的程序首地址是0X87800000，而中断地址默认是 0X00000000，这样就会出现一个问题，系统找不到正确的中断地址
 
+> 注意我们要将这里的程序看成表， 程序上电并不会直接执行这里程序，而是只存储这个表。当中断发生时，才会跳转到这里执行对应的程序。
+
 
 #### 2. 中断向量偏移
 
@@ -5861,3 +5863,142 @@ GICD_IPRIORITYR[40] = 5 << 3;
 `#include "core_ca7.h"`
 
 #### 重新编写 start.S 文件
+
+```
+.global _start  				/* 全局标号 */
+
+/*
+ * 描述：	_start函数，首先是中断向量表的创建
+ */
+_start:
+	ldr pc, =Reset_Handler		/* 复位中断 					*/	
+	ldr pc, =Undefined_Handler	/* 未定义中断 					*/
+	ldr pc, =SVC_Handler		/* SVC(Supervisor)中断 		*/
+	ldr pc, =PrefAbort_Handler	/* 预取终止中断 					*/
+	ldr pc, =DataAbort_Handler	/* 数据终止中断 					*/
+	ldr	pc, =NotUsed_Handler	/* 未使用中断					*/
+	ldr pc, =IRQ_Handler		/* IRQ中断 					*/
+	ldr pc, =FIQ_Handler		/* FIQ(快速中断)未定义中断 			*/
+
+/* 复位中断 */	
+Reset_Handler:
+
+	cpsid i						/* 关闭全局中断 */
+
+	/* 关闭I,DCache和MMU 
+	 * 采取读-改-写的方式。
+	 */
+	mrc     p15, 0, r0, c1, c0, 0     /* 读取CP15的C1寄存器到R0中       		        	*/
+    bic     r0,  r0, #(0x1 << 12)     /* 清除C1寄存器的bit12位(I位)，关闭I Cache            	*/
+    bic     r0,  r0, #(0x1 <<  2)     /* 清除C1寄存器的bit2(C位)，关闭D Cache    				*/
+    bic     r0,  r0, #0x2             /* 清除C1寄存器的bit1(A位)，关闭对齐						*/
+    bic     r0,  r0, #(0x1 << 11)     /* 清除C1寄存器的bit11(Z位)，关闭分支预测					*/
+    bic     r0,  r0, #0x1             /* 清除C1寄存器的bit0(M位)，关闭MMU				       	*/
+    mcr     p15, 0, r0, c1, c0, 0     /* 将r0寄存器中的值写入到CP15的C1寄存器中	 				*/
+
+	
+#if 0
+	/* 汇编版本设置中断向量表偏移 */
+	ldr r0, =0X87800000
+
+	dsb
+	isb
+	mcr p15, 0, r0, c12, c0, 0
+	dsb
+	isb
+#endif
+    
+	/* 设置各个模式下的栈指针，
+	 * 注意：IMX6UL的堆栈是向下增长的！
+	 * 堆栈指针地址一定要是4字节地址对齐的！！！
+	 * DDR范围:0X80000000~0X9FFFFFFF
+	 */
+	/* 进入IRQ模式 */
+	mrs r0, cpsr
+	bic r0, r0, #0x1f 	/* 将r0寄存器中的低5位清零，也就是cpsr的M0~M4 	*/
+	orr r0, r0, #0x12 	/* r0或上0x13,表示使用IRQ模式					*/
+	msr cpsr, r0		/* 将r0 的数据写入到cpsr_c中 					*/
+	ldr sp, =0x80600000	/* 设置IRQ模式下的栈首地址为0X80600000,大小为2MB */
+
+	/* 进入SYS模式 */
+	mrs r0, cpsr
+	bic r0, r0, #0x1f 	/* 将r0寄存器中的低5位清零，也就是cpsr的M0~M4 	*/
+	orr r0, r0, #0x1f 	/* r0或上0x13,表示使用SYS模式					*/
+	msr cpsr, r0		/* 将r0 的数据写入到cpsr_c中 					*/
+	ldr sp, =0x80400000	/* 设置SYS模式下的栈首地址为0X80400000,大小为2MB */
+
+	/* 进入SVC模式 */
+	mrs r0, cpsr
+	bic r0, r0, #0x1f 	/* 将r0寄存器中的低5位清零，也就是cpsr的M0~M4 	*/
+	orr r0, r0, #0x13 	/* r0或上0x13,表示使用SVC模式					*/
+	msr cpsr, r0		/* 将r0 的数据写入到cpsr_c中 					*/
+	ldr sp, =0X80200000	/* 设置SVC模式下的栈首地址为0X80200000,大小为2MB */
+
+	cpsie i				/* 打开全局中断 */
+#if 0
+	/* 使能IRQ中断 */
+	mrs r0, cpsr		/* 读取cpsr寄存器值到r0中 			*/
+	bic r0, r0, #0x80	/* 将r0寄存器中bit7清零，也就是CPSR中的I位清零，表示允许IRQ中断 */
+	msr cpsr, r0		/* 将r0重新写入到cpsr中 			*/
+#endif
+
+	b main				/* 跳转到main函数 			 	*/
+
+......
+
+/* IRQ中断！重点！！！！！ */
+IRQ_Handler:
+	push {lr}					/* 保存lr地址 */
+	push {r0-r3, r12}			/* 保存r0-r3，r12寄存器 */
+
+	mrs r0, spsr				/* 读取spsr寄存器 */
+	push {r0}					/* 保存spsr寄存器 */
+
+	mrc p15, 4, r1, c15, c0, 0 /* 从CP15的C0寄存器内的值到R1寄存器中
+								* 参考文档ARM Cortex-A(armV7)编程手册V4.0.pdf P49
+								* Cortex-A7 Technical ReferenceManua.pdf P68 P138
+								*/							
+	add r1, r1, #0X2000			/* GIC基地址加0X2000，也就是GIC的CPU接口端基地址 */
+	ldr r0, [r1, #0XC]			/* GIC的CPU接口端基地址加0X0C就是GICC_IAR寄存器，
+								 * GICC_IAR寄存器保存这当前发生中断的中断号，我们要根据
+								 * 这个中断号来绝对调用哪个中断服务函数
+								 */
+	push {r0, r1}				/* 保存r0,r1 */
+	
+	cps #0x13					/* 进入SVC模式，允许其他中断再次进去 */
+	
+	push {lr}					/* 保存SVC模式的lr寄存器 */
+	ldr r2, =system_irqhandler	/* 加载C语言中断处理函数到r2寄存器中*/
+	blx r2						/* 运行C语言中断处理函数，带有一个参数，保存在R0寄存器中 */
+
+	pop {lr}					/* 执行完C语言中断服务函数，lr出栈 */
+	cps #0x12					/* 进入IRQ模式 */
+	pop {r0, r1}				
+	str r0, [r1, #0X10]			/* 中断执行完成，写EOIR */
+
+	pop {r0}						
+	msr spsr_cxsf, r0			/* 恢复spsr */
+
+	pop {r0-r3, r12}			/* r0-r3,r12出栈 */
+	pop {lr}					/* lr出栈 */
+	subs pc, lr, #4				/* 将lr-4赋给pc */
+	
+	
+
+/* FIQ中断 */
+FIQ_Handler:
+
+	ldr r0, =FIQ_Handler	
+	bx r0									
+
+```
+
+第 17 到 81 行是复位中断服务函数 Reset_Handler， 第 19 行先调用指令“cpsid i”关闭 IRQ，第 24 到 30 行是关闭 I/D Cache、MMU、对齐检测和分支预测。
+第 33 行到 42 行是汇编版本的中断向量表重映射。
+第 50 到 68 行是设置不同模式下的 sp 指针，分别设置 IRQ 模式、SYS 模式和 SVC 模式的栈指针，每种模式的栈大小都是 2MB。
+第 70 行调用指令“cpsie i”重新打开IRQ 中断，第 72 到 79 行是操作 CPSR 寄存器来打开 IRQ 中断。当初始化工作都完成以后就可以进入到 main 函数了，第 81 行就是跳转到 main 函数。
+第 110 到 144 行是中断服务函数 IRQ_Handler，这个是本章的重点，因为所有的外部中断最终都会触发 IRQ 中断，所以 IRQ 中断服务函数主要的工作就是区分当前发生的什么中断(中断 ID)？然后针对不同的外部中断做出不同的处理。第 111 到 115 行是保存现场，第 117 到 122行是获取当前中断号，中断号被保存到了 r0 寄存器中。
+第 131 和 132 行才是中断处理的重点，这两行相当于调用了函数 system_irqhandler，函数 system_irqhandler 是一个 C 语言函数，此函数有一个参数，这个参数中断号，所以我们需要传递一个参数。汇编中调用 C 函数如何实现参数传递呢？根据 ATPCS(ARM-Thumb Procedure Call Standard)定义的函数参数传递规则，在汇编调用 C 函数的时候建议形参不要超过 4 个，形参可以由 r0~r3 这四个寄存器来传递，如果形参大于 4 个，那么大于 4 个的部分要使用堆栈进行传递。所以给 r0 寄存器写入中断号就可以了函数 system_irqhandler 的参数传递，在 136 行已经向 r0 寄存器写入了中断号了。中断的真正处理过程其实是在函数 system_irqhandler 中完成，稍后需要编写函数 system_irqhandler。
+第 137 行向 GICC_EOIR 寄存器写入刚刚处理完成的中断号，当一个中断处理完成以后必须向 GICC_EOIR 寄存器写入其中断号表示中断处理完成。
+第 139 到 143 行就是恢复现场。
+第 144 行中断处理完成以后就要重新返回到曾经被中断打断的地方运行，这里为什么要将lr-4 然后赋给 pc 呢？而不是直接将 lr 赋值给 pc？ARM 的指令是三级流水线：取指、译指、执行，pc 指向的是正在取值的地址，这就是很多书上说的 pc=当前执行指令地址+8。
