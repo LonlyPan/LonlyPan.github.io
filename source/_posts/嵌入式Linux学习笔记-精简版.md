@@ -6337,3 +6337,17 @@ exit_init 是中断初始化函数。初始化 KEY 所使用的 UART1_CTS 这个
 链接脚本保持不变。
 
 ## EPIT定时器
+
+EPIT 的全称是：Enhanced Periodic Interrupt Timer，直译过来就是增强的周期中断定时器，只是完成周期性中断定时的，仅此一项功能！至于输入捕获、PWM 输出等这些功能，I.MX6U 由其它的外设来完成。
+
+EPIT 的配置步骤如下：
+1. 设置寄存器 EPIT1_CR 寄存器的 CLKSRC(bit25:24)位，选择 EPIT1 的时钟源。
+2、设置寄存器 EPIT1_CR 寄存器的 PRESCALAR(bit15:4)位，设置分频值。
+3、设置寄存器 EPIT1_CR 的 RLD(bit3)位，设置 EPTI1 的工作模式。
+4、设置寄存器 EPIT1_CR 的 ENMOD(bit1)位，设置计数器的初始值来源。
+5、我们要使用到比较中断，因此需要设置寄存器 EPIT1_CR 的 OCIEN(bit2)位，使能比较中断。
+6、设置寄存器 EPIT1_LR 中的加载值和寄存器 EPIT1_CMPR 中的比较值，通过这两个寄存器就可以决定定时器的中断周期。
+7、使能 GIC 中对应的 EPIT1 中断，注册中断服务函数，如果需要的话还可以设置中断优先级。最后编写中断服务函数。
+8、配置好 EPIT1 以后就可以使能 EPIT1 了，通过寄存器 EPIT1_CR 的 EN(bit0)位来设置。
+
+通过以上几步我们就配置好 EPIT 了，通过 EPIT 的比较中断来实现 LED0 的翻转
