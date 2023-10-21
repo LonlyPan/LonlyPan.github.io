@@ -5566,6 +5566,7 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 
 不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
 我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
+同时也可以看到芯片是Y2（全功能）和C（工业级）的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
 
 ### PFD时钟设置
