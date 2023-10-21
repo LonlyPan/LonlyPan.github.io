@@ -5701,6 +5701,9 @@ void imx6u_clkinit(void)
 ## GPIO中断
 
 ### Cortex-A7 中断系统详解
+参考资料：
+- [uboot-的start.S详细注解及分析](https://www.cnblogs.com/schips/p/11269102.html)
+- 
 #### 1. 中断向量表
 
 中断向量表即中断向量的列表。这个表里面存放的是中断向量。
@@ -5726,6 +5729,7 @@ _start:
 	ldr pc, =IRQ_Handler		/* IRQ中断 					*/
 	ldr pc, =FIQ_Handler		/* FIQ(快速中断)未定义中断 			*/`
 ```
+
 
 #### 2. 中断向量偏移
 
