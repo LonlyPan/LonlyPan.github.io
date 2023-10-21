@@ -5707,6 +5707,7 @@ void imx6u_clkinit(void)
 #### 1. 中断向量表
 
 中断向量表即中断向量的列表。这个表里面存放的是中断向量。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697890021740.png)
 中断向量表是计算机硬件中的一个数据结构，它存储了处理器所支持的所有中断类型的入口地址。当系统中发生一个中断事件时，中断向量表会被用来确定对应的中断处理程序的地址。
 中断向量表通常位于内存的固定地址上，处理器会在启动时加载中断向量表的地址。当发生一个中断事件时，处理器会根据中断号从中断向量表中读取对应的中断处理程序地址，并开始执行该程序。一般从 0X00000000 开始存放
 向量跳转表，每条占四个字节（一个字），地址范围为0x0000 0000～@0x0000 0020
@@ -5755,6 +5756,15 @@ _start:
 __set_VBAR((uint32_t)0x87800000); /* 中断向量表偏移 */
 ```
 
+#### 中断 ID
+
+中断源有很多，为了区分这些不同的中断源肯定要给他们分配一个唯一 ID，这些 ID 就是中断 ID。每一个 CPU 最多支持 1020 个中断 ID，中断 ID 号为 ID0~ID1019。这 1020 个 ID 分配如下：
+ID0~ID15：这 16 个 ID 分配给 SGI(Software-generated Interrupt)，软件中断。固定的
+ID16~ID31：这 16 个 ID 分配给 PPII(Private Peripheral Interrupt)，私有中断固定的
+ID32~ID1019：这 988 个 ID 分配给 SPI(Shared Peripheral Interrupt),共享中断，顾名思义，所有 Core 共享的中断。具体 ID 对应哪个中断那由半导体厂商定义。
+
+I.MX6U 的总共使用了 128 个中断 ID，加上前面属于 PPI 和 SGI 的 32 个 ID，I.MX6U 的中断源共有 128+32=160个，这 128 个中断 ID 对应的中断在《I.MX6ULL 参考手册》的“3.2 Cortex A7 interrupts”小节，我们前面移植了 NXP 官方 SDK中的文件 MCIMX6Y2C.h，在此文件中定义了一个枚举类型 IRQn_Type，此枚举类型就枚举出了 I.MX6U 的所有中断
+
 #### 3. GIC 中断控制器
 
 STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制器叫做 GIC，关于 GIC 的详细内容请参考开发板光盘中的文档《ARM Generic Interrupt Controller(ARM GIC控制器)V2.0.pdf》。
@@ -5768,14 +5778,10 @@ STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制�
 VFIQ 和 VIRQ 是针对虚拟化的，我们不讨论虚拟化，剩下的就是 FIQ 和 IRQ 了，本教程我们只使用 IRQ，所以相当于 GIC 最终向 ARM 内核就上报一个 IRQ信号。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697885069293.png)
 
-#### 中断 ID
+GIC
 
-中断源有很多，为了区分这些不同的中断源肯定要给他们分配一个唯一 ID，这些 ID 就是中断 ID。每一个 CPU 最多支持 1020 个中断 ID，中断 ID 号为 ID0~ID1019。这 1020 个 ID 分配如下：
-ID0~ID15：这 16 个 ID 分配给 SGI(Software-generated Interrupt)，软件中断。固定的
-ID16~ID31：这 16 个 ID 分配给 PPII(Private Peripheral Interrupt)，私有中断固定的
-ID32~ID1019：这 988 个 ID 分配给 SPI(Shared Peripheral Interrupt),共享中断，顾名思义，所有 Core 共享的中断。具体 ID 对应哪个中断那由半导体厂商定义。
 
-I.MX6U 的总共使用了 128 个中断 ID，加上前面属于 PPI 和 SGI 的 32 个 ID，I.MX6U 的中断源共有 128+32=160个，这 128 个中断 ID 对应的中断在《I.MX6ULL 参考手册》的“3.2 Cortex A7 interrupts”小节，我们前面移植了 NXP 官方 SDK中的文件 MCIMX6Y2C.h，在此文件中定义了一个枚举类型 IRQn_Type，此枚举类型就枚举出了 I.MX6U 的所有中断
+
 
 
 
