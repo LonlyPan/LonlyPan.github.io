@@ -5783,7 +5783,24 @@ VFIQ 和 VIRQ 是针对虚拟化的，我们不讨论虚拟化，剩下的就是
 
 GIC 中断控制器 实际使用CP15协处理器控制的。
 
+关 于 CP15 协 处 理 器 和 其 相 关 寄 存 器 的 详 细 内 容 请 参 考 下 面 两 份 文 档 ：《 ARMArchitectureReference Manual ARMv7-A and ARMv7-R edition.pdf》第 1469 页“B3.17 Oranizationof the CP15 registers in a VMSA implementation”。《Cortex-A7 Technical ReferenceManua.pdf》第55 页“Capter 4 System Control”。
 
+CP15 协处理器一般用于存储系统管理，但是在中断中也会使用到，CP15 协处理器一共有16 个 32 位寄存器。CP15 协处理器的访问通过如下几个指令完成：
+- MRC: 将 CP15 协处理器中的寄存器数据读到 ARM 寄存器中。
+- MCR: 将 ARM 寄存器的数据写入到 CP15 协处理器寄存器中。
+
+MRC 就是读 CP15 寄存器，MCR 就是写 CP15 寄存器，MCR 指令格式如下：
+`MCR{cond} p15, <opc1>, <Rt>, <CRn>, <CRm>, <opc2>`
+- cond:指令执行的条件码，如果忽略的话就表示无条件执行。
+- opc1：协处理器要执行的操作码。
+- Rt：ARM 源寄存器，要写入到 CP15 寄存器的数据就保存在此寄存器中。
+- CRn：CP15 协处理器的目标寄存器。
+- CRm：协处理器中附加的目标寄存器或者源操作数寄存器，如果不需要附加信息就将CRm 设置为 C0，否则结果不可预测。
+- opc2：可选的协处理器特定操作码，当不需要的时候要设置为 0。
+
+MRC 的指令格式和 MCR 一样，只不过在 MRC 指令中 Rt 就是目标寄存器。假如我们要将 CP15 中 C0 寄存器的值读取到 R0 寄存器中，那么就可以使用如下命令：
+`MRC p15, 0, r0, c0, c0, 0`
+CP15 协处理器有 16 个 32 位寄存器，c0~c15，本章来看一下  本章实验要用到这四个寄存器，其他的寄存器大家参考上面的两个文档即可
 
 
 
