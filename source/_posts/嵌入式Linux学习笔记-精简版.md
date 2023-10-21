@@ -5764,6 +5764,7 @@ ID16~ID31：这 16 个 ID 分配给 PPII(Private Peripheral Interrupt)，私有�
 ID32~ID1019：这 988 个 ID 分配给 SPI(Shared Peripheral Interrupt),共享中断，顾名思义，所有 Core 共享的中断。具体 ID 对应哪个中断那由半导体厂商定义。
 
 I.MX6U 的总共使用了 128 个中断 ID，加上前面属于 PPI 和 SGI 的 32 个 ID，I.MX6U 的中断源共有 128+32=160个，这 128 个中断 ID 对应的中断在《I.MX6ULL 参考手册》的“3.2 Cortex A7 interrupts”小节，我们前面移植了 NXP 官方 SDK中的文件 MCIMX6Y2C.h，在此文件中定义了一个枚举类型 IRQn_Type，此枚举类型就枚举出了 I.MX6U 的所有中断
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697890190723.png)
 
 #### 3. GIC 中断控制器
 
@@ -5778,7 +5779,7 @@ STM32(Cortex-M)的中断控制器叫做 NVIC，I.MX6U(Cortex-A)的中断控制�
 VFIQ 和 VIRQ 是针对虚拟化的，我们不讨论虚拟化，剩下的就是 FIQ 和 IRQ 了，本教程我们只使用 IRQ，所以相当于 GIC 最终向 ARM 内核就上报一个 IRQ信号。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697885069293.png)
 
-GIC
+CP15 协处理器
 
 
 
