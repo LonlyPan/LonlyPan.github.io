@@ -5701,3 +5701,5 @@ void imx6u_clkinit(void)
 	CCM->CSCMR1 &= ~(7 << 0);	/* PERCLK_PODF位清零，即1分频 */
 }
 ```
+
+# GPIO中断
