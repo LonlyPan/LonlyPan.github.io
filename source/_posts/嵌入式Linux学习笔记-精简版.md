@@ -5566,8 +5566,8 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 
 不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
 我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
-
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
+
 ### PFD时钟设置
 
 我们还需要设置好其他的PLL和PFD时钟，PLL2、PLL3和PLL7固定为528MHz、480MHz和480MHz，PLL4~PLL6都是针对特殊外设的，用到的时候再设置。因此，接下来重点就是设置**PLL2和PLL3**的各自4路PFD，NXP推荐的这8路PFD频率如表所示：
