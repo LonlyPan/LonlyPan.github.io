@@ -6114,5 +6114,6 @@ void default_irqhandler(unsigned int giccIar, void *userParam)
 
 `system_irqtable_init`将 `irqTable` 所有的ID都注册默认函数`default_irqhandler`,也就是初始化。
 后面其它函数例如按键中断就可以使用`system_register_irqhandler`将自己的中断ID和中断函数注册到`irqTable` 数组中，这样当中断发生后，就可以使用`system_irqhandler`函数通过传递进来的`giccIar`搜索`irqTable` 数组，从而调用ID对应的函数。
+`system_irqhandler` 函数在 start.S 中调用 
 
 `irqTable` 本质就是一个函数数组。通过ID索引，找到对应的函数执行。
