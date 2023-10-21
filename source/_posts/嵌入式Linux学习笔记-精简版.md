@@ -5814,6 +5814,8 @@ GIC 寄存器 GICD_ISENABLERn 和 GICD_ ICENABLERn 用来完成外部中断的�
 
 #### 中断优先级设置
 
+##### 优先级数配置
+
 GIC 控制器最多可以支持 256 个优先级，数字越小，优先级越高！Cortex-A7 选择了 32 个优先级。在使用中断的时候需要初始化 GICC_PMR 寄存器，此寄存器用来决定使用几级优先级，GICC_PMR 寄存器只有低 8 位有效，这 8 位最多可以设置 256 个优先级
 ![他优先级数设置如表 17.1.6.1 所示](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697890837749.png)
 
