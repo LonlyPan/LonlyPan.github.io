@@ -7135,3 +7135,14 @@ void raise(int sig_nr)
 > 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用，在此函数中使用到了除法运算。而引入库，就会提示raise未定义，网络上找到i两种解决办法，我们选择了最简单的，自己定义一个空函数，解决报错问题
 > - [/libgcc/config/arm/lib1funcs.S:1331：对‘raise’未定义的引用](https://blog.csdn.net/weixin_45309916/article/details/108882748)
 > - [lib1funcs.asm undefined reference to raise'](https://blog.csdn.net/android_lee/article/details/19198953)
+
+## Printf
+
+本章实验所需要移植的源码已经放到了开发板光盘中，路径为：1、例程源码->5、模块驱动源码->2、格式化函数源码->stdio，文件夹 stdio 里面的文件就是我们要移植的源码文件。本章实验在上一章例程的基础上完成，将 stdio 文件夹复制到实验工程根目录中，stdio 里面有两个文件夹：include 和 lib，这两个文件夹里面的内容如图 22.3.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697983814900.png)
+
+stdio 里面的文件其实是从 uboot 里面移植过来的。后面学习 uboot 以后大家有兴趣的话可以自行从 uboot 源码里面“扣”出相应的文件，完成格式化函数的移植。这里要注意一点，stdio 中并没有实现完全版的格式化函数，比如 printf 函数并不支持浮点数，但是基本够我们使用了。
+
+> 移植好后，还是需要用到上面的uart初始话串口，然后直接就能使用scanf和printf函数了
+
+### 程序编写
