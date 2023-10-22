@@ -6656,23 +6656,7 @@ GPT 定时器有两种工作模式：重新启动(restart)模式和自由运行(
 ### 程序编写
 
 ```
-/***************************************************************
-Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
-文件名	: 	 bsp_delay.c
-作者	   : 左忠凯
-版本	   : V1.0
-描述	   : 延时文件。
-其他	   : 无
-论坛 	   : www.wtmembed.com
-日志	   : 初版V1.0 2019/1/4 左忠凯创建
 
-		 V2.0 2019/1/15	左忠凯修改
-		 使用定时器GPT实现高精度延时,添加了：
-		 delay_init 延时初始化函数
-		 gpt1_irqhandler gpt1定时器中断处理函数
-		 delayus us延时函数
-		 delayms ms延时函数
-***************************************************************/
 #include "bsp_delay.h"
 
 /*
@@ -6715,61 +6699,8 @@ void delay_init(void)
 
 	GPT1->CR |= 1<<0;			//使能GPT1
 
-	/* 一下屏蔽的代码是GPT定时器中断代码，
-	 * 如果想学习GPT定时器的话可以参考一下代码。
-	 */
-#if 0
-	/*
-     * GPT的PR寄存器，GPT的分频设置
-     * bit11:0  设置分频值，设置为0表示1分频，
-     *          以此类推，最大可以设置为0XFFF，也就是最大4096分频
-	 */
-	GPT1->PR = 65;	//设置为1，即65+1=66分频，因此GPT1时钟为66M/66=1MHz
-
-
-	 /*
-      * GPT的OCR1寄存器，GPT的输出比较1比较计数值，
-      * 当GPT的计数值等于OCR1里面值时候，输出比较1就会发生中断
-      * 这里定时500ms产生中断，因此就应该为1000000/2=500000;
-	  */
-	GPT1->OCR[0] = 500000;
-
-	/*
-     * GPT的IR寄存器，使能通道1的比较中断
-     * bit0： 0 使能输出比较中断
-	 */
-	GPT1->IR |= 1 << 0;
-
-	/*
-     * 使能GIC里面相应的中断，并且注册中断处理函数
-	 */
-	GIC_EnableIRQ(GPT1_IRQn);	//使能GIC中对应的中断
-	system_register_irqhandler(GPT1_IRQn, (system_irq_handler_t)gpt1_irqhandler, NULL);	//注册中断服务函数	
-#endif
-	
 }
 
-#if 0
-/* 中断处理函数 */
-void gpt1_irqhandler(void)
-{ 
-	static unsigned char state = 0;
-
-	state = !state;
-
-	/*
-     * GPT的SR寄存器，状态寄存器
-     * bit2： 1 输出比较1发生中断
-	 */
-	if(GPT1->SR & (1<<0)) 
-	{
-		led_switch(LED2, state);
-	}
-	
-	GPT1->SR |= 1<<0; /* 清除中断标志位 */
-}
-#endif
- 
 /*
  * @description		: 微秒(us)级延时
  * @param - value	: 需要延时的us数,最大延时0XFFFFFFFFus
@@ -6837,3 +6768,8 @@ void delay(volatile unsigned int n)
 
 ```
 
+文件 bsp_delay.c 中一共有 5 个函数，分别为：delay_init、delayus、delayms 、delay_short和 delay。除了 delay_short 和 delay 以外，其他三个都是新增加的。
+函数 delay_init 是延时初始化函数，主要用于初始化 GPT1 定时器，设置其时钟源、分频值和输出比较寄存器值。
+函数 delayus 和 delayms 就是 us 级和 ms 级的高精度延时函数，函数 delayus 就是按照我们在 20.1.2 小节讲解的高精度延时原理编写的，delayus 函数处理 GPT1 计数器溢出的情况。函数delayus 只有一个参数 usdelay，这个参数就是要延时的 us 数。delayms 函数很简单，就是对delayus(1000)的多次叠加，此函数也只有一个参数 msdelay，也就是要延时的 ms 数。
+
+## UART串口通信
