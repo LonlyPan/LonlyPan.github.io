@@ -7130,3 +7130,6 @@ void raise(int sig_nr)
 第八个函数是 puts，用于通过 UART1发送一串数据。
 第九个函数是 getc，用于通过 UART1 获取一个字节的数据
 最后一个函数是raise，这是一个空函数，防止编译器报错。
+
+> 这里的为什么要定义一个raise空函数
+> 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用
