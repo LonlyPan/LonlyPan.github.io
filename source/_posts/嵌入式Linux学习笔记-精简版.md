@@ -7189,8 +7189,7 @@ int main(void)
 }
 ```
 
-第 30 行使用 printf 函数输出一段提示信息，第 31 行使用函数 scanf 等待键盘输入两个整数。第 32 行使用 printf 函数输出两个整数的和。程序很简单，但是可以验证 printf 和 scanf 这
-两个函数是否正常工作
+第 30 行使用 printf 函数输出一段提示信息，第 31 行使用函数 scanf 等待键盘输入两个整数。第 32 行使用 printf 函数输出两个整数的和。程序很简单，但是可以验证 printf 和 scanf 这两个函数是否正常工作
 
 ```
 CROSS_COMPILE 	?= arm-linux-gnueabihf-
