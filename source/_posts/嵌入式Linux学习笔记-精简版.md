@@ -6610,3 +6610,5 @@ void gpio1_16_31_irqhandler(void)
 
 ```
 
+文件 bsp_keyfilter.c 一共有 6 个函数，这 6 个函数其实都很简单。filterkey_init 是本试验的初始化函数，此函数首先初始化了 KEY 所使用的 UART1_CTS 这个 IO，设置这个 IO 的中断模式，并且注册中断处理函数，最后调用函数 filtertimer_init 初始化定时器 EPIT1 定时周期为10ms。
+函数 filtertimer_init 是定时器 EPIT1 的初始化函数，内容基本和上一章实验的 EPIT1 初始化函数一样。函数 filtertimer_stop 和 filtertimer_restart 分别是 EPIT1 的关闭和重启函数。filtertimer_irqhandler 是 EPTI1 的中断处理函数，此函数里面就是按键要做的工作，在本例程里面就是开启或者关闭蜂鸣器。函数 gpio1_16_31_irqhandler 是 GPIO1_IO18 的中断处理函数，此函数只有一个工作，那就是重启定时器 EPIT1。
