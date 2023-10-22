@@ -7132,4 +7132,4 @@ void raise(int sig_nr)
 最后一个函数是raise，这是一个空函数，防止编译器报错。
 
 > 这里的为什么要定义一个raise空函数
-> 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用
+> 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用，在此函数中使用到了除法运算。ru
