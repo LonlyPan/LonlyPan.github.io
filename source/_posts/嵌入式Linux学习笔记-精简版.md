@@ -6442,3 +6442,15 @@ void epit1_irqhandler(void)
 
 ```
 
+bsp_epittimer.c 里面有两个函数：EPIT1 初始化函数和EPIT1 中断处理函数。
+epit1_init 有两个参数 frac 和 value，其中 frac 是分频值，value 是加载值。在第 29 行设置比较寄存器为 0，也就是当计数器倒计数到 0 以后就会触发比较中断，因此分频值 frac 和 value 就可以决定中断频率，计算公式如下：
+Tout = ((frac +1 )* value) / Tclk;
+其中：
+- Tclk：EPIT1 的输入时钟频率(单位 Hz)。
+- Tout：EPIT1 的溢出时间(单位 S)。
+
+这里我们在主函数设置frac  = 0，value=66000000/2，则中断时间0.6s
+
+第 38 行设置了 EPIT1 工作模式为 set-and-forget，并且时钟源为 ipg_clk=66MHz。假如我们现在要设置 EPIT1 中断周期为 500ms，可以设置分频值为 0，也就是 1 分频，这样进入 EPIT1的时钟就是 66MHz。如果要实现 500ms 的中断周期，EPIT1 的加载寄存器就应该为66000000/2=33000000。
+
+函数 epit1_irqhandler 是 EPIT1 的中断处理函数，此函数先读取 EPIT1_SR 寄存器，判断当前的中断是否为比较事件，如果是的话就翻转 LED 灯。最后在退出中断处理函数的时候需要清除中断标志位。
