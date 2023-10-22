@@ -7132,4 +7132,6 @@ void raise(int sig_nr)
 最后一个函数是raise，这是一个空函数，防止编译器报错。
 
 > 这里的为什么要定义一个raise空函数
-> 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用，在此函数中使用到了除法运算。ru
+> 后面Makefile中，我们引入了数学库，用于的uart_setbaudrate函数使用，在此函数中使用到了除法运算。而引入库，就会提示raise未定义，网络上找到i两种解决办法，我们选择了最简单的，自己定义一个空函数，解决报错问题
+- [/libgcc/config/arm/lib1funcs.S:1331：对‘raise’未定义的引用](https://blog.csdn.net/weixin_45309916/article/details/108882748)
+- [lib1funcs.asm undefined reference to raise'](https://blog.csdn.net/android_lee/article/details/19198953)
