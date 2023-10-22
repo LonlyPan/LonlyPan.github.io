@@ -6772,4 +6772,69 @@ void delay(volatile unsigned int n)
 函数 delay_init 是延时初始化函数，主要用于初始化 GPT1 定时器，设置其时钟源、分频值和输出比较寄存器值。
 函数 delayus 和 delayms 就是 us 级和 ms 级的高精度延时函数，函数 delayus 就是按照我们在 20.1.2 小节讲解的高精度延时原理编写的，delayus 函数处理 GPT1 计数器溢出的情况。函数delayus 只有一个参数 usdelay，这个参数就是要延时的 us 数。delayms 函数很简单，就是对delayus(1000)的多次叠加，此函数也只有一个参数 msdelay，也就是要延时的 ms 数。
 
-## UART串口通信
+## UART 串口通信
+
+### I.MX6U UART 简介
+.MX6U 一共有 8 个 UART，其主要特性如下：
+①、兼容 TIA/EIA-232F 标准，速度最高可到 5Mbit/S。
+②、支持串行 IR 接口，兼容 IrDA，最高可到 115.2Kbit/s。
+③、支持 9 位或者多节点模式(RS-485)。
+④、1 或 2 位停止位。
+⑤、可编程的奇偶校验(奇校验和偶校验)。
+⑥、自动波特率检测(最高支持 115.2Kbit/S)。
+
+I.MX6U 的 UART 功能很多，但是我们本章就只用到其最基本的串口功能，关于 UART 其它功能的介绍请参考《I.MX6ULL 参考手册》第 3561 页的“Chapter 55 Universal AsynchronousReceiver/Transmitter(UART)”章节。
+UART 的时钟源是由寄存器 CCM_CSCDR1 的 UART_CLK_SEL(bit)位来选择的，当为 0 的时候 UART 的时钟源为 pll3_80m(80MHz)，如果为 1 的时候 UART 的时钟源为 osc_clk(24M)，一般选择 pll3_80m 作为 UART 的时钟源。
+寄存器 CCM_CSCDR1 的 UART_CLK_PODF(bit5:0)位是 UART 的时钟分频值，可设置 0~63，分别对应 1~64 分频，一般设置为 1 分频，因此最终进入 UART 的时钟为 80MHz。
+
+接下来看一下 UART 几个重要的寄存器，第一个就是 UART 的控制寄存器 1，即UARTx_UCR1(x=1~8)，此寄存器的结构如图 21.1.2.1 所示：
+- ADBR(bit14)：自动波特率检测使能位，为 0 的时候关闭自动波特率检测，为 1 的时候使能自动波特率检测。
+- UARTEN(bit0)：UART 使能位，为 0 的时候关闭 UART，为 1 的时候使能 UART。
+ 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697981731228.png)
+
+ UART 的控制寄存器 2，即：UARTx_UCR2，此寄存器结构如图 21.1.2.2 所示：
+ - IRTS(bit14)：为 0 的时候使用 RTS 引脚功能，为 1 的时候忽略 RTS 引脚。
+ - PREN(bit8)：奇偶校验使能位，为 0 的时候关闭奇偶校验，为 1 的时候使能奇偶校验。
+ - PROE(bit7)：奇偶校验模式选择位，开启奇偶校验以后此位如果为 0 的话就使用偶校验，此位为 1 的话就使能奇校验。
+ - STOP(bit6)：停止位数量，为 0 的话 1 位停止位，为 1 的话 2 位停止位。
+ - WS(bit5)：数据位长度，为 0 的时候选择 7 位数据位，为 1 的时候选择 8 位数据位。
+ - TXEN(bit2)：发送使能位，为 0 的时候关闭 UART 的发送功能，为 1 的时候打开 UART的发送功能。
+ - RXEN(bit1)：接收使能位，为 0 的时候关闭 UART 的接收功能，为 1 的时候打开 UART的接收功能。
+ - SRST(bit0)：软件复位，为 0 的是时候软件复位 UART，为 1 的时候表示复位完成。复位完成以后此位会自动置 1，表示复位完成。此位只能写 0，写 1 会被忽略掉。
+ - 
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697981760778.png)
+
+
+UARTx_UCR3 寄存器，此寄存器结构如图 21.1.2.3 所示：
+- 本章实验就用到了寄存器 UARTx_UCR3 中的位 RXDMUXSEL(bit2)，这个位应该始终为 1，这个在《I.MX6ULL 参考手册》第 3624 页有说明。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697981803491.png)
+
+寄存器 UARTx_USR2，这个是 UART 的状态寄存器 2，此寄存器结构如图21.1.2.4 所示：
+- TXDC(bit3)：发送完成标志位，为 1 的时候表明发送缓冲(TxFIFO)和移位寄存器为空，也就是发送完成，向 TxFIFO 写入数据此位就会自动清零。
+- RDR(bit0)：数据接收标志位，为 1 的时候表明至少接收到一个数据，从寄存器UARTx_URXD 读取数据接收到的数据以后此位会自动清零。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697981908672.png)
+
+寄 存 器UARTx_UFCR 中我们要用到的是位 RFDIV(bit9:7)，用来设置参考时钟分频，设置 UART 的波特率，波特率的计算公式如下：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697981995600.png)
+- Ref Freq：经过分频以后进入 UART 的最终时钟频率。
+- UBMR：寄存器 UARTx_UBMR 中的值。
+- UBIR：寄存器 UARTx_UBIR 中的值。
+
+通过 UARTx_UFCR 的 RFDIV 位、UARTx_UBMR 和 UARTx_UBIR 这三者的配合即可得到我们想要的波特率。比如现在要设置 UART 波特率为 115200，那么可以设置 RFDIV 为5(0b101)，也就是 1 分频，因此 Ref Freq=80MHz。设置 UBIR=71，UBMR=3124，根据上面的公式可以得到：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697982022423.png)
+
+UARTx_URXD 和 UARTx_UTXD，这两个寄存器分别为 UART 的接收和发送数据寄存器，这两个寄存器的低八位为接收到的和要发送的数据。读取寄存器UARTx_URXD 即可获取到接收到的数据，如果要通过 UART 发送数据，直接将数据写入到寄存器 UARTx_UTXD 即可。
+
+
+UART1 的配置步骤如下：
+1. 设置 UART 的时钟源为 pll3_80m，设置寄存器 CCM_CSCDR1 的 UART_CLK_SEL 位为 0即可。
+2. 初始化 UART1 所使用 IO，设置 UART1 的寄存器 UART1_UCR1~UART1_UCR3，设置内
+容包括波特率，奇偶校验、停止位、数据位等等。
+4. UART1 初始化完成以后就可以使能 UART1 了，设置寄存器 UART1_UCR1 的位 UARTEN为 1。
+5. 编写两个函数用于 UART1 的数据收发操作。
+
+### 硬件连接
+
+在做实验之前需要用 USB 串口线将串口 1 和电脑连接起来，并且还需要设置 JP5 跳线帽，将串口 1 的 RXD、TXD 两个引脚分别与 P116、P117 连接一起，如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697982097135.png)
