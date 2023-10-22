@@ -6364,10 +6364,9 @@ EPIT 定时器结构如图 18.1.1 所示：
 **set-and-forget 模式：** EPITx_CR(x=1，2)寄存器的 RLD 位置 1 的时候 EPIT 工作在此模式下，在此模式下 EPIT 的计数器从加载寄存器 EPITx_LR 中获取初始值，不能直接向计数器寄存器写入数据。不管什么时候，只要计数器计数到 0，那么就会从加载寄存器 EPITx_LR 中重新加载数据 到计数器中，周而复始。
 **free-running 模式：** EPITx_CR 寄存器的 RLD 位清零的时候 EPIT 工作在此模式下，当计数器计数到 0 以后会重新从0XFFFFFFFF 开始计数，并不是从加载寄存器 EPITx_LR 中获取数据。
 
-接下来看一下 EPIT 重要的几个寄存器，第一个就是 EPIT 的配置寄存器 EPITx_CR，此寄
-存器的结构如图 18.1.2 所示：
 
-EPIT 的配置步骤如下：
+### EPIT 的配置
+
 1. 设置寄存器 EPIT1_CR 寄存器的 CLKSRC(bit25:24)位，选择 EPIT1 的时钟源。
 2、设置寄存器 EPIT1_CR 寄存器的 PRESCALAR(bit15:4)位，设置分频值。
 3、设置寄存器 EPIT1_CR 的 RLD(bit3)位，设置 EPTI1 的工作模式。
