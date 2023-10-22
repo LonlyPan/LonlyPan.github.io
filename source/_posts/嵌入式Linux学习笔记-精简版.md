@@ -7146,3 +7146,130 @@ stdio 里面的文件其实是从 uboot 里面移植过来的。后面学习 ubo
 > 移植好后，还是需要用到上面的uart初始话串口，然后直接就能使用scanf和printf函数了
 
 ### 程序编写
+
+```
+#include "bsp_clk.h"
+#include "bsp_delay.h"
+#include "bsp_led.h"
+#include "bsp_beep.h"
+#include "bsp_key.h"
+#include "bsp_int.h"
+#include "bsp_uart.h"
+#include "stdio.h"
+
+/*
+ * @description	: main函数
+ * @param 		: 无
+ * @return 		: 无
+ */
+int main(void)
+{
+	unsigned char state = OFF;
+	int a , b;
+
+	int_init(); 				/* 初始化中断(一定要最先调用！) */
+	imx6u_clkinit();			/* 初始化系统时钟 			*/
+	delay_init();				/* 初始化延时 			*/
+	clk_enable();				/* 使能所有的时钟 			*/
+	led_init();					/* 初始化led 			*/
+	beep_init();				/* 初始化beep	 		*/
+	uart_init();				/* 初始化串口，波特率115200 */
+	
+	while(1)					
+	{	
+		printf("输入两个整数，使用空格隔开:");
+		scanf("%d %d", &a, &b);					 		/* 输入两个整数 */
+		printf("\r\n数据%d + %d = %d\r\n\r\n", a, b, a+b);	/* 输出两个数相加的和 */
+
+		state = !state;
+		led_switch(LED0,state);
+	}
+
+	return 0;
+}
+```
+
+第 30 行使用 printf 函数输出一段提示信息，第 31 行使用函数 scanf 等待键盘输入两个整数。第 32 行使用 printf 函数输出两个整数的和。程序很简单，但是可以验证 printf 和 scanf 这
+两个函数是否正常工作
+
+```
+CROSS_COMPILE 	?= arm-linux-gnueabihf-
+TARGET		  	?= printf
+
+CC 				:= $(CROSS_COMPILE)gcc
+LD				:= $(CROSS_COMPILE)ld
+OBJCOPY 		:= $(CROSS_COMPILE)objcopy
+OBJDUMP 		:= $(CROSS_COMPILE)objdump
+
+LIBPATH			:= -lgcc -L /usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4
+
+
+INCDIRS 		:= imx6ul \
+				   stdio/include \
+				   bsp/clk \
+				   bsp/led \
+				   bsp/delay  \
+				   bsp/beep \
+				   bsp/gpio \
+				   bsp/key \
+				   bsp/exit \
+				   bsp/int \
+				   bsp/epittimer \
+				   bsp/keyfilter \
+				   bsp/uart 
+				   			   
+SRCDIRS			:= project \
+				   stdio/lib \
+				   bsp/clk \
+				   bsp/led \
+				   bsp/delay \
+				   bsp/beep \
+				   bsp/gpio \
+				   bsp/key \
+				   bsp/exit \
+				   bsp/int \
+				   bsp/epittimer \
+				   bsp/keyfilter \
+				   bsp/uart 
+				   
+				   
+INCLUDE			:= $(patsubst %, -I %, $(INCDIRS))
+
+SFILES			:= $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.S))
+CFILES			:= $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))
+
+SFILENDIR		:= $(notdir  $(SFILES))
+CFILENDIR		:= $(notdir  $(CFILES))
+
+SOBJS			:= $(patsubst %, obj/%, $(SFILENDIR:.S=.o))
+COBJS			:= $(patsubst %, obj/%, $(CFILENDIR:.c=.o))
+OBJS			:= $(SOBJS) $(COBJS)
+
+VPATH			:= $(SRCDIRS)
+
+.PHONY: clean
+	
+$(TARGET).bin : $(OBJS)
+	$(LD) -Timx6ul.lds -o $(TARGET).elf $^ $(LIBPATH)
+	$(OBJCOPY) -O binary -S $(TARGET).elf $@
+	$(OBJDUMP) -D -m arm $(TARGET).elf > $(TARGET).dis
+
+$(SOBJS) : obj/%.o : %.S
+	$(CC) -Wall -nostdlib -fno-builtin -c -O2  $(INCLUDE) -o $@ $<
+
+$(COBJS) : obj/%.o : %.c
+	$(CC) -Wall -Wa,-mimplicit-it=thumb -nostdlib -fno-builtin -c -O2  $(INCLUDE) -o $@ $<
+	
+clean:
+	rm -rf $(TARGET).elf $(TARGET).dis $(TARGET).bin $(COBJS) $(SOBJS)
+
+	
+```
+
+第 2 行修改变量 TARGET 为“printf”，也就是目标名称为“printf”。
+第 7 行在变量 INCDIRS 中添加 stdio 相关头文件(.h)路径。
+第 28 行在变量 SRCDIRS 中添加 stdio 相关文件(.c)路径。
+第 37 行在编译 C 文件的时候添加了选项“-Wa,-mimplicit-it=thumb”，否则的话会有如下
+类似的错误提示：
+`thumb conditional instruction should be in IT block -- `addcs r5,r5,#65536'`
+链接脚本保持不变。
