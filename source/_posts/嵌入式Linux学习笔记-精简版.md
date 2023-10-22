@@ -4563,6 +4563,7 @@ I.MX6ULL的SDK包在NXP[官网下载](https://www.nxp.com/products/processors-an
 
 - [uboot-的start.S详细注解及分析](https://www.cnblogs.com/schips/p/11269102.html)
 - [Uboot中start.S源码的指令级的详尽解析](https://www.crifan.com/files/doc/docbook/uboot_starts_analysis/release/html/uboot_starts_analysis.html)
+
 新建VScode工程，工程名字为“ledc”，新建三个文件：start.S、main.c和main.h。其中start.S是汇编文件，main.c和main.h是C语言相关文件。
  
 在创建的start.s中输入如下代码：
