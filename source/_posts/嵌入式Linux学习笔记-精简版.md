@@ -7119,3 +7119,14 @@ void raise(int sig_nr)
 
 }
 ```
+
+文件 bsp_uart.c 中共有 10 个函数
+第一个函数是 uart_init，这个函数是 UART1 初始化函数，用于初始化 UART1 相关的 IO、并且设置 UART1的波特率、字长、停止位和校验模式等，初始化完成以后就使能 UART1。
+第二个函数是uart_io_init，用于初始化 UART1 所使用的 IO。
+第三个函数是 uart_setbaudrate，这个函数是从NXP 官方的 SDK 包里面移植过来的，用于设置波特率。我们只需将要设置的波特率告诉此函数，此函数就会使用逐次逼近方式来计算出寄存器 UART1_UFCR 的 FRDIV 位、寄存器UART1_UBIR 和寄存器 UART1_UBMR 这三个的值。
+第四和第五这两个函数为 uart_disable 和uart_enable，分别是使能和关闭 UART1。
+第 6 个函数是 uart_softreset，用于软件复位指定的 UART。
+第七个函数是 putc，用于通过 UART1 发送一个字节的数据。
+第八个函数是 puts，用于通过 UART1发送一串数据。
+第九个函数是 getc，用于通过 UART1 获取一个字节的数据
+最后一个函数是raise，这是一个空函数，防止编译器报错。
