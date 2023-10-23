@@ -7270,7 +7270,7 @@ clean:
 第 28 行在变量 SRCDIRS 中添加 stdio 相关文件(.c)路径。
 第 37 行在编译 C 文件的时候添加了选项“-Wa,-mimplicit-it=thumb”，否则的话会有如下
 类似的错误提示：
-`thumb conditional instruction should be in IT block -- \`addcs r5,r5,#65536\`
+`thumb conditional instruction should be in IT block -- `addcs r5,r5,#65536`\`
 链接脚本保持不变。
 
 ## DDR3
