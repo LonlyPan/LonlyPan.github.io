@@ -7285,11 +7285,11 @@ DDR 全称是 Double Data Rate SDRAM，也就是双倍速率 SDRAM，看名字�
 先介绍三个频率： 
 
 - 核心频率：即内部存储颗粒工作的频率，现在**很难提升，提升的花费也很大**。n-prefetch需要内部存储单元在核心频率下多读n倍的数据（通过多条线来实现）。
-
 时钟频率：指的是I/O缓存区的时钟频率，根据n-bites的prefetch，时钟频率是核心频率的n/2倍。
-
 等效频率：即外部接口需要的频率，由于采用上下沿双触发，所以是时钟频率的两倍。
 
 prefetch 字面意思就是预取，在DDR memory chip里面用的一个技术方案。DDR1 采用2n prefetch，DDR2采用4n prefetch，DDR3采用8n prefetch。所谓的n指的是chip对外的I/O width。以DDR3为例，它的IO gating buffer与FIFO的接口宽度是FIFO与外部IO的接口宽度的8倍。对于8bits位宽的 DDR3 MEMORY chip，为了满足8n prefetch，IO gating buffer的宽度要达到64 bits的位宽。
 
-如下图所示，fifo两端的位宽就是8倍的差距，所以可以实现8bits的prefetch
+通俗理解就是说，DDR1-3的核心频率都是一致的，之所以速度不同，是时钟频率不同。DDR1的时钟频率没变，但是是在上下降沿都读取，所以速率提升一倍。DDR2呢则是提高了时钟频率，所以当读取数据时，就是双倍频率读取数据，然后从送到FIFO中，再送出（前后频率不一致，就需要FIFI缓存），再加上DDR1的双沿读取，就成了四倍。DDR3、4类似的道理
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698065659817.png)
