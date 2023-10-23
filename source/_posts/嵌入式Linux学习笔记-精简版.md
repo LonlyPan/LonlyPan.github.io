@@ -7276,3 +7276,20 @@ clean:
 ## DDR3
 
 ### DDR 简介
+
+DDR 全称是 Double Data Rate SDRAM，也就是双倍速率 SDRAM，看名字就知道 DDR 的速率(数据传输速率)比 SDRAM 高 1 倍！这 1 倍的速度不是简简单单的将 CLK 提高 1 倍，SDRAM 在一个 CLK 周期传输一次数据，DDR 在一个 CLK 周期传输两次数据，也就是在上升
+沿和下降沿各传输一次数据，这个概念叫做预取(prefetch)，相当于 DDR 的预取为 2bit，因此DDR 的速度直接加倍！
+
+#### 关于DDR的prefetch
+
+先介绍三个频率： 
+
+- 核心频率：即内部存储颗粒工作的频率，现在**很难提升，提升的花费也很大**。n-prefetch需要内部存储单元在核心频率下多读n倍的数据（通过多条线来实现）。
+
+时钟频率：指的是I/O缓存区的时钟频率，根据n-bites的prefetch，时钟频率是核心频率的n/2倍。
+
+等效频率：即外部接口需要的频率，由于采用上下沿双触发，所以是时钟频率的两倍。
+
+prefetch 字面意思就是预取，在DDR memory chip里面用的一个技术方案。DDR1 采用2n prefetch，DDR2采用4n prefetch，DDR3采用8n prefetch。所谓的n指的是chip对外的I/O width。以DDR3为例，它的IO gating buffer与FIFO的接口宽度是FIFO与外部IO的接口宽度的8倍。对于8bits位宽的 DDR3 MEMORY chip，为了满足8n prefetch，IO gating buffer的宽度要达到64 bits的位宽。
+
+如下图所示，fifo两端的位宽就是8倍的差距，所以可以实现8bits的prefetch
