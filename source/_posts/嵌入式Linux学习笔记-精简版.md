@@ -7290,6 +7290,44 @@ DDR 全称是 Double Data Rate SDRAM，也就是双倍速率 SDRAM，看名字�
 
 prefetch 字面意思就是预取，在DDR memory chip里面用的一个技术方案。DDR1 采用2n prefetch，DDR2采用4n prefetch，DDR3采用8n prefetch。所谓的n指的是chip对外的I/O width。以DDR3为例，它的IO gating buffer与FIFO的接口宽度是FIFO与外部IO的接口宽度的8倍。对于8bits位宽的 DDR3 MEMORY chip，为了满足8n prefetch，IO gating buffer的宽度要达到64 bits的位宽。
 
-通俗理解就是说，DDR1-3的核心频率都是一致的，之所以速度不同，是时钟频率不同。DDR1的时钟频率没变，但是是在上下降沿都读取，所以速率提升一倍。DDR2呢则是提高了时钟频率，所以当读取数据时，就是双倍频率读取数据，然后从送到FIFO中，再送出（前后频率不一致，就需要FIFI缓存），再加上DDR1的双沿读取，就成了四倍。DDR3、4类似的道理
+通俗理解就是说，DDR1-3的核心频率都是一致的，之所以速度不同，是时钟频率不同。DDR1的时钟频率没变，但是是在上下降沿都读取，所以速率提升一倍。DDR2呢则是提高了时钟频率，所以当读取数据时，就是双倍频率读取数据，然后从送到FIFO中，再送出（前后频率不一致，就需要FIFO缓存），再加上DDR1的双沿读取，就成了四倍。DDR3类似的道理
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698065659817.png)
+
+- [关于DDR的prefetch](https://www.twblogs.net/a/5db2ac39bd9eee310ee63195?lang=zh-cn)
+- [DDR中的预读取bit数的理解](https://blog.csdn.net/spx1164376416/article/details/122919092)
+
+
+正点原子的 I.MX6U-ALPHA 开发板上接了一个 256MB/512MB 的 DDR3L，16 位宽，型号为NT5CC128M16JR/MT5CC256M16EP，nanya 公司出品的，分为对应 256MB 和 512MB 容量。EMMC 核心板上用的 512MB 容量的 DDR3L，NAND 核心板上用的 256MB 容量的 DDR3L。本
+
+镁光 MT41K256M16 数据手册里面的结构框，DDR3L 结构框图如图 23.1.4.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698066075219.png)
+
+①、控制线
+- ODT：片上终端使能，ODT 使能和禁止片内终端电阻。
+- ZQ：输出驱动校准的外部参考引脚，此引脚应该外接一个 240 欧的电阻到 VSSQ 上，一般就是直接接地了。
+- RESET：复位引脚，低电平有效。
+- CKE：时钟使能引脚。
+- A12：A12 是地址引脚，但是有也有另外一个功能，因此也叫做 BC 引脚，A12 会在 READ和 WRITE 命令期间被采样，以决定 burst chop 是否会被执行。
+- CK 和 CK#：时钟信号，DDR3 的时钟线是差分时钟线，所有的控制和地址信号都会在 CK对的上升沿和 CK#的下降沿交叉处被采集。
+- CS#：片选信号，低电平有效。
+- RAS#、CAS#和 WE#：行选通信号、列选通信号和写使能信号。
+②、地址线
+- A[14:0]为地址线，A0~A14，一共 15 根地址线，根据 NT5CC256M16ER-EK 的数据手册可知，列地址为 A0~A9，共 10 根，行地址为 A0~A14，共 15 根，因此一个 BANK 的大小就是2^10*2^15*2=32MB*2=64MB，根据图 23.1.4.2 可知一共有 8 个 BANK，因此 DDR3L 的容量就是 64*8=512MB。
+③、BANK 选择线
+- 一片 DDR3 有 8 个 BANK，因此需要 3 个线才能实现 8 个 BANK 的选择，BA0~BA2 就是用于完成 BANK 选择的。
+④、BANK 区域
+- DDR3 一般都是 8 个 BANK 区域。
+⑤、数据线
+- 因为是 16 位宽的，因此有 16 根数据线，分别为 DQ0~DQ15。
+⑥、数据选通引脚
+- DQS 和 DQS#是数据选通引脚，为差分信号，读的时候是输出，写的时候是输入。LDQS(有的叫做 DQSL)和 LDQS#(有的叫做 DQSL#)对应低字节，也就是 DQ0~7，UDQS(有的叫做 DQSU)和 UDQS#(有的叫做 DQSU#)，对应高字节，也就是 DQ8~15。
+⑦、数据输入屏蔽引脚
+- DM 是写数据输入屏蔽引脚。
+
+### DDR3 关键时间参数
+
+1、传输速率
+比如 1066MT/S、1600MT/S、1866MT/S 等，这个是首要考虑的，因为这个决定了 DDR3 内存的最高传输速率。
+2、tRCD 参数
+tRCD 全称是 RAS-to-CAS Delay，也就是行寻址到列寻址之间的延迟。DDR 的寻址流程是先指定 BANK 地址，然后再指定行地址，最后指定列地址确定最终要寻址的单元。BANK 地址和行地址是同时发出的，这个命令叫做“行激活”(Row Active)。行激活以后就发送列地址和具体的操作命令(读还是写)，这两个是同时发出的，因此一般也用“读/写命令”表示列寻址。在行有效(行激活)到读写命令发出的这段时间间隔叫做 tRCD，如图 23.2.1 所示：
