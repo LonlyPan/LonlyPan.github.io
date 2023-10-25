@@ -7330,4 +7330,68 @@ prefetch 字面意思就是预取，在DDR memory chip里面用的一个技术�
 
 DDR3时没有裸机程序的，本章主要使用NXP的官方软件对DDR3进行测试，已验证其完好性。
 
+####  ddr_stress_tester 简介
 
+NXP 提供了一个非常好用的 DDR 初始化工具，叫做 ddr_stress_tester。此工具已经放到了开 发 板 光 盘 中 ， 路 径 为 ： 5 、 开 发 工 具 ->5 、 NXP 官 方 DDR 初 始 化 与 测 试 工 具->ddr_stress_tester_v2.90_setup.exe.zip，我们简单介绍一下 ddr_stress_tester 工具，此工具特点如下：
+①、此工具通过 USB OTG 接口与开发板相连接，也就是通过 USB OTG 口进行 DDR 的初始化与测试。
+②、此工具有一个默认的配置文件，为 excel 表，通过此表可以设置板子的 DDR 信息，最后生成一个.inc 结尾的 DDR 初始化脚本文件。这个.inc 文件就包含了 DDR 的初始化信息，一般都是寄存器地址和对应的寄存器值。
+③、此工具会加载.inc 表里面的 DDR 初始化信息，然后通过 USB OTG 接口向板子下载DDR 相关的测试代码，包括初始化代码。
+④、对此工具进行简单的设置，即可开始 DDR 测试，一般要先做校准，因为不同的 PCB其结构肯定不同，必须要做一次校准，校准完成以后会得到两个寄存器对应的校准值，我们需要用这个新的校准值来重新初始化 DDR。
+⑤、此工具可以测试板子的 DDR 超频性能，一般认为 DDR 能够以超过标准工作频率10%~20%稳定工作的话就认定此硬件 DDR 走线正常。
+⑥、此工具也可以对 DDR 进行 12 小时的压力测试。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698238716345.png)
+我们依次来看一下图 23.5.1.1 中的这些文件的作用：
+①、ALIENTEK_256MB.inc 和 ALIENTEK_512MB.inc，这两个就是通过 excel 表配置生成的，针对正点原子开发板的 DDR 配置脚本文件。
+②、ddr_stress_tester_v2.90_setup.exe.zip 就是我们要用的 ddr_stress_tester 软件，大家自行安装即可，一定要记得安装路径。
+③、I.MX6UL_DDR3_Script_Aid_V0.02.xlsx 就是 NXP 编写的针对 I.MX6UL 的 DDR 初始化 execl 文件，可以在此文件里面填写 DDR 的相关参数，然后就会生成对应的.inc 初始化脚本。
+④、最后两个 PDF 文档就是关于 I.MX6 系列的 DDR 调试文档，这两个是 NXP 编写的。
+
+### DDR3驱动配置
+
+安装 ddr_stress_tester
+
+首先要安装 ddr_stress_testr 软件，安装方法很简单，这里就不做详细的讲解了。但是一定要记得安装路径！因为我们要到安装路径里面找到测试软件。安装完成以后就会在此目录下生成一个名为 ddr_stress_tester_v2.90 的文件夹，进入到此文件夹中，里面的文件如图 23.5.2.1 所示：DDR_Tester.exe 就是我们稍后要使用的 DDR 测试软件。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239689228.png)
+
+配置 DDR3L，生成初始化脚本
+
+将 开 发 板 光 盘 中 的 ： 5 、 开 发 工 具 ->5 、 NXP 官 方 DDR 初 始 化 与 测 试 工 具->I.MX6UL_DDR3_Script_Aid_V0.02.xlsx 文件拷贝到 ddr_stress_testr 软件安装目录中，完成以后如图 23.5.2.2 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239629034.png)
+I.MX6UL_DDR3_Script_Aid_V0.02.xlsx就是NXP为 I.MX6UL 编写的 DDR3 配置 excel 表，虽然看名字是为 I.MX6UL 编写的，但是 I.MX6ULL 也是可以使用的。打开 I.MX6UL_DDR3_Script_Aid_V0.02.xlsx，打开以后如图 23.5.2.3 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239739160.png)
+图 23.5.2.3 中最下方有三个选项卡，这三个选项卡的功能如下：
+①、Readme 选项卡，此选项卡是帮助信息，告诉用户此文件如何使用。
+②、Register Configuration 选项卡，顾名思义，此选项卡用于完成寄存器配置，也就是配置DDR3，此选项卡是我们重点要讲解的。
+③、RealView.inc 选项卡，当我们配置好 Register Configuration 选项卡以后，RealView.inc选项卡里面就保存着寄存器地址和对应的寄存器值。我们需要另外新建一个后缀为.inc 的文件来保存 RealView.inc 中的初始化脚本内容，ddr_stress_testr 软件就是要使用此.inc 结尾的初始化脚本文件来初始化 DDR3。
+
+选中“Register Configuration”选项卡，如图 23.5.2.4 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239761323.png)
+- Manufacturer：DDR3 芯片厂商，默认为镁光(Micron)，这个没有意义，比如我们用的 nanya的 DDR3，但是此配置文件也是可以使用的。
+- Memory part number：DDR3 芯片型号，可以不用设置，没有实际意义。
+- Memory type:DDR3 类型，有 DDR3-800、DDR3-1066、DDR3-1333 和 DDR3-1600.最大只能选择 DDR3-1600，没有 DDR3-1866 选项，因此我们就只能选择 DDR3-1600。
+- DRAM density(Gb)：DDR3 容量，可选的容量为 1、2、4 和 8Gb，如果使用的 512MB 的 DDR3 就应该选择 4，如果使用的 256MB 的 DDR3 就应该选择 2。
+- DRAM Bus width：DDR3 位宽，正点原子 ALPHA 开发板所有的 DDR3 都是 16 位宽，因此选择 16。
+- Number of Banks：DDR3 内部 BANK 数量，对于 DDR3 来说内部都是 8 个 BANK，因此固定为 8。
+- Number of ROW Addresses：行地址宽度，可选 11~16 位，这个要具体所使用的 DDR3 芯片来定，如果是 EMMC 核心板(DDR3 型号为 NT5CC256M16EP-EK)，那么行地址为 15 位。如果是 NAND 核心板(DDR3 型号为 NT5CC128M16JR-EK)，行地址就为 14 位。
+- Number COLUMN Addresses：列地址宽度，可选 9~12 位,EMMC 核心板和 NAND 核心板的 DDR3 列地址都为 10 位。
+- Page Size(K)：DDR3 页大小，可选 1 和 2，NT5CC256M16EP-EK 和 NT5CC128M16JR-EK的页大小都为 2KB，因此选择 2。
+- Self-Refresh Temperature(SRT)：固定为 Extended，不需要修改。
+- tRCD=tRP=CL(ns)：DDR3 的 tRCD-tRP-CL 时间参数，要查阅所使用的 DDR3 芯片手册，NT5CC256M16EP-EK 和 NT5CC128M16JR-EK 都为 13.91ns，因此在后面填写 13.91。
+- tRC Min(ns)：DDR3 的 tRC 时间参数，NT5CC256M16EP-EK 和 NT5CC128M16JR-EK 都为 47.91ns，因此在后面填写 47.91。
+- tRAS Min(ns)：DDR3 的 tRAS 时间参数，NT5CC256M16EP-EK 和 NT5CC128M16JR-EK都为 34ns，因此在后面填写 34。
+- i.Mx Part：固定为 i.MX6UL。
+- Bus Width：总线宽度，16 位宽。
+- Density per Chip select(Gb)：每个片选对应的 DDR3 容量，可选 1~16，根据实际所使用的DDR3 芯片来填写，512MB 的话就选择 4，256MB 的话就选择 2。
+- Number of Chip Select used：使用几个片选信号？可选择 1 或 2，正点原子所有的核心板都只使用了一个片选信号，因此选择 1。
+- Total DRAM Density(Gb)：整个 DDR3 的容量，单位为 Gb，如果是 512MB 的话就是 4，如果是 256MB 的话就是 2。
+- DRAM Clock Freq(MHz)：DDR3 工作频率，设置为 400MHz。
+- DRAM Clock Cycle Time(ns)：DDR3 工作频率对应的周期，单位为 ns，如果工作在 400MHz，那么周期就是 2.5ns。
+- Address Mirror(for CS1)：地址镜像，仅 CS1 有效，此处选择关闭，也就是“Disable”，此选项我们不需要修改。
+- **SI Configuratin** 部分是信号完整性方面的配置，主要是一些信号线的阻抗设置，这个要咨询硬件工程师，这里我们直接使用 NXP 的默认设置即可。
+
+配置完成以后点击 RealView.inc 选项卡，如图。中的 RealView.inc 就是生成的配置脚本，全部是“寄存器地址=寄存器值”这
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239969515.png)
+图中的 RealView.inc 就是生成的配置脚本，全部是“寄存器地址=寄存器值”这种形式。RealView.inc 不能直接用，我们需要新建一个以.inc 结尾的文件，名字自定义，比如我名为“ALIENTEK_512MB”的.inc 文件，如图 23.5.2.11 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239997509.png)
+打开 ALIENTEK_512MB.inc 文件，然后将图 23.5.2.10 中 RealView.inc 里面的所有内容全部拷贝到 ALIENTEK_512MB.inc 文件中，保存
