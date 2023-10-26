@@ -7586,16 +7586,6 @@ void lcd_fill(unsigned    short x0, unsigned short y0, unsigned short x1, unsign
 第 23 行的宏 LCD_FRAMEBUF_ADDR 是显存首地址，此处将显存首地址放到了 0X89000000地址处。这个要根据所使用的 LCD 屏幕大小和 DDR 内存大小来确定的，前面我们说了 ATK7016这款 RGB 屏幕所需的显存大小为 2.4MB，而 I.MX6U-ALPHA 开发板配置的 DDR 有 256 和512MB 两种类型，内存地址范围分别为 0X80000000~0X90000000 和 0X80000000~0XA0000000。所以 LCD 显存首地址选择为 0X89000000 不管是 256MB 还是 512MB 的 DDR 都可以使用。第 26 行的结构体 tftlcd_typedef 是 RGB LCD 的控制参数结构体，里面包含了跟 LCD 配置有关的一些成员变量。最后就是一些变量和函数是声明。
 
 ```
-/***************************************************************
-Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
-文件名	: 	 bsp_lcd.c
-作者	   : 左忠凯
-版本	   : V1.0
-描述	   : LCD驱动文件。
-其他	   : 无
-论坛 	   : www.wtmembed.com
-日志	   : 初版V1.0 2019/1/3 左忠凯创建
-***************************************************************/
 #include "bsp_lcd.h"
 #include "bsp_gpio.h"
 #include "bsp_delay.h"
@@ -8082,15 +8072,7 @@ inline unsigned int lcd_readpoint(unsigned short x,unsigned short y)
  */
 void lcd_clear(unsigned int color)
 {
-	unsigned int num;
-	unsigned int i = 0; 
-
-	unsigned int *startaddr=(unsigned int*)tftlcd_dev.framebuffer;	//指向帧缓存首地址
-	num=(unsigned int)tftlcd_dev.width * tftlcd_dev.height;			//缓冲区总长度
-	for(i = 0; i < num; i++)
-	{
-		startaddr[i] = color;
-	}		
+	
 }
 
 /*
@@ -8105,18 +8087,12 @@ void lcd_clear(unsigned int color)
 void lcd_fill(unsigned    short x0, unsigned short y0, 
                  unsigned short x1, unsigned short y1, unsigned int color)
 { 
-    unsigned short x, y;
 
-	if(x0 < 0) x0 = 0;
-	if(y0 < 0) y0 = 0;
-	if(x1 >= tftlcd_dev.width) x1 = tftlcd_dev.width - 1;
-	if(y1 >= tftlcd_dev.height) y1 = tftlcd_dev.height - 1;
-	
-    for(y = y0; y <= y1; y++)
-    {
-        for(x = x0; x <= x1; x++)
-			lcd_drawpoint(x, y, color);
-    }
 }
 
 ```
+
+文件 bsp_lcd.c 里面一共有 10 个函数，第一个函数是 lcd_init，这个是 LCD 初始化函数，
+此函数先调用 LCD 的 IO 初始化函数、时钟初始化函数、复位函数等，然后会按照我们前面讲
+解的步骤初始化 eLCDIF 相关的寄存器，最后使能 eLCDIF。第二个函数是 lcdgpio_init，这个是
+LCD 的 IO 初始化函数。第三个函数 lcdclk_init 是 LCD 的时钟初始化函数。第四个函数 lcd_reset
