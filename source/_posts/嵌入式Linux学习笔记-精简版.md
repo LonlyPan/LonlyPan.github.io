@@ -7395,3 +7395,109 @@ I.MX6UL_DDR3_Script_Aid_V0.02.xlsx就是NXP为 I.MX6UL 编写的 DDR3 配置 exc
 图中的 RealView.inc 就是生成的配置脚本，全部是“寄存器地址=寄存器值”这种形式。RealView.inc 不能直接用，我们需要新建一个以.inc 结尾的文件，名字自定义，比如我名为“ALIENTEK_512MB”的.inc 文件，如图 23.5.2.11 所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698239997509.png)
 打开 ALIENTEK_512MB.inc 文件，然后将图 23.5.2.10 中 RealView.inc 里面的所有内容全部拷贝到 ALIENTEK_512MB.inc 文件中，保存
+
+### DDR3L 校准
+
+首先要用 DDR_Tester.exe 软件对正点原子 ALPAH 开发板的 DDR3L 进行校准，因为不同的 PCB 其走线不同，必须要进行校准，经过校准一会 DDR3L 就会工作到最佳状态
+
+1. 将开发板通过 USB OTG 线连接到电脑上
+2. 弹出 TF 卡，如果插入了 TF 卡，那么一定要弹出来！！
+3. 设置拨码开关从 USB 启动，重启
+4. 双击“DDR_Tester.exe”，打开测试软件 
+5. 点击 “ Load init Script ” 加 载 前 面 已 经 生 成 的 初 始 化 脚 本 文 件ALIENTEK_512MB.inc，注意，不能有中文路径，否则加载可能会失败！
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240096560.png)
+6. 一切设置好以后点击图 中右上方大大的“Download”按钮，将测试代码下载到开发板中(具体下载到哪里笔者也不清楚，估计是 I.MX6ULL 内部的 OCRAM)，下载完成以后 DDRTest Tool 下方的信息窗口就会输出一些内容，如图 23.5.3.7 所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240152582.png)
+输出了一些关于板子的信息，比如 SOC 型号、工作频率、DDR 配置信息等等。
+
+DDR Test Tool 工具有三个测试项：DDR Calibration、DDR Stess Test 和 32bit Memory Read/Write，我们首先要做校准测试，因为不同的 PCB、不同的 DDR3L 芯片对信号的影响不同，必须要进行校准，然后用新的校准值重新初始化 DDR。点击“Calibraton”按钮
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240187810.png)
+点击图 23.5.3.8 中的“Calibration”按钮以后就会自动开始校准，最终会得到 Write levelingcalibtarion、Read DQS Gating Calibration、Read calibration 和 Write calibration，一共四种校准结果，校准结果如下：
+```
+示例代码 23.5.3.1 DDR3L 校准结果
+1 Write leveling calibration
+2 MMDC_MPWLDECTRL0 ch0 (0x021b080c) = 0x00000000
+3 MMDC_MPWLDECTRL1 ch0 (0x021b0810) = 0x000B000B
+4
+5 Read DQS Gating calibration
+6 MPDGCTRL0 PHY0 (0x021b083c) = 0x0138013C
+7 MPDGCTRL1 PHY0 (0x021b0840) = 0x00000000
+8
+9 Read calibration
+10 MPRDDLCTL PHY0 (0x021b0848) = 0x40402E34
+11
+12 Write calibration
+13 MPWRDLCTL PHY0 (0x021b0850) = 0x40403A34
+```
+
+所谓的校准结果其实就是得到了一些寄存器对应的值，比如 MMDC_MPWLDECTRL0 寄存器地址为 0X021B080C，此寄存器是 PHY 写平衡延时寄存器 0，经过校准以后此寄存器的值应 该 为 0X00000000 ， 以 此 类 推 。 我 们 需 要 修 改 ALIENTEK_512MB.inc 文 件 ， 找 到MMDC_MPWLDECTRL0、MMDC_MPWLDECTRL1、MPDGCTRL0 PHY0、MPDGCTRL1 PHY0、MPRDDLCTL PHY0 和 MPWRDLCTL PHY0 这 6 个寄存器，然后将其值改为示例代码 23.5.3.1中 的 校 准 后 的 值 。 
+>注 意 ， 在ALIENTEK_512MB.inc中 可 能 找 不 到MMDC_MPWLDECTRL1(0x021b0810)和 MPDGCTRL1 PHY0(0x021b0840)这两个寄存器，找不到就不用修改了。
+ALIENTEK_512MB.inc 修改完成以后重新加载并下载到开发板中，至此 DDR 校准完成，校准的目的就是得到示例代码 23.5.3.1 中这 6 个寄存器的值！
+
+### DDR3L 超频测试
+
+校准完成以后就可以进行 DDR3 超频测试，超频测试的目的就是为了检验 DDR3 硬件设计合不合理，一般 DDR3 能够超频到比标准频率高 10%~15%的话就认为硬件没有问题，因此对于正点原子的 ALPHA 开发板而言，如果 DDR3 能够超频到 440MHz~460MHz 那么就认为DDR3 硬件工作良好。
+
+DDR Test Tool 支持 DDR3 超频测试，只要指定起始频率和终止频率，那么工具就会自动开始一点点的增加频率，直到达到终止频率或者测试失败。设置如图 23.5.4.1 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240284310.png)
+图 23.5.4.1 中设置好起始频率为 400MHz，终止频率为 600MHz，设置好以后点击“StressTest”开启超频测试，超频测试时间比较久，大家耐心等待测试结果即可。超频测试完成以后结果如图 23.5.4.2 所示(因为硬件不同，测试结果可能有些许区别)：
+
+
+## RGB-LCD
+
+### LCD 简介
+在本章实验中我们使用 ARGB8888 这种像素格式，一个像素占用 4个字节的内存，这四个字节每个位的分配如图 24.1.1.2 所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240563780.png)
+
+LCD 屏幕接口
+I.MX6U-ALPHA支持RGB接口的LCD，接口的信号线如表所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240636018.png)
+
+RGB LCD 一般有两种驱动模式：DE 模式和 HV 模式，这两个模式的区别是 DE 模式需要用到 DE 信号线，而 HV 模式不需要用到 DE 信号线，在 DE模式下是可以不需要 HSYNC 信号线的，即使不接 HSYNC 信号线 LCD 也可以正常工作。
+
+ATK-7016 的屏幕接口原理图如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698241024705.png)
+
+默认情况，R1 和 R6 焊接，设置 LCD_LR 和 LCD_UD，控制 LCD 的扫描方向，是从左到右，从上到下（横屏看）。而 LCD_R7/G7/B7 则用来设置 LCD 的 ID，由于RGB-LCD 没有读写寄存器，也就没有所谓的 ID，这里我们通过在模块上面，控制 R7/G7/B7 的上/下拉，来自定义 LCD 模块的 ID，帮助 MCU 判断当前 LCD 面板的分辨率和相关参数，以提高程序兼容性。
+
+#### LCD 时间参数
+
+如果将 LCD 显示一帧图像的过程想象成绘画，那么在显示的过程中就是用一根“笔”在不同的像素点画上不同的颜色。这根笔按照从左至右、从上到下的顺序扫描每个像素点，并且在像素画上对应的颜色，当画到最后一个像素点的时候一幅图像就绘制好了。假如一个 LCD 的分辨率为 1024*600，那么其扫描如图 24.1.1.5 所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698241118478.png)
+
+结合图我们来看一下 LCD 是怎么扫描显示一帧图像的。一帧图像也是由一行一行组成的。
+- HSYNC 是水平同步信号，也叫做行同步信号，当产生此信号的话就表示开始显示新的一行了，所以此信号都是在图的最左边。当
+- VSYNC 信号是垂直同步信号，也叫做帧同步信号，当产生此信号的话就表示开始显示新的一帧图像了，所以此信号在图的左上角。
+
+在图可以看到有一圈“黑边”，真正有效的显示区域是中间的白色部分。那这一圈“黑边”是什么东西呢？ RGB LCD屏幕内部是有一个 IC 的，发送一行或者一帧数据给 IC，IC 是需要反应时间的。通过这段反应时间可以让 IC 识别到一行数据扫描完了，要换行了，或者一帧图像扫描完了，要开始下一帧图像显示了。因此，在 LCD 屏幕中继续存在 HBP、HFP、VPB 和 VFP 这四个参数的主要目的是为了锁定有效的像素数据。这四个时间是 LCD 重要的时间参数，后面编写 LCD 驱动的时候要用到的，至于这四个时间参数具体值是多少，那要需要去查看所使用的 LCD 数据手册了。
+
+#### RGB LCD 屏幕时序
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698241363591.png)
+图就是 RGB LCD 的行显示时序，我们来分析一下其中重要的几个参数：
+- HSYNC：行同步信号，当此信号有效的话就表示开始显示新的一行数据，查阅所使用的LCD 数据手册可以知道此信号是低电平有效还是高电平有效，假设此时是低电平有效。
+- HSPW：有些地方也叫做 thp，是 HSYNC 信号宽度，也就是 HSYNC 信号持续时间。HSYNC信号不是一个脉冲，而是需要持续一段时间才是有效的，单位为 CLK。
+- HBP：有些地方叫做 thb，前面已经讲过了，术语叫做行同步信号后肩，单位是 CLK。
+- HOZVAL：有些地方叫做 thd，显示一行数据所需的时间，假如屏幕分辨率为 1024*600，那么 HOZVAL 就是 1024，单位为 CLK。
+- HFP：有些地方叫做 thf，前面已经讲过了，术语叫做行同步信号前肩，单位是 CLK。
+
+当 HSYNC 信号发出以后，需要等待 HSPW+HBP 个 CLK 时间才会接收到真正有效的像素数据。当显示完一行数据以后需要等待 HFP 个 CLK 时间才能发出下一个 HSYNC 信号，所以显示一行所需要的时间就是：HSPW + HBP + HOZVAL + HFP。一帧图像就是由很多个行组成的，RGB LCD 的帧显示时序如图 24.1.1.7 所示
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698241413329.png)
+
+- VSYNC：帧同步信号，当此信号有效的话就表示开始显示新的一帧数据，查阅所使用的
+- LCD 数据手册可以知道此信号是低电平有效还是高电平有效，假设此时是低电平有效。
+- VSPW：有些地方也叫做 tvp，是 VSYNC 信号宽度，也就是 VSYNC 信号持续时间，单位为 1 行的时间。
+- VBP：有些地方叫做 tvb，前面已经讲过了，术语叫做帧同步信号后肩，单位为 1 行的时间。
+- LINE：有些地方叫做 tvd，显示一帧有效数据所需的时间，假如屏幕分辨率为 1024*600，那么 LINE 就是 600 行的时间。
+- VFP：有些地方叫做 tvf，前面已经讲过了，术语叫做帧同步信号前肩，单位为 1 行的时间。显示一帧所需要的时间就是：VSPW+VBP+LINE+VFP 个行时间，最终的计算公式：
+T = (VSPW+VBP+LINE+VFP) * (HSPW + HBP + HOZVAL + HFP)
+
+因此我们在配置一款 RGB LCD 的时候需要知道这几个参数：HOZVAL(屏幕有效宽度)、LINE(屏幕有效高度)、HBP、HSPW、HFP、VSPW、VBP 和 VFP。ALIENTEK 三款 RGB LCD屏幕的参数如表所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698241506867.png)
+
+配置步骤如下：
+1、首先肯定是初始化 LCD 所示使用的 IO，将其复用为 eLCDIF 接口 IO。
+2、查阅所使用的 LCD 屏幕数据手册，或者自己计算出的时钟像素，然后设置 CCM 相应的寄存器。
+3、设置 LCDIF 的寄存器 CTRL、CTRL1、TRANSFER_COUNT、VDCTRL0~4、CUR_BUF 和NEXT_BUF。根据 LCD 的数据手册设置相应的参数。
+4、驱动 LCD 屏幕的目的就是显示内容，所以需要编写一些基本的 API 函数，比如画点、画线、画圆函数，字符串显示函数等。
+
+### 程序编写
