@@ -8092,7 +8092,22 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 
 ```
 
-文件 bsp_lcd.c 里面一共有 10 个函数，第一个函数是 lcd_init，这个是 LCD 初始化函数，
-此函数先调用 LCD 的 IO 初始化函数、时钟初始化函数、复位函数等，然后会按照我们前面讲
-解的步骤初始化 eLCDIF 相关的寄存器，最后使能 eLCDIF。第二个函数是 lcdgpio_init，这个是
-LCD 的 IO 初始化函数。第三个函数 lcdclk_init 是 LCD 的时钟初始化函数。第四个函数 lcd_reset
+文件 bsp_lcd.c 里面一共有 10 个函数
+第一个函数是 lcd_init，这个是 LCD 初始化函数，此函数先调用 LCD 的 IO 初始化函数、时钟初始化函数、复位函数等，然后会按照我们前面讲解的步骤初始化 eLCDIF 相关的寄存器，最后使能 eLCDIF。
+第二个函数是 lcdgpio_init，这个是LCD 的 IO 初始化函数。
+第三个函数 lcdclk_init 是 LCD 的时钟初始化函数。
+第四个函数 lcd_reset和第五个函数 lcd_noreset 分别为复位 LCD 的停止 LCD 复位函数。
+第六个函数 lcd_enable 是eLCDIF 使能函数，用于使能 eLCDIF。
+第七个和第八个是画点和读点函数，分别为 lcd_drawpoint和 lcd_readpoint，通过这两个函数就可以在 LCD 的指定像素点上显示指定的颜色，或者读取指定像素点的颜色。
+第九个函数 lcd_clear 是清屏函数，使用指定的颜色清除整个屏幕。
+最后一个函数 lcd_fill 是填充函数，使用此函数的时候需要指定矩形的起始坐标、终止坐标和填充颜色，这样就可以填充出一个矩形区域。
+
+然后是文件 bsp_lcdapi函数，里面都是一些 LCD 的 API 操作函数，比如画线、画矩形、画圆、显示数字、显示字符和字符串等函数。这些函数都是从 STM32 例程里面移植过来的，如果学习过ALIENTEK 的 STM32 教程的话就会很熟悉，都是一些纯软件的东西。
+
+
+## RTC
+
+跳过
+
+
+## 
