@@ -4437,6 +4437,24 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 看每个IO能复用什么外设的话可以直接查阅《IMX6UL参考手册》的第4章“Chapter4ExternalSignalsandPinMultiplexing”。
 如果我们要编写代码，设置某个IO的复用功能的话就需要查阅第30章“Chapter32: IOMUX Controller(IOMUXC)”。
 
+#### GPIO功能图
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
+
+我们对照着图来详细看一下寄存器各个位的含义：
+
+ - HYS(bit16)：对应图中HYS，用来使能迟滞比较器，当IO作为输入功能的时候有效，用于设置输入接收器的施密特触发器是否使能。如果需要对输入波形进行整形的话可以使能此位。此位为0的时候禁止迟滞比较器，为1的时候使能迟滞比较器。
+ - PUS(bit15:14)：对应图中的PUS，用来设置上下拉电阻的，一共有四种选项可以选择，如表所示
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/上下拉设置.png)
+- PUE(bit13)：图中没有给出来，当IO作为输入的时候，这个位用来设置IO使用上下拉还是状态保持器。当为0的时候使用状态保持器，当为1的时候使用上下拉。状态保持器在IO作为输入的时候才有用，顾名思义，就是当外部电路断电以后此IO口可以保持住以前的状态。
+- PKE(bit12)：对应图中的PKE，此为用来使能或者禁止上下拉/状态保持器功能，为0时禁止上下拉/状态保持器，为1时使能上下拉和状态保持器。
+- ODE(bit11)：对应图中的ODE，当IO作为输出的时候，此位用来禁止或者使能开路输出，此位为0的时候禁止开路输出，当此位为1的时候就使能开路输出功能。
+- SPEED(bit7:6)：对应图中的SPEED，当IO用作输出的时候，此位用来设置IO速度，设置如表所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/速度配置.png)
+- DSE(bit5:3)：对应图中的DSE，当IO用作输出的时候用来设置IO的驱动能力，总共有8个可选选项，如表所示： 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/驱动能力设置.png)
+- SRE(bit0)：对应图中的SRE，设置压摆率，当此位为0的时候是低压摆率，当为1的时候是高压摆率。这里的压摆率就是IO电平跳变所需要的时间，比如从0到1需要多少时间，时间越小波形就越陡，说明压摆率越高；反之，时间越多波形就越缓，压摆率就越低。如果你的产品要过EMC的话那就可以使用小的压摆率，因为波形缓和，如果你当前所使用的IO做高速通信的话就可以使用高压摆率。
+
+
 #### I.MX6U IO配置
 示例：
 ```
@@ -4459,11 +4477,11 @@ static inline void IOMUXC_SetPinMux(uint32_t muxRegister,
 {
 	*((volatile uint32_t *)muxRegister) =
 		IOMUXC_SW_MUX_CTL_PAD_MUX_MODE(muxMode) |
-	IOMUXC_SW_MUX_CTL_PAD_SION(inputOnfield);
+			IOMUXC_SW_MUX_CTL_PAD_SION(inputOnfield);
 	if (inputRegister)
 	{
-	*((volatile uint32_t *)inputRegister) =
-	IOMUXC_SELECT_INPUT_DAISY(inputDaisy);
+		*((volatile uint32_t *)inputRegister) =
+			IOMUXC_SELECT_INPUT_DAISY(inputDaisy);
 	}
 }
 ```
@@ -4498,78 +4516,31 @@ IOMUXC_GPIO1_IO03_UART1_TX
 IOMUXC_SetPinConfig函数源码如下：
 ```
 static inline void IOMUXC_SetPinConfig(uint32_t muxRegister,
-uint32_t muxMode,
-uint32_t inputRegister,
-uint32_t inputDaisy,
-uint32_t configRegister,
-uint32_t configValue)
+										uint32_t muxMode,
+										uint32_t inputRegister,
+										uint32_t inputDaisy,
+										uint32_t configRegister,
+										uint32_t configValue)
+{
+	if (configRegister)
+	{
+		*((volatile uint32_t *)configRegister) = configValue;
+	}
+}
 ```
-GPIO功能图
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
 
-我们对照着图来详细看一下寄存器各个位的含义：
+函数 IOMUXC_SetPinConfig 有 6 个参数，其中前五个参数和函数 IOMUXC_SetPinMux 一样，但是此函数只使用了参数 configRegister 和 configValue
+- cofigRegister 参数是 IO 配置寄存器地址，比如 GPIO1_IO03 的 IO 配置寄存器为 IOMUXC_SW_PAD_CTL_PAD_GPIO1_IO03，其地址为 0X020E02F4，
+- 参数 configValue 就是要写入到寄存器 configRegister 的值。
 
- - HYS(bit16)：对应图中HYS，用来使能迟滞比较器，当IO作为输入功能的时候有效，用于设置输入接收器的施密特触发器是否使能。如果需要对输入波形进行整形的话可以使能此位。此位为0的时候禁止迟滞比较器，为1的时候使能迟滞比较器。
- - PUS(bit15:14)：对应图中的PUS，用来设置上下拉电阻的，一共有四种选项可以选择，如表所示
- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/上下拉设置.png)
-- PUE(bit13)：图中没有给出来，当IO作为输入的时候，这个位用来设置IO使用上下拉还是状态保持器。当为0的时候使用状态保持器，当为1的时候使用上下拉。状态保持器在IO作为输入的时候才有用，顾名思义，就是当外部电路断电以后此IO口可以保持住以前的状态。
-- PKE(bit12)：对应图中的PKE，此为用来使能或者禁止上下拉/状态保持器功能，为0时禁止上下拉/状态保持器，为1时使能上下拉和状态保持器。
-- ODE(bit11)：对应图中的ODE，当IO作为输出的时候，此位用来禁止或者使能开路输出，此位为0的时候禁止开路输出，当此位为1的时候就使能开路输出功能。
-- SPEED(bit7:6)：对应图中的SPEED，当IO用作输出的时候，此位用来设置IO速度，设置如表所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/速度配置.png)
-- DSE(bit5:3)：对应图中的DSE，当IO用作输出的时候用来设置IO的驱动能力，总共有8个可选选项，如表所示： 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/驱动能力设置.png)
-- SRE(bit0)：对应图中的SRE，设置压摆率，当此位为0的时候是低压摆率，当为1的时候是高压摆率。这里的压摆率就是IO电平跳变所需要的时间，比如从0到1需要多少时间，时间越小波形就越陡，说明压摆率越高；反之，时间越多波形就越缓，压摆率就越低。如果你的产品要过EMC的话那就可以使用小的压摆率，因为波形缓和，如果你当前所使用的IO做高速通信的话就可以使用高压摆率。
-  
+将宏展开以后就是：
+`IOMUXC_SetPinConfig(0x020E0068U, 0x5U, 0x00000000U, 0x0U, 0x020E02F4U, 0X10B0);`
+根据函数 IOMUXC_SetPinConfig 的源码可以知道，上面函数就是将寄存器 0x020E02F4 的值设置为 0X10B0。
 
-
-
- ### I.MX6U GPIO配置
- 
-`IOMUXC_SW_MUX_CTL_PAD_XX_XX`和`IOMUXC_SW_PAD_CTL_PAD_XX_XX`这两种寄存器都是配置IO的，注意是IO！不是GPIO，GPIO是一个IO众多复用功能中的一种。
-
-关于I.MX6U的GPIO请参考《IMX6UL参考手册》的第28章“Chapter 28 General Purpose Input/Ouput(GPIO)”，GPIO结构如图所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO结构图.png)
-
-左下角 的IOMUXC框图里SW_MUX_CTL_PAD_\*和SW_PAD_CTL_PAD_\*两种寄存器，用来设置IO的复用功能和IO属性配置。左上角部分的GPIO框图就是当IO用作GPIO的时候需要设置的寄存器，一共有八个：DR、GDIR、PSR、ICR1、ICR2、EDGE_SEL、IMR和ISR。
-
-- DR数据寄存器
-	- 此寄存器是32位的，每个位都对应一个GPIO。
-	- 当GPIO被配置为输出功能以后，此寄存器设置相应的IO输出高低电平
-	- 当GPIO被配置为输入模式以后，此寄存器就保存着对应IO的电平值。
-- DR方向寄存器
-	- GDIR寄存器也是32位的，同样的，每个IO对应一个位，
-	- 此寄存器用来设置某个IO的工作方向，是输入还是输出。
-	- 输入为0，输出为1。
-
-- PSR状态寄存器
-	- 同样的PSR寄存器也是一个GPIO对应一个位，
-	- 读取相应的位即可获取对应的GPIO的状态，也就是GPIO的高低电平值。
-	- 功能和输入状态下的DR寄存器一样。
-
-- ICR1和ICR2中断控制寄存器
-	- ICR1用于IO0\~15的配置，ICR2用于IO16\~31的配置。
-	- ICR寄存器中一个GPIO用两个位，这两个位用来配置中断的触发方式，如表所示：
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/中断触发配置.png)
-
-- IMR中断屏蔽寄存器
-	- 一个GPIO对应一个位，
-	- 控制GPIO的中断禁止和使能，使能设为1；禁止中断，就设为0。
-
-- ISR中断状态寄存器
-	- 一个GPIO对应一个位
-	- 只要某个GPIO的中断发生，那么ISR中相应的位就会被置1。
-	- 处理完中断以后，必须清除中断标志位，清除方法就是向ISR中相应的位写1，也就是写1清零。
-
-- EDGE_SEL边沿选择寄存器
-	- E设置边沿中断，这个寄存器会覆盖ICR1和ICR2的设置，同样是一个GPIO对应一个位。
-	- 如果相应的位被置1，那么就相当与设置了对应的GPIO是上升沿和下降沿(双边沿)触发
 
 #### I.MX6U GPIO时钟使能
 
-I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”
-我们只看一下CCM里面的外设时钟使能寄存器。CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关
-以CCM_CCGR0为例：
+I.MX6UL 参考手册的第 18 章“Chapter 18: Clock Controller Module(CCM)”我们只看一下CCM里面的外设时钟使能寄存器。CMM 有 CCM_CCGR0~CCM_CCGR6 这 7 个寄存器，这 7 个寄存器控制着 I.MX6U 的所有外设时钟开关以CCM_CCGR0为例：
 - CCM_CCGR0 是个 32 位寄存器，其中每 2 位控制一个外设的时钟，比如 bit31:30 控制着-GPIO2 的外设时钟，两个位就有 4 种操作方式。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/外设时钟控制.png)
 
