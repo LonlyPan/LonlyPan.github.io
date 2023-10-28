@@ -4456,6 +4456,16 @@ uint32_t inputRegister,
 uint32_t inputDaisy,
 uint32_t configRegister,
 uint32_t inputOnfield)
+{
+*((volatile uint32_t *)muxRegister) =
+IOMUXC_SW_MUX_CTL_PAD_MUX_MODE(muxMode) |
+IOMUXC_SW_MUX_CTL_PAD_SION(inputOnfield);
+if (inputRegister)
+{
+*((volatile uint32_t *)inputRegister) =
+IOMUXC_SELECT_INPUT_DAISY(inputDaisy);
+}
+}
 ```
 
 - muxRegister ： IO 的 复 用 寄 存 器 地 址 ， 比 如 GPIO1_IO03 的 IO 复 用 寄 存 器SW_MUX_CTL_PAD_GPIO1_IO03 的地址为 0X020E0068。
@@ -4484,6 +4494,16 @@ IOMUXC_GPIO1_IO03_UART1_TX
 这样就与函数 IOMUXC_SetPinMux 的 6 个参数对应起来了，如果我们要将 GPIO1_IO03 复用为 I2C1_SDA 的话就可以使用如下代码：
 `IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_I2C1_SDA, 0);`
 
+
+IOMUXC_SetPinConfig函数源码如下：
+```
+static inline void IOMUXC_SetPinConfig(uint32_t muxRegister,
+uint32_t muxMode,
+uint32_t inputRegister,
+uint32_t inputDaisy,
+uint32_t configRegister,
+uint32_t configValue)
+```
 GPIO功能图
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
 
