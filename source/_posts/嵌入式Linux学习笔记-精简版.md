@@ -8179,6 +8179,25 @@ AP3216 的设备地址为 0X1E，同几乎所有的 I2C 从器件一样，AP3216
 
 ## SPI
 
+### I.MX6U ECSPI 简介
+I.MX6U 自带的 SPI 外设叫做 ECSPI，全称是 Enhanced Configurable Serial Peripheral Interface，别看前面加了个“EC”就以为和标准 SPI 有啥不同的，其实就是 SPI。ECSPI 有 64*32 个接收FIFO(RXFIFO)和 64*32 个发送 FIFO(TXFIFO)，ECSPI 特性如下：
+①、全双工同步串行接口。
+②、可配置的主/从模式。
+③、四个片选信号，支持多从机。
+④、发送和接收都有一个 32x64 的 FIFO。
+⑤、片选信号 SS/CS，时钟信号 SCLK 极性可配置。
+⑥、支持 DMA。
+
+I.MX6U 的 ECSPI 可以工作在主模式或从模式，本章我们使用主模式，I.MX6U 有 4 个ECSPI，每个 ECSPI 支持四个片选信号，也就说，如果你要使用 ECSPI 的硬件片选信号的话，一个 ECSPI 可以支持 4 个外设。如果不使用硬件的片选信号就可以支持无数个外设，本章实验我们不使用硬件片选信号，因为硬件片选信号只能使用指定的片选 IO，软件片选的话可以使用任意的 IO。
+我们接下来看一下 ECSPI 的几个重要的寄存器，首先看一下ECSPIx_CONREG(x=1~4)寄
+存器，这是 ECSPI 的控制寄存器，此寄存器结构如图 27.1.2.1 所示：
+
+
+寄存器 ECSPIx_PERIODREG，这个是 ECSPI 的采样周期寄存器，此寄存器
+结构如图 27.1.2.3 所示：
+
+接下来看一下寄存器 ECSPIx_STATREG，这个是 ECSPI 的状态寄存器，此寄存器结构如图
+27.1.2.5 所示：
 ## 触摸
 
 ## PWM背光
