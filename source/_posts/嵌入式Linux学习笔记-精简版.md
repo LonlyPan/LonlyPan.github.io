@@ -4451,20 +4451,20 @@ IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03,0X10B0);
 函数 IOMUXC_SetPinMux 在文件 fsl_iomuxc.h 中定义，函数源码如下：
 ```
 static inline void IOMUXC_SetPinMux(uint32_t muxRegister,
-uint32_t muxMode,
-uint32_t inputRegister,
-uint32_t inputDaisy,
-uint32_t configRegister,
-uint32_t inputOnfield)
+									uint32_t muxMode,
+									uint32_t inputRegister,
+									uint32_t inputDaisy,
+									uint32_t configRegister,
+									uint32_t inputOnfield)
 {
-*((volatile uint32_t *)muxRegister) =
-IOMUXC_SW_MUX_CTL_PAD_MUX_MODE(muxMode) |
-IOMUXC_SW_MUX_CTL_PAD_SION(inputOnfield);
-if (inputRegister)
-{
-*((volatile uint32_t *)inputRegister) =
-IOMUXC_SELECT_INPUT_DAISY(inputDaisy);
-}
+	*((volatile uint32_t *)muxRegister) =
+		IOMUXC_SW_MUX_CTL_PAD_MUX_MODE(muxMode) |
+	IOMUXC_SW_MUX_CTL_PAD_SION(inputOnfield);
+	if (inputRegister)
+	{
+	*((volatile uint32_t *)inputRegister) =
+	IOMUXC_SELECT_INPUT_DAISY(inputDaisy);
+	}
 }
 ```
 
