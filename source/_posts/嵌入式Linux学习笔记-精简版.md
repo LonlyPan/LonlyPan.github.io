@@ -4537,6 +4537,62 @@ static inline void IOMUXC_SetPinConfig(uint32_t muxRegister,
 `IOMUXC_SetPinConfig(0x020E0068U, 0x5U, 0x00000000U, 0x0U, 0x020E02F4U, 0X10B0);`
 根据函数 IOMUXC_SetPinConfig 的源码可以知道，上面函数就是将寄存器 0x020E02F4 的值设置为 0X10B0。
 
+### I.MX6U GPIO配置
+ 
+`IOMUXC_SW_MUX_CTL_PAD_XX_XX`和`IOMUXC_SW_PAD_CTL_PAD_XX_XX`这两种寄存器都是配置IO的，注意是IO！不是GPIO，GPIO是一个IO众多复用功能中的一种。
+
+比如GPIO1_IO00这个IO可以复用为9个功能，GPIO1_IO00是其中的一种。如果我们要用GPIO1_IO00来点个灯、作为按键输入啥的就是使用其GPIO(通用输入输出)的功能。将其复用为GPIO以后还需要对其GPIO的功能进行配置，关于I.MX6U的GPIO请参考《IMX6UL参考手册》的第26章“Chapter 26 General Purpose Input/Ouput(GPIO)”，GPIO结构如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO结构图.png)
+
+在图中的 左下角 的IOMUXC框 图 里 面 就 有SW_MUX_CTL_PAD_\*和SW_PAD_CTL_PAD_\*两种寄存器。这两种寄存器前面说了用来设置IO的复用功能和IO属性配置。左上角部分的GPIO框图就是，当IO用作GPIO的时候需要设置的寄存器，一共有八个：DR、GDIR、PSR、ICR1、ICR2、EDGE_SEL、IMR和ISR。前面我们说了I.MX6U一共有GPIO1~GPIO5共五组GPIO，每组GPIO都有这8个寄存器。我们来看一下这8个寄存器都是什么含义。
+
+首先来看一下DR寄存器，此寄存器是数据寄存器，结构图如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/DR寄存器结构图.png)
+
+此寄存器是32位的，一个GPIO组最大只有32个IO，因此
+- DR寄存器中的每个位都对应一个GPIO。
+- 当GPIO被配置为输出功能以后，向指定的位写入数据那么相应的IO就会输出相应的高低电平，要设置GPIO1_IO00输出高电平，那么就应该设置GPIO1.DR=1。
+- 当GPIO被配置为输入模式以后，此寄存器就保存着对应IO的电平值。例如，当GPIO1_IO00这个引脚接地的话，那么GPIO1.DR的bit0就是0。
+
+看完DR寄存器，接着看GDIR寄存器，这是方向寄存器，用来设置某个GPIO的工作方向的，即输入/输出，GDIR寄存器结构如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GDIR寄存器.png)
+GDIR寄存器也是32位的，同样的，每个IO对应一个位，
+- 此寄存器用来设置某个IO的工作方向，是输入还是输出。
+- 要设置GPIO为输入的话就设置相应的位为0
+- 如果要设置为输出的话就设置为1。
+
+接下来看PSR寄存器，这是GPIO状态寄存器，如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/PSR状态寄存器.png)
+
+同样的PSR寄存器也是一个GPIO对应一个位，
+- 读取相应的位即可获取对应的GPIO的状态，也就是GPIO的高低电平值。
+- 功能和输入状态下的DR寄存器一样。
+
+接下来看ICR1和ICR2这两个寄存器，都是中断控制寄存器，ICR1用于配置低16个GPIO，ICR2用于配置高16个GPIO，ICR1寄存器如图所示：
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ICR1寄存器.png)
+ICR1用于IO0~15的配置，ICR2用于IO16~31的配置。ICR1寄存器中一个GPIO用两个位，这两个位用来配置中断的触发方式，和STM32的中断很类似，可配置的选线如表所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/中断触发配置.png)
+
+接下来看IMR寄存器，这是中断屏蔽寄存器，如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/IMR寄存器.png)
+IMR寄存器也是一个GPIO对应一个位，
+- IMR寄存器用来控制GPIO的中断禁止和使能，如果使能某个GPIO的中断，那么设置相应的位为1即可，反之，如果要禁止中断，那么就设置相应的位为0即可。
+
+例如，要使能GPIO1_IO00的中断，那么就可以设置GPIO1.MIR=1即可。
+
+接下来看寄存器ISR，ISR是中断状态寄存器，寄存器如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/ISR寄存器.png)
+
+ISR寄存器也是32位寄存器，一个GPIO对应一个位，只要某个GPIO的中断发生，那么ISR中相应的位就会被置1。所以，我们可以通过读取ISR寄存器来判断GPIO中断是否发生，相当于ISR中的这些位就是中断标志位。当我们处理完中断以后，必须清除中断标志位，清除方法就是向ISR中相应的位写1，也就是写1清零。
+
+最后来看一下EDGE_SEL寄存器，这是边沿选择寄存器，寄存器如图所示：
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/EDGE_SEL寄存器.png)
+
+EDGE_SEL寄存器用来设置边沿中断，这个寄存器会覆盖ICR1和ICR2的设置，同样是一个GPIO对应一个位。如果相应的位被置1，那么就相当与设置了对应的GPIO是上升沿和下降沿(双边沿)触发。例如，我们设置GPIO1.EDGE_SEL=1，那么就表示GPIO1_IO01是双边沿触发中断，无论GFPIO1_CR1的设置为多少，都是双边沿触发。
+
+关于GPIO的寄存器就讲解到这里，因为GPIO是最常用的功能，我们详细的讲解了GPIO的8个寄存器。
+
 
 #### I.MX6U GPIO时钟使能
 
@@ -5021,9 +5077,19 @@ ls /dev/sd*
 
 ### forlinx开发板实验
 
+#### 硬件原理图
+
+底板有两个LED灯
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698477152824.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698477182796.png)
+
+核心板还有一个（文档资料没给出，原理图上有 ）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698498795818.png)
+
+##### 程序编写
+
+
 ## BSP工程管理实验
 
 BSP 其实就是底层驱动开发，写些程序能够控制芯片以及外设、并准备好操作系统运行环境，然后留出 API 接口供后面的软件开发人员使用。而软件开发人员是不需要关心底层硬件的。简单来说就是链接硬件和软件的桥梁。所以就需要既懂硬件（驱动开发）也懂软件（API接口）。
