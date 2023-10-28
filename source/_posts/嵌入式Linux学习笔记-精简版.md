@@ -5124,6 +5124,7 @@ void led_init(void)
 	/* 1、初始化IO复用 */
 	IOMUXC_SetPinMux(IOMUXC_GPIO1_IO09_GPIO1_IO09,0);		/* 复用为GPIO1_IO0 */
     IOMUXC_SetPinMux(IOMUXC_SNVS_SNVS_TAMPER9_GPIO5_IO09,0);		/* 复用为GPIO1_IO0 */
+	IOMUXC_SetPinMux(IOMUXC_SNVS_SNVS_TAMPER5_GPIO5_IO05,0);		/* 复用为GPIO1_IO0 */
 	/* 2、、配置GPIO1_IO03的IO属性	
 	 *bit 16:0 HYS关闭
 	 *bit [15:14]: 00 默认下拉
