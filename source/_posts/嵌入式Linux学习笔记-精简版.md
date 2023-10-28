@@ -4443,7 +4443,7 @@ IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03,0);
 IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03,0X10B0);
 ```
 
-这 里 使 用 了 两 个 函 数 IOMUXC_SetPinMux 和 IOMUXC_SetPinConfig ， 其 中 函 数IOMUXC_SetPinMux是 用 来 设 置 IO复 用 功 能 的 ， 最 终 肯 定 设 置 的 是 寄 存 器“IOMUXC_SW_MUX_CTL_PAD_XX”。函数 IOMUXC_SetPinConfig 设置的是 IO 的上下拉、速度等的，也就是寄存器“IOMUXC_SW_PAD_CTL_PAD_XX”，所以上面两个函数其实就是上章中的：
+这里使用了两个函数IOMUXC_SetPinMux 和 IOMUXC_SetPinConfig ， 其中函数IOMUXC_SetPinMux是用来设置 IO复用功能的 ， 函数 IOMUXC_SetPinConfig 设置的是 IO 的上下拉、速度等的
 
 前面说过，配置 IO 需要两种寄存器。
 
