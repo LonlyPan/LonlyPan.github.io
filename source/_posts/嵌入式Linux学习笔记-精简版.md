@@ -4988,7 +4988,11 @@ ls /dev/sd*
 
 > 如果遇到sd启动，没有反应，一定要重新格式化sd卡，只需要使用windows的右键格式化，**不要使用其它软件进行格式化！！！**
 
+### forlinx开发板实验
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698477152824.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698477182796.png)
 ## BSP工程管理实验
 
 BSP 其实就是底层驱动开发，写些程序能够控制芯片以及外设、并准备好操作系统运行环境，然后留出 API 接口供后面的软件开发人员使用。而软件开发人员是不需要关心底层硬件的。简单来说就是链接硬件和软件的桥梁。所以就需要既懂硬件（驱动开发）也懂软件（API接口）。
