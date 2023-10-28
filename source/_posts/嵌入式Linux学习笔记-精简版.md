@@ -4438,17 +4438,51 @@ I.MX6U 的 GPIO 一共有 5 组：GPIO1、GPIO2、GPIO3、GPIO4 和 GPIO5，其�
 如果我们要编写代码，设置某个IO的复用功能的话就需要查阅第30章“Chapter32: IOMUX Controller(IOMUXC)”。
 
 #### I.MX6U IO配置
+示例：
 ```
 IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03,0);
 IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03,0X10B0);
 ```
 
-这里使用了两个函数IOMUXC_SetPinMux 和 IOMUXC_SetPinConfig ， 其中函数IOMUXC_SetPinMux是用来设置 IO复用功能的 ， 函数 IOMUXC_SetPinConfig 设置的是 IO 的上下拉、速度等的
+这里使用了两个函数
+- IOMUXC_SetPinMux ，设置 IO复用功能的
+- IOMUXC_SetPinConfig ，设置的是 IO 的上下拉、速度等的
 
-前面说过，配置 IO 需要两种寄存器。
+函数 IOMUXC_SetPinMux 在文件 fsl_iomuxc.h 中定义，函数源码如下：
+```
+static inline void IOMUXC_SetPinMux(uint32_t muxRegister,
+uint32_t muxMode,
+uint32_t inputRegister,
+uint32_t inputDaisy,
+uint32_t configRegister,
+uint32_t inputOnfield)
+```
 
- - SW_MUX_CTL_PAD_\*负责设置管脚使用什么复用功能，
- - SW_PAD_CTL_PAD_\*用来设置管脚的属性，比如在输出时什么属性，输入时什么属性。
+- muxRegister ： IO 的 复 用 寄 存 器 地 址 ， 比 如 GPIO1_IO03 的 IO 复 用 寄 存 器SW_MUX_CTL_PAD_GPIO1_IO03 的地址为 0X020E0068。
+- muxMode： IO 复用值，也就是 ALT0~ALT8，对应数字 0~8，比如要将 GPIO1_IO03 设置为 GPIO 功能的话此参数就要设置为 5。
+- inputRegister：外设输入 IO 选择寄存器地址，有些 IO 在设置为其他的复用功能以后还需要设置 IO 输入寄存器，比如 GPIO1_IO03 要复用为 UART1_RX 的话还需要设置寄存器UART1_RX_DATA_SELECT_INPUT，此寄存器地址为 0X020E0624。
+- inputDaisy：寄存器 inputRegister 的值，比如 GPIO1_IO03 要作为 UART1_RX 引脚的话此参数就是 1。
+- configRegister：未使用，函数 IOMUXC_SetPinConfig 会使用这个寄存器。
+- inputOnfield ： IO软件输入使能 ， 以GPIO1_IO03为 例 就 是 寄 存 器SW_MUX_CTL_PAD_GPIO1_IO03 的 SION 位(bit4)。如果需要使能 GPIO1_IO03 的软件输入功能的话此参数应该为 1，否则的话就为 0。
+
+我们实际使用时，参数是IOMUXC_GPIO1_IO03_GPIO1_IO03 ，这是个宏，在文件fsl_iomuxc.h 中有定义，NXP 的 SDK 库将一个 IO 的所有复用功能都定义了一个宏，比如GPIO1_IO03 就有如下 9 个宏定义：
+```
+IOMUXC_GPIO1_IO03_I2C1_SDA
+IOMUXC_GPIO1_IO03_GPT1_COMPARE3
+IOMUXC_GPIO1_IO03_USB_OTG2_OC
+IOMUXC_GPIO1_IO03_USDHC1_CD_B
+IOMUXC_GPIO1_IO03_GPIO1_IO03
+IOMUXC_GPIO1_IO03_CCM_DI0_EXT_CLK
+IOMUXC_GPIO1_IO03_SRC_TESTER_ACK
+IOMUXC_GPIO1_IO03_UART1_RX
+IOMUXC_GPIO1_IO03_UART1_TX
+```
+上面 9 个宏定义分别对应着 GPIO1_IO03 的九种复用功能，比如复用为 GPIO 的宏定义就是：
+`#define IOMUXC_GPIO1_IO03_GPIO1_IO03 0x020E0068U,0x5U, 0x00000000U,0x0U,0x020E02F4U`
+将这个宏带入到函数以后就是：
+`IOMUXC_SetPinMux (0x020E0068U, 0x5U, 0x00000000U, 0x0U, 0x020E02F4U, 0);`
+这样就与函数 IOMUXC_SetPinMux 的 6 个参数对应起来了，如果我们要将 GPIO1_IO03 复用为 I2C1_SDA 的话就可以使用如下代码：
+`IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_I2C1_SDA, 0);`
 
 GPIO功能图
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/GPIO功能图.png)
