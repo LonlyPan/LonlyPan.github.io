@@ -4384,6 +4384,13 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 
 ### 6ULL和6UL的区别
 
+I.MX6ULL相对于I.MX6UltraLite来说，主要是优化了其成本。与I.MX6UltraLite芯片是PIN-2-PIN兼容的，使的I.MX6ULL很容易在IMX6UL上重用，主要更改如下。
+1. 增加了EPD显示支持与EPDC/PXP的低端电子阅读器，相对于6sl7d系列也是一个低成本低功耗方案。
+2. 安全功能如CAAM/BEE/DryICE等主要用于POS应用的advancedsecurity被裁剪，但基本安全如HAB还是支持的。
+3. 多通道音频输入输出ESAI被添加，使其更好的支持音频，IMX6UL的SAI仍被保持。
+4. 优化功耗。
+5. EMV SIM模块被删除。
+ 
 参考资料
 - https://www.nxp.com/docs/en/application-note/AN5350.pdf
 
