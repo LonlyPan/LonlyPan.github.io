@@ -4390,7 +4390,7 @@ I.MX6ULL相对于I.MX6UltraLite来说，主要是优化了其成本。与I.MX6Ul
 3. 多通道音频输入输出ESAI被添加，使其更好的支持音频，IMX6UL的SAI仍被保持。
 4. 优化功耗。
 5. EMV SIM模块被删除。
-6. I.MX6ULL主频提高了，I.MX6UltraLite是528MHz,I.MX6ULL是800MHz
+6. I.MX6ULL主频提高了，I.MX6UltraLite是528MHz，I.MX6ULL是800MHz
  
 参考资料
 - https://www.nxp.com/docs/en/application-note/AN5350.pdf
