@@ -5663,7 +5663,7 @@ Forlinx没有蜂鸣器，有一个HC595串转并电路，这里测试以下。
 
 ### 74HC595介绍
 
-未测试
+**未测试**
 
 595有多种厂商品牌和型号。在这里，我们将使用德州仪器的SN74HC595N。如果您使用不同厂家的型号，请仔细阅读其数据表并记下差异。
 让我们来看看它的引脚排列。请注意，两个引脚的名称上有一条线；这意味着它们以“负逻辑”运行。
@@ -5703,6 +5703,12 @@ OE（输出使能）也是负逻辑，低电压时，锁存器里数据才能被
 |   SNVS_TAMPER7|  SHIFT_STCP   | 锁存器时钟|
 |  SNVS_TAMPER8     |   SHIFT_NOE  | 输出使能 |
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698581912121.png)
+
+我们这里主要是控制HC595_LCD_NPWREN，背光电源引脚。
+但经过研究屏幕板的原理图发现，HC595_LCD_NPWREN（PWRRGTON）实际是没有接入到电源控制中的（R19、R29未焊接），也就是电源硬件上已经使能了。
+所以本次实验作废
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698587008839.png)
+
 
 ### 程序编写
 
