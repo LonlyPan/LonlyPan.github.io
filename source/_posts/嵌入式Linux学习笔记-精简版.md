@@ -4363,11 +4363,10 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 
 ## 开发板介绍
 
-### 正点原子
-正点原子是I.MX6ULL
-
 不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
-我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
+
+### 正点原子
+正点原子是I.MX6ULL-MCIMX6Y2CVM08AB，所以主频最高792MHz
 
 - Y0系列：基础系列，只有528Mhz 一种主频，有工业级和消费级
 - Y1系列：比Y0多1个USB，添加1个CAN
@@ -4377,8 +4376,9 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
 
 ### Forlinx
-正点原子是I.MX6UltraLite
 
+Forlinx是I.MX6UltraLite- MCIMX6G2CVM85AB
+这里有个问题，从型号看，这颗芯片是工业级的，但官方宣传的是商业级，原因是EMMC不支持，工业级最大的EMMC只能到1G，而商业及的是8GB。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698543445710.png)
 
 
