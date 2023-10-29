@@ -4381,6 +4381,12 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698543445710.png)
 
+
+### 6ULL和6UL的区别
+
+参考资料
+- https://www.nxp.com/docs/en/application-note/AN5350.pdf
+
 ## I.MX6U启动方式详解
 
 STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的，然后stm32从flash中读取程序运行。
