@@ -5690,7 +5690,7 @@ OE（输出使能）也是负逻辑，低电压时，锁存器里数据才能被
 
 ### 硬件原理图
 
-硬件手册有关串转并的电路描述
+硬件手册有关串转并的电路描述。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698581846863.png)
 
 但要想找到四个控制引脚，还是需要一番功夫的。当对比核心板和底板原理图后，才能够知道四个引脚
@@ -5701,6 +5701,10 @@ OE（输出使能）也是负逻辑，低电压时，锁存器里数据才能被
 |   SNVS_TAMPER7|  SHIFT_STCP   | 锁存器时钟|
 |  SNVS_TAMPER8     |   SHIFT_NOE  | 输出使能 |
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698581912121.png)
+
+### 程序编写
+
+
 
 ## 按键输入实验
 
