@@ -5489,6 +5489,53 @@ void led_switch(int led, int status)
 }
 ```
 
+```
+#include "bsp_clk.h"
+#include "bsp_delay.h"
+#include "bsp_led.h"
+
+/*
+ * @description	: mian函数
+ * @param 		: 无
+ * @return 		: 无
+ */
+
+int main(void)
+{
+	clk_enable();		/* 使能所有的时钟 			*/
+	led_init();			/* 初始化led 			*/
+
+	while(1)			
+	{	
+		/* 打开LED0 */
+		led_switch(LED1,ON);		
+		delay(200);
+
+		/* 关闭LED0 */
+		led_switch(LED1,OFF);	
+		delay(200);
+
+		/* 打开LED0 */
+		led_switch(LED2,ON);		
+		delay(200);
+
+		/* 关闭LED0 */
+		led_switch(LED2,OFF);	
+		delay(200);
+
+		/* 打开LED0 */
+		led_switch(LED3,ON);		
+		delay(200);
+
+		/* 关闭LED0 */
+		led_switch(LED3,OFF);	
+		delay(200);
+	}
+	return 0;
+}
+
+
+```
 ## 蜂鸣器实验
 
 ### 硬件原理分析
