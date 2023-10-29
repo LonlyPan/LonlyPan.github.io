@@ -4378,7 +4378,7 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ### Forlinx
 
 Forlinx是I.MX6UltraLite- MCIMX6G2CVM85AB
-这里有个问题，从型号看，这颗芯片是工业级的，但官方宣传的是商业级，原因是EMMC不支持，工业级最大的EMMC只能到1G，而商业及的是8GB。
+这里有个问题，从型号看，这颗芯片是工业级的，但官方宣传的是商业级，原因是EMMC是商业级的，工业级最大的EMMC只能到1G，而商业及的是8GB。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698543445710.png)
 
 
