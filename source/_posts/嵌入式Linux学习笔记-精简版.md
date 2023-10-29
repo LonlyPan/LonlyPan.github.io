@@ -4364,7 +4364,7 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ## 开发板介绍
 
 ### 正点原子
-正点原子是6ULL
+正点原子是I.MX6ULL
 
 不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
 我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
@@ -4377,7 +4377,7 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
 
 ### Forlinx
-正点原子是6UL
+正点原子是I.MX6UltraLite
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698543445710.png)
 
@@ -4390,6 +4390,7 @@ I.MX6ULL相对于I.MX6UltraLite来说，主要是优化了其成本。与I.MX6Ul
 3. 多通道音频输入输出ESAI被添加，使其更好的支持音频，IMX6UL的SAI仍被保持。
 4. 优化功耗。
 5. EMV SIM模块被删除。
+6. I.MX6ULL主频提高了，I.MX6UltraLite是528MHz,I.MX6ULL是800MHz
  
 参考资料
 - https://www.nxp.com/docs/en/application-note/AN5350.pdf
