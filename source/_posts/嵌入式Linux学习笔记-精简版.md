@@ -5710,9 +5710,6 @@ OE（输出使能）也是负逻辑，低电压时，锁存器里数据才能被
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698587008839.png)
 
 
-### 程序编写
-
-
 
 ## 按键输入实验
 
