@@ -5663,6 +5663,8 @@ Forlinx没有蜂鸣器，有一个HC595串转并电路，这里测试以下。
 
 ### 74HC595介绍
 
+未测试
+
 595有多种厂商品牌和型号。在这里，我们将使用德州仪器的SN74HC595N。如果您使用不同厂家的型号，请仔细阅读其数据表并记下差异。
 让我们来看看它的引脚排列。请注意，两个引脚的名称上有一条线；这意味着它们以“负逻辑”运行。
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698575770990.png)
