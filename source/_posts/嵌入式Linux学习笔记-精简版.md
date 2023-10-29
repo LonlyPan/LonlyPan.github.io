@@ -4361,6 +4361,26 @@ BL指令相比B指令，在跳转之前会在寄存器LR(R14)中保存当前PC�
  - [ARM® Cortex™-A Series Programmer's Guide  Version: 4.0](https://developer.arm.com/documentation/den0013/d)
  - [ARM ArchitectureReference Manual ARMv7-A and ARMv7-R edition.pdf](https://developer.arm.com/documentation/ddi0406/cd)
 
+## 开发板介绍
+
+### 正点原子
+正点原子是6ULL
+
+不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
+我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
+
+- Y0系列：基础系列，只有528Mhz 一种主频，有工业级和消费级
+- Y1系列：比Y0多1个USB，添加1个CAN
+- Y2系列：接口丰富，主频可选，相应的价格也比较贵
+- Y7系列：增加电子墨水屏接口，没有工业级
+  
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
+
+### Forlinx
+正点原子是6UL
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698543445710.png)
+
 ## I.MX6U启动方式详解
 
 STM32 也有 boot 选择，一般我们的程序是直接下载到内部flash的，然后stm32从flash中读取程序运行。
@@ -5794,15 +5814,7 @@ I.MX6U的系统主频为528MHz，有些型号可以跑到696MHz，但是默认�
 4. 设置寄存器CCSR的PLL1_SW_CLK_SEL位，重新将pll1_sw_clk的时钟源切换回pll1_main_clk，切换回来以后的pll1_sw_clk就等于1056MHz。
 5. 最后设置寄存器CCM_CACRR的ARM_PODF为2分频，I.MX6U的内核主频就为1056/2=528MHz。
 
-不同型号芯片的主频时不同的，具体看手册 i.MX 6ULL Applications Processors for Consumer Products ，第一章节的表格描述
-我的型号时：MCIMX6Y2CVM08AB，所以主频最高792MHz
 
-- Y0系列：基础系列，只有528Mhz 一种主频，有工业级和消费级
-- Y1系列：比Y0多1个USB，添加1个CAN
-- Y2系列：接口丰富，主频可选，相应的价格也比较贵
-- Y7系列：增加电子墨水屏接口，没有工业级
-  
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697872089035.png)
 
 ### PFD时钟设置
 
