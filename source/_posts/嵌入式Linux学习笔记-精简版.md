@@ -7990,6 +7990,29 @@ setmem /32	0x021b0848 =	0x40404046	// MPRDDLCTL PHY0
 setmem /32	0x021b0850 =	0x40405650	// MPWRDLCTL PHY0
 ```
 
+
+压力测试
+```
+DDR Freq: 547 MHz
+t0.1: data is addr test
+t0: memcpy11 SSN test
+t1: memcpy8 SSN test
+t2: byte-wise SSN test
+t3: memcpy11 random pattern test
+t4: IRAM_to_DDRv2 test
+t5: IRAM_to_DDRv1 test
+t6: read noise walking ones and zeros test
+
+DDR Freq: 552 MHz
+t0.1: data is addr test
+t0: memcpy11 SSN test
+t1: memcpy8 SSN test
+Address of test1 failure: 0x90000002
+Data initally read was:   0x00000010
+Data re-read is:          0x00000010
+But pattern was:          0x0001
+Error: failed to run stress test!!!
+```
 ## RGB-LCD
 
 ### LCD 简介
@@ -8661,6 +8684,7 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 #### 程序编写
 
 只需要修改接口初始化时序
+
 ```
 	} else if(lcdid == ATK7016) {
 		tftlcd_dev.height = 600;	
