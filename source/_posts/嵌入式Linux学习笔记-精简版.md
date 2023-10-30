@@ -8634,6 +8634,14 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 然后是文件 bsp_lcdapi函数，里面都是一些 LCD 的 API 操作函数，比如画线、画矩形、画圆、显示数字、显示字符和字符串等函数。这些函数都是从 STM32 例程里面移植过来的，如果学习过ALIENTEK 的 STM32 教程的话就会很熟悉，都是一些纯软件的东西。
 
 
+### Forlinx
+
+显示屏时序
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698676278906.png)
+
+#### 程序编写
+
+
 ## RTC
 
 跳过
