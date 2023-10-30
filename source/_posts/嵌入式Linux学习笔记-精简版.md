@@ -7349,6 +7349,9 @@ UART1 的配置步骤如下：
 在做实验之前需要用 USB 串口线将串口 1 和电脑连接起来，并且还需要设置 JP5 跳线帽，将串口 1 的 RXD、TXD 两个引脚分别与 P116、P117 连接一起，如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697982097135.png)
 
+普通的串口调试助手用不了，接收到的是乱码，原因是XCOM不支持UTF-8格式（Ubuntu中的程序是UTF-8格式），但MobaXterm 支持，使用没问题
+
+
 ### 程序编写
 
 ```
