@@ -8660,6 +8660,23 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 
 #### 程序编写
 
+只需要修改接口初始化时序
+```
+	} else if(lcdid == ATK7016) {
+		tftlcd_dev.height = 600;	
+		tftlcd_dev.width = 1024;
+		tftlcd_dev.vspw = 3;
+		tftlcd_dev.vbpd = 23;
+		tftlcd_dev.vfpd = 12;
+		tftlcd_dev.hspw = 20;
+		tftlcd_dev.hbpd = 160;
+		tftlcd_dev.hfpd = 160;
+		lcdclk_init(32, 3, 5);	/* 初始化LCD时钟 51.2MHz */
+	} 
+```
+
+#### 程序编写
+
 
 ## RTC
 
