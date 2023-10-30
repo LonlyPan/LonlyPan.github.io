@@ -7970,7 +7970,25 @@ DDR Test Tool 支持 DDR3 超频测试，只要指定起始频率和终止频率
 目标型号选 **MX6UL**，貌似选MX6ULL也是可以的
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698675911470.png)
 
-
+测试数据：
+```
+//=============================================================================			
+// Calibration setup.			
+//=============================================================================			
+setmem /32	0x021b0800 =	0xA1390003	// DDR_PHY_P0_MPZQHWCTRL, enable both one-time & periodic HW ZQ calibration.
+			
+// For target board, may need to run write leveling calibration to fine tune these settings.			
+setmem /32	0x021b080c  =	0x00000000	
+			
+//Read DQS Gating calibration			
+setmem /32	0x021b083c =	0x014C014C	// MPDGCTRL0 PHY0
+			
+//Read calibration			
+setmem /32	0x021b0848 =	0x40404046	// MPRDDLCTL PHY0
+			
+//Write calibration                     			
+setmem /32	0x021b0850 =	0x40405650	// MPWRDLCTL PHY0
+```
 
 ## RGB-LCD
 
