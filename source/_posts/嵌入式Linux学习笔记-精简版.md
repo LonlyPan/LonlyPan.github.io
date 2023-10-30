@@ -5966,6 +5966,26 @@ Makefile在之前章节的基础上修改变量TARGET为key，在变量INCDIRS�
 
 烧写成功以后将SD卡插到开发板的SD卡槽中，然后复位开发板。如果代码运行正常的话LED0会以大约500ms周期闪烁，按下开发板上的KEY0按键，蜂鸣器打开，再按下KEY0按键，蜂鸣器关闭。
 
+## ONOFF（按键）
+
+意外发现开发板上还有一个ONOFF（按键）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698671505446.png)
+阅读芯片手册Chapter 10-Clock and Power Management-10.5 ONOFF (Button)，原文翻译如下
+
+芯片支持使用按钮输入信号来请求 PMU 更改主 SoC 电源状态（即开或关）。 SNVS_LP 内部的 ONOFF 逻辑允许直接连接到 PMIC 或其他稳压器设备。 该逻辑获取按钮输入信号，然后输出 pmic_en_b 和 set_pwr_off_irq 信号。 PMIC 逻辑还支持 SNVS_LP 篡改逻辑，该逻辑允许在关闭状态下发生篡改事件时唤醒系统。 该逻辑有两种不同的操作模式（哑模式和智能模式）。 
+Dumb PMIC 模式使用 pmic_en_b 发出打开和关闭的电平信号。 Dumb pmic 模式有许多不同的配置选项，其中包括（去抖、关闭到开启时间和最大超时）。
+• 防抖：防抖配置支持0 毫秒、50 毫秒、100 毫秒和500 毫秒。 去抖用于生成 set_pwr_off_irq 中断。 当处于 ON 状态并且按下按钮的时间长于去抖时间时，会生成 set_pwr_off_irq。 
+• 关闭到开启时间：关闭到开启配置支持0 毫秒、50 毫秒、100 毫秒和500 毫秒。 此配置支持在达到配置的按钮按下时间后请求开机所需的时间。 一旦按下按钮的时间超过配置时间，状态机将从 OFF 状态转换为 ON 状态。
+• 最大超时：最大超时配置支持5 秒、10 秒、15 秒和禁用。 此配置支持按下按钮达到定义的时间后请求断电所需的时间。 Dumb PMIC 模式使用 2 状态状态机，如下所示。 pmic_en_b 的输出由状态机的状态生成。
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698671670253.png)
+
+Smart PMIC 模式旨在连接到另一个 PMIC。 pmic_en_b 信号发出脉冲而不是电平信号。 此模式唯一可用的配置选项是用于 set_pwr_off_irq 的去抖动配置。
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698671673859.png)
+
+> 简单来说，这个按键可以实现长按开关系芯片。
+> 并且按键自带消抖（时间可设），关机长按时间可设置（或者禁用），开机长按时间可设置
+> 
 ## 主频和时钟配置实验
 
 系统会有时钟默认配置，所以不修改的时钟理论是不需要再单独设置，保持默认即可。但如果该时钟的上一级时钟更改了，就要看是否会影响到默认设置再做修改。
