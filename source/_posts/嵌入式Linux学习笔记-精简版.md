@@ -7646,6 +7646,9 @@ void raise(int sig_nr)
 > - [/libgcc/config/arm/lib1funcs.S:1331：对‘raise’未定义的引用](https://blog.csdn.net/weixin_45309916/article/details/108882748)
 > - [lib1funcs.asm undefined reference to raise'](https://blog.csdn.net/android_lee/article/details/19198953)
 
+
+### Forlinx
+
 ## Printf
 
 本章实验所需要移植的源码已经放到了开发板光盘中，路径为：1、例程源码->5、模块驱动源码->2、格式化函数源码->stdio，文件夹 stdio 里面的文件就是我们要移植的源码文件。本章实验在上一章例程的基础上完成，将 stdio 文件夹复制到实验工程根目录中，stdio 里面有两个文件夹：include 和 lib，这两个文件夹里面的内容如图 22.3.2 所示：
