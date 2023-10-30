@@ -7649,6 +7649,11 @@ void raise(int sig_nr)
 
 ### Forlinx
 
+
+#### 硬件原理图
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698673553259.png)
+
+
 ## Printf
 
 本章实验所需要移植的源码已经放到了开发板光盘中，路径为：1、例程源码->5、模块驱动源码->2、格式化函数源码->stdio，文件夹 stdio 里面的文件就是我们要移植的源码文件。本章实验在上一章例程的基础上完成，将 stdio 文件夹复制到实验工程根目录中，stdio 里面有两个文件夹：include 和 lib，这两个文件夹里面的内容如图 22.3.2 所示：
