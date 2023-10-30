@@ -7349,7 +7349,7 @@ UART1 的配置步骤如下：
 在做实验之前需要用 USB 串口线将串口 1 和电脑连接起来，并且还需要设置 JP5 跳线帽，将串口 1 的 RXD、TXD 两个引脚分别与 P116、P117 连接一起，如图所示：
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1697982097135.png)
 
-普通的串口调试助手用不了，接收到的是乱码，原因是XCOM不支持UTF-8格式（Ubuntu中的程序是UTF-8格式），但MobaXterm 支持，使用没问题
+>XCOM串口调试助手用不了，接收到的是乱码，原因是XCOM不支持UTF-8格式（Ubuntu中的程序是UTF-8格式），但MobaXterm 支持，使用没问题
 
 
 ### 程序编写
@@ -7963,7 +7963,9 @@ DDR Test Tool 支持 DDR3 超频测试，只要指定起始频率和终止频率
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698240284310.png)
 图 23.5.4.1 中设置好起始频率为 400MHz，终止频率为 600MHz，设置好以后点击“StressTest”开启超频测试，超频测试时间比较久，大家耐心等待测试结果即可。超频测试完成以后结果如图 23.5.4.2 所示(因为硬件不同，测试结果可能有些许区别)：
 
+### Forlinx
 
+和正点原子一样，都是Nanya的，型号和容量也是一样的。
 ## RGB-LCD
 
 ### LCD 简介
