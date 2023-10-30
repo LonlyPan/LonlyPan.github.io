@@ -8636,6 +8636,7 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 
 ### Forlinx
 
+显示屏尺寸和分辨率与正点原子一致。时序也基本类似，个别不太一样。
 显示屏时序
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698676278906.png)
 
