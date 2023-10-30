@@ -6160,6 +6160,8 @@ void imx6u_clkinit(void)
 
 ### Forlinx
 
+I.MX6UltraLite是528MHz
+
 ## GPIO中断
 
 ### Cortex-A7 中断系统详解
