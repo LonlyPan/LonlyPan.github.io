@@ -8683,7 +8683,7 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 
 #### 程序编写
 
-只需要修改接口初始化时序，参考Forlinx设备树中参数。使用和上面正点原子一样得参数也没问题
+修改接口初始化时序，参考Forlinx设备树中参数。使用和上面正点原子一样得参数也没问题
 
 ```
 	} else if(lcdid == ATK7016) {
@@ -8699,6 +8699,29 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 	} 
 ```
 
+另外修改读取屏幕ID函数，写死返回值。因为Forlinx没有做自定义ID识别。这个是正点原子特有的，所以写死就行。
+
+```
+/*
+ * 读取屏幕ID，
+ * 描述：LCD_DATA23=R7(M0);LCD_DATA15=G7(M1);LCD_DATA07=B7(M2);
+ * 		M2:M1:M0
+ *		0 :0 :0	//4.3寸480*272 RGB屏,ID=0X4342
+ *		0 :0 :1	//7寸800*480 RGB屏,ID=0X7084
+ *	 	0 :1 :0	//7寸1024*600 RGB屏,ID=0X7016
+ *  	1 :0 :1	//10.1寸1280*800,RGB屏,ID=0X1018
+ *		1 :0 :0	//4.3寸800*480 RGB屏,ID=0X4384
+ * @param 		: 无
+ * @return 		: 屏幕ID
+ */
+unsigned short lcd_read_panelid(void)
+{
+
+	return ATK7016;	//7寸屏,1024*600分辨率
+
+
+}
+```
 #### 程序编写
 
 
