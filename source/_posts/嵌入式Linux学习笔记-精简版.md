@@ -8684,6 +8684,7 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 #### 程序编写
 
 修改接口初始化时序，参考Forlinx设备树中参数。使用和上面正点原子一样得参数也没问题
+另外需要在 `lcd_enable();			/* 使能LCD 	*/` 之前添加`delayms(2500);`，使得LCD初始化完全，原因见后面详述
 
 ```
 
