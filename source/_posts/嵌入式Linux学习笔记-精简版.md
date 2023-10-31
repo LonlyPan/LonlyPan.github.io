@@ -8683,7 +8683,7 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 
 #### 程序编写
 
-只需要修改接口初始化时序
+只需要修改接口初始化时序，参考Forlinx设备树中参数。使用和上面正点原子一样得参数也没问题
 
 ```
 	} else if(lcdid == ATK7016) {
