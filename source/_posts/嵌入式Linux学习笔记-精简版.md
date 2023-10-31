@@ -8750,10 +8750,14 @@ unsigned short lcd_read_panelid(void)
 }
 ```
 
+#### 关于Forlinx屏幕需要额外初始化延时问题
+如果我们不加额外的延时 2.5s ，屏幕驱动就会有问题（如下所示），花了一个晚上排查，才推测需要延时
+![led3-5](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-5.gif)
+
 ![led3-3](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-3.gif)
 #### 程序编写
 
-
+![led3-4](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-4.gif)
 ## RTC
 
 跳过
