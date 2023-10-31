@@ -8755,6 +8755,7 @@ unsigned short lcd_read_panelid(void)
 ![led3-5](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-5.gif)
 
 将延时加长，会发现和正点原子的屏幕在初始化时，表现是不一样的，推测两块屏的素质不一样，正点原子的初始化快，而Forlinx则慢很多，因此需要延时
+
 ![正点原子屏](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-3.gif)
 
 ![Forlinx屏](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-4.gif)
