@@ -8686,6 +8686,179 @@ void lcd_fill(unsigned    short x0, unsigned short y0,
 修改接口初始化时序，参考Forlinx设备树中参数。使用和上面正点原子一样得参数也没问题
 
 ```
+
+*
+ * @description	: 始化LCD
+ * @param 		: 无
+ * @return 		: 无
+ */
+void lcd_init(void)
+{
+	unsigned short lcdid = 0;
+	lcdid = lcd_read_panelid();		/* 读取屏幕ID值 		*/
+	tftlcd_dev.id = lcdid;
+	lcdgpio_init();			/* 初始化IO 			*/
+	lcd_reset();			/* 复位LCD  			*/
+	delayms(10);			/* 延时10ms 			*/
+	lcd_noreset();			/* 结束复位 			*/
+	/* TFTLCD参数结构体初始化 */
+	if(lcdid == ATK4342) {
+		tftlcd_dev.height = 272;	
+		tftlcd_dev.width = 480;
+		tftlcd_dev.vspw = 1;
+		tftlcd_dev.vbpd = 8;
+		tftlcd_dev.vfpd = 8;
+		tftlcd_dev.hspw = 1;
+		tftlcd_dev.hbpd = 40;
+		tftlcd_dev.hfpd = 5; 	
+		lcdclk_init(27, 8, 8);	/* 初始化LCD时钟 10.1MHz */
+	} else if(lcdid == ATK4384) {
+		tftlcd_dev.height = 480;	
+		tftlcd_dev.width = 800;
+		tftlcd_dev.vspw = 3;
+		tftlcd_dev.vbpd = 32;
+		tftlcd_dev.vfpd = 13;
+		tftlcd_dev.hspw = 48;
+		tftlcd_dev.hbpd = 88;
+		tftlcd_dev.hfpd = 40;
+		lcdclk_init(42, 4, 8);	/* 初始化LCD时钟 31.5MHz */
+	} else if(lcdid == ATK7084) {
+		tftlcd_dev.height = 480;	
+		tftlcd_dev.width = 800;
+		tftlcd_dev.vspw = 1;
+		tftlcd_dev.vbpd = 23;
+		tftlcd_dev.vfpd = 22;
+		tftlcd_dev.hspw = 1;
+		tftlcd_dev.hbpd = 46;
+		tftlcd_dev.hfpd = 210;	
+		lcdclk_init(30, 3, 7);	/* 初始化LCD时钟 34.2MHz */
+	} else if(lcdid == ATK7016) {
+		tftlcd_dev.height = 600;	
+		tftlcd_dev.width = 1024;
+		tftlcd_dev.vspw = 3;
+		tftlcd_dev.vbpd = 20;
+		tftlcd_dev.vfpd = 12;
+		tftlcd_dev.hspw = 20;
+		tftlcd_dev.hbpd = 140;
+		tftlcd_dev.hfpd = 160;
+		lcdclk_init(32, 3, 5);	/* 初始化LCD时钟 51.2MHz */
+	} else if(lcdid == ATK1018) {
+		tftlcd_dev.height = 800;	
+		tftlcd_dev.width = 1280;
+		tftlcd_dev.vspw = 3;
+		tftlcd_dev.vbpd = 10;
+		tftlcd_dev.vfpd = 10;
+		tftlcd_dev.hspw = 10;
+		tftlcd_dev.hbpd = 80;
+		tftlcd_dev.hfpd = 70;
+		lcdclk_init(35, 3, 5);	/* 初始化LCD时钟 56MHz */
+	} else if(lcdid == ATKVGA) {  
+		tftlcd_dev.height = 768;	
+		tftlcd_dev.width = 1366;
+		tftlcd_dev.vspw = 3;
+		tftlcd_dev.vbpd = 24;
+		tftlcd_dev.vfpd = 3;
+		tftlcd_dev.hspw = 143;
+		tftlcd_dev.hbpd = 213;
+		tftlcd_dev.hfpd = 70;
+		lcdclk_init(32, 3, 3);	/* 初始化LCD时钟 85MHz */
+	}
+	tftlcd_dev.pixsize = 4;				/* ARGB8888模式，每个像素4字节 */
+	tftlcd_dev.framebuffer = LCD_FRAMEBUF_ADDR;	
+	tftlcd_dev.backcolor = LCD_WHITE;	/* 背景色为白色 */
+	tftlcd_dev.forecolor = LCD_BLACK;	/* 前景色为黑色 */
+     
+	/* 初始化ELCDIF的CTRL寄存器
+     * bit [31] 0 : 停止复位
+     * bit [19] 1 : 旁路计数器模式
+     * bit [17] 1 : LCD工作在dotclk模式
+     * bit [15:14] 00 : 输入数据不交换
+     * bit [13:12] 00 : CSC不交换
+     * bit [11:10] 11 : 24位总线宽度
+     * bit [9:8]   11 : 24位数据宽度,也就是RGB888
+     * bit [5]     1  : elcdif工作在主模式
+     * bit [1]     0  : 所有的24位均有效
+	 */
+	 LCDIF->CTRL |= (1 << 19) | (1 << 17) | (0 << 14) | (0 << 12) |
+	 				(3 << 10) | (3 << 8) | (1 << 5) | (0 << 1);
+	/*
+     * 初始化ELCDIF的寄存器CTRL1
+     * bit [19:16]  : 0X7 ARGB模式下，传输24位数据，A通道不用传输
+	 */	
+	 LCDIF->CTRL1 = 0X7 << 16; 
+
+	 /*
+      * 初始化ELCDIF的寄存器TRANSFER_COUNT寄存器
+      * bit [31:16]  : 高度
+      * bit [15:0]   : 宽度
+	  */
+	LCDIF->TRANSFER_COUNT  = (tftlcd_dev.height << 16) | (tftlcd_dev.width << 0);
+
+	/*
+     * 初始化ELCDIF的VDCTRL0寄存器
+     * bit [29] 0 : VSYNC输出
+     * bit [28] 1 : 使能ENABLE输出
+     * bit [27] 0 : VSYNC低电平有效
+     * bit [26] 0 : HSYNC低电平有效
+     * bit [25] 0 : DOTCLK上升沿有效
+     * bit [24] 1 : ENABLE信号高电平有效
+     * bit [21] 1 : DOTCLK模式下设置为1
+     * bit [20] 1 : DOTCLK模式下设置为1
+     * bit [17:0] : vsw参数
+	 */
+	LCDIF->VDCTRL0 = 0;	//先清零
+	if(lcdid == ATKVGA) {   //VGA需要特殊处理
+		LCDIF->VDCTRL0 = (0 << 29) | (1 << 28) | (0 << 27) |
+					 (0 << 26) | (1 << 25) | (0 << 24) |
+					 (1 << 21) | (1 << 20) | (tftlcd_dev.vspw << 0);
+	} else {
+		LCDIF->VDCTRL0 = (0 << 29) | (1 << 28) | (0 << 27) |
+					 (0 << 26) | (0 << 25) | (1 << 24) |
+					 (1 << 21) | (1 << 20) | (tftlcd_dev.vspw << 0);
+	}
+
+	/*
+	 * 初始化ELCDIF的VDCTRL1寄存器
+	 * 设置VSYNC总周期
+	 */  
+	LCDIF->VDCTRL1 = tftlcd_dev.height + tftlcd_dev.vspw + tftlcd_dev.vfpd + tftlcd_dev.vbpd;  //VSYNC周期
+	 
+	 /*
+	  * 初始化ELCDIF的VDCTRL2寄存器
+	  * 设置HSYNC周期
+	  * bit[31:18] ：hsw
+	  * bit[17:0]  : HSYNC总周期
+	  */ 
+	LCDIF->VDCTRL2 = (tftlcd_dev.hspw << 18) | (tftlcd_dev.width + tftlcd_dev.hspw + tftlcd_dev.hfpd + tftlcd_dev.hbpd);
+
+	/*
+	 * 初始化ELCDIF的VDCTRL3寄存器
+	 * 设置HSYNC周期
+	 * bit[27:16] ：水平等待时钟数
+	 * bit[15:0]  : 垂直等待时钟数
+	 */ 
+	LCDIF->VDCTRL3 = ((tftlcd_dev.hbpd + tftlcd_dev.hspw) << 16) | (tftlcd_dev.vbpd + tftlcd_dev.vspw);
+
+	/*
+	 * 初始化ELCDIF的VDCTRL4寄存器
+	 * 设置HSYNC周期
+	 * bit[18] 1 : 当使用VSHYNC、HSYNC、DOTCLK的话此为置1
+	 * bit[17:0]  : 宽度
+	 */ 
+	
+	LCDIF->VDCTRL4 = (1<<18) | (tftlcd_dev.width);
+
+	/*
+     * 初始化ELCDIF的CUR_BUF和NEXT_BUF寄存器
+     * 设置当前显存地址和下一帧的显存地址
+	 */
+	LCDIF->CUR_BUF = (unsigned int)tftlcd_dev.framebuffer;
+	LCDIF->NEXT_BUF = (unsigned int)tftlcd_dev.framebuffer;
+    delayms(2500);
+	lcd_enable();			/* 使能LCD 	*/
+	delayms(10);
+	lcd_clear(LCD_WHITE);	/* 清屏 		*/
+}
 	} else if(lcdid == ATK7016) {
 		tftlcd_dev.height = 600;	
 		tftlcd_dev.width = 1024;
@@ -8722,6 +8895,8 @@ unsigned short lcd_read_panelid(void)
 
 }
 ```
+
+![led3-3](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-3.gif)
 #### 程序编写
 
 
