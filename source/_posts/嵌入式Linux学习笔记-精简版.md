@@ -8717,7 +8717,7 @@ void lcd_init(void)
 	 */
 	LCDIF->CUR_BUF = (unsigned int)tftlcd_dev.framebuffer;
 	LCDIF->NEXT_BUF = (unsigned int)tftlcd_dev.framebuffer;
-    delayms(2500);
+    delayms(2500);          /* 等待屏幕初始化完成 */
 	lcd_enable();			/* 使能LCD 	*/
 	delayms(10);
 	lcd_clear(LCD_WHITE);	/* 清屏 		*/
