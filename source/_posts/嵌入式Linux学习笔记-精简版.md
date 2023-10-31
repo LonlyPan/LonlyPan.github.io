@@ -8751,11 +8751,10 @@ unsigned short lcd_read_panelid(void)
 ```
 
 #### 关于Forlinx屏幕需要额外初始化延时问题
-如果我们不加额外的延时 2.5s ，屏幕驱动就会有问题（如下所示），花了个晚上排查，才推测需要延时
+如果我们不加额外的延时 2.5s ，屏幕驱动就会有问题（如下所示），花了两个晚上排查，才推测是需要延时
 ![led3-5](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-5.gif)
 
 将延时加长，会发现和正点原子的屏幕在初始化时，表现是不一样的，推测两块屏的素质不一样，正点原子的初始化快，而Forlinx则慢很多，因此需要延时
-
 ![正点原子屏](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-3.gif)
 
 ![Forlinx屏](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/led3-4.gif)
