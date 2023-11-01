@@ -8837,7 +8837,10 @@ AP3216 的设备地址为 0X1E，同几乎所有的 I2C 从器件一样，AP3216
 #### 硬件原理图
 
 这个是底板原理图的截图，和实物一致。但Forlinx官方提供的硬件参考手册却是PCF8563T/5芯片，以下图原理图为准
+其实和正点原子的一样
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698844974888.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698845573485.png)
 
 ## SPI
 
