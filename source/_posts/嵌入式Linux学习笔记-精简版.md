@@ -8848,6 +8848,9 @@ AP3216 的设备地址为 0X1E，同几乎所有的 I2C 从器件一样，AP3216
 7-bits I2C 地址: 0x32
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698846643060.png)
 
+初始化（仅使用时钟功能）
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1698847311184.png)
+
 #### 程序编写
 
 ## SPI
