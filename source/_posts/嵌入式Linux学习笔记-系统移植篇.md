@@ -131,6 +131,10 @@ Hit any key to stop autoboot:  0
 
 ### u-boot 命令
 
+#### 信息查询
+
+
+
 ### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
