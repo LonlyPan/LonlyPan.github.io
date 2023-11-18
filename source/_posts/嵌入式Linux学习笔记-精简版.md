@@ -8970,6 +8970,43 @@ chmod 777 imxdownload //给予 imxdownload 可执行权限
 ./imxdownload u-boot.bin /dev/sdd //烧写到 SD 卡中，不能烧写到/dev/sda 或 sda1 里面
 ```
 
+启动信息
+> v1.5 以后的出厂uboot中正点原子禁用了LCD，所以启动信息是没有LCD的参数的
+
+```
+
+
+U-Boot 2016.03 (Nov 18 2023 - 21:32:32 +0800)
+
+CPU:   Freescale i.MX6ULL rev1.1 792 MHz (running at 396 MHz)
+CPU:   Industrial temperature grade (-40C to 105C) at 24C
+Reset cause: POR
+Board: I.MX6U ALPHA|MINI
+I2C:   ready
+DRAM:  512 MiB
+MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+*** Warning - bad CRC, using default environment
+
+In:    serial
+Out:   serial
+Err:   serial
+switch to partitions #0, OK
+mmc0 is current device
+Net:   FEC1
+Error: FEC1 address not set.
+
+Normal Boot
+Hit any key to stop autoboot:  0
+=>
+```
+
+### u-boot 命令
+
+#### 信息查询
+- bdinfo 查看板子信息
+- printenv 输出环境变量信息
+- version 查看 uboot 的版本号
+
 ### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
