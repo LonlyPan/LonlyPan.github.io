@@ -9007,6 +9007,10 @@ Hit any key to stop autoboot:  0
 - printenv 输出环境变量信息
 - version 查看 uboot 的版本号
 
+#### 修改环境变量
+
+
+
 ### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
