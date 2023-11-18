@@ -66,11 +66,12 @@ git clone https://source.codeaurora.org/external/imx/linux-imx -b rel_imx_4.1.15
 **参考资料：**
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 - [NXP IMX6ULL老版本源码下载方法](https://blog.csdn.net/huohongpeng/article/details/106472024)
-## U-Boot移植
 
-uboot 移植的一般流程：
-1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
-2. 参考原厂开发板移植 uboot 到我们所使用的开发板
+
+
+
+## U-Boot使用实验
+ 
 ### alentek-uboot编译烧录测试
 
 1. 正点原子 uboot 复制到 ubuntu的linux -> uboot -> alentek_uboot下，解压
@@ -220,6 +221,11 @@ u32 get_cpu_speed_grade_hz(void)
 **参考资料：**
 - [修复使用 792MHz 的 I.MX6ULL，uboot显示主频为 69MHz](http://www.openedv.com/forum.php?mod=viewthread&tid=315050&highlight=uboot%2B%D6%F7%C6%B5)
 
+## U-Boot移植
+
+uboot 移植的一般流程：
+1. 在 uboot 中找到参考的开发平台，一般是原厂的开发板。
+2. 参考原厂开发板移植 uboot 到我们所使用的开发板
 ### uboot修改移植
 
 #### 1. 添加开发板默认配置文件
