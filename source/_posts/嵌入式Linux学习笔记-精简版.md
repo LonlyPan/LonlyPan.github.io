@@ -9040,6 +9040,9 @@ saveenv
 setenv author
 saveenv
 ```
+
+#### 内存操作
+
 ### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
