@@ -67,9 +67,6 @@ git clone https://source.codeaurora.org/external/imx/linux-imx -b rel_imx_4.1.15
 - [nfs下载镜像报错File lookup fail、“TTTTTTTTTTTTTTT”](https://blog.csdn.net/qq_41709234/article/details/123160029)
 - [NXP IMX6ULL老版本源码下载方法](https://blog.csdn.net/huohongpeng/article/details/106472024)
 
-
-
-
 ## U-Boot使用实验
  
 ### alentek-uboot编译烧录测试
@@ -131,6 +128,8 @@ Normal Boot
 Hit any key to stop autoboot:  0
 =>
 ```
+
+### u-boot 命令
 
 ### NXP-uboot编译烧录测试
 
