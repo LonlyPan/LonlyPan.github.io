@@ -8932,6 +8932,16 @@ NXP官方uboot下载地址github：https://github.com/nxp-imx
 
 ### alentek-uboot编译烧录测试
 
+```
+-c ：新建打包文件
+-t ：查看打包文件的内容含有哪些文件名
+-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中
+-j ：通过bzip2的支持进行压缩/解压缩
+-z ：通过gzip的支持进行压缩/解压缩
+-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来
+-f filename ：filename为要处理的文件
+-C dir ：指定压缩/解压缩的目录dir
+```
 1. 正点原子 uboot 复制到 ubuntu的linux -> uboot -> alentek_uboot下，解压
 
 ```
