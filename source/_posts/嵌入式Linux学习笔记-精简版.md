@@ -9007,9 +9007,31 @@ Hit any key to stop autoboot:  0
 - printenv 输出环境变量信息
 - version 查看 uboot 的版本号
 
-#### 修改环境变量
+#### 环境变量
 
+##### 修改环境变量
 
+所以使用命令 setenv 修改的是 DRAM中的环境变量值，修改以后要使用 saveenv 命令将修改后的环境变量保存到 flash 中，否则的话uboot 下一次重启会继续使用以前的环境变量值。
+
+```
+setenv bootdelay 5
+saveenv
+```
+
+修改的环境变量值可能会有空格，比如 bootcmd、bootargs 等，这个时候环境变量值就得用单引号括起来，比如下面修改环境变量 bootargs 的值：
+```
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+saveenv 
+```
+上面命令设置 bootargs 的值为“console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw”，其中“console=ttymxc0,115200”、“root=/dev/mmcblk1p2”、“rootwait”和“rw”相当于四组“值”，这四组“值”之间用空格隔开，所以需要使用单引号‘’将其括起来，表示这四组“值”都属于环境变量 bootargs。
+
+##### 新建环境变量
+
+还是 setenv
+```
+setenv author zuozhongkai
+saveenv
+```
 
 ### NXP-uboot编译烧录测试
 
