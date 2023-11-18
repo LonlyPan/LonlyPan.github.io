@@ -9033,6 +9033,13 @@ setenv author zuozhongkai
 saveenv
 ```
 
+##### 删除环境变量
+
+要删除一个环境变量只要给这个环境变量赋空值即可
+```
+setenv author
+saveenv
+```
 ### NXP-uboot编译烧录测试
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
