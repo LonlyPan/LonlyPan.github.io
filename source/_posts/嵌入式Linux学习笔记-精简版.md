@@ -9086,7 +9086,7 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 ```
 
-设置开发板网络信息
+##### 设置开发板网络信息
 - 开发板的 IP 地址和Ubuntu 主机同一网段，可设置成 192.168.0.xx，设置设置为192.168.0.50，最好先用ubuntu去ping以下这个地址，放置已经被使用了
 - Ubuntu 主机的地址为 192.168.0.254，因此 serverip 就是192.168.0.254。
 - ethaddr 为网络 MAC 地址，是一个 48bit 的地址，自定义。如果在同一个网段内有多个开发板的话一定要保证每个开发板的 ethaddr 是不同的，否则通信会有问题！
@@ -9099,6 +9099,48 @@ setenv netmask 255.255.255.0
 setenv serverip 192.168.0.254
 saveenv
 ```
+
+##### ping
+
+然后再uboot中ping主机
+>只能在 uboot 中 ping 其他的机器，其他机器不能 ping uboot，因为 uboot 没有对 ping命令做处理，如果用其他的机器 ping uboot 的话会失败！
+```
+=> ping 192.168.0.254
+FEC1 Waiting for PHY auto negotiation to complete.... done
+Using FEC1 device
+host 192.168.0.254 is alive
+```
+
+##### dhcp 命令
+dhcp 用于从路由器获取 IP 地址，替代前面网络设置命令。
+>dhcp是临时的，也就是重启后获取的网络信息就没了，需要重新获取，因此严格意义上并不能替代上面的网络设置命令。
+```
+=> dhcp
+BOOTP broadcast 1
+BOOTP broadcast 2
+DHCP client bound to address 192.168.0.109 (580 ms)
+*** Warning: no boot file name; using 'C0A8006D.img'
+Using FEC1 device
+TFTP from server 192.168.0.254; our IP address is 192.168.0.109
+Filename 'C0A8006D.img'.
+Load address: 0x80800000
+Loading: *
+TFTP error: 'File not found' (1)
+Not retrying...
+```
+开发板通过 dhcp 获取到的 IP 地址为 192.168.0.109。同时可以看到“warning：no boot file name;”、“TFTP from server 192.168.0.254”这样的字样。
+这是因为 DHCP 不单单是获取 IP 地址，其还会通过 TFTP 来启动 linux 内核。
+
+##### nfs 命令
+
+nfs(Network File System)网络文件系统，通过 nfs 可以在计算机之间通过网络来分享资源，比如我们将 linux 镜像和设备树文件放到 Ubuntu 中，然后在 uboot 中使用 nfs 命令将 Ubuntu 中的 linux 镜像和设备树下载到开发板的 DRAM 中。这样做的目的是为了方便调试 linux 镜像和设备树，也就是网络调试，通过网络调试是 Linux 开发中最常用的调试方法。
+
+在使用之前需要开启 Ubuntu 主机的 NFS 服务，并且要新建一个 NFS 使用的目录，以后所有要通过NFS 访问的文件都需要放到这个 NFS 目录中。Ubuntu 的 NFS 服务开启我们在前面已经详细讲解过了，包括 NFS 文件目录的创建
+uboot 中的 nfs 命令格式如下所示：
+`nfs [loadAddress] [[hostIPaddr:]bootfilename]`
+loadAddress 是要保存的 DRAM 地址，[[hostIPaddr:]bootfilename]是要下载的文件地址。这里我们将正点原子官方编译出来的 Linux 镜像文件 zImage 下载到开发板 DRAM 的 0x80800000这个地址处。正点原子编译出来的 zImage 文件已经放到了开发板光盘中，路径为：8、系统镜像->1、出厂系统镜像->2、kernel 镜像\linux-imx-4.1.15-2.1.0-gbfed875-v1.6 ->zImage。将文件zImage通 过FileZilla发 送 到Ubuntu中 的NFS目 录 下 ， 比 如 我 的 就 是 放 到/home/zuozhongkai/linux/nfs 这个目录下，完成以后的 NFS 目录如图 30.4.4.5 所示：
+
+
 #### 内存操作
 
 ### NXP-uboot编译烧录测试
