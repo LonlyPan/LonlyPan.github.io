@@ -9193,20 +9193,14 @@ TFTP_OPTIONS="-l -c -s"
 将 zImage 镜像文件 和 设备树 拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
 ```
 cp zImage /home/lonly/linux2023/tftpboot/
-cp imx6ull-14x14-emmc-7-1024x600-c.dtb /home/lonly/linux2023/tftpboot/
 cd /home/lonly/linux2023/tftpboot/
 chmod 777 zImage
-chmod 777 imx6ull-14x14-emmc-7-1024x600-c.dtb
 ```
 
 uboot启动，设置如下
 ```
-setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
-setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000'
-saveenv
+tftp 80800000 zImage
 ```
-重启`boot`
-
 显示如下：
 ```
 => boot
@@ -9225,26 +9219,27 @@ Loading: #################################################################
          204.1 KiB/s
 done
 Bytes transferred = 6785480 (6789c8 hex)
-Using FEC1 device
-TFTP from server 192.168.0.254; our IP address is 192.168.0.111
-Filename 'imx6ull-14x14-emmc-7-1024x600-c.dtb'.
-Load address: 0x83000000
-Loading: ###
-         233.4 KiB/s
-done
-Bytes transferred = 39327 (999f hex)
-Kernel image @ 0x80800000 [ 0x000000 - 0x6789c8 ]
-## Flattened Device Tree blob at 83000000
-   Booting using the fdt blob at 0x83000000
-   Using Device Tree in place at 83000000, end 8300c99e
-
-Starting kernel ...
 ```
 
 
 #### 内存操作
 
-### NXP-uboot编译烧录测试
+#### EMMC 和 SD 卡操作
+
+#### FAT 格式文件系统操作
+
+#### EXT 格式文件系统操作
+
+#### NAND 操作
+
+#### BOOT 操作
+
+#### 其他常用命令
+
+
+#### NXP-uboot编译烧录测试
+
+uboot 中还有其他一
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
 `sudo apt-get install libncurses5-dev`
