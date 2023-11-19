@@ -9041,6 +9041,50 @@ setenv author
 saveenv
 ```
 
+#### 网络操作命令
+I.MX6U-ALPHA 开发板有两个网口：ENET1 和 ENET2，一定要连接 ENET2
+开发板和主机 PC 都连接到同一个路由器上！同一网段
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1700357685229.png)
+网络相关环境变量
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记-精简版/1700357706197.png)
+
+先看一下自己的ubuntu地址
+```
+lonly@lonly-VirtualBox:~$ ifconfig
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.254  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::fbe8:f4e6:a19:36  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:f6:61:58  txqueuelen 1000  (以太网)
+        RX packets 1882  bytes 2020154 (2.0 MB)
+        RX errors 1  dropped 50  overruns 0  frame 0
+        TX packets 1207  bytes 118892 (118.8 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 19  base 0xd020  
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (本地环回)
+        RX packets 105  bytes 10177 (10.1 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 105  bytes 10177 (10.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+```
+
+设置开发板网络信息
+- 开发板的 IP 地址和Ubuntu 主机同一网段，可设置成 192.168.0.xx，设置设置为192.168.0.50，最好先用ubuntu去ping以下这个地址，放置已经被使用了
+- Ubuntu 主机的地址为 192.168.0.254，因此 serverip 就是192.168.0.254。
+- ethaddr 为网络 MAC 地址，是一个 48bit 的地址，自定义。如果在同一个网段内有多个开发板的话一定要保证每个开发板的 ethaddr 是不同的，否则通信会有问题！
+ 
+```
+setenv ipaddr 192.168.0.50
+setenv ethaddr b8:ae:1d:01:00:00
+setenv gatewayip 192.168.0.1
+setenv netmask 255.255.255.0
+setenv serverip 192.168.0.254
+saveenv
+```
 #### 内存操作
 
 ### NXP-uboot编译烧录测试
