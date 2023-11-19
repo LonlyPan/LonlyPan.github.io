@@ -9237,9 +9237,9 @@ Bytes transferred = 6785480 (6789c8 hex)
 #### 其他常用命令
 
 
-#### NXP-uboot编译烧录测试
+### NXP-uboot编译烧录测试
 
-uboot 中还有其他一
+
 
 首先在 Ubuntu 中安装 ncurses 库， 否则编译会报错，安装命令如下：
 `sudo apt-get install libncurses5-dev`
@@ -9248,6 +9248,8 @@ uboot 中还有其他一
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
 ```
+找到默认配置文件
+
 2. 创建sh文件
 ```
 vim mx6ull_14x14_emmc.sh
