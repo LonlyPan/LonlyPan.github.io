@@ -9000,6 +9000,14 @@ Hit any key to stop autoboot:  0
 =>
 ```
 
+这里报了一个错误：
+```
+*** Warning - bad CRC, using default environment
+```
+
+会导致我们后面使用 setenv 命令设置环境变量出错，所以这里需要解决一下
+
+
 ### u-boot 命令
 
 #### 信息查询
