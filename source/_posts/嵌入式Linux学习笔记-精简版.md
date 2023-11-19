@@ -9006,7 +9006,14 @@ Hit any key to stop autoboot:  0
 ```
 
 会导致我们后面使用 setenv 命令设置环境变量出错，所以这里需要解决一下
-
+```
+=> env default -a
+## Resetting to default environment
+=> saveenv
+Saving Environment to MMC...
+Writing to MMC(0)... done
+=>
+```
 
 ### u-boot 命令
 
