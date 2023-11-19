@@ -9146,6 +9146,102 @@ loadAddress 是要保存的 DRAM 地址，[[hostIPaddr:]bootfilename]是要下�
 
 ##### tftp命令
 
+前提必须先设置好开发板的网络参数和服务器地址。详见上文 `网络驱动修改`
+tftp 命令的作用和 nfs 命令一样，都是用于通过网络下载东西到 DRAM 中，只是 tftp 命令使用的 TFTP 协议，Ubuntu 主机作为 TFTP 服务器。因此需要在 Ubuntu 上搭建 TFTP 服务器，需要安装 tftp-hpa 和 tftpd-hpa，命令如下：
+
+需要在 Ubuntu 上搭建 TFTP 服务器，需要安装 tftp-hpa 和 tftpd-hpa，命令如下：
+```
+sudo apt-get install tftp-hpa tftpd-hpa
+sudo apt-get install xinetd
+```
+在用户目录下新建一个目录存放文件，命令如下：
+```
+mkdir /home/lonly/linux2023/tftpboot
+chmod 777 /home/lonly/linux2023/tftpboot
+```
+新建文件`sudo vi /etc/xinetd.d/tftp`，然后在里面输入如下内容：
+
+```
+server tftp
+{
+	socket_type	= dgram
+	protocol	= udp
+	wait	= yes
+	user	= root
+	server	= /usr/sbin/in.tftpd
+	server_args	= -s /home/lonly/linux2023/tftpboot/
+	disable	= no
+	per_source	= 11
+	cps	= 100 2
+	flags	= IPv4
+}
+```
+完了以后启动 tftp 服务，命令如下：
+`sudo service tftpd-hpa start`
+打开 `sudo vi /etc/default/tftpd-hpa` 文件，将其修改为如下所示内容：
+```
+# /etc/default/tftpd-hpa
+
+TFTP_USERNAME="tftp"
+TFTP_DIRECTORY="/home/lonly/linux2023/tftpboot"
+TFTP_ADDRESS=":69"
+TFTP_OPTIONS="-l -c -s"
+```
+重启 tftp 服务器：
+`sudo service tftpd-hpa restart`
+
+将 zImage 镜像文件 和 设备树 拷贝到 tftpboot 文件夹中，并且给予 zImage 相应的权限，命令如下：
+```
+cp zImage /home/lonly/linux2023/tftpboot/
+cp imx6ull-14x14-emmc-7-1024x600-c.dtb /home/lonly/linux2023/tftpboot/
+cd /home/lonly/linux2023/tftpboot/
+chmod 777 zImage
+chmod 777 imx6ull-14x14-emmc-7-1024x600-c.dtb
+```
+
+uboot启动，设置如下
+```
+setenv bootargs 'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw'
+setenv bootcmd 'tftp 80800000 zImage; tftp 83000000 imx6ull-14x14-emmc-7-1024x600-c.dtb; bootz 80800000 - 83000000'
+saveenv
+```
+重启`boot`
+
+显示如下：
+```
+=> boot
+Using FEC1 device
+TFTP from server 192.168.0.254; our IP address is 192.168.0.111
+Filename 'zImage'.
+Load address: 0x80800000
+Loading: #################################################################
+         #################################################################
+         #################################################################
+         #############################################################T ####
+         #################################################################
+         ###################################################T ##############
+         #################################################################
+         ########
+         204.1 KiB/s
+done
+Bytes transferred = 6785480 (6789c8 hex)
+Using FEC1 device
+TFTP from server 192.168.0.254; our IP address is 192.168.0.111
+Filename 'imx6ull-14x14-emmc-7-1024x600-c.dtb'.
+Load address: 0x83000000
+Loading: ###
+         233.4 KiB/s
+done
+Bytes transferred = 39327 (999f hex)
+Kernel image @ 0x80800000 [ 0x000000 - 0x6789c8 ]
+## Flattened Device Tree blob at 83000000
+   Booting using the fdt blob at 0x83000000
+   Using Device Tree in place at 83000000, end 8300c99e
+
+Starting kernel ...
+```
+
+
 #### 内存操作
 
 ### NXP-uboot编译烧录测试
