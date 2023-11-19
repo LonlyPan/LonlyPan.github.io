@@ -9006,9 +9006,8 @@ Hit any key to stop autoboot:  0
 ```
 
 会导致我们后面使用 setenv 命令设置环境变量出错，所以这里需要解决一下
+原因是uboot启动开始时，会从sd卡中读取环境变量。但因为我们之前没保存过，就会出现读取校验错误，我们这里手动保存一下，就解决问题了
 ```
-=> env default -a
-## Resetting to default environment
 => saveenv
 Saving Environment to MMC...
 Writing to MMC(0)... done
