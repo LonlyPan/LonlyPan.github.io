@@ -9248,7 +9248,7 @@ Bytes transferred = 6785480 (6789c8 hex)
 ```
 tar -jvxf uboot-imx-rel_imx_4.1.15_2.1.0_ga.tar.bz2 
 ```
-找到默认配置文件
+configs 目录下找到默认配置文件，mx6ull_14x14_evk_emmc_defconfig 作为默认配置文件
 
 2. 创建sh文件
 ```
