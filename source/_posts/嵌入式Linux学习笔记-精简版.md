@@ -9138,8 +9138,13 @@ nfs(Network File System)网络文件系统，通过 nfs 可以在计算机之间
 在使用之前需要开启 Ubuntu 主机的 NFS 服务，并且要新建一个 NFS 使用的目录，以后所有要通过NFS 访问的文件都需要放到这个 NFS 目录中。Ubuntu 的 NFS 服务开启我们在前面已经详细讲解过了，包括 NFS 文件目录的创建
 uboot 中的 nfs 命令格式如下所示：
 `nfs [loadAddress] [[hostIPaddr:]bootfilename]`
-loadAddress 是要保存的 DRAM 地址，[[hostIPaddr:]bootfilename]是要下载的文件地址。这里我们将正点原子官方编译出来的 Linux 镜像文件 zImage 下载到开发板 DRAM 的 0x80800000这个地址处。正点原子编译出来的 zImage 文件已经放到了开发板光盘中，路径为：8、系统镜像->1、出厂系统镜像->2、kernel 镜像\linux-imx-4.1.15-2.1.0-gbfed875-v1.6 ->zImage。将文件zImage通 过FileZilla发 送 到Ubuntu中 的NFS目 录 下 ， 比 如 我 的 就 是 放 到/home/zuozhongkai/linux/nfs 这个目录下，完成以后的 NFS 目录如图 30.4.4.5 所示：
+loadAddress 是要保存的 DRAM 地址，[[hostIPaddr:]bootfilename]是要下载的文件地址。
 
+我们将正点原子官方编译出来的 Linux 镜像文件 zImage 下载到开发板 DRAM 的 0x80800000这个地址处。路径为：8、系统镜像->1、出厂系统镜像->2、kernel 镜像\linux-imx-4.1.15-2.1.0-gbfed875-v1.6 ->zImage。将文件zImage通 过FileZilla发 送 到Ubuntu中 的NFS目 录 下 
+准备好以后就可以使用 nfs 命令来将 zImage 下载到开发板 DRAM 的 0X80800000 地址处，命令如下：
+`nfs 80800000 192.168.0.254:/home/lonly/linux2023/nfs/zImage`
+
+##### tftp命令
 
 #### 内存操作
 
