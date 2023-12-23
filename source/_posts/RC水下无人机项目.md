@@ -21,6 +21,8 @@ categories: 00-项目
 ## 前期调研
 
 ### 网站
+[5imx社区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700&filter=lastpost&orderby=lastpost)
+[rovmaker](http://rovmaker.cn/c/rov)
 [subcommittee.](https://subcommittee.com/forum/showthread.php?32640-433mhz-links-and-info-(Tim-s-Regatta-Seminar)&highlight=remote)
 [方舟模型](http://www.arkmodel.com/index.php?cPath=21)
 [模型吧](https://tieba.baidu.com/p/1734805169?pn=2)
@@ -29,7 +31,7 @@ categories: 00-项目
 [rc船吧](http://jump2.bdimg.com/f?kw=rc%E8%88%B9&ie=utf-8&tp=0)
 [openLRSng](https://github.com/openLRSng/openLRSngWiki/wiki/Hardware-Guide)
 [bluerobotics](https://bluerobotics.com/learn/bluerov2-assembly/)
-[rovmaker](http://rovmaker.cn/c/rov)
+
 ### 视频参考
 
 [rc submarine solidworks](https://www.youtube.com/watch?v=PGICQRAMXIA)
