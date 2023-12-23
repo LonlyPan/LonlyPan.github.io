@@ -18,7 +18,7 @@ categories: 00-项目
 
 
 [无人潜航器总体方案通过专家评审，产业化在即切入千亿市场](http://pg.jrj.com.cn/acc/Res/CN_RES/STOCK/2016/1/3/30b18633-fc61-4187-937e-51c359522034.pdf)
-## 前期调研
+## 学习参考
 
 ### 网站
 [5imx社区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700&filter=lastpost&orderby=lastpost)
