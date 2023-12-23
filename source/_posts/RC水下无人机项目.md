@@ -21,7 +21,7 @@ categories: 00-项目
 
 ## 学习参考
 
-### 产品主要参考资料：  
+### 主要参考资料：  
 
 [5iMX社区›遥控航海模型-【技术专栏】›潜艇模型讨论区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700)
 [凯旋号潜水艇-各种功能](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1241194&extra=page%3D7%26filter%3Dauthor%26orderby%3Ddateline) 
@@ -109,8 +109,7 @@ categories: 00-项目
 缺点：会对密封舱造成极大的内压变化（注水时水袋膨胀挤压内部空间，内压增大 或者 排水时水带压缩，内压减小）。容易造成漏水。
 
 水带可用唧筒（针筒）代替
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1610037616639.png)
-
+![1610037616639](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1610037616639.png)
 - [第一艘 1：144 基洛级潜水艇](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1508356&extra=page%3D2%26filter%3Dauthor%26orderby%3Ddateline&page=2)
 - [入模第一发：从这枚小鱼雷开始](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1440768&extra=page%3D3%26filter%3Dauthor%26orderby%3Ddateline)
 
@@ -169,7 +168,7 @@ categories: 00-项目
 **3**
 又名：
 循环气体静潜系统
-- ![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1610036069063.png)
+- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297516129.png)
  - [海底两万里—鹦鹉螺号潜艇制作进行时](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1526747&extra=page%3D2%26filter%3Dauthor%26orderby%3Ddateline)
   
  **4**
@@ -244,13 +243,10 @@ categories: 00-项目
 气瓶，下潜之后 调节 气瓶的 出气量
 始终 使得 潜艇内部 压力 高于水压，
 
-
 你好，我想问一下你的这个导弹在水下时是怎么密封的？
 自己做个圆把尾部顶上，因为头是密封的，里面有气，不会进水。
 
-
 ### 信号传输
-
 
 
 1B/s=8bps（b/s）、1KB/s=8Kbps（Kb/s）、1MB/s=8Mbps（Mb/s）。  
@@ -378,9 +374,9 @@ fm的比例控说实话对模拟电路技术要求很高，而且自己做了很
 
 接收端和发射端都使用 SX1278，功率不同。  
 采用 SX1278 方案，433MHz，水下测试1.5米正常。接收端：
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1609779168146.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297389013.png)
 可将发射功率增大至 1W（再高有法律限制）增加深度（实际待测）。  **大功率发射器：**
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1609779098754.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297367138.png)
 
 [本人潜艇小白，想请问大家的遥控潜艇都是用2.4G遥控吗](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1051654&extra=page%3D10%26filter%3Dauthor%26orderby%3Ddateline)
 
@@ -394,7 +390,7 @@ fm的比例控说实话对模拟电路技术要求很高，而且自己做了很
 [新手制作红鲨潜艇-](http://bbs.5imx.com/forum.php?mod=viewthread&tid=524335&extra=page%3D20%26filter%3Dauthor%26orderby%3Ddateline&page=2) 
 #### 遥控潜艇版实物图
 初版：  
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1609779325401.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297405179.png)
 改版，手机APP遥控
 [开源！用手机开船是一种什么样的体验？](https://www.bilibili.com/video/BV1cV411S7nA)
 ![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1609779374911]]]" )
@@ -442,10 +438,8 @@ http://bbs.5imx.com/forum.php?mod=viewthread&tid=1293524
 [超声波测距电路](https://wenku.baidu.com/view/6f595d6f58fafab069dc024c.html)
 
 ### 加速度
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1611278720894.png)
-
-![enter description here](https://LonlyPan.github.io/images/Posts/2020-10-13-遥控潜艇模型制作/1611278748637.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297425816.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297434776.png)
 
 ### 磁力传感器
 
