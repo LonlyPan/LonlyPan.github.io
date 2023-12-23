@@ -423,6 +423,28 @@ http://bbs.5imx.com/forum.php?mod=viewthread&tid=1293524
 [想建个仿生鱼潜水器讨论组](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1101521&extra=page%3D9%26filter%3Dauthor%26orderby%3Ddateline&page=2)
 [简易机器鱼](http://bbs.5imx.com/forum.php?mod=viewthread&tid=928650&extra=page%3D12%26filter%3Dauthor%26orderby%3Ddateline)
 
+## RC遥控
+
+## 控制板
+
+## 图传
+
+## 配件
+
+### 水下测距
+
+### 水下声呐
+
+### 深度检测
+
+### IMU惯性导航/定位
+
+### 漏水检测
+
+### 推进系统
+
+### 外壳
+
 ## 制作-方案验证
 
 ### 水下超声波测距
