@@ -561,9 +561,7 @@ DS-012 Pixhawk Autopilot v6X Standard
 
 ### 下潜方案
 
-
 ### 动力
-
 
 ## 配件
 
