@@ -436,6 +436,9 @@ http://bbs.5imx.com/forum.php?mod=viewthread&tid=1293524
 [超声波测距论文(含原理图、程序)](https://wenku.baidu.com/view/8b83de27dd36a32d73758147.html)
 
 [超声波测距电路](https://wenku.baidu.com/view/6f595d6f58fafab069dc024c.html)
+![pic_1618489809078](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/pic_1618489809078.png)
+![水下超声波检测](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波检测.png)
+![水下超声波探测原理图](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波探测原理图.png)
 
 ### 加速度
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297425816.png)
