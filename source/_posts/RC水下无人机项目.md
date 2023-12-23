@@ -21,6 +21,15 @@ categories: 00-项目
 
 ## 学习参考
 
+### 产品主要参考资料：  
+
+[5iMX社区›遥控航海模型-【技术专栏】›潜艇模型讨论区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700)
+[凯旋号潜水艇-各种功能](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1241194&extra=page%3D7%26filter%3Dauthor%26orderby%3Ddateline) 
+[关于电磁阀和水泵气泵](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1065379&extra=page%3D10%26filter%3Dauthor%26orderby%3Ddateline)
+[潜艇改造：配件选择参考](http://bbs.5imx.com/forum.php?mod=viewthread&tid=789531&extra=page%3D14%26filter%3Dauthor%26orderby%3Ddateline&page=1)
+[做一艘能潜水的攻击潜艇，顺便改一下原来做的喇叭牌海狼小潜艇](http://bbs.5imx.com/forum.php?mod=viewthread&tid=837768&extra=&page=9)
+
+
 ### 网站
 [5imx社区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700&filter=lastpost&orderby=lastpost)
 [rovmaker](http://rovmaker.cn/c/rov)
@@ -39,41 +48,21 @@ categories: 00-项目
 [Mazu Sensor Board : Assembly instructions](https://www.youtube.com/watch?v=tpPX1rwJyAw&feature=emb_logo)
 [part2: Assembling an ROV today! BlueROV mkII](https://www.youtube.com/watch?v=uCO2BKlrRLk)
 [ROV MAKER](https://www.youtube.com/channel/UCSzkO2WNCYh4BSL6FSEijzw/videos?view=0&sort=dd&flow=grid)
-
-### 国外网站制作参考
-
-
 [Engel's Akula II   Build log](http://www.cliffhangershideout.com/Akula/Akula-log.html)
-
  [1. 潜艇紧急上浮时角度是否可以大于30度？](https://bbs.tiexue.net/post2_8297233_1.html)
 
 ### 店铺
-
 [水下机器人控制系统 电子舱体 ardusub 密封舱 ROV 竞赛](https://item.taobao.com/item.htm?spm=2013.1.w4023-23150242545.7.50211954kR4MnF&id=626813080975)
 
 
-主要参考：  
-[5iMX社区›遥控航海模型-【技术专栏】›潜艇模型讨论区](http://bbs.5imx.com/forum.php?mod=forumdisplay&fid=700)
 
-[凯旋号潜水艇-各种功能](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1241194&extra=page%3D7%26filter%3Dauthor%26orderby%3Ddateline) 
-
-[关于电磁阀和水泵气泵](http://bbs.5imx.com/forum.php?mod=viewthread&tid=1065379&extra=page%3D10%26filter%3Dauthor%26orderby%3Ddateline)
-
-
-[潜艇改造：配件选择参考](http://bbs.5imx.com/forum.php?mod=viewthread&tid=789531&extra=page%3D14%26filter%3Dauthor%26orderby%3Ddateline&page=1)
-
-[做一艘能潜水的攻击潜艇，顺便改一下原来做的喇叭牌海狼小潜艇](http://bbs.5imx.com/forum.php?mod=viewthread&tid=837768&extra=&page=9)
-
-### 下潜
+### 下潜方式
 
 [无刷终极版亚特兰蒂斯号开始之制作了](http://bbs.5imx.com/forum.php?mod=viewthread&tid=900532&extra=page%3D12%26filter%3Dauthor%26orderby%3Ddateline&page=3)
-
 [水泵沉浮密封舱制作的一些经验，，希望对想要做的朋友一些提示](http://bbs.5imx.com/forum.php?mod=viewthread&tid=891492)
 
 [通过控制进水排水量来实现潜艇在水中的深度](http://bbs.5imx.com/forum.php?mod=viewthread&tid=989320&extra=page%3D11%26filter%3Dauthor%26orderby%3Ddateline)
-
 [水囊用什么做好那，冲水不均匀，不会导致侧偏么](http://bbs.5imx.com/forum.php?mod=viewthread&tid=890015&extra=page%3D12%26filter%3Dauthor%26orderby%3Ddateline)
-
 [关于让潜艇更逼真的上浮和下潜的想法，气泵水泵二合一，不知是否能增加上浮下潜的速度](http://bbs.5imx.com/forum.php?mod=viewthread&tid=688391&extra=page%3D16%26filter%3Dauthor%26orderby%3Ddateline)
 #### 冲浅
 
