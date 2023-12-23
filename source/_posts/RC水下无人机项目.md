@@ -425,66 +425,14 @@ http://bbs.5imx.com/forum.php?mod=viewthread&tid=1293524
 
 ## RC遥控
 
-## 控制板
-
-## 图传
-
-## 配件
-
-### 水下测距
-
-### 水下声呐
-
-### 深度检测
-
-### IMU惯性导航/定位
-
-### 漏水检测
-
-### 推进系统
-
-### 外壳
-
-## 制作-方案验证
-
-### 水下超声波测距
-
-[超声波测距仪原理图+PCB源文件+程序](https://www.cirmall.com/circuit/3873)
-
-[超声波测距原理与制作](https://zhuanlan.zhihu.com/p/38453131)
-
-[一体化超声波测距电路图](http://blog.sina.com.cn/s/blog_68541adc01017ujg.html)
-
-[超声波测距论文(含原理图、程序)](https://wenku.baidu.com/view/8b83de27dd36a32d73758147.html)
-
-[超声波测距电路](https://wenku.baidu.com/view/6f595d6f58fafab069dc024c.html)
-![pic_1618489809078](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/pic_1618489809078.png)
-![水下超声波检测](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波检测.png)
-![水下超声波探测原理图](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波探测原理图.png)
-
-### 加速度
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297425816.png)
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297434776.png)
-
-### 磁力传感器
-
-[Ultimate Sensor Fusion Solution - MPU9250](https://www.tindie.com/products/onehorse/ultimate-sensor-fusion-solution-mpu9250/)
-[BNO055 VS 恩智浦 FXOS8700 + FXAS21002](https://forums.adafruit.com/viewtopic.php?f=8&t=140702)
-[Guides for product: Adafruit Precision NXP 9-DOF Breakout Board](https://learn.adafruit.com/products/3463/guides)
-[Overview](https://learn.adafruit.com/comparing-gyroscope-datasheets)
-[BNO055 and MPU9250 "Roll" indication is correct in static position, wrong when moving.](https://github.com/kriswiner/BNO055/issues/11) 
-[Next generation sensor platform ... MPU9250 vs. LSM9DS0](https://groups.google.com/g/diyrovers/c/TZJIvRdDrls/m/xOc2VxlyU_QJ)
-[9 DoF Motion Sensor Bakeoff](https://github.com/kriswiner/MPU6050/wiki/9-DoF-Motion-Sensor-Bakeoff)
-[LSM9DS1 vs. MPU-9250 vs. BMX055](https://github.com/kriswiner/MPU6050/issues/6)
-
-### 开源控制器
-
+### 参考遥控器资料
 - [Autopilot](https://ardupilot.org/copter/index.html)：开源固件
  [ArduPilot-Github](https://github.com/ArduPilot) 
 - [Pixhawk](https://docs.px4.io/v1.9.0/en/)：软硬件标准，平行于Autopilot
 [PX4 Autopilot User Guide](https://docs.px4.io/master/en/)
 DS-012 Pixhawk Autopilot v6X Standard
 - Holybro：无人机
+
 
 #### 开源
 [智能卡存储单元EEPROM，Flash和FRAM之间的性能比较](https://blog.csdn.net/badboy2008/article/details/6221787)
@@ -597,5 +545,63 @@ DS-012 Pixhawk Autopilot v6X Standard
 #### Multiprotocol TX Module
 
 [DIY Multiprotocol TX Module](https://www.rcgroups.com/forums/showthread.php?2165676-DIY-Multiprotocol-TX-Module)
+
+
+## 控制板
+
+## 图传
+
+## 配件
+
+### 水下测距
+
+[超声波测距仪原理图+PCB源文件+程序](https://www.cirmall.com/circuit/3873)
+
+[超声波测距原理与制作](https://zhuanlan.zhihu.com/p/38453131)
+
+[一体化超声波测距电路图](http://blog.sina.com.cn/s/blog_68541adc01017ujg.html)
+
+[超声波测距论文(含原理图、程序)](https://wenku.baidu.com/view/8b83de27dd36a32d73758147.html)
+
+[超声波测距电路](https://wenku.baidu.com/view/6f595d6f58fafab069dc024c.html)
+![pic_1618489809078](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/pic_1618489809078.png)
+![水下超声波检测](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波检测.png)
+![水下超声波探测原理图](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/水下超声波探测原理图.png)
+
+
+### 水下声呐
+
+### 深度检测
+
+### IMU惯性导航/定位
+#### 加速度
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297425816.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目/1703297434776.png)
+
+#### 磁力传感器
+
+[Ultimate Sensor Fusion Solution - MPU9250](https://www.tindie.com/products/onehorse/ultimate-sensor-fusion-solution-mpu9250/)
+[BNO055 VS 恩智浦 FXOS8700 + FXAS21002](https://forums.adafruit.com/viewtopic.php?f=8&t=140702)
+[Guides for product: Adafruit Precision NXP 9-DOF Breakout Board](https://learn.adafruit.com/products/3463/guides)
+[Overview](https://learn.adafruit.com/comparing-gyroscope-datasheets)
+[BNO055 and MPU9250 "Roll" indication is correct in static position, wrong when moving.](https://github.com/kriswiner/BNO055/issues/11) 
+[Next generation sensor platform ... MPU9250 vs. LSM9DS0](https://groups.google.com/g/diyrovers/c/TZJIvRdDrls/m/xOc2VxlyU_QJ)
+[9 DoF Motion Sensor Bakeoff](https://github.com/kriswiner/MPU6050/wiki/9-DoF-Motion-Sensor-Bakeoff)
+[LSM9DS1 vs. MPU-9250 vs. BMX055](https://github.com/kriswiner/MPU6050/issues/6)
+
+### 漏水检测
+
+### 推进系统
+
+### 外壳
+
+## 制作-方案验证
+
+### 水下超声波测距
+
+
+
+
+
 
 
