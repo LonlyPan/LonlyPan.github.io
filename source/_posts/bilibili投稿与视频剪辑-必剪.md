@@ -11,6 +11,8 @@ hide: false
 categories: 03-瞎折腾
 ---
 
+<!--more-->
+
 ## 视频录制
 
 OBS 
@@ -78,4 +80,4 @@ blender
 
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
-<!--more-->
+
