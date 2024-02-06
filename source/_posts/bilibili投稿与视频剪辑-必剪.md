@@ -74,7 +74,7 @@ blender
 完整过程如下
 ![分割素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/分割素材.gif)
 
-
+![Bcut2Srt-scd-x64](./img/bilibili投稿与视频剪辑-必剪/Bcut2Srt-scd-x64.exe)
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
 <!--more-->
