@@ -61,8 +61,14 @@ blender
  打开必剪，开始创作
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707182587145.png)
  
- 将音频或视频文件拖入到 **导入素材** 框中，然后再从 **素材** 框中将音视频素材拖入到**编辑栏**中，注意向左对齐。
+ 将音频或视频文件拖入到 **导入素材** 框中，然后再从 **素材** 框中将音视频素材拖入到**编辑栏**中，注意导轨向左对齐。
+ ![导入素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/导入素材.gif)
  
- ### 适用旧版本（V2.0以前）
+ 选择 文本 -> 识别字幕  -> 开始识别
+ >注：如果音视频文件时常超过15分钟，是不能直接识别的（软件中间会有提示，如下图所示），我们需要先将其分割成一小段，并且每段时长不超过15分钟
+ 
+ ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707183478516.png)
+
+### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
 <!--more-->
