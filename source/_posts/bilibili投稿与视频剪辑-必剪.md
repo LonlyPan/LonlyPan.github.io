@@ -66,8 +66,14 @@ blender
  
  选择 文本 -> 识别字幕  -> 开始识别
  >注：如果音视频文件时常超过15分钟，是不能直接识别的（软件中间会有提示，如下图所示），我们需要先将其分割成一小段，并且每段时长不超过15分钟
- 
+
  ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707183478516.png)
+
+拖动编辑栏中的分割线到合适位置（上面有时间线），然后单击分割图标，音视频就会被分割成两端（已分割线为界），然后再分割，直到每段时长不超过15分钟
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707184906602.png)
+完整过程如下
+![分割素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/分割素材.gif)
+
 
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
