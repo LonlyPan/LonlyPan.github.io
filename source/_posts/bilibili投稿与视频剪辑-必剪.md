@@ -76,7 +76,8 @@ blender
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707184906602.png)
 完整过程如下
 ![分割素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/分割素材.gif)
-
+分割完成后，我们打开必剪的工程目录，一般默认地址在 **我的电脑-文档** 路径下
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707276058845.png)
 
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
