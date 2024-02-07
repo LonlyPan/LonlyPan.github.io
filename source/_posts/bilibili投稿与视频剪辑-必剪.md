@@ -82,6 +82,7 @@ blender
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707276058845.png)
 
 然后下载字符提取软件
+https://github.com/u2sb/Bcut2Srt
 
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
