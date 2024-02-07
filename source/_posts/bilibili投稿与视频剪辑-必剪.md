@@ -76,8 +76,12 @@ blender
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707184906602.png)
 完整过程如下
 ![分割素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/分割素材.gif)
-分割完成后，我们打开必剪的工程目录，一般默认地址在 **我的电脑-文档** 路径下
+分割完成后，我们打开必剪的工程目录，一般默认地址在 **我的电脑-文档-Bcut Drafts** 路径下
+- 按修改日期排序，看时间最近的一个文件夹就是我们刚刚编辑的那个工程，进入到里面
+- 会有多个 JSON 文件，同样也是按时间排序，选择时间最近的一个（如果时间都一样，就随便选，文件大小最大的）
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707276058845.png)
+
+然后下载字符提取软件
 
 ### 适用旧版本（V2.0以前）
 工程文件格式是xml文件
