@@ -12,6 +12,21 @@ categories: 00-项目
 
 <!--more-->
 
+# 制作
+
+系统框图
+
+参考资料：
+- [如果做一个开源的ROV 控制在2000元内,有人会买吗](https://rovmaker.cn/t/rov-2000/2956/40)
+- https://rovmaker.cn/
+- https://www.rcshipyard.com/
+## 遥控
+
+## 惯导系统
+- 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708784376821.png)
+
+
 
 [如何DIY一个遥控潜艇？](https://www.zhihu.com/question/22127975)
 [弥补童年的遗憾:遥控潜艇模型制作](https://www.bilibili.com/video/av17018072/)
