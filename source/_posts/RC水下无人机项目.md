@@ -173,7 +173,7 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 ## 数据回传+数字图传
 
-## FMU控制器&IMU惯导测量
+
 
 ### 参考设计
 
@@ -234,16 +234,78 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708855482684.png)
 
+电路结构
+下图是V5+的结构，参考视频https://www.youtube.com/watch?v=wcL6k2UzyiQ
+- 电路板都固定在中间的透明塑料件上，然后使用铝外壳包围固定
+- 减震板固定在金属件上，上面再盖一层海绵，金属件和透明塑料件再次通过海绵固定
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708857034338.png)
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708856994555.png)
+
+下图是X7的，图中有何错误，主板应该是在金属件的下方，
+- 和V5类似，不过这次的透明塑料件直接改成了外壳
+- 减震板还加了一个罩子
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708857749786.png)
+
+**尺寸**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708856310663.png)
 参考资料：
 - https://ardupilot.org/
 	- https://www.cubepilot.com/#/home
 - https://github.com/pixhawk
 	- https://docs.px4.io/main/en/flight_controller/cubepilot_cube_orangeplus.html
 
-- https://holybro.com/
 
 
-## 
+#### Holybro 
+##### Pixhawk 6X 
+
+最新版，带网口，和IMU恒温控制
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708862971159.png)
+
+**技术规范**
+Processors & Sensors
+- FMU Processor: STM32H753
+- 32 Bit Arm® Cortex®-M7, 480MHz, 2MB flash memory, 1MB RAM
+
+IO Processor: STM32F103
+- 32 Bit Arm® Cortex®-M3, 72MHz, 64KB SRAM 
+
+On-board sensors
+- Accel/Gyro: ICM-20649 or BMI088
+- ccel/Gyro: ICM-42688-P
+- Accel/Gyro: ICM-42670-P
+- Mag: BMM150
+- Barometer: 2x BMP388
+
+##### Pix32 V6
+
+**接线图**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860503246.png)
+
+**系统架构**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860637628.png)
+
+**传感器**
+FMU Processor: STM32H743 
+- 32 Bit Arm® Cortex®-M7, 480MHz, 2MB memory, 1MB SRAM 
+IO Processor: STM32F103
+= 32 Bit Arm® Cortex®-M3, 72MHz, 64KB SRAM 
+On-board sensors 
+- Accel/Gyro: ICM-42688-P 
+- Accel/Gyro: BMI055 
+- Mag: IST8310 
+- Barometer: MS5611
+
+尺寸
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863102936.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860545077.png)
+
+- - https://holybro.com/
+	- https://docs.holybro.com/autopilot/pix32-v6/overview
+	- https://docs.px4.io/main/en/flight_controller/holybro_pix32_v5.html
+
+## FMU控制器&IMU惯导测量
 - 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708784376821.png)
 
