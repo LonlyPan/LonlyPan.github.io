@@ -182,13 +182,14 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 系统架构
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849715143.png)
 
-Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
-- ICM45686 / ICM20649
-- ICM20948 / ICM42688 / ICM45686_EXT2 
-- ICM42688 / ICM45686
+
+IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
+- ICM42688*2 / ICM45686
 - MS5611 barometer 气压计
- 
-All sensors connected via SPI.
+- 所有传感器都通过SPI链接
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708850053843.png)
+
+
 
 链接：
 - [官网](https://www.cubepilot.com/#/home)
