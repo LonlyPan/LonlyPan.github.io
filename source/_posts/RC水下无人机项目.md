@@ -277,6 +277,15 @@ On-board sensors
 - Mag: BMM150
 - Barometer: 2x BMP388
 
+**结构**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863993422.png)
+
+**尺寸**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863102936.png)
+
+**接线图**
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860545077.png)
+
 ##### Pix32 V6
 
 
@@ -296,15 +305,11 @@ On-board sensors
 - Mag: IST8310 
 - Barometer: MS5611
 
-**尺寸**
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863102936.png)
-
-**接线图**
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860545077.png)
 
 - - https://holybro.com/
 	- https://docs.holybro.com/autopilot/pix32-v6/overview
 	- https://docs.px4.io/main/en/flight_controller/holybro_pix32_v5.html
+
 
 ## FMU控制器&IMU惯导测量
 - 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
