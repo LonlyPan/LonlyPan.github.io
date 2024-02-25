@@ -180,19 +180,26 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 #### cubepilot
 
 系统架构
+- 隔振板上有四个贴片加热电路，提供恒温环境
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849715143.png)
 
 
 IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 这里有个问题，没有磁力计，但图中又有（减震板上最大的放心MCU），集合历史版本可能是 ICM20948
-- ICM42688 \*2 六轴 / ICM45686 (一个ICM45686 和MS5611主板板上，其它安装在温控、隔振板上)
+- ICM42688 \*2 六轴 / ICM45686 
 - ICM20948 磁力计
 - MS5611\*2 barometer 气压计
-- 所有传感器都通过SPI链接
+- 所有传感器都通过SPI链接，一个ICM45686 和MS5611主板板上，其它安装在温控、隔振板上
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708850053843.png)
 
+安装方式：
+- 共三层电路板
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851866490.png)
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851874473.png)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851878348.png)
 链接：
 - [官网](https://www.cubepilot.com/#/home)
 - [硬件开源](https://github.com/proficnc/The-Cube/tree/master)
