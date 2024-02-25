@@ -216,7 +216,11 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 	 
 
 #### 雷迅CUAV
-
+链接：
+- https://www.cuav.net/
+	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
+	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
+	- 
 参考资料：
 - https://ardupilot.org/
 	- https://www.cubepilot.com/#/home
@@ -224,9 +228,7 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 	- https://docs.px4.io/main/en/flight_controller/cubepilot_cube_orangeplus.html
 
 - https://holybro.com/
-- https://www.cuav.net/
-	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
-	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
+
 
 ## 
 - 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
