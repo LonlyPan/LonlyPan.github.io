@@ -193,7 +193,7 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 - 所有传感器都通过SPI链接，一个ICM45686 和MS5611主板板上，其它安装在温控、隔振板上
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708850053843.png)
 
-- ADS 型号位置，安装在地板上
+- ADS 型号位置，安装在底板上
 
 **电路结构和安装方式：**
 - 共三层电路板
