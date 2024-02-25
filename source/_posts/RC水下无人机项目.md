@@ -173,6 +173,12 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 ## 数据回传+数字图传
 
+## FMU控制器&IMU惯导测量
+
+### 惯导基本概念
+
+- 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708784376821.png)
 
 
 ### 参考设计
@@ -278,6 +284,9 @@ On-board sensors
 - Barometer: 2x BMP388
 
 **结构**
+- 外壳铝
+- 主板固定在底座上，外壳上固定一个四支撑住塑料夹
+ - 塑料件下挂海绵，再挂IMU板，再挂配重
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863993422.png)
 
 **尺寸**
@@ -311,9 +320,6 @@ On-board sensors
 	- https://docs.px4.io/main/en/flight_controller/holybro_pix32_v5.html
 
 
-## FMU控制器&IMU惯导测量
-- 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708784376821.png)
 
 
 
