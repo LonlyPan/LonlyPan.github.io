@@ -220,7 +220,7 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 - https://www.cuav.net/
 	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
 	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
-	- 
+	- [ardupilot介绍](https://ardupilot.org/copter/docs/common-cuav-x7-family-overview.html)
 参考资料：
 - https://ardupilot.org/
 	- https://www.cubepilot.com/#/home
