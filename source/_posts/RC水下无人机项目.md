@@ -184,7 +184,7 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 - 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849715143.png)
 
-
+**传感器**
 IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 这里有个问题，没有磁力计，但图中又有（减震板上最大的放心MCU），集合历史版本可能是 ICM20948
 - ICM42688 \*2 六轴 / ICM45686 
@@ -193,7 +193,9 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 - 所有传感器都通过SPI链接，一个ICM45686 和MS5611主板板上，其它安装在温控、隔振板上
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708850053843.png)
 
-电路结构和安装方式：
+- ADS 型号位置，安装在地板上
+
+**电路结构和安装方式：**
 - 共三层电路板
 - FMU主板有两个MCU和几个传感器，并有SD卡接口，和PWM电平引脚切换（3.3V和5V）,底部一个板对板接口连接地板
 - IMU 共两块，底下的板子与主板硬固定使用FPC连接（这里接口也是软排线，推测是为了贴片误差，防止错误装不上），并且提供一个平整的安装平台
@@ -221,6 +223,11 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
 	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
 	- [ardupilot介绍](https://ardupilot.org/copter/docs/common-cuav-x7-family-overview.html)
+
+**传感器**
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708855482684.png)
+
 参考资料：
 - https://ardupilot.org/
 	- https://www.cubepilot.com/#/home
