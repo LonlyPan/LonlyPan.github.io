@@ -279,7 +279,7 @@ On-board sensors
 
 ##### Pix32 V6
 
-**接线图**
+
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860503246.png)
 
 **系统架构**
@@ -296,9 +296,10 @@ On-board sensors
 - Mag: IST8310 
 - Barometer: MS5611
 
-尺寸
+**尺寸**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708863102936.png)
 
+**接线图**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860545077.png)
 
 - - https://holybro.com/
