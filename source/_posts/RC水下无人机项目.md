@@ -178,7 +178,7 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 ### 参考设计
 
 #### cubepilot
-缺少开源资料，只有最老版本的FMU原理图，其它资料都缺失。不建议作为设计参考
+缺少开源资料，只有最老版本的FMU原理图，其它资料都缺失。尽可作为设计参考
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708853667229.png)
 系统架构
