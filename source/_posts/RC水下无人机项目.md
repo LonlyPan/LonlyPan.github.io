@@ -179,8 +179,9 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 #### cubepilot
 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708853667229.png)
 系统架构
-- 隔振板上有四个贴片加热电路，提供恒温环境
+- 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849715143.png)
 
 
@@ -192,19 +193,29 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 - 所有传感器都通过SPI链接，一个ICM45686 和MS5611主板板上，其它安装在温控、隔振板上
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708850053843.png)
 
-安装方式：
+电路结构和安装方式：
 - 共三层电路板
+- FMU主板有两个MCU和几个传感器，并有SD卡接口，和PWM电平引脚切换（3.3V和5V）,底部一个板对板接口连接地板
+- IMU 共两块，底下的板子与主板硬固定使用FPC连接（这里接口也是软排线，推测是为了贴片误差，防止错误装不上），并且提供一个平整的安装平台
+- 减震板时使用泡沫固定的，并没有硬连接，但也有四个定位孔，也有可能是固定在减震棉上
+- 减震板自带加热（四颗贴片加热电阻）
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851980968.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851866490.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851874473.png)
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708851878348.png)
+
+
 链接：
 - [官网](https://www.cubepilot.com/#/home)
 - [硬件开源](https://github.com/proficnc/The-Cube/tree/master)
+- [ardupilot介绍](https://ardupilot.org/copter/docs/common-thecubeorange-overview.html#system-features)
 	 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849145702.png)
+
+#### 雷迅CUAV
 
 参考资料：
 - https://ardupilot.org/
