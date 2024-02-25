@@ -175,6 +175,8 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 ## FMU控制器&IMU惯导测量
 
+参考
+- https://github.com/pixhawk
 ### 惯导基本概念
 
 - 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
@@ -227,6 +229,7 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 #### 雷迅CUAV
 
 开源资料齐全，且有最新版的资料。
+雷迅已经脱离了Pixhawk标准，其X7设计只有一个MCU，F1辅助MCU去除了
 
 链接：
 - https://www.cuav.net/
@@ -278,7 +281,7 @@ IO Processor: STM32F103
 
 On-board sensors
 - Accel/Gyro: ICM-20649 or BMI088
-- ccel/Gyro: ICM-42688-P
+- Accel/Gyro: ICM-42688-P
 - Accel/Gyro: ICM-42670-P
 - Mag: BMM150
 - Barometer: 2x BMP388
