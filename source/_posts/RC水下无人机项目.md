@@ -20,6 +20,11 @@ categories: 00-项目
 - [如果做一个开源的ROV 控制在2000元内,有人会买吗](https://rovmaker.cn/t/rov-2000/2956/40)
 - https://rovmaker.cn/
 - https://www.rcshipyard.com/
+
+## 遥控
+
+## 数据回传+数字图传
+
 ## FMU重要控制器
 
 ## 惯导系统
