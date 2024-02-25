@@ -173,9 +173,31 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 ## 数据回传+数字图传
 
-## FMU重要控制器
+## FMU控制器&惯导系统
 
-## 惯导系统
+### 参考设计
+
+#### cubepilot
+
+从github上开源的资料时间看，该设计已经是
+链接：
+- [官网](https://www.cubepilot.com/#/home)
+- [硬件开源](https://github.com/proficnc/The-Cube/tree/master)
+	 
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849145702.png)
+
+参考资料：
+- https://ardupilot.org/
+	- https://www.cubepilot.com/#/home
+- https://github.com/pixhawk
+	- https://docs.px4.io/main/en/flight_controller/cubepilot_cube_orangeplus.html
+
+- https://holybro.com/
+- https://www.cuav.net/
+	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
+	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
+
+## 
 - 简单来说，传感器只负责输出原始数据，惯性测量负责解析原始数据并转成角度、加速度等有用数据，惯导则是利用这些数据计算出当前的位置用于导航
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708784376821.png)
 
