@@ -173,13 +173,23 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 
 ## 数据回传+数字图传
 
-## FMU控制器&惯导系统
+## FMU控制器&IMU惯导测量
 
 ### 参考设计
 
 #### cubepilot
 
-从github上开源的资料时间看，该设计已经是
+系统架构
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708849715143.png)
+
+Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
+- ICM45686 / ICM20649
+- ICM20948 / ICM42688 / ICM45686_EXT2 
+- ICM42688 / ICM45686
+- MS5611 barometer 气压计
+ 
+All sensors connected via SPI.
+
 链接：
 - [官网](https://www.cubepilot.com/#/home)
 - [硬件开源](https://github.com/proficnc/The-Cube/tree/master)
