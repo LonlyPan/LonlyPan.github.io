@@ -178,6 +178,7 @@ DSMX是DSM2的升级版，协议基本一样就是速率加快了。DSMX协议�
 ### 参考设计
 
 #### cubepilot
+缺少开源资料，只有最老版本的FMU原理图，其它资料都缺失。不建议作为设计参考
 
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708853667229.png)
 系统架构
@@ -218,11 +219,14 @@ IMU传感器Vibration Damped IMU board version 3 (Fitted to Cube Orange+)
 	 
 
 #### 雷迅CUAV
+
 链接：
 - https://www.cuav.net/
 	- https://github.com/cuav/hardware/tree/master/X7_Autopilot
 	- https://doc.cuav.net/flight-controller/x7/zh-hans/x7-pro.html
 	- [ardupilot介绍](https://ardupilot.org/copter/docs/common-cuav-x7-family-overview.html)
+
+![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708855708861.png)
 
 **传感器**
 
