@@ -11,19 +11,6 @@ hide: false
 categories: 00-项目
 ---
 
----
-layout: post
-title: "硬件设计应用经验总结"
-index_img:  https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/硬件应用经验总结/图像_3.png
-date: 2021-01-24
-updated: 2021-01-24  17:12
-hide: false
-# sticky: 100 #置顶，数字越大越靠前
-# banner_img: #/img/post_banner.jpg
-# comment: false
-categories: 01-专业
----
-
 <!--more-->
 
 # 制作
