@@ -56,34 +56,5 @@ blender
  
  模板：网页版上传界面 新建模板 桌面版的没法新建，但可以使用网页版新建的模板，节省上传设置
  
-## 字幕识别与导出
- 
- ### 适用最新版本（V2.0以上）
- V2.0 之后新版的必剪改了工程位置和工程文件格式，现在是json文件，以前是xml文件
- 
- 打开必剪，开始创作
- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707182587145.png)
- 
- 将音频或视频文件拖入到 **导入素材** 框中，然后再从 **素材** 框中将音视频素材拖入到**编辑栏**中，注意导轨向左对齐。
- ![导入素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/导入素材.gif)
- 
- 选择 文本 -> 识别字幕  -> 开始识别
- >注：如果音视频文件时常超过15分钟，是不能直接识别的（软件中间会有提示，如下图所示），我们需要先将其分割成一小段，并且每段时长不超过15分钟
 
- ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707183478516.png)
-
-拖动编辑栏中的分割线到合适位置（上面有时间线），然后单击分割图标，音视频就会被分割成两端（已分割线为界），然后再分割，直到每段时长不超过15分钟
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707184906602.png)
-完整过程如下
-![分割素材](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/分割素材.gif)
-分割完成后，我们打开必剪的工程目录，一般默认地址在 **我的电脑-文档-Bcut Drafts** 路径下
-- 按修改日期排序，看时间最近的一个文件夹就是我们刚刚编辑的那个工程，进入到里面
-- 会有多个 JSON 文件，同样也是按时间排序，选择时间最近的一个（如果时间都一样，就随便选，文件大小最大的）
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/bilibili投稿与视频剪辑-必剪/1707276058845.png)
-
-然后下载字符提取软件
-https://github.com/u2sb/Bcut2Srt
-
-### 适用旧版本（V2.0以前）
-工程文件格式是xml文件
 
