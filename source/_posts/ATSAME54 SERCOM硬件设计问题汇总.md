@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "ATSAME54 SERCOM硬件设计问题"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/ATSAME54_SERCOM硬件设计问题/ATSAME54.png
 date: 2019-11-20 16:2
