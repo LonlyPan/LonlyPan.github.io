@@ -1,4 +1,5 @@
 ---
+layout: post
 title: RC水下无人机项目前期调研
 index_img:  https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S2教程_基于ESP-IDF_v4.4/ESP32_S2教程封面-合集.png
 date: 2023-12-23 19:23
