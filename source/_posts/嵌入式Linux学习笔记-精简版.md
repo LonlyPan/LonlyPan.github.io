@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 嵌入式Linux学习笔记-精简版
+title: "嵌入式Linux学习笔记-精简版"
 index_img: https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/嵌入式Linux学习笔记/1654315471941.png
 date: 2022-04-06
 updated: 2022-06-12 23:19
