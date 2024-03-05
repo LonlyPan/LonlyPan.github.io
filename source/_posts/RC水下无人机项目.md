@@ -1,6 +1,5 @@
 ---
-layout: post
-title: "RC水下无人机项目"
+title: RC水下无人机项目前期调研
 index_img:  https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/乐鑫ESP32_S2教程_基于ESP-IDF_v4.4/ESP32_S2教程封面-合集.png
 date: 2023-12-23 19:23
 updated: 2023-12-23 23:23
@@ -302,7 +301,6 @@ On-board sensors
 ##### Pix32 V6
 
 
-![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860503246.png)
 
 **系统架构**
 ![enter description here](https://lonly-hexo-img.oss-cn-shanghai.aliyuncs.com/hexo_images/RC水下无人机项目前期调研/1708860637628.png)
